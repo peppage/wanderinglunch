@@ -3,7 +3,7 @@ include mixins/truckTable
 extends includes/base
 
 block css
-    //link(rel='stylesheet', href='/stylesheets/stacktable.css')
+    link(rel='stylesheet', href='/stylesheets/magnific-popup.css')
     link(rel='stylesheet', href='/stylesheets/tooltipster.css')
 
 block content
@@ -16,10 +16,10 @@ block scripts
     script(type='text/javascript'
          , src='/javascripts/jquery.tooltipster.js')
     script(type='text/javascript'
-         , src='/javascripts/stacktable.js')
+         , src='/javascripts/jquery.magnific-popup.js')
 
     script.
         $(document).ready(function() {
             $('.tooltip').tooltipster();
-            //$('#truckTable').stacktable({myClass:'stacktable small-only'});
+            $('.image-link').magnificPopup({type:'image'});
         });
