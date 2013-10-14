@@ -2,6 +2,10 @@ include mixins/truckTable
 
 extends includes/base
 
+block css
+    //link(rel='stylesheet', href='/stylesheets/stacktable.css')
+    link(rel='stylesheet', href='/stylesheets/tooltipster.css')
+
 block content
     include includes/menu
     .sub-nav Quick Jump: 
@@ -35,5 +39,5 @@ block scripts
     script(type='text/javascript').
         $(document).ready(function() {
             $('.tooltip').tooltipster();
-            $('.truckTable').stacktable({myClass:'stacktable small-only'});
+            //$('.truckTable').stacktable({myClass:'stacktable small-only'});
         });
