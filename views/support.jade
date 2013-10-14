@@ -1,0 +1,18 @@
+extends includes/base
+
+block content
+    include includes/menu
+
+    h1.centerText Support the site
+
+    .content Thanks for even thinking about supporting this site.  I have put a lot of time and energy into making this and I hope you find it useful. Right now the server costs $5/mo to run, if you want to help you can use <a href="https://spacebox.io/s/XZDcsZkoA0" class="sbe-button">this Stripe form</a>. Thanks!
+
+    footer
+        a(href="http://stripe.com")
+            img(src="/images/stripe-solid.png")
+
+block scripts
+    script(type='text/javascript'
+         , src="/javascripts/jquery.stickyfooter.js")
+    script(type='text/javascrpt'
+         , src="https://spacebox.io/embed/js/embed-v1.js")

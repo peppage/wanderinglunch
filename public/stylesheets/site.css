@@ -1,0 +1,53 @@
+body {
+    /*background-color: whitesmoke;*/
+}
+
+.truck {
+    color: darkred;
+}
+
+.tooltip {
+    border-bottom: 1px dotted #ccc;
+    cursor: help;
+    font-weight: bold;
+    color: #333;
+}
+
+.large-only {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.centerText {
+    text-align: center;
+}
+
+.time {
+    color: darkred;
+}
+
+.content {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 800px;
+}
+
+.me {
+    padding: 5px;
+    background-color: #000;
+    height: 100px;
+}
+
+.about {
+    font-size: 26px;
+}
+
+.code {
+    font-family:monospace;
+}
+
+.about em {
+    font-family: 'Reenie Beanie';
+    border-bottom: 1px dashed #000;
+    font-size: 32px;
+}

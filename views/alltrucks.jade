@@ -1,0 +1,21 @@
+include mixins/truckTable
+
+extends includes/base
+
+block content
+    include includes/menu
+    
+    h1.centerText All Trucks
+    +truckTable(trucks)
+
+block scripts
+    script(type='text/javascript'
+         , src='/javascripts/jquery.tooltipster.js')
+    script(type='text/javascript'
+         , src='/javascripts/stacktable.js')
+
+    script.
+        $(document).ready(function() {
+            $('.tooltip').tooltipster();
+            $('.truckTable').stacktable({myClass:'stacktable small-only'});
+        });
