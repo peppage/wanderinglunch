@@ -51,3 +51,14 @@ body {
     border-bottom: 1px dashed #000;
     font-size: 32px;
 }
+
+.sub-nav {
+    padding-left: 1%;
+    overflow: hidden;
+    font-size: .875em;
+}
+
+.sub-nav > a {
+    color: #999;
+    text-decoration: none;
+}

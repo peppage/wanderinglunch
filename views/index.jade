@@ -4,16 +4,25 @@ extends includes/base
 
 block content
     include includes/menu
+    .sub-nav Quick Jump: 
+        a(href="#uptown") Above 34th 
+        a(href="#midtown") 10th to 33rd 
+        a(href="#downtown") Downtown 
+        a(href="#brooklyn") Brooklyn 
 
+    a#uptown(style="visibility: hidden")
     h1.centerText Above 34th
     +truckTable(upTrucks)
 
+    a#midtown(style="visibility: hidden")
     h1.centerText 10th to 33rd
     +truckTable(midTrucks)
 
+    a#downtown(style="visibility: hidden")
     h1.centerText Downtown
     +truckTable(downTrucks)
 
+    a#brooklyn(style="visibility: hidden")
     h1.centerText Brooklyn
     +truckTable(bkTrucks)
 

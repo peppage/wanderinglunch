@@ -15,4 +15,5 @@ mixin truckTable(trucks)
                         span.tooltip(title=truck.tweet)= truck.location
                     td
                         a.time(href="http://twitter.com/" + truck.twitname)= prettyTime(truck.lastupdate)
-                    td 1
+                    td
+                        img(src="/images/trucks/thumb/" + truck.twitname + ".jpg")
