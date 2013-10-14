@@ -11,10 +11,10 @@ var moment = require('moment');
 
 var app = express();
 
-var oneDay = 86400000;
+var cacheTime = 86400000;
 
 // all environments
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 3001);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.use(express.favicon(path.join(__dirname, "public/images/favicon.ico")));
@@ -23,7 +23,7 @@ app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(app.router);
 app.use(express.compress());
-app.use(express.static(path.join(__dirname, 'public'), {maxAge: oneDay}));
+app.use(express.static(path.join(__dirname, 'public'), {maxAge: cacheTime}));
 app.enable('trust proxy');
 
 // development only
