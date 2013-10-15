@@ -17,4 +17,4 @@ mixin truckTable(trucks)
                         a.time(href="http://twitter.com/" + truck.twitname)= prettyTime(truck.lastupdate)
                     td
                         a.image-link(href='/images/trucks/' + truck.twitname + '.jpg')
-                            img(src='/images/trucks/thumb/' + truck.twitname + '.jpg')
+                            img(src='/images/trucks/thumb/' + truck.twitname + '.jpg', alt= truck.name + ' Menu', width='30')

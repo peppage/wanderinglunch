@@ -14,21 +14,33 @@ block content
         a(href="#downtown") Downtown 
         a(href="#brooklyn") Brooklyn 
 
-    a#uptown(style="visibility: hidden")
-    h1.centerText Above 34th
-    +truckTable(upTrucks)
+    - if (upTrucks.length !== 0) {
+        a#uptown(style="visibility: hidden")
+        h1.centerText Above 34th
+        +truckTable(upTrucks)
+    - }
 
-    a#midtown(style="visibility: hidden")
-    h1.centerText 10th to 33rd
-    +truckTable(midTrucks)
+    - if (midTrucks.length !== 0) {
+        a#midtown(style="visibility: hidden")
+        h1.centerText 10th to 33rd
+        +truckTable(midTrucks)
+    - }
 
-    a#downtown(style="visibility: hidden")
-    h1.centerText Downtown
-    +truckTable(downTrucks)
+    - if (downTrucks.length !== 0) {
+        a#downtown(style="visibility: hidden")
+        h1.centerText Downtown
+        +truckTable(downTrucks)
+    - }
 
-    a#brooklyn(style="visibility: hidden")
-    h1.centerText Brooklyn
-    +truckTable(bkTrucks)
+    - if (bkTrucks.length !== 0) {
+        a#brooklyn(style="visibility: hidden")
+        h1.centerText Brooklyn
+        +truckTable(bkTrucks)
+    - }
+
+    - if (upTrucks.length !== 0 && midTrucks.length !== 0 && downTrucks.length !== 0 && bkTrucks.length !== 0) {
+          h1 No Trucks at the moment
+    - }
 
 block scripts
     script(type='text/javascript'
