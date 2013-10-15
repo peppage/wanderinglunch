@@ -1,7 +1,7 @@
 .pure-menu.pure-menu-open.pure-menu-horizontal
     ul
         li
-            a(href="#") WL
+            a(href='#') WL
         -var items = { '/':'Home', 'alltrucks':'All Trucks', 'about':'About', 'support':'Support'}
         -each val, key in items
             -if (id == key)
@@ -11,4 +11,4 @@
                 li
                     a(href='#{key}') #{val}
         li
-            a(href="http://wanderinglunch.userecho.com/") Feedback
+            a(href='http://wanderinglunch.userecho.com/') Feedback

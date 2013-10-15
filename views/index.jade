@@ -9,31 +9,31 @@ block css
 block content
     include includes/menu
     .sub-nav Quick Jump: 
-        a(href="#uptown") Above 34th 
-        a(href="#midtown") 10th to 33rd 
-        a(href="#downtown") Downtown 
-        a(href="#brooklyn") Brooklyn 
+        a(href='#uptown') Above 34th 
+        a(href='#midtown') 10th to 33rd 
+        a(href='#downtown') Downtown 
+        a(href='#brooklyn') Brooklyn 
 
     - if (upTrucks.length !== 0) {
-        a#uptown(style="visibility: hidden")
+        a#uptown(style='visibility: hidden')
         h1.centerText Above 34th
         +truckTable(upTrucks)
     - }
 
     - if (midTrucks.length !== 0) {
-        a#midtown(style="visibility: hidden")
+        a#midtown(style='visibility: hidden')
         h1.centerText 10th to 33rd
         +truckTable(midTrucks)
     - }
 
     - if (downTrucks.length !== 0) {
-        a#downtown(style="visibility: hidden")
+        a#downtown(style='visibility: hidden')
         h1.centerText Downtown
         +truckTable(downTrucks)
     - }
 
     - if (bkTrucks.length !== 0) {
-        a#brooklyn(style="visibility: hidden")
+        a#brooklyn(style='visibility: hidden')
         h1.centerText Brooklyn
         +truckTable(bkTrucks)
     - }
