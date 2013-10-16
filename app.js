@@ -25,6 +25,7 @@ app.use(app.router);
 app.use(express.compress());
 app.use(express.static(path.join(__dirname, 'public'), {maxAge: cacheTime}));
 app.enable('trust proxy');
+app.disable('view cache');
 
 // development only
 if ('development' == app.get('env')) {
