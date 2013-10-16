@@ -1,13 +1,13 @@
 exports.about = function(req, res) {
     res.render('about', {
-        title: 'About',
+        title: 'Wandering Lunch: NYC Food Truck Finder | About',
         id: 'about'
     });
 };
 
 exports.support = function(req, res) {
     res.render('support', {
-        title: 'Support',
+        title: 'Wandering Lunch: NYC Food Truck Finder | Support',
         id: 'support'
     });
 };
