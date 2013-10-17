@@ -1,8 +1,7 @@
 var truckData = require('../model/trucks');
+var async = require('async');
 
 exports.index = function(req, res){
-
-    var async = require('async');
     
     async.parallel({
         upTrucks: async.apply(truckData.upTrucks),
