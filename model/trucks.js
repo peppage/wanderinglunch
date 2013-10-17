@@ -37,7 +37,7 @@ exports.getTruck = function getTruck(twitname, callback) {
 
 exports.upTrucks = function upTrucks(callback) {
     var Truck = mongoose.model('Truck');
-    var query = Truck.find({'region' : 'up', 'lastupdate':{$gt : ((new Date().getTime()) / 1000) - 120}});
+    var query = Truck.find({'region' : 'up', 'lastupdate':{$gt : ((new Date().getTime()) / 1000) - 28800}});
     query.sort('street');
     query.exec(function(err, upTrucks) {
         if(err) {
