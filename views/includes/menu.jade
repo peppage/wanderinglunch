@@ -1,14 +1,12 @@
-.pure-menu.pure-menu-open.pure-menu-horizontal
-    ul
-        li
-            a(href='#') WL
-        -var items = { '/':'Home', 'alltrucks':'All Trucks', 'about':'About', 'support':'Support'}
-        -each val, key in items
-            -if (id == key)
-                li.pure-menu-selected
-                    a(href='#{key}') #{val}
-            -else
-                li
-                    a(href='#{key}') #{val}
-        li
-            a(href='http://wanderinglunch.userecho.com/') Feedback
+nav.cl-effect-2
+    -var items = { 'alltrucks':'All Trucks', 'about':'About', '/':'Logo', 'support':'Support', 'help':'Help'}
+    -each val, key in items
+        -if (key == '/')
+            a(href="/")
+                img(src="/images/logo.png", style="height:100px;")  
+        -else if (id == key)
+            a(href='/#{key}')
+                span.selected(data-hover="#{val}") #{val}    
+        -else
+            a(href='/#{key}')
+                span(data-hover="#{val}") #{val}

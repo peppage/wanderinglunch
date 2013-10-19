@@ -10,6 +10,7 @@
     "jade": "0.35.x",
     "mongoose": "3.6.x",
     "async": "0.2.x",
-    "moment": "2.3.x"
+    "moment": "2.3.x",
+    "less-middleware": "0.1.x"
   }
 }
