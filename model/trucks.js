@@ -86,3 +86,16 @@ exports.bkTrucks = function bkTrucks(callback) {
         }
     });
 };
+
+exports.debug = function debug(callback) {
+    var Truck = mongoose.model('Truck');
+    var query = Truck.find({'lastupdate': {$lt: ((new Date().getTime()) / 1000) - 86400}});
+    query.sort('name');
+    query.exec(function(err, debug) {
+        if(err) {
+            console.log(err);
+        } else {
+            callback("", debug);
+        }
+    });
+};

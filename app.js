@@ -3,11 +3,13 @@ var routes = require('./routes');
 var region = require('./routes/region');
 var all = require('./routes/alltrucks');
 var truck = require('./routes/truck');
+var debug = require('./routes/debug');
 var statics = require('./routes/statics');
 var http = require('http');
 var path = require('path');
 var db = require('./model/db');
 var moment = require('moment');
+var lessMiddleware = require('less-middleware');
 
 var app = express();
 
@@ -38,6 +40,7 @@ app.get('/truck/:twitname', truck.show);
 app.get('/alltrucks', all.show);
 app.get('/about', statics.about);
 app.get('/support', statics.support);
+app.get('/debug', debug.show);
 
 app.locals({
     prettyTime: function(lastUpdate) {
@@ -61,4 +64,13 @@ app.locals({
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
+});
+
+app.configure(function () {
+    app.use(lessMiddleware({
+        src: __dirname + '/public',
+        compress: true
+    }));
+
+    app.use(express.static(path.join(__dirname, 'public'), {maxAge: cacheTime}));
 });
