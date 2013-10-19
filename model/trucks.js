@@ -99,3 +99,15 @@ exports.debug = function debug(callback) {
         }
     });
 };
+
+exports.count = function count(callback) {
+    var Truck = mongoose.model('Truck');
+    var query = Truck.count();
+    query.exec(function(err, q) {
+        if(err) {
+            console.log(err);
+        } else {
+            callback("", q);
+        }
+    });
+};

@@ -5,6 +5,7 @@ var all = require('./routes/alltrucks');
 var truck = require('./routes/truck');
 var debug = require('./routes/debug');
 var statics = require('./routes/statics');
+var stats = require('./routes/stats');
 var http = require('http');
 var path = require('path');
 var db = require('./model/db');
@@ -40,6 +41,7 @@ app.get('/alltrucks', all.show);
 app.get('/about', statics.about);
 app.get('/support', statics.support);
 app.get('/debug', debug.show);
+app.get('/stats', stats.show);
 
 app.locals({
     prettyTime: function(lastUpdate) {
