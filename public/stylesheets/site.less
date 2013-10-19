@@ -66,6 +66,7 @@ body {
     }
 }
 
+/* Menu Stuff */
 *,
 *:after,
 *::before {
@@ -87,11 +88,23 @@ nav {
         font-weight: 400;
         text-shadow: 0 0 1px rgba(255,255,255,0.3);
         font-size: 1.35em;
+
+        @media screen and (max-width: 786px) {
+            width: 100%;
+            margin: 0px;
+        }
+
+        
+
     }
 
     a:hover, a:focus {
         outline: none;
     }
+}
+
+#logo {
+    height:100px;
 }
 
 .cl-effect-2 {
@@ -131,7 +144,13 @@ nav {
         &:hover span, &:focus span {
             -webkit-transform: rotateX(90deg) translateY(-22px);
             -moz-transform: rotateX(90deg) translateY(-22px);
-            transform: rotateX(90deg) translateY(-22px); 
+            transform: rotateX(90deg) translateY(-22px);
+
+            @media screen and (max-width: 768px) {
+                transform: none;
+                -webkit-transform: none;
+                -moz-transform: none;
+            }
         }
     }
 

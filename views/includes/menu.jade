@@ -3,7 +3,7 @@ nav.cl-effect-2
     -each val, key in items
         -if (key == '/')
             a(href="/")
-                img(src="/images/logo.png", style="height:100px;")  
+                img#logo(src="/images/logo.png")  
         -else if (id == key)
             a(href='/#{key}')
                 span.selected(data-hover="#{val}") #{val}    
