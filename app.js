@@ -45,7 +45,7 @@ app.get('/stats', stats.show);
 
 app.locals({
     prettyTime: function(lastUpdate) {
-        return moment.unix(lastUpdate).fromNow(true);
+        return moment.unix(lastUpdate).fromNow();
         /*var now = (new Date().getTime()) / 1000;
         var timePast = Math.round((now - lastUpdate) / 60);
 
