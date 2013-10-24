@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var moment = require('moment');
 
 exports.allTrucks = function allTrucks(callback) {
     var Truck = mongoose.model('Truck');
@@ -37,7 +38,7 @@ exports.getTruck = function getTruck(twitname, callback) {
 
 exports.upTrucks = function upTrucks(callback) {
     var Truck = mongoose.model('Truck');
-    var query = Truck.find({'region' : 'up', 'lastupdate':{$gt : ((new Date().getTime()) / 1000) - 28800}});
+    var query = Truck.find({'region' : 'up', 'lastupdate':{$gt : moment().subtract('hours', 8).unix()}});
     query.sort('street');
     query.exec(function(err, upTrucks) {
         if(err) {
@@ -50,7 +51,7 @@ exports.upTrucks = function upTrucks(callback) {
 
 exports.midTrucks = function midTrucks(callback) {
     var Truck = mongoose.model('Truck');
-    var query = Truck.find({'region' : 'mid', 'lastupdate':{$gt : ((new Date().getTime()) / 1000) - 28800}});
+    var query = Truck.find({'region' : 'mid', 'lastupdate':{$gt : moment().subtract('hours', 8).unix()}});
     query.sort('street');
     query.exec(function(err, midTrucks) {
         if(err) {
@@ -63,7 +64,7 @@ exports.midTrucks = function midTrucks(callback) {
 
 exports.downTrucks = function downTrucks(callback) {
     var Truck = mongoose.model('Truck');
-    var query = Truck.find({'region' : 'none', 'lastupdate':{$gt : ((new Date().getTime()) / 1000) - 28800}});
+    var query = Truck.find({'region' : 'none', 'lastupdate':{$gt : moment().subtract('hours', 8).unix()}});
     query.sort('street');
     query.exec(function(err, downTrucks) {
         if(err) {
@@ -76,7 +77,7 @@ exports.downTrucks = function downTrucks(callback) {
 
 exports.bkTrucks = function bkTrucks(callback) {
     var Truck = mongoose.model('Truck');
-    var query = Truck.find({'region' : 'bkl', 'lastupdate':{$gt : ((new Date().getTime()) / 1000) - 28800}});
+    var query = Truck.find({'region' : 'bkl', 'lastupdate':{$gt : moment().subtract('hours', 8).unix()}});
     query.sort('street');
     query.exec(function(err, bkTrucks) {
         if(err) {
@@ -89,7 +90,7 @@ exports.bkTrucks = function bkTrucks(callback) {
 
 exports.debug = function debug(callback) {
     var Truck = mongoose.model('Truck');
-    var query = Truck.find({'lastupdate': {$lt: ((new Date().getTime()) / 1000) - 86400}});
+    var query = Truck.find({'lastupdate': {$lt: moment().subtract('days', 1).unix()}, 'lastTweet' : {$gt : moment().startOf('day').unix() }});
     query.sort('name');
     query.exec(function(err, debug) {
         if(err) {
