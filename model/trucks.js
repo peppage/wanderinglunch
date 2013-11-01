@@ -32,19 +32,36 @@ exports.getRegion = function getRegion(region, callback) {
     });
 };
 
-exports.getTruck = function getTruck(twitname, callback) {
+exports.getTruck = function getTruck(id, callback) {
     pg.connect(conString, function(err, client, done) {
         if(err) {
             console.log(err);
         }
         client.query({name: "getTruck",
-                      text: "SELECT * FROM trucks WHERE twitname = $1",
-                      values:[twitname]}, function(err, result) {
+                      text: "SELECT * FROM trucks WHERE id = $1",
+                      values:[id]}, function(err, result) {
             done();
             if(err) {
                 console.log(err);
             }
             callback("", result.rows);
+        });
+    });
+};
+
+exports.getTweets = function getTweets(twitname, callback) {
+    pg.connect(conString, function(err, client, done) {
+        if(err) {
+            console.log(err);
+        }
+        client.query({name: "getTweets",
+                      text: "SELECT * FROM tweets WHERE twitname = $1 ORDER BY time DESC LIMIT 6",
+                      values:[twitname]}, function(err, result) {
+            done();
+            if(err) {
+                console.log(err);
+            }
+            callback('', result.rows);
         });
     });
 };

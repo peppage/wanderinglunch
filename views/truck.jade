@@ -1,2 +1,49 @@
-each t in truck
-    li=t.name
+extends includes/base
+
+block css
+    link(rel='stylesheet', href='/stylesheets/truck.css')
+
+block content
+    include includes/menu
+
+    - var t = truck[0]
+
+    .pure-g-r.content
+        .pure-u-1-2
+            img(src='/images/trucks/' + t.twitname + '.jpg' alt=t.name + ' menu')
+            h2 Recent Tweets
+            each tweet in tweets
+                .pure-u-1.tweet-name='@'+t.twitname
+                .pure-u-1.tweet-contents!=tweet.contents
+                .pure-u-1
+                    a.tweet-time(href='http://twitter.com/' + tweet.twitname + '/status/' + tweet.id, target='_blank')=prettyTime(tweet.time)
+        .pure-u-1-2
+            .right-side
+                h1.truck-title=t.name
+                .truck-type=t.type
+                br
+                h2 Details
+                .pure-g-r
+                    .pure-u-1
+                        p!=t.about
+                    .pure-u-1-2
+                        strong Last Location
+                    .pure-u-1-2=t.location
+                    .pure-u-1-2
+                        strong Last Updated
+                    .pure-u-1-2=prettyTime(t.lastupdate)
+                    .pure-u-1-2
+                        strong Website
+                    .pure-u-1-2
+                        a(href=t.weburl, target='_blank')=t.weburl
+                    .pure-u-1-2
+                        strong Twitter
+                    .pure-u-1-2
+                        a(href='http://twitter.com/' + t.twitname, target='_blank')='http://twitter.com/' + t.twitname
+
+
+
+
+            
+block scripts
+    script(src='/javascripts/modernizr.custom.js')

@@ -27,11 +27,7 @@ app.use(express.methodOverride());
 app.use(app.router);
 app.enable('trust proxy');
 app.disable('view cache');
-app.use(express.static(path.join(__dirname, 'public'), {maxAge: cacheTime}));
-app.use(lessMiddleware({
-        src: __dirname + '/public',
-        compress: true
-    }));
+
 
 // development only
 if ('development' == app.get('env')) {
@@ -40,7 +36,7 @@ if ('development' == app.get('env')) {
 
 app.get('/', routes.index);
 app.get('/region/:region', region.show);
-app.get('/truck/:twitname', truck.show);
+app.get('/truck/:id', truck.show);
 app.get('/alltrucks', all.show);
 app.get('/about', statics.about);
 app.get('/support', statics.support);
@@ -69,4 +65,17 @@ app.locals({
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
+});
+
+
+app.configure(function () {
+    app.use(lessMiddleware({
+        src: __dirname + '/public',
+        compress: false,
+        force: true,
+        optimization: 2
+    }));
+    
+
+    app.use(express.static(path.join(__dirname, 'public'), {maxAge: cacheTime}));
 });

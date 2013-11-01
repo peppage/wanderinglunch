@@ -10,11 +10,10 @@ mixin truckTable(trucks)
             each truck in trucks
                 tr
                     td
-                        a.truck(href=truck.weburl)=truck.name
+                        a.truck(href='/truck/'+truck.id)=truck.name
                     td
                         span.tooltip(title=truck.tweet)= truck.location
-                    td
-                        a.time(href='http://twitter.com/' + truck.twitname)= prettyTime(truck.lastupdate)
+                    td=prettyTime(truck.lastupdate)
                     td
                         a.image-link(href='/images/trucks/' + truck.twitname + '.jpg')
                             img(src='/images/trucks/thumb/' + truck.twitname + '.jpg', alt= truck.name + ' Menu')
