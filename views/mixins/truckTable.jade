@@ -2,9 +2,9 @@ mixin truckTable(trucks)
     table#truckTable.large-only.pure-table.pure-table-striped
         thead
             tr
-                th Truck
-                th Location
-                th Time
+                th(style="width:32%;") Truck
+                th(style="width:50%;") Location
+                th(style="width:28%;") Time
                 th Menu
         tbody
             each truck in trucks
@@ -17,4 +17,4 @@ mixin truckTable(trucks)
                         a.time(href='http://twitter.com/' + truck.twitname)= prettyTime(truck.lastupdate)
                     td
                         a.image-link(href='/images/trucks/' + truck.twitname + '.jpg')
-                            img(src='/images/trucks/thumb/' + truck.twitname + '.jpg', alt= truck.name + ' Menu', width='30')
+                            img(src='/images/trucks/thumb/' + truck.twitname + '.jpg', alt= truck.name + ' Menu', width='30', height='30')
