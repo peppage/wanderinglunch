@@ -43,12 +43,9 @@ block content
     - }
 
 block scripts
-    script(type='text/javascript'
-         , src='/javascripts/jquery.tooltipster.js')
-    script(type='text/javascript'
-         , src='/javascripts/jquery.magnific-popup.js')
+    script(src='/javascripts/site-combined.js')
 
-    script(type='text/javascript').
+    script.
         $(document).ready(function() {
             $('.tooltip').tooltipster();
             $('.image-link').magnificPopup({type:'image'});

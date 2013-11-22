@@ -14,14 +14,14 @@ var lessMiddleware = require('less-middleware');
 
 var app = express();
 
-var cacheTime = 86400000;
+var cacheTime = 2592000000; //30 days
 
 // all environments
 app.set('port', process.env.PORT || 3001);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.use(express.compress());
-app.use(express.favicon(path.join(__dirname, "public/images/favicon.ico")));
+app.use(express.favicon(path.join(__dirname, 'public/images/favicon.ico')));
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
