@@ -1,114 +1,150 @@
-var mongoose = require('mongoose');
 var moment = require('moment');
+var pg = require('pg');
+var conString = 'postgres://localhost/foodtruck';
 
 exports.allTrucks = function allTrucks(callback) {
-    var Truck = mongoose.model('Truck');
-    var query = Truck.find({});
-    query.sort('name');
-    query.exec(function(err, trucks) {
+    pg.connect(conString, function(err, client, done) {
         if(err) {
             console.log(err);
-        } else {
-            callback("", trucks);
         }
+        client.query('SELECT * FROM trucks ORDER BY name', function(err, result) {
+            done();
+            if(err) {
+                console.log(err);
+            }
+            callback("", result.rows);
+        });
     });
 };
 
 exports.getRegion = function getRegion(region, callback) {
-    var Truck = mongoose.model('Truck');
-    Truck.find({'region' : region}, function(err, trucks) {
+    pg.connect(conString, function(err, client, done) {
         if(err) {
             console.log(err);
-        } else {
-            callback("", trucks);
         }
+        client.query('SELECT * FROM trucks WHERE region = $1', [region], function(err, result) {
+            done();
+            if(err) {
+                console.log(err);
+            }
+            callback("", result.rows);
+        });
     });
 };
 
 exports.getTruck = function getTruck(twitname, callback) {
-    var Truck = mongoose.model('Truck');
-    Truck.find({'twitname': twitname}, function(err, trucks) {
+    pg.connect(conString, function(err, client, done) {
         if(err) {
             console.log(err);
-        } else {
-            callback("", trucks);
         }
+        client.query({name: "getTruck",
+                      text: "SELECT * FROM trucks WHERE twitname = $1",
+                      values:[twitname]}, function(err, result) {
+            done();
+            if(err) {
+                console.log(err);
+            }
+            callback("", result.rows);
+        });
     });
 };
 
 exports.upTrucks = function upTrucks(callback) {
-    var Truck = mongoose.model('Truck');
-    var query = Truck.find({'region' : 'up', 'lastupdate':{$gt : moment().subtract('hours', 8).unix()}});
-    query.sort('street');
-    query.exec(function(err, upTrucks) {
+    pg.connect(conString, function(err, client, done) {
         if(err) {
             console.log(err);
-        } else {
-            callback("", upTrucks);
         }
+        client.query({name: 'getTimedRegion',
+                      text: 'SELECT * FROM trucks WHERE region = $1 AND lastupdate > $2',
+                      values: ['up', moment().subtract('hours', 8).unix()]}, function(err, result) {
+            done();
+            if(err) {
+                console.log(err);
+            }
+            callback("", result.rows);
+        });
     });
 };
 
 exports.midTrucks = function midTrucks(callback) {
-    var Truck = mongoose.model('Truck');
-    var query = Truck.find({'region' : 'mid', 'lastupdate':{$gt : moment().subtract('hours', 8).unix()}});
-    query.sort('street');
-    query.exec(function(err, midTrucks) {
+    pg.connect(conString, function(err, client, done) {
         if(err) {
             console.log(err);
-        } else {
-            callback("", midTrucks);
         }
+        client.query({name: 'getTimedRegion',
+                      text: 'SELECT * FROM trucks WHERE region = $1 AND lastupdate > $2',
+                      values: ['mid', moment().subtract('hours', 8).unix()]}, function(err, result) {
+            done();
+            if(err) {
+                console.log(err);
+            }
+            callback("", result.rows);
+        });
     });
 };
 
 exports.downTrucks = function downTrucks(callback) {
-    var Truck = mongoose.model('Truck');
-    var query = Truck.find({'region' : 'none', 'lastupdate':{$gt : moment().subtract('hours', 8).unix()}});
-    query.sort('street');
-    query.exec(function(err, downTrucks) {
+    pg.connect(conString, function(err, client, done) {
         if(err) {
             console.log(err);
-        } else {
-            callback("", downTrucks);
         }
+        client.query({name: 'getTimedRegion',
+                      text: 'SELECT * FROM trucks WHERE region = $1 AND lastupdate > $2',
+                      values: ['none', moment().subtract('hours', 8).unix()]}, function(err, result) {
+            done();
+            if(err) {
+                console.log(err);
+            }
+            callback("", result.rows);
+        });
     });
 };
 
 exports.bkTrucks = function bkTrucks(callback) {
-    var Truck = mongoose.model('Truck');
-    var query = Truck.find({'region' : 'bkl', 'lastupdate':{$gt : moment().subtract('hours', 8).unix()}});
-    query.sort('street');
-    query.exec(function(err, bkTrucks) {
+    pg.connect(conString, function(err, client, done) {
         if(err) {
             console.log(err);
-        } else {
-            callback("", bkTrucks);
         }
+        client.query({name: 'getTimedRegion',
+                      text: 'SELECT * FROM trucks WHERE region = $1 AND lastupdate > $2',
+                      values: ['bkl', moment().subtract('hours', 8).unix()]}, function(err, result) {
+            done();
+            if(err) {
+                console.log(err);
+            }
+            callback("", result.rows);
+        });
     });
 };
 
 exports.debug = function debug(callback) {
-    var Truck = mongoose.model('Truck');
-    var query = Truck.find({'lastupdate': {$lt: moment().subtract('days', 1).unix()}, 'lastTweet' : {$gt : moment().startOf('day').unix() }});
-    query.sort('name');
-    query.exec(function(err, debug) {
+    pg.connect(conString, function(err, client, done) {
         if(err) {
             console.log(err);
-        } else {
-            callback("", debug);
         }
+        client.query("SELECT * FROM trucks WHERE lastupdate < " +
+                    moment().subtract('days', 1).unix() + " AND lasttweet > " + moment().startOf('day').unix() + ";", function(err, result) {
+            done();
+            if(err) {
+                console.log(err);
+            }
+            callback("", result.rows);
+        });
     });
 };
 
 exports.count = function count(callback) {
-    var Truck = mongoose.model('Truck');
-    var query = Truck.count();
-    query.exec(function(err, q) {
+    pg.connect(conString, function(err, client, done) {
         if(err) {
             console.log(err);
-        } else {
-            callback("", q);
         }
+        client.query('SELECT * FROM trucks', function(err, result) {
+            done();
+            if(err) {
+                console.log(err);
+            }
+            console.log(result);
+            callback("", result.rowCount);
+        });
     });
 };

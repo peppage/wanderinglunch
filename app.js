@@ -8,7 +8,6 @@ var statics = require('./routes/statics');
 var stats = require('./routes/stats');
 var http = require('http');
 var path = require('path');
-var db = require('./model/db');
 var moment = require('moment');
 var lessMiddleware = require('less-middleware');
 
