@@ -55,7 +55,7 @@ exports.upTrucks = function upTrucks(callback) {
             console.log(err);
         }
         client.query({name: 'getTimedRegion',
-                      text: 'SELECT * FROM trucks WHERE region = $1 AND lastupdate > $2',
+                      text: 'SELECT * FROM trucks WHERE region = $1 AND lastupdate > $2 ORDER BY street',
                       values: ['up', moment().subtract('hours', 8).unix()]}, function(err, result) {
             done();
             if(err) {
@@ -72,7 +72,7 @@ exports.midTrucks = function midTrucks(callback) {
             console.log(err);
         }
         client.query({name: 'getTimedRegion',
-                      text: 'SELECT * FROM trucks WHERE region = $1 AND lastupdate > $2',
+                      text: 'SELECT * FROM trucks WHERE region = $1 AND lastupdate > $2 ORDER BY street',
                       values: ['mid', moment().subtract('hours', 8).unix()]}, function(err, result) {
             done();
             if(err) {
@@ -89,7 +89,7 @@ exports.downTrucks = function downTrucks(callback) {
             console.log(err);
         }
         client.query({name: 'getTimedRegion',
-                      text: 'SELECT * FROM trucks WHERE region = $1 AND lastupdate > $2',
+                      text: 'SELECT * FROM trucks WHERE region = $1 AND lastupdate > $2 ORDER BY street',
                       values: ['none', moment().subtract('hours', 8).unix()]}, function(err, result) {
             done();
             if(err) {
@@ -106,7 +106,7 @@ exports.bkTrucks = function bkTrucks(callback) {
             console.log(err);
         }
         client.query({name: 'getTimedRegion',
-                      text: 'SELECT * FROM trucks WHERE region = $1 AND lastupdate > $2',
+                      text: 'SELECT * FROM trucks WHERE region = $1 AND lastupdate > $2 ORDER BY street',
                       values: ['bkl', moment().subtract('hours', 8).unix()]}, function(err, result) {
             done();
             if(err) {
