@@ -27,6 +27,11 @@ app.use(express.methodOverride());
 app.use(app.router);
 app.enable('trust proxy');
 app.disable('view cache');
+app.use(express.static(path.join(__dirname, 'public'), {maxAge: cacheTime}));
+app.use(lessMiddleware({
+        src: __dirname + '/public',
+        compress: true
+    }));
 
 // development only
 if ('development' == app.get('env')) {
@@ -64,13 +69,4 @@ app.locals({
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
-});
-
-app.configure(function () {
-    app.use(lessMiddleware({
-        src: __dirname + '/public',
-        compress: true
-    }));
-
-    app.use(express.static(path.join(__dirname, 'public'), {maxAge: cacheTime}));
 });
