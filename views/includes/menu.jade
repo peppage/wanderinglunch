@@ -3,7 +3,7 @@ nav.cl-effect-2
     -each val, key in items
         -if (key == '/')
             a(href='/')
-                img#logo(src='/images/logo.png', alt='Wandiner Lunch Logo')
+                img#logo(src='/images/logo.png', alt='Wandering Lunch Logo')
         -else if (id == key)
             a(href='/#{key}')
                 span.selected(data-hover='#{val}') #{val}    
