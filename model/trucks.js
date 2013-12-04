@@ -66,6 +66,23 @@ exports.getTweets = function getTweets(twitname, callback) {
     });
 };
 
+exports.getImages = function getImages(twitname, callback) {
+    pg.connect(conString, function(err, client, done) {
+        if(err) {
+            console.log(err);
+        }
+        client.query({name: "getImages",
+                      text: "SELECT * FROM images WHERE twitname = $1 AND visibility='public'",
+                      values:[twitname]}, function(err, result) {
+            done();
+            if(err) {
+                console.log(err);
+            }
+            callback('', result.rows);
+        });
+    });
+};
+
 exports.upTrucks = function upTrucks(callback) {
     pg.connect(conString, function(err, client, done) {
         if(err) {

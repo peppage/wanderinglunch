@@ -11,18 +11,12 @@ block content
     .pure-g-r.content
         .pure-u-1-2
             img(src='/images/trucks/' + t.twitname + '.jpg' alt=t.name + ' menu')
-            if t.pics > 0
+            if images.length > 0
+                img(src='https://playfoursquare.s3.amazonaws.com/press/logo/poweredByFoursquare_gray.png', width='300')
                 .popup-gallery
-                    - for (var i = 0; i < t.pics; ++i) {
-                        a.image(href="/images/trucks/"+t.id +"/"+t.id+ i +".jpg")
-                            img(src="/images/trucks/"+t.id +"/"+t.id+ i +"_t.jpg")
-                    - }
-            h2 Recent Tweets
-            each tweet in tweets
-                .pure-u-1.tweet-name='@'+t.twitname
-                .pure-u-1.tweet-contents!=tweet.contents
-                .pure-u-1
-                    a.tweet-time(href='http://twitter.com/' + tweet.twitname + '/status/' + tweet.id, target='_blank')=prettyTime(tweet.time)
+                    each image in images
+                        a(href=image['prefix'] + 'width960' + image['suffix']) 
+                            img(src=image['prefix'] + 'width100' + image['suffix'])
         .pure-u-1-2
             .right-side
                 h1.truck-title=t.name
@@ -38,21 +32,24 @@ block content
                     .pure-u-1-2
                         strong Last Updated
                     .pure-u-1-2=prettyTime(t.lastupdate)
-                    .pure-u-1-2
-                        strong Website
-                    .pure-u-1-2
-                        a(href=t.weburl, target='_blank')=t.weburl
-                    .pure-u-1-2
-                        strong Twitter
-                    .pure-u-1-2
-                        a(href='http://twitter.com/' + t.twitname, target='_blank')='http://twitter.com/' + t.twitname
+                h2 Links
+                .pure-g-r
+                    .pure-u-1
+                        a(href=t.weburl, target='_blank') Website
+                    .pure-u-1
+                        a(href='http://twitter.com/' + t.twitname, target='_blank') Twitter
+                    .pure-u-1
+                        a(href='http://foursquare.com/v/' + t.foursquare + '?ref=P1JDYDE13QQDC11VUSA4LV3VV25OTRPHV1WAV5WP3VCE0QUP', target='_blank') Foursquare
+                h2 Recent Tweets
+                each tweet in tweets
+                    .pure-u-1.tweet-name='@'+t.twitname
+                    .pure-u-1.tweet-contents!=tweet.contents
+                    .pure-u-1
+                        a.tweet-time(href='http://twitter.com/' + tweet.twitname + '/status/' + tweet.id, target='_blank')=prettyTime(tweet.time)
 
-
-
-
-            
 block scripts
-    script(src='/javascripts/modernizr.custom.js')    script(src='/javascripts/jquery.magnific-popup.js')
+    script(src='/javascripts/modernizr.custom.js')
+    script(src='/javascripts/jquery.magnific-popup.js')
     script.
         $(document).ready(function() {
             $('.popup-gallery').magnificPopup({
@@ -68,7 +65,7 @@ block scripts
                 image: {
                     tError: '<a href="%url%">The image #%curr%</a> could not be loaded.',
                     titleSrc: function(item) {
-                        return item.el.attr('title') + '<small>by Marsel Van Oosten</small>';
+                        return '<small>Provided by Foursquare</small>';
                     }
                 }
             });
