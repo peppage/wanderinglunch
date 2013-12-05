@@ -71,8 +71,9 @@ http.createServer(app).listen(app.get('port'), function(){
 app.configure(function () {
     app.use(lessMiddleware({
         src: __dirname + '/public',
-        compress: false,
-        force: true,
+        compress: true,
+        force: false,
+        once: true,
         optimization: 2
     }));
     
