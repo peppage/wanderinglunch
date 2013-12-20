@@ -26,8 +26,6 @@ app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(app.router);
 app.enable('trust proxy');
-app.disable('view cache');
-
 
 // development only
 if ('development' == app.get('env')) {

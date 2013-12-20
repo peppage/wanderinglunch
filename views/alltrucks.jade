@@ -14,7 +14,11 @@ block content
 
 block scripts
     script.
-        $(document).ready(function() {
-            $('.tooltip').tooltipster();
-            $('.image-link').magnificPopup({type:'image'});
-        });
+        function appInit() {
+            $(document).ready(function() {
+                if( $('.tooltip').length > 0 ) {
+                    $('.tooltip').tooltipster();
+                    $('.image-link').magnificPopup({type:'image'});
+                }
+            });
+        }
