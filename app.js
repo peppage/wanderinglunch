@@ -9,6 +9,8 @@ var stats = require('./routes/stats');
 var http = require('http');
 var path = require('path');
 var moment = require('moment');
+var ect = require('ect');
+var ectRenderer = ect({ watch: true, gzip: true, root: __dirname + '/views' });
 var lessMiddleware = require('less-middleware');
 
 var app = express();
@@ -18,7 +20,8 @@ var cacheTime = 2592000000; //30 days
 // all environments
 app.set('port', process.env.PORT || 3001);
 app.set('views', __dirname + '/views');
-app.set('view engine', 'jade');
+app.engine('.ect', ectRenderer.render);
+app.set('view engine', 'ect');
 app.use(express.compress());
 app.use(express.favicon(path.join(__dirname, 'public/images/favicon.ico')));
 app.use(express.logger('dev'));
@@ -40,26 +43,6 @@ app.get('/about', statics.about);
 app.get('/support', statics.support);
 app.get('/debug', debug.show);
 app.get('/stats', stats.show);
-
-app.locals({
-    prettyTime: function(lastUpdate) {
-        return moment.unix(lastUpdate).fromNow();
-        /*var now = (new Date().getTime()) / 1000;
-        var timePast = Math.round((now - lastUpdate) / 60);
-
-        if(timePast < 60) {
-            timePast = timePast.toString() + " m";
-        } else if(timePast > 60 && timePast < 604800) {
-            timePast = Math.round(timePast / 60).toString() + " h";
-        } else {
-            timePast = Math.round(timePast / 60 ).toString() + " w";
-        }
-        return timePast;*/
-        //return timePast % 86400 + "d";
-        //return new Date().valueOf();
-
-    }
-});
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

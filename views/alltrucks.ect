@@ -1,0 +1,19 @@
+<% extend 'includes/base.ect' %>
+
+<% block 'css' : %>
+    <link href="/stylesheets/index.css" rel="stylesheet" />
+    <meta name="description" content="Complete list of food trucks around New York City" />
+<% end %>
+
+<h1 class="centerText">All Trucks</h1>
+
+<% include 'includes/truckTable.ect', {trucks : @trucks} %>
+<br>
+<% block 'scripts' : %>
+    $(document).ready(function() {
+        if( $('.tooltip').length > 0 ) {
+            $('.tooltip').tooltipster();
+            $('.image-link').magnificPopup({type:'image'});
+        }
+    });
+<% end %>

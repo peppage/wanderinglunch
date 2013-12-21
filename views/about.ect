@@ -1,0 +1,27 @@
+<% extend 'includes/base.ect' %>
+<% block 'css' : %>
+    <link href="http://fonts.googleapis.com/css?family=Reenie+Beanie" rel="stylesheet" />
+    <link href="/stylesheets/site.css" rel="stylesheet" />
+<% end %>
+<div class="content">
+    <h1>About the Site</h1>
+
+    <p class="about">
+        The site gets data from twitter and displays it in an easy to read format. I would also suggest double checking the information from twitter by looking at the individual truck page. I'm constantly trying to improve and feedback is welcome on twitter <a href="http://twitter.com/peppage">@peppage</a>.
+    </p>
+
+    <h1>About Me</h1>
+    <img src="/images/me.jpeg" alt="me" class="me"/>
+    <p class="about">
+        Hi! My name is <em>Michael Peppler</em>. I'm a <em>web developer</em> in <em>New York City, New York</em> just looking to solve his <em>midday hunger</em> with a <em>great meal</em>. I enjoy <em>brewing coffee, brewing beer, and eating (of course!).</em>
+    </p>
+
+    <h1>Nerdy Part</h1>
+    <p class="about code">
+        var express = require('express'); <br>
+        var pg = require('pg'); <br>
+        var moment = require('moment');<br>
+        var ect = require('ect');
+        var less = require('less-middleware');
+    </p>
+</div>

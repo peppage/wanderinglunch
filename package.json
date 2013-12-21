@@ -11,6 +11,7 @@
     "pg": "2.8.x",
     "async": "0.2.x",
     "moment": "2.3.x",
-    "less-middleware": "0.1.x"
+    "less-middleware": "0.1.x",
+    "ect": "~0.5.5"
   }
 }

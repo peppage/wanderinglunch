@@ -1,0 +1,54 @@
+<% extend 'includes/base.ect' %>
+
+<% block 'css' : %>
+    <link href="/stylesheets/index.css" rel="stylesheet" />
+    <meta name="description" content="Track and find food trucks around New York City. Updated everyday from twitter" />
+<% end %>
+
+<div class="sub-nav">Quick Jump: 
+    <a href='#uptown'>Above 34th</a> &bull; 
+    <a href='#midtown'>10th to 33rd</a> &bull; 
+    <a href='#downtown'>Downtown</a> &bull; 
+    <a href='#brooklyn'>Brooklyn</a>
+</div>
+
+<% if @upTrucks.length != 0 : %>
+    <a id="uptown" style="visibility:hidden;" ></a>
+    <h1 class="centerText">Above 34th</h1>
+    <% include 'includes/truckTable.ect', {trucks : @upTrucks} %>
+<% end %>
+
+<% if @midTrucks.length != 0 : %>
+    <a id="midtown" style="visibility:hidden;" ></a>
+    <h1 class="centerText">10th to 33rd</h1>
+    <% include 'includes/truckTable.ect', {trucks : @midTrucks} %>
+<% end %>
+
+<% if @downTrucks.length != 0 : %>
+    <a id="downtown" style="visibility:hidden;" ></a>
+    <h1 class="centerText">Downtown</h1>
+    <% include 'includes/truckTable.ect', {trucks : @downTrucks} %>
+<% end %>
+
+<% if @bkTrucks.length != 0 : %>
+    <a id="brooklyn" style="visibility:hidden;" ></a>
+    <h1 class="centerText">Brooklyn</h1>
+    <% include 'includes/truckTable.ect', {trucks : @bkTrucks} %>
+<% end %>
+
+<% if @upTrucks.length == 0 && @midTrucks.length == 0 && @downTrucks.length == 0 && @bkTrucks.length == 0 : %>
+    <h1 class="centerText">Your hunger cannot be satisfied, no trucks are tweeting</h1>
+    <p class="centerText">If it's late bookmark the site and come back around lunchtime! <br></p>
+    <p class="centerText">There will be a list of trucks here, <a target="_blank" href="https://twitter.com/intent/tweet?text=Wandering Lunch&url=http://wanderinglunch.com">tweet</a> at yourself so you don't forget.<br></p>
+    <p class="centerText">Check out <a href="/alltrucks">a list of all the trucks</a> on the site while you wait.</p>
+<% end %>
+
+<br>
+<% block 'scripts' : %>
+    $(document).ready(function() {
+        if( $('.tooltip').length > 0 ) {
+            $('.tooltip').tooltipster();
+            $('.image-link').magnificPopup({type:'image'});
+        }
+    });
+<% end %>
