@@ -3,8 +3,10 @@
 
 body {
     font-family: sans-serif;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
 }
-
 .truck {
     color: @linkColor;
 }
@@ -30,13 +32,34 @@ body {
     color: @linkColor;
 }
 
+footer {
+    border-top: 2px solid @linkColor;
+    padding: 1.5rem;
+    background: #414141;
+    color: white;
+    font-size: .85em;
+    text-align: right;
+    a:link, a:visited, a:active {
+       color: white;
+       padding: 10px;
+    }
+    a:hover {
+        color: @linkColor;
+    }
+}
+
 .content {
     margin-left: auto;
     margin-right: auto;
-    max-width: 800px;
     a:link, a:visited, a:hover, a:active {
        color: @linkColor
    }
+   flex: 1;
+   padding-bottom: 50px;
+}
+
+.width960 {
+    max-width: 960px;
 }
 
 .me {
@@ -92,7 +115,7 @@ nav {
     a {
         position: relative;
         display: inline-block;
-        margin: 15px 25px;
+        margin: 15px 15px;
         outline: none;
         color: #fff;
         text-decoration: none;
@@ -100,11 +123,18 @@ nav {
         letter-spacing: 1px;
         font-weight: 400;
         text-shadow: 0 0 1px rgba(255,255,255,0.3);
-        font-size: 1.35em;
+        font-size: 1.25em;
 
-        @media screen and (max-width: 1033px) {
+        @media screen and (max-width: 726px) {
             width: 100%;
             margin: 0px;
+        }
+        @media screen and (max-width: 888px) {
+            img {
+                max-width: 80%;
+            }
+            margin: 5px;
+            font-size: 1.00em;
         }
 
         
@@ -159,7 +189,7 @@ nav {
             -moz-transform: rotateX(90deg) translateY(-22px);
             transform: rotateX(90deg) translateY(-22px);
 
-            @media screen and (max-width: 1033px) {
+            @media screen and (max-width: 768px) {
                 transform: none;
                 -webkit-transform: none;
                 -moz-transform: none;

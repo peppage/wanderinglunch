@@ -177,7 +177,6 @@ exports.count = function count(callback) {
             if(err) {
                 console.log(err);
             }
-            console.log(result);
             callback("", result.rowCount);
         });
     });
