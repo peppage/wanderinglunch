@@ -8,7 +8,7 @@
 <h1 class="centerText">All Trucks</h1>
 
 <% include 'includes/truckTable.ect', {trucks : @trucks} %>
-<br>
+
 <% block 'scripts' : %>
     $(document).ready(function() {
         if( $('.tooltip').length > 0 ) {
