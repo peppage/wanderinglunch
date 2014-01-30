@@ -60,7 +60,7 @@
             <h2>Recent Tweets</h2>
             <% for tweet in @tweets : %>
                 <div class="pure-u-1 tweet-name">@<%- t.twitname %></div>
-                <div class="pure-u-1 tweet-contents"><%= tweet.contents %></div>
+                <div class="pure-u-1 tweet-contents"><%- tweet.contents %></div>
                 <div class="pure-u-1">
                     <a class="tweet-time" href="http://twitter.com/<%- tweet.twitname %>/status/<%- tweet.id %>" target="_blank"> <%- moment.unix(tweet.time).fromNow() %> </a>
                 </div>
