@@ -21,6 +21,7 @@
                         if (!window.jQuery) {
                             Modernizr.load('/javascripts/jquery-1.10.2.min.js');
                         }
+                        Modernizr.addTest('flexboxtweener', Modernizr.testAllProps('flexAlign', 'end', true));
                     }
                 },
                 {

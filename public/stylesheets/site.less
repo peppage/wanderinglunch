@@ -3,10 +3,22 @@
 
 body {
     font-family: sans-serif;
-    display: flex;
+    display: -webkit-box;   /* OLD: Safari,  iOS, Android browser, older WebKit browsers.  */
+    display: -moz-box;      /* OLD: Firefox (buggy) */ 
+    display: -ms-flexbox;   /* MID: IE 10 */
+    display: -webkit-flex;  /* NEW, Chrome 21–28, Safari 6.1+ */
+    display: flex;          /* NEW: IE11, Chrome 29+, Opera 12.1+, Firefox 22+ */
     min-height: 100vh;
+    -webkit-box-orient: vertical;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
     flex-direction: column;
 }
+
+.flexboxtweener, .flexboxtweener>body {
+    height: 100%;
+}
+
 .truck {
     color: @linkColor;
 }
@@ -52,7 +64,10 @@ footer {
     a:link, a:visited, a:hover, a:active {
        color: @linkColor
    }
+   -webkit-box-flex: 1;
+   -ms-flex: 1 0 auto;
    flex: 1;
+   -webkit-flex: 1;
    padding-bottom: 50px;
 }
 
