@@ -1,0 +1,26 @@
+<% extend 'includes/base.ect' %>
+
+<% block 'css' : %>
+    <link href="/stylesheets/index.css" rel="stylesheet" />
+<% end %>
+
+<h1 class="centerText">Tweets but not updated</h1>
+
+<% include 'includes/truckTable.ect', {trucks : @trucks} %>
+
+
+<div style="padding-top: 15px">
+    <h1 class="centerText">Invalid images</h1>
+    <% for img in @images : %>
+        <%- img.twitname %> : <%- img.id %> <br />
+    <% end %>
+</div>
+
+<% block 'scripts' : %>
+    $(document).ready(function() {
+        if( $('.tooltip').length > 0 ) {
+            $('.tooltip').tooltipster();
+            $('.image-link').magnificPopup({type:'image'});
+        }
+    });
+<% end %>

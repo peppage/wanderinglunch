@@ -182,3 +182,18 @@ exports.count = function count(callback) {
         });
     });
 };
+
+exports.invalidImages = function invalidImages(callback) {
+    pg.connect(conString, function(err, client, done) {
+        if(err) {
+            console.log(err);
+        }
+        client.query('SELECT twitname, id FROM images WHERE visibility != $1', ['public'], function (err, result) {
+            done();
+            if(err) {
+                console.log(err);
+            }
+            callback("", result.rows);
+        });
+    });
+};
