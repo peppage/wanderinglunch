@@ -2,6 +2,8 @@
 - manual update page
 - error log page, keep track of bad information
 - admin area
+- Clean up iamges table
+    - has uneeded columns
 - set your location and have it alert you when trucks are close by
 	- detect location from phone
 - get foursquare checked in data
