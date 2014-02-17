@@ -187,7 +187,10 @@ exports.invalidImages = function invalidImages(callback) {
         if(err) {
             console.log(err);
         }
-        client.query('SELECT twitname, id FROM images WHERE visibility != $1', ['public'], function (err, result) {
+        //jshint multistr: true
+        client.query('select distinct on (images.id) images.twitname, images.id, trucks.id as \
+            truckid from images left join trucks on (images.twitname = trucks.twitname) where \
+            visibility != $1;', ['public'], function (err, result) {
             done();
             if(err) {
                 console.log(err);
