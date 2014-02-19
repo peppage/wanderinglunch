@@ -6,10 +6,10 @@
 <% end %>
 
 <div class="sub-nav">Quick Jump: 
-    <a href='#uptown'>Above 34th</a> &bull; 
-    <a href='#midtown'>10th to 33rd</a> &bull; 
-    <a href='#downtown'>Downtown</a> &bull; 
-    <a href='#brooklyn'>Brooklyn</a>
+    <a id="up-link" href='#uptown'>Above 34th</a> &bull; 
+    <a id="mid-link" href='#midtown'>10th to 33rd</a> &bull; 
+    <a id="down-link" href='#downtown'>Downtown</a> &bull; 
+    <a id="bk-link" href='#brooklyn'>Brooklyn</a>
 </div>
 
 <% if @upTrucks.length != 0 : %>
@@ -49,5 +49,19 @@
             $('.tooltip').tooltipster();
             $('.image-link').magnificPopup({type:'image'});
         }
+        
+        $('#up-link').click(function () {
+            $('html,body').animate({scrollTop: $('#uptown').offset().top}, 'slow');
+        });
+        $('#mid-link').click(function () {
+            $('html,body').animate({scrollTop: $('#midtown').offset().top}, 'slow');
+        });
+        $('#down-link').click(function () {
+            $('html,body').animate({scrollTop: $('#downtown').offset().top}, 'slow');
+        });
+        $('#bk-link').click(function () {
+            $('html,body').animate({scrollTop: $('#brooklyn').offset().top}, 'slow');
+        });
+        
     });
 <% end %>
