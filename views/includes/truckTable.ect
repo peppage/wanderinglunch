@@ -11,10 +11,10 @@
         <% for truck in @trucks : %>
             <tr>
                 <td>
-                    <a class="truck" href="/truck/<%-truck.id%>"><%-truck.name %>
+                    <a class="truck" href="/truck/<%-truck.id%>"><%-truck.name %></a>
                 </td>
                 <td>
-                    <span class="tooltip" title="<%-truck.tweet%>"><%-truck.location %>
+                    <span class="tooltip" title="<%=truck.tweet%>"><%=truck.location %></span>
                 </td>
                 <td>
                     <%- moment.unix(truck.lastupdate).fromNow() %>
