@@ -10,17 +10,25 @@
   <div class="pure-g-r content">
     <div class="pure-u-1-2">
       <div class="left-side">
-        <img src="/images/trucks/<%- t.twitname %>.jpg" alt="<%- t.name %> Menu" />
-        <% if @images.length > 0 : %>
-          <img src='https://playfoursquare.s3.amazonaws.com/press/logo/poweredByFoursquare_gray.png' width='300'>
-          <div class="popup-gallery">
-            <% for image in @images : %>
-              <a href="<%- image['prefix'] %>width960<%- image['suffix'] %>">
-                <img src="<%- image['prefix'] %>width100<%- image['suffix'] %>" />
-              </a>
-            <% end %>
-           </div>
-        <% end %>
+        <div class="popup-gallery">
+          <% if @menu : %>
+            <a href="<%- menu['prefix'] %>width960<%- menu['suffix'] %>">
+              <img src="<%- menu['prefix'] %>width600<%- menu['suffix'] %>" />
+            </a>
+          <% else : %>
+            <a href="/images/trucks/<%- t.twitname %>.jpg">
+              <img src="/images/trucks/<%- t.twitname %>.jpg" alt="<%- t.name %> Menu" />
+            </a>
+          <% end %>
+          <% if @images.length > 0 : %>
+            <img src='https://playfoursquare.s3.amazonaws.com/press/logo/poweredByFoursquare_gray.png' width='300'><br />
+              <% for image in @images : %>
+                <a href="<%- image['prefix'] %>width960<%- image['suffix'] %>">
+                  <img src="<%- image['prefix'] %>width100<%- image['suffix'] %>" />
+                </a>
+              <% end %>
+          <% end %>
+        </div>
       </div>
     </div>
     <div class="pure-u-1-2">

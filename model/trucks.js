@@ -72,7 +72,7 @@ exports.getImages = function getImages(twitname, callback) {
       console.log(err);
     }
     client.query({name: "getImages",
-            text: "SELECT * FROM images WHERE twitname = $1 AND visibility='public'",
+            text: "SELECT * FROM images WHERE twitname = $1 AND visibility='public' ORDER BY menu",
             values:[twitname]}, function(err, result) {
       done();
       if(err) {
