@@ -1,67 +1,67 @@
 <% extend 'includes/base.ect' %>
 
 <% block 'css' : %>
-    <link href="/stylesheets/index.css" rel="stylesheet" />
-    <meta name="description" content="Track and find food trucks around New York City. Updated everyday from twitter" />
+  <link href="/stylesheets/index.css" rel="stylesheet" />
+  <meta name="description" content="Track and find food trucks around New York City. Updated everyday from twitter" />
 <% end %>
 
 <div class="sub-nav">Quick Jump: 
-    <a id="up-link" href='#uptown'>Above 34th</a> &bull; 
-    <a id="mid-link" href='#midtown'>10th to 33rd</a> &bull; 
-    <a id="down-link" href='#downtown'>Downtown</a> &bull; 
-    <a id="bk-link" href='#brooklyn'>Brooklyn</a>
+  <a id="up-link" href='#uptown'>Above 34th</a> &bull; 
+  <a id="mid-link" href='#midtown'>10th to 33rd</a> &bull; 
+  <a id="down-link" href='#downtown'>Downtown</a> &bull; 
+  <a id="bk-link" href='#brooklyn'>Brooklyn</a>
 </div>
 
 <% if @upTrucks.length != 0 : %>
-    <a id="uptown" style="visibility:hidden;" ></a>
-    <h1 class="centerText">Above 34th</h1>
-    <% include 'includes/truckTable.ect', {trucks : @upTrucks} %>
+  <a id="uptown" style="visibility:hidden;" ></a>
+  <h1 class="centerText">Above 34th</h1>
+  <% include 'includes/truckTable.ect', {trucks : @upTrucks} %>
 <% end %>
 
 <% if @midTrucks.length != 0 : %>
-    <a id="midtown" style="visibility:hidden;" ></a>
-    <h1 class="centerText">10th to 33rd</h1>
-    <% include 'includes/truckTable.ect', {trucks : @midTrucks} %>
+  <a id="midtown" style="visibility:hidden;" ></a>
+  <h1 class="centerText">10th to 33rd</h1>
+  <% include 'includes/truckTable.ect', {trucks : @midTrucks} %>
 <% end %>
 
 <% if @downTrucks.length != 0 : %>
-    <a id="downtown" style="visibility:hidden;" ></a>
-    <h1 class="centerText">Downtown</h1>
-    <% include 'includes/truckTable.ect', {trucks : @downTrucks} %>
+  <a id="downtown" style="visibility:hidden;" ></a>
+  <h1 class="centerText">Downtown</h1>
+  <% include 'includes/truckTable.ect', {trucks : @downTrucks} %>
 <% end %>
 
 <% if @bkTrucks.length != 0 : %>
-    <a id="brooklyn" style="visibility:hidden;" ></a>
-    <h1 class="centerText">Brooklyn</h1>
-    <% include 'includes/truckTable.ect', {trucks : @bkTrucks} %>
+  <a id="brooklyn" style="visibility:hidden;" ></a>
+  <h1 class="centerText">Brooklyn</h1>
+  <% include 'includes/truckTable.ect', {trucks : @bkTrucks} %>
 <% end %>
 
 <% if @upTrucks.length == 0 && @midTrucks.length == 0 && @downTrucks.length == 0 && @bkTrucks.length == 0 : %>
-    <h1 class="centerText">Your hunger cannot be satisfied, no trucks are tweeting</h1>
-    <p class="centerText">If it's late bookmark the site and come back around lunchtime! <br></p>
-    <p class="centerText">There will be a list of trucks here, <a target="_blank" href="https://twitter.com/intent/tweet?text=Wandering Lunch&url=http://wanderinglunch.com">tweet</a> at yourself so you don't forget.<br></p>
-    <p class="centerText">Check out <a href="/alltrucks">a list of all the trucks</a> on the site while you wait.</p>
+  <h1 class="centerText">Your hunger cannot be satisfied, no trucks are tweeting</h1>
+  <p class="centerText">If it's late bookmark the site and come back around lunchtime! <br></p>
+  <p class="centerText">There will be a list of trucks here, <a target="_blank" href="https://twitter.com/intent/tweet?text=Wandering Lunch&url=http://wanderinglunch.com">tweet</a> at yourself so you don't forget.<br></p>
+  <p class="centerText">Check out <a href="/alltrucks">a list of all the trucks</a> on the site while you wait.</p>
 <% end %>
 
 <% block 'scripts' : %>
-    $(document).ready(function() {
-        if( $('.tooltip').length > 0 ) {
-            $('.tooltip').tooltipster();
-            $('.image-link').magnificPopup({type:'image'});
-        }
-        
-        $('#up-link').click(function () {
-            $('html,body').animate({scrollTop: $('#uptown').offset().top}, 'slow');
-        });
-        $('#mid-link').click(function () {
-            $('html,body').animate({scrollTop: $('#midtown').offset().top}, 'slow');
-        });
-        $('#down-link').click(function () {
-            $('html,body').animate({scrollTop: $('#downtown').offset().top}, 'slow');
-        });
-        $('#bk-link').click(function () {
-            $('html,body').animate({scrollTop: $('#brooklyn').offset().top}, 'slow');
-        });
-        
+  $(document).ready(function() {
+    if( $('.tooltip').length > 0 ) {
+      $('.tooltip').tooltipster();
+      $('.image-link').magnificPopup({type:'image'});
+    }
+    
+    $('#up-link').click(function () {
+      $('html,body').animate({scrollTop: $('#uptown').offset().top}, 'slow');
     });
+    $('#mid-link').click(function () {
+      $('html,body').animate({scrollTop: $('#midtown').offset().top}, 'slow');
+    });
+    $('#down-link').click(function () {
+      $('html,body').animate({scrollTop: $('#downtown').offset().top}, 'slow');
+    });
+    $('#bk-link').click(function () {
+      $('html,body').animate({scrollTop: $('#brooklyn').offset().top}, 'slow');
+    });
+    
+  });
 <% end %>

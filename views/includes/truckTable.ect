@@ -1,30 +1,30 @@
 <table class="large-only pure-table pure-table-striped">
-    <thead>
-        <tr>
-            <th style="width:22%;">Truck</th>
-            <th style="width:50%;">Location</th>
-            <th style="width:20%;">Time</th>
-            <th>Menu</th>
-        </tr>
-    </thead>
-    <tbody>
-        <% for truck in @trucks : %>
-            <tr>
-                <td>
-                    <a class="truck" href="/truck/<%-truck.id%>"><%-truck.name %></a>
-                </td>
-                <td>
-                    <span class="tooltip" title="<%=truck.tweet%>"><%=truck.location %></span>
-                </td>
-                <td>
-                    <%- moment.unix(truck.lastupdate).fromNow() %>
-                </td>
-                <td>
-                    <a class="image-link" href="/images/trucks/<%-truck.twitname%>.jpg">
-                        <img src="/images/trucks/thumb/<%-truck.twitname%>.jpg" alt="<%-truck.name %> Menu" />
-                    </a>
-                </td>
-            </tr>
-        <% end %>
-    </tbody>
+  <thead>
+    <tr>
+      <th style="width:22%;">Truck</th>
+      <th style="width:50%;">Location</th>
+      <th style="width:20%;">Time</th>
+      <th>Menu</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for truck in @trucks : %>
+      <tr>
+        <td>
+          <a class="truck" href="/truck/<%-truck.id%>"><%-truck.name %></a>
+        </td>
+        <td>
+          <span class="tooltip" title="<%=truck.tweet%>"><%=truck.location %></span>
+        </td>
+        <td>
+          <%- moment.unix(truck.lastupdate).fromNow() %>
+        </td>
+        <td>
+          <a class="image-link" href="/images/trucks/<%-truck.twitname%>.jpg">
+            <img src="/images/trucks/thumb/<%-truck.twitname%>.jpg" alt="<%-truck.name %> Menu" />
+          </a>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
 </table>
