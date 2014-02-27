@@ -7,7 +7,10 @@ exports.allTrucks = function allTrucks(callback) {
     if(err) {
       console.log(err);
     }
-    client.query('SELECT * FROM trucks ORDER BY name', function(err, result) {
+      //jshint multistr: true
+      client.query('SELECT id, name, twitname, weburl, tweet, street, location, retweeted, lastupdate, suffix \
+        FROM trucks LEFT JOIN (SELECT twitname as imgtwit, suffix FROM images WHERE menu AND visibility=$1) AS \
+        images ON (trucks.twitname = imgtwit) ORDER BY name;', ['public'], function( err, result) {
       done();
       if(err) {
         console.log(err);
@@ -89,8 +92,10 @@ exports.upTrucks = function upTrucks(callback) {
       console.log(err);
     }
     client.query({name: 'getTimedRegion',
-            text: 'SELECT * FROM trucks WHERE region = $1 AND lastupdate > $2 ORDER BY street',
-            values: ['up', moment().subtract('hours', 8).unix()]}, function(err, result) {
+            text: 'SELECT id, name, twitname, weburl, tweet, street, location, retweeted, lastupdate, suffix \
+                   FROM trucks LEFT JOIN (SELECT twitname as imgtwit, suffix FROM images WHERE menu AND visibility=$3) AS \
+                   images ON (trucks.twitname = imgtwit) WHERE region = $1 AND lastupdate > $2 ORDER BY street;',
+            values: ['up', moment().subtract('hours', 8).unix(), 'public']}, function(err, result) {
       done();
       if(err) {
         console.log(err);
@@ -106,8 +111,10 @@ exports.midTrucks = function midTrucks(callback) {
       console.log(err);
     }
     client.query({name: 'getTimedRegion',
-            text: 'SELECT * FROM trucks WHERE region = $1 AND lastupdate > $2 ORDER BY street',
-            values: ['mid', moment().subtract('hours', 8).unix()]}, function(err, result) {
+            text: 'SELECT id, name, twitname, weburl, tweet, street, location, retweeted, lastupdate, suffix \
+                   FROM trucks LEFT JOIN (SELECT twitname as imgtwit, suffix FROM images WHERE menu AND visibility=$3) AS \
+                   images ON (trucks.twitname = imgtwit) WHERE region = $1 AND lastupdate > $2 ORDER BY street;',
+            values: ['mid', moment().subtract('hours', 8).unix(), 'public']}, function(err, result) {
       done();
       if(err) {
         console.log(err);
@@ -123,8 +130,10 @@ exports.downTrucks = function downTrucks(callback) {
       console.log(err);
     }
     client.query({name: 'getTimedRegion',
-            text: 'SELECT * FROM trucks WHERE region = $1 AND lastupdate > $2 ORDER BY street',
-            values: ['none', moment().subtract('hours', 8).unix()]}, function(err, result) {
+            text: 'SELECT id, name, twitname, weburl, tweet, street, location, retweeted, lastupdate, suffix \
+                   FROM trucks LEFT JOIN (SELECT twitname as imgtwit, suffix FROM images WHERE menu AND visibility=$3) AS \
+                   images ON (trucks.twitname = imgtwit) WHERE region = $1 AND lastupdate > $2 ORDER BY street;',
+            values: ['none', moment().subtract('hours', 8).unix(), 'public']}, function(err, result) {
       done();
       if(err) {
         console.log(err);
@@ -140,8 +149,10 @@ exports.bkTrucks = function bkTrucks(callback) {
       console.log(err);
     }
     client.query({name: 'getTimedRegion',
-            text: 'SELECT * FROM trucks WHERE region = $1 AND lastupdate > $2 ORDER BY street',
-            values: ['bkl', moment().subtract('hours', 8).unix()]}, function(err, result) {
+            text: 'SELECT id, name, twitname, weburl, tweet, street, location, retweeted, lastupdate, suffix \
+                   FROM trucks LEFT JOIN (SELECT twitname as imgtwit, suffix FROM images WHERE menu AND visibility=$3) AS \
+                   images ON (trucks.twitname = imgtwit) WHERE region = $1 AND lastupdate > $2 ORDER BY street;',
+            values: ['bkl', moment().subtract('hours', 8).unix(), 'public']}, function(err, result) {
       done();
       if(err) {
         console.log(err);
