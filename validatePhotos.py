@@ -28,10 +28,9 @@ with conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as cur:
                     print image['id'] + " " + str(found)
                     if found:
                         saveCursor.execute(
-                            """UPDATE images SET prefix = (%(prefix)s), 
+                            """UPDATE images SET
                             suffix = (%(suffix)s), visibility = (%(visibility)s) WHERE id = (%(id)s);""",
-                            {'visibility': photo['visibility'], 'suffix' : photo['suffix'],
-                            'prefix' : photo['prefix'], 'id': image['id']})
+                            {'visibility': photo['visibility'], 'suffix' : photo['suffix'], 'id': image['id']})
                     else:
                         # Need to see if maybe it's in the next 200
                          saveCursor.execute(
