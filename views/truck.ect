@@ -57,15 +57,19 @@
       </div>
       <h2>Links</h2>
       <div class="pure-g-r">
-        <div class="pure-u-1">
-          <a href="<%- t.weburl %>" target="_blank">Website</a>
-        </div>
+        <% if t.weburl : %>
+          <div class="pure-u-1">
+            <a href="<%- t.weburl %>" target="_blank">Website</a>
+          </div>
+        <% end %>
         <div class="pure-u-1">
           <a href="http://twitter.com/<%- t.twitname %>" target="_blank">Twitter</a>
         </div>
-        <div class="pure-u-1">
-          <a href="http://foursquare.com/v/<%- t.foursquare %>?ref=P1JDYDE13QQDC11VUSA4LV3VV25OTRPHV1WAV5WP3VCE0QUP" target="_blank">Foursquare</a>
-        </div>
+        <% if t.foursquare : %>
+          <div class="pure-u-1">
+            <a href="http://foursquare.com/v/<%- t.foursquare %>?ref=P1JDYDE13QQDC11VUSA4LV3VV25OTRPHV1WAV5WP3VCE0QUP" target="_blank">Foursquare</a>
+          </div>
+        <% end %>
       </div>
       <h2>Recent Tweets</h2>
       <% for tweet in @tweets : %>
