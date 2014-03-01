@@ -1,9 +1,6 @@
 - Voting to confirm location
 - manual update page
 - error log page, keep track of bad information
-- admin area
-- Clean up iamges table
-    - has uneeded columns
 - set your location and have it alert you when trucks are close by
 	- detect location from phone
 - get foursquare checked in data
@@ -22,7 +19,7 @@
 - email alerts when food trucks are in the area
 - twitter
     - wanderinglunchnyc
-- Use a slow scroll to get to the sub-section to give context that you are still on the same page
+- Put 4sq logo on front page to say that info is being pulled in from 4sq
 
 https://dev.twitter.com/docs/image-resources
 
