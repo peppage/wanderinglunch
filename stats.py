@@ -20,7 +20,7 @@ with conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as cur:
 
     for truck in cur:
         #print truck['id']
-        if truck['lastupdate'] < epochMinus8Hours and truck['location'] is not None:
+        if truck['lastupdate'] > epochMinus8Hours and truck['location'] is not None:
             if truck['region'] == "up":
                 upTown += 1
             elif truck['region'] == "mid":
