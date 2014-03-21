@@ -218,8 +218,18 @@ nav {
             }
         }
     }
+}
 
-    
+html.no-cssreflections {
+  .cl-effect-2 {
+    a {
+      &:hover span, &:focus span {
+        transform: none;
+        -webkit-transform: none;
+        -moz-transform: none;
+      }
+    }
+  }
 }
 
 .csstransforms3d .cl-effect-2  {
