@@ -137,7 +137,14 @@ postgresql::server::table_grant { 'mca on tweets':
   role      => 'mca',
 }
 ~>
-postgresql::server::table_grant { 'mca on stats':
+postgresql::server::table_grant { 'mca on sitestats':
+  privilege => 'ALL',
+  table     => 'stats',
+  db        => 'foodtruck',
+  role      => 'mca',
+}
+~>
+postgresql::server::table_grant { 'mca on truckstats':
   privilege => 'ALL',
   table     => 'stats',
   db        => 'foodtruck',
