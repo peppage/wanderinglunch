@@ -24,7 +24,7 @@
 ###Automatic security updates###
 1. apt-get install unattended-upgrades
 1. vim /etc/apt/apt.conf.d/10periodic  
-- `APT::Periodic::Update-Package-Lists "1";`<br \>
-  `APT::Periodic::Download-Upgradeable-Packages "1";`<br>
-  `APT::Periodic::AutocleanInterval "7";`<br>
-  `APT::Periodic::Unattended-Upgrade "1";`
+- `APT::Periodic::Update-Package-Lists "1";
+  APT::Periodic::Download-Upgradeable-Packages "1";
+  APT::Periodic::AutocleanInterval "7";
+  APT::Periodic::Unattended-Upgrade "1";`
