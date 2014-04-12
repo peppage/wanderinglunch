@@ -13,6 +13,18 @@ package { 'fail2ban':
 package { 'nginx':
   ensure => installed,
 }
+~>
+file { '/etc/nginx/sites-enabled/default':
+  ensure => absend,
+}
+~>
+file { '/data':
+  ensure => directory,
+}
+~>
+file { '/data/nginx':
+  ensure => directory,
+}
 
 class { 'apt' :
   always_apt_update => true,
@@ -31,16 +43,16 @@ package { 'nodejs':
 }
 
 exec { 'allow port 22': 
-  path => '/usr/sbin',
+  path    => '/usr/sbin',
   command => 'ufw allow 22',
 }
 ~>
 exec { 'allow port 80':
-  path => '/usr/sbin',
+  path    => '/usr/sbin',
   command => 'ufw allow 80',
 }
 exec { 'enable firewall':
-  path => '/usr/sbin',
+  path    => '/usr/sbin',
   command => 'ufw --force enable',
 }
 
@@ -62,6 +74,11 @@ file { 'wanderinglunch':
   ensure  => file,
   require => Package['nginx'],
   source  => '/wanderinglunch/config/wanderinglunch'
+}
+~>
+exec { 'reload nginx':
+  path => '/usr/sbin',
+  command => 'nginx -s reload',
 }
 ~>
 file { '/etc/nginx/sites-enabled/wanderinglunch':
@@ -116,6 +133,13 @@ postgresql::server::table_grant { 'mca on images':
 postgresql::server::table_grant { 'mca on tweets':
   privilege => 'ALL',
   table     => 'tweets',
+  db        => 'foodtruck',
+  role      => 'mca',
+}
+~>
+postgresql::server::table_grant { 'mca on stats':
+  privilege => 'ALL',
+  table     => 'stats',
   db        => 'foodtruck',
   role      => 'mca',
 }
@@ -201,3 +225,31 @@ exec { 'site permissions':
   require => User['mca'],
 }
 
+package { 'python':
+  ensure => installed,
+}
+
+package { 'libpq-dev':
+  ensure => installed,
+}
+
+package { 'python-pip':
+  ensure => installed,
+}
+
+package { 'python-dev':
+  ensure => installed,
+}
+
+exec { 'python requirements':
+  path    => '/usr/bin',
+  command => 'pip install psycopg2 nltk numpy twitter foursquare',
+  require => Package['python-pip'],
+}
+~>
+exec { 'setup nltk':
+  path    => '/usr/bin',
+  user    => 'mca',
+  environment => ['HOME=/home/mca'],
+  command => "python -c \"import nltk; nltk.download('all')\"",
+}
