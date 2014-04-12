@@ -45,7 +45,7 @@ with conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as cur:
     cur.execute("SELECT * FROM siteStats WHERE time > %(time)s;", {'time': epochMinus30Days})
 
     f = open('public/data/trucks.tsv', 'w')
-    f.write("date\tUptown\tMidtown\tDowntown\tBrooklyn\n")
+    f.write("date\tAbove 34th\t10th to 33rd\tDowntown\tBrooklyn\n")
     for stat in cur:
     #    for key, value in stat.iteritems():
             #print key, value
