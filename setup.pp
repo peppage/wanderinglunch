@@ -76,14 +76,19 @@ file { 'wanderinglunch':
   source  => '/wanderinglunch/config/wanderinglunch'
 }
 ~>
-exec { 'reload nginx':
-  path => '/usr/sbin',
-  command => 'nginx -s reload',
-}
-~>
 file { '/etc/nginx/sites-enabled/wanderinglunch':
   ensure => link,
   target => '/etc/nginx/sites-available/wanderinglunch'
+}
+~>
+exec { 'stop nginx':
+  path    => '/etc/init.d',
+  command => 'nginx stop',
+}
+~>
+exec { 'stop nginx':
+  path    => '/etc/init.d',
+  command => 'nginx start',
 }
 
 class { 'postgresql::globals':
