@@ -86,7 +86,7 @@ exec { 'stop nginx':
   command => 'nginx stop',
 }
 ~>
-exec { 'stop nginx':
+exec { 'start nginx':
   path    => '/etc/init.d',
   command => 'nginx start',
 }
@@ -95,6 +95,7 @@ class { 'postgresql::globals':
   manage_package_repo => true,
   version             => '9.3',
   require             => User['mca'],
+  before              => Exec['python requirements'],
 }
 ~>
 class { 'postgresql::server': 
