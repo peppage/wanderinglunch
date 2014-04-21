@@ -82,7 +82,11 @@ def getUpdate(truck):
                 regex = truck['regex']
             except KeyError:
                 regex = None
-            tweet = getAddressFromTweet(regex, tweets)
+            try:
+                matcher = truck['matcher']
+            except KeyError:
+                matcher = None
+            tweet = getAddressFromTweet(regex, matcher, tweets)
             if tweet:
                 address = tweet['address']
 
@@ -119,8 +123,8 @@ def compareToTweet(address, tweets):
     """ Compare an address with tweets return the matched tweet dict.
 
     Keyword arguments:
-    url -- the twitter url to get tweets from
     address -- the address to compare
+    tweets -- a list of tweets from the api
 
     """
     streetRegex = re.compile("[0-9][0-9]", re.I)  # This is bad.
@@ -164,7 +168,13 @@ def compareToTweet(address, tweets):
 
 
 def getRegion(address, contents):
-    """ Get the region in NYC the truck is in """
+    """ Get the region in NYC the truck is in 
+    
+    Keyword arguments:
+    address -- the address the truck is currently at
+    contents -- the entire contents of the tweet from the truck   
+ 
+    """
 
     address = re.sub("https?:\/\/\S+", "", address)
     contents = re.sub("https?:\/\/\S+", "", contents)
@@ -198,19 +208,23 @@ def getRegion(address, contents):
     return region
 
 
-def getAddressFromTweet(regex, tweets):
+def getAddressFromTweet(regex, matcher, tweets):
     """
     Get the truck location from twitter return the tweet address dict
 
     Keyword arguments:
-    url -- the twitter url to get tweets from
     regex -- the custom regex for this truck
+    matcher -- if the truck requires a word to be in the tweet
+    tweets -- list of tweets from api
 
     """
-    checkingRegex = re.compile("(( |^|\n|w|@)([0-9]{1,3}(nd|th|rd|ave|st)? |adams|amsterdam|atlantic|beckman|bedford|bleec?ker|bridge|broad|broadwa?y|b'way|bdway|bway|bdwy|(north|n.?) brunswick|canal|charlton|columbus|court|ditmars|fletcher|front|fulton|gouverneur|goveneur|grand|greene|hanover|(w.? )?houston|howard|hudson|jay|john|kings?|lafayette|lex|lexington|liberty|lincoln|maiden|mad[^a-z]|madison|madosin|main|mercer|murray hill|(north|n.?) ?end|ocean|old slip|park[^a-z]|pearl|pine|prince|radison|south end|spring|starrett?.?lehigh|vanderbilt|var?ndam|varicks?|vess?ey|wall|washington|water|waverly|whitehall|william|york)([^-]*?)(and?|at|between|bw|\+|n|btwn|\/|&|btw.?|bwtn|bet|b\/w|@|b\/t|facing|facing towards|off|near|nr|\()@? ?([0-9]{1,3}(nd|th|rd|ave|st)?|adams|amsterdam|atlantic|beckman|bedford|bleec?ker|bridge|broad|broadwa?y|b'way|bdway|bway|bdwy|(north|n.?) brunswick|canal|charlton|columbus|court|ditmars|fletcher|front|fulton|gouverneur|goveneur|grand|greene|hanover|(w.? )?houston|howard|hudson|jay|john|kings?|lafayette|lex|lexington|liberty|lincoln|maiden|mad|madison|madosin|main|mercer|murray hill|(north|n.?) ?end|ocean|old slip|park|pearl|pine|prince|radison|south end|spring|starrett?.?lehigh|vanderbilt|var?ndam|varicks?|vess?ey|wall|washington|water|waverly|whitehall|william|york)(?! price) ?(st.?|street|ave?|avenue|la?ne?|blvd)? ?(and?|at|between|bw|\+|n|btwn|\/|&|btw.?|bwtn|bet|b\/w|@|b\/t|facing|facing towards|off|near|nr|\()?@? ?([0-9]{1,3}(nd|th|rd|ave|st)?|adams|amsterdam|atlantic|beckman|bedford|bleec?ker|bridge|broad|broadwa?y|b'way|bdway|bway|bdwy|(north|n.?) brunswick|canal|charlton|columbus|court|ditmars|fletcher|front|fulton|gouverneur|goveneur|grand|greene|hanover|(w.? )?houston|howard|hudson|jay|john|kings?|lafayette|lex|lexington|liberty|lincoln|maiden|mad|madison|madosin|main|mercer|murray hill|(north|n.?) ?end|ocean|old slip|park|pearl|pine|prince|radison|south end|spring|starrett?.?lehigh|vanderbilt|var?ndam|varicks?|vess?ey|wall|washington|water|waverly|whitehall|william|york)? ?(and?|at|between|bw|\+|n|btwn|\/|&|btw.?|bwtn|bet|b\/w|@|b\/t|facing|facing towards|off|near|nr|\()?@? ?([0-9]{1,3}(nd|th|rd|ave|st)?|adams|amsterdam|atlantic|beckman|bedford|bleec?ker|bridge|broad|broadwa?y|b'way|bdway|bway|bdwy|(north|n.?) brunswick|canal|charlton|columbus|court|ditmars|fletcher|front|fulton|gouverneur|goveneur|grand|greene|hanover|(w.? )?houston|howard|hudson|jay|john|kings?|lafayette|lex|lexington|liberty|lincoln|maiden|mad|madison|madosin|main|mercer|murray hill|(north|n.?) ?end|ocean|old slip|park|pearl|pine|prince|radison|south end|spring|starrett?.?lehigh|vanderbilt|var?ndam|varicks?|vess?ey|wall|washington|water|waverly|whitehall|william|york)?|coney island ave|brookfieldplny|world finan?cial center|wfc|world ?financial ?center|wfcfoodtrucks|union square west|union sq|starrett?.?lehigh|pier.94|hanover.square|dumboLot|columbia university|south street seaport|queens college|south end ave|industrycity|60 wall|dumbofoodtrucks|@?columbia|brooklyn college|pier 36)", re.I)
+    checkingRegex = re.compile("(( |^|\n|w|@)([0-9]{1,3}(nd|th|rd|ave|st)? |adams|amsterdam|atlantic|beckman|bedford|beaver|bleec?ker|bridge|broad|broadwa?y|b'way|bdway|bway|bdwy|(north|n.?) brunswick|canal|charlton|columbus|court|ditmars|fletcher|front|fulton|greenwich|gouverneur|goveneur|grand|greene|hanover|(w.? )?houston|howard|hudson|jay|john|kings?|lafayette|lex|lexington|liberty|lincoln|maiden|mad[^a-z]|madison|madosin|main|mercer|murray|murray hill|(north|n.?) ?end|ocean|old slip|park[^a-z]|pearl|pine|prince|radison|south end|spring|starrett?.?lehigh|vanderbilt|var?ndam|varicks?|vess?ey|wall|washington|water|waverly|west|whitehall|william|york)([^-]*?)(and?|at|between|bw|\+|n|btwn|\/|&|btw.?|bwtn|bet|b\/w|@|b\/t|facing towards|off|near|nr|\()@? ?([0-9]{1,3}(nd|th|rd|ave|st)?|adams|amsterdam|atlantic|beckman|bedford|beaver|bleec?ker|bridge|broad|broadwa?y|b'way|bdway|bway|bdwy|(north|n.?) brunswick|canal|charlton|columbus|court|ditmars|fletcher|front|fulton|greenwich|gouverneur|goveneur|grand|greene|hanover|(w.? )?houston|howard|hudson|jay|john|kings?|lafayette|lex|lexington|liberty|lincoln|maiden|mad|madison|madosin|main|mercer|murray|murray hill|(north|n.?) ?end|ocean|old slip|park|pearl|pine|prince|radison|south end|spring|starrett?.?lehigh|vanderbilt|var?ndam|varicks?|vess?ey|wall|washington|water|waverly|west|whitehall|william|york)(?! price) ?(st.?|street|ave?|avenue|la?ne?|blvd)? ?(and?|at|between|bw|\+|n|btwn|\/|&|btw.?|bwtn|bet|b\/w|@|b\/t|facing towards|off|near|nr|\()?@? ?([0-9]{1,3}(nd|th|rd|ave|st)?|adams|amsterdam|atlantic|beckman|bedford|beaver|bleec?ker|bridge|broad|broadwa?y|b'way|bdway|bway|bdwy|(north|n.?) brunswick|canal|charlton|columbus|court|ditmars|fletcher|front|fulton|greenwich|gouverneur|goveneur|grand|greene|hanover|(w.? )?houston|howard|hudson|jay|john|kings?|lafayette|lex|lexington|liberty|lincoln|maiden|mad|madison|madosin|main|mercer|murray|murray hill|(north|n.?) ?end|ocean|old slip|park|pearl|pine|prince|radison|south end|spring|starrett?.?lehigh|vanderbilt|var?ndam|varicks?|vess?ey|wall|washington|water|waverly|west|whitehall|william|york)? ?(and?|at|between|bw|\+|n|btwn|\/|&|btw.?|bwtn|bet|b\/w|@|b\/t|facing towards|off|near|nr|\()?@? ?([0-9]{1,3}(nd|th|rd|ave|st)?|adams|amsterdam|atlantic|beckman|bedford|beaver|bleec?ker|bridge|broad|broadwa?y|b'way|bdway|bway|bdwy|(north|n.?) brunswick|canal|charlton|columbus|court|ditmars|fletcher|front|fulton|greenwich|gouverneur|goveneur|grand|greene|hanover|(w.? )?houston|howard|hudson|jay|john|kings?|lafayette|lex|lexington|liberty|lincoln|maiden|mad|madison|madosin|main|mercer|murray|murray hill|(north|n.?) ?end|ocean|old slip|park|pearl|pine|prince|radison|south end|spring|starrett?.?lehigh|vanderbilt|var?ndam|varicks?|vess?ey|wall|washington|water|waverly|west|whitehall|william|york)?|coney island ave|brookfieldplny|world finan?cial center|wfc|world ?financial ?center|wfcfoodtrucks|union square west|union sq|starrett?.?lehigh|pier.94|hanover.square|dumboLot|columbia university|south street seaport|queens college|south end ave|industrycity|60 wall|dumbofoodtrucks|@?columbia|brooklyn college|pier 36|wall st)", re.I)
+
     epochMinus8Hours = int(time.time()) - datetime.timedelta(hours=8).total_seconds()
     today = date.today().strftime("X%m/X%d/%y").replace('X0', 'X').replace('X', '')
     today2 = date.today().strftime("X%m/X%d").replace('X0', 'X').replace('X', '')
+    today3 = date.today().strftime("%b X%dth").replace('X0', 'X').replace('X', '')
+
 
     for tweet in tweets:
         contents = tweet['contents']
@@ -223,20 +237,20 @@ def getAddressFromTweet(regex, tweets):
                 continue
         contents = re.sub(today, "", contents)
         contents = re.sub(today2, "", contents)
-        contents = re.sub("at the corner of", "and", contents)
+        contents = re.sub(today3, "", contents)
         #remove twitter urls
         with open('simpleWords', 'r') as f:
             for word in f:
                 contents = re.sub(word.strip(), "", contents, flags=re.I)
         contents = re.sub("http:\/\/t.co\/[a-z0-9A-Z]*", "", contents)
         contents = contents.replace("~", " ")
+        contents = contents.replace("  ", " ")
         contents = contents.replace(",", " ")
         contents = contents.replace(".", " ")
         contents = contents.replace("\n", " ")
         contents = contents.replace("(", " ")
         contents = contents.replace(")", " ")
-        contents = contents.replace("-- ", "")
-        contents = re.sub("[0-9]{2}(am?|\:[0-9]{1,2})?\ ?- ?[0-9](pm)?", " ", contents)  # times
+        contents = re.sub("[0-9]{2}(am?|\:[0-9]{1,2})?\ ?- ?[0-9](pm?|\:[0-9]{1,2})?", " ", contents)  # times
         hasPunct = True
         while hasPunct:
             punct = re.search("[^ ](\/|&|\+|\-)[^ ]", contents)  #add spaces around punctuation
@@ -245,14 +259,20 @@ def getAddressFromTweet(regex, tweets):
             else:
                 hasPunct = False
 
-        contents = re.sub("new york", "", contents, 0, re.I)
         contents = re.sub("@brookfieldplny", "brookfieldplny", contents, 0, re.I)
         contents = re.sub("@dumbolot", "dumbolot", contents, 0, re.I)
-        print contents
+        contents = re.sub("@downtownlunch", "downtownlunch", contents, 0, re.I)
+        contents = re.sub("@midtownlunch", "midtownlunch", contents, 0, re.I)
+        if matcher:
+           matcherRegex = re.compile(matcher, re.I)
         if int(tweet['time']) > epochMinus8Hours  \
            and len(contents) > 0 \
            and not contents[0] == "@" \
-           and not re.match("tomorrow", contents, re.I):
+           and not re.match("tomorrow", contents, re.I) \
+           and not re.match(".*taking (the)? day off", tweet['contents'], re.I) \
+           and not re.match(".*will not be coming out", tweet['contents'], re.I) \
+           and not re.match(".*off the road (due to the weather )?today", tweet['contents'], re.I) \
+           and (not matcher or re.search(matcherRegex, contents)):
             # if truck has BSON amount of trucks (2) then make sure to
             # get both the trucks and if the truck has more than 1 match
             match = re.search(checkingRegex, contents)
@@ -282,6 +302,7 @@ def getTweets(twitName):
         contents = unicodedata.normalize('NFKD', tweet['text']).encode('ascii', 'ignore')  # Fix unicode
         contents = contents.replace("&amp;", "&")
         contents = contents.replace("#", "")
+        contents = contents.replace('"', "")
         t['contents'] = contents
         t['time'] = int(time.mktime(time.strptime(tweet['created_at'], TWEET_TIME_FORMAT)))
         t['id'] = tweet['id']
