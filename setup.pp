@@ -76,20 +76,26 @@ file { 'wanderinglunch':
   source  => '/wanderinglunch/config/wanderinglunch'
 }
 ~>
-exec { 'reload nginx':
-  path => '/usr/sbin',
-  command => 'nginx -s reload',
-}
-~>
 file { '/etc/nginx/sites-enabled/wanderinglunch':
   ensure => link,
   target => '/etc/nginx/sites-available/wanderinglunch'
+}
+~>
+exec { 'stop nginx':
+  path    => '/etc/init.d',
+  command => 'nginx stop',
+}
+~>
+exec { 'start nginx':
+  path    => '/etc/init.d',
+  command => 'nginx start',
 }
 
 class { 'postgresql::globals':
   manage_package_repo => true,
   version             => '9.3',
   require             => User['mca'],
+  before              => Exec['python requirements'],
 }
 ~>
 class { 'postgresql::server': 
@@ -137,9 +143,16 @@ postgresql::server::table_grant { 'mca on tweets':
   role      => 'mca',
 }
 ~>
-postgresql::server::table_grant { 'mca on stats':
+postgresql::server::table_grant { 'mca on sitestats':
   privilege => 'ALL',
-  table     => 'stats',
+  table     => 'sitestats',
+  db        => 'foodtruck',
+  role      => 'mca',
+}
+~>
+postgresql::server::table_grant { 'mca on truckstats':
+  privilege => 'ALL',
+  table     => 'truckstats',
   db        => 'foodtruck',
   role      => 'mca',
 }
