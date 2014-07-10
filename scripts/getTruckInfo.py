@@ -223,6 +223,7 @@ def getAddressFromTweet(regex, matcher, tweets):
     today = date.today().strftime("X%m/X%d/%y").replace('X0', 'X').replace('X', '')
     today2 = date.today().strftime("X%m/X%d").replace('X0', 'X').replace('X', '')
     today3 = date.today().strftime("%b X%dth").replace('X0', 'X').replace('X', '')
+    tomorrow = (datetime.date.today() + datetime.timedelta(days=1)).strftime("X%m/X%d").replace('X0', 'X').replace('X', '')
 
 
     for tweet in tweets:
@@ -237,6 +238,7 @@ def getAddressFromTweet(regex, matcher, tweets):
         contents = re.sub(today, "", contents)
         contents = re.sub(today2, "", contents)
         contents = re.sub(today3, "", contents)
+        contents = re.sub(tomorrow, "", contents)
         contents = re.sub("at the corner of", "and", contents)
         #remove twitter urls
         with open('simpleWords', 'r') as f:
