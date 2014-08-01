@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import psycopg2
 import psycopg2.extras
 import foursquare
