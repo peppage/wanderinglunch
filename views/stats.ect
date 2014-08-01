@@ -7,3 +7,13 @@
 <h1>Stats</h1>
 
 <p>There are <%- @total %> trucks on the website</p>
+
+<h2>Trucks that have been out per day by neighborhood</h2>
+<style>
+#loadImg{position:absolute;z-index:999;}
+#loadImg div{display:table-cell;width:40px;height:40px;background:#fff;text-align:center;vertical-align:middle;}
+</style>
+<div id="loadImg"><div><img src="/images/logo.png" /></div></div>
+<iframe width="800" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
+   src="/data/neighborhood-daily.htm" onload="document.getElementById('loadImg').style.display='none';">
+</iframe>
