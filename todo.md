@@ -1,9 +1,28 @@
+- update to express 4
+- move from PG to Knex
+- create login system
+- reorganize file structure
+- possible move getTrucks from python to javascript?
+- redo how clean up tweets is happening, move to DB
+- New method for finding multiple trucks in same tweet (waffle)
+    - Frack, this isn't thought out yet.
+- create new table of intersections and find that in cleaned up tweet
+    - tweet format
+    - coordinates
+    - website display format
+- new column in trucks that matches up with id in intersections
+- admin area
+    - if no match is found from table show possible matches and let the user add them to the DB
+    - also allow for additional cleanup additions
+
+== OLD ==
 - Voting to confirm location
 - manual update page
 - error log page, keep track of bad information
 - set your location and have it alert you when trucks are close by
 	- detect location from phone
 - get foursquare checked in data
+    - if people are checking in today?
 - each truck has a logo
 - logged in area
 	- that would be another section "my trucks"
