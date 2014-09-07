@@ -47,4 +47,42 @@ module.exports = function adminRoutes( app, passport ) {
     });
   });
 
+  app.get( '/admin/subs' , passHelper.isLoggedIn,
+    function subs( req, res ) {
+      res.render( 'admin/subs.ect');
+    }
+  );
+
+  app.post( '/admin/subs/add', [express.urlencoded(), passHelper.isLoggedIn],
+    function subsAdd( req, res ) {
+      knex('subs').insert({
+        regex: req.body.regex,
+        replacement: req.body.replacement
+      })
+      .then(res.send(200))
+      .catch(function( error ) {
+        res.send(418);
+      });
+    }
+  );
+
+  app.get('/admin/debug', passHelper.isLoggedIn, function debug( req, res ) {
+    knex('trucks')
+    .where('lastupdate', '<', moment().subtract(1, 'days').unix())
+    .andWhere('lasttweet', '>', moment().startOf('day').unix())
+    .then(function( trucks ) {
+      knex.select('images.id', 'images.twitname', 'trucks.id as truckid')
+      .from('images')
+      .innerJoin('trucks', 'images.twitname', 'trucks.twitname')
+      .where('images.visibility', '!=', 'public')
+      .then(function( images ) {
+        res.render('admin/debug', {
+          title: 'Wandering Lunch: NYC Food Truck Finder | debug',
+          id: 'debug',
+          trucks : trucks,
+          images: images
+        });
+      });
+    });
+  });
 };

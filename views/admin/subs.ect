@@ -1,0 +1,43 @@
+<% extend 'includes/base.ect' %>
+
+<% include 'admin/includes/menu.ect' %>
+
+<h1>Add substitutions</h1>
+
+<p>Some words need to be substituted inside a tweet, add them here</p>
+
+<label for="regex">Regular Expression</label>
+<input id="regex" type="text">
+<br>
+<label for="replace">Replacement Text</label>
+<input id="replace" type="text">
+
+<br>
+<button id="add" type="button">Add</button>
+
+<h2>Perhaps show subs here?</h2>
+
+<% block 'scripts' : %>
+  $(document).ready(function() {
+    $('#add').click(function() {
+      $.ajax({
+        url: '/admin/subs/add',
+        type: 'POST',
+        data: {
+          regex: $('#regex').val(),
+          replacement: $('#replace').val()
+        },
+        success: function(data, textStatus) {
+          console.log('yay');
+        },
+        statusCode: {
+          418: function(data) {
+            console.log(data.responsiveText);
+          }
+        }
+      }).done(function(data) {
+
+      });
+    });
+  });
+<% end %>

@@ -128,26 +128,6 @@ module.exports = function routes( app, passport ) {
     });
   });
 
-  app.get('/debug', function debug( req, res ) {
-    knex('trucks').debug()
-    .where('lastupdate', '<', moment().subtract(1, 'days').unix())
-    .andWhere('lasttweet', '>', moment().startOf('day').unix())
-    .then(function( trucks ) {
-      knex.select('images.id', 'images.twitname', 'trucks.id as truckid')
-      .from('images')
-      .innerJoin('trucks', 'images.twitname', 'trucks.twitname')
-      .where('images.visibility', '!=', 'public')
-      .then(function( images ) {
-        res.render('debug', {
-          title: 'Wandering Lunch: NYC Food Truck Finder | debug',
-          id: 'debug',
-          trucks : trucks,
-          images: images
-        });
-      });
-    });
-  });
-
   app.get('/stats', function stats( req, res ) {
     knex('trucks').count()
     .then(function( count ) {
