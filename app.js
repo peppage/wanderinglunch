@@ -8,7 +8,7 @@ var ectRenderer = ect({
   root: __dirname + '/views'
 });
 var lessMiddleware = require('less-middleware');
-var configDB = require('./database.js');
+var configDB = require('./config/database.js');
 var knex = require('knex')(configDB);
 
 var app = express();
