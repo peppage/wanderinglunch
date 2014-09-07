@@ -42,7 +42,7 @@ package { 'nodejs':
   ensure => installed,
 }
 
-exec { 'allow port 22': 
+exec { 'allow port 22':
   path    => '/usr/sbin',
   command => 'ufw allow 22',
 }
@@ -73,7 +73,7 @@ file { 'wanderinglunch':
   path    => '/etc/nginx/sites-available/wanderinglunch',
   ensure  => file,
   require => Package['nginx'],
-  source  => '/wanderinglunch/config/wanderinglunch'
+  source  => '/wanderinglunch/setup/wanderinglunch'
 }
 ~>
 file { '/etc/nginx/sites-enabled/wanderinglunch':
@@ -98,7 +98,7 @@ class { 'postgresql::globals':
   before              => Exec['python requirements'],
 }
 ~>
-class { 'postgresql::server': 
+class { 'postgresql::server':
  ipv4acls => ['host all all 127.0.0.1/32 trust'],
 }
 ~>
