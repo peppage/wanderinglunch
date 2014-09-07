@@ -29,13 +29,22 @@ twit = Twitter(
 conn = psycopg2.connect("dbname=foodtruck")
 saveCursor = conn.cursor()
 
+conn2 = psycopg2.connect("dbname=foodtruck")
+tweetsCursor = conn2.cursor()
 
 def doAllTrucks():
     """ Run through all the trucks and try to update them all """
 
     with conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as cur:
+        cur.execute("SELECT DISTINCT twitname FROM trucks")
+
+        # Get all tweets first
+        for twitname in cur:
+            getTweetsFromTwitter(twitname[0])
+
         cur.execute("SELECT * FROM trucks;")
 
+        # Update site Data
         for truck in cur:
             print truck['twitname']
             print truck['name']
@@ -50,6 +59,7 @@ def doTruck(twitterHandle):
         for truck in cur:
             print truck['twitname']
             print truck['name']
+            getTweetsFromTwitter(truck['twitname'])
             getUpdate(truck)
 
 
@@ -73,53 +83,56 @@ def getUpdate(truck):
 
     print address
 
-    tweets = getTweets(twitName)
-    if not tweets is None:  # Make sure we have a list of tweets
-        tweet = None
+    with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
+      cur.execute("SELECT * from tweets WHERE twitname = '" + twitName + "';")
+      tweets = cur.fetchall()
 
-        if address:
-            tweet = compareToTweet(address, tweets)
+      if not tweets is None:  # Make sure we have a list of tweets
+          tweet = None
 
-        if not tweet:
-            try:
-                regex = truck['regex']
-            except KeyError:
-                regex = None
-            try:
-                matcher = truck['matcher']
-            except KeyError:
-                matcher = None
-            tweet = getAddressFromTweet(regex, matcher, tweets)
-            if tweet:
-                address = tweet['address']
+          if address:
+              tweet = compareToTweet(address, tweets)
 
-        if tweet:
-            region = getRegion(address, tweet['contents'])
-            print {"id" : truckId, "location": address,
-                   "lastupdate": int(tweet['time']),
-                   "tweet": tweet['contents'],
-                   "region": region['section'],
-                   "street": region['street'],
-                   "retweeted": tweet['retweeted'],
-                   "lasttweet" : tweets[0]['time']}
-            saveCursor.execute(
-                """UPDATE trucks SET location = (%(location)s), 
-                lastupdate = (%(lastupdate)s), tweet = (%(tweet)s),
-                region = (%(region)s), street = (%(street)s),
-                retweeted = (%(retweeted)s), lasttweet = (%(lasttweet)s)
-                WHERE id = (%(id)s);""", 
-                {'id' : truckId, 'location': address, 'lastupdate' : int(tweet['time']) ,
-                'tweet' : tweet['contents'], 'region' : region['section'], 
-                'street' : region['street'], 'retweeted' : tweet['retweeted'],
-                'lasttweet' : tweets[0]['time']})
-        else:
-            try:
-                saveCursor.execute(
-                    """UPDATE trucks SET lasttweet = (%(time)s) WHERE id = (%(id)s);""",
-                    {'time': tweets[0]['time'], 'id': truckId})
-            except IndexError:
-                print "Truck has not tweeted"
-            print "Not Updated"
+          if not tweet:
+              try:
+                  regex = truck['regex']
+              except KeyError:
+                  regex = None
+              try:
+                  matcher = truck['matcher']
+              except KeyError:
+                  matcher = None
+              tweet = getAddressFromTweet(regex, matcher, tweets)
+              if tweet:
+                  address = tweet['address']
+
+          if tweet:
+              region = getRegion(address, tweet['contents'])
+              print {"id" : truckId, "location": address,
+                     "lastupdate": int(tweet['time']),
+                     "tweet": tweet['contents'],
+                     "region": region['section'],
+                     "street": region['street'],
+                     "retweeted": tweet['retweeted'],
+                     "lasttweet" : tweets[0]['time']}
+              saveCursor.execute(
+                  """UPDATE trucks SET location = (%(location)s),
+                  lastupdate = (%(lastupdate)s), tweet = (%(tweet)s),
+                  region = (%(region)s), street = (%(street)s),
+                  retweeted = (%(retweeted)s), lasttweet = (%(lasttweet)s)
+                  WHERE id = (%(id)s);""",
+                  {'id' : truckId, 'location': address, 'lastupdate' : int(tweet['time']) ,
+                  'tweet' : tweet['contents'], 'region' : region['section'],
+                  'street' : region['street'], 'retweeted' : tweet['retweeted'],
+                  'lasttweet' : tweets[0]['time']})
+          else:
+              try:
+                  saveCursor.execute(
+                      """UPDATE trucks SET lasttweet = (%(time)s) WHERE id = (%(id)s);""",
+                      {'time': tweets[0]['time'], 'id': truckId})
+              except IndexError:
+                  print "Truck has not tweeted"
+              print "Not Updated"
 
 
 def compareToTweet(address, tweets):
@@ -171,12 +184,12 @@ def compareToTweet(address, tweets):
 
 
 def getRegion(address, contents):
-    """ Get the region in NYC the truck is in 
-    
+    """ Get the region in NYC the truck is in
+
     Keyword arguments:
     address -- the address the truck is currently at
-    contents -- the entire contents of the tweet from the truck   
- 
+    contents -- the entire contents of the tweet from the truck
+
     """
 
     address = re.sub("https?:\/\/\S+", "", address)
@@ -288,7 +301,7 @@ def getAddressFromTweet(regex, matcher, tweets):
     return None
 
 
-def getTweets(twitName):
+def getTweetsFromTwitter(twitName):
     """
     Get the latest tweets by scraping, return list of tweet dict
 
@@ -315,11 +328,16 @@ def getTweets(twitName):
         t['retweeted'] = tweet['retweeted']
         try:
             saveCursor.execute(
-                """INSERT INTO tweets (id, contents, time, retweeted, twitname) SELECT 
+                """INSERT INTO tweets (id, contents, time, retweeted, twitname) SELECT
                     %(id)s, %(contents)s, %(time)s, %(retweeted)s, %(twitname)s WHERE NOT EXISTS (
-                        SELECT 1 FROM tweets WHERE id=%(id)s);""", 
-                    {'id' : tweet['id'], 'contents' : unicodedata.normalize('NFKD', tweet['text']).encode('ascii', 'ignore'), 
-                    'time' : t['time'], 'retweeted' : tweet['retweeted'], 'twitname' : twitName})
+                        SELECT 1 FROM tweets WHERE id=%(id)s);""",
+                    {
+                      'id' : tweet['id'],
+                      'contents' : t['contents'],
+                      'time' : t['time'],
+                      'retweeted' : tweet['retweeted'],
+                      'twitname' : twitName
+                    })
         except psycopg2.IntegrityError:
             print "duplicate"
             saveCursor.rollback()
@@ -345,3 +363,5 @@ else:
 conn.commit()
 saveCursor.close()
 conn.close()
+tweetsCursor.close()
+conn2.close()
