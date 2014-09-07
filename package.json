@@ -6,12 +6,12 @@
     "start": "node app.js"
   },
   "dependencies": {
+    "async": "0.2.x",
+    "ect": "~0.5.5",
     "express": "3.4.x",
     "jade": "0.35.x",
-    "pg": "2.8.x",
-    "async": "0.2.x",
-    "moment": "2.3.x",
+    "knex": "^0.6.22",
     "less-middleware": "0.1.x",
-    "ect": "~0.5.5"
+    "moment": "2.3.x",
   }
 }
