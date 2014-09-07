@@ -30,7 +30,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: images; Type: TABLE; Schema: public; Owner: pepp; Tablespace: 
+-- Name: images; Type: TABLE; Schema: public; Owner: Pepp; Tablespace: 
 --
 
 CREATE TABLE images (
@@ -42,10 +42,10 @@ CREATE TABLE images (
 );
 
 
-ALTER TABLE public.images OWNER TO pepp;
+ALTER TABLE public.images OWNER TO "Pepp";
 
 --
--- Name: sitestats; Type: TABLE; Schema: public; Owner: pepp; Tablespace: 
+-- Name: sitestats; Type: TABLE; Schema: public; Owner: Pepp; Tablespace: 
 --
 
 CREATE TABLE sitestats (
@@ -57,10 +57,10 @@ CREATE TABLE sitestats (
 );
 
 
-ALTER TABLE public.sitestats OWNER TO pepp;
+ALTER TABLE public.sitestats OWNER TO "Pepp";
 
 --
--- Name: trucks; Type: TABLE; Schema: public; Owner: pepp; Tablespace: 
+-- Name: trucks; Type: TABLE; Schema: public; Owner: Pepp; Tablespace: 
 --
 
 CREATE TABLE trucks (
@@ -83,10 +83,10 @@ CREATE TABLE trucks (
 );
 
 
-ALTER TABLE public.trucks OWNER TO pepp;
+ALTER TABLE public.trucks OWNER TO "Pepp";
 
 --
--- Name: truckstats; Type: TABLE; Schema: public; Owner: pepp; Tablespace: 
+-- Name: truckstats; Type: TABLE; Schema: public; Owner: Pepp; Tablespace: 
 --
 
 CREATE TABLE truckstats (
@@ -98,10 +98,10 @@ CREATE TABLE truckstats (
 );
 
 
-ALTER TABLE public.truckstats OWNER TO pepp;
+ALTER TABLE public.truckstats OWNER TO "Pepp";
 
 --
--- Name: tweets; Type: TABLE; Schema: public; Owner: pepp; Tablespace: 
+-- Name: tweets; Type: TABLE; Schema: public; Owner: Pepp; Tablespace: 
 --
 
 CREATE TABLE tweets (
@@ -113,10 +113,52 @@ CREATE TABLE tweets (
 );
 
 
-ALTER TABLE public.tweets OWNER TO pepp;
+ALTER TABLE public.tweets OWNER TO "Pepp";
 
 --
--- Data for Name: images; Type: TABLE DATA; Schema: public; Owner: pepp
+-- Name: users; Type: TABLE; Schema: public; Owner: Pepp; Tablespace: 
+--
+
+CREATE TABLE users (
+    id bigint NOT NULL,
+    email text NOT NULL,
+    password text NOT NULL,
+    admin boolean DEFAULT false
+);
+
+
+ALTER TABLE public.users OWNER TO "Pepp";
+
+--
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: Pepp
+--
+
+CREATE SEQUENCE users_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_id_seq OWNER TO "Pepp";
+
+--
+-- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: Pepp
+--
+
+ALTER SEQUENCE users_id_seq OWNED BY users.id;
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: Pepp
+--
+
+ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
+
+
+--
+-- Data for Name: images; Type: TABLE DATA; Schema: public; Owner: Pepp
 --
 
 COPY images (id, suffix, visibility, twitname, menu) FROM stdin;
@@ -350,7 +392,7 @@ COPY images (id, suffix, visibility, twitname, menu) FROM stdin;
 
 
 --
--- Data for Name: sitestats; Type: TABLE DATA; Schema: public; Owner: pepp
+-- Data for Name: sitestats; Type: TABLE DATA; Schema: public; Owner: Pepp
 --
 
 COPY sitestats ("time", uptown, midtown, downtown, brooklyn) FROM stdin;
@@ -374,7 +416,7 @@ COPY sitestats ("time", uptown, midtown, downtown, brooklyn) FROM stdin;
 
 
 --
--- Data for Name: trucks; Type: TABLE DATA; Schema: public; Owner: pepp
+-- Data for Name: trucks; Type: TABLE DATA; Schema: public; Owner: Pepp
 --
 
 COPY trucks (id, name, twitname, weburl, tweet, street, location, retweeted, region, regex, lasttweet, lastupdate, type, about, foursquare, matcher) FROM stdin;
@@ -467,7 +509,7 @@ greenradish	The Green Radish	thegreenradish1	http://www.thegreenradish.com/	Vega
 
 
 --
--- Data for Name: truckstats; Type: TABLE DATA; Schema: public; Owner: pepp
+-- Data for Name: truckstats; Type: TABLE DATA; Schema: public; Owner: Pepp
 --
 
 COPY truckstats (id, "time", street, region, location) FROM stdin;
@@ -1093,7 +1135,7 @@ hh3	1397235601	47	up	 47st & Park Ave
 
 
 --
--- Data for Name: tweets; Type: TABLE DATA; Schema: public; Owner: pepp
+-- Data for Name: tweets; Type: TABLE DATA; Schema: public; Owner: Pepp
 --
 
 COPY tweets (contents, "time", id, retweeted, twitname) FROM stdin;
@@ -3104,7 +3146,22 @@ Hi Guys we are in Brooklyn Borough Park New Utrecht Ave and 46 street from 3:30-
 
 
 --
--- Name: images_id_key; Type: CONSTRAINT; Schema: public; Owner: pepp; Tablespace: 
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: Pepp
+--
+
+COPY users (id, email, password, admin) FROM stdin;
+\.
+
+
+--
+-- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: Pepp
+--
+
+SELECT pg_catalog.setval('users_id_seq', 4, true);
+
+
+--
+-- Name: images_id_key; Type: CONSTRAINT; Schema: public; Owner: Pepp; Tablespace: 
 --
 
 ALTER TABLE ONLY images
@@ -3112,7 +3169,7 @@ ALTER TABLE ONLY images
 
 
 --
--- Name: trucks_id_key; Type: CONSTRAINT; Schema: public; Owner: pepp; Tablespace: 
+-- Name: trucks_id_key; Type: CONSTRAINT; Schema: public; Owner: Pepp; Tablespace: 
 --
 
 ALTER TABLE ONLY trucks
@@ -3120,7 +3177,7 @@ ALTER TABLE ONLY trucks
 
 
 --
--- Name: tweets_id_key; Type: CONSTRAINT; Schema: public; Owner: pepp; Tablespace: 
+-- Name: tweets_id_key; Type: CONSTRAINT; Schema: public; Owner: Pepp; Tablespace: 
 --
 
 ALTER TABLE ONLY tweets
@@ -3128,12 +3185,20 @@ ALTER TABLE ONLY tweets
 
 
 --
--- Name: public; Type: ACL; Schema: -; Owner: postgres
+-- Name: users_email_key; Type: CONSTRAINT; Schema: public; Owner: Pepp; Tablespace: 
+--
+
+ALTER TABLE ONLY users
+    ADD CONSTRAINT users_email_key UNIQUE (email);
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: Pepp
 --
 
 REVOKE ALL ON SCHEMA public FROM PUBLIC;
-REVOKE ALL ON SCHEMA public FROM postgres;
-GRANT ALL ON SCHEMA public TO postgres;
+REVOKE ALL ON SCHEMA public FROM "Pepp";
+GRANT ALL ON SCHEMA public TO "Pepp";
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
