@@ -1,14 +1,13 @@
 <% extend 'includes/base.ect' %>
 
 <% block 'css' : %>
-  <link href="/stylesheets/index.css" rel="stylesheet" />
   <meta name="description" content="Track and find food trucks around New York City. Updated everyday from twitter" />
 <% end %>
 
-<div class="sub-nav">Quick Jump: 
-  <a id="up-link" href='#uptown'>Above 34th</a> &bull; 
-  <a id="mid-link" href='#midtown'>10th to 33rd</a> &bull; 
-  <a id="down-link" href='#downtown'>Downtown</a> &bull; 
+<div class="sub-nav">Quick Jump:
+  <a id="up-link" href='#uptown'>Above 34th</a> &bull;
+  <a id="mid-link" href='#midtown'>10th to 33rd</a> &bull;
+  <a id="down-link" href='#downtown'>Downtown</a> &bull;
   <a id="bk-link" href='#brooklyn'>Brooklyn</a>
 </div>
 
@@ -49,7 +48,7 @@
       $('.tooltip').tooltipster();
       $('.image-link').magnificPopup({type:'image'});
     }
-    
+
     $('#up-link').click(function () {
       $('html,body').animate({scrollTop: $('#uptown').offset().top}, 'slow');
     });
@@ -62,6 +61,6 @@
     $('#bk-link').click(function () {
       $('html,body').animate({scrollTop: $('#brooklyn').offset().top}, 'slow');
     });
-    
+
   });
 <% end %>
