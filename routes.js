@@ -133,7 +133,7 @@ module.exports = function routes( app ) {
     .where('lastupdate', '<', moment().subtract(1, 'days').unix())
     .andWhere('lasttweet', '>', moment().startOf('day').unix())
     .then(function( trucks ) {
-      knex.select('images.id', 'images.twitname', 'trucks.id as truckid').debug()
+      knex.select('images.id', 'images.twitname', 'trucks.id as truckid')
       .from('images')
       .innerJoin('trucks', 'images.twitname', 'trucks.twitname')
       .where('images.visibility', '!=', 'public')

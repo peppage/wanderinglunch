@@ -30,7 +30,7 @@ app.use(app.router);
 app.enable('trust proxy');
 
 // development only
-if ('development' == app.get('env')) {
+if ('development' === app.get('env')) {
   app.use(express.errorHandler());
 }
 
@@ -42,14 +42,14 @@ http.createServer(app).listen(app.get('port'), function(){
 
 
 app.configure(function () {
-    app.use(lessMiddleware({
-        src: __dirname + '/public',
-        compress: true,
-        force: false,
-        once: true,
-        optimization: 2
-    }));
+  app.use(lessMiddleware({
+      src: __dirname + '/public',
+      compress: true,
+      force: false,
+      once: true,
+      optimization: 2
+  }));
 
 
-    app.use(express.static(path.join(__dirname, 'public'), {maxAge: cacheTime}));
+  app.use(express.static(path.join(__dirname, 'public'), {maxAge: cacheTime}));
 });
