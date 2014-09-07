@@ -1,6 +1,8 @@
 var express = require('express');
 var http = require('http');
 var path = require('path');
+var passport = require('passport');
+var flash = require('connect-flash');
 var ect = require('ect');
 var ectRenderer = ect({
   watch: true,
@@ -14,6 +16,7 @@ var knex = require('knex')(configDB);
 var app = express();
 
 app.set('knex', knex);
+require('./config/passport')(app, passport);
 
 var cacheTime = 2592000000; //30 days
 
@@ -26,6 +29,11 @@ app.use(express.compress());
 app.use(express.favicon(path.join(__dirname, 'public/images/favicon.ico')));
 app.use(express.logger('dev'));
 app.use(express.methodOverride());
+app.use(express.cookieParser());
+app.use(express.session({secret: 'Ought&Fence&34&&'}));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
 app.use(app.router);
 app.enable('trust proxy');
 
@@ -34,7 +42,7 @@ if ('development' === app.get('env')) {
   app.use(express.errorHandler());
 }
 
-require('./routes.js')(app);
+require('./routes.js')(app, passport);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

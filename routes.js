@@ -1,15 +1,15 @@
-var express = require( 'express' );
 var moment = require('moment');
 var async = require('async');
 var statics = require('./routes/statics');
 
-module.exports = function routes( app ) {
+module.exports = function routes( app, passport ) {
   var knex = app.get( 'knex' );
   var validImages = knex('images')
       .select('twitname', 'suffix')
       .where({ menu: true, visibility: 'public'});
 
   require('./routes/statics')(app);
+  require('./routes/admin')(app, passport);
 
   app.get('/', function index( req, res ) {
     var data = [];

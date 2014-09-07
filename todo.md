@@ -1,6 +1,4 @@
 - update to express 4
-- move from PG to Knex
-- create login system
 - reorganize file structure
 - possible move getTrucks from python to javascript?
 - redo how clean up tweets is happening, move to DB
