@@ -12,13 +12,13 @@ module.exports = function passportConfig( app, passport ) {
 
   passport.deserializeUser(function ( id, done ) {
     knex('users').where({ 'id': id })
-      .then(function ( model ) {
-        if ( model[0] === undefined ) {
-          done( true, model[0] );
-        } else {
-          done( null, model[0] );
-        }
-      });
+    .then(function ( model ) {
+      if ( model[0] === undefined ) {
+        done( true, model[0] );
+      } else {
+        done( null, model[0] );
+      }
+    });
   });
 
   passport.use( 'local-signup', new LocalStrategy ({
@@ -29,27 +29,27 @@ module.exports = function passportConfig( app, passport ) {
   function signup( req, email, password, done ) {
     process.nextTick(function () {
       knex('users').where({ 'email': email })
-        .then(function ( model ) {
-          if ( model[0] !== undefined ) {
-            return done(
-              null,
-              false,
-              req.flash( 'signupMessage', 'That email is already taken' )
-            );
-          } else {
-            knex('users').insert({
-              'email': email,
-              'password': Bcrypt.hashSync(password, Bcrypt.genSaltSync(8), null)
-            })
-            .returning('*')
-            .then(function ( saveduser ) {
-              return done( null, saveduser[0] );
-            })
-            .catch(function(error) {
-              console.log(error);
-            });
-          }
-        });
+      .then(function ( model ) {
+        if ( model[0] !== undefined ) {
+          return done(
+            null,
+            false,
+            req.flash( 'signupMessage', 'That email is already taken' )
+          );
+        } else {
+          knex('users').insert({
+            'email': email,
+            'password': Bcrypt.hashSync(password, Bcrypt.genSaltSync(8), null)
+          })
+          .returning('*')
+          .then(function ( saveduser ) {
+            return done( null, saveduser[0] );
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
+        }
+      });
     });
   }));
 
@@ -60,24 +60,24 @@ module.exports = function passportConfig( app, passport ) {
   },
   function login( req, email, password, done ) {
     knex('users').where({ 'email': email })
-      .then(function ( model ) {
-        if ( model[0] === undefined ) {
-          return done(
-            null,
-            false,
-            req.flash( 'loginMessage', 'No user found.' )
-          );
-        }
+    .then(function ( model ) {
+      if ( model[0] === undefined ) {
+        return done(
+          null,
+          false,
+          req.flash( 'loginMessage', 'No user found.' )
+        );
+      }
 
-        if ( !Bcrypt.compareSync(password, model[0].password) ) {
-          return done(
-            null,
-            false,
-            req.flash( 'loginMessage', 'Wrong password' )
-          );
-        }
+      if ( !Bcrypt.compareSync(password, model[0].password) ) {
+        return done(
+          null,
+          false,
+          req.flash( 'loginMessage', 'Wrong password' )
+        );
+      }
 
-        return done( null, model[0] );
-      });
+      return done( null, model[0] );
+    });
   }));
 };
