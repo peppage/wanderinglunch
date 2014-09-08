@@ -1,0 +1,98 @@
+<% extend 'includes/base.ect' %>
+
+<% include 'admin/includes/menu.ect' %>
+
+<h1>Add Truck</h1>
+
+<div class="form">
+  <div class="form-group">
+    <label for="id">Id</label>
+    <input id="id" type="text" class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input id="name" type="text" class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="twitname">Twitname</label>
+    <input id="twitname" type="text" class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="weburl">WebUrl</label>
+    <input id="weburl" type="text" class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="regex">Regex</label>
+    <input id="regex" type="text" class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="type">Type</label>
+    <input id="type" type="text" class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="about">About</label>
+    <input id="about" type="text" class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="foursquare">Foursquare</label>
+    <input id="foursquare" type="text" class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="matcher">Matcher</label>
+    <input id="matcher" type="text" class="form-control">
+  </div>
+
+  <button id="add" type="button">Add</button>
+</div>
+
+<h2>Trucks</h2>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Location</th>
+    <th> </th>
+  </tr>
+  <% for truck in @trucks : %>
+    <tr>
+      <td><%- truck.name %></td>
+      <td><%- truck.location %></td>
+      <td><a href="/admin/trucks/edit/<%- truck.id %>">Edit</a>
+    </tr>
+  <% end %>
+</table>
+<% if @page != 0: %>
+  <a href="/admin/trucks/<% @page-1 %>">Prev Page</a>
+<% end %>
+<% if @trucks.length == 10 : %>
+  <a href="/admin/trucks/<%- @page+1 %>">Next Page</a>
+<% end %>
+
+<% block 'scripts' : %>
+    $('#add').click(function() {
+      $.ajax({
+        url: '/admin/trucks/add',
+        type: 'POST',
+        data: {
+          id: $('#id').val(),
+          name: $('#name').val(),
+          twitname: $('#twitname').val(),
+          weburl: $('#weburl').val(),
+          matcher: $('#matcher').val(),
+          regex: $('#regex').val(),
+          type: $('#type').val(),
+          about: $('#about').val(),
+          foursquare: $('#foursquare').val()
+        },
+        success: function(data, textStatus) {
+          window.location.href = '/admin/trucks';
+        },
+        statusCode: {
+          418: function(data) {
+            console.log(data.responsiveText);
+          }
+        }
+      }).done(function(data) {
+
+      });
+    });
+<% end %>

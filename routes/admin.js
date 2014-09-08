@@ -4,6 +4,9 @@ var passHelper = require( '../util/passport-helper' );
 module.exports = function adminRoutes( app, passport ) {
   var knex = app.get( 'knex' );
 
+  require( './subs' )(app);
+  require( './trucks' )(app);
+
   app.get( '/login', function login( req, res ) {
     res.render( 'admin/login.ect', {
       title: 'Log in',
@@ -46,25 +49,6 @@ module.exports = function adminRoutes( app, passport ) {
 
     });
   });
-
-  app.get( '/admin/subs' , passHelper.isLoggedIn,
-    function subs( req, res ) {
-      res.render( 'admin/subs.ect');
-    }
-  );
-
-  app.post( '/admin/subs/add', [express.urlencoded(), passHelper.isLoggedIn],
-    function subsAdd( req, res ) {
-      knex('subs').insert({
-        regex: req.body.regex,
-        replacement: req.body.replacement
-      })
-      .then(res.send(200))
-      .catch(function( error ) {
-        res.send(418);
-      });
-    }
-  );
 
   app.get('/admin/debug', passHelper.isLoggedIn, function debug( req, res ) {
     knex('trucks')

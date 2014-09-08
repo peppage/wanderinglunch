@@ -2,57 +2,36 @@
 
 <% include 'admin/includes/menu.ect' %>
 
-<h1>Add substitutions</h1>
+<h1>Edit substitution</h1>
 
 <p>Some words need to be substituted inside a tweet, add them here</p>
 
 <div class="form">
   <div class="form-group">
     <label for="regex">Regular Expression</label>
-    <input id="regex" type="text" class="form-control">
+    <input id="regex" type="text" class="form-control" value="<%- @sub.regex %>">
   </div>
   <div class="form-group">
     <label for="replace">Replacement Text</label>
-    <input id="replace" type="text" class="form-control">
+    <input id="replace" type="text" class="form-control" value="<%- @sub.replacement %>">
   </div>
 
-  <button id="add" type="button">Add</button>
+  <button id="save" type="button">Save</button>
 </div>
-
-<h2>Showing the subs here</h2>
-<table>
-  <tr>
-    <th>Regex</th>
-    <th>Substitution</th>
-    <th> </th>
-  </tr>
-  <% for sub in @subs : %>
-    <tr>
-      <td><%- sub.regex %></td>
-      <td><%- sub.replacement %></td>
-      <td><a href="/admin/subs/edit/<%- sub.id %>">Edit</a>
-    </tr>
-  <% end %>
-</table>
-<% if @page != 0: %>
-  <a href="/admin/subs/<% @page-1 %>">Prev Page</a>
-<% end %>
-<% if @subs.length == 10 : %>
-  <a href="/admin/subs/<%- @page+1 %>">Next Page</a>
-<% end %>
 
 <% block 'scripts' : %>
   $(document).ready(function() {
-    $('#add').click(function() {
+    $('#save').click(function() {
       $.ajax({
-        url: '/admin/subs/add',
+        url: '/admin/subs/save',
         type: 'POST',
         data: {
+          id: <%- @sub.id %>,
           regex: $('#regex').val(),
           replacement: $('#replace').val()
         },
         success: function(data, textStatus) {
-          console.log('yay');
+          window.location.href = '/admin/subs';
         },
         statusCode: {
           418: function(data) {

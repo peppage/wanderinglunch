@@ -1,0 +1,73 @@
+<% extend 'includes/base.ect' %>
+
+<% include 'admin/includes/menu.ect' %>
+
+<h1>Edit Truck</h1>
+
+<div class="form">
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input id="name" type="text" class="form-control" value="<%- @truck.name %>">
+  </div>
+  <div class="form-group">
+    <label for="twitname">Twitname</label>
+    <input id="twitname" type="text" class="form-control" value="<%- @truck.twitname %>">
+  </div>
+  <div class="form-group">
+    <label for="weburl">Web URL</label>
+    <input id="weburl" type="text" class="form-control" value="<%- @truck.weburl %>">
+  </div>
+  <div class="form-group">
+    <label for="matcher">Tweet</label>
+    <input id="matcher" type="text" class="form-control" value="<%- @truck.matcher %>">
+  </div>
+  <div class="form-group">
+    <label for="regex">Regex</label>
+    <input id="regex" type="text" class="form-control" value="<%- @truck.regex %>">
+  </div>
+  <div class="form-group">
+    <label for="type">Type</label>
+    <input id="type" type="text" class="form-control" value="<%- @truck.type %>">
+  </div>
+  <div class="form-group">
+    <label for="about">About</label>
+    <input id="about" type="text" class="form-control" value="<%- @truck.about %>">
+  </div>
+  <div class="form-group">
+    <label for="foursquare">Foursquare</label>
+    <input id="foursquare" type="text" class="form-control" value="<%- @truck.foursquare %>">
+  </div>
+
+  <button id="save" type="button">Save</button>
+</div>
+
+
+<% block 'scripts' : %>
+    $('#save').click(function() {
+      $.ajax({
+        url: '/admin/trucks/save',
+        type: 'POST',
+        data: {
+          id: '<%- @truck.id %>',
+          name: $('#name').val(),
+          twitname: $('#twitname').val(),
+          weburl: $('#weburl').val(),
+          matcher: $('#matcher').val(),
+          regex: $('#regex').val(),
+          type: $('#type').val(),
+          about: $('#about').val(),
+          foursquare: $('#foursquare').val()
+        },
+        success: function(data, textStatus) {
+          window.location.href = '/admin/trucks';
+        },
+        statusCode: {
+          418: function(data) {
+            console.log(data.responsiveText);
+          }
+        }
+      }).done(function(data) {
+
+      });
+    });
+<% end %>
