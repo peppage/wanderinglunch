@@ -11,7 +11,12 @@
 - new column in trucks that matches up with id in intersections
 - admin area
     - if no match is found from table show possible matches and let the user add them to the DB
-    - also allow for additional cleanup additions
+    - delete trucks
+    - edit locations
+    - add images
+    - delete images
+- convert to bootstrap (sigh)
+- at least rewrite the python script (confusing now)
 
 == OLD ==
 - Voting to confirm location

@@ -29,9 +29,6 @@ twit = Twitter(
 conn = psycopg2.connect("dbname=foodtruck")
 saveCursor = conn.cursor()
 
-conn2 = psycopg2.connect("dbname=foodtruck")
-tweetsCursor = conn2.cursor()
-
 def doAllTrucks():
     """ Run through all the trucks and try to update them all """
 
@@ -39,7 +36,7 @@ def doAllTrucks():
         cur.execute("SELECT DISTINCT twitname FROM trucks")
 
         # Get all tweets first
-        for twitname in cur:
+        gfor twitname in cur:
             getTweetsFromTwitter(twitname[0])
 
         cur.execute("SELECT * FROM trucks;")
@@ -84,7 +81,7 @@ def getUpdate(truck):
     print address
 
     with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
-      cur.execute("SELECT * from tweets WHERE twitname = '" + twitName + "';")
+      cur.execute("SELECT * from tweets WHERE twitname = '" + twitName + "' order by time desc;")
       tweets = cur.fetchall()
 
       if not tweets is None:  # Make sure we have a list of tweets
@@ -102,7 +99,7 @@ def getUpdate(truck):
                   matcher = truck['matcher']
               except KeyError:
                   matcher = None
-              tweet = getAddressFromTweet(regex, matcher, tweets)
+              tweet = getAddressFromTweet(regex, matcher, tweets, truckId)
               if tweet:
                   address = tweet['address']
 
@@ -224,7 +221,7 @@ def getRegion(address, contents):
     return region
 
 
-def getAddressFromTweet(regex, matcher, tweets):
+def getAddressFromTweet(regex, matcher, tweets, truckId):
     """
     Get the truck location from twitter return the tweet address dict
 
@@ -234,13 +231,56 @@ def getAddressFromTweet(regex, matcher, tweets):
     tweets -- list of tweets from api
 
     """
-    checkingRegex = re.compile("(( |^|\n|w|@)([0-9]{1,3}(nd|th|rd|ave|st)? |adams|amsterdam|atlantic|beckman|bedford|beaver|bleec?ker|bridge|broad|broadwa?y|b'way|bdway|bway|bdwy|(north|n.?) brunswick|canal|charlton|columbus|court|ditmars|fletcher|front|fulton|greenwich|gouverneur|goveneur|grand|greene|hanover|(w.? )?houston|howard|hudson|jay|john|kings?|lafayette|lex|lexington|liberty|lincoln|maiden|mad[^a-z]|madison|madosin|main|mercer|murray|murray hill|(north|n.?) ?end|ocean|old slip|park[^a-z]|pearl|pine|prince|radison|south end|spring|starrett?.?lehigh|vanderbilt|var?ndam|varicks?|vess?ey|wall|washington|water|waverly|west|whitehall|william|york)([^-]*?)(and?|at|between|bw|\+|n|btwn|\/|&|btw.?|bwtn|bet|b\/w|@|b\/t|facing|facing towards|off|near|nr|\()@? ?([0-9]{1,3}(nd|th|rd|ave|st)?|adams|amsterdam|atlantic|beckman|bedford|beaver|bleec?ker|bridge|broad|broadwa?y|b'way|bdway|bway|bdwy|(north|n.?) brunswick|canal|charlton|columbus|court|ditmars|fletcher|front|fulton|greenwich|gouverneur|goveneur|grand|greene|hanover|(w.? )?houston|howard|hudson|jay|john|kings?|lafayette|lex|lexington|liberty|lincoln|maiden|mad|madison|madosin|main|mercer|murray|murray hill|(north|n.?) ?end|ocean|old slip|park|pearl|pine|prince|radison|south end|spring|starrett?.?lehigh|vanderbilt|var?ndam|varicks?|vess?ey|wall|washington|water|waverly|west|whitehall|william|york)(?! price) ?(st.?|street|ave?|avenue|la?ne?|blvd)? ?(and?|at|between|bw|\+|n|btwn|\/|&|btw.?|bwtn|bet|b\/w|@|b\/t|facing|facing towards|off|near|nr|\()?@? ?([0-9]{1,3}(nd|th|rd|ave|st)?|adams|amsterdam|atlantic|beckman|bedford|beaver|bleec?ker|bridge|broad|broadwa?y|b'way|bdway|bway|bdwy|(north|n.?) brunswick|canal|charlton|columbus|court|ditmars|fletcher|front|fulton|greenwich|gouverneur|goveneur|grand|greene|hanover|(w.? )?houston|howard|hudson|jay|john|kings?|lafayette|lex|lexington|liberty|lincoln|maiden|mad|madison|madosin|main|mercer|murray|murray hill|(north|n.?) ?end|ocean|old slip|park|pearl|pine|prince|radison|south end|spring|starrett?.?lehigh|vanderbilt|var?ndam|varicks?|vess?ey|wall|washington|water|waverly|west|whitehall|william|york)? ?(and?|at|between|bw|\+|n|btwn|\/|&|btw.?|bwtn|bet|b\/w|@|b\/t|facing|facing towards|off|near|nr|\()?@? ?([0-9]{1,3}(nd|th|rd|ave|st)?|adams|amsterdam|atlantic|beckman|bedford|beaver|bleec?ker|bridge|broad|broadwa?y|b'way|bdway|bway|bdwy|(north|n.?) brunswick|canal|charlton|columbus|court|ditmars|fletcher|front|fulton|greenwich|gouverneur|goveneur|grand|greene|hanover|(w.? )?houston|howard|hudson|jay|john|kings?|lafayette|lex|lexington|liberty|lincoln|maiden|mad|madison|madosin|main|mercer|murray|murray hill|(north|n.?) ?end|ocean|old slip|park|pearl|pine|prince|radison|south end|spring|starrett?.?lehigh|vanderbilt|var?ndam|varicks?|vess?ey|wall|washington|water|waverly|west|whitehall|william|york)?|coney island ave|brookfieldplny|world finan?cial center|wfc|world ?financial ?center|wfcfoodtrucks|union square west|union sq|starrett?.?lehigh|pier.94|hanover.square|dumboLot|columbia university|south street seaport|queens college|south end ave|industrycity|60 wall|dumbofoodtrucks|@?columbia|brooklyn college|pier 36|wall st|brooklyn navy yard)", re.I)
-    epochMinus8Hours = int(time.time()) - datetime.timedelta(hours=8).total_seconds()
     today = date.today().strftime("X%m/X%d/%y").replace('X0', 'X').replace('X', '')
     today2 = date.today().strftime("X%m/X%d").replace('X0', 'X').replace('X', '')
     today3 = date.today().strftime("%b X%dth").replace('X0', 'X').replace('X', '')
     tomorrow = (datetime.date.today() + datetime.timedelta(days=1)).strftime("X%m/X%d").replace('X0', 'X').replace('X', '')
+    epochMinus8Hours = int(time.time()) - datetime.timedelta(hours=8).total_seconds()
 
+    with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
+      cur.execute("SELECT * from locations;")
+
+      for location in cur:
+        for tweet in tweets:
+          contents = tweet['contents']
+          contents = re.sub(today, "", contents)
+          contents = re.sub(today2, "", contents)
+          contents = re.sub(today3, "", contents)
+
+          with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
+            cur.execute("SELECT * from subs;")
+            for sub in cur:
+              contents = re.sub(sub['regex'], sub['replacement'], contents, flags=re.I)
+
+          # Skip tweets that have tomorrow's date in them
+          hasTomorrow = re.search(tomorrow, contents)
+          if hasTomorrow or re.search("tomorrow", contents):
+              continue
+
+          # This is a list of the future!
+          if re.search('(tue|tues)', contents, flags=re.I) \
+              and re.search('wed', contents, flags=re.I) \
+              and re.search('(thu|thurs)', contents, flags=re.I):
+              continue
+
+          # If we got into tweets that are too old
+          if int(tweet['time']) < epochMinus8Hours:
+              break
+
+          test = re.search(location['matcher'], contents)
+          if test:
+              saveCursor.execute(
+                  """UPDATE trucks SET loc = (%(location)s), lastup = (%(lastupdate)s)
+                  WHERE id = (%(id)s);""",
+                  {
+                      'id' : truckId,
+                      'location': location['id'],
+                      'lastupdate' : int(tweet['time'])
+                  })
+              break
+
+
+    checkingRegex = re.compile("(( |^|\n|w|@)([0-9]{1,3}(nd|th|rd|ave|st)? |adams|amsterdam|atlantic|beckman|bedford|beaver|bleec?ker|bridge|broad|broadwa?y|b'way|bdway|bway|bdwy|(north|n.?) brunswick|canal|charlton|columbus|court|ditmars|fletcher|front|fulton|greenwich|gouverneur|goveneur|grand|greene|hanover|(w.? )?houston|howard|hudson|jay|john|kings?|lafayette|lex|lexington|liberty|lincoln|maiden|mad[^a-z]|madison|madosin|main|mercer|murray|murray hill|(north|n.?) ?end|ocean|old slip|park[^a-z]|pearl|pine|prince|radison|south end|spring|starrett?.?lehigh|vanderbilt|var?ndam|varicks?|vess?ey|wall|washington|water|waverly|west|whitehall|william|york)([^-]*?)(and?|at|between|bw|\+|n|btwn|\/|&|btw.?|bwtn|bet|b\/w|@|b\/t|facing|facing towards|off|near|nr|\()@? ?([0-9]{1,3}(nd|th|rd|ave|st)?|adams|amsterdam|atlantic|beckman|bedford|beaver|bleec?ker|bridge|broad|broadwa?y|b'way|bdway|bway|bdwy|(north|n.?) brunswick|canal|charlton|columbus|court|ditmars|fletcher|front|fulton|greenwich|gouverneur|goveneur|grand|greene|hanover|(w.? )?houston|howard|hudson|jay|john|kings?|lafayette|lex|lexington|liberty|lincoln|maiden|mad|madison|madosin|main|mercer|murray|murray hill|(north|n.?) ?end|ocean|old slip|park|pearl|pine|prince|radison|south end|spring|starrett?.?lehigh|vanderbilt|var?ndam|varicks?|vess?ey|wall|washington|water|waverly|west|whitehall|william|york)(?! price) ?(st.?|street|ave?|avenue|la?ne?|blvd)? ?(and?|at|between|bw|\+|n|btwn|\/|&|btw.?|bwtn|bet|b\/w|@|b\/t|facing|facing towards|off|near|nr|\()?@? ?([0-9]{1,3}(nd|th|rd|ave|st)?|adams|amsterdam|atlantic|beckman|bedford|beaver|bleec?ker|bridge|broad|broadwa?y|b'way|bdway|bway|bdwy|(north|n.?) brunswick|canal|charlton|columbus|court|ditmars|fletcher|front|fulton|greenwich|gouverneur|goveneur|grand|greene|hanover|(w.? )?houston|howard|hudson|jay|john|kings?|lafayette|lex|lexington|liberty|lincoln|maiden|mad|madison|madosin|main|mercer|murray|murray hill|(north|n.?) ?end|ocean|old slip|park|pearl|pine|prince|radison|south end|spring|starrett?.?lehigh|vanderbilt|var?ndam|varicks?|vess?ey|wall|washington|water|waverly|west|whitehall|william|york)? ?(and?|at|between|bw|\+|n|btwn|\/|&|btw.?|bwtn|bet|b\/w|@|b\/t|facing|facing towards|off|near|nr|\()?@? ?([0-9]{1,3}(nd|th|rd|ave|st)?|adams|amsterdam|atlantic|beckman|bedford|beaver|bleec?ker|bridge|broad|broadwa?y|b'way|bdway|bway|bdwy|(north|n.?) brunswick|canal|charlton|columbus|court|ditmars|fletcher|front|fulton|greenwich|gouverneur|goveneur|grand|greene|hanover|(w.? )?houston|howard|hudson|jay|john|kings?|lafayette|lex|lexington|liberty|lincoln|maiden|mad|madison|madosin|main|mercer|murray|murray hill|(north|n.?) ?end|ocean|old slip|park|pearl|pine|prince|radison|south end|spring|starrett?.?lehigh|vanderbilt|var?ndam|varicks?|vess?ey|wall|washington|water|waverly|west|whitehall|william|york)?|coney island ave|brookfieldplny|world finan?cial center|wfc|world ?financial ?center|wfcfoodtrucks|union square west|union sq|starrett?.?lehigh|pier.94|hanover.square|dumboLot|columbia university|south street seaport|queens college|south end ave|industrycity|60 wall|dumbofoodtrucks|@?columbia|brooklyn college|pier 36|wall st|brooklyn navy yard)", re.I)
 
     for tweet in tweets:
         contents = tweet['contents']
@@ -332,11 +372,11 @@ def getTweetsFromTwitter(twitName):
                     %(id)s, %(contents)s, %(time)s, %(retweeted)s, %(twitname)s WHERE NOT EXISTS (
                         SELECT 1 FROM tweets WHERE id=%(id)s);""",
                     {
-                      'id' : tweet['id'],
-                      'contents' : t['contents'],
-                      'time' : t['time'],
-                      'retweeted' : tweet['retweeted'],
-                      'twitname' : twitName
+                        'id' : tweet['id'],
+                        'contents' : t['contents'],
+                        'time' : t['time'],
+                        'retweeted' : tweet['retweeted'],
+                        'twitname' : twitName
                     })
         except psycopg2.IntegrityError:
             print "duplicate"
@@ -363,5 +403,3 @@ else:
 conn.commit()
 saveCursor.close()
 conn.close()
-tweetsCursor.close()
-conn2.close()
