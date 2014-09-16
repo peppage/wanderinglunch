@@ -54,6 +54,50 @@ module.exports = function routes( app, passport ) {
     });
   });
 
+  app.get('/index2', function index( req, res ) {
+    var data = [];
+    data.up = [];
+    data.mid = [];
+    data.none = [];
+    data.bkl = [];
+
+    knex
+    .select(
+      'trucks.id',
+      'name',
+      'trucks.twitname',
+      'tweet',
+      'locations.region',
+      'locations.display',
+      'retweeted',
+      'lastupdate',
+      'suffix'
+    )
+    .from(validImages.clone().as('imgtwit'))
+    .rightJoin('trucks', 'imgtwit.twitname', 'trucks.twitname')
+    .rightJoin('locations', 'locations.id', 'trucks.loc')
+    .where('lastupdate', '>', moment().subtract(8, 'hours').unix())
+    .orderBy('street')
+    .then(function( trucks ) {
+      trucks.forEach(function(truck) {
+        try {
+          data[truck.region].push(truck);
+        }
+        catch (err) {
+          console.log('Region Error ' + err);
+        }
+      });
+      res.render('index2', {
+          title: 'Wandering Lunch: NYC Food Truck Finder',
+          id: '/',
+          upTrucks: data.up,
+          midTrucks: data.mid,
+          downTrucks: data.none,
+          bkTrucks: data.bkl
+      });
+    });
+  });
+
   app.get('/region/:region', function region( req, res ) {
     knex('trucks').where({ 'region': req.param('region') })
     .then(function( trucks ) {
