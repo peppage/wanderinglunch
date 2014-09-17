@@ -14,7 +14,7 @@
           <a class="truck" href="/truck/<%-truck.id%>"><%-truck.name %></a>
         </td>
         <td>
-          <span class="tooltip" title="<%=truck.tweet%>"><%=truck.location %></span>
+          <span class="tooltip" title="<%=truck.tweet%>"><%=truck.display %></span>
         </td>
         <td>
           <%- moment.unix(truck.lastupdate).fromNow() %>

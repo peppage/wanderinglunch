@@ -20,49 +20,6 @@ module.exports = function routes( app, passport ) {
 
     knex
     .select(
-      'id',
-      'name',
-      'trucks.twitname',
-      'tweet',
-      'location',
-      'region',
-      'retweeted',
-      'lastupdate',
-      'suffix'
-    )
-    .from(validImages.clone().as('imgtwit'))
-    .rightJoin('trucks', 'imgtwit.twitname', 'trucks.twitname')
-    .where('lastupdate', '>', moment().subtract(8, 'hours').unix())
-    .orderBy('street')
-    .then(function( trucks ) {
-      trucks.forEach(function(truck) {
-        try {
-          data[truck.region].push(truck);
-        }
-        catch (err) {
-          console.log('Region Error ' + err);
-        }
-      });
-      res.render('index', {
-          title: 'Wandering Lunch: NYC Food Truck Finder',
-          id: '/',
-          upTrucks: data.up,
-          midTrucks: data.mid,
-          downTrucks: data.none,
-          bkTrucks: data.bkl
-      });
-    });
-  });
-
-  app.get('/index2', function index( req, res ) {
-    var data = [];
-    data.up = [];
-    data.mid = [];
-    data.none = [];
-    data.bkl = [];
-
-    knex
-    .select(
       'trucks.id',
       'name',
       'trucks.twitname',
@@ -77,7 +34,7 @@ module.exports = function routes( app, passport ) {
     .rightJoin('trucks', 'imgtwit.twitname', 'trucks.twitname')
     .rightJoin('locations', 'locations.id', 'trucks.loc')
     .where('lastupdate', '>', moment().subtract(8, 'hours').unix())
-    .orderBy('street')
+    .orderBy('lat')
     .then(function( trucks ) {
       trucks.forEach(function(truck) {
         try {
@@ -87,7 +44,7 @@ module.exports = function routes( app, passport ) {
           console.log('Region Error ' + err);
         }
       });
-      res.render('index2', {
+      res.render('index', {
           title: 'Wandering Lunch: NYC Food Truck Finder',
           id: '/',
           upTrucks: data.up,
@@ -112,18 +69,19 @@ module.exports = function routes( app, passport ) {
   app.get('/truck/:id', function trucks( req, res ) {
     knex('trucks')
     .select(
-      'id',
+      'trucks.id',
       'name',
       'tweet',
+      'display',
       'twitname',
-      'location',
       'lastupdate',
       'about',
       'weburl',
       'type',
       'foursquare'
     )
-    .where({ id: req.param('id') })
+    .leftJoin('locations', 'trucks.loc', 'locations.id')
+    .where({ 'trucks.id': req.param('id') })
     .then(function( truck ) {
       knex('tweets').where({ twitname: truck[0].twitname })
       .orderBy('time', 'desc').limit(6)
@@ -152,16 +110,17 @@ module.exports = function routes( app, passport ) {
   app.get('/alltrucks', function allTrucks( req, res ) {
     knex
     .select(
-      'id',
+      'trucks.id',
       'name',
       'tweet',
       'trucks.twitname',
-      'location',
+      'locations.display',
       'lastupdate',
       'suffix'
     )
     .from(validImages.clone().as('imgtwit'))
     .rightJoin('trucks', 'imgtwit.twitname', 'trucks.twitname')
+    .leftJoin('locations', 'locations.id', 'trucks.loc')
     .orderBy('name')
     .then(function( trucks ) {
       res.render('alltrucks', {

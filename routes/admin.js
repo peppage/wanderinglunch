@@ -6,6 +6,7 @@ module.exports = function adminRoutes( app, passport ) {
 
   require( './subs' )(app);
   require( './trucks' )(app);
+  require( './location' )(app);
 
   app.get( '/login', function login( req, res ) {
     res.render( 'admin/login.ect', {
@@ -29,11 +30,13 @@ module.exports = function adminRoutes( app, passport ) {
   });
 
   app.get( '/signup', function signup( req, res ) {
+    res.send(404);
+    /*
     res.render( 'admin/signup.ect', {
       title: 'Sign up',
       section: 'signup',
       message: req.flash( 'signupMessage' )
-    });
+    });*/
   });
 
   app.post( '/signup', express.urlencoded(),
@@ -45,28 +48,75 @@ module.exports = function adminRoutes( app, passport ) {
   );
 
   app.get( '/admin', passHelper.isLoggedIn, function admin( req, res ) {
-    res.render( 'admin/admin.ect', {
-
-    });
-  });
-
-  app.get('/admin/debug', passHelper.isLoggedIn, function debug( req, res ) {
     knex('trucks')
-    .where('lastupdate', '<', moment().subtract(1, 'days').unix())
+    .select('twitname', 'id')
+    .where('lastup', '<', moment().subtract(1, 'days').unix())
     .andWhere('lasttweet', '>', moment().startOf('day').unix())
     .then(function( trucks ) {
-      knex.select('images.id', 'images.twitname', 'trucks.id as truckid')
-      .from('images')
-      .innerJoin('trucks', 'images.twitname', 'trucks.twitname')
-      .where('images.visibility', '!=', 'public')
-      .then(function( images ) {
-        res.render('admin/debug', {
-          title: 'Wandering Lunch: NYC Food Truck Finder | debug',
-          id: 'debug',
-          trucks : trucks,
-          images: images
-        });
+      res.render('admin/admin', {
+        title: 'Wandering Lunch: NYC Food Truck Finder | admin',
+        id: 'admin',
+        trucks : trucks
       });
     });
   });
+
+  app.get('/admin/images', passHelper.isLoggedIn, function images( req, res) {
+    knex.select('images.id', 'images.twitname', 'trucks.id as truckid')
+    .from('images')
+    .innerJoin('trucks', 'images.twitname', 'trucks.twitname')
+    .where('images.visibility', '!=', 'public')
+    .then(function( images ) {
+      res.render('admin/images', {
+        title: 'Wandering Lunch: NYC Food Truck Finder | invalid images',
+        id: 'images',
+        images: images
+      });
+    });
+  });
+
+  app.get('/admin/fix/:twitname/:page?', passHelper.isLoggedIn,
+    function fix( req, res ) {
+      if(req.param('page')) {
+        page = parseInt(req.param('page'));
+      }
+      else {
+        page = 0;
+      }
+
+      knex('tweets')
+      .where({ 'twitname': req.param('twitname') })
+      .limit(10)
+      .offset(page * 10)
+      .orderBy('time', 'desc')
+      .then(function( tweets ) {
+        res.render('admin/fix', {
+          title: 'Wandering Lunch: NYC Food Truck Finder | fixing a truck',
+          id: 'fix',
+          twitname: req.param('twitname'),
+          tweets: tweets,
+          page: page
+        });
+      });
+    }
+  );
+
+  app.post('/admin/tweet/convert',
+    [express.urlencoded(), passHelper.isLoggedIn],
+    function convert( req, res ) {
+      knex('tweets').select('contents')
+      .where({ id: req.body.id })
+      .then(function( tweet ) {
+        contents = tweet[0].contents;
+        knex('subs')
+        .then(function( subs) {
+          subs.forEach(function(sub) {
+            var re = new RegExp(sub.regex, 'gi');
+            contents = contents.replace(re, sub.replacement);
+          });
+          res.send(200, contents);
+        });
+      });
+    }
+  );
 };

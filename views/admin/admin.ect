@@ -3,3 +3,8 @@
 <% include 'admin/includes/menu.ect' %>
 
 <h1>This is the admin area</h1>
+
+<h2>Trucks that require attention</h2>
+<% for truck in @trucks: %>
+  <a href="/admin/fix/<%- truck.twitname %>"><%- truck.twitname %> (<%- truck.id %>)</a><br>
+<% end %>

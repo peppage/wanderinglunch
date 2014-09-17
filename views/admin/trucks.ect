@@ -61,10 +61,10 @@
   <% end %>
 </table>
 <% if @page != 0: %>
-  <a href="/admin/trucks/<% @page-1 %>">Prev Page</a>
+  <a href="/admin/trucks/<%- parseInt(@page, 10) - 1 %>">Prev Page</a>
 <% end %>
 <% if @trucks.length == 10 : %>
-  <a href="/admin/trucks/<%- @page+1 %>">Next Page</a>
+  <a href="/admin/trucks/<%- parseInt(@page, 10) + 1 %>">Next Page</a>
 <% end %>
 
 <% block 'scripts' : %>

@@ -29,6 +29,17 @@ twit = Twitter(
 conn = psycopg2.connect("dbname=foodtruck")
 saveCursor = conn.cursor()
 
+class Location:
+  """
+
+  """
+  def __init__(self, id, location):
+      self.id = id
+      self.location = location
+
+  def __repr__(self):
+      return repr((self.id, self.location))
+
 def doAllTrucks():
     """ Run through all the trucks and try to update them all """
 
@@ -36,7 +47,7 @@ def doAllTrucks():
         cur.execute("SELECT DISTINCT twitname FROM trucks")
 
         # Get all tweets first
-        gfor twitname in cur:
+        for twitname in cur:
             getTweetsFromTwitter(twitname[0])
 
         cur.execute("SELECT * FROM trucks;")
@@ -45,11 +56,18 @@ def doAllTrucks():
         for truck in cur:
             print truck['twitname']
             print truck['name']
-            getUpdate(truck)
+            search(truck)
+            #getUpdate(truck)
 
 
 def doTruck(twitterHandle):
-    """ Given the truck name update just this one """
+    """ Given the twitter find all trucks associated in the db
+    and update them.
+
+    Keyword arguments:
+    twitterHandle -- The truck's twitter
+
+    """
 
     with conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as cur:
         cur.execute("SELECT * FROM trucks WHERE twitname = '" + twitterHandle + "';")
@@ -57,8 +75,137 @@ def doTruck(twitterHandle):
             print truck['twitname']
             print truck['name']
             getTweetsFromTwitter(truck['twitname'])
-            getUpdate(truck)
+            search(truck)
+            #getUpdate(truck)
 
+
+def findLocations(contents):
+    """ Search the contents of a tweet for an address
+
+    Keyword arguments:
+    contents -- a cleaned tweet
+
+    """
+    locations = []
+    with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
+      cur.execute("SELECT * from locations;")
+
+      for location in cur:
+          searchResult = re.search(location['matcher'], contents, re.I)
+          if searchResult:
+              locations.insert(0, Location(location['id'], searchResult))
+
+    return locations
+
+def cleanTweet(contents):
+    """ Run through the substitutions table and clean the tweet
+
+    Keyword arguments:
+    contents -- contents of a dirty tweet
+
+    """
+    with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
+      cur.execute("SELECT * from subs;")
+      for sub in cur:
+        contents = re.sub(sub['regex'], sub['replacement'], contents, flags=re.I)
+
+    return contents
+
+def search(truck):
+    """ Get the tweets for a truck from the database and if the tweet shouldn't
+    be skipped clean the tweet and find the location. If a location is found
+    save it to the database.
+
+    Keyword arguments:
+    twitname -- the twit name of the truck to find a location of
+
+    """
+    epochMinus8Hours = int(time.time()) - datetime.timedelta(hours=8).total_seconds()
+    tomorrow = (datetime.date.today() + datetime.timedelta(days=1)).strftime("X%m/X%d").replace('X0', 'X').replace('X', '')
+
+    with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
+        cur.execute("SELECT * from tweets WHERE twitname = '" + truck['twitname'] + "' order by time desc;")
+        tweets = cur.fetchall()
+
+    for tweet in tweets:
+        contents = tweet['contents']
+        # Skip tweets that have tomorrow's date in them
+        hasTomorrow = re.search(tomorrow, contents)
+        if hasTomorrow or re.search("tomorrow", contents):
+            print "that tweet is happening tomorrow"
+            continue
+
+        # This is a list of the future!
+        if re.search('(tue|tues)', contents, flags=re.I) \
+            and re.search('wed', contents, flags=re.I) \
+            and re.search('(thu|thurs)', contents, flags=re.I):
+            print "that tweet is a list"
+            continue
+
+        # If we got into tweets that are too old
+        if int(tweet['time']) < epochMinus8Hours:
+              break
+
+        # If the tweet must contain a matcher
+        if truck['matchmethod'] == "contains":
+            if not methodContains(contents, truck['matcher']):
+                continue
+
+        contents = cleanTweet(contents)
+
+        location = False
+        locations = findLocations(contents)
+        if len(locations) == 1:
+            if truck['matchmethod'] == "two":
+                if int(truck['matcher']) == 1:
+                    location = locations[0]
+                else:
+                    break
+        elif len(locations) > 1:
+            if truck['matchmethod'] == "before":
+                location = methodBefore(contents, truck['matcher'], locations)
+            elif truck['matchmethod'] == "two":
+                location = locations[int(truck['matcher']) - 1]
+            else:
+                print "Something is wrong, improper matchmethod"
+
+        if location:
+            saveCursor.execute(
+                """UPDATE trucks SET loc = (%(location)s), lastupdate = (%(lastupdate)s)
+                WHERE id = (%(id)s);""",
+                {
+                    'id' : truck['id'],
+                    'location': location.id,
+                    'lastupdate' : int(tweet['time'])
+                })
+            break
+
+def methodBefore(tweet, matcher, locations):
+    """ For twitters that facility multiple trucks.
+    Find the matcher before the location and that's your correct location.
+
+    Keyword arguments:
+    tweet -- tweet with the locations
+    matcher -- what to find before the location
+    locations -- all locations found in tweet
+
+    """
+
+    for location in locations:
+      matchFound = re.search(matcher, tweet, re.I)
+      if matchFound and matchFound.start() < location.location.start():
+          return location
+
+    return False
+
+def methodContains(tweet, matcher):
+    """
+
+    """
+    if re.search(matcher, tweet, re.I):
+        return True
+    else:
+        return False
 
 def getUpdate(truck):
     """ Get the information on the given truck and update the db """
@@ -67,6 +214,7 @@ def getUpdate(truck):
     truckId = truck['id']
     address = ""
 
+    # Doing this class bullshit is now useless
     try:
         custom = __import__('trucks.' + twitName, fromlist=[twitName])
         c = getattr(custom, twitName)
@@ -135,6 +283,8 @@ def getUpdate(truck):
 def compareToTweet(address, tweets):
     """ Compare an address with tweets return the matched tweet dict.
 
+    This only happens if we do the class bullshit (this is useless)
+
     Keyword arguments:
     address -- the address to compare
     tweets -- a list of tweets from the api
@@ -183,6 +333,8 @@ def compareToTweet(address, tweets):
 def getRegion(address, contents):
     """ Get the region in NYC the truck is in
 
+    This is also useless because region is tied to a location
+
     Keyword arguments:
     address -- the address the truck is currently at
     contents -- the entire contents of the tweet from the truck
@@ -220,7 +372,6 @@ def getRegion(address, contents):
 
     return region
 
-
 def getAddressFromTweet(regex, matcher, tweets, truckId):
     """
     Get the truck location from twitter return the tweet address dict
@@ -236,49 +387,6 @@ def getAddressFromTweet(regex, matcher, tweets, truckId):
     today3 = date.today().strftime("%b X%dth").replace('X0', 'X').replace('X', '')
     tomorrow = (datetime.date.today() + datetime.timedelta(days=1)).strftime("X%m/X%d").replace('X0', 'X').replace('X', '')
     epochMinus8Hours = int(time.time()) - datetime.timedelta(hours=8).total_seconds()
-
-    with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
-      cur.execute("SELECT * from locations;")
-
-      for location in cur:
-        for tweet in tweets:
-          contents = tweet['contents']
-          contents = re.sub(today, "", contents)
-          contents = re.sub(today2, "", contents)
-          contents = re.sub(today3, "", contents)
-
-          with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
-            cur.execute("SELECT * from subs;")
-            for sub in cur:
-              contents = re.sub(sub['regex'], sub['replacement'], contents, flags=re.I)
-
-          # Skip tweets that have tomorrow's date in them
-          hasTomorrow = re.search(tomorrow, contents)
-          if hasTomorrow or re.search("tomorrow", contents):
-              continue
-
-          # This is a list of the future!
-          if re.search('(tue|tues)', contents, flags=re.I) \
-              and re.search('wed', contents, flags=re.I) \
-              and re.search('(thu|thurs)', contents, flags=re.I):
-              continue
-
-          # If we got into tweets that are too old
-          if int(tweet['time']) < epochMinus8Hours:
-              break
-
-          test = re.search(location['matcher'], contents)
-          if test:
-              saveCursor.execute(
-                  """UPDATE trucks SET loc = (%(location)s), lastup = (%(lastupdate)s)
-                  WHERE id = (%(id)s);""",
-                  {
-                      'id' : truckId,
-                      'location': location['id'],
-                      'lastupdate' : int(tweet['time'])
-                  })
-              break
-
 
     checkingRegex = re.compile("(( |^|\n|w|@)([0-9]{1,3}(nd|th|rd|ave|st)? |adams|amsterdam|atlantic|beckman|bedford|beaver|bleec?ker|bridge|broad|broadwa?y|b'way|bdway|bway|bdwy|(north|n.?) brunswick|canal|charlton|columbus|court|ditmars|fletcher|front|fulton|greenwich|gouverneur|goveneur|grand|greene|hanover|(w.? )?houston|howard|hudson|jay|john|kings?|lafayette|lex|lexington|liberty|lincoln|maiden|mad[^a-z]|madison|madosin|main|mercer|murray|murray hill|(north|n.?) ?end|ocean|old slip|park[^a-z]|pearl|pine|prince|radison|south end|spring|starrett?.?lehigh|vanderbilt|var?ndam|varicks?|vess?ey|wall|washington|water|waverly|west|whitehall|william|york)([^-]*?)(and?|at|between|bw|\+|n|btwn|\/|&|btw.?|bwtn|bet|b\/w|@|b\/t|facing|facing towards|off|near|nr|\()@? ?([0-9]{1,3}(nd|th|rd|ave|st)?|adams|amsterdam|atlantic|beckman|bedford|beaver|bleec?ker|bridge|broad|broadwa?y|b'way|bdway|bway|bdwy|(north|n.?) brunswick|canal|charlton|columbus|court|ditmars|fletcher|front|fulton|greenwich|gouverneur|goveneur|grand|greene|hanover|(w.? )?houston|howard|hudson|jay|john|kings?|lafayette|lex|lexington|liberty|lincoln|maiden|mad|madison|madosin|main|mercer|murray|murray hill|(north|n.?) ?end|ocean|old slip|park|pearl|pine|prince|radison|south end|spring|starrett?.?lehigh|vanderbilt|var?ndam|varicks?|vess?ey|wall|washington|water|waverly|west|whitehall|william|york)(?! price) ?(st.?|street|ave?|avenue|la?ne?|blvd)? ?(and?|at|between|bw|\+|n|btwn|\/|&|btw.?|bwtn|bet|b\/w|@|b\/t|facing|facing towards|off|near|nr|\()?@? ?([0-9]{1,3}(nd|th|rd|ave|st)?|adams|amsterdam|atlantic|beckman|bedford|beaver|bleec?ker|bridge|broad|broadwa?y|b'way|bdway|bway|bdwy|(north|n.?) brunswick|canal|charlton|columbus|court|ditmars|fletcher|front|fulton|greenwich|gouverneur|goveneur|grand|greene|hanover|(w.? )?houston|howard|hudson|jay|john|kings?|lafayette|lex|lexington|liberty|lincoln|maiden|mad|madison|madosin|main|mercer|murray|murray hill|(north|n.?) ?end|ocean|old slip|park|pearl|pine|prince|radison|south end|spring|starrett?.?lehigh|vanderbilt|var?ndam|varicks?|vess?ey|wall|washington|water|waverly|west|whitehall|william|york)? ?(and?|at|between|bw|\+|n|btwn|\/|&|btw.?|bwtn|bet|b\/w|@|b\/t|facing|facing towards|off|near|nr|\()?@? ?([0-9]{1,3}(nd|th|rd|ave|st)?|adams|amsterdam|atlantic|beckman|bedford|beaver|bleec?ker|bridge|broad|broadwa?y|b'way|bdway|bway|bdwy|(north|n.?) brunswick|canal|charlton|columbus|court|ditmars|fletcher|front|fulton|greenwich|gouverneur|goveneur|grand|greene|hanover|(w.? )?houston|howard|hudson|jay|john|kings?|lafayette|lex|lexington|liberty|lincoln|maiden|mad|madison|madosin|main|mercer|murray|murray hill|(north|n.?) ?end|ocean|old slip|park|pearl|pine|prince|radison|south end|spring|starrett?.?lehigh|vanderbilt|var?ndam|varicks?|vess?ey|wall|washington|water|waverly|west|whitehall|william|york)?|coney island ave|brookfieldplny|world finan?cial center|wfc|world ?financial ?center|wfcfoodtrucks|union square west|union sq|starrett?.?lehigh|pier.94|hanover.square|dumboLot|columbia university|south street seaport|queens college|south end ave|industrycity|60 wall|dumbofoodtrucks|@?columbia|brooklyn college|pier 36|wall st|brooklyn navy yard)", re.I)
 
@@ -343,7 +451,7 @@ def getAddressFromTweet(regex, matcher, tweets, truckId):
 
 def getTweetsFromTwitter(twitName):
     """
-    Get the latest tweets by scraping, return list of tweet dict
+    Store the latest tweets into the database
 
     Keyword arguments:
     twitName -- the twitter name to get tweets from
@@ -353,7 +461,7 @@ def getTweetsFromTwitter(twitName):
     try:
         resp = twit.statuses.user_timeline(screen_name=twitName, count=20, exclude_replies=0)
     except TwitterHTTPError:
-        print "error getting tweets"
+        print "error getting tweets " + twitName
         return None
 
     for tweet in resp:
@@ -391,6 +499,7 @@ def getTweetsFromTwitter(twitName):
     return scrapedTweets
 
 
+# de fuck? This is pointless now
 def findtags(tag_prefix, tagged_text):
     cfd = nltk.ConditionalFreqDist((tag, word) for (word, tag) in tagged_text if tag.startswith(tag_prefix))
     return dict((tag, cfd[tag].keys()[:5]) for tag in cfd.conditions())

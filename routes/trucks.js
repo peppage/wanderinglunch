@@ -7,7 +7,7 @@ module.exports = function truckRoutes( app, passport ) {
   app.get( '/admin/trucks/:page?', passHelper.isLoggedIn,
     function (req, res) {
       if(req.param('page')) {
-        page = req.param('page');
+        page = parseInt(req.param('page'));
       }
       else {
         page = 0;
@@ -15,7 +15,7 @@ module.exports = function truckRoutes( app, passport ) {
       knex('trucks')
       .orderBy('id')
       .limit(10)
-      .offset(page)
+      .offset(page * 10)
       .then(function( trucks ) {
         res.render( 'admin/trucks.ect', {
           trucks: trucks,

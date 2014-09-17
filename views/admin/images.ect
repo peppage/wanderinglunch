@@ -1,0 +1,10 @@
+<% extend 'includes/base.ect' %>
+
+<% include 'admin/includes/menu.ect' %>
+
+<div style="padding-top: 15px">
+    <h1 class="centerText">Invalid images</h1>
+    <% for img in @images : %>
+        <a href="/truck/<%- img.truckid %>"><%- img.twitname %></a> : <%- img.id %> <br />
+    <% end %>
+</div>

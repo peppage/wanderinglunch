@@ -1,0 +1,74 @@
+<% extend 'includes/base.ect' %>
+
+<% include 'admin/includes/menu.ect' %>
+
+<h1>Tweets for <%- @twitname %></h1>
+<a href="http://twitter.com/<%- @twitname %>">twitter</a><br>
+<ul>
+  <% for tweet in @tweets: %>
+    <li id="<%- tweet.id %>"><%- tweet.contents %></li>
+    <%- moment.unix(tweet.time).fromNow() %>
+    <button class="convert" data-id="<%-tweet.id%>">Convert</button>
+  <% end %>
+</ul>
+<% if @page != 0: %>
+  <a href="/admin/fix/<%- @twitname %>/<%- parseInt(@page, 10) - 1 %>">Prev Page</a>
+<% end %>
+<% if @tweets.length == 10 : %>
+  <a href="/admin/fix/<%- @twitname %>/<%- parseInt(@page, 10) + 1 %>">Next Page</a>
+<% end %>
+
+<h1>Add location</h1>
+
+<div class="form">
+  <div class="form-group">
+    <label for="display">Display</label>
+    <input id="display" type="text" class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="matcher">Matcher</label>
+    <input id="matcher" type="text" class="form-control">
+    <span class="help-block">
+      <a href="http://regex101.com">Regex Tester</a>
+    </span>
+  </div>
+  <div class="form-group">
+    <label for="region">Region</label>
+    <input id="region" type="text" class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="lat">Latitude</label>
+    <input id="lat" type="text" class="form-control">
+    <span class="help-block">
+      <a href="http://maps.google.com">Map</a>
+    </span>
+  </div>
+  <div class="form-group">
+    <label for="long">Longitude</label>
+    <input id="long" type="text" class="form-control">
+  </div>
+
+  <button id="add" type="button">Add</button>
+</div>
+
+<% block 'scripts' : %>
+  $('.convert').click(function() {
+    var id = $(this).data('id');
+    $.ajax({
+      url:'/admin/tweet/convert',
+      type: 'POST',
+      data: {
+        id: id
+      },
+      success: function(data, textStatus) {
+        $('#' + id).text(data);
+      },
+      statusCode: {
+        418: function(data) {
+          console.log(data.responsiveText);
+        }
+      }
+    }).done(function(data) {
+    });
+  });
+<% end %>

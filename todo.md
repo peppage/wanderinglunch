@@ -1,22 +1,40 @@
 - update to express 4
 - reorganize file structure
 - possible move getTrucks from python to javascript?
-- redo how clean up tweets is happening, move to DB
-- New method for finding multiple trucks in same tweet (waffle)
-    - Frack, this isn't thought out yet.
 - create new table of intersections and find that in cleaned up tweet
     - tweet format
     - coordinates
     - website display format
-- new column in trucks that matches up with id in intersections
 - admin area
     - if no match is found from table show possible matches and let the user add them to the DB
     - delete trucks
     - edit locations
     - add images
     - delete images
-- convert to bootstrap (sigh)
-- at least rewrite the python script (confusing now)
+    - fixing area (view tweets + update locations)
+- convert to jeet?
+- have a parent truck
+- The user override feature that clears nightly
+- Stats => to news or blog
+- stats.py is broken
+
+THE LIST
+<strike>1 Determine what SQL I did to get mutli trucks working, save it</strike>
+<strike>2 Add Coordinates to locations</strike>
+<strike>3 Add District to locations</strike>
+<stirke>4 Add street to locations (NOPE, sort by lat</strike>
+5 Clean up trucks table, remove stuff
+<strike>5.5 Convert website to use new data</strike>
+<strike>6 /signup returns a 200, NO SIGNUPS</strike>
+<strike>7 Verify that the script is in working order (8 hours back in)</strike>
+8 Finish Admin area
+  - Fix the menu
+  - Make it look a lot nicer
+
+== Truck Lists ==
+http://www.foodtruckmaps.com/nyc/food_trucks_in_brooklyn_navy_yard/
+https://twitter.com/mikespin/lists/street-food-nyc/members
+https://twitter.com/nycfoodtruck/lists/nycfta-members/members
 
 == OLD ==
 - Voting to confirm location
