@@ -50,7 +50,7 @@ module.exports = function adminRoutes( app, passport ) {
   app.get( '/admin', passHelper.isLoggedIn, function admin( req, res ) {
     knex('trucks')
     .select('twitname', 'id')
-    .where('lastup', '<', moment().subtract(1, 'days').unix())
+    .where('lastupdate', '<', moment().subtract(1, 'days').unix())
     .andWhere('lasttweet', '>', moment().startOf('day').unix())
     .then(function( trucks ) {
       res.render('admin/admin', {
