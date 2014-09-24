@@ -7,7 +7,7 @@ module.exports = function locRoutes( app, passport ) {
   app.get( '/admin/locations/:page?', passHelper.isLoggedIn,
     function locations(req, res) {
       if(req.param('page')) {
-        page = parseInt(req.param('page'));
+        page = req.param('page');
       }
       else {
         page = 0;
@@ -19,7 +19,7 @@ module.exports = function locRoutes( app, passport ) {
       .then(function( locs ) {
         res.render( 'admin/location.ect', {
           locs: locs,
-          page: page
+          page: parseInt(page)
         });
       });
     }

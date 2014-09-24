@@ -3,7 +3,7 @@
 <% include 'admin/includes/menu.ect' %>
 
 <h2>Locations</h2>
-<table>
+<table class="table table-striped">
   <tr>
     <th>Display</th>
     <th>Matcher</th>
@@ -18,8 +18,8 @@
   <% end %>
 </table>
 <% if @page != 0: %>
-  <a href="/admin/locations/<%- parseInt(@page, 10) - 1 %>">Prev Page</a>
+  <a href="/admin/locations/<%- @page - 1 %>">Prev Page</a>
 <% end %>
 <% if @locs.length == 10 : %>
-  <a href="/admin/locations/<%- parseInt(@page, 10) + 1 %>">Next Page</a>
+  <a href="/admin/locations/<%- @page + 1 %>">Next Page</a>
 <% end %>
