@@ -75,6 +75,24 @@ module.exports = function adminRoutes( app, passport ) {
     });
   });
 
+  app.post( '/admin/images/add', [express.urlencoded(), passHelper.isLoggedIn],
+    function( req, res ) {
+      knex('images')
+      .insert({
+        'id': req.body.id,
+        'visibility': 'public',
+        'suffix': req.body.suffix,
+        'twitname': req.body.twitname,
+        'menu': req.body.menu
+      })
+      .then(res.send(200))
+      .catch(function( error ) {
+        console.log(error);
+        res.send(418);
+      });
+    }
+  );
+
   app.get('/admin/fix/:twitname/:page?', passHelper.isLoggedIn,
     function fix( req, res ) {
       if(req.param('page')) {
