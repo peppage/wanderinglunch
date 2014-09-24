@@ -2,6 +2,28 @@
 
 <% include 'admin/includes/menu.ect' %>
 
+<h1>Showing the subs here</h1>
+<table class="table table-striped">
+  <tr>
+    <th>Regex</th>
+    <th>Substitution</th>
+    <th>Action</th>
+  </tr>
+  <% for sub in @subs : %>
+    <tr>
+      <td><%- sub.regex %></td>
+      <td><%- sub.replacement %></td>
+      <td><a href="/admin/subs/edit/<%- sub.id %>">Edit</a>
+    </tr>
+  <% end %>
+</table>
+<% if @page != 0: %>
+  <a href="/admin/subs/<%- @page - 1 %>">Prev Page</a>
+<% end %>
+<% if @subs.length == 10 : %>
+  <a href="/admin/subs/<%- @page + 1 %>">Next Page</a>
+<% end %>
+
 <h1>Add substitutions</h1>
 
 <p>Some words need to be substituted inside a tweet, add them here</p>
@@ -18,28 +40,6 @@
 
   <button id="add" type="button">Add</button>
 </div>
-
-<h2>Showing the subs here</h2>
-<table>
-  <tr>
-    <th>Regex</th>
-    <th>Substitution</th>
-    <th> </th>
-  </tr>
-  <% for sub in @subs : %>
-    <tr>
-      <td><%- sub.regex %></td>
-      <td><%- sub.replacement %></td>
-      <td><a href="/admin/subs/edit/<%- sub.id %>">Edit</a>
-    </tr>
-  <% end %>
-</table>
-<% if @page != 0: %>
-  <a href="/admin/subs/<% @page-1 %>">Prev Page</a>
-<% end %>
-<% if @subs.length == 10 : %>
-  <a href="/admin/subs/<%- @page+1 %>">Next Page</a>
-<% end %>
 
 <% block 'scripts' : %>
   $(document).ready(function() {

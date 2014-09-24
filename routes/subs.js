@@ -13,12 +13,13 @@ module.exports = function subsRoutes( app ) {
         page = 0;
       }
       knex('subs')
+      .orderBy('replacement')
       .limit(10)
-      .offset(page)
+      .offset(page * 10)
       .then(function( subs ) {
         res.render( 'admin/subs.ect', {
           subs: subs,
-          page: page
+          page: parseInt(page)
         });
       });
     }
