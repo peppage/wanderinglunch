@@ -2,6 +2,32 @@
 
 <% include 'admin/includes/menu.ect' %>
 
+<h1>Trucks</h1>
+<table class="table table-striped">
+  <tr>
+    <th>Name</th>
+    <th>Location</th>
+    <th>Action</th>
+  </tr>
+  <% for truck in @trucks : %>
+    <tr>
+      <td><a href="/truck/<%- truck.id %>"><%- truck.name %></a></td>
+      <td><%- truck.display %></td>
+      <td>
+        <a href="/admin/trucks/edit/<%- truck.id %>">Edit</a>
+        <a href="/admin/trucks/delete/<%- truck.id %>">Delete</a>
+      </td>
+    </tr>
+  <% end %>
+</table>
+<% if @page != 0: %>
+  <a href="/admin/trucks/<%- parseInt(@page, 10) - 1 %>">Prev Page</a>
+<% end %>
+<% if @trucks.length == 10 : %>
+  <a href="/admin/trucks/<%- parseInt(@page, 10) + 1 %>">Next Page</a>
+<% end %>
+
+
 <h1>Add Truck</h1>
 
 <div class="form">
@@ -44,28 +70,6 @@
 
   <button id="add" type="button">Add</button>
 </div>
-
-<h2>Trucks</h2>
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Location</th>
-    <th> </th>
-  </tr>
-  <% for truck in @trucks : %>
-    <tr>
-      <td><%- truck.name %></td>
-      <td><%- truck.location %></td>
-      <td><a href="/admin/trucks/edit/<%- truck.id %>">Edit</a>
-    </tr>
-  <% end %>
-</table>
-<% if @page != 0: %>
-  <a href="/admin/trucks/<%- parseInt(@page, 10) - 1 %>">Prev Page</a>
-<% end %>
-<% if @trucks.length == 10 : %>
-  <a href="/admin/trucks/<%- parseInt(@page, 10) + 1 %>">Next Page</a>
-<% end %>
 
 <% block 'scripts' : %>
     $('#add').click(function() {

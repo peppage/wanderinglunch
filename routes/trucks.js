@@ -13,7 +13,13 @@ module.exports = function truckRoutes( app, passport ) {
         page = 0;
       }
       knex('trucks')
-      .orderBy('id')
+      .select(
+        'trucks.id',
+        'locations.display',
+        'trucks.name'
+      )
+      .leftJoin('locations', 'trucks.loc', 'locations.id')
+      .orderBy('trucks.id')
       .limit(10)
       .offset(page * 10)
       .then(function( trucks ) {
@@ -62,7 +68,6 @@ module.exports = function truckRoutes( app, passport ) {
 
   app.post( '/admin/trucks/add', [express.urlencoded(), passHelper.isLoggedIn],
     function truckAdd( req, res ) {
-      console.log(req.body);
       knex('trucks')
       .insert({
         'id': req.body.id,
@@ -82,4 +87,18 @@ module.exports = function truckRoutes( app, passport ) {
       });
     }
   );
+
+  app.post( '/admin/trucks/delete',
+    [express.urlencoded(), passHelper.isLoggedIn],
+    function truckDelete( req, res ) {
+      knex('trucks')
+      .where({ 'id': req.body.id })
+      .del()
+      .then(res.send(200))
+      .catch(function( error ) {
+        console.log(error);
+        res.send(418);
+      });
+    }
+);
 };
