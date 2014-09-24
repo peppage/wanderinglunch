@@ -1,0 +1,63 @@
+<% extend 'includes/base.ect' %>
+
+<% include 'admin/includes/menu.ect' %>
+
+<h1>Edit Location</h1>
+
+<div class="form">
+  <div class="form-group">
+    <label for="display">Display</label>
+    <input id="display" type="text" class="form-control" value="<%- @location.display %>">
+  </div>
+  <div class="form-group">
+    <label for="matcher">Matcher</label>
+    <input id="matcher" type="text" class="form-control" value="<%- @location.matcher %>">
+  </div>
+  <div class="form-group">
+    <label for="region">Region</label>
+    <input id="region" type="text" class="form-control" value="<%- @location.region %>">
+  </div>
+  <div class="form-group">
+    <label for="lat">Lat</label>
+    <input id="lat" type="text" class="form-control" value="<%- @location.lat %>">
+  </div>
+  <div class="form-group">
+    <label for="long">Long</label>
+    <input id="long" type="text" class="form-control" value="<%- @location.long %>">
+  </div>
+  <div class="form-group">
+    <label for="hood">Hood</label>
+    <input id="hood" type="text" class="form-control" value="<%- @location.hood %>">
+  </div>
+
+  <button id="save" type="button">Save</button>
+</div>
+
+
+<% block 'scripts' : %>
+    $('#save').click(function() {
+      $.ajax({
+        url: '/admin/locations/save',
+        type: 'POST',
+        data: {
+          id: '<%- @location.id %>',
+          display: $('#display').val(),
+          matcher: $('#matcher').val(),
+          region: $('#region').val(),
+          lat: $('#lat').val(),
+          long: $('#long').val(),
+          hood: $('#hood').val(),
+        },
+        success: function(data, textStatus) {
+          window.location.href = '/admin/locations';
+        },
+        statusCode: {
+          418: function(data) {
+            console.log(data.responsiveText);
+          }
+        }
+      }).done(function(data) {
+
+      });
+    });
+<% end %>
