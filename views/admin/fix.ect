@@ -8,14 +8,14 @@
   <% for tweet in @tweets: %>
     <li id="<%- tweet.id %>"><%- tweet.contents %></li>
     <%- moment.unix(tweet.time).fromNow() %>
-    <button class="convert" data-id="<%-tweet.id%>">Convert</button>
+    <button class="js-convert" data-id="<%-tweet.id%>">Convert</button>
   <% end %>
 </ul>
 <% if @page != 0: %>
-  <a href="/admin/fix/<%- @twitname %>/<%- parseInt(@page, 10) - 1 %>">Prev Page</a>
+  <a href="/admin/fix/<%- @twitname %>/<%- @page - 1 %>">Prev Page</a>
 <% end %>
 <% if @tweets.length == 10 : %>
-  <a href="/admin/fix/<%- @twitname %>/<%- parseInt(@page, 10) + 1 %>">Next Page</a>
+  <a href="/admin/fix/<%- @twitname %>/<%- @page + 1 %>">Next Page</a>
 <% end %>
 
 <h1>Add location</h1>
@@ -47,12 +47,16 @@
     <label for="long">Longitude</label>
     <input id="long" type="text" class="form-control">
   </div>
+  <div class="form-group">
+    <label for="hood">Hood</label>
+    <input id="hood" type="text" class="form-control">
+  </div>
 
-  <button id="add" type="button">Add</button>
+  <button class="js-add" type="button">Add</button>
 </div>
 
 <% block 'scripts' : %>
-  $('.convert').click(function() {
+  $('.js-convert').click(function() {
     var id = $(this).data('id');
     $.ajax({
       url:'/admin/tweet/convert',
@@ -69,6 +73,31 @@
         }
       }
     }).done(function(data) {
+    });
+  });
+
+  $('.js-add').click(function() {
+    $.ajax({
+      url: '/admin/locations/add',
+      type: 'POST',
+      data: {
+        display: $('#display').val(),
+        matcher: $('#matcher').val(),
+        region: $('#region').val(),
+        lat: $('#lat').val(),
+        long: $('#long').val(),
+        hood: $('#hood').val(),
+      },
+      success: function(data, textStatus) {
+        window.location.href = '/admin/trucks';
+      },
+      statusCode: {
+        418: function(data) {
+          console.log(data.responsiveText);
+        }
+      }
+    }).done(function(data) {
+
     });
   });
 <% end %>

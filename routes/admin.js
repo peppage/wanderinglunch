@@ -78,7 +78,7 @@ module.exports = function adminRoutes( app, passport ) {
   app.get('/admin/fix/:twitname/:page?', passHelper.isLoggedIn,
     function fix( req, res ) {
       if(req.param('page')) {
-        page = parseInt(req.param('page'));
+        page = req.param('page');
       }
       else {
         page = 0;
@@ -95,7 +95,7 @@ module.exports = function adminRoutes( app, passport ) {
           id: 'fix',
           twitname: req.param('twitname'),
           tweets: tweets,
-          page: page
+          page: parseInt(page)
         });
       });
     }
