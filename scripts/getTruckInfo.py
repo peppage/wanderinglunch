@@ -171,12 +171,14 @@ def search(truck):
 
         if location:
             saveCursor.execute(
-                """UPDATE trucks SET loc = (%(location)s), lastupdate = (%(lastupdate)s)
+                """UPDATE trucks SET loc = (%(location)s),
+                lastupdate = (%(lastupdate)s), tweet = (%(tweet)s)
                 WHERE id = (%(id)s);""",
                 {
                     'id': truck['id'],
                     'location': location.id,
-                    'lastupdate': int(tweet['time'])
+                    'lastupdate': int(tweet['time']),
+                    'tweet': tweet['contents']
                 })
             break
 
