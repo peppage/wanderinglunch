@@ -1,8 +1,9 @@
-var express = require( 'express' );
+var bodyParser = require('body-parser');
 var passHelper = require( '../util/passport-helper' );
 
 module.exports = function subsRoutes( app ) {
   var knex = app.get( 'knex' );
+  var urlencodedParser = bodyParser.urlencoded({ extended: true });
 
   app.get( '/admin/subs/:page?', passHelper.isLoggedIn,
     function subs( req, res ) {
@@ -38,7 +39,7 @@ module.exports = function subsRoutes( app ) {
   );
 
   app.post( '/admin/subs/save',
-    [express.urlencoded(), passHelper.isLoggedIn],
+    [urlencodedParser, passHelper.isLoggedIn],
     function subsSave( req, res ) {
       knex('subs')
       .where({ 'id': req.body.id })
@@ -46,23 +47,23 @@ module.exports = function subsRoutes( app ) {
         'regex': req.body.regex,
         'replacement': req.body.replacement
       })
-      .then(res.send(200))
+      .then(res.status(200).end())
       .catch(function( error ) {
         console.log(error);
-        res.send(418);
+        res.status(418).end();
       });
     }
   );
 
-  app.post( '/admin/subs/add', [express.urlencoded(), passHelper.isLoggedIn],
+  app.post( '/admin/subs/add', [urlencodedParser, passHelper.isLoggedIn],
     function subsAdd( req, res ) {
       knex('subs').insert({
         regex: req.body.regex,
         replacement: req.body.replacement
       })
-      .then(res.send(200))
+      .then(res.status(200).end())
       .catch(function( error ) {
-        res.send(418);
+        res.status(418).end();
       });
     }
   );

@@ -1,4 +1,3 @@
-- update to express 4
 - reorganize file structure
 - possible move getTrucks from python to javascript?
 - create new table of intersections and find that in cleaned up tweet
@@ -6,27 +5,16 @@
     - coordinates
     - website display format
 - admin area
-    - if no match is found from table show possible matches and let the user add them to the DB
     - delete trucks
-    - edit locations
-    - add images
     - delete images
-    - fixing area (view tweets + update locations)
 - convert to jeet?
 - have a parent truck
 - The user override feature that clears nightly
 - Stats => to news or blog
 - stats.py is broken
+- using https://medium.com/@fat/mediums-css-is-actually-pretty-fucking-good-b8e2a6c78b06 make yo css clearer
 
 THE LIST
-<strike>1 Determine what SQL I did to get mutli trucks working, save it</strike>
-<strike>2 Add Coordinates to locations</strike>
-<strike>3 Add District to locations</strike>
-<stirke>4 Add street to locations (NOPE, sort by lat</strike>
-5 Clean up trucks table, remove stuff
-<strike>5.5 Convert website to use new data</strike>
-<strike>6 /signup returns a 200, NO SIGNUPS</strike>
-<strike>7 Verify that the script is in working order (8 hours back in)</strike>
 8 Finish Admin area
   - Fix the menu
   - Make it look a lot nicer

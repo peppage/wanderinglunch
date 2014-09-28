@@ -1,8 +1,9 @@
-var express = require( 'express' );
+var bodyParser = require('body-parser');
 var passHelper = require( '../util/passport-helper' );
 
 module.exports = function locRoutes( app, passport ) {
   var knex = app.get( 'knex' );
+  var urlencodedParser = bodyParser.urlencoded({ extended: true });
 
   app.get( '/admin/locations/:page?', passHelper.isLoggedIn,
     function locations(req, res) {
@@ -26,7 +27,7 @@ module.exports = function locRoutes( app, passport ) {
   );
 
   app.post( '/admin/locations/add',
-    [express.urlencoded(), passHelper.isLoggedIn],
+    [urlencodedParser, passHelper.isLoggedIn],
     function locationAdd( req, res ) {
       knex('locations')
       .insert({
@@ -37,10 +38,10 @@ module.exports = function locRoutes( app, passport ) {
         'long': req.body.long,
         'hood': req.body.hood
       })
-      .then(res.send(200))
+      .then(res.status(200).end())
       .catch(function( error ) {
         console.log(err);
-        res.send(418);
+        res.status(418).end();
       });
     }
   );
@@ -58,7 +59,7 @@ module.exports = function locRoutes( app, passport ) {
   );
 
   app.post( '/admin/locations/save',
-    [express.urlencoded(), passHelper.isLoggedIn],
+    [urlencodedParser, passHelper.isLoggedIn],
     function locationSave( req, res ) {
       knex('locations')
       .where({ 'id': req.body.id })
@@ -70,10 +71,10 @@ module.exports = function locRoutes( app, passport ) {
         'long': req.body.long,
         'hood': req.body.hood
       })
-      .then(res.send(200))
+      .then(res.status(200).end())
       .catch(function( error ) {
         console.log(error);
-        res.send(418);
+        res.status(418).end();
       });
     }
   );

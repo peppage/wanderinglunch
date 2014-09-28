@@ -1,8 +1,9 @@
-var express = require( 'express' );
+var bodyParser = require('body-parser');
 var passHelper = require( '../util/passport-helper' );
 
 module.exports = function adminRoutes( app, passport ) {
   var knex = app.get( 'knex' );
+  var urlencodedParser = bodyParser.urlencoded({ extended: true });
 
   require( './subs' )(app);
   require( './trucks' )(app);
@@ -16,7 +17,7 @@ module.exports = function adminRoutes( app, passport ) {
     });
   });
 
-  app.post( '/login', express.urlencoded(),
+  app.post( '/login', urlencodedParser,
     passport.authenticate( 'local-login', {
       successRedirect: '/admin',
       failureRedirect: '/login',
@@ -30,7 +31,7 @@ module.exports = function adminRoutes( app, passport ) {
   });
 
   app.get( '/signup', function signup( req, res ) {
-    res.send(404);
+    res.status(404).end();
     /*
     res.render( 'admin/signup.ect', {
       title: 'Sign up',
@@ -39,7 +40,7 @@ module.exports = function adminRoutes( app, passport ) {
     });*/
   });
 
-  app.post( '/signup', express.urlencoded(),
+  app.post( '/signup', urlencodedParser,
     passport.authenticate( 'local-signup', {
       successRedirect: '/admin',
       failureRedirect: '/signup',
@@ -75,7 +76,7 @@ module.exports = function adminRoutes( app, passport ) {
     });
   });
 
-  app.post( '/admin/images/add', [express.urlencoded(), passHelper.isLoggedIn],
+  app.post( '/admin/images/add', [urlencodedParser, passHelper.isLoggedIn],
     function( req, res ) {
       knex('images')
       .insert({
@@ -85,10 +86,10 @@ module.exports = function adminRoutes( app, passport ) {
         'twitname': req.body.twitname,
         'menu': req.body.menu
       })
-      .then(res.send(200))
+      .then(res.status(200).end())
       .catch(function( error ) {
         console.log(error);
-        res.send(418);
+        res.status(418).end();
       });
     }
   );
@@ -120,7 +121,7 @@ module.exports = function adminRoutes( app, passport ) {
   );
 
   app.post('/admin/tweet/convert',
-    [express.urlencoded(), passHelper.isLoggedIn],
+    [urlencodedParser, passHelper.isLoggedIn],
     function convert( req, res ) {
       knex('tweets').select('contents')
       .where({ id: req.body.id })

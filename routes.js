@@ -1,6 +1,5 @@
 var moment = require('moment');
 var async = require('async');
-var statics = require('./routes/statics');
 
 module.exports = function routes( app, passport ) {
   var knex = app.get( 'knex' );
@@ -58,7 +57,7 @@ module.exports = function routes( app, passport ) {
   app.get('/region/:region', function region( req, res ) {
     knex('trucks').where({ 'region': req.param('region') })
     .then(function( trucks ) {
-      res.send(404);
+      res.status(404).end();
       res.render('region', {
         title: 'test',
         trucks : trucks

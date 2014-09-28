@@ -1,8 +1,9 @@
-var express = require( 'express' );
+var bodyParser = require('body-parser');
 var passHelper = require( '../util/passport-helper' );
 
 module.exports = function truckRoutes( app, passport ) {
   var knex = app.get( 'knex' );
+  var urlencodedParser = bodyParser.urlencoded({ extended: true });
 
   app.get( '/admin/trucks/:page?', passHelper.isLoggedIn,
     function (req, res) {
@@ -44,7 +45,7 @@ module.exports = function truckRoutes( app, passport ) {
   );
 
   app.post( '/admin/trucks/save',
-    [express.urlencoded(), passHelper.isLoggedIn],
+    [urlencodedParser, passHelper.isLoggedIn],
     function truckSave( req, res ) {
       knex('trucks')
       .where({ 'id': req.body.id })
@@ -58,15 +59,15 @@ module.exports = function truckRoutes( app, passport ) {
         'about': req.body.about,
         'foursquare': req.body.foursquare
       })
-      .then(res.send(200))
+      .then(res.status(200).end())
       .catch(function( error ) {
         console.log(error);
-        res.send(418);
+        res.status(418).end();
       });
     }
   );
 
-  app.post( '/admin/trucks/add', [express.urlencoded(), passHelper.isLoggedIn],
+  app.post( '/admin/trucks/add', [urlencodedParser, passHelper.isLoggedIn],
     function truckAdd( req, res ) {
       knex('trucks')
       .insert({
@@ -80,24 +81,24 @@ module.exports = function truckRoutes( app, passport ) {
         'about': req.body.about,
         'foursquare': req.body.foursquare
       })
-      .then(res.send(200))
+      .then(res.status(200).end())
       .catch(function( error ) {
         console.log(error);
-        res.send(418);
+        res.status(418).end();
       });
     }
   );
 
   app.post( '/admin/trucks/delete',
-    [express.urlencoded(), passHelper.isLoggedIn],
+    [urlencodedParser, passHelper.isLoggedIn],
     function truckDelete( req, res ) {
       knex('trucks')
       .where({ 'id': req.body.id })
       .del()
-      .then(res.send(200))
+      .then(res.status(200).end())
       .catch(function( error ) {
         console.log(error);
-        res.send(418);
+        res.status(418).end();
       });
     }
 );
