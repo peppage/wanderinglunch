@@ -103,23 +103,24 @@
     $('.js-delete').click( function(evt) {
       evt.preventDefault();
       var row = $(this).parent().parent();
-      $.ajax({
-        url: '/admin/trucks/delete',
-        type: 'POST',
-        data: {
-          id: $(this).data('id')
-        },
-        success: function(data, textStatus) {
-          console.log(row);
-          row.remove();
-        },
-        statusCode: {
-          418: function(data) {
-            console.log(data.responseiveText);
+      if (confirm('Delete this truck?')) {
+        $.ajax({
+          url: '/admin/trucks/delete',
+          type: 'POST',
+          data: {
+            id: $(this).data('id')
+          },
+          success: function(data, textStatus) {
+            row.remove();
+          },
+          statusCode: {
+            418: function(data) {
+              console.log(data.responseiveText);
+            }
           }
-        }
-      }).done(function(data) {
+        }).done(function(data) {
 
-      });
+        });
+      }
     });
 <% end %>
