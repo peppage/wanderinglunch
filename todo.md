@@ -4,9 +4,6 @@
     - tweet format
     - coordinates
     - website display format
-- admin area
-    - delete trucks
-    - delete images
 - convert to jeet?
 - have a parent truck
 - The user override feature that clears nightly
