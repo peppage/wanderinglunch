@@ -24,18 +24,38 @@
     </label>
   </div>
 
-  <button id="add" type="button">Add</button>
+  <button class="js-add" type="button">Add</button>
 </div>
 
 <div style="padding-top: 15px">
     <h1 class="centerText">Invalid images</h1>
-    <% for img in @images : %>
-      <a href="/truck/<%- img.truckid %>"><%- img.twitname %></a> : <%- img.id %> <br />
-    <% end %>
+    <table class="table table-striped">
+        <tr>
+          <th>twitname</th>
+          <th>id</th>
+          <th>suffix</th>
+          <th>Action</th>
+        </tr>
+      <% for img in @images : %>
+        <tr>
+          <td>
+            <a href="/truck/<%- img.truckid %>"><%- img.twitname %></a>
+          </td>
+          <td>
+            <%- img.id %>
+          </td>
+          <td>
+            <img src="https://irs0.4sqi.net/img/general/width100<%- img.suffix %>" />
+          </td>
+          <td>
+            <a href="#" class="js-delete" data-id="<%- img.id %>">Delete</a>
+        </tr>
+      <% end %>
+    </table>
 </div>
 
 <% block 'scripts' : %>
-    $('#add').click(function() {
+    $('.js-add').click(function() {
       $.ajax({
         url: '/admin/images/add',
         type: 'POST',
@@ -56,5 +76,29 @@
       }).done(function(data) {
 
       });
+    });
+
+    $('.js-delete').click( function(evt) {
+      evt.preventDefault();
+      var row = $(this).parent().parent();
+      if (confirm('Delete this image?')) {
+        $.ajax({
+          url: '/admin/images/delete',
+          type: 'POST',
+          data: {
+            id: $(this).data('id')
+          },
+          success: function(data, textStatus) {
+            row.remove();
+          },
+          statusCode: {
+            418: function(data) {
+              console.log(data.responseiveText);
+            }
+          }
+        }).done(function(data) {
+
+        });
+      }
     });
 <% end %>
