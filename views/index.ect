@@ -44,24 +44,22 @@
 <% end %>
 
 <% block 'scripts' : %>
-  $(document).ready(function() {
-    if( $('.tooltip').length > 0 ) {
-      $('.tooltip').tooltipster();
-      $('.image-link').magnificPopup({type:'image'});
-    }
+  if( $('.tooltip').length > 0 ) {
+    $('.tooltip').tooltipster();
+    $('.image-link').magnificPopup({type:'image'});
+  }
 
-    $('#up-link').click(function () {
-      $('html,body').animate({scrollTop: $('#uptown').offset().top}, 'slow');
-    });
-    $('#mid-link').click(function () {
-      $('html,body').animate({scrollTop: $('#midtown').offset().top}, 'slow');
-    });
-    $('#down-link').click(function () {
-      $('html,body').animate({scrollTop: $('#downtown').offset().top}, 'slow');
-    });
-    $('#bk-link').click(function () {
-      $('html,body').animate({scrollTop: $('#brooklyn').offset().top}, 'slow');
-    });
-
+  $('#up-link').click(function () {
+    $('html,body').animate({scrollTop: $('#uptown').offset().top}, 'slow');
   });
+  $('#mid-link').click(function () {
+    $('html,body').animate({scrollTop: $('#midtown').offset().top}, 'slow');
+  });
+  $('#down-link').click(function () {
+    $('html,body').animate({scrollTop: $('#downtown').offset().top}, 'slow');
+  });
+  $('#bk-link').click(function () {
+    $('html,body').animate({scrollTop: $('#brooklyn').offset().top}, 'slow');
+  });
+
 <% end %>

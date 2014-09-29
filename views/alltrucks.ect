@@ -9,10 +9,8 @@
 <% include 'includes/truckTable.ect', {trucks : @trucks} %>
 
 <% block 'scripts' : %>
-    $(document).ready(function() {
-        if( $('.tooltip').length > 0 ) {
-            $('.tooltip').tooltipster();
-            $('.image-link').magnificPopup({type:'image'});
-        }
-    });
+  if( $('.tooltip').length > 0 ) {
+      $('.tooltip').tooltipster();
+      $('.image-link').magnificPopup({type:'image'});
+  }
 <% end %>
