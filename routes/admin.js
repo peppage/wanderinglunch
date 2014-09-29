@@ -63,7 +63,12 @@ module.exports = function adminRoutes( app, passport ) {
   });
 
   app.get('/admin/images', passHelper.isLoggedIn, function images( req, res) {
-    knex.select('images.id', 'images.twitname', 'trucks.id as truckid')
+    knex.select(
+      'images.id',
+      'images.twitname',
+      'images.suffix',
+      'trucks.id as truckid'
+    )
     .from('images')
     .innerJoin('trucks', 'images.twitname', 'trucks.twitname')
     .where('images.visibility', '!=', 'public')
@@ -88,6 +93,19 @@ module.exports = function adminRoutes( app, passport ) {
       })
       .then(res.status(200).end())
       .catch(function( error ) {
+        console.log(error);
+        res.status(418).end();
+      });
+    }
+  );
+
+  app.post( '/admin/images/delete', [urlencodedParser, passHelper.isLoggedIn],
+    function( req, res ) {
+      knex('images')
+      .where({ id: req.body.id })
+      .del()
+      .then(res.status(200).end())
+      .catch(function(error) {
         console.log(error);
         res.status(418).end();
       });
