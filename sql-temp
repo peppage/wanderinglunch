@@ -22,14 +22,12 @@ create table locations (
 );
 
 alter table trucks add column loc bigint;
-alter table trucks add column lastUp int;
 alter table trucks add column matchMethod text;
 
 alter table trucks drop column street;
 alter table trucks drop column location;
 alter table trucks drop column region;
 alter table trucks drop column regex;
-alter table trucks drop column lastupdate;
 
 (before, contains, two)
 
@@ -58,23 +56,32 @@ update trucks set matcher='(schnitzcart|the cart)' where id='schnitzelcart';
     - long
     - order? street?
 
+# delete old trucks
+delete from trucks where id='phils0';
+update trucks set id='phils' where id='phils03';
+
 insert into locations (display, matcher, region, lat, long, hood) values ('20th & 5th', '20th & 5th', 'mid', '40.739680', '-73.990847', 'Flatiron');
 insert into locations (display, matcher, region, lat, long, hood) values ('26th between 11th & 12th', '26th between 11th & 12th', 'mid', '40.751356', '-74.006822', 'Chelsea');
 insert into locations (display, matcher, region, lat, long, hood) values ('36st & Broad', '36st & broad', 'mid', '40.751526', '-73.987775', 'Garment District');
 insert into locations (display, matcher, region, lat, long, hood) values ('32rd & Park', '32rd & park', 'mid', '40.745774', '-73.982260', 'Murray Hill');
 insert into locations (display, matcher, region, lat, long, hood) values ('33rd & Park', '33rd & park', 'mid', '40.746468', '-73.981828', 'Murray Hill');
-insert into locations (display, matcher, region, lat, long, hood) values ('39th & Broadway', '39th & broadway', 'mid', '40.753642', '-73.987122', 'Midtown West');
-insert into locations (display, matcher, region, lat, long, hood) values ('40th & Park', '(40th & park|park & 40th)', 'up', '40.750853', '-73.978594', 'Murray Hill');
-insert into locations (display, matcher, region, lat, long, hood) values ('46th & 6th', '46th & 6th', 'up', '40.757418', '-73.982288', 'Midtown West');
-insert into locations (display, matcher, region, lat, long, hood) values ('46th between 5th & 6th', '46th between 5th & 6th', 'up', '40.756705', '-73.980505', 'Midtown West');
-insert into locations (display, matcher, region, lat, long, hood) values ('49th & 3rd', '49th & 3rd', 'up', '40.755254', '-73.971262', 'Midtown East');
 insert into locations (display, matcher, region, lat, long, hood) values ('37th & Broadway', '37th & broadway', 'up', '40.752200', '-73.987543', 'Garment District');
+insert into locations (display, matcher, region, lat, long, hood) values ('38th & Broadway', '38th & broadway', 'up', '40.752895', '-73.987340', 'Midtown West');
+insert into locations (display, matcher, region, lat, long, hood) values ('39th & Broadway', '39th & broadway', 'up', '40.753642', '-73.987122', 'Midtown West');
+insert into locations (display, matcher, region, lat, long, hood) values ('40th & Park', '(40th & park|park & 40th)', 'up', '40.750853', '-73.978594', 'Murray Hill');
+insert into locations (display, matcher, region, lat, long, hood) values ('40th & Broadway', '(40th & broadway|broadway & 40th)', 'up', '40.754333', '-73.986901', 'Midtown West');
+insert into locations (display, matcher, region, lat, long, hood) values ('41st Between 6th & Broadway', '41st between 6th & broadway', 'up', '40.754659', '-73.985726', 'Midtown West');
+insert into locations (display, matcher, region, lat, long, hood) values ('45th & 6th', '45th & 6th', 'up', '40.757425', '-73.982273', 'Midtown West');
+insert into locations (display, matcher, region, lat, long, hood) values ('46th & 6th', '46th & 6th', 'up', '40.757418', '-73.982288', 'Midtown West');
 insert into locations (display, matcher, region, lat, long, hood) values ('46th Between 5th & 6th', '(46th between 5th & 6th|46 5 & 6)', 'up', '40.756625', '-73.980321', 'Midtown West');
-insert into locations (display, matcher, region, lat, long, hood) values ('47th & Park', '47(th)? & park', 'up', '40.755333', '-73.975311', 'Midtown East');
+insert into locations (display, matcher, region, lat, long, hood) values ('46th & Park', '(46th & park|park & 46th)', 'up', '40.754706', '-73.975810', 'Midtown East');
+insert into locations (display, matcher, region, lat, long, hood) values ('47th & Park', '(park|47(th)?) & (47(th)?|park)', 'up', '40.755332', '-73.975305', 'Midtown East');
 insert into locations (display, matcher, region, lat, long, hood) values ('47th Between Park and Lexington', '47th between park & (lex|lexington)', 'up', '40.754942', '-73.974389', 'Midtown East');
 insert into locations (display, matcher, region, lat, long, hood) values ('48th & 6th', '48th & 6th', 'up', '40.758650', '-73.981341', 'Midtown West');
 insert into locations (display, matcher, region, lat, long, hood) values ('48th between 6th & 7th', '48th between 6(th)? & 7(th)?', 'up', '40.759249', '-73.982680', 'Midtown West');
-insert into locations (display, matcher, region, lat, long, hood) values ('50th Between 6th & 7th', '50th between 6th & 7th', 'up', '40.760400', '-73.981444', 'Midtown West');
+insert into locations (display, matcher, region, lat, long, hood) values ('49th & 3rd', '49th & 3rd', 'up', '40.755254', '-73.971262', 'Midtown East');
+insert into locations (display, matcher, region, lat, long, hood) values ('49th Between 6th & 7th', '49th between (6th & 7th|6 ?& ?7)', 'up', '40.759904', '-73.982359', 'Midtown West');
+insert into locations (display, matcher, region, lat, long, hood) values ('50th Between 6th & 7th', '50th between (6th & 7th|6 ?& ?7)', 'up', '40.760400', '-73.981444', 'Midtown West');
 insert into locations (display, matcher, region, lat, long, hood) values ('51st between Park & Madison', '51st between park & madison ', 'up', '40.758212', '-73.974371', 'Midtown East');
 insert into locations (display, matcher, region, lat, long, hood) values ('51st & Park', '51st & park', 'up', '40.757830', '-73.973477', 'Midtown East');
 insert into locations (display, matcher, region, lat, long, hood) values ('52nd & 6th', '52nd & 6th', 'up', '40.761166', '-73.979443', 'Midtown West');
@@ -87,26 +94,36 @@ insert into locations (display, matcher, region, lat, long, hood) values ('56th 
 insert into locations (display, matcher, region, lat, long, hood) values ('70th & York', '70th & york', 'up', '40.765542', '-73.954715', 'Upper East Side');
 insert into locations (display, matcher, region, lat, long, hood) values ('71st & York', '71st & york', 'up', '40.766112', '-73.954221', 'Upper East Side');
 insert into locations (display, matcher, region, lat, long, hood) values ('116th & Amsterdam', '116th & amsterdam', 'up', '40.806734', '-73.961037', 'Morningside Heights');
+insert into locations (display, matcher, region, lat, long, hood) values ('116th & Broadway', '116th & broadway', 'up', '40.808079', '-73.963993', 'Morningside Heights');
 insert into locations (display, matcher, region, lat, long, hood) values ('Columbia', 'columbia', 'up', '40.807371', '-73.964404', 'Morningside Heights');
 insert into locations (display, matcher, region, lat, long, hood) values ('Union Sq', 'union sq', 'none', '40.735486', '-73.991557', 'Union Sq');
 insert into locations (display, matcher, region, lat, long, hood) values ('King & Varick', '(varick|king) & (king|varick)', 'none', '40.727889', '-74.005495', 'Soho');
 insert into locations (display, matcher, region, lat, long, hood) values ('Hudson & King', 'hudson & king', 'none', '40.728086', '-74.007317', 'Soho');
 insert into locations (display, matcher, region, lat, long, hood) values ('Wall & Pearl', 'wall & pearl', 'none', '40.705533', '-74.007926', 'Financial District');
-insert into locations (display, matcher, region, lat, long, hood) values ('Dumbolot', 'dumbolot', 'bkl', '40.703105', '-73.986664', 'Brooklyn');
-insert into locations (display, matcher, region, lat, long, hood) values ('Water & Hanover', '(hanover|water) & (water|hanover)', 'none', '40.704089', '-74.00900', 'Financial District');
-insert into locations (display, matcher, region, lat, long, hood) values ('Water & Fulton', '(fulton|water) & (water|fulton)', 'none', '40.707424', '-74.004114', 'Financial District');
+insert into locations (display, matcher, region, lat, long, hood) values ('Wall & William', 'wall & william', 'none', '40.706363', '-74.009531', 'Financial District');
+insert into locations (display, matcher, region, lat, long, hood) values ('Hanover & Water', '(hanover|water) & (water|hanover)', 'none', '40.704089', '-74.00900', 'Financial District');
+insert into locations (display, matcher, region, lat, long, hood) values ('Hanover & Old Slip', 'hanover & old slip', 'none', '40.704018', '-74.008981', 'Financial District');
+insert into locations (display, matcher, region, lat, long, hood) values ('Old Slip & Water', 'old slip & water', 'none', '40.704038', '-74.008965', 'Financial District');
+insert into locations (display, matcher, region, lat, long, hood) values ('Fulton & Water', '(fulton|water) & (water|fulton)', 'none', '40.707424', '-74.004114', 'Financial District');
 insert into locations (display, matcher, region, lat, long, hood) values ('Starrett-Lehigh', 'starrettlehigh', 'none', '40.751575', '-74.006684', 'Chelsea');
-insert into locations (display, matcher, region, lat, long, hood) values ('Front & Fulton', '(fulton|front) & (front|fulton)', 'none', '40.706914', '-74.003792', 'Financial District');
+insert into locations (display, matcher, region, lat, long, hood) values ('Fulton & Front', '(fulton|front) & (front|fulton)', 'none', '40.706914', '-74.003792', 'Financial District');
+insert into locations (display, matcher, region, lat, long, hood) values ('Fulton Between Front & South', 'fulton between front & south', 'none', '40.706510', '-74.003370', 'Financial District');
+insert into locations (display, matcher, region, lat, long, hood) values ('John & Front', '(john|front) & (front|john)', 'none', '40.706382',' -74.004601', 'Financial District');
 insert into locations (display, matcher, region, lat, long, hood) values ('30th & 7th', '(7th & 30th|30th & 7th)', 'none', '40.748471', '-73.992487', 'Chelsea');
 insert into locations (display, matcher, region, lat, long, hood) values ('Water & Old Slip', 'water & old slip', 'none', '40.704081', '-74.009010', 'Financial District');
 insert into locations (display, matcher, region, lat, long, hood) values ('10 Hanover sq', '10 hanover sq', 'none', '40.704557', '-74.009220', 'Financial District');
+insert into locations (display, matcher, region, lat, long, hood) values ('7 Hanover sq', '7 hanover sq', 'none', '40.704557', '-74.009220', 'Financial District');
 
+insert into locations (display, matcher, region, lat, long, hood) values ('Dumbolot', 'dumbolot', 'bkl', '40.703105', '-73.986664', 'Brooklyn');
 insert into locations (display, matcher, region, lat, long, hood) values ('Brooklyn Navy Yard', 'brooklyn navy yard', 'bkl', '40.699282', '-73.972583', 'Brooklyn');
 insert into locations (display, matcher, region, lat, long, hood) values ('Jay & Front', '(front|jay) & (jay|front)', 'bkl', '40.702351', '-73.986671', 'Brooklyn');
 insert into locations (display, matcher, region, lat, long, hood) values ('Jay & Water', '(water|jay) & (jay|water)', 'bkl', '40.703075', '-73.986617', 'Brooklyn');
 
 
-
+insert into subs (regex, replacement) values ('\.', ' ');
+insert into subs (regex, replacement) values ('-', '');
+insert into subs (regex, replacement) values ('&amp;', '&');
+insert into subs (regex, replacement) values ('oldslip', 'Old Slip');
 insert into subs (regex, replacement) values ('bway', 'broadway');
 insert into subs (regex, replacement) values ('at the corner of', 'and');
 insert into subs (regex, replacement) values ('(b\/w|bet(?!w)|btwn|btw)', 'between');
@@ -114,11 +131,10 @@ insert into subs (regex, replacement) values (' \/ ', ' & ');
 insert into subs (regex, replacement) values ('\/', ' & ');
 insert into subs (regex, replacement) values (' and ', ' & ');
 insert into subs (regex, replacement) values ('55st', '55th');
-insert into subs (regex, replacement) values (' mad ', 'Madison');
-insert into subs (regex, replacement) values (' street ', '');
-insert into subs (regex, replacement) values ('(@dumbolot|@dumbofoodtrucks)', 'dumbolot');
+insert into subs (regex, replacement) values (' mad ', ' Madison ');
+insert into subs (regex, replacement) values (' street ', ' ');
+insert into subs (regex, replacement) values ('(@dumbolot)', 'dumbolot');
 insert into subs (regex, replacement) values ('@starrettlehigh', 'starrettlehigh');
-insert into subs (regex, replacement) values (' ave ', '');
-insert into subs (regex, replacement) values ('\.', '');
+insert into subs (regex, replacement) values (' ave ', ' ');
 insert into subs (regex, replacement) values (' st ', ' ');
-insert into subs (regex, replacement) values ('!', '');
+insert into subs (regex, replacement) values (' at ', ' & ');
