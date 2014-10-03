@@ -91,7 +91,7 @@ def findLocations(contents):
         for location in cur:
             searchResult = re.search(location['matcher'], contents, re.I)
             if searchResult:
-                locations.insert(0, Location(location['id'], searchResult))
+                locations.append(Location(location['id'], searchResult))
 
     return locations
 
@@ -144,6 +144,7 @@ def search(truck):
 
         # If we got into tweets that are too old
         if int(tweet['time']) < epochMinus8Hours:
+            print "too old"
             break
 
         # If the tweet must contain a matcher
@@ -152,7 +153,6 @@ def search(truck):
                 continue
 
         contents = cleanTweet(contents)
-
         location = False
         locations = findLocations(contents)
         if len(locations) == 1:
@@ -161,13 +161,16 @@ def search(truck):
                     location = locations[0]
                 else:
                     break
+            else:
+                location = locations[0]
         elif len(locations) > 1:
             if truck['matchmethod'] == "before":
                 location = methodBefore(contents, truck['matcher'], locations)
             elif truck['matchmethod'] == "two":
                 location = locations[int(truck['matcher']) - 1]
             else:
-                print "Something is wrong, improper matchmethod"
+                location = locations[0]
+                print "Many addresses, no match method"
 
         if location:
             saveCursor.execute(
