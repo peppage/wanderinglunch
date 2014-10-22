@@ -14,7 +14,7 @@ module.exports = function locRoutes( app, passport ) {
         page = 0;
       }
       knex('locations')
-      .orderBy('id')
+      .orderBy('display')
       .limit(10)
       .offset(page * 10)
       .then(function( locs ) {
