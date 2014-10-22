@@ -56,8 +56,8 @@
     <div class="pure-u-1-2">
       <div class="popup-gallery">
         <% if @menu : %>
-          <a href="https://irs0.4sqi.net/img/general/width960<%- menu['suffix'] %>">
-            <img src="https://irs0.4sqi.net/img/general/width600<%- menu['suffix'] %>" />
+          <a href="http://irs0.4sqi.net/img/general/width960<%- menu['suffix'] %>">
+            <img src="http://irs0.4sqi.net/img/general/width600<%- menu['suffix'] %>" />
           </a>
         <% else : %>
           <a href="/images/trucks/<%- @truck.twitname %>.jpg">
@@ -67,8 +67,8 @@
         <% if @images.length > 0 : %>
           <img src='https://playfoursquare.s3.amazonaws.com/press/logo/poweredByFoursquare_gray.png' width='300'><br />
             <% for image in @images : %>
-              <a href="https://irs0.4sqi.net/img/general/width960<%- image['suffix'] %>">
-                <img src="https://irs0.4sqi.net/img/general/width100<%- image['suffix'] %>" />
+              <a href="http://irs0.4sqi.net/img/general/width960<%- image['suffix'] %>">
+                <img src="http://irs0.4sqi.net/img/general/width100<%- image['suffix'] %>" />
               </a>
             <% end %>
         <% end %>
