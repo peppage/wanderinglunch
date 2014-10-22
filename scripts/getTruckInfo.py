@@ -89,6 +89,7 @@ def findLocations(contents):
         cur.execute("SELECT * from locations;")
 
         for location in cur:
+            
             searchResult = re.search(location['matcher'], contents, re.I)
             if searchResult:
                 locations.append(Location(location['id'], searchResult))
@@ -108,6 +109,7 @@ def cleanTweet(contents):
         for sub in cur:
             contents = re.sub(sub['regex'], sub['replacement'], contents, flags=re.I)
 
+    contents = re.sub("  ", " ", contents, flags=re.I)
     return contents
 
 
@@ -184,7 +186,13 @@ def search(truck):
                     'tweet': tweet['contents']
                 })
             break
-
+     
+        else:
+            try:
+                saveCursor.execute( """UPDATE trucks SET lasttweet = (%(time)s) WHERE id = (%(id)s);""", {'time': tweets[0]['time'], 'id': truck['id']})
+            except IndexError:
+                print "Truck has not tweeted"
+            print "Not Updated"
 
 def methodBefore(tweet, matcher, locations):
     """ For twitters that facility multiple trucks.
