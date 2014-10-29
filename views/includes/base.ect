@@ -6,7 +6,7 @@
     <title><%- @title %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css">
-    <link href="/stylesheets/site.css" rel="stylesheet" />
+    <link href="/stylesheets/site.css" type="text/css" rel="stylesheet" />
     <% content 'css' %>
   </head>
   <body>
@@ -22,8 +22,8 @@
       <a href="/about">About</a>
     </footer>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" ></script>
-    <script async src="/javascripts/site-combined.js" ></script>
-    <script async src="/javascripts/modernizr.custom.js" ></script>
+    <script type="text/javascript" async src="/javascripts/site-combined.js" ></script>
+    <script type="text/javascript" async src="/javascripts/modernizr.custom.js" ></script>
     <% content 'loadscripts' %>
     <script>
       window.onload = function onLoad() {
