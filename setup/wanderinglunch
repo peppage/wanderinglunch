@@ -23,6 +23,7 @@ server {
     proxy_set_header X-NginX-proxy true;
     gzip on;
     gzip_static on;
+    gzip_types text/plain text/html text/css text/javascript;
     
     
     proxy_cache STATIC;
