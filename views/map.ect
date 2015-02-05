@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" ></script>
+    <style type="text/css">
+
+    </style>
+    <script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAN8Jk0062QBOMPmXH-Totg9zi1GCw3o3w">
+    </script>
+    <script type="text/javascript">
+      function initialize() {
+        var beaches = [];
+        $.ajax({
+          url: "/updatedTrucks",
+        })
+        .done(function( msg ) {
+          beaches = msg;
+          var mapOptions = {
+            center: { lat: 40.755575, lng: -73.982404},
+            zoom: 12
+          };
+          var map = new google.maps.Map(document.getElementById('map-canvas'),
+              mapOptions);
+          setMarkers(map, beaches);
+        });
+
+      }
+
+      function setMarkers(map, locations) {
+        for (var i = 0; i < locations.length; i++) {
+            var loc = locations[i];
+            var infowindow = new google.maps.InfoWindow({
+                content: loc.name,
+            });
+            var myLatLng = new google.maps.LatLng(loc.lat, loc.long);
+            var marker = new google.maps.Marker({
+                position: myLatLng,
+                map: map,
+                title: loc.name,
+                zIndex: 1,
+                display: loc.display,
+                id: loc.id,
+            });
+
+
+            google.maps.event.addListener(marker, 'click', function() {
+                var t = new google.maps.InfoWindow({
+                    // Um could probably even ajax this?? Is that even a good idea?
+                    content: '<a href="/truck/'+ this.id + '" />' + this.title + '</a><br>' + this.display,
+                });
+                t.open(map,this);
+            });
+        }
+      }
+
+      google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+  </head>
+  <body>
+  <div class="container">
+    <div class="col-xs-12">
+        <div id="map-canvas" style="height:500px"></div>
+    </div>
+   <div class="col-xs-6">
+   Now the map is on the top of the page
+    </div>
+    <div class="col-xs-6">
+   Bootstrap!
+    </div>
+  </div>
+
+  </body>
+</html>

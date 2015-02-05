@@ -9,6 +9,7 @@ module.exports = function routes( app, passport ) {
 
   require('./routes/statics')(app);
   require('./routes/admin')(app, passport);
+  require('./routes/map.js')(app);
 
   app.get('/', function index( req, res ) {
     var data = [];
