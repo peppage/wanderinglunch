@@ -151,7 +151,7 @@ module.exports = function adminRoutes( app, passport ) {
             var re = new RegExp(sub.regex, 'gi');
             contents = contents.replace(re, sub.replacement);
           });
-          res.send(200, contents);
+          res.status(200).send(contents);
         });
       });
     }
