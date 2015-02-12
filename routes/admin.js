@@ -114,15 +114,15 @@ module.exports = function adminRoutes( app, passport ) {
 
   app.get('/admin/fix/:twitname/:page?', passHelper.isLoggedIn,
     function fix( req, res ) {
-      if(req.param('page')) {
-        page = req.param('page');
+      if(req.params.page) {
+        page = req.params.page;
       }
       else {
         page = 0;
       }
 
       knex('tweets')
-      .where({ 'twitname': req.param('twitname') })
+      .where({ 'twitname': req.params.twitname })
       .limit(10)
       .offset(page * 10)
       .orderBy('time', 'desc')
@@ -130,7 +130,7 @@ module.exports = function adminRoutes( app, passport ) {
         res.render('admin/fix', {
           title: 'Wandering Lunch: NYC Food Truck Finder | fixing a truck',
           id: 'fix',
-          twitname: req.param('twitname'),
+          twitname: req.params.twitname,
           tweets: tweets,
           page: parseInt(page)
         });

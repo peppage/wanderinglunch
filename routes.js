@@ -55,14 +55,16 @@ module.exports = function routes( app, passport ) {
   });
 
   app.get('/region/:region', function region( req, res ) {
-    knex('trucks').where({ 'region': req.param('region') })
-    .then(function( trucks ) {
-      res.status(404).end();
-      res.render('region', {
-        title: 'test',
-        trucks : trucks
+    if(req.params.region) {
+      knex('trucks').where({ 'region': req.params.region })
+      .then(function( trucks ) {
+        res.status(404).end();
+        res.render('region', {
+          title: 'test',
+          trucks : trucks
+        });
       });
-    });
+    }
   });
 
   app.get('/truck/:id', function trucks( req, res ) {
@@ -80,29 +82,33 @@ module.exports = function routes( app, passport ) {
       'foursquare'
     )
     .leftJoin('locations', 'trucks.loc', 'locations.id')
-    .where({ 'trucks.id': req.param('id') })
+    .where({ 'trucks.id': req.params.id })
     .then(function( truck ) {
-      knex('tweets').where({ twitname: truck[0].twitname })
-      .orderBy('time', 'desc').limit(6)
-      .then(function( tweets ) {
-        knex('images').select('suffix', 'menu')
-        .where({ twitname: truck[0].twitname, visibility: 'public' })
-        .orderByRaw('menu desc nulls last')
-        .then(function( images ) {
-          menu = null;
-          if(images.length > 0 && images[0].menu) {
-            menu = images[0];
-            images.splice(0, 1);
-          }
-          res.render('truck', {
-            title: truck[0].name + ' Wandering Lunch',
-            truck : truck[0],
-            tweets : tweets,
-            menu : menu,
-            images : images
+      if(trucks[0]) {
+        knex('tweets').where({ twitname: truck[0].twitname })
+        .orderBy('time', 'desc').limit(6)
+        .then(function( tweets ) {
+          knex('images').select('suffix', 'menu')
+          .where({ twitname: truck[0].twitname, visibility: 'public' })
+          .orderByRaw('menu desc nulls last')
+          .then(function( images ) {
+            menu = null;
+            if(images.length > 0 && images[0].menu) {
+              menu = images[0];
+              images.splice(0, 1);
+            }
+            res.render('truck', {
+              title: truck[0].name + ' Wandering Lunch',
+              truck : truck[0],
+              tweets : tweets,
+              menu : menu,
+              images : images
+            });
           });
         });
-      });
+      } else {
+        res.status(404).send();
+      }
     });
   });
 

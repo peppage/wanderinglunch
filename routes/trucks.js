@@ -7,8 +7,8 @@ module.exports = function truckRoutes( app, passport ) {
 
   app.get( '/admin/trucks/:page?', passHelper.isLoggedIn,
     function (req, res) {
-      if(req.param('page')) {
-        page = parseInt(req.param('page'));
+      if(req.params.page) {
+        page = parseInt(req.params.page);
       }
       else {
         page = 0;
@@ -35,7 +35,7 @@ module.exports = function truckRoutes( app, passport ) {
   app.get( '/admin/trucks/edit/:id', passHelper.isLoggedIn,
     function truckEdit( req, res ) {
       knex('trucks')
-      .where({ 'id': req.param('id') })
+      .where({ 'id': req.params.id })
       .then(function( row ) {
         res.render('admin/truckEdit', {
           truck: row[0]
