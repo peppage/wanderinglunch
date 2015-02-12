@@ -6,7 +6,6 @@
 
 from datetime import date
 import datetime
-import nltk
 import re
 import sys
 import time
