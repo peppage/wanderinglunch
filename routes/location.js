@@ -7,8 +7,8 @@ module.exports = function locRoutes( app, passport ) {
 
   app.get( '/admin/locations/:page?', passHelper.isLoggedIn,
     function locations(req, res) {
-      if(req.param.page) {
-        page = req.param.page;
+      if(req.params.page) {
+        page = req.params.page;
       }
       else {
         page = 0;
@@ -49,7 +49,7 @@ module.exports = function locRoutes( app, passport ) {
   app.get( '/admin/locations/edit/:id', passHelper.isLoggedIn,
     function locationEdit( req, res ) {
       knex('locations')
-      .where({ 'id': req.param.id })
+      .where({ 'id': req.params.id })
       .then(function( row ) {
         res.render('admin/locationEdit', {
           location: row[0]
