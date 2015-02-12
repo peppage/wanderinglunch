@@ -84,7 +84,7 @@ module.exports = function routes( app, passport ) {
     .leftJoin('locations', 'trucks.loc', 'locations.id')
     .where({ 'trucks.id': req.params.id })
     .then(function( truck ) {
-      if(trucks[0]) {
+      if(truck[0]) {
         knex('tweets').where({ twitname: truck[0].twitname })
         .orderBy('time', 'desc').limit(6)
         .then(function( tweets ) {
