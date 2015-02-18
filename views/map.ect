@@ -10,6 +10,10 @@
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAN8Jk0062QBOMPmXH-Totg9zi1GCw3o3w">
     </script>
     <script type="text/javascript">
+      var markers = new Array;
+      var infoWindow = new google.maps.InfoWindow({
+      	content: '',
+      });
       function initialize() {
         var beaches = [];
         $.ajax({
@@ -23,9 +27,23 @@
           };
           var map = new google.maps.Map(document.getElementById('map-canvas'),
               mapOptions);
+
+          google.maps.event.addListener(map, 'click', function() {
+        	  
+          });
+
           setMarkers(map, beaches);
         });
 
+
+      }
+
+      function getMarkerAt(latLng) {
+      	for(var j=0; j < markers.length; j++) {
+            	if(latLng.k === markers[j].position.k && latLng.d === markers[j].position.d) {
+            		return markers[j];
+            	}
+            }
       }
 
       function setMarkers(map, locations) {
@@ -35,23 +53,34 @@
                 content: loc.name,
             });
             var myLatLng = new google.maps.LatLng(loc.lat, loc.long);
-            var marker = new google.maps.Marker({
-                position: myLatLng,
-                map: map,
-                title: loc.name,
-                zIndex: 1,
-                display: loc.display,
-                id: loc.id,
-            });
+            
+            var existingMarker = getMarkerAt(myLatLng);
 
+            if(existingMarker != null) {
+            	existingMarker.title += '<a href="/truck/'+ loc.id + '" />' + loc.name + '</a><br>';
+            	
+            } else {
+	            var marker = new google.maps.Marker({
+	                position: myLatLng,
+	                map: map,
+	                title: '<a href="/truck/'+ loc.id + '" />' + loc.name + '</a><br>',
+	                zIndex: 1,
+	                display: loc.display,
+	                id: loc.id,
+	            });
 
-            google.maps.event.addListener(marker, 'click', function() {
-                var t = new google.maps.InfoWindow({
-                    // Um could probably even ajax this?? Is that even a good idea?
-                    content: '<a href="/truck/'+ this.id + '" />' + this.title + '</a><br>' + this.display,
-                });
-                t.open(map,this);
-            });
+	            markers.push(marker);
+
+	            google.maps.event.addListener(marker, 'click', function() {
+	            	if(infoWindow.getContent() != '') {
+	            		infoWindow.setContent('');
+	            		infoWindow.close();
+	            	}
+
+            		infoWindow.setContent('<h3>' + this.display + '</h3>' + this.title);
+            		infoWindow.open(map, this);
+	            });
+	        }
         }
       }
 
