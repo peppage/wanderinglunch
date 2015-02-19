@@ -21,7 +21,8 @@ module.exports = function mapRoutes( app ) {
 
   app.get( '/map', function login( req, res ) {
     res.render( 'map.ect', {
-
+      title: 'Wandering Lunch: NYC Food Truck Finder | Map',
+      id: 'map',
     });
   });
 
