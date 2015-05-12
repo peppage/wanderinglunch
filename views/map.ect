@@ -9,12 +9,12 @@
     	content: '',
     });
     function initialize() {
-      var beaches = [];
+      var trucks = [];
       $.ajax({
         url: "/updatedTrucks",
       })
       .done(function( msg ) {
-        beaches = msg;
+        trucks = msg;
         var mapOptions = {
           center: { lat: 40.755575, lng: -73.982404},
           zoom: 12
@@ -23,18 +23,19 @@
             mapOptions);
 
         google.maps.event.addListener(map, 'click', function() {
-      	  
-        });
 
-        setMarkers(map, beaches);
+        });
+        setMarkers(map, trucks);
       });
 
 
     }
 
     function getMarkerAt(latLng) {
+      console.log(latLng);
+      console.log(markers);
     	for(var j=0; j < markers.length; j++) {
-          	if(latLng.k === markers[j].position.k && latLng.d === markers[j].position.d) {
+          	if(latLng.A === markers[j].position.A && latLng.F === markers[j].position.F) {
           		return markers[j];
           	}
           }
@@ -43,16 +44,18 @@
     function setMarkers(map, locations) {
       for (var i = 0; i < locations.length; i++) {
           var loc = locations[i];
+          console.log(loc);
           var infowindow = new google.maps.InfoWindow({
               content: loc.name,
           });
           var myLatLng = new google.maps.LatLng(loc.lat, loc.long);
-          
+
           var existingMarker = getMarkerAt(myLatLng);
 
+          console.log(existingMarker);
           if(existingMarker != null) {
           	existingMarker.title += '<a href="/truck/'+ loc.id + '" />' + loc.name + '</a><br>';
-          	
+
           } else {
             var marker = new google.maps.Marker({
                 position: myLatLng,
