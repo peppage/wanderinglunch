@@ -32,8 +32,6 @@
     }
 
     function getMarkerAt(latLng) {
-      console.log(latLng);
-      console.log(markers);
     	for(var j=0; j < markers.length; j++) {
           	if(latLng.A === markers[j].position.A && latLng.F === markers[j].position.F) {
           		return markers[j];
@@ -44,7 +42,6 @@
     function setMarkers(map, locations) {
       for (var i = 0; i < locations.length; i++) {
           var loc = locations[i];
-          console.log(loc);
           var infowindow = new google.maps.InfoWindow({
               content: loc.name,
           });
@@ -52,7 +49,6 @@
 
           var existingMarker = getMarkerAt(myLatLng);
 
-          console.log(existingMarker);
           if(existingMarker != null) {
           	existingMarker.title += '<a href="/truck/'+ loc.id + '" />' + loc.name + '</a><br>';
 
