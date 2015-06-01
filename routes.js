@@ -44,14 +44,18 @@ module.exports = function routes( app, passport ) {
           console.log('Region Error ' + err);
         }
       });
-      res.render('index', {
-          title: 'Wandering Lunch: NYC Food Truck Finder',
-          id: '/',
-          upTrucks: data.up,
-          midTrucks: data.mid,
-          downTrucks: data.none,
-          bkTrucks: data.bkl
-      });
+      knex('messages').select()
+      .orderBy('date', 'desc').limit(1).then(function(message) {
+        res.render('index', {
+            title: 'Wandering Lunch: NYC Food Truck Finder',
+            id: '/',
+            message: message[0],
+            upTrucks: data.up,
+            midTrucks: data.mid,
+            downTrucks: data.none,
+            bkTrucks: data.bkl
+        });
+      })
     });
   });
 

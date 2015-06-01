@@ -30,7 +30,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: images; Type: TABLE; Schema: public; Owner: mca; Tablespace: 
+-- Name: images; Type: TABLE; Schema: public; Owner: mpeppleradmin; Tablespace: 
 --
 
 CREATE TABLE images (
@@ -42,10 +42,10 @@ CREATE TABLE images (
 );
 
 
-ALTER TABLE images OWNER TO mca;
+ALTER TABLE images OWNER TO mpeppleradmin;
 
 --
--- Name: locations; Type: TABLE; Schema: public; Owner: mca; Tablespace: 
+-- Name: locations; Type: TABLE; Schema: public; Owner: mpeppleradmin; Tablespace: 
 --
 
 CREATE TABLE locations (
@@ -59,10 +59,10 @@ CREATE TABLE locations (
 );
 
 
-ALTER TABLE locations OWNER TO mca;
+ALTER TABLE locations OWNER TO mpeppleradmin;
 
 --
--- Name: locations_id_seq; Type: SEQUENCE; Schema: public; Owner: mca
+-- Name: locations_id_seq; Type: SEQUENCE; Schema: public; Owner: mpeppleradmin
 --
 
 CREATE SEQUENCE locations_id_seq
@@ -73,17 +73,29 @@ CREATE SEQUENCE locations_id_seq
     CACHE 1;
 
 
-ALTER TABLE locations_id_seq OWNER TO mca;
+ALTER TABLE locations_id_seq OWNER TO mpeppleradmin;
 
 --
--- Name: locations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mca
+-- Name: locations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mpeppleradmin
 --
 
 ALTER SEQUENCE locations_id_seq OWNED BY locations.id;
 
 
 --
--- Name: sitestats; Type: TABLE; Schema: public; Owner: mca; Tablespace: 
+-- Name: messages; Type: TABLE; Schema: public; Owner: mpeppleradmin; Tablespace: 
+--
+
+CREATE TABLE messages (
+    message text,
+    date integer
+);
+
+
+ALTER TABLE messages OWNER TO mpeppleradmin;
+
+--
+-- Name: sitestats; Type: TABLE; Schema: public; Owner: mpeppleradmin; Tablespace: 
 --
 
 CREATE TABLE sitestats (
@@ -95,10 +107,10 @@ CREATE TABLE sitestats (
 );
 
 
-ALTER TABLE sitestats OWNER TO mca;
+ALTER TABLE sitestats OWNER TO mpeppleradmin;
 
 --
--- Name: subs; Type: TABLE; Schema: public; Owner: mca; Tablespace: 
+-- Name: subs; Type: TABLE; Schema: public; Owner: mpeppleradmin; Tablespace: 
 --
 
 CREATE TABLE subs (
@@ -108,10 +120,10 @@ CREATE TABLE subs (
 );
 
 
-ALTER TABLE subs OWNER TO mca;
+ALTER TABLE subs OWNER TO mpeppleradmin;
 
 --
--- Name: subs_id_seq; Type: SEQUENCE; Schema: public; Owner: mca
+-- Name: subs_id_seq; Type: SEQUENCE; Schema: public; Owner: mpeppleradmin
 --
 
 CREATE SEQUENCE subs_id_seq
@@ -122,17 +134,17 @@ CREATE SEQUENCE subs_id_seq
     CACHE 1;
 
 
-ALTER TABLE subs_id_seq OWNER TO mca;
+ALTER TABLE subs_id_seq OWNER TO mpeppleradmin;
 
 --
--- Name: subs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mca
+-- Name: subs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mpeppleradmin
 --
 
 ALTER SEQUENCE subs_id_seq OWNED BY subs.id;
 
 
 --
--- Name: trucks; Type: TABLE; Schema: public; Owner: mca; Tablespace: 
+-- Name: trucks; Type: TABLE; Schema: public; Owner: mpeppleradmin; Tablespace: 
 --
 
 CREATE TABLE trucks (
@@ -153,10 +165,10 @@ CREATE TABLE trucks (
 );
 
 
-ALTER TABLE trucks OWNER TO mca;
+ALTER TABLE trucks OWNER TO mpeppleradmin;
 
 --
--- Name: truckstats; Type: TABLE; Schema: public; Owner: mca; Tablespace: 
+-- Name: truckstats; Type: TABLE; Schema: public; Owner: mpeppleradmin; Tablespace: 
 --
 
 CREATE TABLE truckstats (
@@ -168,10 +180,10 @@ CREATE TABLE truckstats (
 );
 
 
-ALTER TABLE truckstats OWNER TO mca;
+ALTER TABLE truckstats OWNER TO mpeppleradmin;
 
 --
--- Name: tweets; Type: TABLE; Schema: public; Owner: mca; Tablespace: 
+-- Name: tweets; Type: TABLE; Schema: public; Owner: mpeppleradmin; Tablespace: 
 --
 
 CREATE TABLE tweets (
@@ -183,10 +195,10 @@ CREATE TABLE tweets (
 );
 
 
-ALTER TABLE tweets OWNER TO mca;
+ALTER TABLE tweets OWNER TO mpeppleradmin;
 
 --
--- Name: users; Type: TABLE; Schema: public; Owner: mca; Tablespace: 
+-- Name: users; Type: TABLE; Schema: public; Owner: mpeppleradmin; Tablespace: 
 --
 
 CREATE TABLE users (
@@ -197,10 +209,10 @@ CREATE TABLE users (
 );
 
 
-ALTER TABLE users OWNER TO mca;
+ALTER TABLE users OWNER TO mpeppleradmin;
 
 --
--- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: mca
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: mpeppleradmin
 --
 
 CREATE SEQUENCE users_id_seq
@@ -211,38 +223,38 @@ CREATE SEQUENCE users_id_seq
     CACHE 1;
 
 
-ALTER TABLE users_id_seq OWNER TO mca;
+ALTER TABLE users_id_seq OWNER TO mpeppleradmin;
 
 --
--- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mca
+-- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mpeppleradmin
 --
 
 ALTER SEQUENCE users_id_seq OWNED BY users.id;
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: mca
+-- Name: id; Type: DEFAULT; Schema: public; Owner: mpeppleradmin
 --
 
 ALTER TABLE ONLY locations ALTER COLUMN id SET DEFAULT nextval('locations_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: mca
+-- Name: id; Type: DEFAULT; Schema: public; Owner: mpeppleradmin
 --
 
 ALTER TABLE ONLY subs ALTER COLUMN id SET DEFAULT nextval('subs_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: mca
+-- Name: id; Type: DEFAULT; Schema: public; Owner: mpeppleradmin
 --
 
 ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
 
 
 --
--- Data for Name: images; Type: TABLE DATA; Schema: public; Owner: mca
+-- Data for Name: images; Type: TABLE DATA; Schema: public; Owner: mpeppleradmin
 --
 
 COPY images (id, suffix, visibility, twitname, menu) FROM stdin;
@@ -485,7 +497,7 @@ COPY images (id, suffix, visibility, twitname, menu) FROM stdin;
 
 
 --
--- Data for Name: locations; Type: TABLE DATA; Schema: public; Owner: mca
+-- Data for Name: locations; Type: TABLE DATA; Schema: public; Owner: mpeppleradmin
 --
 
 COPY locations (id, display, matcher, region, lat, long, hood) FROM stdin;
@@ -593,14 +605,24 @@ COPY locations (id, display, matcher, region, lat, long, hood) FROM stdin;
 
 
 --
--- Name: locations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mca
+-- Name: locations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mpeppleradmin
 --
 
 SELECT pg_catalog.setval('locations_id_seq', 100, true);
 
 
 --
--- Data for Name: sitestats; Type: TABLE DATA; Schema: public; Owner: mca
+-- Data for Name: messages; Type: TABLE DATA; Schema: public; Owner: mpeppleradmin
+--
+
+COPY messages (message, date) FROM stdin;
+test	1433174075
+<p>temp <b>thing</b></p>	1433174165
+\.
+
+
+--
+-- Data for Name: sitestats; Type: TABLE DATA; Schema: public; Owner: mpeppleradmin
 --
 
 COPY sitestats ("time", uptown, midtown, downtown, brooklyn) FROM stdin;
@@ -624,7 +646,7 @@ COPY sitestats ("time", uptown, midtown, downtown, brooklyn) FROM stdin;
 
 
 --
--- Data for Name: subs; Type: TABLE DATA; Schema: public; Owner: mca
+-- Data for Name: subs; Type: TABLE DATA; Schema: public; Owner: mpeppleradmin
 --
 
 COPY subs (id, regex, replacement) FROM stdin;
@@ -654,14 +676,14 @@ COPY subs (id, regex, replacement) FROM stdin;
 
 
 --
--- Name: subs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mca
+-- Name: subs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mpeppleradmin
 --
 
 SELECT pg_catalog.setval('subs_id_seq', 22, true);
 
 
 --
--- Data for Name: trucks; Type: TABLE DATA; Schema: public; Owner: mca
+-- Data for Name: trucks; Type: TABLE DATA; Schema: public; Owner: mpeppleradmin
 --
 
 COPY trucks (id, name, twitname, weburl, tweet, retweeted, lasttweet, lastupdate, type, about, foursquare, matcher, loc, matchmethod) FROM stdin;
@@ -759,7 +781,7 @@ gorilla1	Gorilla Cheese 1	gcnyc1	http://www.gorillacheesenyc.com/	G1 46 5/6\nG2 
 
 
 --
--- Data for Name: truckstats; Type: TABLE DATA; Schema: public; Owner: mca
+-- Data for Name: truckstats; Type: TABLE DATA; Schema: public; Owner: mpeppleradmin
 --
 
 COPY truckstats (id, "time", street, region, location) FROM stdin;
@@ -1385,7 +1407,7 @@ hh3	1397235601	47	up	 47st & Park Ave
 
 
 --
--- Data for Name: tweets; Type: TABLE DATA; Schema: public; Owner: mca
+-- Data for Name: tweets; Type: TABLE DATA; Schema: public; Owner: mpeppleradmin
 --
 
 COPY tweets (contents, "time", id, retweeted, twitname) FROM stdin;
@@ -3164,7 +3186,7 @@ Hey guys we will be on Charlton & Varick today.	1433171703	605392117750476800	f	
 
 
 --
--- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: mca
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: mpeppleradmin
 --
 
 COPY users (id, email, password, admin) FROM stdin;
@@ -3173,14 +3195,14 @@ COPY users (id, email, password, admin) FROM stdin;
 
 
 --
--- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mca
+-- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mpeppleradmin
 --
 
 SELECT pg_catalog.setval('users_id_seq', 1, true);
 
 
 --
--- Name: images_id_key; Type: CONSTRAINT; Schema: public; Owner: mca; Tablespace: 
+-- Name: images_id_key; Type: CONSTRAINT; Schema: public; Owner: mpeppleradmin; Tablespace: 
 --
 
 ALTER TABLE ONLY images
@@ -3188,7 +3210,7 @@ ALTER TABLE ONLY images
 
 
 --
--- Name: locations_display_key; Type: CONSTRAINT; Schema: public; Owner: mca; Tablespace: 
+-- Name: locations_display_key; Type: CONSTRAINT; Schema: public; Owner: mpeppleradmin; Tablespace: 
 --
 
 ALTER TABLE ONLY locations
@@ -3196,7 +3218,7 @@ ALTER TABLE ONLY locations
 
 
 --
--- Name: trucks_id_key; Type: CONSTRAINT; Schema: public; Owner: mca; Tablespace: 
+-- Name: trucks_id_key; Type: CONSTRAINT; Schema: public; Owner: mpeppleradmin; Tablespace: 
 --
 
 ALTER TABLE ONLY trucks
@@ -3204,7 +3226,7 @@ ALTER TABLE ONLY trucks
 
 
 --
--- Name: tweets_id_key; Type: CONSTRAINT; Schema: public; Owner: mca; Tablespace: 
+-- Name: tweets_id_key; Type: CONSTRAINT; Schema: public; Owner: mpeppleradmin; Tablespace: 
 --
 
 ALTER TABLE ONLY tweets
@@ -3212,12 +3234,12 @@ ALTER TABLE ONLY tweets
 
 
 --
--- Name: public; Type: ACL; Schema: -; Owner: postgres
+-- Name: public; Type: ACL; Schema: -; Owner: mpeppleradmin
 --
 
 REVOKE ALL ON SCHEMA public FROM PUBLIC;
-REVOKE ALL ON SCHEMA public FROM postgres;
-GRANT ALL ON SCHEMA public TO postgres;
+REVOKE ALL ON SCHEMA public FROM mpeppleradmin;
+GRANT ALL ON SCHEMA public TO mpeppleradmin;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 

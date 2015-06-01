@@ -8,6 +8,7 @@ module.exports = function adminRoutes( app, passport ) {
   require( './subs' )(app);
   require( './trucks' )(app);
   require( './location' )(app);
+  require( './message' )(app);
 
   app.get( '/login', function login( req, res ) {
     res.render( 'admin/login.ect', {
