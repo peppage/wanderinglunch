@@ -48,10 +48,6 @@
     <input id="weburl" type="text" class="form-control">
   </div>
   <div class="form-group">
-    <label for="regex">Regex</label>
-    <input id="regex" type="text" class="form-control">
-  </div>
-  <div class="form-group">
     <label for="type">Type</label>
     <input id="type" type="text" class="form-control">
   </div>
@@ -66,6 +62,10 @@
   <div class="form-group">
     <label for="matcher">Matcher</label>
     <input id="matcher" type="text" class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="matchmethod">Match Method</label>
+    <input id="matchmethod" type="text" class="form-control">
   </div>
 
   <button class="js-add" type="button">Add</button>
@@ -82,7 +82,7 @@
           twitname: $('#twitname').val(),
           weburl: $('#weburl').val(),
           matcher: $('#matcher').val(),
-          regex: $('#regex').val(),
+          matchmethod: $('#matchmethod').val(),
           type: $('#type').val(),
           about: $('#about').val(),
           foursquare: $('#foursquare').val()

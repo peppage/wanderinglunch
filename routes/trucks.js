@@ -76,7 +76,7 @@ module.exports = function truckRoutes( app, passport ) {
         'twitname': req.body.twitname,
         'weburl': req.body.weburl,
         'matcher': req.body.matcher,
-        'regex': req.body.regex,
+        'matchmethod': req.body.matchmethod,
         'type': req.body.type,
         'about': req.body.about,
         'foursquare': req.body.foursquare
