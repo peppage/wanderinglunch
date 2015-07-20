@@ -30,7 +30,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: images; Type: TABLE; Schema: public; Owner: mpeppleradmin; Tablespace: 
+-- Name: images; Type: TABLE; Schema: public; Owner: mca; Tablespace: 
 --
 
 CREATE TABLE images (
@@ -42,10 +42,10 @@ CREATE TABLE images (
 );
 
 
-ALTER TABLE images OWNER TO mpeppleradmin;
+ALTER TABLE images OWNER TO mca;
 
 --
--- Name: locations; Type: TABLE; Schema: public; Owner: mpeppleradmin; Tablespace: 
+-- Name: locations; Type: TABLE; Schema: public; Owner: mca; Tablespace: 
 --
 
 CREATE TABLE locations (
@@ -59,10 +59,10 @@ CREATE TABLE locations (
 );
 
 
-ALTER TABLE locations OWNER TO mpeppleradmin;
+ALTER TABLE locations OWNER TO mca;
 
 --
--- Name: locations_id_seq; Type: SEQUENCE; Schema: public; Owner: mpeppleradmin
+-- Name: locations_id_seq; Type: SEQUENCE; Schema: public; Owner: mca
 --
 
 CREATE SEQUENCE locations_id_seq
@@ -73,17 +73,17 @@ CREATE SEQUENCE locations_id_seq
     CACHE 1;
 
 
-ALTER TABLE locations_id_seq OWNER TO mpeppleradmin;
+ALTER TABLE locations_id_seq OWNER TO mca;
 
 --
--- Name: locations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mpeppleradmin
+-- Name: locations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mca
 --
 
 ALTER SEQUENCE locations_id_seq OWNED BY locations.id;
 
 
 --
--- Name: messages; Type: TABLE; Schema: public; Owner: mpeppleradmin; Tablespace: 
+-- Name: messages; Type: TABLE; Schema: public; Owner: mca; Tablespace: 
 --
 
 CREATE TABLE messages (
@@ -92,10 +92,10 @@ CREATE TABLE messages (
 );
 
 
-ALTER TABLE messages OWNER TO mpeppleradmin;
+ALTER TABLE messages OWNER TO mca;
 
 --
--- Name: sitestats; Type: TABLE; Schema: public; Owner: mpeppleradmin; Tablespace: 
+-- Name: sitestats; Type: TABLE; Schema: public; Owner: mca; Tablespace: 
 --
 
 CREATE TABLE sitestats (
@@ -107,10 +107,10 @@ CREATE TABLE sitestats (
 );
 
 
-ALTER TABLE sitestats OWNER TO mpeppleradmin;
+ALTER TABLE sitestats OWNER TO mca;
 
 --
--- Name: subs; Type: TABLE; Schema: public; Owner: mpeppleradmin; Tablespace: 
+-- Name: subs; Type: TABLE; Schema: public; Owner: mca; Tablespace: 
 --
 
 CREATE TABLE subs (
@@ -120,10 +120,10 @@ CREATE TABLE subs (
 );
 
 
-ALTER TABLE subs OWNER TO mpeppleradmin;
+ALTER TABLE subs OWNER TO mca;
 
 --
--- Name: subs_id_seq; Type: SEQUENCE; Schema: public; Owner: mpeppleradmin
+-- Name: subs_id_seq; Type: SEQUENCE; Schema: public; Owner: mca
 --
 
 CREATE SEQUENCE subs_id_seq
@@ -134,17 +134,17 @@ CREATE SEQUENCE subs_id_seq
     CACHE 1;
 
 
-ALTER TABLE subs_id_seq OWNER TO mpeppleradmin;
+ALTER TABLE subs_id_seq OWNER TO mca;
 
 --
--- Name: subs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mpeppleradmin
+-- Name: subs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mca
 --
 
 ALTER SEQUENCE subs_id_seq OWNED BY subs.id;
 
 
 --
--- Name: trucks; Type: TABLE; Schema: public; Owner: mpeppleradmin; Tablespace: 
+-- Name: trucks; Type: TABLE; Schema: public; Owner: mca; Tablespace: 
 --
 
 CREATE TABLE trucks (
@@ -165,10 +165,10 @@ CREATE TABLE trucks (
 );
 
 
-ALTER TABLE trucks OWNER TO mpeppleradmin;
+ALTER TABLE trucks OWNER TO mca;
 
 --
--- Name: truckstats; Type: TABLE; Schema: public; Owner: mpeppleradmin; Tablespace: 
+-- Name: truckstats; Type: TABLE; Schema: public; Owner: mca; Tablespace: 
 --
 
 CREATE TABLE truckstats (
@@ -180,10 +180,10 @@ CREATE TABLE truckstats (
 );
 
 
-ALTER TABLE truckstats OWNER TO mpeppleradmin;
+ALTER TABLE truckstats OWNER TO mca;
 
 --
--- Name: tweets; Type: TABLE; Schema: public; Owner: mpeppleradmin; Tablespace: 
+-- Name: tweets; Type: TABLE; Schema: public; Owner: mca; Tablespace: 
 --
 
 CREATE TABLE tweets (
@@ -195,10 +195,10 @@ CREATE TABLE tweets (
 );
 
 
-ALTER TABLE tweets OWNER TO mpeppleradmin;
+ALTER TABLE tweets OWNER TO mca;
 
 --
--- Name: users; Type: TABLE; Schema: public; Owner: mpeppleradmin; Tablespace: 
+-- Name: users; Type: TABLE; Schema: public; Owner: mca; Tablespace: 
 --
 
 CREATE TABLE users (
@@ -209,10 +209,10 @@ CREATE TABLE users (
 );
 
 
-ALTER TABLE users OWNER TO mpeppleradmin;
+ALTER TABLE users OWNER TO mca;
 
 --
--- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: mpeppleradmin
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: mca
 --
 
 CREATE SEQUENCE users_id_seq
@@ -223,281 +223,281 @@ CREATE SEQUENCE users_id_seq
     CACHE 1;
 
 
-ALTER TABLE users_id_seq OWNER TO mpeppleradmin;
+ALTER TABLE users_id_seq OWNER TO mca;
 
 --
--- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mpeppleradmin
+-- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mca
 --
 
 ALTER SEQUENCE users_id_seq OWNED BY users.id;
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: mpeppleradmin
+-- Name: id; Type: DEFAULT; Schema: public; Owner: mca
 --
 
 ALTER TABLE ONLY locations ALTER COLUMN id SET DEFAULT nextval('locations_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: mpeppleradmin
+-- Name: id; Type: DEFAULT; Schema: public; Owner: mca
 --
 
 ALTER TABLE ONLY subs ALTER COLUMN id SET DEFAULT nextval('subs_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: mpeppleradmin
+-- Name: id; Type: DEFAULT; Schema: public; Owner: mca
 --
 
 ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
 
 
 --
--- Data for Name: images; Type: TABLE DATA; Schema: public; Owner: mpeppleradmin
+-- Data for Name: images; Type: TABLE DATA; Schema: public; Owner: mca
 --
 
 COPY images (id, suffix, visibility, twitname, menu) FROM stdin;
-526e8aee11d299d16e74b447	/67629862_ZPeS1alTFabw1hPqq8PCcGF1SRFynqA23OgkKg8yc00.jpg	public	lovemamak	\N
+55159d3f498ef66b6de1b09c	/6096863_zt9VyCrl2nuWO8cc2KBxYq0rgIFXGJndFGmZcumdSRc.jpg	public	shuka	f
+545d48d2498e3e01487425a1	/8418727_ueAVzhZe5huI9alIjmHct6sTu6gQ4RyIUDXP0_qGF4M.jpg	public	kayanyc28	f
 51c1ea41498e372d91835cf9	/5067950_pSXIZo_RqO8Hh5AuWcomjr0p3q_pXPUMWe99W8hUGTU.jpg	public	burgersandbites	\N
 51a79983498e3044671cd784	/1441492_yfySwml4ChzJ_ni5DxTq-8n2UlecWBWjgxR-ygA6pYc.jpg	public	burgersandbites	\N
+526e8aee11d299d16e74b447	/67629862_ZPeS1alTFabw1hPqq8PCcGF1SRFynqA23OgkKg8yc00.jpg	public	lovemamak	\N
 521b83c411d29ec0512f89b3	/255980_1U9yRWzBKuIDLReBhmBs45qJ0mtHu7pzL_Fv4T9gTss.jpg	public	lovemamak	\N
-51645882e4b0bcb0cb0c7ef3	/7511393_dEJJLGO8ljFPMA_kFidoz1wpWZ-k6mHpqYnuRwoBpRg.jpg	public	philssteaks	\N
-52fe5db111d2d7644f04c21e	/404119_k2pARWK6AW8sOni-GGVsAfTehHeRbbnRCBGhfeb1xZc.jpg	public	philssteaks	t
-507071bfe4b06e882e74b445	/1112203_qnT5k-31-4cRKDz00cUpp7Ia7HG3YTjhsC9Udo90RDI.jpg	public	philssteaks	\N
 501c284be4b07d0ab63e08be	/vQv8P8_hFNwHMmpR7k6-arr8zqYmmgoSG_aAPJuz-ws.jpg	public	itizyicecream	\N
 51e83b4a498e0a1c64e62828	/26624_AGoljLki5SS-GJGKaAGB75mloHKRBkJ1Qj5BQCRP1_Y.jpg	public	itizyicecream	\N
 5180207390e7374e46b6c165	/49563206_uKsSD-Cd2jjy6FMyR9U_--7DdUBJ7ZUxtdlushxyIAg.jpg	public	freshandhearty	\N
+5165924de4b093be3bc5cd57	/2159706_uFl3RYgA1z4EiDNp8PtjjG2HHWhTiiXDLNzJtFWPHS8.jpg	public	mactruckny	\N
+556f5fda498e63fb4eda1f61	/68150_wqjx6504Fhkiz_LfsnouqTZvlLmrDMzJu96d8eZO-yw.jpg	public	mamasheros	t
+525b3a3711d2040fdcbd6fee	/52031712_DN0C9vfm3iv1geUuFX92Pt0jwgl8NhbGokLj_o0Ebjg.jpg	public	mooshugrill	\N
+51d31ab97dd28a271207af20	/59958053_5CogfmHgRpBtjkPzVkAgAjK7q9ac0bo8Z1TPwxPIFAw.jpg	public	grillonwheelsny	\N
 535d6fe9498eeb428f0a49a5	/643701_B0msQNcQCClAiTuYbiNnskLICf99ehNmerkWdhYNR8c.jpg	public	snowday	f
 533ddd9a498ebf7fb4775ca2	/36814481_r4TU0Q7tJ6Xum58iZ5olLRY6sV-P4dN3psrhw2ZZKZ8.jpg	public	snowday	f
-525b3a3711d2040fdcbd6fee	/52031712_DN0C9vfm3iv1geUuFX92Pt0jwgl8NhbGokLj_o0Ebjg.jpg	public	mooshugrill	\N
+4ff318dde4b0444717bb6c21	/7p0pVfwa2IPX5eoAqan3mf43CoVnVrHHztgDqMGA6aE.jpg	private	korillabbq	t
 54978669498e92fb4a6b4341	/97520198_KIqmbmLkuFxboBU_HjFosEOXtwVA01QnxiBHugrwImE.jpg	public	shukanyc	t
-511d2c60e4b017a4221bec0c	/1425622_srSMuVL9KOV8rqb_UDiSQNwjvNOtMyF-zeTO7sHRZZo.jpg	public	nuchasnyc	f
-4ffef65ae4b013ea5f373be1	/VqxEh6cK784gtMOJRF6Lnub985jBJPC6-FuwZwXt_y4.jpg	public	nuchasnyc	f
-50ef1f18e4b0710a5e5cb1eb	/117715_4lM2ZgzHp4Uv61-ckuWzdXXXcPVNEH2NjISpWAEjGds.jpg	public	nuchasnyc	f
+52e456f2498ea9ece32b66e0	/25812424_w-pfXOZy2D8xWVJY37hGi4VXYiDnicBFvWRiiDOnNhE.jpg	public	carlssteaks	f
+5203e16e498e9e8e0a93b61a	/702028_Fog-6PEF03KateivIPP-hx87Qn6gi7PwnaJv-wTFv3I.jpg	public	carlssteaks	\N
 4fd0f054e4b0757383b97c0f	/MbR1inb3VKXu0PQMsCkHkHGftYq0E8CDbYG3BLRRGaE.jpg	public	thecrepestruck	\N
-51dd9ddc498efb9a3437e123	/4501533_djr9d2BEP8dg7E48xJjJTa_Yjk0Iy-MmBG6hgIQBLUs.jpg	public	bigdsgrub	\N
-4e4e92c7b0fb088f3c0f14d5	/HTLXSW2D30RGIEYPI0JGR22LUCS5BTXQ0LXDWAOHH4PCVHM4.jpg	public	bigdsgrub	\N
-513101fce4b006d9c4991bdc	/17248619_XfpmI8dNgmoeHE3BXjV8bL2yuuMTqxU3FqDr4BqX7Ks.jpg	public	bigdsgrub	\N
-4fa2d04de4b0489ba3d7936d	/hsPbM0G5l3AsUaI3x6r_VkiSYo4pYlWTKK2S9zqh_KE.jpg	public	bigdsgrub	\N
-51d31ab97dd28a271207af20	/59958053_5CogfmHgRpBtjkPzVkAgAjK7q9ac0bo8Z1TPwxPIFAw.jpg	public	grillonwheelsny	\N
 52a0bef911d299250c89f9c7	/349672_Cg8dtcrfQ0WZeSo7BJR61YBG6VzsiMltZP8XIqyHiu0.jpg	public	mrniceguytruck	\N
 529ccbc511d21047117cdea2	/68150__CRf8sW9KvXZTkcAQEc4EsnYPgqXA2trmMxy-_AzobY.jpg	public	mrniceguytruck	\N
 51c8a3c5498e797153ec5629	/46314126_95x6AErCZEGSi1zGZrFCY-EzgsIMyOhgO4G59l-u_Xg.jpg	public	funbunsnyc	\N
 5212ec18498e9494b634a94c	/814104_tUkLgiQ8zcYxovra9R8PIx7FckFhBjzNVHmirteXd58.jpg	public	funbunsnyc	\N
+4f67b0d4e4b08559c4c60149	/SdNxRS0joKXurf0FEv8_SRg-GeR9lGCN098_ZB2tijA.jpg	public	mexicue	\N
+507efae0e4b09a52c022ec3a	/39213_nH-zcqfLCJqMvG0Nco0LWE4QuRuoL6unlEXJlJbTEF4.jpg	public	mexicue	\N
+501fe830e4b0bbddce992f90	/fFBOGONZt5Zr77Vc5g8adoAiBht0f-MBut7GqorVEjo.jpg	public	mexicue	\N
+523c930a11d22e1c3012a9d3	/34169985_AiTXirGu6jTaGeWWhhOfl2QIbGVaQjdDg1QCEakqza8.jpg	public	mexicue	t
+50784742498ec6be8cd3f88e	/155927_ebZApDyXpTKTmvOQHdBTxNc2wJrsZV2QASmpYTNAVJM.jpg	public	mexicue	\N
+519a7e33498e6e4ea6ff66f1	/3354_e_1JMupbEA8VtOBVXgLHAvtJGQwcpHvY2JyFESXYSjo.jpg	public	thesteelcart	\N
+51dc0e71498e8db4f9a8106e	/4456614_ZWvsB80ogvwYkoKIyVf6q5RfcDXwuKI4t0XJJhyLQ_I.jpg	public	thesteelcart	\N
+556f5fe0498e71287f7c3e06	/68150_DEYnBJz_XjQjQWbq4QTnfip2-TEt4cDPYPIaF4zm9lg.jpg	public	mamasheros	f
+51645882e4b0bcb0cb0c7ef3	/7511393_dEJJLGO8ljFPMA_kFidoz1wpWZ-k6mHpqYnuRwoBpRg.jpg	public	philssteaks	\N
+52fe5db111d2d7644f04c21e	/404119_k2pARWK6AW8sOni-GGVsAfTehHeRbbnRCBGhfeb1xZc.jpg	public	philssteaks	t
+507071bfe4b06e882e74b445	/1112203_qnT5k-31-4cRKDz00cUpp7Ia7HG3YTjhsC9Udo90RDI.jpg	public	philssteaks	\N
 5176cceb498efe500552cc9e	/21735785_zaQs-7anNinrrQlobBV2AjNxquTXs5g8ZY0NxvoxvHo.jpg	public	steaksncrepes	\N
 523b2edc11d265bf373f82a0	/8853695_cjpq3trk4bFpcU1oHWwj4XxwwD9ZI169sNncUyOQoM8.jpg	public	steaksncrepes	\N
 526fef71498e92d1ace459d9	/60805368_eCRrBwapYrNL8fM9tmIaLCfnlhQYb9ASU-ZkaR1Og54.jpg	public	mamuthainoodle	\N
-4ffda271e4b03bbc7f8fd13a	/6Dtx8fj7IXT6M3O6ZV3rXryb6zKTAqPchjeOM2BJJAs.jpg	public	funbunsnyc	\N
-505204d6e4b02dee62bd961a	/dcOYoRoNNeCLMxvoyAN-o9gJObcw5FljMqYpS9cps84.jpg	public	funbunsnyc	\N
-5196816e498eebbaef53fe6b	/32050404_-lVnQ_kgFICQK3OBrfq4QydeDqXhz3ZCRD3TrCvMPxY.jpg	public	veganlunchtruck	f
-50292d68e4b0d0acd3bb5dbb	/vv6y8qi6JFfXr9QDkIvTPP0fSmbgQ_jGXHCVwDv0c04.jpg	public	veganlunchtruck	f
-516ef5ece4b0d1c83382c12f	/117715_Gt3J4FMusC7YQjSfEup4O7bAO10z8J4gxmnd0xKnZuQ.jpg	public	veganlunchtruck	\N
-508af08be4b02ba9b11cc747	/17430999_28ys6GXVoaOZoKPXLLK5GQpVEL8UrC1_1DajRIy8ia4.jpg	public	veganlunchtruck	f
-526e782b11d2a15e6fb663f3	/8761552_XH612BVbFNOBD2jJVEMDzyawnGF45FygNA3TtdKo6UE.jpg	private	veganlunchtruck	\N
-52ade258498e293fae46e684	/68150_s7DCORg1dB6IJWWdj_e_pZMg4zKZs3S_Tjkff_px7kw.jpg	private	veganlunchtruck	\N
-51dc48a3498efe9483d8417a	/117715_dlhUlP8z_jVejqRlWaCzsJBqg0eoP6rRSjOLpszFA0Q.jpg	public	veganlunchtruck	\N
-51105b22e4b0a7b61fac854b	/117715_vKu0po70jlTD3qN9mXsdNiE6V5Od1hmYMVlUY9xSIP8.jpg	public	veganlunchtruck	\N
-519a7e33498e6e4ea6ff66f1	/3354_e_1JMupbEA8VtOBVXgLHAvtJGQwcpHvY2JyFESXYSjo.jpg	public	thesteelcart	\N
-51dc0e71498e8db4f9a8106e	/4456614_ZWvsB80ogvwYkoKIyVf6q5RfcDXwuKI4t0XJJhyLQ_I.jpg	public	thesteelcart	\N
-50f59e2ee4b0b31f58d6cc1f	/1922740_OhtWiNUDUcN0NE_HB3Tk8vm5qIZcvqxcP2nMDrN8dT0.jpg	public	kimchitruck	t
-5197fe76498e1c056c96d21b	/117715_m462oAqyqBN12xyWCOyzYR6-1gtYrUa8BiX9r9OybE8.jpg	private	kimchitruck	\N
-4e3da652d4c058f9dc087a6c	/QEOIS2W35WLTHYK00QC04LKKX4X1SYW3DDI45X30HSKTJENQ.jpg	public	kimchitruck	\N
-5151c82de4b024888079c5ea	/5003144_g8kbTzyfr6gL9vIRpMBbXz4TqBUk5EgkqIPlBP9DtsA.jpg	public	mactruckny	\N
+4da8977840a3582fb8c49316	/MCGIPRA0XR15JNG4O2YZJQBCRMK05UVTC4T14TOQWRTNMQFZ.jpg	public	eddiespizzany	\N
+4fd79157e4b071eb33a9c810	/8zrcTIejD5EBiOJzSobql1_PQWr-i2KmRfgMCYmbK-M.jpg	public	eddiespizzany	\N
+4f9c18b0e4b0b38d2f554383	/AQEKYbyPrQt5uMWhy4r4ODm2vSMCqPseJyMhcg55mtY.jpg	public	eddiespizzany	\N
+4fb29dc4e4b0e08c1e225555	/ckjwTj4Fd2cRoZvDQZw_1jYdwuBF4BsfV4ZWc5oElFo.jpg	public	eddiespizzany	\N
+532879fb498ec68315b3d232	/68150_KF6qgT-viSOMS5bt3lJarsNeEUjlVJn1lbAypyCl1js.jpg	public	dubpies	f
+53287a0c498edd9a0567c2c0	/68150_i3UKBmIXHPN4h7gtvSQjnYfikUNmJuGRpjwKP2dLI5Q.jpg	public	dubpies	f
+5345d100498eaa611b76f338	/62345083_i2VdE3VeEPlbfUgNv9mWmVmsuL19upJhcHaRX3zje1w.jpg	public	dubpies	f
+5328764d498e217e55fa24e1	/68150_4QSMIi6zBoyrZ1VeH1Dqb3fEovQswz93yHAPvf2lGmQ.jpg	public	dubpies	t
+5197cb68498e8d409a89ec1b	/1847096_oRB5R_owQW40gVWlJhNNsh9_0bEq2D8Rt3Zod9HUbUg.jpg	public	disosnyc	\N
+5199097e498ea36447e54093	/40899881_hbjUdavpBfT-sLaBhv3pbZydT1tgs9v-Maw12j9I3Xs.jpg	public	carpedonutnyc	\N
+4fda1cf4e4b0f6aceebbdb2d	/lKL7uz06jZgB680Vye9zxa_2yQfH96afFExvxaLlRpU.jpg	public	hibachiheaven	f
+52e6af38498e26e622e5398c	/4147709_E9hzkLfHAJjdgQ6RT3W29cf-cftJShyXpRthu8riZYs.jpg	public	hibachiheaven	f
+52e2aa07498e25b9a084ee94	/12998378_50qpDzH_XwsSlaJpw-f2fDtJsSvQg4TU_ujjdsnyWOw.jpg	public	hibachiheaven	f
+5362891011d2b40c5f328b6e	/41834822_k1LVelyLVM9gsNt3M70sVjI-QLm_84bgv4c6hoMHPO8.jpg	public	hibachiheaven	t
+538fa2da498e8efc80bc2cb7	/26065139_jgo2VLUL2PokQdo7SP2iJ6rtca8E552GZGM3Bhu1e28.jpg	public	langostruck	f
+511d2c60e4b017a4221bec0c	/1425622_srSMuVL9KOV8rqb_UDiSQNwjvNOtMyF-zeTO7sHRZZo.jpg	public	nuchasnyc	f
+50ef1f18e4b0710a5e5cb1eb	/117715_4lM2ZgzHp4Uv61-ckuWzdXXXcPVNEH2NjISpWAEjGds.jpg	public	nuchasnyc	f
+4ffef65ae4b013ea5f373be1	/VqxEh6cK784gtMOJRF6Lnub985jBJPC6-FuwZwXt_y4.jpg	public	nuchasnyc	f
+4feb6e00e4b048145c547997	/wcCcDDUFo3EAkWygR8pGn29HTAv7VKEvPwJgzS6hQcw.jpg	public	andysitalianice	f
+516ee142e4b04f28d58be309	/36812449_DjR1ynMnMpwj-KmiWPZQldmGQwJ2IEzjSwwmGevqe3U.jpg	public	sweeterynyc	\N
+5107e09be4b047c08ade6bf6	/760350_ZaalKVnOYdVAGoQEdugu-1Lws1LubyJBOVpZvJJD1V0.jpg	public	sweeterynyc	\N
+50188a43e4b0d35e6d8035b4	/b-fKh6mx2WxCybNQkr9ovk_jv4x7bwJPVFM9RF3M5T4.jpg	public	sweeterynyc	\N
+51ccc251498e028212e9b1e3	/117715_ozxp6K6iPGwKCzQDARR3BgMcisplkTt0x4LEKDJdBMk.jpg	public	nautimobile	\N
+5022f267011cfeafe81dab9a	/7EPnN8ReXYQWoZYxzqkH9AQlOe8vFPtVP_60n65i9U4.jpg	public	nautimobile	\N
+4e09f3fca12d09aa881a769f	/NTSOFYDIBYVWGE4RYQTBBNIAQESPZ1LLW3Q4TC3TGMROSJPH.jpg	public	nautimobile	\N
+4e70e35c52b140871b6fa35f	/1TB5ROKJY5NF0GAVS4YS3WZTFCUXXHTPLLBUIK4BU0XD0QA5.jpg	public	nautimobile	\N
+516d98b8e4b0b059e50ff5ad	/117715_BoNkQJO4jPWEtg_ef4-URb7IseoIXnYiP5vkvWJtezg.jpg	public	toumnyc	\N
+51716b5f498e03d8bc252c48	/11709298_S8klPxq0yPyZw2X9-_0IZyk6TFTn9xi5SWd_6BGCeVM.jpg	public	toumnyc	\N
+507dacb0e4b0d8cafc9601e0	/2361939_S3NwwSNVZD-2tAhc3bwAvsYgk9tXwYv0T0yq9ci-ihE.jpg	public	toumnyc	\N
+516452a5e4b0e1b216fdbaa4	/26263584_5wpEOb9FygNRBFQySA-pE1t1q_E9jVM_4mx2mnw5fAU.jpg	public	toumnyc	\N
+51dd9ddc498efb9a3437e123	/4501533_djr9d2BEP8dg7E48xJjJTa_Yjk0Iy-MmBG6hgIQBLUs.jpg	public	bigdsgrub	\N
+4e4e92c7b0fb088f3c0f14d5	/HTLXSW2D30RGIEYPI0JGR22LUCS5BTXQ0LXDWAOHH4PCVHM4.jpg	public	bigdsgrub	\N
+513101fce4b006d9c4991bdc	/17248619_XfpmI8dNgmoeHE3BXjV8bL2yuuMTqxU3FqDr4BqX7Ks.jpg	public	bigdsgrub	\N
+4fa2d04de4b0489ba3d7936d	/hsPbM0G5l3AsUaI3x6r_VkiSYo4pYlWTKK2S9zqh_KE.jpg	public	bigdsgrub	\N
+5192873e498e63958610c2eb	/117715_Jf2pdeF9ztory7puWsPaFE26jmMzPEzjOfPopvTzSjA.jpg	public	polishcuisine	\N
+5244712a11d295d581384a17	/22780_QXd0BtJcOWXZwSm_ZG3oXyaNj6Qw5-p8hWQzzH121fY.jpg	public	polishcuisine	\N
+51424d6ce4b0041cb8df9856	/117715_oxR8_TwNSaCL-_gKDA2i2-1YoRfVVnbfT3M9Bfu4nxE.jpg	public	thepocketful	\N
+511a7d64e4b0c6a64118260c	/793192_Dtd9vMRk-pbBJscn1cb7n29zM87iJjZy6rojapRhODk.jpg	public	thepocketful	\N
+4f7deaf5e4b0ffb6a3f2008e	/Xho5Xq8BtpNhEQvH0KRI3yX4kUstFRwTxEDj6QoawcM.jpg	public	palenquefood	\N
+51b8a845498e8ebdef064e0c	/761163_j9ai1NfaIpK2TLN8JzXbTwyIhVzuZevNHBV5EpQ7Fh0.jpg	public	palenquefood	\N
+51435e1de4b07d53cf71fd7a	/4486_lUhkecOFThYlMHKai4wDp4lXXiQSPLTq3Nno5WMIz7E.jpg	public	palenquefood	\N
+4e6513efc65b2dc8a0bfff6d	/TUQTIKBJPOALJKHN54QRKGISWMQDDOW3WTAECOGJ4FOJTPXI.jpg	public	palenquefood	\N
+527d2c2711d2c984e85cb11b	/4179871_5FQ2eCC5ZeizUVRLh4tadgEAO1BnJjVQ7pSEvSDwIfQ.jpg	public	biandangnyc	\N
+512161e0ebca7d20d6a70104	/4574_ZC6mf3ha1jNXmFUDgtNsN3zIf-NHyqgxA3WkUkOl4mY.jpg	public	biandangnyc	\N
+5106b878e4b05ec869ad8b34	/814104_blIawoImaEcqf-Mg89W5A-nEHiZ5jx76BEYHVzz8dnA.jpg	public	biandangnyc	\N
+520912ad11d2f941183dea9f	/13285510_v7K0PTg4FzGI822Jbc9A8K5mUHIxwJPBZB_0xNeEauE.jpg	public	domotaco	\N
+50ce269de4b07c1547ebfb2c	/263293_qjcLaRmf5itOMyRiq4AyYZuY2UVjVJk04lO3FTA2CMY.jpg	public	domotaco	\N
+4ec59ebacc21b428e0de466c	/4AMXSGP5YGTUHEL3TFKTS5ROVIX4HUTU4MU5ZW1OX5E3URDD.jpg	public	domotaco	\N
+4fbfe026e4b04422a08a40f6	/Han8Z4R-SQ615pLoN2lRdPfKEFa6UW2yudSOxXmJtts.jpg	public	thetreatstruck	\N
+51461b9de4b0bb73a6821e97	/1102787_UDt7OJpexNs8VPrehVDsp9EtfUJnMhKzJ2tTXuof06M.jpg	public	thetreatstruck	\N
+516cdc93e4b0d6bb083f9db2	/117715_3eRUhgkRZGVpjDAYUz9TD5yQXPVFmg0iCB7iIgv_XD0.jpg	public	souvlakitruck	f
 513b9b7de4b04f7024bc158a	/45519738_eDUGOpHYwiR5C3VUps1gQ1YDIq0Di3WMfuirGs2EVBk.jpg	public	rickshawtruck	\N
 4f8dc377e4b0ca2accf75652	/EKcue5yGEyaPnBymSd_HtBxWEZl4grYSOXMhw-gqpTs.jpg	public	rickshawtruck	\N
 4fb6bb41e4b066430032e4ca	/HHZWTU3POi_yJE4GU0zI_NjZNerm5y3MjjxddcV5ZMs.jpg	public	rickshawtruck	\N
+5151c82de4b024888079c5ea	/5003144_g8kbTzyfr6gL9vIRpMBbXz4TqBUk5EgkqIPlBP9DtsA.jpg	public	mactruckny	\N
 50883301e4b0904987088a20	/2361939_J2zcgauqqGFC_PZPyvkfEDoSufdDe5qE7gi_NkS1P1U.jpg	public	mactruckny	\N
 519bb23b498e208a0b81b7fa	/9285455_LZiJ4FLH7NOWjNUsXO9jxDRFAgLygBSB8SmSIW0z9kM.jpg	public	mactruckny	\N
-5165924de4b093be3bc5cd57	/2159706_uFl3RYgA1z4EiDNp8PtjjG2HHWhTiiXDLNzJtFWPHS8.jpg	public	mactruckny	\N
-501fe830e4b0bbddce992f90	/fFBOGONZt5Zr77Vc5g8adoAiBht0f-MBut7GqorVEjo.jpg	public	mexicue	\N
-523c930a11d22e1c3012a9d3	/34169985_AiTXirGu6jTaGeWWhhOfl2QIbGVaQjdDg1QCEakqza8.jpg	public	mexicue	t
-4f67b0d4e4b08559c4c60149	/SdNxRS0joKXurf0FEv8_SRg-GeR9lGCN098_ZB2tijA.jpg	public	mexicue	\N
-50784742498ec6be8cd3f88e	/155927_ebZApDyXpTKTmvOQHdBTxNc2wJrsZV2QASmpYTNAVJM.jpg	public	mexicue	\N
-507efae0e4b09a52c022ec3a	/39213_nH-zcqfLCJqMvG0Nco0LWE4QuRuoL6unlEXJlJbTEF4.jpg	public	mexicue	\N
-519fa37b498e7adf7e8ebce3	/47170230_A9xVWAtkJBP-vVqUF1q2WlK8yuZTf1CVQz0JcPrHGY0.jpg	public	taimmobile	\N
-4dfa4a9840a3542ff44549df	/VBAJNQCBWDMP2WKDXJ5QHQ0WYF1MKHZSLUAZZJXKDBDLDUWG.jpg	public	taimmobile	\N
-51cb2c41498e9851cecdd49a	/5728350_vuJ4ORu0wHhd-B-f4FTNfsoIhfHgtJRMJc-QEeiYmNQ.jpg	public	taimmobile	\N
-504a271ce4b0c65efb6b05f5	/PG0DfZvsxtqv4QM8Xpl6y8Ojahb0UanYwCPSdmuhj_E.jpg	public	taimmobile	t
-4fa814d1e4b0d607baf8bd9d	/2drHnu4mqj-uzpwwcJa3MatYGD7KFuxjE472rButWlM.jpg	public	taimmobile	\N
-53860b95498ee26cd484fe30	/81832079_fNoLG8cvJl_IqYaTNF8p9uwsDsglMXnfF2DKZ8X0Tk4.jpg	public	mtblls	t
-53e3b619498e4b9015f0bad7	/68150_s6TPzQTspWKu7AI0DXgjZai6xKrtSkWgIdJNkenXMfs.jpg	public	mtblls	f
-523887bb11d2ac89551d71ff	/5568483_apwtHKsNfvYc-IjeDL1_oqXIqZsLTUGH_-l1uxxAiGo.jpg	public	mtblls	f
-53287c9c498e4b30223220d1	/68150_mMquObtK1F2QjX3VWuhYK2MtjUA9i5QRzexf9zWrBOQ.jpg	public	thegreenradish1	t
-51dc5fec498e4e9be748eac4	/22801_gX0atVT6Jt_H6FPXuYAqHD4VzO5jAmS4SVid_ZLkk5U.jpg	public	disosnyc	\N
-525c259b498ea7548cf31f8e	/769710_ZxOOtsSbFVklHIRhXVmTO7ops0Pm0EybRDTgUvGHrSY.jpg	public	disosnyc	\N
-5197cb68498e8d409a89ec1b	/1847096_oRB5R_owQW40gVWlJhNNsh9_0bEq2D8Rt3Zod9HUbUg.jpg	public	disosnyc	\N
-4e09f3fca12d09aa881a769f	/NTSOFYDIBYVWGE4RYQTBBNIAQESPZ1LLW3Q4TC3TGMROSJPH.jpg	public	nautimobile	\N
-4e70e35c52b140871b6fa35f	/1TB5ROKJY5NF0GAVS4YS3WZTFCUXXHTPLLBUIK4BU0XD0QA5.jpg	public	nautimobile	\N
-51ccc251498e028212e9b1e3	/117715_ozxp6K6iPGwKCzQDARR3BgMcisplkTt0x4LEKDJdBMk.jpg	public	nautimobile	\N
-5022f267011cfeafe81dab9a	/7EPnN8ReXYQWoZYxzqkH9AQlOe8vFPtVP_60n65i9U4.jpg	public	nautimobile	\N
-5203e16e498e9e8e0a93b61a	/702028_Fog-6PEF03KateivIPP-hx87Qn6gi7PwnaJv-wTFv3I.jpg	public	carlssteaks	\N
-52e456f2498ea9ece32b66e0	/25812424_w-pfXOZy2D8xWVJY37hGi4VXYiDnicBFvWRiiDOnNhE.jpg	public	carlssteaks	f
-4f7deaf5e4b0ffb6a3f2008e	/Xho5Xq8BtpNhEQvH0KRI3yX4kUstFRwTxEDj6QoawcM.jpg	public	palenquefood	\N
-5192873e498e63958610c2eb	/117715_Jf2pdeF9ztory7puWsPaFE26jmMzPEzjOfPopvTzSjA.jpg	public	polishcuisine	\N
-51424d6ce4b0041cb8df9856	/117715_oxR8_TwNSaCL-_gKDA2i2-1YoRfVVnbfT3M9Bfu4nxE.jpg	public	thepocketful	\N
-5245c79c498e057f7d5ff65d	/117715_CEghvDHaxkALy5RxQCAVW-kyM0TAZo2-fIT4e6veJeo.jpg	public	neaexpress	\N
-500ecc9ce4b0a6d209804d9e	/d2yG6CtTrc8TQAXoEGN68UYAv3DiJIqJvKU65-ApcaU.jpg	private	lobstertruckny	\N
-5245c7a1498e0eb9bc097723	/1727660_xLZtYmqATL4pckN_IhgIj0AgUbDAJxywzqbf5PKEooM.jpg	public	lobstertruckny	\N
-4dcbff9440a3324246c6fb7c	/YVZPSDS5D1O5DR2NK5IFQKOU0ZNOQTQMTHMRWS3ESLQIQAWK.jpg	public	lobstertruckny	t
-507b0648e4b0109f3656e2d2	/76137_7JNe3m0dO2MZ7a9rkqa_DTlnrw0LyNitqksFG7_5IC8.jpg	public	lobstertruckny	\N
-508abe69e4b01ff7516d118b	/8029486_9wt2tO9BnY5d11Ef0mpAgHAqfK1QMmSvLXglU4fj6Xw.jpg	public	lobstertruckny	\N
-5106b878e4b05ec869ad8b34	/814104_blIawoImaEcqf-Mg89W5A-nEHiZ5jx76BEYHVzz8dnA.jpg	public	biandangnyc	\N
-50ce2696e4b0881a7ef3ee67	/263293_lcA30Y_JnQGKaaHhRqFUio2HQ8UQkphCWP9yhW4CE3g.jpg	public	domotaco	\N
-520912ad11d2f941183dea9f	/13285510_v7K0PTg4FzGI822Jbc9A8K5mUHIxwJPBZB_0xNeEauE.jpg	public	domotaco	\N
-50ce269de4b07c1547ebfb2c	/263293_qjcLaRmf5itOMyRiq4AyYZuY2UVjVJk04lO3FTA2CMY.jpg	public	domotaco	\N
-516cdc93e4b0d6bb083f9db2	/117715_3eRUhgkRZGVpjDAYUz9TD5yQXPVFmg0iCB7iIgv_XD0.jpg	public	souvlakitruck	f
-50be4929e4b0ada0df80b932	/4611139_UjW8jF3qFz_uyk0hDKT6CMZI2q3My4j6ZiwX-68QpME.jpg	public	souvlakitruck	f
-5079a745e4b00277f33e4836	/34723233_tCoDnWhdhZj61xi_e00MNwJoK_UcfDXCQQ7Weat8pBM.jpg	public	valduccis	\N
-5135022ee4b0592185aa975e	/2660256_0rdKd0P0tCYzLf5j7-_3b8HbPNDVCW6S0hHdJGW47Wo.jpg	public	mikenwillies	\N
-506dcb8be4b0748e0467de78	/157259_PdYI3Fpzhcz_LoGnBeymaSAZaZCiVVw43c4xaYQQIDY.jpg	public	mikenwillies	\N
-51117858e4b0e14064917adb	/263293_EvgjxXJqOivd94q0mbPR_AxkRXuzkFtjOBcOWnXuyQU.jpg	public	mikenwillies	\N
+51ab89bb498e83fced4cefd6	/66074_8dLzCKmVRde0Uvtx_NSl9SKROFh0kat1IQgcAvU4J3M.jpg	public	delsnyc	\N
+51fd732d498e415eeb8b9881	/8839239_mAp7_MVmWbbK42Xq3-W-1zmegy-MNx8NzB0P5Brf-Pw.jpg	public	delsnyc	\N
+520e673a11d25d1282a44199	/117715_KjwJnc6idBB7TuMKhGboHDg8IYjlGcr6h3I6_fJECmM.jpg	public	delsnyc	\N
+51b8d7aa498e103b3a36ec2d	/47900463_7B6lLfz2PW1XyrG2vCIxp4vIq7QXWEhxufI5i75jwxE.jpg	public	delsnyc	t
 5012d0d5e4b06fc7ce735a68	/7J2g1YLtx4ma57g4A4CerJJ66OwudjGhFI67JaNl1Qw.jpg	public	seoulfoodnyc	\N
 4f5e6b3fe4b033732b227036	/7Pw4h0QMNateMpgFd_DAFO0uUnsIdcGzmHG_1in7Wu0.jpg	public	seoulfoodnyc	f
 4fb1335de4b0f4503b23a67a	/GSQxN-iFZejvploz8v8hm2QzrWiTmg6QdgBffmHvsnc.jpg	public	seoulfoodnyc	f
 514e42c7e4b0ec8b7e400875	/48992751_ibL8tx_7JPvV3aQmnEevrdibtLP0jWytaChkCdRuhG8.jpg	public	crafflesnyc	\N
 514e42a8e4b0d91e975b3db9	/48992751_womoOVd5bv-2KopmWjWEHA_WsyoWQITjAyXBuM4Ciz8.jpg	public	crafflesnyc	\N
-51f4589a498e97316d307dab	/186827_ilvLMlb3AFqgXUQJ43S7IjsLNPxYP3Pw5LEjrqhp6wI.jpg	public	chipsykingny	\N
-51ab89bb498e83fced4cefd6	/66074_8dLzCKmVRde0Uvtx_NSl9SKROFh0kat1IQgcAvU4J3M.jpg	public	delsnyc	\N
-51fd732d498e415eeb8b9881	/8839239_mAp7_MVmWbbK42Xq3-W-1zmegy-MNx8NzB0P5Brf-Pw.jpg	public	delsnyc	\N
-520e673a11d25d1282a44199	/117715_KjwJnc6idBB7TuMKhGboHDg8IYjlGcr6h3I6_fJECmM.jpg	public	delsnyc	\N
-51b8d7aa498e103b3a36ec2d	/47900463_7B6lLfz2PW1XyrG2vCIxp4vIq7QXWEhxufI5i75jwxE.jpg	public	delsnyc	t
 506dc9b9e4b0c21f078c3bb3	/22983_XN2GbKo3a5YsNY_ZpiBcjUHTD2if3TWS8r586Uq4cEk.jpg	public	blend_express	\N
 5033cee6e4b03e64bc749ee7	/tIyy6IAKcw2SSiX5JSPBCURstZZisntK_46plgrfdJ0.jpg	public	blend_express	\N
 519babe8498e355d9d35fca0	/65817_6p9jSMaQMqP9QGn3KOIyuDOG15jaLxIPvsdrpZGWdj8.jpg	public	blend_express	\N
-512bbfebe4b0b8faa466c796	/1425622_4wp7wCuj7Ci1dl_FVH9syKmrJwQavMhL9uqww1b0m1o.jpg	public	philssteaks	\N
-527e77d111d2e66fa6a871b3	/649454_HIWthX8nL3SZAOwyMlKj9Y7ju9GCiN4OEV-wZR6IKC0.jpg	public	philssteaks	\N
-5249c4bb498ecd25dde27c5e	/764670_x0RdEOs5TL4SEe2zGgpkzPFBFmlFV7-6UQiVtoFeHaY.jpg	public	goburger	\N
-51dc5a9e498ebf7ad40223ec	/1328035_Ak3fMs2e36r7NvIE_gIDK5XZ9CwrW1DEJa3g1oobp5E.jpg	public	wingnitnyc	\N
-50e719c2e4b0e263423e547e	/15471_4uN0tddGW5orNGh02xhxbiAOGUpAAy3rIWEotoRgB_M.jpg	public	tacobite	\N
-50f99bcee4b08ca132377f78	/4611139_CEH3eveI6uxlRVQLet5Fpa_sNfJwAzfheMTYSBplO5Q.jpg	public	thecrepestruck	\N
 531b7d5e498e3df35f261af2	/22402741_aYe825rrQDsEq6E_Pqv35za149PBn1PcT557SaJhOK4.jpg	public	brooklynpopcorn	t
 5220dc78498ebd10d150f736	/29917892_nMZHXkfxBukc2QfFqtDBTZSJ1xpMkoO7VGBJmGKkwhY.jpg	public	brooklynpopcorn	\N
-5258d3ef11d26d03cc0563a5	/117715_GQ_O1nyBbVlKTaYpRlprc8ZdIEAEftbU4_9hDGjvxsU.jpg	public	brooklynpopcorn	\N
-51a4ee69abd87ea53396c979	/4083549_jMzaCPEId80kWmAaq2oQ9APKf4bLvdeHhy40qPeB9j8.jpg	public	shortysnyc	\N
-50045b1be4b0004dbf67c977	/MDweBG1fBnF_fZ1tOghWyHS9qUxGNiJeOrOpoA-fBrY.jpg	public	shortysnyc	\N
-4feb2bb8e4b0a47cf49787d7	/-CEaOy-zjgmGzmPRViSeNchwIITBbHgI3lFosreLqIE.jpg	public	shortysnyc	t
-5008051fe4b0974c844d5003	/oNy0_bsWPyVmjrduzJXpbrAPHjQS0PVbyOCfoRSD9xE.jpg	public	shortysnyc	\N
+50e719c2e4b0e263423e547e	/15471_4uN0tddGW5orNGh02xhxbiAOGUpAAy3rIWEotoRgB_M.jpg	public	tacobite	\N
+50f99bcee4b08ca132377f78	/4611139_CEH3eveI6uxlRVQLet5Fpa_sNfJwAzfheMTYSBplO5Q.jpg	public	thecrepestruck	\N
+5249c4bb498ecd25dde27c5e	/764670_x0RdEOs5TL4SEe2zGgpkzPFBFmlFV7-6UQiVtoFeHaY.jpg	public	goburger	\N
+51dc5a9e498ebf7ad40223ec	/1328035_Ak3fMs2e36r7NvIE_gIDK5XZ9CwrW1DEJa3g1oobp5E.jpg	public	wingnitnyc	\N
+512bbfebe4b0b8faa466c796	/1425622_4wp7wCuj7Ci1dl_FVH9syKmrJwQavMhL9uqww1b0m1o.jpg	public	philssteaks	\N
+527e77d111d2e66fa6a871b3	/649454_HIWthX8nL3SZAOwyMlKj9Y7ju9GCiN4OEV-wZR6IKC0.jpg	public	philssteaks	\N
+51f4589a498e97316d307dab	/186827_ilvLMlb3AFqgXUQJ43S7IjsLNPxYP3Pw5LEjrqhp6wI.jpg	public	chipsykingny	\N
+505c9776e4b0643aba1071c7	/5568483_yQrtG73dbug7q06p9IASJmTFnOVgGprIZKbfHjQRcso.jpg	public	biandangnyc	\N
+50ce2696e4b0881a7ef3ee67	/263293_lcA30Y_JnQGKaaHhRqFUio2HQ8UQkphCWP9yhW4CE3g.jpg	public	domotaco	\N
+5079a745e4b00277f33e4836	/34723233_tCoDnWhdhZj61xi_e00MNwJoK_UcfDXCQQ7Weat8pBM.jpg	public	valduccis	\N
 4fe65d6fe4b09198fde5842a	/nVmhJloDitdcBPFceYT8ajqQqgXBpB_w5GoPWse33Ks.jpg	public	valduccis	\N
-521e9e4511d2d8ddc5c69dbd	/117715_r7cpzyXCpOthqHouR5gdqIMX8k0TZ2KWHFun5wh-EYk.jpg	public	valduccis	\N
-5203bd51498ed50247ee01dd	/60805368_HlIeqCMjY2I5md2mzI5crKizc9wVPUZo_sBmC6zrPEA.jpg	public	mamuthainoodle	\N
+4f753600e4b07eec20023ddb	/zUb4OswXiQLnF_k2xnx7AdupnEIl1nuGyIuFcmFWf8Q.jpg	public	thetreatstruck	\N
+4fbfebe9e4b0a3bda0340383	/Brw9_z178IK92xMEXLCSSZrP0-99GXjutCp7dHCi5CQ.jpg	public	thetreatstruck	\N
+50be4929e4b0ada0df80b932	/4611139_UjW8jF3qFz_uyk0hDKT6CMZI2q3My4j6ZiwX-68QpME.jpg	public	souvlakitruck	f
+50031911e4b034c2944f0c3a	/bExPPWxN-4YhYlw2nPz-T5eA3mYN-U78LUZtcIzjTRM.jpg	public	souvlakitruck	t
+52013fe1498e5f476bfdcf83	/30611522_DHhazmY8dyNAbmijjHX7jyyfVBEiugL5-GJcTLuYjS4.jpg	public	getstuffednow	\N
 5182ad6b498ef6cb59d48783	/39425123_zPh6ih4GAAygbhRJ-pyPdCr5TI3rXafgKyIEEK4HpHY.jpg	public	goburger	\N
 501d4734e4b0af03cf473287	/6BUHUmEyYTTh3a2SRjSYRklUlTfQBNbFnnk_hfEojYs.jpg	public	goburger	\N
-52013fe1498e5f476bfdcf83	/30611522_DHhazmY8dyNAbmijjHX7jyyfVBEiugL5-GJcTLuYjS4.jpg	public	getstuffednow	\N
 523c8b2a498e959b87f8ded2	/39707564_-WCsPSk2ExKeZ8q06DtUQrpt_vcWG9-AzvFoToSdQqY.jpg	public	getstuffednow	\N
+51dd9efb498ebbc846c11c03	/13001992_b9dLXH02o0ZX8hyUZVtpgGW6sDyzAl23vmEl-0Hj0jY.jpg	public	itizyicecream	\N
 51af7257498e0c7f8979c05d	/752258_nUJpoSxZ8p9BBJMG5ISetpo3DDLzycLT_gT3z9fvJmI.jpg	public	getstuffednow	\N
 50ca356fe4b05b0bb93edc40	/1590381_NyRIp7fXJtGoJoXp25IcMmufNufPxxvLEj3TVYXRo5g.jpg	private	getstuffednow	\N
-51dd9efb498ebbc846c11c03	/13001992_b9dLXH02o0ZX8hyUZVtpgGW6sDyzAl23vmEl-0Hj0jY.jpg	public	itizyicecream	\N
+5258d3ef11d26d03cc0563a5	/117715_GQ_O1nyBbVlKTaYpRlprc8ZdIEAEftbU4_9hDGjvxsU.jpg	public	brooklynpopcorn	\N
 529fe66b498e1fd14afe696f	/68150_h0wbg6xbNwrEjXD6uaE12ZDZYF_h55LN99Es520nMBI.jpg	public	mooshugrill	\N
 5267fa9611d2688bdc4587a2	/2136029_bvqot1MnMJ9IGYsYJkamqTiE_lL96OcfilWMxskhdU8.jpg	public	mooshugrill	\N
 5213a7c011d27a56f99dfba3	/11074699_K2ka1_NxiELyTqgjvY3oMN70IUxIlADqRIAb5QpzsLM.jpg	public	mooshugrill	\N
+4ffda271e4b03bbc7f8fd13a	/6Dtx8fj7IXT6M3O6ZV3rXryb6zKTAqPchjeOM2BJJAs.jpg	public	funbunsnyc	\N
+505204d6e4b02dee62bd961a	/dcOYoRoNNeCLMxvoyAN-o9gJObcw5FljMqYpS9cps84.jpg	public	funbunsnyc	\N
+5203bd51498ed50247ee01dd	/60805368_HlIeqCMjY2I5md2mzI5crKizc9wVPUZo_sBmC6zrPEA.jpg	public	mamuthainoodle	\N
+5196816e498eebbaef53fe6b	/32050404_-lVnQ_kgFICQK3OBrfq4QydeDqXhz3ZCRD3TrCvMPxY.jpg	public	veganlunchtruck	f
+50292d68e4b0d0acd3bb5dbb	/vv6y8qi6JFfXr9QDkIvTPP0fSmbgQ_jGXHCVwDv0c04.jpg	public	veganlunchtruck	f
+516ef5ece4b0d1c83382c12f	/117715_Gt3J4FMusC7YQjSfEup4O7bAO10z8J4gxmnd0xKnZuQ.jpg	public	veganlunchtruck	\N
+508af08be4b02ba9b11cc747	/17430999_28ys6GXVoaOZoKPXLLK5GQpVEL8UrC1_1DajRIy8ia4.jpg	public	veganlunchtruck	f
+51dc48a3498efe9483d8417a	/117715_dlhUlP8z_jVejqRlWaCzsJBqg0eoP6rRSjOLpszFA0Q.jpg	public	veganlunchtruck	\N
+51105b22e4b0a7b61fac854b	/117715_vKu0po70jlTD3qN9mXsdNiE6V5Od1hmYMVlUY9xSIP8.jpg	public	veganlunchtruck	\N
+51800af8e4b07a4a57023def	/9548073_erhzj0ShEDKaz8S8DhlDe90fDjJEIWjilIxO4_zjdGE.jpg	public	thepocketful	\N
+50a696b4e4b04d062582a95e	/32050404_qo6ZUnU5LQMoqrAR6YoH5Qz-PdUcD1d1jCheEJy7lng.jpg	public	thepocketful	\N
+521e9e4511d2d8ddc5c69dbd	/117715_r7cpzyXCpOthqHouR5gdqIMX8k0TZ2KWHFun5wh-EYk.jpg	public	valduccis	\N
+50f59e2ee4b0b31f58d6cc1f	/1922740_OhtWiNUDUcN0NE_HB3Tk8vm5qIZcvqxcP2nMDrN8dT0.jpg	public	kimchitruck	t
+5197fe76498e1c056c96d21b	/117715_m462oAqyqBN12xyWCOyzYR6-1gtYrUa8BiX9r9OybE8.jpg	private	kimchitruck	\N
+4e3da652d4c058f9dc087a6c	/QEOIS2W35WLTHYK00QC04LKKX4X1SYW3DDI45X30HSKTJENQ.jpg	public	kimchitruck	\N
 501975c5e4b092f6a51ef338	/bI7RrGcK_moyn-kJICa1OCciBVuYYykwCMGlea6mcxg.jpg	public	kimchitruck	\N
 4e00e61aa12db1129557e99c	/WSUNYIB0YFVRCTXB13UCRCTANZUG0DO0X2FWCUYYILU4TCGB.jpg	private	kimchitruck	\N
-538fa2da498e8efc80bc2cb7	/26065139_jgo2VLUL2PokQdo7SP2iJ6rtca8E552GZGM3Bhu1e28.jpg	public	langostruck	f
-5244712a11d295d581384a17	/22780_QXd0BtJcOWXZwSm_ZG3oXyaNj6Qw5-p8hWQzzH121fY.jpg	public	polishcuisine	\N
-5328764d498e217e55fa24e1	/68150_4QSMIi6zBoyrZ1VeH1Dqb3fEovQswz93yHAPvf2lGmQ.jpg	public	dubpies	t
-532879fb498ec68315b3d232	/68150_KF6qgT-viSOMS5bt3lJarsNeEUjlVJn1lbAypyCl1js.jpg	public	dubpies	f
-53287a0c498edd9a0567c2c0	/68150_i3UKBmIXHPN4h7gtvSQjnYfikUNmJuGRpjwKP2dLI5Q.jpg	public	dubpies	f
-5345d100498eaa611b76f338	/62345083_i2VdE3VeEPlbfUgNv9mWmVmsuL19upJhcHaRX3zje1w.jpg	public	dubpies	f
-516d98b8e4b0b059e50ff5ad	/117715_BoNkQJO4jPWEtg_ef4-URb7IseoIXnYiP5vkvWJtezg.jpg	public	toumnyc	\N
-51716b5f498e03d8bc252c48	/11709298_S8klPxq0yPyZw2X9-_0IZyk6TFTn9xi5SWd_6BGCeVM.jpg	public	toumnyc	\N
-507dacb0e4b0d8cafc9601e0	/2361939_S3NwwSNVZD-2tAhc3bwAvsYgk9tXwYv0T0yq9ci-ihE.jpg	public	toumnyc	\N
-51800af8e4b07a4a57023def	/9548073_erhzj0ShEDKaz8S8DhlDe90fDjJEIWjilIxO4_zjdGE.jpg	public	thepocketful	\N
-505c9776e4b0643aba1071c7	/5568483_yQrtG73dbug7q06p9IASJmTFnOVgGprIZKbfHjQRcso.jpg	public	biandangnyc	\N
-527d2c2711d2c984e85cb11b	/4179871_5FQ2eCC5ZeizUVRLh4tadgEAO1BnJjVQ7pSEvSDwIfQ.jpg	public	biandangnyc	\N
-512161e0ebca7d20d6a70104	/4574_ZC6mf3ha1jNXmFUDgtNsN3zIf-NHyqgxA3WkUkOl4mY.jpg	public	biandangnyc	\N
-4ec59ebacc21b428e0de466c	/4AMXSGP5YGTUHEL3TFKTS5ROVIX4HUTU4MU5ZW1OX5E3URDD.jpg	public	domotaco	\N
-50031911e4b034c2944f0c3a	/bExPPWxN-4YhYlw2nPz-T5eA3mYN-U78LUZtcIzjTRM.jpg	public	souvlakitruck	t
-4f753600e4b07eec20023ddb	/zUb4OswXiQLnF_k2xnx7AdupnEIl1nuGyIuFcmFWf8Q.jpg	public	thetreatstruck	\N
-4fbfe026e4b04422a08a40f6	/Han8Z4R-SQ615pLoN2lRdPfKEFa6UW2yudSOxXmJtts.jpg	public	thetreatstruck	\N
-51461b9de4b0bb73a6821e97	/1102787_UDt7OJpexNs8VPrehVDsp9EtfUJnMhKzJ2tTXuof06M.jpg	public	thetreatstruck	\N
 5286645011d228bbd12f9880	/1353667_2qCG26N4ikz7mbvEGkrFkcNLagGqrzRuNyeQ35CCDE8.jpg	public	korillabbq	\N
 5231f54311d26e8da5827f3b	/977282_AToQDrlKW5PTNbNGQcB24_BeJNsRMgZTeYmC9P-or38.jpg	public	korillabbq	\N
 528e451f11d2a93e4361f565	/977282_wEw3nDjN0NbjC4CgQ00ON0YjdtnMocrfAjXDM4UH63Q.jpg	public	korillabbq	\N
-51f15b4d498ee58fec420a7c	/13285510_Q-SBXKFpfroSwQ-QJdezzrh1KaHfHAmLyicy8d5S1jU.jpg	public	parissandwich	\N
-5243126c498ea77b19b3a444	/65506790_31Qpx9E-ZjuNve-izmDY6vVxUCMrhgGsnOLn4-fusp4.jpg	public	parissandwich	\N
-51b22a0a498ec00d1c45726c	/390807_y2oeK6xR54wk9b1Sfm82Ek09Auv2lNkRTpJOzos3xjU.jpg	public	parissandwich	\N
 5254357b498ec4662e20c654	/2620660_kMXeinZ_B6lOrHRQnheIHMBr7p81ZxcUblWl0SQ1vEs.jpg	public	thesteelcart	\N
 50ad186ae4b0b639ca7ca234	/295161_qCQYG0XjW1Ji0pSDxM7fWRzxTZRbcYyZbsbPNJo12hw.jpg	public	toastmonsternyc	\N
 521649b811d2913e20a1ae87	/5568483_RtMp5aDM_JtBZOI1u48Jy3om4Z672obezdu1uA_UWd0.jpg	public	toastmonsternyc	\N
 518a82c9498e068718057964	/25979758_bGWQQ7W2SJI4v7KmU891VcYZGitov6qbSNAnIEt8HTo.jpg	public	toastmonsternyc	\N
 53287a41498ef1dfde86d217	/68150_jBIeF8OZP2o4q5lJjB4TeUteiuuczqDDm3s4zQGipGc.jpg	public	shanghaisogo	t
 530f7b7b498e225c3989957a	/20103877_gKGG5Z15ifazVa7PoBKpyKecZK7x2dWgjFIDOkwO38c.jpg	public	shanghaisogo	f
+51f15b4d498ee58fec420a7c	/13285510_Q-SBXKFpfroSwQ-QJdezzrh1KaHfHAmLyicy8d5S1jU.jpg	public	parissandwich	\N
+5243126c498ea77b19b3a444	/65506790_31Qpx9E-ZjuNve-izmDY6vVxUCMrhgGsnOLn4-fusp4.jpg	public	parissandwich	\N
+51b22a0a498ec00d1c45726c	/390807_y2oeK6xR54wk9b1Sfm82Ek09Auv2lNkRTpJOzos3xjU.jpg	public	parissandwich	\N
 51378e9ce4b071feb46ef7cc	/18792384_RSm8zhe_6kUOxy91taByfRjTDSLp7stH7PI41aJHOrU.jpg	public	bobjotruck	\N
 5249b50c11d2d415e3c6b017	/769710_HOnpTjl0b6qd4-yoPpg9lXZGBy-ZKikqzLlFWw2sQfs.jpg	public	bobjotruck	\N
 4fe20639e4b05dcdf7f5737c	/l9UdGGevddtOhDk6scQjcy1-TbVBX-wf8Gf56jBIRIg.jpg	public	bobjotruck	\N
 5249b1c511d23e54343ae083	/769710_HUiZ7dJrNbdnPYV-DTQRr1z0zgoxFx9KMC_Y-OQ6O2o.jpg	public	bobjotruck	t
 51c213db498e0748ab0dca3c	/53641916_5aNKp9fdHx3i_Pi15Z_X6pE3fAsTX35YBQ0nlmZGfaA.jpg	private	morristruck	\N
-53287ac3498ee8ce8841a510	/68150_pNBQ4zhtsUiGR_kyfk0HziUGMzyIQwYcYpJ3VpZf7tk.jpg	public	thegreenradish1	f
-5199097e498ea36447e54093	/40899881_hbjUdavpBfT-sLaBhv3pbZydT1tgs9v-Maw12j9I3Xs.jpg	public	carpedonutnyc	\N
 4fc7a5d3e4b0647c52b3c26e	/iRvxK7ohXIwK9Ib6wkVgtR46VKRLsamXuElhEtOlNKc.jpg	public	andysitalianice	t
 4fc2552fe4b0cec932846e84	/cjaTu8CSMM7HvFDxIUk3I2TF_I8mJyZuejfwTgYLc-c.jpg	private	andysitalianice	f
-4feb6e00e4b048145c547997	/wcCcDDUFo3EAkWygR8pGn29HTAv7VKEvPwJgzS6hQcw.jpg	public	andysitalianice	f
-51b8a845498e8ebdef064e0c	/761163_j9ai1NfaIpK2TLN8JzXbTwyIhVzuZevNHBV5EpQ7Fh0.jpg	public	palenquefood	\N
-51435e1de4b07d53cf71fd7a	/4486_lUhkecOFThYlMHKai4wDp4lXXiQSPLTq3Nno5WMIz7E.jpg	public	palenquefood	\N
-4e6513efc65b2dc8a0bfff6d	/TUQTIKBJPOALJKHN54QRKGISWMQDDOW3WTAECOGJ4FOJTPXI.jpg	public	palenquefood	\N
-4fb29dc4e4b0e08c1e225555	/ckjwTj4Fd2cRoZvDQZw_1jYdwuBF4BsfV4ZWc5oElFo.jpg	public	eddiespizzany	\N
-4da8977840a3582fb8c49316	/MCGIPRA0XR15JNG4O2YZJQBCRMK05UVTC4T14TOQWRTNMQFZ.jpg	public	eddiespizzany	\N
-4fd79157e4b071eb33a9c810	/8zrcTIejD5EBiOJzSobql1_PQWr-i2KmRfgMCYmbK-M.jpg	public	eddiespizzany	\N
-4f9c18b0e4b0b38d2f554383	/AQEKYbyPrQt5uMWhy4r4ODm2vSMCqPseJyMhcg55mtY.jpg	public	eddiespizzany	\N
-516452a5e4b0e1b216fdbaa4	/26263584_5wpEOb9FygNRBFQySA-pE1t1q_E9jVM_4mx2mnw5fAU.jpg	public	toumnyc	\N
+51a4ee69abd87ea53396c979	/4083549_jMzaCPEId80kWmAaq2oQ9APKf4bLvdeHhy40qPeB9j8.jpg	public	shortysnyc	\N
+50045b1be4b0004dbf67c977	/MDweBG1fBnF_fZ1tOghWyHS9qUxGNiJeOrOpoA-fBrY.jpg	public	shortysnyc	\N
+4feb2bb8e4b0a47cf49787d7	/-CEaOy-zjgmGzmPRViSeNchwIITBbHgI3lFosreLqIE.jpg	public	shortysnyc	t
+5008051fe4b0974c844d5003	/oNy0_bsWPyVmjrduzJXpbrAPHjQS0PVbyOCfoRSD9xE.jpg	public	shortysnyc	\N
+519fa37b498e7adf7e8ebce3	/47170230_A9xVWAtkJBP-vVqUF1q2WlK8yuZTf1CVQz0JcPrHGY0.jpg	public	taimmobile	\N
+4dfa4a9840a3542ff44549df	/VBAJNQCBWDMP2WKDXJ5QHQ0WYF1MKHZSLUAZZJXKDBDLDUWG.jpg	public	taimmobile	\N
 520538a611d2b476431ac7f9	/117715_GMdoseCn4baUtTX9kN6_PAAfHaGIlUpjxzAitpqLAOY.jpg	public	chefsamirtruck	\N
 5189442c498e765ce62d5924	/2432527_5nUa0fTfy4rzjXpiIUIlkguBa2kdqFSZIG-PLvkKu2Y.jpg	public	chefsamirtruck	\N
 4fd0d80de4b062589043211f	/hZjMDK5KKgxjMhmOGBtaRjx_ga0SWHwppqfLfqw20Tg.jpg	public	chefsamirtruck	\N
 5294e76b11d2879d5217bd00	/47558447_v1SwJZbLSZ2etlJXOF9qw4H3vErpdTiVIqXxULSVTSU.jpg	public	chefsamirtruck	\N
+5245c79c498e057f7d5ff65d	/117715_CEghvDHaxkALy5RxQCAVW-kyM0TAZo2-fIT4e6veJeo.jpg	public	neaexpress	\N
+51dc5fec498e4e9be748eac4	/22801_gX0atVT6Jt_H6FPXuYAqHD4VzO5jAmS4SVid_ZLkk5U.jpg	public	disosnyc	\N
+525c259b498ea7548cf31f8e	/769710_ZxOOtsSbFVklHIRhXVmTO7ops0Pm0EybRDTgUvGHrSY.jpg	public	disosnyc	\N
+53287c9c498e4b30223220d1	/68150_mMquObtK1F2QjX3VWuhYK2MtjUA9i5QRzexf9zWrBOQ.jpg	public	thegreenradish1	t
+53287ac3498ee8ce8841a510	/68150_pNBQ4zhtsUiGR_kyfk0HziUGMzyIQwYcYpJ3VpZf7tk.jpg	public	thegreenradish1	f
+53860b95498ee26cd484fe30	/81832079_fNoLG8cvJl_IqYaTNF8p9uwsDsglMXnfF2DKZ8X0Tk4.jpg	public	mtblls	t
+53e3b619498e4b9015f0bad7	/68150_s6TPzQTspWKu7AI0DXgjZai6xKrtSkWgIdJNkenXMfs.jpg	public	mtblls	f
+523887bb11d2ac89551d71ff	/5568483_apwtHKsNfvYc-IjeDL1_oqXIqZsLTUGH_-l1uxxAiGo.jpg	public	mtblls	f
 521f754c498ee4d6fbe8a778	/22491899_EEPqf4HeJFaaFjYabKyScGZ8symjXEgMjPUEkfpJsJk.jpg	public	morristruck	\N
 51856452498e6f602088cbe1	/232510_pLk3QUUWFOu82-4SX-ObtA8bw2ZPf61QBOeIuL50T-o.jpg	public	morristruck	\N
-52e6af38498e26e622e5398c	/4147709_E9hzkLfHAJjdgQ6RT3W29cf-cftJShyXpRthu8riZYs.jpg	public	hibachiheaven	f
-52e2aa07498e25b9a084ee94	/12998378_50qpDzH_XwsSlaJpw-f2fDtJsSvQg4TU_ujjdsnyWOw.jpg	public	hibachiheaven	f
-5362891011d2b40c5f328b6e	/41834822_k1LVelyLVM9gsNt3M70sVjI-QLm_84bgv4c6hoMHPO8.jpg	public	hibachiheaven	t
-4fda1cf4e4b0f6aceebbdb2d	/lKL7uz06jZgB680Vye9zxa_2yQfH96afFExvxaLlRpU.jpg	public	hibachiheaven	f
-516ee142e4b04f28d58be309	/36812449_DjR1ynMnMpwj-KmiWPZQldmGQwJ2IEzjSwwmGevqe3U.jpg	public	sweeterynyc	\N
-5107e09be4b047c08ade6bf6	/760350_ZaalKVnOYdVAGoQEdugu-1Lws1LubyJBOVpZvJJD1V0.jpg	public	sweeterynyc	\N
-50188a43e4b0d35e6d8035b4	/b-fKh6mx2WxCybNQkr9ovk_jv4x7bwJPVFM9RF3M5T4.jpg	public	sweeterynyc	\N
-50a696b4e4b04d062582a95e	/32050404_qo6ZUnU5LQMoqrAR6YoH5Qz-PdUcD1d1jCheEJy7lng.jpg	public	thepocketful	\N
-511a7d64e4b0c6a64118260c	/793192_Dtd9vMRk-pbBJscn1cb7n29zM87iJjZy6rojapRhODk.jpg	public	thepocketful	\N
-4fbfebe9e4b0a3bda0340383	/Brw9_z178IK92xMEXLCSSZrP0-99GXjutCp7dHCi5CQ.jpg	public	thetreatstruck	\N
+500ecc9ce4b0a6d209804d9e	/d2yG6CtTrc8TQAXoEGN68UYAv3DiJIqJvKU65-ApcaU.jpg	private	lobstertruckny	\N
+5245c7a1498e0eb9bc097723	/1727660_xLZtYmqATL4pckN_IhgIj0AgUbDAJxywzqbf5PKEooM.jpg	public	lobstertruckny	\N
+4dcbff9440a3324246c6fb7c	/YVZPSDS5D1O5DR2NK5IFQKOU0ZNOQTQMTHMRWS3ESLQIQAWK.jpg	public	lobstertruckny	t
+507b0648e4b0109f3656e2d2	/76137_7JNe3m0dO2MZ7a9rkqa_DTlnrw0LyNitqksFG7_5IC8.jpg	public	lobstertruckny	\N
+508abe69e4b01ff7516d118b	/8029486_9wt2tO9BnY5d11Ef0mpAgHAqfK1QMmSvLXglU4fj6Xw.jpg	public	lobstertruckny	\N
+51cb2c41498e9851cecdd49a	/5728350_vuJ4ORu0wHhd-B-f4FTNfsoIhfHgtJRMJc-QEeiYmNQ.jpg	public	taimmobile	\N
+504a271ce4b0c65efb6b05f5	/PG0DfZvsxtqv4QM8Xpl6y8Ojahb0UanYwCPSdmuhj_E.jpg	public	taimmobile	t
+4fa814d1e4b0d607baf8bd9d	/2drHnu4mqj-uzpwwcJa3MatYGD7KFuxjE472rButWlM.jpg	public	taimmobile	\N
 51bf306a498ed0fde41060d6	/250434_ayEUsJHsbHDQFjUrGrR2fdlBjswuffyRTlWWFrW0-dU.jpg	public	fritesnmeats	f
 5413499511d26b1c8b577c09	/4195495_Ir_R8BxT1YxyTe-VuFD3U5pw6j9CobWIBlYp1FF-TwI.jpg	public	fritesnmeats	f
 4e42f5ecaeb7f6be72c39c70	/JC5VO3Z50HMMMVLCCGWDQPMKF4W01VBXP1QS2LFESR55UHIX.jpg	public	fritesnmeats	\N
 4fe1fbabe4b0be4ebe6c1c52	/HNMFUfRPXDmxSDWAwh7pixJ34SFUY0fgzZFeOLAVXU8.jpg	public	funbunsnyc	t
-542a28a1498e4288ab95e302	/68150_E567_ql-1p2jEv5ysetaEOgtnxpMmeLwZghpwLximCw.jpg	public	papayakingtruck	f
-542a28a8498e8c25fb70df8c	/68150_ru2bxW9jr0deeGFaJrvEbwBh8Bv1FRW82ZIglwoRv1M.jpg	public	papayakingtruck	f
-52d32962498e318b0a9942f1	/61382883_iF5gX7tlMJ3CWlWcTkpntPniCUpS3o7H8anOau4wiKA.jpg	public	usafoodtruck	f
-520f87b511d2e753e7955853	/44_gUd2HlRFt-yMUFcOdI_EUCdz5NK86hKk-3kHwZhHou0.jpg	public	carpedonutnyc	f
 5109aed2e4b01d2a5b69b022	/117715_0jgrjk5IsUFppNAL0NtebyMYoz1JMdzrnWAIjrLMHZw.jpg	public	schnitznthings	\N
 5012e555e4b0dd18ec16bd37	/mZQAOCmv5lnRZ1qOUTwDXk-MLC-X-p01AfECgfLJC2I.jpg	public	schnitznthings	\N
 522e088e11d2d4539942a387	/39707564_2mJZIxFUyGllfVMRjXdE86dZsCxH8cmCdUv29E4dfmE.jpg	public	schnitznthings	t
-5243206b498e78230cd0770a	/54092198_eF4CEteD3zHjOCJzaYssyRXaQElB-GEOy2sqzBFQPm4.jpg	public	thegreenradish1	\N
-525ee647498ef229c65969fe	/10045965_ptbEO58Zn5wDz6kgitvMVjFScmxSkkuHNbK-AguCXSM.jpg	public	thegreenradish1	\N
+520f87b511d2e753e7955853	/44_gUd2HlRFt-yMUFcOdI_EUCdz5NK86hKk-3kHwZhHou0.jpg	public	carpedonutnyc	f
+542a28a1498e4288ab95e302	/68150_E567_ql-1p2jEv5ysetaEOgtnxpMmeLwZghpwLximCw.jpg	public	papayakingtruck	f
+542a28a8498e8c25fb70df8c	/68150_ru2bxW9jr0deeGFaJrvEbwBh8Bv1FRW82ZIglwoRv1M.jpg	public	papayakingtruck	f
+52d32962498e318b0a9942f1	/61382883_iF5gX7tlMJ3CWlWcTkpntPniCUpS3o7H8anOau4wiKA.jpg	public	usafoodtruck	f
 5086e523e4b02ca59cae7bd4	/2361939_1JvatS0wOUdQQIaTmd4Vmk8bgr7aFYOR7LaMkRio0X8.jpg	public	mausamnyc	\N
 513f646ce4b0b1892aaae1bc	/13285510_LmdJLKoCS9fSwm3wy96lcieTczjsLuxAEUnU3FlZDlo.jpg	public	mausamnyc	\N
 51194bbae4b0cd237850b223	/793192_FQUO1SFGyLkg5NRz6VUYl3_zmFgfy0Mh8gL1unO8ijM.jpg	public	mausamnyc	\N
-5239ddce11d2ab4765d5cc7f	/5568483_alwOH7sfGU8-pKfLmurfe9rt3pk2G6p90KwFyC6hq1A.jpg	public	sweetchilinyc	\N
-5208f543498eaeeaaad3ce52	/15629_P_UAUr_S-OO0R12wNp8LDPwr-ZbfPiWeG0Q0rrjW6Ww.jpg	public	sweetchilinyc	\N
-51f2be1f498e71235db5b61b	/117715_mGfGU0UGjUMhgqgwrDPf2f44NZtfMrobqJMF8ahsrjY.jpg	public	sweetchilinyc	\N
-50e71f82e4b07154c72fdc22	/275165_az4RUZ2U7-4cfdnQA1FlMrDLaxwCMriWtlhS_pddjEc.jpg	public	mexicoblvd	\N
-5140cc96e4b0ef29f4802508	/4886503_z36ZXtYKGVIHcNLCR18ZdUWtpStRrbf33rInxsr2p1Q.jpg	public	mexicoblvd	\N
-525de1d7498ef4b27ada0847	/31827631_CApIgPWaXupe3toLi7iJLb6NxIyn2IDTOjAG0qw-PIk.jpg	public	mexicoblvd	\N
+5243206b498e78230cd0770a	/54092198_eF4CEteD3zHjOCJzaYssyRXaQElB-GEOy2sqzBFQPm4.jpg	public	thegreenradish1	\N
+525ee647498ef229c65969fe	/10045965_ptbEO58Zn5wDz6kgitvMVjFScmxSkkuHNbK-AguCXSM.jpg	public	thegreenradish1	\N
 4fee068ce4b0f9bd2b4041f7	/UQwqaF9knSdh4LFRzAhnh7hcl6_dSjDTg1phtqTe_7Y.jpg	public	milktrucknyc	\N
 5281221811d21e907e460e00	/4195495_akELCvAQ7aY-bfTfHk93g5g5_qcJnQJV7h_gH0FlKUA.jpg	public	milktrucknyc	\N
 514360f4e4b0455b303a4d66	/8626436_tfGrSomdm1qEPFKcyb0Q5atmm3DmDeao1W8MotOtOwY.jpg	public	milktrucknyc	t
 4f749b3fe4b0f06c04ae2440	/rA31cWGMm0G8EuZFYZBxb3y2OrW3oEo7vCj1L2XR3AM.jpg	public	milktrucknyc	\N
 52052ef211d22b8ed81dd96b	/36360429_am9ha8rSYxAvCaSMU9ya6lI9MzIgcpR62DH6HS1b-uY.jpg	public	milktrucknyc	\N
+50e71f82e4b07154c72fdc22	/275165_az4RUZ2U7-4cfdnQA1FlMrDLaxwCMriWtlhS_pddjEc.jpg	public	mexicoblvd	\N
+5140cc96e4b0ef29f4802508	/4886503_z36ZXtYKGVIHcNLCR18ZdUWtpStRrbf33rInxsr2p1Q.jpg	public	mexicoblvd	\N
+525de1d7498ef4b27ada0847	/31827631_CApIgPWaXupe3toLi7iJLb6NxIyn2IDTOjAG0qw-PIk.jpg	public	mexicoblvd	\N
+5239ddce11d2ab4765d5cc7f	/5568483_alwOH7sfGU8-pKfLmurfe9rt3pk2G6p90KwFyC6hq1A.jpg	public	sweetchilinyc	\N
+5208f543498eaeeaaad3ce52	/15629_P_UAUr_S-OO0R12wNp8LDPwr-ZbfPiWeG0Q0rrjW6Ww.jpg	public	sweetchilinyc	\N
+51f2be1f498e71235db5b61b	/117715_mGfGU0UGjUMhgqgwrDPf2f44NZtfMrobqJMF8ahsrjY.jpg	public	sweetchilinyc	\N
 51cc7075498e8d24309aea57	/991186_cg_CePJhqcT81QY5l1L4eB3MQxy_QlsRh4zmZDk8cFM.jpg	public	biandangnyc	t
-5280c18811d2e4df572063db	/5354893_5EtQmcwzMnTRFz9qbxjkt9FguCAC4xfW5xwUCyYIrbQ.jpg	private	waffletruck	\N
-4f733c44e4b039d898ce1409	/PQ9G-O3CAtCW6ixkiwHhICEaRn0L3Lz1F95zKcl_GdI.jpg	public	waffletruck	\N
-4fd26038e4b06145dfb72894	/zUVUqzIwbwoFsRrRenEhtDmBSbK2Ry9lzqeuYnmnHG0.jpg	public	waffletruck	\N
-527e823311d2db75dd831ee0	/22419482_1rrrm4nhOKXQsXN25ApmVsGDw4t2J3GyjhfeQPEbClU.jpg	private	waffletruck	\N
 5106bdece4b051d6cb82a376	/1922740_Eqg3x5oj7wks2XGfudNYIAzcCuZHJiWpgLP1CCbonEE.jpg	public	gcnyc1	t
 4fba74c1e4b0a2484fae410e	/1XmG8W_3-cY3Qc-l1GwU7YSOBlzOwyGtk2BzKOkxqYY.jpg	public	gcnyc1	f
 516d80bd498e8f3b47ac90e6	/36812449_Vbw1XbeTn6HJHdJF1bzMp9TvcwrqCP5edmktYCzlW6k.jpg	public	gcnyc1	f
 51eae36e498e58d50e5683ba	/331066_SArUzXa_cz_-YMQco1rwYAfU8a99TZCHJX9a2WA3fHg.jpg	public	gcnyc1	\N
+5280c18811d2e4df572063db	/5354893_5EtQmcwzMnTRFz9qbxjkt9FguCAC4xfW5xwUCyYIrbQ.jpg	private	waffletruck	\N
+4f733c44e4b039d898ce1409	/PQ9G-O3CAtCW6ixkiwHhICEaRn0L3Lz1F95zKcl_GdI.jpg	public	waffletruck	\N
+4fd26038e4b06145dfb72894	/zUVUqzIwbwoFsRrRenEhtDmBSbK2Ry9lzqeuYnmnHG0.jpg	public	waffletruck	\N
+527e823311d2db75dd831ee0	/22419482_1rrrm4nhOKXQsXN25ApmVsGDw4t2J3GyjhfeQPEbClU.jpg	private	waffletruck	\N
 \.
 
 
 --
--- Data for Name: locations; Type: TABLE DATA; Schema: public; Owner: mpeppleradmin
+-- Data for Name: locations; Type: TABLE DATA; Schema: public; Owner: mca
 --
 
 COPY locations (id, display, matcher, region, lat, long, hood) FROM stdin;
@@ -527,7 +527,6 @@ COPY locations (id, display, matcher, region, lat, long, hood) FROM stdin;
 49	John & Front	(john|front) & (front|john)	none	40.706382	 -74.004601	Financial District
 50	30th & 7th	(7th & 30th|30th & 7th)	none	40.748471	-73.992487	Chelsea
 51	Water & Old Slip	water & old slip	none	40.704081	-74.009010	Financial District
-52	10 Hanover sq	10 hanover sq	none	40.704557	-74.009220	Financial District
 53	7 Hanover sq	7 hanover sq	none	40.704557	-74.009220	Financial District
 54	Dumbolot	dumbolot	bkl	40.703105	-73.986664	Brooklyn
 55	Brooklyn Navy Yard	brooklyn navy yard	bkl	40.699282	-73.972583	Brooklyn
@@ -547,7 +546,6 @@ COPY locations (id, display, matcher, region, lat, long, hood) FROM stdin;
 65	Fulton between Water & South	fulton between water & south	none	40.706782	-74.003660	Financial District
 21	49th between 6th & 7th	49th between (6th & 7th|6 ?& ?7)	up	40.759904	-73.982359	Midtown West
 66	Varick between Charlton & King	varick between (king|charlton) & (charlton|king)	none	0.727513	-74.005521	Hudson Square
-68	Old Slip between Water & Front	old slip between water (&|n) front	none	40.703985	-74.008571	Financial District
 27	53rd between Park & Lexington	53rd between park & lexington	up	40.758746	-73.971748	Midtown West
 61	52nd between 6th & 7th	52nd between 6(th)? ?(&|n)? 7(th)?	up	40.761774	-73.980945	Midtown West
 7	38th & Broadway	38(th)? ?& ?broadway	up	40.752895	-73.987340	Midtown West
@@ -558,7 +556,6 @@ COPY locations (id, display, matcher, region, lat, long, hood) FROM stdin;
 39	King & Hudson	(king|hudson) & (hudson|king)	none	40.728086	-74.007317	Soho
 11	41st between 6th & Broadway	41st between 6th (n|&) broadway	up	40.754659	-73.985726	Midtown West
 25	52nd & 6th	52(nd)? ?(N|&) ?6(th)?	up	40.761166	-73.979443	Midtown West
-24	51st & Park	51st ?& ?park	up	40.757830	-73.973477	Midtown East
 13	46th & 6th	(w)?46(th)? ?& ?6(th)?	up	40.757418	-73.982288	Midtown West
 38	King & Varick	(varick|king) ?& ?(king|varick)	none	40.727889	-74.005495	Soho
 5	33rd & Park	(33(rd)?|park) & (park|33(rd)?)	mid	40.746468	-73.981828	Murray Hill
@@ -568,13 +565,15 @@ COPY locations (id, display, matcher, region, lat, long, hood) FROM stdin;
 71	27th & Park	27th & park	mid	40.742706	-73.984531	NoMad
 69	23rd & Park	23rd & park	mid	40.740172	-73.986363	Flatiron
 22	50th between 6th & 7th	50(th)? between (6th ?& ?7th|6 ?& ?7)	up	40.760400	-73.981444	Midtown West
+24	51st & Park	51(st)? ?& ?park	up	40.757830	-73.973477	Midtown East
+68	Old Slip between Water & Front	old slip between (front|water) (&|n) (front|water)	none	40.703985	-74.008571	Financial District
+52	10 Hanover sq	(10 hanover sq|hanover square)	none	40.704557	-74.009220	Financial District
 73	55 Water	55 water	none	40.703653	-74.008528	Financial District
 74	22nd between 5th & 6th	22nd between 5th & 6th	mid	40.741546	-73.991616	Flatiron
 75	Front & Adams	front(s)? & adams	bkl	40.702470	-73.988548	Brooklyn
 76	MetroTech	metrotech	bkl	40.694219	-73.985725	Brooklyn
 77	53rd & Madison	53rd & (mad|madison)	up	40.759708	-73.974214	Midtown East
 78	65th & Broadway	(broadway|65th) & (65th|broadway)	up	40.772945	-73.982057	Upper West Side
-79	Hanover sq between Water & Pearl	hanover( sq)? between water & pearl	none	40.704313	-74.009178	Financial District
 80	Vandam & Varick	(varick|vandam) & (vandam|varick)	none	40.726394	-74.005652	Soho
 81	27th between 11th & 12th	27th between 11th & 12th	mid	40.751856	-74.006316	Chelsea
 82	Charlton & Varick	(varick|charlton) & (charlton|varick)	none	40.727037	-74.005634	Soho
@@ -585,44 +584,53 @@ COPY locations (id, display, matcher, region, lat, long, hood) FROM stdin;
 88	49th & 6th	49th & 6th	up	40.759215	-73.980893	Midtown West
 89	Hudson between King & Charlton	hudson between king & charlton	none	40.727704	-74.007285	Hudson Square
 90	Wall & Water	(water|wall) & (water|wall)	none	40.705131	-74.007406	Financial District
-17	47th between Park & Lexington	47 ?(th|st)? between (lexington|park) ?(n|&) ?(park|lex|lexington)	up	40.754942	-73.974389	Midtown East
 92	55th between 6th & 7th	55th between 6th & 7th	up	40.763653	-73.979593	Midtown West
 93	99th & Madison	99th & madison	up	40.789202	-73.952694	Upper East Side
 94	Water & Broad	water & broad	none	40.702961	-74.011477	Financial District
-72	52nd & Park	52(st|nd)? ?& park	up	40.758444	-73.973026	Midtown East
 91	Water between Wall & Gouvernour	water between wall( st)? & gouvernour	none	40.704894	-74.007785	Financial District
 95	Gouvernour & Water	(gouvernour|water) & (gouvernour|water)	none	40.704619	-74.008153	Financial District
 97	Houston & Broadway	(houston|broadway) & (houston|broadway)	none	40.725457	-73.996819	SoHo
 98	58th & Madison	58th & madison	up	40.762954	-73.971847	Midtown West
 85	46th between 6th & 7th	46(th|st)? (between( )?(6&7|6th & 7th)|\\(6&7\\))	up	40.758025	-73.983710	Midtown West
-96	21st & 5th	((5th|21st) & (5th|21st)| 5(th)? between 20(& )? 21)	mid	40.740258	-73.990499	Flatiron
-1	20th & 5th	(5th|20th) & (5th|20th)	mid	40.739680	-73.990847	Flatiron
-28	55th & Broadway	(broadway|55(th)?) (&|n|between) (broadway|55(th)?)	up	40.764966	-73.982223	Midtown West
 14	46th between 5th & 6th	46(th|st)? (between )?(5th ?& ?6(th)?|5 ?& ?6|& 5~6)	up	40.756625	-73.980321	Midtown West
 99	45th between 1st & 2nd	45th between 1st & 2nd	up	40.751243	-73.969530	Midtown East
 100	320 West 66	320 west 66	up	40.775990	 -73.987717	Upper West Side
+72	52nd & Park	52(st|nd)? ?&? park	up	40.758444	-73.973026	Midtown East
+101	76th & Amsterdam	jcc	up	40.781190	-73.980043	Upper West Side
+17	47th between Park & Lexington	47 ?(th|st)? between (lex|lexington|park) ?(n|&) ?(park|lex|lexington)	up	40.754942	-73.974389	Midtown East
+102	Broadway between Houston & Bleeker	broadway between (bleeker|houston) & (houston|bleeker)	none	40.726014	-73.996255	SoHo
+103	22nd & 5th	(5th|22nd) & (5th|22nd)	mid	40.740871	-73.990086	Flatiron
+79	Hanover sq between Water & Pearl	hanover( sq)? (between )?water & pearl	none	40.704313	-74.009178	Financial District
+96	21st & 5th	((5th|(w )?21st) & (5th|(w )?21st)| 5(th)? between (e)?20(th)?( & )?(w)?21)	mid	40.740258	-73.990499	Flatiron
+1	20th & 5th	(5(th|ave)?|20(th)?) & (5th|20(th)?)	mid	40.739680	-73.990847	Flatiron
+28	55th & Broadway	(broadway|(w)?55(th)?) (&|n|between) (broadway|(w)55(th)?)	up	40.764966	-73.982223	Midtown West
 \.
 
 
 --
--- Name: locations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mpeppleradmin
+-- Name: locations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mca
 --
 
-SELECT pg_catalog.setval('locations_id_seq', 100, true);
+SELECT pg_catalog.setval('locations_id_seq', 103, true);
 
 
 --
--- Data for Name: messages; Type: TABLE DATA; Schema: public; Owner: mpeppleradmin
+-- Data for Name: messages; Type: TABLE DATA; Schema: public; Owner: mca
 --
 
 COPY messages (message, date) FROM stdin;
-test	1433174075
-<p>temp <b>thing</b></p>	1433174165
+	0
+<b>Trucks Added:</b><br >\n<a href="/mamasheros">Mamas Heros</a><br>\n<br>\n<b>Trucks Removed:</b><br>\nYume Teriyaki<br>\nWing'n It<br>\nItizy Ice Cream<br>\nGO Burger	1433364244
+  <b>Trucks Added:</b><br>\n<a href="/truck/mamasheros">Mamas Heros</a><br>\n<br>\n<b>Trucks Removed:</b><br>\nYume Teriyaki<br>\nWing'n It<br>\nItizy Ice Cream<br>\nGO Burger	1433526867
+<b>Trucks Added:</b><br>\n<a href="/truck/mamasheros">Mamas Heros</a><br>\n<a href="/truck/lobsterjoint">Lobster Joint</a><br>\n<br>\n<b>Trucks Removed:</b><br>\nYume Teriyaki<br>\nWing'n It<br>\nItizy Ice Cream<br>\nGO Burger	1433952247
+	1434555819
+<b>Trucks added:</b><br>\n<a href="/truck/camion">Camion</a><br>\n<b>Trucks Removed:</b><br>\nBistroShopp<br>\nDeli Heaven<br>\nMike n Willie's<br>	1435338398
+<b>Trucks added:</b><br>\n<a href="/truck/kaya">Kaya NYC</a><br>\n<a href="/truck/kettlecorn">Kettle Corn NYC</a><br>\n<b>Trucks Removed:</b><br>\nSteaks N Crepes<br>	1436391969
 \.
 
 
 --
--- Data for Name: sitestats; Type: TABLE DATA; Schema: public; Owner: mpeppleradmin
+-- Data for Name: sitestats; Type: TABLE DATA; Schema: public; Owner: mca
 --
 
 COPY sitestats ("time", uptown, midtown, downtown, brooklyn) FROM stdin;
@@ -646,7 +654,7 @@ COPY sitestats ("time", uptown, midtown, downtown, brooklyn) FROM stdin;
 
 
 --
--- Data for Name: subs; Type: TABLE DATA; Schema: public; Owner: mpeppleradmin
+-- Data for Name: subs; Type: TABLE DATA; Schema: public; Owner: mca
 --
 
 COPY subs (id, regex, replacement) FROM stdin;
@@ -671,117 +679,114 @@ COPY subs (id, regex, replacement) FROM stdin;
 5	(bway|bdwy)	broadway
 21	!	
 22	thst	
-7	(btwen|btween|b & (w|t)|b\\/w|bet(?!w)|btwn|btw)	between
+7	(btwen|btween|b & (w|t)|b\\/w|bet(?!w)|btwn|btw|bw)	between
 \.
 
 
 --
--- Name: subs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mpeppleradmin
+-- Name: subs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mca
 --
 
 SELECT pg_catalog.setval('subs_id_seq', 22, true);
 
 
 --
--- Data for Name: trucks; Type: TABLE DATA; Schema: public; Owner: mpeppleradmin
+-- Data for Name: trucks; Type: TABLE DATA; Schema: public; Owner: mca
 --
 
 COPY trucks (id, name, twitname, weburl, tweet, retweeted, lasttweet, lastupdate, type, about, foursquare, matcher, loc, matchmethod) FROM stdin;
-deliheaven	Deli Heaven	deliheaventruck		@downtownlunch correction we are on king&varick today. The word of the day is amore for ur free upgrade. SoHo get ur deliheaven on	f	1392220340	1392220340	Deli	\N			\N	\N
-trucktotable	BistroShopp	trucktotable	http://bistrotruck.com/	55St & Broadway until 4pm. Let's goooo	f	1420227139	1407427421	Moroccan	\N		\N	\N	\N
-mikenwillie	Mike n Willie's	mikenwillies	http://www.mikenwillies.com	Happy Taco Tuesday!! South st seaport Front St. & Fulton St 12-8 ComeGetSome	f	1403394007	1402414859	TexMex		4f205f0ee4b0294b35a1178b	\N	\N	\N
-sweetchili	Sweet Chili	sweetchilinyc	http://sweetchilinyc.com/	Sweet chili chicken. Get yours at old slip & water 1130-3 and broadway btw 39 & 40th 11-9! eaturban... https://t.co/vuWNhUQtiz	f	1433084293	1432822509	Asian		51a8c802498e2165ca855a19	\N	44	\N
+mactruck	MacTruck	mactruckny	http://MacTruckNYC.com	Good morning 47st!!! Between park and lex last truck on the block caboose	f	1437364450	1432730877	American	Looking to take a nap after lunch? This truck is great and the owner is incredibly friendly. Feel free to chat it up while you watch him prepare your food.  Not listed on the menu are the many condiments\\n you can get on your macaroni. The regular size is a good portion for a normal lunch.	50575ab8e4b04ed4f2197dac	\N	17	\N
+kimchitaco	Kimchi Taco	kimchitruck	http://kimchitacotruck.com/	Let's do this, midtown Grab your Fri grub at 52nd St. & 6th Ave.11:30 - 2:00	f	1437318442	1437144705	Korean Fusion		4d6ee122b45b59417c6a6778	\N	25	\N
+dels	Del's	delsnyc	http://instagram.com/delsnyc	We apologize for being MIA the past 2 days. We've been preparing for the hottest day of the week! Come find us at 21st & 5th Ave until 4pm	f	1435693089	1409149941	Sweets		519bb56b498ed2dfa950ace2	\N	\N	\N
+eggstrav	eggstravaganza	etravaganza	http://www.eggstravaganzany.com/	GM again..!! It's taco Tuesday.\nlet's start with our delicious egg breakfast tacos.\nThe truck it's located at NE corner 52nd and Park Avenue	\N	1436358066	1436879209	Mexican	\N	4b15165ef964a52049a823e3	\N	72	\N
 seoul	Seoul Food	seoulfoodnyc	http://www.seoulfoodnyc.com	Come to 51st street, between Park and Madison - it's lunch time!!	f	1392220033	1392220033	Asian		4e74afad88775d593d9a7eb5	\N	\N	\N
 miamifood	Miami Food Machine	miamimachinenyc	http://www.miamifoodmachinenyc.com/	RT @YouGotSmoked: Park Ave btw 33rd St and 32nd St from 11:00 to 3:00 today! New York Aged Cheddar Mac and Cheese! Delicious nyc http://t...	t	1421905524	1389964561	Mexican		514b53aee4b00c3e98ec25e9	\N	\N	\N
 craffels	Craffles	crafflesnyc	http://www.craffles.com/	Happy holidays!!!\nMake ur holidays sweet with our delicious crepe or waffles. Our location for today. Hunter college and union square.	f	1421616846	1388428190	Crepes		514e426ce4b05bcb261d910e	\N	\N	\N
-chipsy	Chipsy King	chipsykingny	http://chipsykingny.com/	Kasar truck is at union square\nBroadway and 16th street\nAll day until 8pm	f	1433085550	1407255461	Fries		51bb5c43498ee06e13d0d31f	\N	\N	\N
+lobsterjoint	Lobster Joint	lobsterrolling	http://www.lobsterjoint.com/food_truck.html	Good Morning NYC,\nWe are parked on E20 Street & 5th Ave today. Come enjoy Fresh Lobster Rolls, Sliders, Gazpacho. Have a great day.	\N	1437224037	1436970443	Seafood		552d5dcd498edeb4d817ef9a		1	
 vspot	Hit your V Spot	hityourvspot	https://www.facebook.com/VSPOT.TRUCK	47th and Park from 11:15am to 2:30pm !!	f	1412066274	1412066274	Vietnamese	\N	53c9479b498e2dfa7e205ff0	\N	\N	\N
 schnitzel	Schnitzel & Things	schnitznthings	http://schnitzelandthings.com	The truck will be on 47th & Park.  Schnitzel time.	f	1422645854	1430322671	German		4a6640b3f964a5204cc81fe3	(schnitztruck|the truck)	16	contains
 shadydawg	Shady Dawg	shadydawgnyc	http://www.shadydawg.com/	\N	\N	\N	\N	American	\N	536e77ea498e8b0d31167218	\N	\N	\N
-steaksncrepes	Steaks N Crepes	steaksncrepes	http://steaksncrepes.com	50 st bet 6 & 7 ave for lunch till 03:30. come for the best old style cheesesteaks in nyc. combo w/ fries & drink $10 only. midtown lunch	f	1397096188	1374766188	American		50f44167e4b0af5bf46321ce	\N	\N	\N
-yume	Yume Teriyaki	yumefoodtruck	http://yumeteriyakigrill.com/	Yume is on Hanover and Water today for lunch. Start the weekend the right way :).	f	1400251565	1400251565	Japanese	\N	530cdc14498ee06c95ab14e0	\N	\N	\N
-frites	Frites 'N Meats	fritesnmeats	http://www.fritesnmeats.com/	Lunch 2day @ 7 Hanover sq b/t water & pearl st. Burger of the week THE MARITAL BLISS. Preorder 9172929226 fidi	f	1433164648	1432907255	American	This is a good burger but this truck is interesting because of the many toppings they carry and their burger of the week. 	4ae9d217f964a520bcb621e3	\N	53	\N
-dels	Del's	delsnyc	http://instagram.com/delsnyc	We apologize for being MIA the past 2 days. We've been preparing for the hottest day of the week! Come find us at 21st & 5th Ave until 4pm	f	1410028765	1409149941	Sweets		519bb56b498ed2dfa950ace2	\N	\N	\N
-mamak	Mamak	lovemamak	http://www.lovemamak.com/	hey guys we are @smorgasburg pier 2 @BrooklynBridge_  come come come! http://t.co/llBP6I0uKb	f	1432276046	1410708157	Asian		51c4cffa498ec876f564a0b4	\N	\N	\N
+kaya	Kaya NYC	kayanyc28	http://www.kayanyc28.com/	One more round Charlton and Varick till supplies last. Catch us for some buns before the weekend weekendsunshine CheapEats lunchtime	\N	1436972951	1437143989	Chinese		54342678498e669166a9d82c		82	
+mamak	Mamak	lovemamak	http://www.lovemamak.com/	hey guys we are @smorgasburg pier 2 @BrooklynBridge_  come come come! http://t.co/llBP6I0uKb	f	1433525962	1410708157	Asian		51c4cffa498ec876f564a0b4	\N	\N	\N
 blend	Blend	blend_express	http://blen02.wix.com/blendnyc	Happy Halloween.   47th and park we here.	f	1421948094	1414774175	Latin Fusion		4fa94528e4b0f8fbf13317e6	\N	16	\N
-mamuthai	Mamu Thai Noodle	mamuthainoodle	https://www.facebook.com/MamuThaiNoodle	We are super excited to join @thaithenticNYC for their second Chef Series pop-up event @starrettlehigh this evening 5pm-8pm Hungry yet?thai	f	1432938856	1431624296	Thai		5126a10ae4b0af674c85f353	\N	46	\N
-phils3	Phil's Steaks	philssteaks	http://www.philssteaks.com	TBT to that time we won a Vendy.... Come get an award winning cheesesteak today on 52nd & 6th from 11-3. jawn http://t.co/YjcusxkVWV	f	1433169892	1432823021	American		4f15b382e4b0725660ea9f31	\N	25	\N
-goburger	GO Burger	goburger	http://www.goburger.com	We're on 91st and Amsterdam for dinner tonight. See you soon!	f	1402176073	1398896034	American		4c06b3eccf8c76b0a4eb3a65	\N	\N	\N
+cinnamonsnail	The Cinnamon Snail	veganlunchtruck	http://www.cinnamonsnail.com/	Parked on 55th/Broadway 9:00-3:00\n*Please read note at the bottom of this post. \n\nHabanero apricot grilled tempeh... http://t.co/9ifeS1tevk	f	1437332411	1425044750	Vegan		4c263af6a852c9287537e66c	1	28	two
+milktruck	Milk Truck	milktrucknyc	http://www.milktrucknyc.com	Bessie's at Water St. and Broad St. today for lunch! Call 646-504-6455 to pre-order. Seaport kiosk open all day until 8pm, 19 Fulton St.	f	1437174692	1436881984	American		4e823c0229c2dbb2b7043972	\N	94	\N
 getstuffed	Momos & Buns	getstuffednow	http://www.chinesemirch.com	RT @GovIslandFood: 1/3. Only a few more days till Gov Island gourmet food market powered by @livefastgroup opens for the summer. @Getstuffe...	t	1408198481	1400698983	Chinese Fusion		4fa016cbe4b05d0fc11262c5	\N	\N	\N
-itizy	Itizy Ice Cream	itizyicecream	http://www.itizy.com/	Likely our last three hours at Columbia this year! Come grab a scoop of your favorite flavor before it runs out!	f	1382307419	1382122482	Sweets		4fcbdcaae4b00a0e855124dd	\N	\N	\N
 freshhearty	Fresh and Hearty	freshandhearty	http://freshandheartynyc.com/	Get your Soup & Panini on with Fresh and Hearty! We parked on 46st btw 5th & 6th ave from 11am to 3pm. Call now 4 free delivery! @3474402467	f	1395241942	1390493878	Soup/Salad/Sandwich		51801f7a90e7374e46b6239f	\N	\N	\N
 taipanexpress	Taipan Fusion Express	taipanexpress		Good morning we are serving lunch at 46 st between 5&6ave from 11:30 to 3pm @FoodtoEat @midtownlunch @nystfood	f	1412268299	1408622100	Thai/Chinese/Indian	\N	532b1b92498ea6c0d1026802	\N	\N	\N
-wingit	Wing'n It	wingnitnyc	http://www.wingnitnyc.com/	Out here on 23rd and 5th come and grab some wings for lunch today. We will be open from 10am to 3pm. See you guys at lunch.	f	1390923947	1387549355	American		519ffd2b498ededbeef3c073	\N	\N	\N
+mamasheros	Mamas Heros	mamasheros		Mini crowd forming, come get a sandwich, you really won't regret it. 46th between 5th and 6th http://t.co/EJYNaKt1MB	\N	1436901343	1436803093	Sandwitches		5564a8c5498efbaa697c9fb9		14	
+brooklynpopcorn	Brooklyn Popcorn	brooklynpopcorn	http://brooklynpopcorn.com/	Good afternoon NYC hope everyone is enjoying their beautiful Wednesday! We are looking forward to seeing you on Hudson & King Street :)	f	1435076571	1434567787	Popcorn!		514a0737e4b09c3e77279d83	\N	39	\N
 tacobite	Taco Bite	tacobite	http://www.tacobite.com/	Today we are on\n47th St\nBet\nPark Av / Lexington Av	f	1415029173	1406907223	Mexican		503ba49ae4b0fad35eb7a8dc	\N	\N	\N
-shuka	Shuka Truck	shukanyc	https://www.facebook.com/ShukaTruckNYC	Due to the coming rain storm the Shuka Truck will not be parked on 21st & 5th !	\N	1433086666	1433168690	Israeli	\N	546a5011498e0e047a243f37	\N	96	\N
 mooshu	Moo Shu	mooshugrill	http://www.mooshugrill.com	Brought our yummy fare down to SoHo today! Catch us on Hudson & King til 2:30!	f	1418139086	1418396706	Chinese	Moo Shu grill is a slight twist on typical Chinese <a href="https://en.wikipedia.org/wiki/Moo_shu" target="_blank">moo shu</a> The three Moo Shus option is enough for lunch and you can pick and choose a different protein for each. In my opinion the chicken is the best but it is dark meat. </p><p>It's easy to order as there is one window for ordering and for picking up when your name is called.	52090e45498e5500a6bd41fb	\N	39	\N
-cinnamonsnail	The Cinnamon Snail	veganlunchtruck	http://www.cinnamonsnail.com/	Parked on 55th/Broadway 9:00-3:00\n*Please read note at the bottom of this post. \n\nHabanero apricot grilled tempeh... http://t.co/9ifeS1tevk	f	1433170238	1425044750	Vegan		4c263af6a852c9287537e66c	1	28	two
-bigds	Big D's	bigdsgrub	http://bigdsgrub.com/	D1 is grillin' it up at Hudson/King St. http://t.co/qFIBfSyCwq	f	1433162427	1433163881	Korean Fusion		4c968b907605199c2eaec2a3	\N	39	\N
-nuchas	Nuchas	nuchasnyc	http://www.nuchas.com	Start your day fresh! Catch the truck at Pearl St. & Broad St! MuchasNuchas	f	1432985246	1432652067	Mexican		4ebd2a9bb8f7b504a754c130	\N	67	\N
+gorilla2	Gorilla Cheese 2	gcnyc1	http://t.co/4ZDqfwSH5f	G1 46 5/6\nG2 Broadway / 55th \nComeToTheCheeseYo	f	1437318042	1437145146	American		4dc2d3e352b1c1fb37f1e945	g2	14	before
+grillwheels	Grill On Wheels	grillonwheelsny	#	GOOD MORNING NYC WHAT A BEAUTIFUL DAY TO GO OUT AND GET LUNCH AT HANOVER SQUARE!!!	f	1437143196	1437058212	Kosher		51b0bf31498e9b68db75612c	\N	52	\N
+shuka	Shuka Truck	shukanyc	https://www.facebook.com/ShukaTruckNYC	@JBlechner yes ! We will be on 21st & 5th Today !	\N	1437318025	1437143330	Israeli	\N	546a5011498e0e047a243f37	\N	96	\N
+kettlecorn	Kettle Corn NYC	kettlecornnyc	http://www.kettlecornnyc.com/home.php	\N	\N	1437334625	\N	Popcorn				\N	
+snowday	Snowday	snowdaytruck	http://snowdayfoodtruck.com/	RT @dumbolot: Jumped the gun...we got @DomoTaco @SnowdayTruck and @NeaExpress in the lot today!!!	f	1437356370	1435766697	Comfort	\N	533ddd4a498e774b8250a69b	\N	54	\N
 elpaso	El Paso Truck	elpasotruck	http://elpasony.com/	Today we are at @Columbia between W 115th & W 116st. Stop by and get your tacos, burritos, quesadillas yummy  tacotruck FoodTruckfriday	f	1425157921	1412955921	Mexican	\N	523c911f04937624937304c5	\N	36	\N
-crepestruck	Crepes Truck	thecrepestruck	https://www.facebook.com/thecrepestruck	Come ceck out the Brazzers promo truck in Time Square 48 & 7 ave today till 4pm. http://t.co/wUDdRIZpAh	f	1430844040	1406998102	Crepes		4dfb854918386e743d9869e3	\N	\N	\N
-chefsamir	Comme Ci, Comme Ca	chefsamirtruck	http://www.chefsamirtruck.com	We are at 47st between park av and Lexington av!	f	1432913032	1432827763	Moroccan		4c3c85e3a9509c74b52e395b	\N	17	\N
-brooklynpopcorn	Brooklyn Popcorn	brooklynpopcorn	http://brooklynpopcorn.com/	@Sebastian_Otto We are on 70th and York today! Hope to see you soon. Thank you for your support :)	f	1431354821	1415296416	Popcorn!		514a0737e4b09c3e77279d83	\N	32	\N
+camion	Camion	camionnyc	http://www.camionnyc.com/	Old slip and water FiDi foodporn foodtruck tacos burritos camionmeanstruck... https://t.co/ldYJK0EKLg	\N	1437146040	1436974916	Mexican		53eced53498ea98fb8a770e4		44	
+korilla	Korilla BBQ	korillabbq	http://korillabbq.com	And its FiDi Friday! Front & Old Slip ready by 12:30	f	1437307931	1437147703	Korean Fusion		4cc701aa01fb236ab070baba	\N	84	\N
 hh3	Habachi Heaven 3	hibachiheaven	http://www.hibachiheaven.com/	midtown. Come get warm with some hot HIBACHIHEAVENNYC, find us at 33rd/Park and 47th/Park for some yumyum	f	1428064651	1414075107	Jabanese BBQ	\N	4fda0cd2e4b0318de7d3c85d	2	5	two
-gorilla2	Gorilla Cheese 2	gcnyc1	http://t.co/4ZDqfwSH5f	G1 46 5/6\nG2 broadway / 55th \nComeToTheCheeseYo	f	1433119254	1432904163	American		4dc2d3e352b1c1fb37f1e945	g2	28	before
-grillwheels	Grill On Wheels	grillonwheelsny	#	Grill On Wheels is @ 46th Street between 5th & 6th Ave today!!!	f	1432738187	1432131014	Kosher		51b0bf31498e9b68db75612c	\N	14	\N
-mexicoblvd	Mexico Blvd.	mexicoblvd	http://mexicoblvd.com	Buenos dias amigos de Dumbo tacos tortas flautas @MexicoBlvd @dumbolot Water&Jay	f	1432912626	1433168845	Mexican		4f4e55aee4b04c96fba5b149	\N	54	\N
+frites	Frites 'N Meats	fritesnmeats	http://www.fritesnmeats.com/	Lunch 2day @ 7 Hanover sq b/t water & pearl. Burger of the week THE TEXAN Preorder 9172929226 fidi	f	1437054200	1437140830	American	This is a good burger but this truck is interesting because of the many toppings they carry and their burger of the week. 	4ae9d217f964a520bcb621e3	\N	53	\N
+carls	Carl's Steaks	carlssteaks	http://carlssteaks.com/home/	It's the @carlssteaks TRIFECTA FRIDAY folks\nBIG CARL - 56TH ST / BDWY \nLIL CARL @INTREPIDMUSEUM 46TH ST / 12TH AV... http://t.co/4oIZD8MKVn	f	1437324532	1437144992	American		51a78330498e3fc1f22d771e	\N	29	\N
+crepestruck	Crepes Truck	thecrepestruck	https://www.facebook.com/thecrepestruck	Come ceck out the Brazzers promo truck in Time Square 48 & 7 ave today till 4pm. http://t.co/wUDdRIZpAh	f	1433610398	1406998102	Crepes		4dfb854918386e743d9869e3	\N	\N	\N
 mrnice	Mr Nice Guy	mrniceguytruck	http://mrniceguynyc.com	71st and york... it's friday	f	1414424434	1414687317	American		520bbbb211d26afae232ec59	\N	33	\N
-korilla	Korilla BBQ	korillabbq	http://korillabbq.com	We're back in FLATIRON today ! Catch us on 25th & Broadway!\n+ Midtown (47th & Park)	f	1433120748	1433169803	Korean Fusion		4cc701aa01fb236ab070baba	\N	16	\N
+latinkitchennyc	Latin Kitchen	latinkitchennyc	http://www.latinkitchennyc.com/	HAPPY HALLOWEEN ! ! TODAY OUR LAST FRI OF 2014 ..THANK YOU WALLSTREET! !\nLOCATION 55 WATER ST (SIDE OF OLD SLIP) NYC http://t.co/RWCtK9bCEc	f	1437344293	1414768415	Mexican	\N	53878518498ef00115dbdea1	\N	73	\N
 funbuns	Fun Buns	funbunsnyc	http://j24f.com/funbuns/	Last day to get your favorite buns this year at 50th st between 6 / 7 ave midtown Happy Halloween everyone	f	1419358370	1414768000	Asian		4f8d9663e4b021137aa2bdde	\N	22	\N
-cinnamonsnail2	The Cinnamon Snail 2	veganlunchtruck	http://www.cinnamonsnail.com/	This week:\n\nMon: 48th/6th\nTUES: water/Gouvernour Ln, AND Dinner on 4th Street near Washington Square\nWEDNESDAY:... http://t.co/ssXs1PztRI	\N	1433170238	1423425704	Vegan	\N	4c263af6a852c9287537e66c	2	95	two
-kimchitaco	Kimchi Taco	kimchitruck	http://kimchitacotruck.com/	Couldn't think of a better way to end a 4 day work week than with TACOS. Find us on 52nd & 6th, 11:30 - 2:30	f	1433166302	1432906206	Korean Fusion		4d6ee122b45b59417c6a6778	\N	25	\N
-paris	Paris Sandwich	parissandwich	http://www.parissandwiches.com/	Last day in dumbo today on fronts and Adams @ 11:30 @DUMBOFoodTrucks	f	1432070671	1414764931	French/Vietnamese		519e4ed0498e4f27e64c177a	\N	75	\N
-steelcart	The Steel Cart	thesteelcart	http://www.thesteelcart.com/	Makin a grand finale on Front & Jay! Stick it to the weatherman with a toasted sandwich & grits. Soup today is Rustic Chicken Noodle.	f	1432226274	1419950738	French		511d3abee4b0e188895f3697	\N	56	\N
-mactruck	MacTruck	mactruckny	http://MacTruckNYC.com	Good morning 47st!!! Between park and lex last truck on the block caboose	f	1432985223	1432730877	American	Looking to take a nap after lunch? This truck is great and the owner is incredibly friendly. Feel free to chat it up while you watch him prepare your food.  Not listed on the menu are the many condiments\\n you can get on your macaroni. The regular size is a good portion for a normal lunch.	50575ab8e4b04ed4f2197dac	\N	17	\N
+pontirossi	Ponti Rossi	pontirossifood	http://www.pontirossifood.com/	RT @dumbolot: ricebowls @SweetChiliNYC, pastas @PontiRossiFood, & noodles @mamuthainoodle. great way to start the weekend! carboload carb...	f	1437146486	1437146377	Italian	\N	542d78f4498ee5493e1a8989	\N	54	\N
+mexicue	Mexicue	mexicue	http://mexicueny.com	Eating these sliders under an umbrella is like movie make-out scenes under waterfalls. \n\nCome get em at MadSqEats http://t.co/VxW4aWmiwh	f	1437169498	1410639912	Mexican		4c51a6a71c67ef3ba6b61ab9	\N	\N	\N
+wafelMomma	Wafels & Dinges Momma	waffletruck	http://www.wafelsanddinges.com/	De TRUCKS:\nKastaar @ Horace Mann School til 4pm  Momma Truck @ 40th & Park til 4pm	f	1437347729	1432313318	Belgian		4a416369f964a52036a51fe3	momma	9	before
+chefsamir	Comme Ci, Comme Ca	chefsamirtruck	http://www.chefsamirtruck.com	We are at 47st between park av and Lexington av! Get your couscous	f	1437151147	1436455781	Moroccan		4c3c85e3a9509c74b52e395b	\N	17	\N
+neapolitan	Neapolitan Express	neaexpress	http://neapolitanexpress.com/	Lunchtime already? We will be at @BklynNavyYard and @dumbolot until 3pm today reclaimyourlunchbreak	f	1437327541	1436972426	Pizza		51c8864c498e0ac96c14433e	\N	54	\N
+steelcart	The Steel Cart	thesteelcart	http://www.thesteelcart.com/	Makin a grand finale on Front & Jay! Stick it to the weatherman with a toasted sandwich & grits. Soup today is Rustic Chicken Noodle.	f	1436887174	1419950738	French		511d3abee4b0e188895f3697	\N	56	\N
+phils3	Phil's Steaks	philssteaks	http://www.philssteaks.com	And a very phine Phil's Phriday to you! The Jawn is on 51st and Park 11-2 just waiting for you. Come thru!	f	1437229601	1437144382	American		4f15b382e4b0725660ea9f31	\N	24	\N
 toastmonster	Toast Monster	toastmonsternyc	http://www.toastmonsternyc.com/	Toast Monster @UrbanSpaceNYC @GarmentDstrctNY till October 17. On Broadway between 40th and 39th st.	f	1428680926	1411270224	American		50ad1829e4b087613d696bc4	\N	\N	\N
 shanghai	Shanghai Sogo	shanghaisogo	http://www.shanghaisogo.com/	Happy Halloween. TGIFriday !! We r serving at water and Hanover sq!! ( 10 Hanover square ) come & get some. 11~3pm. http://t.co/VBdd8zsVAK	f	1430948975	1414769059	Asian		5258369d498e13def2bef2cb	\N	42	\N
-mexicue	Mexicue	mexicue	http://mexicueny.com	Eating these sliders under an umbrella is like movie make-out scenes under waterfalls. \n\nCome get em at MadSqEats http://t.co/VxW4aWmiwh	f	1432930226	1410639912	Mexican		4c51a6a71c67ef3ba6b61ab9	\N	\N	\N
-bobjo	BobJo	bobjotruck	http://www.bobjo.net	Good morning nyc we r ready to serve @47th btween park and lex Ave. try our bbq rice platter with beef, pork, shrimp. PlZ come by and enjoy~	f	1432653139	1432826384	\N		4e3add0c88772c3bf12772da	\N	17	\N
-taim	Taim Mobile	taimmobile	http://www.taimmobile.com/	TAIMTUESDAY on 20th and 5th in flatiron!  It's a beautiful day for falafal!  nyceats nycfoodtruck flatiron	f	1432063346	1432654141	Mediterranean		4cf2c5321d18a143951b5cec	\N	1	\N
-papayakingtruck	Papaya King	papayakingtruck	https://www.facebook.com/papayaking	1 cart in Metrotech & 1 cart at the @IntrepidMuseum beautiful day to eat at a foodtruck	f	1433169286	1431018099	American		50952bd2e4b03898afd23fe3		76	
-morris	Morris Grilled Cheese	morristruck	http://morrisgrilledcheese.com/	Another beautiful day to PraiseCheeses, @DowntownBklyn Metrotech on Bridge St, and tonight @BRICartsmedia @BklynBrdgPark DanceParty!	f	1433165147	1432825341	American		4e0e0b3caeb7a5b33ee5dac1	\N	76	\N
-mtblls	Mtblls	mtblls		Hey hey hey its Friday!!!!!  Make it a fantastic day and Come down to 50th bet 6&7 for some  balls .	f	1433169564	1432912394	Italian	\N	504fb7fde4b0bc88c3a6b614	\N	22	\N
-snowday	Snowday	snowdaytruck	http://snowdayfoodtruck.com/	Yo yo yo @dumbolot get ready for mad maple love - spring menu with smoked rib sliders and farrow salad coming your way!! Beep beep	f	1433086356	1430923962	Comfort	\N	533ddd4a498e774b8250a69b	\N	54	\N
-langos	Langos	langostruck	http://www.langostruck.com/	Good morning\nlunch time we're at\n52nd. St bet 6-7 Ave (closer to 6)\n11-2:30pm\n\nnight Long Island City Queens\n5St & 47Rd.\n5-8:30pm	f	1432735121	1432904702	Hungarian	\N	537a883c498eb7fac064409f	\N	61	\N
-greenradish	The Green Radish	thegreenradish1	http://www.thegreenradish.com/	Good Day to GetNaked NakedBeanBurgers 47th between Park and Lexington https://t.co/4ou7IczI7R	f	1433017431	1432902203	Vegan		5229feab11d2edde794d385c	\N	17	\N
-disos	DiSO's	disosnyc	http://www.disosnyc.com/	Friday's society lunch meetings on 46th and 6 today. \n\nCall in orders to: 917-756-4145	f	1432220718	1430489419	Italian Sandwiches	These might be typical italian sandwiches but the ingredients are high quality. You need to get there early because the line can get long and they will run out of some breads. I believe the focaccia half is a normal portion for lunch while their half and hero sizes are pretty big.	519523d6498eeaa6200aad03	\N	13	\N
-shortys	Shortys	shortysnyc	http://www.shortysnyc.com	Up and running at SouthStreetSeaport South and Fulton Streets Cheesesteak ChickenCheesesteak RoastPork... http://t.co/awyzKOzJqw	f	1433112491	1415982867	American		4faea2cce4b08a88c5dc5d05	\N	58	\N
-carpedonut	Carpe Donut	carpedonutnyc	http://carpedonutnyc.com/	Truck open at 55th street and Broadway. Come!!!	f	1433071460	1432895891	Sweets	They only server one kind of donut here, the apple cider, but it's a pretty good one. They are fresh and still hot when you get them. They have donut ice cream sandwiches but you should know the entire thing is in the freezer so you will get a frozen donut as well.	5169892c498e0522481eea97	\N	28	\N
-andysitalianice	Andy's Italian Ice	andysitalianice	http://andysitalianicesnyc.com/	We are loving this nice weather! Come find us in Union Square till 9pm !!!	f	1432764026	1432941500	Dessert	\N	4df26c2bae609e69dd95d2fc	\N	37	\N
-yankeedd	Yankee Doodle Dandy's	usafoodtruck		Fried Day! Come and get the best food in the city at 39th and Broadway at urbanspace or swing by the Intrepid for your base. gorangers	f	1433118694	1432917729	American	\N	52b497e1498eed13ead2b84c	\N	8	\N
+paris	Paris Sandwich	parissandwich	http://www.parissandwiches.com/	Last day in dumbo today on fronts and Adams @ 11:30 @DUMBOFoodTrucks	f	1436401880	1414764931	French/Vietnamese		519e4ed0498e4f27e64c177a	\N	75	\N
+disos	DiSO's	disosnyc	http://www.disosnyc.com/	Friday lunch.. 46th and 6 ave corner. \n\nSPECIAL TODAY: Homemade Meatball Parm hero\n\nCall in orders to: 917-756-4145	f	1437367288	1437141532	Italian Sandwiches	These might be typical italian sandwiches but the ingredients are high quality. You need to get there early because the line can get long and they will run out of some breads. I believe the focaccia half is a normal portion for lunch while their half and hero sizes are pretty big.	519523d6498eeaa6200aad03	\N	13	\N
+mexicoblvd	Mexico Blvd.	mexicoblvd	http://mexicoblvd.com	Buenos dias Dumbo! tacos tortas flautas @MexicoBlvd @dumbolot Water & Jay	f	1437172812	1436799139	Mexican		4f4e55aee4b04c96fba5b149	\N	54	\N
+mamuthai	Mamu Thai Noodle	mamuthainoodle	https://www.facebook.com/MamuThaiNoodle	Friday!! Dumbo day! Come to @dumbolot where we will be serving you the freshest Thai noodle! Hand cut this morning as per everyday! 11:30-3	f	1437250733	1437144992	Thai		5126a10ae4b0af674c85f353	\N	54	\N
+sweetchili	Sweet Chili	sweetchilinyc	http://sweetchilinyc.com/	TGIF we are @dumbolot jay & water 1130-3! porkbelly friedegg sriracha fries nyc bacon sun thaietnamese lunch eatoutside spicy	f	1437231715	1437146140	Asian		51a8c802498e2165ca855a19	\N	54	\N
+eddiespizza	Eddie's Pizza	eddiespizzany	http://www.eddiespizzany.com/	starrettlehigh Takumi specials @ Starrett-Lehigh https://t.co/DJmjLtTZs9	f	1436879099	1436804085	Pizza		4c0cf412b4c6d13ae4850c30	\N	46	\N
+mausam	Mausam	mausamnyc	http://www.mausamnyc.com	RT @dumbolot: We got @mausamnyc @ToumNYC and @bigdsgrub in the lot today!	f	1437333483	1437062528	Indian		50730eebe4b0f3224431dc5d	\N	54	\N
+bobjo	BobJo	bobjotruck	http://www.bobjo.net	Hello nyc we r open at 47th st. Between park ave. and Lexington ave. try our KOREAN BBQ beef, pork, shrimp  thank you very much	f	1436371192	1436887762	\N		4e3add0c88772c3bf12772da	\N	17	\N
+dubpies	DUB Pies	dubpies	http://www.dubpies.com/	PieTruck is @ Hudson Ave & King St, Soho until 2.30pm http://t.co/b4hpuhB8mJ	f	1436691800	1435936010	New Zealand meat pies	\N	4eb825a62c5b53141b78bfb6	\N	39	\N
+greenradish	The Green Radish	thegreenradish1	http://www.thegreenradish.com/	Good Day to GetNaked NakedBeanBurgers 47th between Park and Lexington https://t.co/4ou7IczI7R	f	1437132742	1432902203	Vegan		5229feab11d2edde794d385c	\N	17	\N
+mtblls	Mtblls	mtblls		Well it's Friday Mtbll Lovers! Another beauty .  The  is stopped at 50th bet 6&7 Aves. Come on by for your... http://t.co/O7T3RX1Rk1	f	1436793334	1437145380	Italian	\N	504fb7fde4b0bc88c3a6b614	\N	22	\N
 schnitzelcart	Schnitzel & Things Cart	schnitznthings	http://schnitzelandthings.com	It's Schnitzel time.  The cart will be on 27th & Park serving up your favorite lunch!	f	1431702487	1426694447	German	\N	4a6640b3f964a5204cc81fe3	(schnitzcart|the cart)	71	contains
-lukeslobster	Luke's Lobster	nautimobile	http://lukeslobster.com/	This is it, our last day on the streets of NYC. 17th st and 5th ave. So long, farewell, see ya when we see ya.	f	1433085776	1430398345	Seafood		4dc81239b0fb5556cd2f3023	\N	86	\N
-carls	Carl's Steaks	carlssteaks	http://carlssteaks.com/home/	Scream it from rooftops it's CHEESESTEAK FRIDAY ! 56th st / Bdwy @randomfoodtruck @victoriasecret @UMG @Barclays... http://t.co/7spL7HYg2b	f	1432998786	1432911642	American		51a78330498e3fc1f22d771e	\N	29	\N
-latinkitchennyc	Latin Kitchen	latinkitchennyc	http://www.latinkitchennyc.com/	HAPPY HALLOWEEN ! ! TODAY OUR LAST FRI OF 2014 ..THANK YOU WALLSTREET! !\nLOCATION 55 WATER ST (SIDE OF OLD SLIP) NYC http://t.co/RWCtK9bCEc	f	1433062647	1414768415	Mexican	\N	53878518498ef00115dbdea1	\N	73	\N
-palenque	Palenque	palenquefood	http://www.palenquehomemadecolombianfood.com	RT @starrettlehigh: @tosty17 Have @Palenquefood contact the @nycfoodtruck & tell them it's interested in being at StarrettLehigh!	f	1432857229	1428705650	Colombian Fusion		4e84f424dab45bbd2617dc62	\N	46	\N
+sweetery	Sweetery	sweeterynyc	http://sweeterynyc.com	Serving at Hudson/King St 375 Hudson Street New York From 7:30AM-3:00PM EDT https://t.co/2cDIucjsTY	f	1437341987	1435923308	Sweets		4a28d919f964a52056951fe3	\N	39	\N
+carpedonut	Carpe Donut	carpedonutnyc	http://carpedonutnyc.com/	Truck open at 51st street and Park avenue. Come!!!	f	1436709816	1437044501	Sweets	They only server one kind of donut here, the apple cider, but it's a pretty good one. They are fresh and still hot when you get them. They have donut ice cream sandwiches but you should know the entire thing is in the freezer so you will get a frozen donut as well.	5169892c498e0522481eea97	\N	24	\N
 hh2	Habachi Heaven 2	hibachiheaven	http://www.hibachiheaven.com/	Open and ready to roll corner of Varick and King	f	1428064651	1423759572	Jabanese BBQ	\N	4fda0cd2e4b0318de7d3c85d	1	38	two
-pontirossi	Ponti Rossi	pontirossifood	http://www.pontirossifood.com/	@stefferonipizza Siamo qui sulla 38&broadway fino Alle 7 pm  ciaooooo Stefyyy	f	1433167651	1433019687	Italian	\N	542d78f4498ee5493e1a8989	\N	7	\N
-polish	Old Traditional Polish Cuisine	polishcuisine	https://www.facebook.com/pages/Old-Traditional-Polish-Cuisine/315496671902708	Let's do this - 55th & Broadway - Pierogitime @randomfoodtruck	f	1433169173	1432912950	Polish		51435df4e4b0823a398ebc8a	\N	28	\N
-dubpies	DUB Pies	dubpies	http://www.dubpies.com/	PieTruck is at Hudson & King, Soho - serving cold brew, savory & sweet pies from 11am to 2.30pm. foodtrucks NYC NZ	f	1433168040	1432908646	New Zealand meat pies	\N	4eb825a62c5b53141b78bfb6	\N	39	\N
-eddiespizza	Eddie's Pizza	eddiespizzany	http://www.eddiespizzany.com/	We are serving lunch today at starrett lehigh building on 26th between 11th and 12th avenue from 11am-3pm. call... http://t.co/taVPGUrs8f	f	1432652131	1433160568	Pizza		4c0cf412b4c6d13ae4850c30	\N	2	\N
-sweetery	Sweetery	sweeterynyc	http://sweeterynyc.com	Serving at Hudson/King St 375 Hudson Street New York From 7:30AM-3:00PM EDT http://t.co/aR2bxNYVPT	f	1432907954	1432899308	Sweets		4a28d919f964a52056951fe3	\N	39	\N
-mausam	Mausam	mausamnyc	http://www.mausamnyc.com	Curry Thursday @dumbolot don't forget to grab a delicious mango lassie http://t.co/1r4tLgSuuy	f	1433079414	1432822177	Indian		50730eebe4b0f3224431dc5d	\N	54	\N
-schnitzi	Schnitzi	schnitzi1	http://www.schnitzi.com/	It seems like it is going to be a nice day today, @46 St bet 5&6 serving lunch from 11:30 until 3:30 schnitzitruck http://t.co/vR5tgBHsTH	\N	1433167952	1432214325	German	\N	532b25ed498eb8b1844dc14f	\N	14	\N
-toum	Toum NYC	toumnyc	https://www.facebook.com/ToumNYC	Don't let the rain stop you from having a delicious LebaneseLunch! Pre-order at 917-TOUM-350 & pick up from Jay & Water St in @DumboNYC!	f	1433165237	1433169417	Lebanese		500eedb0e4b062ee00577957	\N	57	\N
-milktruck	Milk Truck	milktrucknyc	http://www.milktrucknyc.com	Hey wallstreet we are at Wall St and William St! Call 646-504-6455 or @foodtoeat.com to preorder. We're also at @TheSeaport 19 Fulton	f	1433159176	1432917330	American		4e823c0229c2dbb2b7043972	\N	41	\N
-eggstrav	eggstravaganza	etravaganza	http://www.eggstravaganzany.com/	Good morning breakfast is served!! join us 52nd and Park is the  place.	\N	1432826618	1432732305	Mexican	\N	4b15165ef964a52049a823e3	\N	72	\N
-pocketful	The Pocketful	thepocketful	http://thepocketful.com/	Our cart is back on 50th between 6th and 7th. Enjoy the sunshine!	f	1429888965	1430145608	Mediterranean		4db8bcd790a0e3f61d601888	\N	22	\N
-neapolitan	Neapolitan Express	neaexpress	http://neapolitanexpress.com/	RT @dumbolot: We got @DomoTaco @NeaExpress and @SnowdayTruck today!	f	1430619288	1430384689	Pizza		51c8864c498e0ac96c14433e	\N	54	\N
-lobstertruck	Red Hook Lobster	lobstertruckny	http://redhooklobster.com/	BigRed is on 46th & 6th today	f	1432830871	1432908956	\N		4dc597c57d8b14fb462ed076	\N	13	\N
-biandang	Bian Dang	biandangnyc	http://www.biandangnyc.com/	Stewing up porkbelly and beefstew on 53rd & Park!	f	1431450031	1433167398	Taiwanese		4d712874722ef04d04160d9c	\N	26	\N
-domo	Domo Taco	domotaco	http://www.domotaco.com	Happy Friday! Catch the truck on Water & Old Slip or our booth on 39th & Broadway!	f	1433167507	1432909853	Asian Fusion		4ed90a2e77c8274efb746d83	\N	8	\N
-wafelMomma	Wafels & Dinges Momma	waffletruck	http://www.wafelsanddinges.com/	De TRUCKS:\nKastaar @ Horace Mann School til 4pm  Momma Truck @ 40th & Park til 4pm	f	1433166637	1432313318	Belgian		4a416369f964a52036a51fe3	momma	9	before
-souvlaki	Souvlaki GR	souvlakitruck	http://www.souvlakigr.com/	@MKramerTV We are on 55st/Broadway\nStop by for a little taste of Mykonos\n@randomfoodtruck till 3 pm.	\N	1433095831	1431701151	Greek	\N	4c75c2908d70b713d5dcdaad	\N	28	\N
-valduccis	Valduccis	valduccis	http://valduccis.com	@starrettlehigh  come on down We are ready !!!! http://t.co/7omYjzU5Gy	f	1433010729	1432915482	Pizza		4df7e1aad4c02ad734170b21	\N	46	\N
-treats	The Treats Truck	thetreatstruck	http://www.treatstruck.com	!!! 12-2:30pm 45th st & 6th ave! Then 3:45ish-7pm Bway (86th & 87th)!!!	f	1433079280	1432828485	Sweets		49e65021f964a52035641fe3	\N	12	\N
-wafelKastaar	Wafels & Dinges Kastaar	waffletruck	http://www.wafelsanddinges.com/	De TRUCKS:\nKastaar @ Horace Mann School til 4pm  Momma Truck @ 40th & Park til 4pm	f	1433166637	1432313318	Belgian		4a416369f964a52036a51fe3	kastaar	9	before
-gorilla1	Gorilla Cheese 1	gcnyc1	http://www.gorillacheesenyc.com/	G1 46 5/6\nG2 broadway / 55th \nComeToTheCheeseYo	f	1433119254	1432904163	American		4dc2d3e352b1c1fb37f1e945	g1	28	before
+langos	Langos	langostruck	http://www.langostruck.com/	Good morning FiDi\nWe're here for you\nWater st & Old Slip\n11-2:30pm	f	1436965869	1436882080	Hungarian	\N	537a883c498eb7fac064409f	\N	51	\N
+nuchas	Nuchas	nuchasnyc	http://www.nuchas.com	CLOSED Tomorrow our NuchasTruck will start the day in Varick St and Charlton St! MuchasNuchas  - http://t.co/G9DUAIOt2h	f	1437157801	1436922505	Mexican		4ebd2a9bb8f7b504a754c130	\N	82	\N
+papayakingtruck	Papaya King	papayakingtruck	https://www.facebook.com/papayaking	.@DowntownBklyn, we are back in metrotech. Come get the worlds greatest franks and tropical drinks	f	1437328935	1435247479	American		50952bd2e4b03898afd23fe3		76	
+yankeedd	Yankee Doodle Dandy's	usafoodtruck		You know what day is a day for America? Erryday. Come get your food NYC, were at 39th and Broadway and at the USS Intrepid. NYC murica	f	1437302431	1433345704	American	\N	52b497e1498eed13ead2b84c	\N	8	\N
+shortys	Shortys	shortysnyc	http://www.shortysnyc.com	Up and running at SouthStreetSeaport South and Fulton Streets Cheesesteak ChickenCheesesteak RoastPork... http://t.co/awyzKOzJqw	f	1437071581	1415982867	American		4faea2cce4b08a88c5dc5d05	\N	58	\N
+morris	Morris Grilled Cheese	morristruck	http://morrisgrilledcheese.com/	Schedule for the week: \nEveryday @ BwayBites, Greeley Sq 11-9\nThursday @DowntownBklyn metrotech Lawrence St 11-3\nWeekend @FarmBoroughFest!	f	1437318383	1435072820	American		4e0e0b3caeb7a5b33ee5dac1	\N	76	\N
+cinnamonsnail2	The Cinnamon Snail 2	veganlunchtruck	http://www.cinnamonsnail.com/	This week:\n\nMon: 48th/6th\nTUES: water/Gouvernour Ln, AND Dinner on 4th Street near Washington Square\nWEDNESDAY:... http://t.co/ssXs1PztRI	\N	1437332411	1423425704	Vegan	\N	4c263af6a852c9287537e66c	2	95	two
+andysitalianice	Andy's Italian Ice	andysitalianice	http://andysitalianicesnyc.com/	Sorry private events all day. Now open in union Squad for all your ice needs. Closing at 8pm @nycfoodtruck @UnionSquareNY	f	1437330926	1437084911	Dessert	\N	4df26c2bae609e69dd95d2fc	\N	37	\N
+schnitzi	Schnitzi	schnitzi1	http://www.schnitzi.com/	Guys today it is our last day before our nine days vacation, so come to 46 St bet 5&6 Ave from 11:30-3:30 order @www.schnitzi.com	\N	1437356777	1437055426	German	\N	532b25ed498eb8b1844dc14f	\N	14	\N
+toum	Toum NYC	toumnyc	https://www.facebook.com/ToumNYC	Hello there @DumboNYC ! Deciding on lunch? Join us on Jay & Water St until 3pm! Your tummy will thank you! Brooklyn	f	1437316170	1437056289	Lebanese		500eedb0e4b062ee00577957	\N	57	\N
+polish	Old Traditional Polish Cuisine	polishcuisine	https://www.facebook.com/pages/Old-Traditional-Polish-Cuisine/315496671902708	Open at 11:00 - 47th b/w Park & Lexington - get your midtown lunch on the go!	f	1437330052	1437143936	Polish		51435df4e4b0823a398ebc8a	\N	17	\N
+lobstertruck	Red Hook Lobster	lobstertruckny	http://redhooklobster.com/	It's Friday! TreatYoSelf to a lobster lunch at 46th and 6th HappyWeekend http://t.co/gxlCfPnHYa	f	1437231763	1437149784	\N		4dc597c57d8b14fb462ed076	\N	13	\N
+chipsy	Chipsy King	chipsykingny	http://chipsykingny.com/	Kasar truck is at 46th and 6th avenue until 7pm	f	1437241508	1436448508	Fries		51bb5c43498ee06e13d0d31f	\N	13	\N
+bigds	Big D's	bigdsgrub	http://bigdsgrub.com/	If you don't know, now ya' know...\nD1 is at 50th Street btwn 6th and 7th Avenue for lunch. 11am to 2:30pm http://t.co/t1iRbrxDig	f	1437246779	1437138585	Korean Fusion		4c968b907605199c2eaec2a3	\N	22	\N
+taim	Taim Mobile	taimmobile	http://www.taimmobile.com/	It's raining it's pooring... but don't let that stop you from a delicious lunch @TaimMobile! See you on 20th and 5th today!	f	1437317158	1436974603	Mediterranean		4cf2c5321d18a143951b5cec	\N	1	\N
+lukeslobster	Luke's Lobster	nautimobile	http://lukeslobster.com/	This is it, our last day on the streets of NYC. 17th st and 5th ave. So long, farewell, see ya when we see ya.	f	1437325413	1430398345	Seafood		4dc81239b0fb5556cd2f3023	\N	86	\N
+pocketful	The Pocketful	thepocketful	http://thepocketful.com/	Our cart is back on 50th between 6th and 7th. Enjoy the sunshine!	f	1436789968	1430145608	Mediterranean		4db8bcd790a0e3f61d601888	\N	22	\N
+palenque	Palenque	palenquefood	http://www.palenquehomemadecolombianfood.com	RT @KristinaMongan: @Palenquefood TY4my 1st eva Arepa! So friendly &delicious! BwayBites muy bueno! NomNom whatsnext vivacolumbia http...	f	1436892798	1434670346	Colombian Fusion		4e84f424dab45bbd2617dc62	\N	36	\N
+biandang	Bian Dang	biandangnyc	http://www.biandangnyc.com/	Yessss... it's almost the weekend! lets go to biandang on 53rd and park!	f	1436796533	1437144480	Taiwanese		4d712874722ef04d04160d9c	\N	26	\N
+domo	Domo Taco	domotaco	http://www.domotaco.com	old slip and water ftw till 2:30pm. also on 33rd and broadway till 9pm! it's friday!!! tgif	f	1436964733	1437144530	Asian Fusion		4ed90a2e77c8274efb746d83	\N	44	\N
+treats	The Treats Truck	thetreatstruck	http://www.treatstruck.com	!!! Wed,July 1st 12-3:30 45th st & 6th! Last day on 45th before our summer break! Come on by! Then 4ish-7pm 18th st & 7th ave!!!	f	1437066216	1435762655	Sweets		49e65021f964a52035641fe3	\N	12	\N
+souvlaki	Souvlaki GR	souvlakitruck	http://www.souvlakigr.com/	@MKramerTV We are on 55st/Broadway\nStop by for a little taste of Mykonos\n@randomfoodtruck till 3 pm.	\N	1437146346	1431701151	Greek	\N	4c75c2908d70b713d5dcdaad	\N	28	\N
+valduccis	Valduccis	valduccis	http://valduccis.com	RT @greenboxny: RT @Valduccis: The slices are red-hot 51st St. and Park @greenboxny @FoodtoEat @Foodtruckstars_ ... http://t.co/QCZzt1RZnq	f	1437335800	1434247434	Pizza		4df7e1aad4c02ad734170b21	\N	24	\N
+wafelKastaar	Wafels & Dinges Kastaar	waffletruck	http://www.wafelsanddinges.com/	De TRUCKS:\nKastaar @ Horace Mann School til 4pm  Momma Truck @ 40th & Park til 4pm	f	1437347729	1432313318	Belgian		4a416369f964a52036a51fe3	kastaar	9	before
+gorilla1	Gorilla Cheese 1	gcnyc1	http://www.gorillacheesenyc.com/	G1 46 5/6\nG2 Broadway / 55th \nComeToTheCheeseYo	f	1437318042	1437145146	American		4dc2d3e352b1c1fb37f1e945	g1	14	before
 \.
 
 
 --
--- Data for Name: truckstats; Type: TABLE DATA; Schema: public; Owner: mpeppleradmin
+-- Data for Name: truckstats; Type: TABLE DATA; Schema: public; Owner: mca
 --
 
 COPY truckstats (id, "time", street, region, location) FROM stdin;
@@ -1407,7 +1412,7 @@ hh3	1397235601	47	up	 47st & Park Ave
 
 
 --
--- Data for Name: tweets; Type: TABLE DATA; Schema: public; Owner: mpeppleradmin
+-- Data for Name: tweets; Type: TABLE DATA; Schema: public; Owner: mca
 --
 
 COPY tweets (contents, "time", id, retweeted, twitname) FROM stdin;
@@ -1431,87 +1436,47 @@ HappyNewYear2014 to everyone! We are back with a boom of different flavors for y
 Back on the road. we are serving lunch on old slip between water st and front street from 11:30 to 2:30 Preorder before 12pm at 3474402467	1388676035	418763761240268800	f	freshandhearty
 GOOD morning Monday... We are park on Broadway between 55 st and 56 st. Preorder before 12pm at 3474402467.	1388416224	417674033657020416	f	freshandhearty
 Hope everyone had a wonderful Christmas! We are serving Lunch on Charlton st & corner of Varick st from 11:30am to 3pm. OrderOnlineNow	1388074894	416242393227464704	f	freshandhearty
-Disos will be back on the streets serving our normal lunch schedule the 2nd week of June..	1432220718	601403399003856897	f	disosnyc
-RT @LifeOfJordo: Got to meet Adam from @DiSOSNYC and talk about toasted raviolis. The fried cookies were awesome! http://t.co/2p2LQmEsbf	1431927829	600174934971666432	f	disosnyc
-You guys were awesome.. Hopefully we meet up again in St. Louie!!! https://t.co/133TD3undB	1431920535	600144339184975872	f	disosnyc
-Meatball Sliders come out to the bigredtruck sedona disosnyc is here for you. @SedonaAZ @SedonaTV @SedonaMagazine http://t.co/r89HwGfA7K	1431905048	600079381248118784	f	disosnyc
-Parmesan Fries are hot and ready. @sedonatalkradio @SedonaMagazine @SedonaAZ @SedonaLine @SedonaTV http://t.co/NGNewqOYEa	1431904760	600078173439533056	f	disosnyc
-We are in front of Cheers sedona come on and get it. @sedonatalkradio @SedonaMonthly @SedonaLine @SedonaMagazine http://t.co/cfZkQxRNgP	1431904694	600077896246431744	f	disosnyc
-RT @D_MS_DH: @DiSOSNYC bring that back to NYC	1431900782	600061490142449664	f	disosnyc
-@eric_zimm maybe 3 weeks around? Well keep everyone posted when we do.. We're touring the country selling food	1431899553	600056334491328512	f	disosnyc
-We just did a rattlesnake rabbit sausage and peppers hero with a spicy Diablo marinara sauce http://t.co/iiB0MaTjqR	1431899125	600054538691829761	f	disosnyc
-Hey sedona we will be serving up Italian specialties at 3pm. @sedonatalkradio @SedonaMonthly @SedonaMagazine @SedonaAZ @RockyMtnChocInc	1431898707	600052787892748288	f	disosnyc
-Oh snap! See you soon Sedona. We are on our way. disosnyc sedonaaz @SedonaMagazine bigredtruck foodtruck http://t.co/8fKI0ctKZm	1431873740	599948068499296256	f	disosnyc
-RT @ChefDanamarie: Sedona you gave us a double rainbow! sedona  @SedonaMagazine @AllAboutSedona @sedonatalkradio @Sedona_AZ @DiSOSNYC http...	1431872590	599943243938209792	f	disosnyc
-RT @ChefDanamarie: Parmesan Fries! Thanks for the support Sedona @AllAboutSedona @sedonatalkradio @SedonaMagazine disosnyc @DiSOSNYC http...	1431872576	599943184395833344	f	disosnyc
-Thanks for the rainbow Sedona we hope to see you again tomorrow. Stay tuned! bigredtruck @SedonaMagazine @SedonaAZ http://t.co/wcBMHuTXhu	1431836283	599790962685018112	f	disosnyc
-Thanks to @RockyMtnChocInc in sedona for providing samples to all our customers today. Sedona bigredtruck http://t.co/QErFnTY6d6	1431835183	599786347621011457	f	disosnyc
-Chicken Pesto come get one @SedonaMagazine @SedonaAZ sedona we are parked infront of Cheers! http://t.co/PhhEvkdka2	1431819892	599722212350763008	f	disosnyc
-@sedonatalkradio @SedonaMonthly @SedonaLine @SedonaAZ we are here big red truck. sedona sedonafooftruck Sedonaarizona	1431809921	599680390723284993	f	disosnyc
-@valengostyle open in Sedona Arizona right now	1431808452	599674228720291840	f	disosnyc
-@valengostyle yes cheers parking lot off 89a	1431808430	599674136709890048	f	disosnyc
-Disos is now in Sedona Arizona serving authentic Italian all day.. We're in the Cheers parking lot route 89A and Forrest Rd.	1431807874	599671805746413568	f	disosnyc
-RT @The_SMT: @thegreenradish1 or @BeyondSushi for lunch. Cant decide!!!! veganproblems	1432950837	604465740910067712	f	thegreenradish1
-Gluten free PeanutButterCookies.... http://t.co/9y4QChsLIE	1432915516	604317591792979968	f	thegreenradish1
-BlackBeanBurger hat trick Go @NYRangers @jpmorgan @Gothamist @nypost @PageSix @TheGarden @midtownlunch @ZagatNYC http://t.co/WMl7Sxon1Q	1432909864	604293886035521536	f	thegreenradish1
-Good Day to GetNaked try our Naked Organic Bean Burger, romaine, spiced ketchup, toasted Ciabatta...$8.00..Kale... http://t.co/OyayFmsrIg	1432903261	604266193789259776	f	thegreenradish1
-Good Day to GetNaked NakedBeanBurgers 47th between Park and Lexington https://t.co/4ou7IczI7R	1432902203	604261753137029120	f	thegreenradish1
-Good Day to GetNaked try our NakedBurger romaine/spiced ketchup $8 47 Park/Lex @jpmorgan @UrbanSpaceNYC @nystfood @nypost Go @NYRangers !!!	1432901361	604258222355124224	f	thegreenradish1
-Fast Veg It WhiteBeanBurgers w/SweetPotato and SpicyKetchup today 47th between Park and Lexington Ave. 11-2 @jpmorgan @Chase @midtownlunch	1432900644	604255215747997696	f	thegreenradish1
-Hey @NYRangers fuel up with BlackBeanBurger Hat Trick 47 between Park and Lexington @jpmorgan http://t.co/t8XLZT41x2	1432896697	604238660003848193	f	thegreenradish1
-Standing together..live long, eatplants http://t.co/GRldu7tSZv	1432828871	603954176499003393	f	thegreenradish1
-Come and get your FastVeg today 52&6thAve 11-2pm @RollingStone @usweekly @ubs @UrbanSpaceNYC @NewYorker @DharmaYogaNYC @CBSNews @EaterNY	1432826760	603945323652849664	f	thegreenradish1
-GoodDay4 BBQ BlackBeanBurgers 52&6ave 11-2 @RollingStone @midtownlunch @WSJ @UBS @MensHealthMag @usweekly @PageSix http://t.co/a6NHwVvhq4	1432818774	603911828138237952	f	thegreenradish1
-Meeting of the minds... https://t.co/mMuzT3NSSe	1432818480	603910594593484800	f	thegreenradish1
-Hey @UBS BlackBeanBurgers outside your window today Thurs 52&6 11-2 GetRad EatPlants http://t.co/Nx9M6R1PGf	1432818342	603910013699100672	f	thegreenradish1
-Meeting of the minds...@EFAnimals @GarmentDstrctNY today 38&bway  11-2 http://t.co/WX6Qrs4uix	1432741408	603587329748500480	f	thegreenradish1
-GoGreen EatPlants today 38&bway 11-2 BBQ BlackBeanBurgers Choc-Coconut Donarts , oh yeah! @GarmentDstrctNY http://t.co/m5tET0U6gG	1432737847	603572396713517056	f	thegreenradish1
-EatPlants FlyHigh    plantbased vegan organic yoga https://t.co/Tvok0Kh1pk	1432728802	603534458424266752	f	thegreenradish1
-Taste Summer-BBQ BlackBeanBurger 38th&Bway 11-2 @GarmentDstrctNY @EFAnimals @BrianLehrer @PageSixEmily @ZagatNYC http://t.co/loImc5zf3t	1432728410	603532812248096768	f	thegreenradish1
-ComeTasteSummer...51&madison 11-2 @blackrock @nycfoodtruck @AceNatural @CitiBikeNYC @midtownlunch @PageSix @Lululemon http://t.co/XyHQ3xahxB	1432652838	603215841233137666	f	thegreenradish1
-Invest inYourHealth EatPlants New WhiteBeanBurger on toasted Ciabatta today 51&madison 11-2 @blackrock @TandTNutrition @goop @DrEsselstyn	1432641439	603168032249257984	f	thegreenradish1
-Try our new 1/4lb WhiteBeanBurger on toasted Ciabatta today 51&Radison 11-2 @blackrock @midtownlunch @grubstreet @EatStTweet @UrbanSpaceNYC	1432638887	603157325222912001	f	thegreenradish1
-RT @34thStNYC: Looking good ;) RT @NuchasNYC: Spring view in Greeley Square MuchasNuchas http://t.co/eoWyp5NvMG	1432915288	604316636275961857	f	nuchasnyc
-Spring view in Greeley Square MuchasNuchas http://t.co/pVx2xRedvk	1432850038	604042957281464320	f	nuchasnyc
-Spring view in Greeley Square MuchasNuchas 34thStNYC	1432849936	604042530267774976	f	nuchasnyc
-Truck moved to E 14th St. & Irving Pl. followthetruck MuchasNuchas	1432672254	603297276359024642	f	nuchasnyc
-Coffee love at first sight MuchasNuchas coffee GreeleySquare 34thStNYC http://t.co/gLhYfh2OFY	1432661010	603250119358681088	f	nuchasnyc
-Start your day fresh! Catch the truck at Pearl St. & Broad St! MuchasNuchas	1432652067	603212609089884160	f	nuchasnyc
-RT @OpyMorales: Empanadas @NuchasNYC http://t.co/Bgpq3Dw95c	1432500232	602575766379954176	f	nuchasnyc
-Nuchas Truck at the Apple Store in Broadway and 67th street! upperwestside MuchasNuchas http://t.co/zp19RLe8UW	1432482434	602501113863081984	f	nuchasnyc
-Nuchas Truck at the Apple Store in Broadway and 67th street! upperwestside MuchasNuchas http://t.co/3tMTgwe11c	1432482393	602500943406596097	f	nuchasnyc
-Nuchas Truck location! Near 115145 W 67th St in New York	1432480920	602494766924697602	f	nuchasnyc
-Truck ready at E 14th St. & 3rd Ave! Enjoy your weekend! MuchasNuchas	1432393855	602129588270018561	f	nuchasnyc
-Nuchas Truck alert! Near 115145 W 67th St in New York	1432333327	601875716976738305	f	nuchasnyc
-Nuchas Truck alert! Near 75 Broad St in New York	1432309537	601775932697759744	f	nuchasnyc
-Nuchas Truck alert! Near 116198 E 14th St in New York	1432237769	601474914508505088	f	nuchasnyc
-Artisan empanadas at Varick St & Charlton St!! MuchasNuchas	1432134752	601042832179253248	f	nuchasnyc
-Truck moved to E 14th St & 3rd Ave! KeepTrackOfTheTruck MuchasNuchas	1432071351	600776908649926656	f	nuchasnyc
-Parked at Bridge St & Broad St! Eat on the go!! MuchasNuchas	1432047112	600675243968040960	f	nuchasnyc
-Lunch time! Truck spotted in front of New York University! MuchasNuchas	1431968053	600343646391635968	f	nuchasnyc
-RT @DispatchNY: .@prospect_park FoodTruckRally Tomorrow 5/17, 11a-5p w/ @KelvinSlush @gcnyc1 @NuchasNYC http://t.co/qV9u4wZY2D	1431805524	599661948456808448	f	nuchasnyc
-Are you hungry?? Meet us in Washington Square Park!! Delicious empanadas waiting for you!	1431788436	599590275258941440	f	nuchasnyc
-Chillin' w/ @methodman in DUMBO Brooklyn MethodMan WuTang Bigdsgrub http://t.co/0l4JmzHkUL	1432927065	604366031365238786	f	bigdsgrub
-Let's end the week off proper! 50th Street btwn 6th and 7th Avenue. http://t.co/kBXcOfuvrr	1432904548	604271591082561536	f	bigdsgrub
-D2 is BACK!! Jay and Water Street @dumbolot @DUMBOFoodTrucks @DUMBOBID @hugeinc TGIF http://t.co/IysVio6Cti	1432904424	604271070003220480	f	bigdsgrub
-53rd Street and Park Avenue http://t.co/iJtKxIvw6L	1432827444	603948190484803586	f	bigdsgrub
-Let's GRUBBBB!!! 50th Street btwn 6th and 7th Avenue http://t.co/883KTdOYTd	1432827398	603947998956146688	f	bigdsgrub
-D1 is grillin' it up at 50th Street btwn 6th and 7th Avenue! http://t.co/0g1KhjYF0o	1432818244	603909604662235136	f	bigdsgrub
-Don't miss out.  D2 has all your favorite specials at 53rd Street and Park Avenue today!! http://t.co/pvGHbrPdR5	1432818141	603909171474489344	f	bigdsgrub
-Waiting on Tom to get into @QnsNightMarket  https://t.co/VyTjv6fdpc	1432762918	603677550708142080	f	bigdsgrub
-RT @feistyfoodie: Today's lunch and dress ... spicy pork and bulgogi over rice from @bigdsgrub , and a black skater... https://t.co/WVhhaV...	1432762888	603677426477043712	f	bigdsgrub
-We're both friends with Art S  https://t.co/f7EkOEBjO9	1432750414	603625105323925506	f	bigdsgrub
-@feistyfoodie we have a side of rice here with your name on it if you can swing back around	1432749912	603623000068497408	f	bigdsgrub
-Let us know you want more rice next time  https://t.co/HTmFSabf8g	1432749780	603622444092563459	f	bigdsgrub
-D2 is at @starrettlehigh. 26th Street btwn 11th and 12th Avenue w/ all your favorite Thai & Vietnamese dishes! http://t.co/Es2NVNI7g4	1432733816	603555488031191040	f	bigdsgrub
-D1 is at 53rd Street and Park Avenue!! http://t.co/tJ3TSNDxpt	1432733590	603554539766165504	f	bigdsgrub
-RT @starrettlehigh: @bigdsgrub Menu looks pretty good! :) FoodieFindings	1432733550	603554372677705728	f	bigdsgrub
-Leave your lunches at home tomorrow, we'll be at @starrettlehigh! StarrettLehigh http://t.co/UWd8k3Vpdz	1432673738	603303502786461696	f	bigdsgrub
-@deancollins we were in Dumbo earlier everywhere pretty quiet today	1432580450	602912224978567168	f	dubpies
-Come n' Grub at 50th Street btwn 6th and 7th Avenue.  Lunch is 11am to 2:30pm http://t.co/vbANfD866k	1432645947	603186940586909696	f	bigdsgrub
-D2 is at Hudson/King St. today!  See you for lunch!!! SoHo WestVillage http://t.co/54lW6vf3ib	1432645548	603185263620313088	f	bigdsgrub
-It's a WRAAAP!  Have a great long weekend everyone!	1432320258	601820900162437120	f	bigdsgrub
-Let's do lunch! 50th Street btwn 6th and 7th Avenue. 11am to 2:30pm	1432307747	601768424440778753	f	bigdsgrub
+Fan of the society?? \n\nTell us on YELP and receive 50% off your next sandwich. (Show ur review at window upon ordering)	1437145883	622061038394060800	f	disosnyc
+Friday lunch.. 46th and 6 ave corner. \n\nSPECIAL TODAY: Homemade Meatball Parm hero\n\nCall in orders to: 917-756-4145	1437141532	622042790558605312	f	disosnyc
+@GiaNY322 welcome to the society :) and thanks	1437101867	621876421703634944	f	disosnyc
+RT @GiaNY322: Had my first @DiSOSNYC sandwich today - needless to say, was amazing! http://t.co/WXvinWjDh4	1437101844	621876323485642752	f	disosnyc
+It's lunch! Have yourself a sangwich and a smile.. :)\n\n47th bet Park and Lex.\n\nCall in orders to: 917-756-4145... http://t.co/De6o5DH5dD	1437059370	621698177348018176	f	disosnyc
+Disos serving today on 47th bet Park and Lex. \n\nSPECIAL TODAY: homemade meatball parm hero\n\nCall in orders to: 917-756-4145	1437055284	621681037970685953	f	disosnyc
+Open for lunch.. Serving on water st and old slip. \n\nSPECIAL TODAY: homemade meatball parm hero\n\nCall in orders to; 917-756-4145	1436974045	621340297407123457	f	disosnyc
+Disos posted up on water and old slip.. \n\nSPECIAL: Mamas homemade meatball park hero\n\nCall in orders to: 917-756-4145	1436971090	621327903784083456	f	disosnyc
+Tomorrow Disos will be serving mamas famous meatball sandwich. Be there.. Water and old slip FIDI.	1436911353	621077349384257537	f	disosnyc
+Lunch today 48th bet 6 and 7 ave	1436889714	620986589410402304	f	disosnyc
+@eric_zimm we'll be selling them soon, like next week or 2	1436837190	620766284368715781	f	disosnyc
+Open for lunch.. 47th bet Park and Lex \n\nCall in orders to: 917-756-4145	1436801660	620617261112532992	f	disosnyc
+Monday lunch- parked 47th bet Park and Lexington ave.\n\nCall in orders for pick up: 917-756-4145	1436798614	620604486382407681	f	disosnyc
+Open for lunch 46th bet 5 and 6 ave\n\nCall in orders to: 917-756-4145	1436542568	619530552799043585	f	disosnyc
+Diso Fridays on 46th bet 5 and 6 ave.\n\nCall in orders for pick up: 917-756-4145	1436537747	619510329819705344	f	disosnyc
+We ova here now!! 47th bet park and Lexington \n\nSpecials: Porchetta, Rice balls, Toasted ravioli	1436450459	619144219131817984	f	disosnyc
+Open for lunch wall st and old slip corner..\n\nCall in orders for pick up: 917-756-4145	1436369754	618805715583508480	f	disosnyc
+Specials today: \n\nPorchetta sandwich, \nrice balls, \ntoasted breaded ravioli	1436365088	618786147913859072	f	disosnyc
+Lunch on water st and old slip. FIDI..\nPlease place large call in orders before noon today as we are short staffed. 917-756-4145	1436365019	618785859203153920	f	disosnyc
+Lunch on water st and old slip. FIDI..\nPlease place large call in orders before noon today as we are short... http://t.co/GtkMH84fua	1436364760	618784772844863488	f	disosnyc
+Black Bean Burgers take NYC Summer Party iac plantbased thegreenradish https://t.co/e8Nb1VDAEZ	1437132742	622005920512524288	f	thegreenradish1
+Thanks @IAC Great summer blast last night getrad plantbased http://t.co/Rb8JevdGiu	1437131214	621999509900374016	f	thegreenradish1
+@Lizerd84 not in NYC presently, JerseyCity	1437130867	621998056586612736	f	thegreenradish1
+RT @themicruz: @thegreenradish1 has an amazing black bean burger! Noms!!	1437130800	621997773810876417	f	thegreenradish1
+Photo: Banh MaMia.... GetRad go PlantBased http://t.co/JLnHJJOOW1	1436994176	621424732899033088	f	thegreenradish1
+Banh MaMIa....grilled tofu cabbage slaw/peanut dressing Sriracha Mayo toasted Ciabatta from... https://t.co/G4yK0pZYwp	1436980793	621368601438736384	f	thegreenradish1
+Don't let grey skies keep you from our Grilled Tofu Banh Mi with Cabbage Slaw&Peanut Dressing.Sriracha Mayo... http://t.co/x4DsdCxeIO	1436974660	621342877633740800	f	thegreenradish1
+Hey jerseycity foodtruck lunch today Wash&Morgan @MordisFoodTruck @TacoChilango @OSM_NJ @jc_eats @CoryBooker http://t.co/H8HbpuUZ5t	1436890544	620990070108110848	f	thegreenradish1
+Lunch is on Wash&Morgan makeityoursJC  getrad foodtrucks	1436890392	620989432435449858	f	thegreenradish1
+Good week to be working at IAC, we'll be catering a private event on Thursday....GetRad NYC http://t.co/AOhfwJv7YG	1436787195	620556592405192704	f	thegreenradish1
+@leeshufro @thegreenradish1 is in JerseyCity for now...	1436747037	620388156710367232	f	thegreenradish1
+THIS WEEKS SCHEDULE \n\nTUESDAY - Lunch on Washington&Morgan 11-2\nWEDNESDAY - Lunch on Washington&Morgan 11-2... http://t.co/qfXzqSvNOp	1436744186	620376197562802176	f	thegreenradish1
+Grab a Mint-Raspberry Tea before it slides away...GetRad jerseycity https://t.co/RfZIYBoupW	1436658848	620018265864151040	f	thegreenradish1
+Photo: Talking PlantBased on @thegreenradish1 http://t.co/wMOQwCQliW	1436642724	619950637988610048	f	thegreenradish1
+Photo: EatPlants LiveLonger GetRad  http://t.co/6lp5tMEVYy	1436642185	619948375627177984	f	thegreenradish1
+So glad you liked it, see you soon! https://t.co/4utfy3V1ix	1436638342	619932256136617984	f	thegreenradish1
+@jc_eats on Instagram: The huge, delicious Classic Black Bean burger from @thegreenradish!... http://t.co/bCrWznmXXh	1436613192	619826771484127232	f	thegreenradish1
+The Green Radish makes Rosemary Fries http://t.co/KHijB4JRN3	1436569189	619642206694076416	f	thegreenradish1
+Radish makes Rosemary Fries http://t.co/XIgmNHVuY3	1436562426	619613842444812288	f	thegreenradish1
+Thank You @SylviaHebron  https://t.co/4utfy3V1ix	1436553296	619575547237011456	f	thegreenradish1
+RT @mouthfoods: Rice noodle bowls from @parissandwich! Really loving the grilled chicken and tofu/veggie toppings,... https://t.co/yZeeDkkgRF	1436401880	618940463664492545	f	parissandwich
 @rikalilyhops wow. We have no affiliation with this cart. They are selling halal food and refused to take off our decals. Thanks for update	1432070671	600774057638887424	f	parissandwich
 @rikalilyhops hey, we actually weren't in that area at all. Did the truck have our logo on it?	1430774397	595337088461049856	f	parissandwich
 RT @BYTNYC: An NYC waffle round-up in honor of this holiest Vaffeldagen, ft. @ParisSandwich, @TheStandNYC, @SweetChickLife etc.! http://t.c...	1427325386	580870887555145728	f	parissandwich
@@ -1531,52 +1496,66 @@ Will end the week in dumbo today on fronts and Adams 12pm. Have a great weekend 
 Hey Dumbo join us for lunch at noon on Fronts and Adams @DUMBOFoodTrucks @jenchung	1412869650	520239137585389569	f	parissandwich
 It's Pho weather NYC ! Visit us on 113 Mott street for your pho fix loveparissandwich pho http://t.co/H8vJg1SQeS	1412529452	518812241874124801	f	parissandwich
 In dumbo today again, Fronts and Adams 12pm. @DUMBOFoodTrucks	1412263803	517698030091665409	f	parissandwich
-We will be in dumbo today everyone. On fronts and Adams at 12pm  @DUMBOFoodTrucks	1412171029	517308908877389824	f	parissandwich
-@downtownlunch correction we are on king&varick today. The word of the day is amore for ur free upgrade. SoHo get ur deliheaven on	1392220340	433629653711212545	f	deliheaventruck
-@downtownlunch DH is on varick&charlton today. The word of the day is amore for ur free upgrade. SoHo get ur deliheaven today	1392217592	433618126148993024	f	deliheaventruck
-@midtownlunch Today is the Day!! Grand Opening on Broadway & 55st. Rotisserie chicken, pastrami @ corn beef sandwiches New York Style	1392131026	433255045355036672	f	deliheaventruck
-@midtownlunch HH3 is on 46 st & 6 Ave. HH2 is on Park Ave & 33st. Word of the day is Peyton for your free upgrade. midtown get ur YumYum	1391178361	429259276079861760	f	deliheaventruck
-@rachelbrill Fastest way to lose weight, burn fat and stop fat production http://t.co/zhkQ2MX5wk	1390923947	428192185209454592	f	wingnitnyc
-@PolishCuisine Fastest way to lose weight, burn fat and stop fat production http://t.co/3PzF9KWyTQ	1390923944	428192175373828096	f	wingnitnyc
-@bertones666 Fastest way to lose weight, burn fat and stop fat production http://t.co/whTuJBvo4v	1390923942	428192165047447553	f	wingnitnyc
-@CDIdiamond Fastest way to lose weight, burn fat and stop fat production http://t.co/HVyv1Us20E	1390923939	428192154708504576	f	wingnitnyc
-Merry Christmas everyone!!! We wish everybody a safe and Happy Holidays!!!	1388012013	415978652623331328	f	wingnitnyc
-RT @FoodtoEat: Last day 12DaysofFoodTrucks ! Thx to all who participated & to the FoodTrucks serving us delicious food!  http://t.co/Ks3L...	1387841125	415261894967304192	f	wingnitnyc
-RT @FoodtoEat: 12DaysofFoodTrucks Day 12 FoodTruck is @wingnitnyc ! Guess where this is from? Win 10-25% off ur next order http://t.co/tH...	1387841124	415261888889778176	f	wingnitnyc
-RT @FoodtoEat: Today's answer to 12DaysofFoodTrucks is @funbunsnyc ! Thx to all those who played and tune in Monday 12/23 for the LAST day!	1387841120	415261873207263232	f	wingnitnyc
-Hello everyone! Looks like we are going to call it a year! It has been a fun journey so far fill with ups and... http://t.co/RwqalnwTOm	1387817580	415163138699321346	f	wingnitnyc
-Out here on 23rd and 5th come and grab some wings for lunch today. We will be open from 10am to 3pm. See you guys at lunch.	1387549355	414038124268752896	f	wingnitnyc
-Hey guys were back out today wing'n it on 56th and Broadway. Come grab some wings for lunch today. For pre-orders... http://t.co/PodH8EaA0G	1387458557	413657287773786112	f	wingnitnyc
-Today we're on 54th and Broadway. Come get some wings for lunch today. Give us a call and pre-order don't want in the cold 917 740 1765.	1386859597	411145066464309248	f	wingnitnyc
-Hey wings fans! We are out today and ready to serve you great tasting wings. Come see us at lunch time. Today we... http://t.co/mHKTBVJvKM	1386773635	410784518253977600	f	wingnitnyc
-We have been going through some issues at our commissary and due to these issues we are unfortunately not able to... http://t.co/8hzi0hlGy4	1386160771	408213977030615041	f	wingnitnyc
-Sorry everyone, we aren't out today. See you guys tomorrow.	1386081285	407880590243803137	f	wingnitnyc
-Happy Thanksgiving Everyone! http://t.co/u7HYUz1MyA	1385666299	406140011419955200	f	wingnitnyc
-Happy Thanksgiving Everyone! http://t.co/yTrps7tc4O	1385666235	406139743098142720	f	wingnitnyc
-RT @MobileCuisine: Food Cart Vendors Face Fines and Arrests for Selling Snacks - http://t.co/Oh2k939USu	1385525761	405550553155252224	f	wingnitnyc
-RT @EstaFiestaPR: @Carnegro U just discovered @WingNItNYC? I LOVE that place!!	1385489857	405399959727779840	f	wingnitnyc
-RT @Carnegro: So I found a wings food truck though. I wish I was hungry. Apricot Maple Whiskey wings sound amazing. @WingNItNYC	1385489851	405399938588483585	f	wingnitnyc
-First breakfast in 30 days. EidMoubarak http://t.co/uNhde7Ibmx	1406548402	493725899762589697	f	trucktotable
-We are loving this nice weather! Come find us in Union Square till 9pm !!!	1432941500	604426576181215233	f	andysitalianice
-We are now open on 55th and Broadway. @nycfoodtruck @grubstreet @StreetGrubSteve	1432830082	603959254748426240	f	andysitalianice
-Sorry ice lovers we will actually be off the road the rest of the evening for some maintenance.	1432764026	603682195954339840	f	andysitalianice
-At a private event today! Union square by 5pm. Sorry for the late tweet @nycfoodtruck	1432748666	603617772686471168	f	andysitalianice
-We are now open! On 32nd and Park Avenue. Till 5pm @nycfoodtruck @grubstreet @StreetGrubSteve @NewForkCityNY	1432656349	603230569749737472	f	andysitalianice
-You're now open on 40th and 6th ave @nycfoodtruck @grubstreet @bryantparknyc  till 2:30 then heading to Long Island	1432309194	601774494634639360	f	andysitalianice
-Have you checked out our new cups yet? Goodbye Styrofoam hello paper. http://t.co/e2ahhatCSJ	1432223851	601416540710412288	f	andysitalianice
-We are now open on 32nd and Park ave. Till 2 PM then off to a private event.	1432223732	601416042376798208	f	andysitalianice
-Unfortunately this weather does not want to cooperate. We will be off the road today. @nycfoodtruck	1432125133	601002487169077248	f	andysitalianice
-Sorry everyone the rain is keeping us in bed. See you all tomorrow. @nycfoodtruck	1432038992	600641185334558720	f	andysitalianice
-Today join us on this amazing day @MAMAPALOOZA from 11-5pm. @nycfoodtruck	1431875670	599956163640356865	f	andysitalianice
-Cater you next private event with us. http://t.co/NgECIhHuwu	1431819148	599719091989913600	f	andysitalianice
-Today we are scooping it up with at the YMCA 64th and Broadway cool down with us and grab a slice of pizza @Valduccis @nycfoodtruck	1431782545	599565569571041280	f	andysitalianice
-We are now open on 47th and park throwing it back. Come cool down with a ice or try one of our amazing new smoothies. @nycfoodtruck	1431702822	599231187681435648	f	andysitalianice
-Now open on 55th and Broadway for all your Italian nice and smooth he needs till 3 PM @nycfoodtruck @EatThisNotThat @grubstreet @EatStTweet	1431624271	598901719985213440	f	andysitalianice
-Did you know most of out Italian Ices are dairy free! gluten nycices andysitalianicesnyc	1431561732	598639411065200641	f	andysitalianice
-We are now open in Union Square till 9 PM I'm cool down with a Italian ice or smoothie.	1431542396	598558311198400512	f	andysitalianice
-RT @FordhamRoad_NYC: Get ready for out-of-this-world flavors!  @nycfoodtruck @NJFoodTrucks  ILoveFordhamRoad http://t.co/rF1XLT1XP4	1431542322	598557999913967616	f	andysitalianice
-Sorry we had to relocate and move early heading into Union Square.	1431541224	598553396560310272	f	andysitalianice
-Find us today on 40th and 6th Ave @bryantparknyc till 5pm	1431528684	598500798666919936	f	andysitalianice
+This is my way of cuddling. Apple, Cranberry & Nutella MuchasNuchas regram @vequalsmcsquared http://t.co/elN0eaztca	1437157801	622111025496752129	f	nuchasnyc
+@Lampaban truck at beaver street & new street!	1437147612	622068290014314496	f	nuchasnyc
+Truck at Beaver St & New St! Right on the spot for lunch! MuchasNuchas	1437147571	622068119696084992	f	nuchasnyc
+RT @mitgc_cm: @NuchasNYC Of service to @CivicHall today while simulcasting IGFUSA with @isocny http://t.co/zwQ1xgmTwn c @Civicist http://t...	1437085472	621807657998008320	f	nuchasnyc
+Rocking in Jones Beach! MuchasNuchas	1436998196	621441594319835137	f	nuchasnyc
+CLOSED Tomorrow our NuchasTruck will start the day in Varick St and Charlton St! MuchasNuchas  - http://t.co/G9DUAIOt2h	1436922505	621124121846509570	f	nuchasnyc
+In E 14th street and 3er Avenue, there's a truck waiting for you! MuchasNuchas	1436908243	621064303223963648	f	nuchasnyc
+OPEN! NuchasTruck on 14th street and 3rd Ave until 6:30 PM! MuchasNuchas - http://t.co/G9DUAIOt2h	1436905263	621051805225615360	f	nuchasnyc
+OPEN! We are in 5th Ave and 21st Street until 3PM! NuchasTruck MuchasNuchas - http://t.co/G9DUAIOt2h	1436889051	620983805965377536	f	nuchasnyc
+Taking baby Nuchas pushcart for a walk! Visit us on Bleeker street and 6th Ave. Thanks @lesliesardinias for... http://t.co/QgDyXEJmCZ	1436799683	620608970659627008	f	nuchasnyc
+Enjoying empanadas at @VansWarpedTour @Jones_Beach MuchasNuchas http://t.co/YtzF88dCDb	1436660082	620023439877906432	f	nuchasnyc
+Start your morning the right way coffee MuchasNuchas http://t.co/iz1ODQsq0I	1436446594	619128009455468544	f	nuchasnyc
+Lacking a snack? Truck parked at E 14th St & Irving Pl! MuchasNuchas	1436387723	618881085015986176	f	nuchasnyc
+RT @NomNomNYCgirls: Curry Empanada from @NuchasNYC got my mouth watering  foodporn @TwitterFood TimesSquare http://t.co/uatHtIcvFI	1436372990	618819289206943744	f	nuchasnyc
+Taking care of lunch! MuchasNuchas approved!! http://t.co/sSSCIRT4T8	1436295314	618493495104413696	f	nuchasnyc
+RT @marjorieglb: If you love empanadas check out Nuchas. All the flavors are delicious! @NuchasNYC @blackmad, they cater http://t.co/g3fYVP...	1436294632	618490631619391488	f	nuchasnyc
+Hudson Square! Truck at Varick St & Charlton St! Hurry up to get some delicious empanadas!! MuchasNuchas	1436201887	618101630760845316	f	nuchasnyc
+Keep it simple and tasty MuchasNuchas http://t.co/JmPlIYA0NO	1436122123	617767077886230528	f	nuchasnyc
+Nuchas at Liberty State Park all day!  MuchasNuchas	1436043592	617437694319292416	f	nuchasnyc
+@KittieBanks we are at liberty state park!	1436043542	617437483849150470	f	nuchasnyc
+It's true.... http://t.co/7SmqSzvynF	1437159118	622116550200438784	f	bigdsgrub
+D2 is catering a private event today. Have a great weekend! https://t.co/PLNesGpWyn	1437145170	622058046911549440	f	bigdsgrub
+If you don't know, now ya' know...\nD1 is at 50th Street btwn 6th and 7th Avenue for lunch. 11am to 2:30pm http://t.co/t1iRbrxDig	1437138585	622030428279570432	f	bigdsgrub
+It's THAT time of the week grubbers! Find us at 50th Street btwn 6th and 7th Avenue for lunch on this beautiful day. http://t.co/jKnanUoYwS	1437052308	621668556091039744	f	bigdsgrub
+Ditch the desk & join us for lunch at @dumbolot. Jay and Water Street @DUMBOFoodTrucks @DUMBOBID DUMBO @hugeinc http://t.co/6jcTyV3IAz	1437052014	621667322709843968	f	bigdsgrub
+We're headed to DUMBO tomorrow. Leave your lunch at home! 	1437000692	621452062157615104	f	bigdsgrub
+D1 is slinging taco, grinders and more at 53rd Street and Park Avenue http://t.co/0aEcQHye5P	1436965288	621303568180584448	f	bigdsgrub
+D2 is grillin' it up at 50th Street btwn 6th and 7th Avenue! Come n' Grub!! http://t.co/FdoFdBS8VW	1436965044	621302545890340864	f	bigdsgrub
+D2 is serving lunch today at 41st Street and 6th Avenue. http://t.co/p9pGbIXkXW	1436881650	620952765376897024	f	bigdsgrub
+D1 has YOUR lunch over at 50th Street btwn 6th and 7th Avenue today. 11am to 2:30pm http://t.co/x89ye8FeCV	1436879619	620944245084524544	f	bigdsgrub
+D2 is grilling up some Vietnamese Roasted Chicken over Dirty Fried Rice & more. 41st. Street btwn 6th and Broadway http://t.co/jWWGkfgLpV	1436879427	620943438670905344	f	bigdsgrub
+Change of plans...\nBigD2 is headed to 53rd Street and Park Avenue. Open by 12:15pm! http://t.co/85im69LW7w	1436801889	620618223856263172	f	bigdsgrub
+D1 is now open at Hudson/King St. (In front of 375 Hudson Street) http://t.co/szLCta0LkE	1436799978	620610206419058688	f	bigdsgrub
+D2 is serving it up at 50th Street btwn 6th and 7th Avenue http://t.co/mYOSkWX5va	1436794422	620586902643716098	f	bigdsgrub
+D1 is grillin' it up at Hudson/King St. 11am to 2:40pm http://t.co/zREFF3kGAB	1436793277	620582101126148096	f	bigdsgrub
+Let's end the week off proper!  Ditch the desk and join D1 for lunch at 50th Street btwn 6th and 7th Avenue TGIF http://t.co/vdvIw6CWTW	1436533984	619494548276936704	f	bigdsgrub
+Join us 4 lunch today at Jay and Water St. @dumbolot @DUMBOBID @DUMBOFoodTrucks @hugeinc DUMBO TGIF http://t.co/O7yigALn5S	1436533861	619494030737588224	f	bigdsgrub
+ https://t.co/899YSh1zDo	1436457377	619173234999721984	f	bigdsgrub
+It's THAT time of the week folks! 50th Street btwn 6th and 7th Avenue http://t.co/1GGVpGulKh	1436446760	619128704569057280	f	bigdsgrub
+D2 is serving lunch at @BLDG92 today. http://t.co/zRRDERkGs2	1436446684	619128384170364928	f	bigdsgrub
+@WestchesterMed we are open and ready for you! Come cool down.	1437145634	622059994792480768	f	andysitalianice
+@WestchesterMed don't worry we will see you all tomorrow. With tons of Canoli ices for you!	1437090145	621827254901972993	f	andysitalianice
+Sorry private events all day. Now open in union Squad for all your ice needs. Closing at 8pm @nycfoodtruck @UnionSquareNY	1437084911	621805303261085696	f	andysitalianice
+We are open in union Square till 8pm @nycfoodtruck	1436818725	620688838583828480	f	andysitalianice
+We are open on Old Split and Water for all your cool down @nycfoodtruck @FTFUSA @grubstreet @StreetGrubSteve	1436805234	620632251563384832	f	andysitalianice
+@Stephluva2711 @prospect_park @nycfoodtruck try one of our featured flavors and keep a lookout for our new menu.	1436714535	620251832372342784	f	andysitalianice
+Today we are @prospect_park with many other amazing food trucks from our @nycfoodtruck come check us out	1436711275	620238159461392385	f	andysitalianice
+Sorry everyone we are at a private event for MTV. Then heading to @bryantparknyc 40th and 6th Ave	1436546619	619547542263590913	f	andysitalianice
+Due to this fabulous weather we will be off the road today. Rain rain go away! @nycfoodtruck @grubstreet	1436446502	619127620446203905	f	andysitalianice
+We would like to welcome our newest member to the Andy's brand we are now available in Ohio @EastCoastIces	1436397248	618921033836437504	f	andysitalianice
+Need us for a private party or event contact us today. Info@andysitalianices.com http://t.co/KDxFhwNLKI	1436397181	618920756228059136	f	andysitalianice
+Still open on 40th & 6th ave. Come cool down with a ice or iced coffee	1436381715	618855884601585664	f	andysitalianice
+We are now open on 40th & 6th Ave till 5pm @bryantparknyc @nycfoodtruck	1436371263	618812047447474176	f	andysitalianice
+We are now Open in @UnionSquareNY till 8pm come chill out!	1436305002	618534126791081984	f	andysitalianice
+RT @nycfoodtruck: Sunday Funday, INDEED. July 12th @Prospect_Park Food Truck Rally: http://t.co/RBk7V1dq5E w/ @AndysItalianIce @CarlsSteaks...	1436304338	618531343325102081	f	andysitalianice
+RT @LoforteMichael: Beating the heat with a mint chocolate chip. @AndysItalianIce @HardcoreItalian @ItalianGrocery  andysitalianicesnyc ht...	1436303460	618527660256436226	f	andysitalianice
+We are open on 32nd are Park Ave for all your cool down needs till 5.	1436284550	618448344298483712	f	andysitalianice
+We are now open in @UnionSquarePark till 8pm	1436215492	618158697244659712	f	andysitalianice
+We are open on water at and front st till 5pm. Come cool down with a refreshing Italina ices. @nycfoodtruck @grubstreet	1436200342	618095150267527168	f	andysitalianice
+Happy July 4th. We will be back on the road Monday.	1436028996	617376476598419456	f	andysitalianice
 47th and Park from 11:15am to 2:30pm !!	1412066274	516869534511538176	f	hityourvspot
 53rd and park today! Ready in 30mins	1412001643	516598450713276416	f	hityourvspot
 47th and Park!!!!	1411729634	515457565313204225	f	hityourvspot
@@ -1597,145 +1576,147 @@ Back at 52nd and 6th!!! :)	1409739596	507110738453094401	f	hityourvspot
 53rd and park :)	1408627853	502447749116469250	f	hityourvspot
 46th and 6th today from 11am to 2:30pm. Don't come too late!! Or else that yummy lemongrass curry chicken gets sold out again!	1408533848	502053464412020736	f	hityourvspot
 Private event today!	1408448881	501697087827091456	f	hityourvspot
-RT @randomfoodtruck: Get a picnic and eat outside! @CarpeDonutNYC @MamasHeros @souvlakitruck @PolishCuisine @carlssteaks @gcnyc1	1432916968	604323682601717761	f	gcnyc1
-G1 46 5/6\nG2 broadway / 55th \nComeToTheCheeseYo	1432904163	604269975281537024	f	gcnyc1
-@Pier_13Hoboken NJFoodTrucks \n@MordisFoodTruck @themoofoodtruck @plumontherun @TheIncrediballs @themoofoodtruck @OINKandMOObbq @waffledely	1432846459	604027946840514560	f	gcnyc1
-RT @FordhamRoad_NYC: @News12EP @gcnyc1 glad you enjoyed!! Thanks for coming!	1432845993	604025990822633472	f	gcnyc1
-RT @News12EP: Thanks @gcnyc1 for the yummy Mac & Cheese bites & Grilled Cheese!  So good!  Thanks for bringing them to The Bronx @Fordham...	1432845980	604025939534712832	f	gcnyc1
-RT @BxArtsFactory: Next Thursday! Tasting the World Mural Match during @FordhamRoad_NYC Food Truck Event! Sponsored by @Blick_Art http://t....	1432835818	603983317017436160	f	gcnyc1
-RT @FordhamRoad_NYC: See all the improvements at Bryan Park https://t.co/epR9ExBit5	1432835807	603983270519447552	f	gcnyc1
-RT @FordhamRoad_NYC: In case you forgot, here's our event page for Fordham's Food Truck Extravaganza http://t.co/OgDZ5lK77j	1432835804	603983254648131584	f	gcnyc1
-RT @News12EP: Food trucks on Fordham Road in The Bronx today!!  Anyone going to check it out??  I plan on it. @FordhamRoad_NYC http://t.co...	1432835797	603983225439002624	f	gcnyc1
-RT @FordhamRoad_NYC: Everyone's here! The first annual Fordham Food Truck Extravaganza! http://t.co/GMQrGV4YQC	1432835779	603983151787028481	f	gcnyc1
-G1 - Hanover water / pearl \nG2 - @FordhamRoad_NYC\n Bryan park at the intersection of E Fordham rd and E kingsbridge \nComeToTheCheeseYo	1432831900	603966881712742400	f	gcnyc1
-@emkropp sorry...we had to leave...prior obligation  @FordhamRoad_NYC	1432831776	603966361262542849	f	gcnyc1
-Rockin @Pier_13Hoboken today w/ @themoofoodtruck @TheIncrediballs @AmandaBananasNJ  @MexiFlips hoboken @  NJFoodTrucks\nComeToTheCheeseYo	1432758423	603658698586722306	f	gcnyc1
-RT @EBAYJUNKIE: @gcnyc1 best grilled cheese http://t.co/XDkp719aio	1432758160	603657593257623552	f	gcnyc1
-RT @AmandaBananasNJ: Catch us at @Pier_13Hoboken today with @themoofoodtruck @TheIncrediballs @gcnyc1 @MexiFlips hoboken NJFoodTrucks	1432758150	603657552560263168	f	gcnyc1
-@bigdsgrub @starretlehigh	1432743533	603596243638558720	f	gcnyc1
-G1 47 lex/park\nG2 46 5/6\nComeToTheCheeseYo	1432739699	603580162442186752	f	gcnyc1
-G1 Hudson / king \nG2  33/Park\nComeToTheCheeseYo	1432651244	603209155671924736	f	gcnyc1
-1 truck available for Sunday  & Monday.. \nU Rent the Truck, We bring the Cheese\nhttp://t.co/oYLeKPMkVo	1432413928	602213780609757184	f	gcnyc1
-RT @randomfoodtruck: Start the long weekend off right! @Chefsamirtruck @souvlakitruck @PolishCuisine @MamasHeros @gcnyc1	1432308592	601771967428067329	f	gcnyc1
-RT @gaddylane: Hot craw-diggity, it's ON. Sun, 6/14, @SycamoreBklyn 6th annual crawfish boil. http://t.co/3vtTSpNsLZ http://t.co/XsU2AmSH1S	1432918849	604331574423769088	f	kimchitruck
-RT @keithbacker: Kimchi Fish Bowl with @KimchiTruck goodlife sowoneulmarhaebwa http://t.co/gtL8L952Oz	1432918630	604330655078432768	f	kimchitruck
-RT @beckysoto: @KimchiTruck best news I've heard ALL DAY.	1432909897	604294023981858817	f	kimchitruck
-Couldn't think of a better way to end a 4 day work week than with TACOS. Find us on 52nd & 6th, 11:30 - 2:30	1432906206	604278544584192000	f	kimchitruck
-Ready to shake it w/ our tacos tonight? @BklynBrdgPark @CelebrateBklyn	1432846070	604026316875145216	f	kimchitruck
-Slinging tacos on Hudson & Charlton St. 11:30 - 2:30. Amen!	1432822808	603928746232537089	f	kimchitruck
-Midtown, we're coming for ya. 52nd & 6th, 11:30 - 2:30 pm.	1432735395	603562110958731267	f	kimchitruck
-Here to cushion your return to work, oomph. KimchiTacosMakeEverythingBetter @dumbolot Jay & Front, 11:30 - 2:30	1432648258	603196629848444928	f	kimchitruck
-@Mutantfroginc No truck today- sorry!	1432308622	601772095236808704	f	kimchitruck
-Have a delicious Memorial Day Weekend, folks. We'll check out your tan next week!	1432302027	601744432652746753	f	kimchitruck
-RT @sisiwei: @KimchiTruck You guys are now my total favorite.	1432224114	601417641266319360	f	kimchitruck
-@sisiwei Yes, we have vegan kimchi avail :)	1432223784	601416260711161856	f	kimchitruck
-RT @mrroselli: @kimchitruck @aaps59 @Mars478 go get it boys.	1432221119	601405080642785280	f	kimchitruck
-Make that Hudson & King!	1432219670	601399002446233601	f	kimchitruck
-Need a taco fix before you take off for the weekend? Catch us on Hudson & Charlton, 11:30-2:30	1432216673	601386432855314432	f	kimchitruck
-RT @trendyvacations: Grab fish tacos and kimchi fries if you are near 52nd and 6th from @KimchiTruck NYC HumpDay SateTheHangry  https://...	1432140098	601065253623832576	f	kimchitruck
-On our way to 52nd & 6th!	1432127572	601012715943931904	f	kimchitruck
-@TonyMazza_ @dumbolot water and jay	1432054075	600704449368186881	f	kimchitruck
-RT @TonyMazza_: @KimchiTruck @dumbolot i'll come	1432051006	600691573932843009	f	kimchitruck
-Dumbo, we're coming atcha. Catch your gorgeous faces today 11:30 - 2:30 @dumbolot	1432043224	600658933372563456	f	kimchitruck
-Good morning\nlunch time we're at\n52nd. St bet 6-7 Ave (closer to 6)\n11-2:30pm\n\nnight Long Island City Queens\n5St & 47Rd.\n5-8:30pm	1432904702	604272237114454016	f	langostruck
-Hi Midtown\n\nWe're at 52 Street bet 6-7ave \n(closer to 6)\n\n11-2:30pm\nmidtown foodtruck hungarian  skirt steak http://t.co/gdpNgPWWho	1432735121	603560961920892928	f	langostruck
-Good morning FiDi\nLangos Truck at\nWater St.& Old Slip\n11-2:30pm\n\nEvening Long Island City(Queens)\n\n5St & 47road\n5-8:30pm\nfood trucks	1432643288	603175785919315968	f	langostruck
-RT @thegreenradish1: A change is in the air....\n\nWe have some permit drama, but were not going to let this unfortunate dance that NYC... htt...	1432565783	602850708241649664	f	langostruck
-@vivalavanway \nWill be 31street & 30th. Ave	1432484747	602510818182307841	f	langostruck
-@vivalavanway \n\nSee you next Thursday in Astoria 5-8:30pm	1432484482	602509703554404352	f	langostruck
-@vivalavanway \nHi Jackie we taking off tomorrow \nThanks	1432478513	602484668953456642	f	langostruck
-Enjoy your long weekend\nWe're at Broadway & bet 67-68 St \n(west side)\n11-6pm \napple store mangalitsa hungarian  http://t.co/oG9TgDZWPw	1432474773	602468983372161024	f	langostruck
-Good Morning FlatIron\nYou can find Us\n21St/ 5ave\n11:30-2:30pm\n\n5-11pm East Village front of KeyBar\n13St. Bet Ave A & 1Ave\nEnjoy you weekend	1432304231	601753676756230144	f	langostruck
-We would like to give you some heads up where we will be tomorrow night. \nAt Keybar , east village  \nfrom 5-11pm. \nMore info: 646-286-9949	1432250423	601527990028210176	f	langostruck
-Hi there\nLunch at 52St. Bet 6-7Ave (closer to 6Ave)\nPlease visit us , and see you soon\nnyc foodtruck schnitzel http://t.co/Ttms9bs7fW	1432214221	601376148531105793	f	langostruck
-@AudreyCrumb \n\nDear Audrey\nNext Thursday we will visit Astoria\n\nThank you	1432214054	601375449776807936	f	langostruck
-Good morning Midtown\nL-T  at 52nd.St bet 6-7 Ave (closer to 6)\nCome to see us , we make yo happy.\n11-2:30pm	1432126440	601007967916396544	f	langostruck
-Hi Long Island City\nWe are here for you till 8:30pm\ncoca cola nyc food truck fresh hungarian http://t.co/atr3ipDKmW	1432070128	600771779045515264	f	langostruck
-Langos Truck going to Budapest Tour http://t.co/dA1XJWvGAu	1432046763	600673777345769472	f	langostruck
-Good morning FiDi\nWe are ready by 11am\nCorner of Water St. & Old Slip\nTill2:30pm\n\nEvening Long Island City\n5-8:30pm\n\nEnjoy your day	1432037619	600635427528278016	f	langostruck
-Dear Friends \nHope you had a lovely weekend,\nBack to Midtown.\n47th. St bet Park & Lexington Ave\n11-2:30pm\nSee you soon\nnyc foodtruck	1431954881	600288396037246976	f	langostruck
-RT @thegreenradish1: Our ticket bin...nyc proud supporter of killing food trucks... what gives, @BilldeBlasio http://t.co/kqLnq93F3T	1431776088	599538487587659776	f	langostruck
-Hi Midtown \nFinally is Friday\n47th. St. & Park \n11-2:30pm\n\nFoodTruck hungarian nyc Friday	1431689719	599176229678358528	f	langostruck
-Good morning \nYou can find fresh crispy delicious langos and more \n52St bet 6-7 Ave(closer to 6)\nFrom 11-2:30pm\nEnjoy	1431605664	598823673898860544	f	langostruck
-mandatory mandarita - it's friday, people  TreatYoSelf\n\nPhoto: no2el https://t.co/klHIuIL19E	1432930226	604379289438556160	f	mexicue
-Wanna be startin' somethin'\n\napps & sides for the win  http://t.co/CeRMnxMVCA	1432740618	603584017284337665	f	mexicue
-@mikeavila thanks for the good words!	1432662051	603254485117435904	f	mexicue
-Tacos are the answer \n\n: @bibilovesrady http://t.co/G9sKfO3VSK	1432654042	603220893247086592	f	mexicue
-the best MDW BBQ is the one you don't have to cook\n\nsmoked chicken sliders at MadSqEats\n\nPhoto by @nycdining http://t.co/o0ZE4itoLa	1432571417	602874338929422337	f	mexicue
-RT @leepatty: Where to eat on Memorial Day weekend: @Mexicue brunch, @TheDutchNYC luau and more http://t.co/iLVH6JeTYl http://t.co/QNtrTiTJ...	1432306723	601764129037254656	f	mexicue
-@waeldavis @MissJennaB thank you for the love!	1432156404	601133647115231232	f	mexicue
-Shrimpin' ain't easy, but it's necessary\n\nEspecially in tostada form TreatYoSelf http://t.co/kp8PLf34Z4	1432050304	600688629007134720	f	mexicue
-That moment when you begin to start your week with a Burnt Ends Brisket Bowl and all is right in the world http://t.co/4cQsnjtqna	1431964549	600328949919539200	f	mexicue
-CurrentMood c/o Burnt End Brisket Chili Nachos\n\nMadSqEats photo by @foodbabyny @ Madison Square Eats https://t.co/J4hDOc2svS	1431616536	598869277668679680	f	mexicue
-Check out today's @nytimesbusiness piece on our expansion from food truck to brick + mortar here: http://t.co/W8A6Vu5bAh	1431532106	598515151688568832	f	mexicue
-totally vegging out on a monday with a kale & quinoa bowl  http://t.co/i0yNTWDRUD	1431358604	597787431941844992	f	mexicue
-It's almost beach season and dadbod is so in right now = TreatYoSelf http://t.co/SVZFyrFGx0	1431012446	596335537667108866	f	mexicue
-Rice Rice Baby...and beans\n\n@AnsonMills Rice Grits + Black Beans + Jalapeno Aioli + Pico http://t.co/2qcrb62LRw	1430925990	595972917160206336	f	mexicue
-RT @ForkintheRoadVV: ~Smoky~ margaritas.\n~Smoky~ carnitas.\n\nHere's how to eat lunch at @Mexicue in NoMad\n\nhttp://t.co/Nu3e7ikchP http://t.c...	1430856062	595679616318177281	f	mexicue
-.@NewYorkcom knows about our CincoDeMayo/CincoDeDrinko deal at 225 Fifth Ave, do you? http://t.co/o0nvph0jg1	1430847631	595644254078300161	f	mexicue
-RT @NewYorkcom: 5 Lively Bars to Celebrate Cinco de Mayo in NYC @Mexicue @thewrennyc @BodegaNegraNYC http://t.co/MYXblxlf7f http://t.co/vjw...	1430778166	595352896755113984	f	mexicue
-Suns out, buns out\n\nTreatYoSelf to a Burnt Ends Brisket Slider on @potatorolls at MadSqEats http://t.co/m4j5M3C41E	1430753870	595250991995482112	f	mexicue
-RT @ThrillistNYC: Congrats to the winner of ThrillistTKO @Mexicue for their Smoky Carnitas taco! http://t.co/yzfOZn8Qny	1430600014	594605673167626241	f	mexicue
-RT @ExperienceNoMad: Mad. Sq. Eats opens today! @Mexicue, @ililiRestaurant, @HillCountryNY and more!  @MadSqParkNYC @UrbanSpaceNYC \n\nhttp:/...	1430501441	594192228551102464	f	mexicue
-It's FalafelFriday in FIDI! Join us on Old Slip btwn Water & Front St until 3pm! FoodTruckFriday vegan Lebanese http://t.co/c8ALsdfxIN	1432908726	604289113194393600	f	toumnyc
-@psychicleaking @DumboNYC One option every day :)	1432832474	603969290908389378	f	toumnyc
-RT @dumbolot: Lot is smelling fine with @MexicoBlvd @ToumNYC and @mausamnyc today!	1432825891	603941677103984640	f	toumnyc
-Beef? Chicken? Vegan Falafel? We have it all! Join the truck in @DumboNYC on Jay&Water or the booth on 41st/B'way http://t.co/V76jKRc8Sm	1432820576	603919384680275968	f	toumnyc
-What's for lunch Midtown? Join us on 46th btwn 5th & 6th & on 41st/B'way! Try our beef shawarma platter! http://t.co/DQEa9Ny4Oq	1432736808	603568037095186432	f	toumnyc
-Had enough BBQ yesterday? Join us for a vegan falafel sandwich at the truck on 52nd/6th or the booth on 41st/B'way! http://t.co/U0zRe3v2G1	1432648389	603197182745927681	f	toumnyc
-Join us for the last day of the food truck showdown @MonmouthPark until 5pm! The booth is also open until 7pm on 41st/B'way! MDW2015	1432567297	602857056744435713	f	toumnyc
-Day 2 of the @MonmouthPark food truck showdown starts now! Join us until 5pm! Our booth is open until 7pm on 41st&B'way! MemorialDayWeekend	1432480363	602492430148104192	f	toumnyc
-RT @fredolay69: @ToumNYC had some chicken schwarma. . Fantastic!!	1432461258	602412298611924993	f	toumnyc
-@PirateJeni awesome photos! So happy you enjoyed :)	1432417856	602230254820810753	f	toumnyc
-RT @PirateJeni: @ToumNYC http://t.co/EblJnxMHIP	1432417843	602230200349392897	f	toumnyc
-@fredolay69 awww thanks! We love our fans! What did you have with us today?	1432417831	602230149367648256	f	toumnyc
-RT @fredolay69: @ToumNYC great food!!!!  You are fantastic.  :)  MonmouthPark	1432417776	602229919230390275	f	toumnyc
-Day 1 of the NJ @MonmouthPark food truck showdown starts today! Join us from 11-5pm! Our booth is also open until 7pm on 41st/B'way!	1432390374	602114989755867137	f	toumnyc
-@psychicleaking you are so very welcome! Thank you for lunching with us! Looking forward to feeding you again 	1432305878	601760583961202688	f	toumnyc
-@PirateJeni @muppetK so happy you decided to lunch with us! What did you have? 	1432305843	601760439891001344	f	toumnyc
-We love Thursday's in Brooklyn! Join us for lunch on Jay & Water St until 3pm then dinner from 4pm -10pm at the @RoyalPalmsClub	1432216028	601383726854049795	f	toumnyc
-@psychicleaking sounds great! Looking forward to seeing and feeding you 	1432209328	601355624656539648	f	toumnyc
-@psychicleaking hi there! We'll be there from 11am-9:pm 	1432205344	601338917766443009	f	toumnyc
-Happy HumpDay MidtownWest! Join the truck on 46th btwn 5th & 6th or our booth on 41st & B'way! Beef Kabab http://t.co/QrnkCJaSNx	1432127401	601011999133270016	f	toumnyc
-@explorebrooklyn great pic btw!  That's what a pie should look like!  ;-)	1432942830	604432157336027136	f	dubpies
-@explorebrooklyn FYI - we serve the occasional American too! But only if they slip by the detector...	1432942796	604432012309622784	f	dubpies
-RT @explorebrooklyn: Brooklyn for Australians: Sheep Station, Milk Bar, @dubpies, @TobysBrooklyn & more\n http://t.co/EsH7Yjs6wH eat http:/...	1432942744	604431794461655040	f	dubpies
-Yes, yes indeed. Bedford & N7! chur RT @milospeluffo: @dubpies are you in williamsburg tonight?	1432942659	604431437270511616	f	dubpies
-PieTruck's @ Bedford & N7 'til midnight! Get in there! Hot pies, cold brew, scorching service! http://t.co/ESAUBVfS2i	1432942620	604431274321805312	f	dubpies
-PieTruck is at Hudson & King, Soho - serving cold brew, savory & sweet pies from 11am to 2.30pm. foodtrucks NYC NZ	1432908646	604288779776561152	f	dubpies
-MT @WRJoissaint: You have to visit Williamsburg & locate @dubpies truck.  You'll love their service & goodies http://t.co/ga1eqDfeGp	1432860835	604088244184162304	f	dubpies
-PieTruck's @ 47th & Park, MidtownEast 11a - 2.30p. Buy a savory pie, get a free sweet (or sweet pie)! foodtrucks NYC	1432821825	603924625005932544	f	dubpies
-@gabrielgironda ha! Posted that monstrosity on FB last night. We're pie purists here. No chance we'd do something so horrendous ;-)	1432766294	603691712616206336	f	dubpies
-PieTruck is @ Varick St & King St - 11am to 2.30pm. SavoryPies flatwhites	1432733446	603553935341842432	f	dubpies
-Something like this? http://t.co/Y3bRXdT8i5 @pievinylrecords RT @oharris69: @dubpies @djsirvere I'm like a stuck pie on a record player!	1432700407	603415360826671105	f	dubpies
-@oharris69 certainly wasn't a complaint (check is in the mail), meant it seriously and in general (ie you = everyone) chur @djsirvere	1432699252	603410516392943616	f	dubpies
-You could respond that way to every tweet ever made and get away with. We reckon! RT @oharris69: @djsirvere also, @dubpies :)	1432698631	603407912397058048	f	dubpies
-PieTruck is at a special event today. Back on streets tomorrow!	1432647922	603195220398833664	f	dubpies
-@deancollins our bad, a tweet was scheduled but incorrectly ;-(  was too late by the time we realized...  won't happen again, sorry	1432580584	602912786885287937	f	dubpies
-@missmillsnz tough year on the street last year, this year shaping to be better... update overdue but on the way! cheers	1432577790	602901066737397760	f	dubpies
-PieTruck is @RoyalPalmsClub all day today and many Sundays this summer! http://t.co/7HGjb8q38S Try our Brisket Biscuit!	1432489550	602530962048741376	f	dubpies
-Yeah, right? What's up with that? RT @component: @dubpies Brooklyn has Trader Joe's now? Yet SoCal still has no Dub Pies truck :(	1432415644	602220977695621122	f	dubpies
-PieTruck is outside Trader Joe's , Court St. - Brooklyn, until 5pm-ish http://t.co/LaadWuzHaT	1432393535	602128247724343296	f	dubpies
-RT @FordhamRoad_NYC: Today's newcomers are @Chefsamirtruck and @mausamnyc ! http://t.co/7sUOhmwNqs	1432913032	604307172781117440	f	chefsamirtruck
-RT @RentSoBro: There is something about truckfood that is uniquely NYC...I love it! @Chefsamirtruck @mausamnyc  https://t.co/46ui927xr7	1432913016	604307106381062144	f	chefsamirtruck
-RT @FordhamRoad_NYC: Today's menu for @Chefsamirtruck http://t.co/ru0Xs1rFQ8	1432912951	604306836087513088	f	chefsamirtruck
-We are at Bryan Park located at the intersection of E. Fordham Road & Kingsbridge Road in the Bronx.	1432911992	604302812219101184	f	chefsamirtruck
-We are @ The Fordham Road Food Truck Extravaganza Weekend!	1432911858	604302251952361472	f	chefsamirtruck
-We are at 47st between park av and Lexington av!	1432827763	603949528199340033	f	chefsamirtruck
-We are at 52st and park av! \nTry our strawberry lemonade today, yummy! !	1432742231	603590783413952512	f	chefsamirtruck
-RT @GovBallNYC: We're releasing a limited amount of single day tickets! Get your tickets for Gov Ball before it's too late! https://t.co/cM...	1432681817	603337387612229632	f	chefsamirtruck
-@AyouchNabil \nI hope you bring the movie to new York one day, Tribeca movie festival, I'm totally against the censure ship in Morocco	1432681739	603337060150321152	f	chefsamirtruck
-We are on 36st and Broadway!	1432657094	603233690546745344	f	chefsamirtruck
-@Gov_Island! Such a beautiful day today !	1432483268	602504611887501313	f	chefsamirtruck
-We're at Governors Island today!	1432482394	602500946741096449	f	chefsamirtruck
-Thanks to @GovIslandFood and  @livefastgroup we will be vending on @Gov_Island all summer long	1432482371	602500850121048065	f	chefsamirtruck
-We're 55th St @ Broadway!	1432304366	601754243377274880	f	chefsamirtruck
-We're at 47st between park av and Lexington av!	1432224171	601417882740875264	f	chefsamirtruck
-MONDAY: Old Slip @ Water St\nTUESDAY: 36th St @ Broadway\nWEDNESDAY: 52nd St @ Park\nTHURSDAY: 47th St btwn Park & Lex\nFRIDAY: 55th @ Broadway	1432222142	601409369604038658	f	chefsamirtruck
-http://t.co/Wox3RfrDxJ\n@karimgeist \nMoroccanfood BestcouscousinNY ChefSamir	1432221560	601406931295690752	f	chefsamirtruck
-We are at 52st and park av!	1432135699	601046802645786625	f	chefsamirtruck
-We are on 36st and Broadway!	1432048712	600681953663279104	f	chefsamirtruck
-We are on Abc studio! !	1431962393	600319903644647425	f	chefsamirtruck
+G1 46 5/6\nG2 Broadway / 55th \nComeToTheCheeseYo	1437145146	622057947665985536	f	gcnyc1
+Hanover water / pearl &\nUptown	1437044227	621634663531061248	f	gcnyc1
+@sethedel idiot	1437016089	621516643039100928	f	gcnyc1
+@OneWaySidewalks not sure but soon.....	1437016081	621516607244902400	f	gcnyc1
+RT @CarrieHeals: Wednesday's lunch date with @gcnyc1  http://t.co/UQGICevERc	1437016041	621516440160595968	f	gcnyc1
+RT @AmandaBananasNJ: We're at @Pier_13Hoboken until 10pm w/ @MexiFlips @themoofoodtruck @waffledelys @gcnyc1 @TFQfoodtruck @TheIncrediballs...	1437016036	621516420149608448	f	gcnyc1
+I'm jealous  of the Gorilla  :) https://t.co/OAlE7ZGgMK	1436984951	621386041187020801	f	gcnyc1
+Lunch:\nG1 Hanover water / pearl \nG2 26th 11/12 @starretlehigh \nDinner:\n@Pier_13Hoboken &\n@NikonJBT \nComeToTheCheeseYo	1436970927	621327218862649345	f	gcnyc1
+G1 Hudson / king \nG2 33/park\nToday's Melt:\nFalafel Melt w/Muenster, lettuce, tomato,caramelized onions & Chipotle aioli\nComeToTheCheeseYo	1436883252	620959482672189440	f	gcnyc1
+G1 47/park\nG2 50/6\nComeToTheCheeseYo	1436795795	620592661636993024	f	gcnyc1
+46 5/6\nBroadway /55\nComeToTheCheeseYo	1436538204	619512249221259264	f	gcnyc1
+G1 @Pier_13Hoboken \nG2 @ Pier 84 (44th & Westside Hwy) for @  hudson river rocks concert [Waxahatchee and Speedy Ortiz]\nComeToTheCheeseYo	1436475327	619248522097922052	f	gcnyc1
+G1 Hanover water / pearl \nG2 uptown \nComeToTheCheeseYo	1436456076	619167777723650048	f	gcnyc1
+Thursdays  https://t.co/nXhm0OhbwK	1436386535	618876103390838784	f	gcnyc1
+G1 Hanover water / pearl \nG2 26th 11/12 @starretlehigh \nComeToTheCheeseYo	1436367169	618794875039969280	f	gcnyc1
+We are in NYC check our friends @grlldcheesetruk they r in ur area https://t.co/K6PW332Xw6	1436364243	618782602565144576	f	gcnyc1
+1 truck out today... Hudson/King\nComeToTheCheeseYo	1436280052	618429477958381568	f	gcnyc1
+G1 38th /Broadway \nG2 50th/6\nComeToTheCheeseYo	1436193912	618068181677117440	f	gcnyc1
+Here's how we do it @Pier_13Hoboken \nFull A++ Crew...  Gorilla.  Pizza. Tfq   Waffles. Dark side. Luke's. Thai & Amanda's	1436111948	617724399165304832	f	gcnyc1
+Hudson /Charlton &\nUptown Lunch \n@Pier_13Hoboken dinner\nComeToTheCheeseYo	1435849738	616624613955620864	f	gcnyc1
+Let's do this, midtown Grab your Fri grub at 52nd St. & 6th Ave.11:30 - 2:00	1437144705	622056098212634625	f	kimchitruck
+Bless you, weather gods, for granting us perfect taco conditions. Hudson & Charlton St 11:30 - 3:00	1437054522	621677843504889856	f	kimchitruck
+RT @mrslentils: The problem with scanning Twitter at the airport is now I want @KimchiTruck taco. And I CAN'T HAVE ONE. firstworldproblems	1436992255	621416674428866560	f	kimchitruck
+Done for the day. See you tmrw!	1436990909	621411030808313861	f	kimchitruck
+@PastorDamion You da best! Thanks for understanding.	1436979795	621364414239739904	f	kimchitruck
+@PastorDamion Sorry, equipment casualty!	1436979321	621362426382958592	f	kimchitruck
+Last day on 40th & 5th @bryantparknyc Don't miss out! 11- 7 foodtruckson5th	1436968117	621315434852122624	f	kimchitruck
+RT @dumbolot: Happy Tuesday with @carlssteaks @SweetChiliNYC and @KimchiTruck!	1436883811	620961828844253184	f	kimchitruck
+Thinking bout that lunch break already? We got'chu. TacoOClock 11:30 - 3:00 @dumbolot Jay & Water	1436881619	620952634464337920	f	kimchitruck
+RT @MommyPowers: @KimchiTruck Reading good things about you- hope to try for myself during BlogHer! LatinaBlogger foodie travel MommyP...	1436795632	620591977613131776	f	kimchitruck
+Truck rally going on now! Grand Army Plaza till 5pm	1436714197	620250417298046976	f	kimchitruck
+RT @JacksonLatrelle: @KimchiTruck yummy	1436536901	619506784148025344	f	kimchitruck
+Friday's here at long last. We're got tacos to make it even sweeter. Find us on 52nd St. & 6th Ave. 11:30 -2:30	1436535796	619502146036346880	f	kimchitruck
+Thinking about lunch already? Don't blame ya. Find us on Hudson & Charlton St. 11:30 - 3:00	1436449386	619139717112688640	f	kimchitruck
+Here until 7pm. Follow the smell of Korean BBQ. 40th & 5th. @nypl	1436391586	618897287012442112	f	kimchitruck
+RT @dubilla: Support your local food trucks. @KimchiTruck http://t.co/YaJGs1gCy2	1436376866	618835546689957888	f	kimchitruck
+Time for a lunchbreak Find us on 40th & 5th today @nypl @bryantparknyc	1436374584	618825976999489536	f	kimchitruck
+RT @bryantparknyc: Stomach rumbling for lunch? Look no further than the @nypl, where @KimchiTruck is serving up Korean BBQ deliciousness ht...	1436370275	618807902405574656	f	kimchitruck
+Got a case of the post holiday humpdays? Grab a taco & a book. foodtruckson5th @nypl 40th & 5th 11-7	1436363485	618779424423591936	f	kimchitruck
+RT @nycfoodtruck: Foodies, the next @Prospect_Park Food Truck Rally is coming up! http://t.co/47Su3yjD8T w/ @KimchiTruck @NeaExpress @papay...	1436320071	618597330984509440	f	kimchitruck
+Hi \nWe're on Wall street bet Hanover street and William\n11-2:30pm	1436965869	621306004454703108	f	langostruck
+Good morning FiDi\nWe're here for you\nWater st & Old Slip\n11-2:30pm	1436882080	620954568600350725	f	langostruck
+The prettiest view ever in the Langos Truck history http://t.co/dZGikiEt67	1436650580	619983585664180224	f	langostruck
+Hi if you looking for the Langos Truck\nWe're on Staten Island Back to the Beach Festival \nSaturday and Sunday \n12-8pm http://t.co/3w0sc5D4X9	1436626434	619882310809337856	f	langostruck
+RT @RiberaRuedaWine: Getting tasting-happy for foodtruckfriday. Would you pair wine w/ @langostruck @vlaic or @pontirossifood?? http://t.c...	1436556636	619589555835023360	f	langostruck
+Hi Midtown \nWe're here for you\n52St bet 6-7Ave (closer to 6)\n11-2:30pm\nEnjoy your weekend	1436532485	619488261367537664	f	langostruck
+Hi\nLunch time\nWe're at Wall St. Bet Hanover St & William11-2:30pm	1436449013	619138152201101312	f	langostruck
+Hi we are at the corner of Hudson st & King\n11-2:30pm	1436280245	618430289388392448	f	langostruck
+Hi \nLangos Truck at 47Street bet Park & Lexington Ave\n11-2:30pm\nSee you soon	1436188873	618047045765611520	f	langostruck
+Hellooo FiDi\nWater St. and Old Slip \n11-2:30pm	1435850309	616627008513163264	f	langostruck
+Hello Midtown\n52nd.St bet 6-7Ave (closer to 6)\n11-2:30pm\n\nYou know skirt steak,fish and chips\nSpec hungarian meat balls w green pea stew\nYam	1435752238	616215668325793792	f	langostruck
+Snow- We are at 51st between Park and Madison Ave	1391440953	430360666047000576	f	seoulfoodnyc
+Hi there\nLangos Truck at the corner of Hudson and King St\n11-2:30pm\nCHOPPED JulyFourth FoodTruck JerseyCity TheProfit BarRescue	1435672991	615883282941669377	f	langostruck
+Hi we hope you had a wonderful weekend\nYou can find us at 47street bet Lexington & Park Ave\n11-2:30pm\n\nNYC NYCfoodtrucks European 	1435579247	615490088563277824	f	langostruck
+Hi Everyone \nWe are at the Pride Festival\nCorner of 6Ave and 3rd. Street\nMore info 646 286 9949\n\npride Festival langos nyc food trucks	1435501757	615165073280077824	f	langostruck
+Hi L-T in FlatIron today\nCorner of 5Ave & 20 street\n11-2:30pm\n\nnyc food truck langos hungarian meat balls electric zoo fish & chips	1435321883	614410627008831488	f	langostruck
+Good morning\nLangos Truck @ the corner of\nHudson and King st\n11-2:30pm\nWe got Plenty of skirts steaks\nnyc hungry hungarian soho party	1435240926	614071068467331072	f	langostruck
+Hi \nLong Island City \nWe are here for You\n@ 47rd & 5th. Street\nSee you soon\n5:30-8:30pm	1435178873	613810798348079105	f	langostruck
+Hi\nL-T at the corner of Hudson & King St.\n11-2:30pm\nCome to visit us and have fun	1435150165	613690391121002496	f	langostruck
+Hi \nLT will be on Upper East Side\n82nd. Street bet 2-3Ave\n\nSaturday \n12-5pm\n\nCome to see us and enjoy your Saturday with crispy fresh langos	1434753325	612025922670231552	f	langostruck
+Enjoy your Sunday\n\nWe Re at Orchard street Festival\nBet Rivington St and Delancey St.\n12-4:30pm\n\nHave a Langos today\nEnjoy\n\n646 286 9949	1434291501	610088891312422913	f	langostruck
+RT @Varun: The green chili pork burrito is the 100 emoji wrapped in a torti... Foursquare Tip @mexicue http://t.co/bbRON4ryH1 http://t.co...	1437169498	622160085016514560	f	mexicue
+Lunchtime views at 225 FIFTH http://t.co/yBrhjidOOj	1437062452	621711102188093440	f	mexicue
+SPICY SHRIMP \narugula, cabbage, jalapeno aioli, pico, cotija, avocado http://t.co/GdaqZh4GdC	1436994849	621427556676423680	f	mexicue
+Tuesday. Tacos. Got it. Awesome. TreatYoSelf http://t.co/O767RcMoro	1436894622	621007172785303552	f	mexicue
+How to upgrade a Monday: Step 1 http://t.co/FEnNoii638	1436805072	620631571192782849	f	mexicue
+Indoor Street Corn   http://t.co/bIfO2jCIeS	1436456124	619167978479874048	f	mexicue
+Got the burrito goin up OnATuesday http://t.co/w1hzXOhpHw	1436281814	618436870582706177	f	mexicue
+We have BBQ running through our veins after this weekend - evening it out with a Kale & Quinoa Bowl  http://t.co/MiCkuxv6iX	1436198595	618087826148696064	f	mexicue
+Your holiday weekend lineup\n\n @no2el http://t.co/jVEaTU1sJZ	1435956956	617074314932822016	f	mexicue
+RT @BravenBrewing: Burnt ends chili burrito, quinoa w/ shaved corn, and blackened fish tacos w/ watermelon radish. @Mexicue is on point. ht...	1435871388	616715419433340928	f	mexicue
+That moment you realize you can dip your cornbread in your Shrimp n Grits... Magic http://t.co/dzQbBQVNyx	1435764130	616265546884100099	f	mexicue
+arugula & avocado | mango, watermelon radish, fresh corn, manchego, pepitas, cotija, citrus vinaigrette, mint | http://t.co/PmOHCyzQ6J	1435591152	615540022536704000	f	mexicue
+Neato Burrito!\n(we also hate that we wrote that, but it's been a long week) http://t.co/MInWKfRfsp	1435266650	614178961719955456	f	mexicue
+On a Tuesday = @iLoveMakonnen5D & @Drake song / when we're gonna eat this OnaTuesday http://t.co/rLC4uTNSCZ	1435094307	613456103238705152	f	mexicue
+Do you even guac, bro?\n\nYou can get ours with watermelon radishes or tortilla chips  http://t.co/p9imPqzs2a	1434988560	613012567854870528	f	mexicue
+The only thing that's bootleg here is made with Bourbon, you want this TreatYoSelf http://t.co/s0Og7shK49	1434748512	612005736680456192	f	mexicue
+Balance  TreatYoSelf http://t.co/Ed7Ngqbnr9	1434663243	611648089854709762	f	mexicue
+Hashtag: Put an Egg on it  http://t.co/k6LdbEoMmj	1434557552	611204790660546560	f	mexicue
+Handheld devices  TacoTuesday http://t.co/v57V8yYxbU	1434468395	610830839736348672	f	mexicue
+Monday's aren't totally rad, but you can at least make them radish http://t.co/S9ICmsSjDI	1434382117	610468961357045760	f	mexicue
+Hello there @DumboNYC ! Deciding on lunch? Join us on Jay & Water St until 3pm! Your tummy will thank you! Brooklyn	1437056289	621685255376896000	f	toumnyc
+@boulosdib we love our fans! Thank you for lunching with us 	1436988846	621402375199293440	f	toumnyc
+RT @boulosdib: @ToumNYC Best Lebanese food.  Worth the 8 block walk. http://t.co/9WKvJv6kpi	1436988818	621402258639560704	f	toumnyc
+Hello MidtownWest! Join us on 46th btwn 5th & 6th until 3pm for a delicious healthy lebaneselunch!	1436967259	621311835048943616	f	toumnyc
+Don't let the rain stand in your way! Call us at 917-TOUM-350 to place your order! Get a free drink with your lunch today after 1:30pm!	1436894910	621008380094758912	f	toumnyc
+There's a chicken shawarma with your name on it on 52nd btwn 5th & 6th! Join us for a delicious LebaneseLunch http://t.co/Y8WIrhMJbS	1436879575	620944060359012352	f	toumnyc
+RT @dumbolot: We got @ToumNYC @MexicoBlvd and @dubpies in the lot today!	1436798913	620605741154627584	f	toumnyc
+GlutenFree platter anyone? Join us @ 3 locations @DumboNYC on Jay/Water St, AMEX in FiDi & @MarthaStewart @gofooda http://t.co/PQzo6VTPnW	1436795398	620590999463718912	f	toumnyc
+RT @sashasleiman: Enjoying a fantastic Lebaneselunch at @ToumNYC in FiDi!! keepcalmandshawarmaon DeliciousFood toumnyc http://t.co/OGw3...	1436554118	619578997580636161	f	toumnyc
+@sashasleiman sahtain! So happy you're enjoying our shawarma! Thanks for lunching with us 	1436554064	619578767925735424	f	toumnyc
+HappyFriday LebaneseLunchers! Join us on Old Slip btwn Water & Front St until 3pm for a healthy vegan lunch http://t.co/H5PJhlpa4d	1436534061	619494871829749761	f	toumnyc
+RT @FoodMoves: Go check out Toum NYC! Best Lebanese food around! https://t.co/VJZ3uBateo	1436460253	619185295657959424	f	toumnyc
+We love our Thursday's in @DumboNYC! Join us until 3pm on Jay & Water St!	1436453303	619156145945583616	f	toumnyc
+RT @LCSwing: .@ToumNYC serves authentic Lebanese food tonight at LCSwing while the @GordonWebster Big Band plays! http://t.co/evOWYHMhgJ	1436386951	618877846094761984	f	toumnyc
+Okay LebaneseLunchers, join us at 3 locations today: the truck on 46th btwn 5th&6th, our popup at AMEX in FiDi & @warnermusic w/ @gofooda	1436360946	618768773256974339	f	toumnyc
+RT @nycfoodtruck: . @Prospect_Park Food Truck Rally is around the corner - Join us! http://t.co/QZHl3ybvHz  w/ @LobsterTruckNY @TaimMobile ...	1436316993	618584420916854784	f	toumnyc
+Deciding on lunch just got easier! Join the truck on 52nd btwn 6th & 7th or our @gofooda popup at @Gilt! Fattoush http://t.co/vIULhIsRUM	1436274599	618406608138305536	f	toumnyc
+RT @dumbolot: Welcome back to real life! We got @bigdsgrub @ToumNYC and @MexicoBlvd to help ease the transition	1436190740	618054877621657600	f	toumnyc
+RT @Simassin: Join @ToumNYC 1)corporate cafeteria in the AMEX building,2) @starrettlehigh with @gofooda or 3) Dumbo Jay&Water St http://t...	1436190731	618054838379761664	f	toumnyc
+Happy Monday! Join us at the corporate cafeteria in the AMEX building, at @starrettlehigh with @gofooda or in Dumbo on Jay & Water St 	1436189737	618050671863037953	f	toumnyc
+Someone say party? RT @publicaddress: @nzdodo How long are @gemmagracewood and @dubpies in the country? Got a party coming up ...	1436691800	620156474338230272	f	dubpies
+RT @carolineymorgan: @dubpies craving me a steak n cheese..............cannot wait to find your Food Truck this weekend! Chur bro	1436691003	620153135269482497	f	dubpies
+RT @AIW27: @dubpies Please make 46th St. a weekly event, because pie just made my day	1436472427	619236360512077824	f	dubpies
+RT @supericakr: Major thanks to @dubpies for hooking it up this am for my work lunch. You guys are tops! Ta! http://t.co/nygSOJPFtP	1436472359	619236071889448960	f	dubpies
+RT @rjgnyc: Shoutout to @dubpies for randomly appearing in food truck form for while I walked around wondering what to get for lunch.	1436470406	619227882339082240	f	dubpies
+No PieTruck today, sorry!	1436187627	618041822699515904	f	dubpies
+We're happy to run with that! ;-) RT @NapierinFrame: @dubpies maybe it's because there's a smaller number of ingenious kiwis, like you! :)	1436142687	617853329973112832	f	dubpies
+Silly us, of course! MT @NapierinFrame: @dubpies perhaps America's antiquated imperial measurement system calls it 0.016 inch gauge wire!	1436140988	617846201212403712	f	dubpies
+When you coming to get your pie? MT @Waitakeres: @dubpies @KimMolly3564 starter motor mount broken, now held in place by substitute 8 wire	1436133009	617812737524170752	f	dubpies
+Come to think of it, you may be the original! RT @KiwiGus: @dubpies @brendonbrewer we jersey city dwellers are Westies too (to NYC at least)	1436132008	617808537062875136	f	dubpies
+RT @KiwiGus: @dubpies @brendonbrewer we jersey city dwellers are Westies too! (to NYC at least)...	1436131961	617808340018724864	f	dubpies
+Aye, but which was first? MT @brendonbrewer: .@dubpies love that AK (current home) & Sydney (home) both have westies (I am one).	1436128703	617794677996171265	f	dubpies
+Your pie awaits you, sir! RT @morningsteppa: @dubpies fucked the flux capacitor and now using modified junk to travel in time?	1436125394	617780796049502208	f	dubpies
+You can take the westie out of West Auckland but....	1436123698	617773681532633088	f	dubpies
+In lieu of 8 wire, go with kotanga. Free pie if you can explain what's happening here. http://t.co/C0da43sh93	1436123607	617773302057148416	f	dubpies
+If Brooklyn lacks anything, we'd have to say there's a serious dearth of 8 wire.	1436121663	617765146514059265	f	dubpies
+Down the hill @RoyalPalmsClub today RT @CalicoAvenger: @dubpies Will the Pie Truck be at 7th Ave/Carroll St today?	1436104651	617693793756803072	f	dubpies
+Thanks for that! ;-) RT @hecktclem: Just gave DUB Pies (@dubpies) a 4.5/5 rating on @ZomatoUS LoveFood http://t.co/AQbbMyvWhH	1436036674	617408676702384128	f	dubpies
+July 4 Special: Free Apple Pie a la mode when you spend $12 @ cafe or Pietruck - today only! http://t.co/pIy80PwYG7	1436026787	617367211158732800	f	dubpies
+PieTruck is @ Hudson Ave & King St, Soho until 2.30pm http://t.co/b4hpuhB8mJ	1435936010	616986463012569089	f	dubpies
+We are close today! ! \nHappy end of ramadan!!	1437151147	622083116363083776	f	chefsamirtruck
+We are at the corner of park av and 52st	1436973493	621337980137902080	f	chefsamirtruck
+We will be one of the sponsor's of this wonderful non profit organization http://t.co/MxTbyGuwt7	1436666022	620048355926929408	f	chefsamirtruck
+Today we are at the intrepid museum! !	1436542322	619529520601780224	f	chefsamirtruck
+Making the best couscous in  new York http://t.co/bBdS8wzDNO	1436455888	619166989169356800	f	chefsamirtruck
+We are at 47st between park av and Lexington av! Get your couscous	1436455781	619166538613059584	f	chefsamirtruck
+Hi new York! ! We are at 52st and park av! \nGet a taste of home style Mediterranean food	1436369511	618804697852477441	f	chefsamirtruck
+60 days to electric zoo NY!!\nChef samir truck will be there! !!!!	1436284755	618449205561040896	f	chefsamirtruck
+RT @ElectricZooNY: This is NOT a drill.. there's only 60 days left till EZOOTransformed Festival EDM http://t.co/OUOHHzyFh1	1436284696	618448959732871168	f	chefsamirtruck
+@ElectricZooNY \nWe are so happy to bring Chef samir truck to the event! ! Yay let's have fun and delicious Mediterranean food	1436284665	618448826404315137	f	chefsamirtruck
+It's official, we are bringing Chef samir truck to Afro punk, we can't wait to see Lenny Kravitz and Lauren hill! !!	1436284487	618448083429494784	f	chefsamirtruck
+Tuesday's at our location of 36st and Broadway! ! It's hot outside, try our refreshing homemade strawberry lemonade and mint iced tea	1436283285	618443038298382336	f	chefsamirtruck
+RT @afropunk: AFROPUNK Announces Inaugural Atlanta Festival \nCheck out the full lineup &gt; http://t.co/oQW8RqSc4b http://t.co/83rLHqXKP3	1436283089	618442218261626880	f	chefsamirtruck
+Bringing Chef samir truck to the intrepid museum! !!\nHappy 4th of July https://t.co/BynsqP9lh3	1436025567	617362092279078912	f	chefsamirtruck
+Long weekend is almost here, start it with delicious Moroccan /Mediterranean food	1435853273	616639439738150912	f	chefsamirtruck
+Happy Thursday, we are on 47st between park av and Lexington av!	1435852077	616634423484747776	f	chefsamirtruck
+We are at 52st and park av!	1435765640	616271878685069312	f	chefsamirtruck
+Traditional Moroccan couscous with 7 vegetables! ! https://t.co/4XEe8N0kkP	1435711872	616046360983375873	f	chefsamirtruck
+We are at 36st and Broadway!	1435677885	615903808456146944	f	chefsamirtruck
+See you in 45min!!! https://t.co/tAE3EgEgn8	1435612909	615631280244424705	f	chefsamirtruck
 Come to 51st street, between Park and Madison - it's lunch time!!	1392220033	433628363769798656	f	seoulfoodnyc
 It is almost time to plan for dinner! We ate at West 4th and Greene NYU!	1392150901	433338403933794304	f	seoulfoodnyc
 Is it lunchtime yet?\nWe are ready to feed you!\nWe are at 46th street between 5th and 6th !	1392128245	433243381087879168	f	seoulfoodnyc
@@ -1749,7 +1730,6 @@ Hungry yet? We are at 51st Street between Park and Madison Ave !!!	1391700710	43
 Here now.....West 4th and Greene street!!	1391555645	430841718502457344	f	seoulfoodnyc
 Holla Back!! We are On 51st between Park and Madison!	1391523816	430708222140645376	f	seoulfoodnyc
 Are you hungry? We have arrived- West 4th and Greene street NYU...	1391465917	430465373465366528	f	seoulfoodnyc
-Snow- We are at 51st between Park and Madison Ave	1391440953	430360666047000576	f	seoulfoodnyc
 Super eat Sunday...we are at the Corner of 67th & Broadway in front of Apple Store, open for biz now-	1391356481	430006364795338753	f	seoulfoodnyc
 Come and get it!!!\nWe are at 67th and Broadway outside Apple Store !	1391268060	429635500639408128	f	seoulfoodnyc
 The sun is up an we are already to serve you for lunch!\nWe are at 51st between park and Madison....see ya real soon!	1391171021	429228490248826880	f	seoulfoodnyc
@@ -1776,45 +1756,37 @@ Catch us at Governors Island every weekend , The Ultimate Guide to Outdoor Dinin
 RT @GovIslandFood: Come on over to @Gov_Island tomorrow for sunshine and great food. @SweetChiliNYC, @MayhemAndStout, @carlssteaks, @Getstu...	1401539927	472718833275650049	f	getstuffednow
 This was the line for the last ferry off @Gov_Island yesterday! Come early 2day, we r slinging awesome kobe burgers! http://t.co/TXNni8IRN2	1401105843	470898153097416704	f	getstuffednow
 RT @GovIslandFood: Almost 100 followers!! Our 100th follower(must be new)gets a free lunch from any one of our vendors at Gov. Island. Rede...	1401105728	470897670782210048	f	getstuffednow
-coming back soon under a new brand name\nCasey's steaks http://t.co/wfD88ssdpV	1397096188	454080439720751104	f	steaksncrepes
-50 st bet 6 & 7 ave for lunch till 03:30. come for the best old style cheesesteaks in nyc. combo w/ fries & drink $10 only. midtown lunch	1374766188	360421632625483776	f	steaksncrepes
-hudson and king st for lunch till 03:30. come for the best old style cheesesteaks in nyc. combo w/ fries & drink $10 only. midtown lunch	1374678996	360055922934038528	f	steaksncrepes
-RT @ice_cold_brusca: @steaksNcrepes has the best philly cheese steak in the city... I love when they come by my job 46st boldstatement n...	1374678938	360055678896832513	f	steaksncrepes
-50 st bet 6 & 7 ave for lunch till 03:30. come for the best old style cheesesteaks in nyc. combo w/ fries & drink $10 only. midtown lunch	1374504972	359326013995499520	f	steaksncrepes
-hudson and king st for lunch till 03:30. come for the best old style cheesesteaks in nyc. combo w/ fries & drink $10 only. midtown lunch	1374071696	357508722785914880	f	steaksncrepes
-46 & 6 ave for lunch till 03:30. come for the best old style cheesesteaks in nyc. combo w/ fries & drink $10 only. midtown lunch	1373986133	357149847138205701	f	steaksncrepes
-50 st bet 6 & 7 ave for lunch till 03:30. come for the best old style cheesesteaks in nyc. combo w/ fries & drink $10 only. midtown lunch	1373900283	356789763187019776	f	steaksncrepes
-Hudson & king st for lunch till 03:30. come for the best old style cheesesteaks in nyc. combo w/ fries & drink $10 only. midtown lunch	1373468853	354980218034855937	f	steaksncrepes
-46 & 6 ave for lunch till 03:30. come for the best old style cheesesteaks in nyc. combo w/ fries & drink $10 only. midtown lunch	1373379393	354604994579791874	f	steaksncrepes
-50 st bet 6 & 7 ave for lunch till 03:30. come for the best old style cheesesteaks in nyc. combo w/ fries & drink $10 only. midtown lunch	1373298135	354264172940365825	f	steaksncrepes
-Hudson and king st for lunch till 03:30. come for the best old style cheesesteaks in nyc. combo w/ fries & drink $10 only. midtown lunch	1372861990	352434846590701569	f	steaksncrepes
-46 & 6 ave for lunch till 03:30. come for the best old style cheesesteaks in nyc. combo w/ fries & drink $10 only. midtown lunch	1372778663	352085349197029378	f	steaksncrepes
-50 st bet 6 & 7 ave for lunch till 03:30. come for the best old style cheesesteaks in nyc. combo w/ fries & drink $10 only. midtown lunch	1372345056	350266668448096257	f	steaksncrepes
-50 st bet 6 & 7 ave for lunch till 03:30. come for the best old style cheesesteaks in nyc. combo w/ fries & drink $10 only. midtown lunch	1372087020	349184390254977024	f	steaksncrepes
-50 st bet 6 & 7 ave for lunch till 03:30. come for the best old style cheesesteaks in nyc. combo w/ fries & drink $10 only. midtown lunch	1371479327	346635540185096195	f	steaksncrepes
-50 st bet 6 & 7 ave for lunch till 03:30. come for the best old style cheesesteaks in nyc. combo w/ fries & drink $10 only. midtown lunch	1371221351	345553511834083328	f	steaksncrepes
-50 st bet 6 & 7 ave for lunch till 03:30. come for the best old style cheesesteaks in nyc. combo w/ fries & drink $10 only. midtown lunch	1371049735	344833699214422017	f	steaksncrepes
-46 & 6 ave for lunch till 03:30. come for the best old style cheesesteaks in nyc. combo w/ fries & drink $10 only. midtown lunch	1370962868	344469353183449088	f	steaksncrepes
-50 st bet 6 & 7 ave for lunch till 03:30. come for the best old style cheesesteaks in nyc. combo w/ fries & drink $10 only. midtown lunch	1370877243	344110215957995522	f	steaksncrepes
-thefatjewish's photo http://t.co/PDsQWOeWDD	1416245631	534399029724344321	f	trucktotable
-c_brewton's photo http://t.co/MySCnLXreX	1414988994	529128311877025792	f	trucktotable
-Otto's Tacos on Yelp: Really good tacos. Price is average, smart packaging and feels traditional. I'll stay fan if ... http://t.co/BwzlIK2H9D	1414171410	525699116266188801	f	trucktotable
-Just me and Taylor @ Ridge Street http://t.co/54YOOVrEOP	1410046735	508398973460037632	f	trucktotable
-I got mine before the rush http://t.co/4TbJIbbnBE	1409855061	507595034263175168	f	trucktotable
-Check out Samsung Galaxy S5 16G Gold (Factory unlocked) Samsung http://t.co/1mhPt01LWd via @eBay	1409444583	505873364171247616	f	trucktotable
-Hi @ligayamishan This Yassir from Rustic LES. need to run something by you! Can you forward your email. Yassir@bistrotruck.com	1409153111	504650844084916224	f	trucktotable
-Check out my listing on @eBay: http://t.co/txwBt9jjPQ via @eBay	1408365145	501345874119643136	f	trucktotable
-55St & Broadway until 4pm. Let's goooo	1407427421	497412775929737217	f	trucktotable
-Happy Monday carnivores!!! \nIt's time to get the fix at Bistroshopp. Corner of 55St & Broadway until 4pm. fancy... http://t.co/WeLiNKW714	1407168197	496325511334088705	f	trucktotable
-It's time for that Merguez sandwich! Cart is open 55St & broadway until 4pm. Moroccan StreetFood	1406736768	494515966018322433	f	trucktotable
-StreetEats Fancy Moroccan StreetFood Lunch 55St & Broadway http://t.co/rOWG8hdSbi	1406649234	494148821547761664	f	trucktotable
-StreetEats Fancy Moroccan StreetFood Lunch 55St & Broadway http://t.co/G30C42sRK1	1406649217	494148748138668033	f	trucktotable
-  \n            \n         	1406579447	493856111725142016	f	trucktotable
-Happy Monday... Cart is at usual corner 55St & Broadway until 4pm. fancy moroccan streetfood	1406561873	493782401760628736	f	trucktotable
-First breakfast in 30 days. EidMoubarak http://t.co/IUossTYjET	1406548404	493725909607006208	f	trucktotable
-Shop is open tonight for deliveries & take out until 11p. Bar available for eat in.	1406241074	492436875777671170	f	trucktotable
-RT @AnthemSoda: Couscous platter, kale, chicken, lamb sausage from @trucktotable http://t.co/zysvH6ItCB	1406238057	492424219566026752	f	trucktotable
-RT @AnthemSoda: AllNatural FoodTruck @trucktotable 'fancy morrocan street food' http://t.co/7aCejMHXiL	1406238055	492424213064863744	f	trucktotable
+One more round Charlton and Varick till supplies last. Catch us for some buns before the weekend weekendsunshine CheapEats lunchtime	1437143989	622053092478029824	f	kayanyc28
+Baoday today at Charlton and Varick. Get ready by 11:30. Let's bao down y'all! VendyAwards VendyCitizenJudge http://t.co/JKhIyzKlrx	1437059343	621698064458350592	f	kayanyc28
+vendyawards's photo https://t.co/NW4VTQHbUu	1437058895	621696183359131648	f	kayanyc28
+Greenwich and Park Pl today. Get ready by 11:30. baoday homemade lunchtime	1436972951	621335708058451969	f	kayanyc28
+Front and Adams till 2:30 @DUMBOFoodTrucks	1436799776	620609358523723777	f	kayanyc28
+Finish up your week with our baos. Front and Adams till 2:30 @DUMBOFoodTrucks @NYCFoodieFinder Minions DUMBO http://t.co/tRWj5Q1Hm6	1436539488	619517632388169728	f	kayanyc28
+Get ready 11:45 Charlton and Varick Soho foodies asianfood	1436452972	619154759942041600	f	kayanyc28
+shoutout to @swang021 We're here today	1436452695	619153597318733824	f	kayanyc28
+Greenwich and Park Pl today. Get ready by 11:30. baoday homemade lunchtime	1436366181	618790730987868160	f	kayanyc28
+Sup guys? Charlton and Varick till 2:30. Bao down with us today for lunch FoodTruck foodie keepontruckin	1436282579	618440078982037504	f	kayanyc28
+Happy Monday! Front and Adams till 2:30 @DUMBOFoodTrucks	1436196387	618078565024854016	f	kayanyc28
+@Datalot your delivery is on the way. http://t.co/9AiVPef2ZJ	1435847840	616616651761537024	f	kayanyc28
+Get ready by 11:45 at Charlton and Varick today. Last day to enjoy the baos before  catering IndependenceDay http://t.co/dCT2w6r3jO	1435847552	616615441511936000	f	kayanyc28
+Greenwich and Park Pl TriBeCa till 2:30. Catch us before IndependenceDay weekend. Extra duck today. HolidayParty beer lunchtime	1435762191	616257414430593024	f	kayanyc28
+RT @Stevejhock: @KayaNYC28  Sweet.......don't have to wait till Thursday	1435699712	615995355331694592	f	kayanyc28
+@six_dffrnt_wys @DUMBOFoodTrucks Sorry, we are not in dumbo today. We will be back to dumbo next Monday! :)	1435689680	615953280049528832	f	kayanyc28
+RT @EricRubenLawyer: Lunch today from @kayanyc28. iloveny http://t.co/a6ZF7XWl0I	1435689613	615953000020987904	f	kayanyc28
+We're out by Charlton and Varick today till 2:30. Let's Bao down today. letseat Streetfood baotime lunchtime	1435676376	615897477737246722	f	kayanyc28
+Our prayers and thoughts go out to all of our fellow young people of Taiwanwaterpark taiwanfire	1435594600	615554485692301313	f	kayanyc28
+@_BlackParade_ Front and Adams	1435591431	615541195742310400	f	kayanyc28
+RT @GooleyChris: @BrooklynPopcorn love me some of your sweet goodies http://t.co/57N6nu95vh	1435365703	614594422974586880	f	brooklynpopcorn
+RT @GooleyChris: @BrooklynPopcorn what is this magical truck!! @RufioJJ @devinmiranda @iamstephdawn @kmonty_ http://t.co/xxTGPWUmvb	1435365693	614594378921844736	f	brooklynpopcorn
+Hello FIDI :) We are cooking everything fresh and can't wait to see you all!!!! NYC	1435076571	613381713511755777	f	brooklynpopcorn
+@WonderlandK Yes we are :) Looking forward to seeing you and thank you for your support!	1435072254	613363608970522624	f	brooklynpopcorn
+Happy Father's Day to all the daddy's from the Brooklyn Popcorn Family!!!	1434904515	612660060917997568	f	brooklynpopcorn
+Hello 96st and Broadway we are back. Making all your favorite flavors especially the Brooklyn Mix. Can't wait to see you all!!!	1434830970	612351587676237824	f	brooklynpopcorn
+@msladyfrost Yes!! we will see you soon! keep you posted :)	1434806613	612249428410433536	f	brooklynpopcorn
+Good afternoon NYC hope everyone is enjoying their beautiful Wednesday! We are looking forward to seeing you on Hudson & King Street :)	1434567787	611247718225301504	f	brooklynpopcorn
+@NYCRobyn  Thank you for the support!! :)	1434502092	610972175701512192	f	brooklynpopcorn
+@p__alon Sorry we missed you Patricia but we will be returning yes! Look forward to seeing you :)	1434502056	610972025880977408	f	brooklynpopcorn
+@SaiGiddy Hi Saira where are you located? Sorry we have missed you! Let us know so we can come by with one of our trucks :)	1434502006	610971812328013824	f	brooklynpopcorn
 RT @MzFuN_SiZ3d: Tried @BrooklynPopcorn for the time today and it was AMAZINGGG 	1431354821	597771561651830784	f	brooklynpopcorn
 RT @lostplum: If eating just @BrooklynPopcorn for dinner is wrong, I don't want to be right!!	1430969410	596155033403658240	f	brooklynpopcorn
 RT @imnotnicolle: Was blessed with the @BrooklynPopcorn truck. I wrote a whole story about on IG cause I'm annoying. http://t.co/bwz90vRIoL	1430969403	596155005071163392	f	brooklynpopcorn
@@ -1824,197 +1796,216 @@ RT @tuccimusic: @BrooklynPopcorn GREAT POPCORN please check them out the Spicy C
 RT @MatthewGellert: @brooklynpopcorn foodtruck near work today & now all other popcorn is seen as weak and useless. incredible delicious...	1430507201	594216388581040129	f	brooklynpopcorn
 RT @ArdenisPerez_: Feeling so happy after eating almost an entire bag of @BrooklynPopcorn Too good!	1416833924	536866507058581505	f	brooklynpopcorn
 @joseph_damato Yes we are there every Wednesday! See you soon :)	1416833914	536866463685292032	f	brooklynpopcorn
-RT @soniamacr: Enjoying my white cheddar @brooklynpopcorn http://t.co/Uf7yiI5N7N	1416185714	534147718818852866	f	brooklynpopcorn
-RT @Sebastian_Otto: my flight goes in few hours back to germany and catch my favourite @BrooklynPopcorn yeah http://t.co/z965UNfPmC	1415769591	532402370630922241	f	brooklynpopcorn
-@Sebastian_Otto We are on 70th and York today! Hope to see you soon. Thank you for your support :)	1415296416	530417732832202752	f	brooklynpopcorn
-@staceymgoodman Hi Stacey check out our Facebook for our daily locations & our website our GPS truck locator. Thank you for your support	1415292317	530400536995299329	f	brooklynpopcorn
-RT @Tani_718: Popcorn trucks should be a must outside any job @BrooklynPopcorn	1415292050	530399420035383297	f	brooklynpopcorn
-@Tani_718 that you so much for your support!!	1415291949	530398996871667713	f	brooklynpopcorn
-RT @Tani_718: @Sebastian_Otto @BrooklynPopcorn they're awesome 	1415291874	530398681099685888	f	brooklynpopcorn
-RT @itsme_CH3LS: @BrooklynPopcorn I'm lovin my NY mix 	1415291859	530398615567884291	f	brooklynpopcorn
-RT @AllegraShine: @BrooklynPopcorn You totally made my day!!!!	1415291814	530398428048941057	f	brooklynpopcorn
-RT @christinebpc: I had to do it. I had to stop and get some @BrooklynPopcorn - GMO free! Delicious! stre... http://t.co/vWX9BSfYzB http:/...	1415291788	530398321329078273	f	brooklynpopcorn
-RT @Sebastian_Otto: i love @BrooklynPopcorn	1415291772	530398254966775808	f	brooklynpopcorn
-Hey hey hey its Friday!!!!!  Make it a fantastic day and Come down to 50th bet 6&7 for some  balls .	1432912394	604304498551582720	f	mtblls
-Good Thursday Y'all! The Mtbll  is taking a mental health day and restock. Have a terrific day! http://t.co/MvS0jnOtB9	1432830618	603961506384977920	f	mtblls
-Happy  Day  Mtbll Lovers!  Come on by 50th bet 6&7 and brighten your day with your favorite menu item. The  is waiting 	1432738375	603574611368910848	f	mtblls
-Good Tuesday Y'all! Hope you all had a great extended weekend thanks to our men and woman of the armed forces.... http://t.co/oVLm6xQXPy	1432652360	603213837857325056	f	mtblls
-Have a Safe Memorial Day! http://t.co/dEIvWNcCn4	1432566445	602853481775570946	f	mtblls
-Good Morning Mtbll Lovers    It's that time of the week again yahooo!!!!  And a 3 day weekend   Come by 50th... http://t.co/vHYbupA5EI	1432307918	601769144237830144	f	mtblls
-Happy Thursday Y'all!   The Mtbll  is stopped at 50th bet 6&7 Aves. Come on by say hi 	1432219495	601398268237590528	f	mtblls
-Happy  Day y'all. After a weather day yesterday the Mtbll  is ready and waiting on 50th bet 6&7 Aves. Come on... http://t.co/J4ULtq234X	1432129267	601019826195279873	f	mtblls
-Good day Mtbll Lovers. Sorry for the late post this morning past me by. The   however, has stopped on 50th bet... http://t.co/egpeIs5zaj	1431966988	600339179420147712	f	mtblls
-Hey hey hey its Friday!  The Mtbll  is stopped at 50th bet 6&7.   Drop on by for hour weekend fix.	1431700681	599222206778978304	f	mtblls
-Happy Thursday Mtbll Lovers!   The Mtbll  is waiting at 50th bet 6&7 Ave.  Enjoy this gorgeous weather and stop by for your favorite ball 	1431615410	598864551505952768	f	mtblls
-Good day y'all !  The Mtbll  has stopped on 50th bet 6&7 Aves. Come say hi on this beautiful day. Your favorite... http://t.co/xqHlpEon70	1431525080	598485679761432577	f	mtblls
-Good Morning Mtbll Lovers!   It's going to be a hot one today. Come on by 50th bet 6&7 Aves and pick up a... http://t.co/M9QtvygBMl	1431442326	598138586949648384	f	mtblls
-Good Morning Mtbll Lovers!   It's going to be a hot one today. Come on by 50th bet 6&7 Aves for a refreshing... http://t.co/qHmGKSKhxz	1431442171	598137937340018689	f	mtblls
-Happiest of Monday Mtbll Lovers!   The  has stopped on 50th bet 6&7 Aves. Come on by for your favorite menu item!\n lgr 	1431352932	597763640964620288	f	mtblls
-The Mtbll  is in Brooklyn at the Red Bull Music Academy Festival. http://t.co/MOy4OYZ889	1431285875	597482384758591489	f	mtblls
-Red Bull Music Academy Festival New York 2015\n\nReturning to New York City for a third consecutive year, the Red... http://t.co/5nXFQQ5Cno	1431283579	597472754112270336	f	mtblls
-To all our moms grandma's and godmoms! http://t.co/rX0WJdHpmr	1431269330	597412987473887233	f	mtblls
-Watch over them today NYPD http://t.co/iQI8oAm09F	1431105797	596727082266275840	f	mtblls
-Yay it's Friday!!!! And a nice a one too   come by 50th bet 6&7 Aves for your weekend fix, the Mtbll  is waiting.	1431096772	596689228811108352	f	mtblls
-Officially sold out of ice cream! Thank you everyone for a great season!! closed	1382307419	392051847542079488	f	itizyicecream
-Greenwich and jay st TriBeCa is where we're at!	1382288993	391974563716030466	f	itizyicecream
-Last day of the season!  Stop by for hazelnut ice cram and sorbets!  Sorbet pints on sale.  Limited quantity left, here til we sell out	1382288637	391973070702792704	f	itizyicecream
-Final day in LIC!  Blowout sale on sorbet pints ($6.50) and ice cream pops ($1.50).   Stop by 47th rd and center blvd til 6:30 today.	1382201646	391608204112957440	f	itizyicecream
-@sarahark hazelnut and mango ice cream today!  Though we're transforming into a sorbet truck...  Running out of ice cream :-)	1382126730	391293983219281920	f	itizyicecream
-Likely our last three hours at Columbia this year! Come grab a scoop of your favorite flavor before it runs out!	1382122482	391276167690719232	f	itizyicecream
-Pint sale on sorbets today $6.50 a pint!  Stop by 115th and broadway til 6:30pm to grab yours today!	1382115945	391248750729240577	f	itizyicecream
-Ice cream trucks getting harder to find?  We're still here and scooping!  Stop by and grab a pint for home @ Greenwich and Duane st til 6:30	1382042133	390939160368144384	f	itizyicecream
-@NoExpiration @TaraLipinsky @courtneyesmith @b1ward @yousingiwrite We are on 51 btwn 6/7! Last day at this location! Will be here until 3:30	1382028679	390882729229049856	f	itizyicecream
-Last day at Midtown west on 51 btwn 6/7 ave! Come get a sweet scoop until 3:30!	1382028621	390882484206182400	f	itizyicecream
-Just a couple of days til the end of our season!  Stop by 115th and broadway for a scoop.  Here til 6:30.	1381946480	390537962184007681	f	itizyicecream
-@NoExpiration most likely we will!	1381938863	390506011716747264	f	itizyicecream
-I scream u scream we all scream for ice scream!  We're still out and serving, stop by Greenwich and jay til 6:30	1381688887	389457538162651136	f	itizyicecream
-It's finally sunny out!  Stop by for a scoop or hand packed pint.  We're at 47th and center blvd LIC til 6:30 tonite.	1381599057	389080765600137217	f	itizyicecream
-@NoExpiration @TaraLipinsky @courtneyesmith @yousingiwrite @IamJessicaLima Sorry, we won't be out today :(  Hopefully we'll see you next wk	1381420892	388333484239888384	f	itizyicecream
-Cooler weather means your ice cream won't melt as fast outdoors so you have more time to enjoy a delicious scoop at 115 st and Broadway	1381339776	387993259639070721	f	itizyicecream
-Walk out into the most and get some dreamy ice cream.  Just walk towards Greenwich and jay st before 6pm :)	1381082157	386912729837350913	f	itizyicecream
-Back in LIC with the truck so everyone that have been asking for our pints, today is your day! 47th rd & Center Blvd	1380998048	386559950740533248	f	itizyicecream
-@Marilyn_He glad you asked!  It's a long and raging debate for many of our customers :-) Its i as in Italy, followed by tizzy.	1380912785	386202328845803520	f	itizyicecream
-New flavor!  Mango ice cream... Stop by our truck at 115th and broadway til 6:30 pm today.	1380903796	386164626511380480	f	itizyicecream
-@KittyGoogs ha. happy to help.	1432946425	604447235368226816	f	milktrucknyc
-@KittyGoogs @kewe_m thanks for coming by ladies.	1432935855	604402901277106176	f	milktrucknyc
-Hey wallstreet we are at Wall St and William St! Call 646-504-6455 or @foodtoeat.com to preorder. We're also at @TheSeaport 19 Fulton	1432917330	604325201271246851	f	milktrucknyc
-RT @sophiaphotos: Woman buys pesticide free food. Feels unsafe a bug was on the lettuce. http://t.co/NJM0FHBGSU	1432834679	603978538694418432	f	milktrucknyc
-Bessie will be at 25th/Park for lunch today! Or visit our kiosk at Seaport (19 Fulton St).	1432825306	603939225814310912	f	milktrucknyc
-RT @noREDpaint: @milktrucknyc yes! I heard about this famous truck	1432817708	603907356364242944	f	milktrucknyc
-The truck is BACK in its usual spots starting today!! \nTruck Lunch locations 11am-3pm:\nTODAY -58th &... https://t.co/axxrZgTOFP	1432741918	603589468415782912	f	milktrucknyc
-Have you missed our truck? We're finally back on the road after a long private event, find us at 58th & Madison for lunch today! midtown	1432741331	603587009916104705	f	milktrucknyc
-Bessie is back on 58th & Madison for lunch, our Seaport stand is open all day at 19 Fulton, and sandwiches always at @houstonhallnyc!	1432733778	603555328685408258	f	milktrucknyc
-happy Memorial Day! visit us at @TheSeaport, 19 Fulton Street all day.	1432572391	602878420910002176	f	milktrucknyc
-caesar salad with oily croutons https://t.co/txxEooRjfK	1432514892	602637252825653249	f	milktrucknyc
-Find us today at Pier 5 Smorgasburg in Brooklyn, or if you're in Manhattan today at @TheSeaport, 19 Fulton St....where we now have TOTS!	1432483204	602504344764841985	f	milktrucknyc
-pork loin for new sammie seaport.pig&gruyere https://t.co/eHYHXsFaUh	1432318200	601812266770702337	f	milktrucknyc
-today's the last day of no truck due to private event. BUT, come see us at @TheSeaport Smorgasburg at 19 Fulton St, booth officially open!	1432307688	601768176804864000	f	milktrucknyc
-RT @TheSeaport: 8 Vendors, 1 SeaportSmorg: @CemitasNYC @MilkTruckNYC @LumpiaShack @PizzaMoto @RedHookLobster @RamenBurger @SchnitzNYC @Lon...	1432226610	601428111654260736	f	milktrucknyc
-RT @smorgasburg: Grand Opening of Seaport Smorgasburg today! @TheSeaport @LonestarEmpire @milktrucknyc @ramenburger @Redhooklobster http://...	1432218954	601396000582967297	f	milktrucknyc
-Trucks still closed, but now you can find us each weekday at @TheSeaport Smorgasburg! 11am-8pm at 19 Fulton Street. Grand opening today!	1432218933	601395911596625920	f	milktrucknyc
-@ADoseofCrazy @houstonhallnyc back next week!	1432150071	601107083153510400	f	milktrucknyc
-The truck is still closed for a private event! Our sandwiches are also sold at @houstonhallnyc or we hope to see you this wknd at markets!	1432131863	601030714902061056	f	milktrucknyc
-RT @mashfeed: Foodies unite! @Smorgasburg is back! Check out the 10 foods we think you should be trying http://t.co/vriwWbKxrZ http://t.co/...	1432069902	600770831220928513	f	milktrucknyc
-This Is Why NYC Has The Best Bagels In The World | via @Gothamist http://t.co/shEi2Pj7rR http://t.co/vrbLxL5zEI	1432915846	604318975942594560	f	souvlakitruck
-RT @randomfoodtruck: Get a picnic and eat outside! @CarpeDonutNYC @MamasHeros @souvlakitruck @PolishCuisine @carlssteaks @gcnyc1	1432915340	604316854404796417	f	souvlakitruck
-Halloumi is Helping to Heal a Divided Cyprus | via @MUNCHIES http://t.co/abjQ6lbVBk http://t.co/QQAqCwRzZd	1432836643	603986775569215488	f	souvlakitruck
-Check out this awesome photo map! | Old NYC, Block By Block via @Gothamist http://t.co/BGmwb6yx73 http://t.co/PEpeU9tIZP	1432746618	603609182508560386	f	souvlakitruck
-Why You Should Still Buy Ugly Fruit by @TheSavory http://t.co/0dqEcJdQ21 http://t.co/xu5jBFWmtQ	1432674910	603308418233929728	f	souvlakitruck
-9 Things You Should Never Do When Grilling | @TheDailyMeal http://t.co/UMtxpFh5Sp http://t.co/qGgnAJrgeH	1432407319	602186059594760193	f	souvlakitruck
-The Most Popular Summer Recipe In Each State, According To Google http://t.co/ERI0Hlw7lj http://t.co/kYdN22yfjV	1432317318	601808568594096128	f	souvlakitruck
-RT @randomfoodtruck: Start the long weekend off right! @Chefsamirtruck @souvlakitruck @PolishCuisine @MamasHeros @gcnyc1	1432308345	601770932122812416	f	souvlakitruck
-RT @souvlakigr: Enjoy our Greek Burger for FREE w UberEATS. Enter code EATSOUVLAKI for free first meal. @Uber_NYC http://t.co/bTUGSAVmVx	1432305126	601757431824277507	f	souvlakitruck
-7 Myths (and Truths) About Olive Oil on @WSJ http://t.co/BV8tDF7Xnt http://t.co/kZ2uQ7DSBw	1432237823	601475140585652224	f	souvlakitruck
-Did you catch a glimpse of the 2015 Dance Parade this weekend? Photos on @Gothamist: http://t.co/dcFd2SnBJl http://t.co/qEVaFzqIwc	1431973513	600366545009803264	f	souvlakitruck
-RT @souvlakigr: Greek Fries on the go from @SouvlakiTruck! http://t.co/nerWAJrId3	1431965407	600332546635882496	f	souvlakitruck
-The NYC Outdoor Food Markets You Need to Hit Up Immediately via @ThrillistNYC http://t.co/VmsFUBNwZM http://t.co/mzTaNqjBh5	1431891041	600020634421305345	f	souvlakitruck
-How long will your produce stay fresh? Find out on @HuffPostTaste: http://t.co/FABNMzcocm http://t.co/694NEdzR0W	1431796817	599625429192957953	f	souvlakitruck
-Looking for a summer read? @GrubStreetNY suggests 10 New Food Books:  http://t.co/h5PsRBFmJC http://t.co/c4xgP8wYcM	1431714027	599278183263903746	f	souvlakitruck
-RT @randomfoodtruck: Almost lunchtime! @CarpeDonutNYC @Chefsamirtruck @carlssteaks @souvlakitruck	1431704195	599236945022230529	f	souvlakitruck
-@MKramerTV We are on 55st/Broadway\nStop by for a little taste of Mykonos\n@randomfoodtruck till 3 pm.	1431701151	599224175094603776	f	souvlakitruck
-RT @holaimpatti: Just had my first taste of souvlaki from @souvlakitruck and loved it. Thank you, @eddiebauer for making it happen.	1431641608	598974436553940992	f	souvlakitruck
-Greek wines are the best wines. | Ode on Grecian White Winesa Modern Success Story on @WSJ http://t.co/Azj8aU5EZO http://t.co/vJ7rAWjwSD	1431630921	598929609242062849	f	souvlakitruck
-@MKramerTV Greetings Marcia were on \n@eddiebauer Airstream Tour! 15st/5th ave\nStop by for a little taste of Mykonos till 7pm	1431623772	598899625282686976	f	souvlakitruck
-RT @RentSoBro: There is something about truckfood that is uniquely NYC...I love it! @Chefsamirtruck @mausamnyc  https://t.co/46ui927xr7	1432919051	604332420893122561	f	mausamnyc
-RT @FordhamRoad_NYC: @mausamnyc @Chefsamirtruck @rollincubans	1432919011	604332250835087360	f	mausamnyc
-RT @FordhamRoad_NYC: Today's menu for @mausamnyc http://t.co/sLrwq0UahN	1432912743	604305960996376577	f	mausamnyc
-RT @FordhamRoad_NYC: Today's newcomers are @Chefsamirtruck and @mausamnyc ! http://t.co/7sUOhmwNqs	1432909870	604293911658565632	f	mausamnyc
-Happy Friday @fordhamroad_nyc \n Aroma of Curry King will make you HUNGRY & delicious mango lassie http://t.co/RdL2hEo6M5	1432905216	604274392756011008	f	mausamnyc
-Don't miss out on a GREATTTT event. Enjoy with and friends! http://t.co/mw9A3L6XT7	1432855633	604066426643714048	f	mausamnyc
-Dinner @Rooseveltisland don't miss delicious Indian flavors 5-8pm http://t.co/G3SEU7Nb6d	1432848425	604036190862471168	f	mausamnyc
-Curry Thursday @dumbolot don't forget to grab a delicious mango lassie http://t.co/1r4tLgSuuy	1432822177	603926100285247488	f	mausamnyc
-Savory Indian dinner @Rooseveltisland 5-8pm stop by and enjoy a delicious mango lassie http://t.co/2NTWXLmd3E	1432755249	603645386260140032	f	mausamnyc
-midtown savory Indian lunch @47 Street between Park & Lex delicious mango lassie. http://t.co/LGgSqog4Kl	1432732092	603548255138492416	f	mausamnyc
-Happy Memorial to All! Thanks to @GovIslandFood and  @livefastgroup we will be vending on @Gov_Island all summer http://t.co/5xvarxit41	1432560837	602829961850920960	f	mausamnyc
-CraZy crowd for CRAZY CURRIES http://t.co/ZaiT4MhzWP	1432486351	602517543841079297	f	mausamnyc
- Thanks to @GovIslandFood and  @livefastgroup we will be vending on @Gov_Island all summer beautiful sunny day! http://t.co/ls2z23Qzjf	1432468221	602441500253884416	f	mausamnyc
- @GovIslandFood and  @livefastgroup we will be vending on @Gov_Island all summer! Bring family & friends http://t.co/ywArxuSBtV	1432383965	602088104829317120	f	mausamnyc
-Great place to start you're Memorial weekend  with family & friends . We're @Governersisland http://t.co/nFfRBzGzIV	1432377807	602062278574383104	f	mausamnyc
-Happy Friday dinner @Rooseveltisland 5-8pm Safe Memorial weekend to All! http://t.co/pEXaCUsXKU	1432324189	601837389716271104	f	mausamnyc
-Happy Friday  Curry King Indian Cuisine Truck Bay Gourmet StarrettLehigh spice you're Memorial weekend! http://t.co/uPXJetEHeT	1432291134	601698745370222592	f	mausamnyc
-@RooseveltIsland special all dinner entree served with Paratha (roti) and drink http://t.co/Z5UJBCfnlp	1432238034	601476025806098432	f	mausamnyc
-Delicious dinners @RooseveltIsland our spices will keep you warm on this cool evening http://t.co/CLiEFYwJ3O	1432233784	601458201729466368	f	mausamnyc
-Dumbolot Thursday's spice up with Curry King's authentic Indian savory flavors http://t.co/1YetCjqFz4	1432206095	601342064496922624	f	mausamnyc
+foofighters CitiField tomorrow night mamasheros	1436994952	621427989276983296	f	mamasheros
+Join us this Thursday at citifield http://t.co/P93ALcvV6c	1436901343	621035361377120256	f	mamasheros
+Mini crowd forming, come get a sandwich, you really won't regret it. 46th between 5th and 6th http://t.co/EJYNaKt1MB	1436803093	620623273919971328	f	mamasheros
+Hey guys! Catch us at the Fair @ The Square in Westchester Sq in the Bronx. We will be leaving at 6 pm! See you there http://t.co/l3GMs5R7eu	1434812189	612272815853699073	f	mamasheros
+RT @BigMangNate: had my first @MamasHeros today, pretty damn tasty and the sandwich was huge.  Def going to work it into the truck rotation.	1433544013	606953700939169792	f	mamasheros
+Thanks Nathan We Look Forward To Seeing You Again Next Wednesday Here Downtown https://t.co/dX7vmOCAdI	1433350875	606143622090788864	f	mamasheros
+Catch Us On Water St & Old Slip Today Can't Miss Us! NYCFoodTruck	1433338092	606090004050407425	f	mamasheros
+A Special Good Morning For Downtown Manhattan! Today We're Right On Water St & Old Slip. Come Try Us... https://t.co/gUVJXoBUKA	1433337922	606089294239956995	f	mamasheros
+Today We'll Be On 46st Between 5th & 6th Avenue NYCFoodTruck TweetAboutIt FoodTruck	1433248420	605713892451467265	f	mamasheros
+Shout Out To Everyone Who Came Out Today To Try Our Footlongs! Tomorrows 55th & Broadway in West Midtown	1432842531	604011470372900864	f	mamasheros
+RT @randomfoodtruck: Start the long weekend off right! @Chefsamirtruck @souvlakitruck @PolishCuisine @MamasHeros @gcnyc1	1432842390	604010879483527169	f	mamasheros
+RT @USMCHerk1022: I don't enjoy the termite loving of NY City, but I do love me some street food. @MamasHeros	1432842356	604010739645468672	f	mamasheros
+RT @QueenCity_226: mamasheros's photo https://t.co/avvwIyqYMS @MamasHeros props to the moves being made	1432842338	604010664085032960	f	mamasheros
+@nystfood Absolutely! We we're actually on 46st and 6ave Today. Tomorrow we're on 55st & Broadway. Come By!	1432842325	604010608892252160	f	mamasheros
+RT @nystfood: @MamasHeros Are you guys active and operating the truck this year?	1432842140	604009829682778112	f	mamasheros
+Is a tomato a fruit or vegetable ?	1426860498	578921007173541888	f	mamasheros
+comingsoon 2015 staytuned	1426224192	576252147320369152	f	mamasheros
+Well it's Friday Mtbll Lovers! Another beauty .  The  is stopped at 50th bet 6&7 Aves. Come on by for your... http://t.co/O7T3RX1Rk1	1437145380	622058928709439488	f	mtblls
+Good Thursday Y'all!  Looks to be a nice one today whew   The Mtbll  is stopped at 50th bet 6&7 come get out... http://t.co/7dxAP2yewr	1437057668	621691039414386689	f	mtblls
+Good Morning Mtbll Lovers! It's that part of the week . The  has stopped on 50th bet 6&7 Aves.  Come on by for your favorite menu item 	1436971914	621331358460289024	f	mtblls
+The Mtbll  has taken a personal day! Got to get things done  see ya tomorrow! http://t.co/AXbQ2EMDy7	1436894675	621007393799962624	f	mtblls
+Uuggghh It's Monday again   Why not turn your frown upside down and grab your favorite ball!  The Mtbll  has... http://t.co/Cw8q6YZvV3	1436793334	620582342122409985	f	mtblls
+TGIF MTBLL LOVERS! The Mtbll  has stopped on 50th bet 6&7 Aves. Come on by for your weekend fix 	1436537156	619507850038112256	f	mtblls
+Morning Mtbll Lovers! The  has stopped on 50th bet 6&7 Aves. Come brighten your day with your favorite ball! http://t.co/ZV27trmJny	1436453131	619155427067076608	f	mtblls
+Good Morning Mtbll Lovers!  We are halfway to the weekend woohoo. Come on by 50th bet 6&7 for some delicious... http://t.co/8Tgr7441dz	1436364711	618784564811571200	f	mtblls
+Morning Y'all! Hope you all have a Terrific Tuesday .  The Mtbll  has stopped on 50th bet 6&7 Aves, come on by... http://t.co/DwHqGOOHJ0	1436280846	618432809825345537	f	mtblls
+Good Monday Y'all!   Hope you all had a fun 4th of July. Now it's back to the grind. Nice day for a stroll to... http://t.co/NBnalGgQNT	1436193121	618064864897036293	f	mtblls
+Good Morning Y'all!  The weekend begins for most tomorrow sooo, make your own fireworks today with our amazing... http://t.co/uJPr2vzFQz	1435849416	616623261279985664	f	mtblls
+Happy  Day Mtbll Lovers! The Mtbll  will be stopped at 50th bet 6&7 Aves.   Come on by for your favorite ball	1435753919	616222718531399681	f	mtblls
+Good Tuesday Y'all!  Calls for a nice day.  Why not take a stroll to 50th bet 6&7 Aves for your favorite menu item 	1435681946	615920841881190400	f	mtblls
+We are at the 4th avenue festival on 14th street until 6 pm\nkettlecornnyc http://t.co/wCpqmj3tFl	1436626686	619883369216802821	f	kettlecornnyc
+Good Monday y'all! Sorry for the late post. It's been a manic Monday for sure   The Mtbll  is stopped at 50th... http://t.co/Brv6a03M42	1435596730	615563418821652480	f	mtblls
+Happy  Day Mtbll Lovers. The  is stopped at 50th bet 6&7. Drop on by for your midweek favs. 	1435157826	613722523113508868	f	mtblls
+Good Tuesday Y'all!  Another hot one today. Come on by 50th bet 6&7 Aves for some refreshing cold water and... http://t.co/ntwHhPo9Dr	1435071211	613359231908073473	f	mtblls
+Happy Monday Mtbll Lovers! The  is shining perfect day for a stroll. Head on down to 50th bet 6&7 Aves. Today's... http://t.co/4pwCY0PjZ7	1434984228	612994399270793216	f	mtblls
+Good Thursday Y'all!   The Mtbll  has stopped on 50th bet 6&7 Aves. Come on by for your favorite ball!	1434642190	611559787285884929	f	mtblls
+Happy  Day Mtbll Lovers!  Finally a beautiful day   take a stroll to 50th bet 6&7 Aves for your favorite ball. 	1434554248	611190932252266496	f	mtblls
+Good day y'all!   Hope you all had a great weekend. The Mtbll  has stopped by 50th bet 6&7 .   Come on by for your favorite ball!	1434466664	610823579266076672	f	mtblls
+honestly, this is all we are trying to do at Milk Truck. makepeepshappy https://t.co/3a1d9O4fRS	1437174692	622181870109900800	f	milktrucknyc
+the pull https://t.co/St5sY6SZ8w	1437174609	622181522213355520	f	milktrucknyc
+salsa verde https://t.co/oyPOwbldM0	1437086151	621810503988420608	f	milktrucknyc
+Bessie's at Water St. and Broad St. today for lunch! Call 646-504-6455 to pre-order. Seaport kiosk open all day until 8pm, 19 Fulton St.	1436881984	620954166006050816	f	milktrucknyc
+RT @TheSeaport: This kind of grin can only be caused by a @milktrucknyc grilled Ham & Cheese. \nSeaportSmorg http://t.co/pkRH90SzMC	1436826506	620721474891051008	f	milktrucknyc
+@1nationundrfood thank u!!	1436725522	620297917711187968	f	milktrucknyc
+RT @1nationundrfood: late post - thanks for the yummy grilled gruyere sandwich @milktrucknyc grilledcheese sandwiches... https://t.co/6g0w0...	1436725507	620297851525066753	f	milktrucknyc
+RT @HannahMylrea: @milktrucknyc thanks! We found you at Seaport instead!	1436544227	619537510989987841	f	milktrucknyc
+RT @foodbabyny: Seriously good Pig & Gruyere Grilled Cheese from @milktrucknyc at smorgasburg... https://t.co/UuzXPphyzH	1436544222	619537490328752128	f	milktrucknyc
+@HannahMylrea 	1436544129	619537098333384704	f	milktrucknyc
+Bessie is at Wall St/William St today for lunch, call 646-504-6455 to preorder!	1436542033	619528307697172480	f	milktrucknyc
+RT @BernPichardo: tbt to last Sunday at @smorgasburg , eating this tasty Mac-n-Cheese from @milktrucknyc http://t.co/QVS2lbaA7w	1436461516	619190593319763968	f	milktrucknyc
+@HannahMylrea hi Hannah. private event today. back at 53rd & Mad next thurs.	1436456183	619168225205600256	f	milktrucknyc
+RT @ADoseofCrazy: I see you, @milktrucknyc. milktrucknyc grilledcheese love http://t.co/PiaubZea9G	1436456141	619168050831597569	f	milktrucknyc
+RT @BernPichardo: Hey @milktrucknyc thank you for providing my leftovers for work today.  Deliciousness at @smorgasburg macandcheese http:...	1436206346	618120335087534080	f	milktrucknyc
+RT @20razz: The @milktrucknyc ham & cheese w/ ranch applewood smoked ham, aged cheddar & mustard on rosemary pullman bread is pretty damn s...	1436152574	617894798318567424	f	milktrucknyc
+Happy 4th!! Nothing says america like grilled cheese, amirite? Wburg @smorgasburg and kiosk at @TheSeaport open all day today!	1436020207	617339609010180096	f	milktrucknyc
+Truck closed today, but kiosk at @TheSeaport is open until 8pm. 19 Fulton Street, let's kick off the 4th with some American comfort food.	1435932016	616969709083230210	f	milktrucknyc
+RT @MajestyBakes: This mac & cheese from @milktrucknyc did not suck whatsoever. Count me as a fan! http://t.co/YjIBKBYQcG	1435784851	616352456121942017	f	milktrucknyc
+@mikeyc2113 We have a location at 19 Fulton St at South Street Seaport's Smorgasburg. Open till 8pm.	1435597254	615565617605804034	f	milktrucknyc
+RT @randomfoodtruck: Been awhile since I was in on a Friday (humblebrag). Happy to see so many great trucks here! @CamionNYC @carlssteaks ...	1437146346	622062981342449664	f	souvlakitruck
+Not in NYC? Check out some awesome Greek restaurants in Montreal: http://t.co/R4h3xmt0pZ via @Thrillist http://t.co/9QXKoc8MtW	1436461362	619189947015266304	f	souvlakitruck
+Good news for midtown-ers! Read about our upcoming location from @EaterNY: http://t.co/pb03CXUXch http://t.co/Ib7LE6EEq4	1436369395	618804211443204097	f	souvlakitruck
+Have a wonderful 4th of July weekend! SouvlakiGR http://t.co/TT1H6QZ2g1	1436018472	617332332954058752	f	souvlakitruck
+@Stellar78 Hello! Please email Kostas at souvlakigr@gmail.com and you can definitely discuss with him - thank you.	1435866613	616695392097300480	f	souvlakitruck
+Thanks to all our guests for the awesome SouvlakiGR truck photos! via @Refinery29 http://t.co/FCvC1wamBH http://t.co/hV0d6t2C1n	1435860044	616667840435879937	f	souvlakitruck
+It's the perfect meal! Find us at FoodTruckson5th today until 7PM. SouvlakiGR http://t.co/5PjJaPgOdZ	1435676480	615897915010191360	f	souvlakitruck
+We're setting up every Tuesday until 7PM - find us! http://t.co/JeOPB9pvdQ http://t.co/t6dEQZXdqA	1435593700	615550709182918656	f	souvlakitruck
+Tourists in Greece: 'Everybody should come and spend money here' | via @guardian http://t.co/gG9vREd8cA http://t.co/H64smaLb3y	1435420862	614825777369083905	f	souvlakitruck
+Is It Food, or Is It Foodiness? Well, Does It Help You When You're 'Hangry'? - @HuffingtonPost http://t.co/QxChMCMw6l http://t.co/UtymmfnrlH	1435341703	614493757392748544	f	souvlakitruck
+Find us today! http://t.co/sg1ZY2XjAf	1435088820	613433089801482240	f	souvlakitruck
+RT @EaterNY: P.M. Intel: Food trucks at the NYPL, Cronut mania hits Japan, and more news: http://t.co/ZkL3A8xCzk http://t.co/9D3HJGvDDz	1435084826	613416338086871040	f	souvlakitruck
+RT @ZeroCater: Congratulations to ZCNYC vendors @souvlakitruck and @CalexicoNYC on being apart of the Top 10 foodtrucks in NYC! http://t...	1435080864	613399722796150784	f	souvlakitruck
+RT @AndysItalianIce: Chilling with my two favorite trucks tonight @bigdsgrub @souvlakitruck	1435079119	613392401131020288	f	souvlakitruck
+We're here at the @NYPL Outdoor Reading Room! http://t.co/wgVYZpl6LS via @EaterNY ireadeverywhere newyorkpubliclibrary	1435074084	613371282734850048	f	souvlakitruck
+Proud to be featured as one of the top 10 best food trucks! via @USATODAY http://t.co/Bnr4KiSS25	1435007663	613092691585449984	f	souvlakitruck
+RT @bryantparknyc: FoodTruckson5th welcome @PhilsSteaks @KimchiTruck @souvlakitruck @NeaExpress & @Redhooklobster taking turns at the @nyp...	1434826209	612331618414522368	f	souvlakitruck
+Mykonos isn't the only paradise in Greece. Check out these other beautiful islands: http://t.co/eXeFZSM7cI via @HuffingtonPost	1434650433	611594361143455744	f	souvlakitruck
+RT @Scottmirts: Feeling of joy when I see @souvlakitruck on my walk to the office	1434641568	611557177912913920	f	souvlakitruck
+It's never a bad idea to souvlaki it up with us. NYStreetFood SouvlakiGR http://t.co/eQ1vbC5PKh	1434218491	609782666012041216	f	souvlakitruck
+GM again..!! It's taco Tuesday.\nlet's start with our delicious egg breakfast tacos.\nThe truck it's located at NE corner 52nd and Park Avenue	1436879209	620942527013761024	f	etravaganza
+GM..!join us for a delicious breakfast taco and a freshly brewed iced coffee..it will hit the spot..!!	1436358066	618756692386426880	f	etravaganza
+Rise&shine NYC have you tried our tasty protein wrap?\nThree farm fresh egg whites,chicken& cheese on a whole wheat wrap or omelette.	1436271771	618394748500488192	f	etravaganza
+RT @nycfoodtruck: Win tickets @VendyAwards! Snap a pic of ur fav streetfood & tag w/ VendyCitizenJudge. Details: http://t.co/5HEkx7Dk6Q	1436219554	618175731563110401	f	etravaganza
+Back to reality..!!happy Monday.\nbreakfast is served.	1436186194	618035808944136193	f	etravaganza
+RT @biggayicecream: Hey NYC- happy pride! http://t.co/9Rb5SRMtsn	1435506048	615183070702927872	f	etravaganza
+Thank you folks for your support!!\nIt has been a nice week.\nFor now!\ntime to wrap up,have a rest and nice weekend.\nSee you Monday.	1435347384	614517586089349121	f	etravaganza
+Almost Friday!\nJoin us for a tasty tacos, Burritos, quesadillas,salad Bowls and More. Begins at 11:43	1435258188	614143473269256193	f	etravaganza
+Have you tried our tasty Salad Bowls!!	1435073206	613367601503281152	f	etravaganza
+Happy Friday we located on 52nd and Park Avenue.\nthree amigos wrap demand..!!join us.	1434725530	611909343349485568	f	etravaganza
+In case you've missed out your breakfast tacos?do not worry!We will continue serving till 2 PM.\nlunch Begins...NOW!!	1434469605	610835914693181440	f	etravaganza
+Good morning..!!have you tried Our delicious  breakfast tacos on a gluten-free corn tortilla?	1434456740	610781956280717312	f	etravaganza
+Let's begin this social Friday with a Mexican Grilled cheese delicious chorizo,bacon bits,tomato and jalapeno on a multigrain.	1434122325	609379316921692160	f	etravaganza
+Good morning it's almost Friday!\nRise and shine breakfast egg wrap\nEgg turkey spinach and avocado on a whole wheat wrap.\nDelicious!!	1434022542	608960797335801856	f	etravaganza
+Tres amigos wrap on demand,\nHealthy salad with a delicious toppings,\nCarne asada,pollo asado, chorizo fresco \nAnd more.begins @ 11:36	1433949082	608652681251463168	f	etravaganza
+Good morning Midtown.!!\n it's a beautiful day in the neighborhood..!!\nJoin us.breakfast is served!	1433937287	608603211189075969	f	etravaganza
+Happy Monday. We are ready for you with a tasty Meal and a smile..!!\nJoin us, 52 & park is the place.	1433778180	607935869782245376	f	etravaganza
+Happy social Friday!\nDelicious tacos awaits.	1433519432	606850599213273088	f	etravaganza
+Beautiful day in Midtown..!\nPreparing a taste  lunch for ya.\njoin us 52nd Park is the place.	1433346636	606125842327064576	f	etravaganza
 Pollo asado and Carne Asada are sizzling..!!would you like it on a salad bowl?or on a tasty burrito!\nJoin us for more.We are @52&park	1432826618	603944728044896258	f	etravaganza
-RT @HippieHooper: So good yesterday - back today CreatureOfHabit breakfastforlunch (@ Eggs Travaganza - @etravaganza) https://t.co/jbBZRL...	1432766837	603693986012880896	f	etravaganza
-Have you tried Our Healthy salad bowls??	1432740510	603583563473297408	f	etravaganza
-Good morning breakfast is served!! join us 52nd and Park is the  place.	1432732305	603549149276024832	f	etravaganza
-Back to reality..!! lunch will be serving at 11:45	1432652376	603213902722269184	f	etravaganza
-Yay..!!happy Friday!	1432286315	601678533698654208	f	etravaganza
-Good morning NYC! our grill's speed is 160 mph.\njoin us for a quick,tasty breakfast\nThe truck is at 52nd and Park.	1431004479	596302123614216192	f	etravaganza
-RT @WNTonight: Happy Cinco de Mayo! \nWATCH: .@GStephanopoulos gives us a brief history of the holiday: http://t.co/n0891DqphX http://t.co/j...	1430836807	595598856030691328	f	etravaganza
-Buenos Dias a todos..!!feliz Cinco de Mayo	1430817917	595519625825234945	f	etravaganza
-RT @edlevine: So awesome that Aaron @franklinbbq won best chef sw bbq rules! @seriouseats @jamesbeardfoundation @TheFoodLab http://t.co/pw5...	1430792121	595411427701194753	f	etravaganza
-Yay..Almost Friday.!! Have you tried our tasty Mexican Wrap??\nNow you can  have it for breakfast and lunch.	1430408329	593801688978456576	f	etravaganza
-Beautiful day in Midtown..!!prepping a tasty lunch for you!\nBegins serving at 11:33.	1430232050	593062319128739840	f	etravaganza
-Think... Burrito!	1430150482	592720200430149633	f	etravaganza
-Y IY!!grab a delicious bites on the go!!	1429890984	591631788172271616	f	etravaganza
-Have you tried our delicious Mexican Grilled cheese?\nBacon bits chorizo fresco grilled tomato  jalapenos on a multigrain.\nGet yours.and More	1429802391	591260199975051264	f	etravaganza
-Good morning NYC!We are back on our usual location 52nd and Park..join us delicious breakfast awaits.	1429787868	591199285649215488	f	etravaganza
-Sorry guys!!\n the truck is at the mechanic.\nwe apologize for any convenience see you tomorrow	1429706272	590857048117608448	f	etravaganza
-Hola amigos De midtown...!! delicioso taco tuesday.\nJoin us..!!	1429624587	590514436252770304	f	etravaganza
-RT @RoamingHunger: 5 Brunch trucks that will get you out of bed! http://t.co/2pzLuNPniA foodtruck foodie http://t.co/3oAGIeuIkJ	1429211799	588783079281557506	f	etravaganza
-RT @FoodtoEat: Breakfast may be over with @ETRAVAGANZA but lunch is starting up. Preorder online for pickup:  http://t.co/6aGZrfbrsj	1429198255	588726269451337729	f	etravaganza
-Did you know our @greenboxny year into plates?credit: @ehynes213 neapolitanexpress pizz... http://t.co/IFbjPlinBC http://t.co/qUkE6YzQG0	1430619288	594686516531703808	f	neaexpress
-Our Diavolo pairs @mikeshothoney with jalapenos to pack in the perfect punch of spice! cr... http://t.co/FkDU6K2RkA http://t.co/gXoPpWDxKL	1430498054	594178023185895424	f	neaexpress
-FiDi are you hungry? We're open on WallStreetcredit: @brianlavoe pizzaneversleeps n... http://t.co/3XgZx8GYpE http://t.co/f4Dw9VFeBD	1430410122	593809207641677824	f	neaexpress
-RT @gastronami: Tricolore pizza (fresh pesto, fresh mozz, basil, San Marzano tomato, black truffle oil) was delicious! @NeaExpress http://t...	1430384712	593702632205787136	f	neaexpress
-RT @FransmartKris: Evolution of fast casual pizza oven technology \n http://t.co/NXZEjT4Nwe @NeaExpress	1430384695	593702561099616256	f	neaexpress
-RT @rouk: The @NeaExpress is outside my job today! ClutchLunch	1430384691	593702544808939520	f	neaexpress
-RT @dumbolot: We got @DomoTaco @NeaExpress and @SnowdayTruck today!	1430384689	593702536902615040	f	neaexpress
-RT @gastronami: Couldn't resist picking up a Bianca pizza at @NeaExpress. Love it! http://t.co/rK2ulYXoJF	1430384678	593702487401504768	f	neaexpress
-RT @leslie_gambetta: Had a great lunch with @LaurarVeloso at @NeaExpress  yum pizza http://t.co/7D2kA2a1YM	1430384667	593702443545792512	f	neaexpress
-Can pizza be our wcw? credit: @thefeaststpizza dailypizza pizzaneversleeps neapolitan... http://t.co/AcngEaJdeu http://t.co/GwMuzlEev7	1430332063	593481807254913026	f	neaexpress
-Thanks for posting your pizza, @gastronami! pizzaneversleeps neapolitanexpress neaexpr... http://t.co/XCA7vVnZhc http://t.co/rOKovd8Juf	1430167122	592789993468370945	f	neaexpress
-Did you hear the joke about the pizza? Never mind, it's to cheesy... @donthatemecuzimhung... http://t.co/6OOlj5nAc9 http://t.co/RuWycTsKW5	1429629923	590536819034423296	f	neaexpress
-Our pizza is organic and eco friendly! neapolitanexpress neaexpress dailypizza foodtr... http://t.co/ZmawrBnzIn http://t.co/IPTkNSl66u	1429204155	588751018587983873	f	neaexpress
-eeny, meeny, miny, moe! pizzaneversleeps neapolitanexpress dailypizza wallstreet wall... http://t.co/1FTuipztTp http://t.co/JHAVqbeQ1S	1429115281	588378251262763009	f	neaexpress
-RT @greenboxny: NYCs WallStreet welcomes its very first pizzeria, and it just happens to be GreenBox user @NeaExpress! https://t.co/l8x...	1428943527	587657863738302464	f	neaexpress
-Sharing is caring!pizzaneversleeps neapolitanexpress dailypizza pizzafromabove credi... https://t.co/mAPevoDLJW http://t.co/YbFMonY8bn	1428943126	587656179955937281	f	neaexpress
-RT @carlomantica: Ottima pizza. Worth the little trip to 111th street or look for the truck (at @neaexpress) https://t.co/r2MljkpYPx http:/...	1428935197	587622923818643457	f	neaexpress
-Mmm, Margherita! Thanks for posting a pic of your pizza, @nyceeeeeats! Come see us again s... https://t.co/XWreefBqsc http://t.co/weScsJIlIO	1428879464	587389165823778816	f	neaexpress
-RT @nycfoodtruck: The first Prospect Park Food Truck Rally of the 2015 season is SUNDAY, 4/12, and will include @KimchiTruck @MilkTruckNYC ...	1428695575	586617876901191680	f	neaexpress
-RT @CrespoMax: FACT 1st pizza ever on wallstreet was made by @NeaExpress with cleanenergy & paid using @Square @jack @boonepickens http:/...	1428615086	586280283802099712	f	neaexpress
-We are at Hanover Square Today!!!	1432738187	603573822365769728	f	grillonwheelsny
-Grill On Wheels is @ 46th Street between 5th & 6th Ave today!!!	1432131014	601027155007557632	f	grillonwheelsny
-Grill On Wheels is @ Hanover square today!	1432044222	600663120542113792	f	grillonwheelsny
-THE TRUCK WILL BE ON 46TH STREET AND 6TH AVE TODAY!!!	1431962414	600319994321367040	f	grillonwheelsny
-Grill On Wheels is @ Hanover square today. Have a sandwich or a plate and get a free drink!!!	1431526794	598492870597804033	f	grillonwheelsny
-Monday corner of 46th and 6th Ave, 12 to 4 Come by have a sandwich or a plate and get a free drink!!!	1431346281	597735744548012032	f	grillonwheelsny
-Serving up juicy Schwarma,	1431028753	596403934534729728	f	grillonwheelsny
-Best Kosher food!! Grill On Wheels downtown @ Hanover Square. Today's special, FREE soda with any plate of your choice.	1431015361	596347766755975168	f	grillonwheelsny
-Grill On Wheels downtown is in the financial district! @ Hanover Square. Today special, FREE soda with any plate of your choice.	1431006005	596308525191700480	f	grillonwheelsny
-Grill On Wheels downtown is  in the financial district! Hanover & Water St come enjoy great foodopen @11:00	1430399687	593765442898030592	f	grillonwheelsny
-Grill On Wheels downtown is  in the financial district! Hanover & Water St come enjoy great foodopen @11:00	1430232110	593062571210604544	f	grillonwheelsny
-Grill On Wheels downtown is  in the financial district! Hanover & Water St come enjoy great foodopen @11:00	1430142278	592685787801608193	f	grillonwheelsny
-Grill On Wheels downtown is  in the financial district! Hanover & Water St come enjoy great food	1429879091	591581904706605057	f	grillonwheelsny
-Grill On Wheels downtown is  in the financial district! Hanover & Water St- NOW OPEN come enjoy great food	1429806739	591278437161168896	f	grillonwheelsny
-Grill On Wheels downtown in the financial district! Hanover & Water St- open @11:00 to 3:00	1429531416	590123646829604864	f	grillonwheelsny
-http://t.co/yvqWs2wRa5	1429481731	589915254928310273	f	grillonwheelsny
-http://t.co/CDXbwNBF1f	1425870705	574769512068837376	f	grillonwheelsny
-@YeahThatsKosher @abieDweck http://t.co/kZyf7LNGqH	1417538109	539820071603163136	f	grillonwheelsny
-We would like you all to try out Pitopia on Broadway/w37th St for Falafel, Shawarma, Schnitzel and Salad bar http://t.co/GEINcVEUyl	1417537134	539815985835175936	f	grillonwheelsny
-Wow! Thank you for all the TLC! GOW will be off for a little bit longer. Working on some cool modifications!! Can't wait to c u soon!	1412013484	516648115638915072	f	grillonwheelsny
-Have a great weekend and thanks for coming!!!	1432935921	604403179418210304	f	polishcuisine
-RT @randomfoodtruck: Get a picnic and eat outside! @CarpeDonutNYC @MamasHeros @souvlakitruck @PolishCuisine @carlssteaks @gcnyc1	1432915966	604319479997202433	f	polishcuisine
-I posted a new photo to Facebook http://t.co/TNGBoMrgwR	1432913795	604310373790019584	f	polishcuisine
-Let's do this - 55th & Broadway - Pierogitime @randomfoodtruck	1432912950	604306832123957248	f	polishcuisine
-Happy Friday on 55th & Broadway MidtownWest Pierogi Kielbasa traditional nyc foodie	1432905939	604277424730300416	f	polishcuisine
-55th & Broadway today @randomfoodtruck traditional nyc PolishTruck	1432903249	604266143235358720	f	polishcuisine
-I posted a new photo to Facebook http://t.co/qjPOKPn2KZ	1432896381	604237334767386624	f	polishcuisine
-Thanks for coming everyone! It's so great being outside!	1432840814	604004268111175680	f	polishcuisine
-Special HuntersStew today on Old Slip b/w Front & Water Traditional nyc	1432823951	603933541869694976	f	polishcuisine
-I posted a new photo to Facebook http://t.co/gpBwnxEaxU	1432823243	603930573141372928	f	polishcuisine
-I posted a new photo to Facebook http://t.co/A5iKLxM1G5	1432823151	603930187789692929	f	polishcuisine
-FinancialDistrict today...Old Slip bw Water & Pearl downtown NYC	1432814808	603895192605872131	f	polishcuisine
-@NYCWingnut on no - that's horrible!!! ok - good to know, thanks for reaching out to us:)	1432743565	603596376954503168	f	polishcuisine
-@NYCWingnut sorry for not being there that often - will keep you posted...hope you miss us ;)	1432742457	603591730785554432	f	polishcuisine
-@jgoldberg007 opened already at 11:00 :)	1432742377	603591394188500993	f	polishcuisine
-Open & Ready to Roll on 47th b/w Park & Lexington Pierogitime nyc Midtown	1432739327	603578600995102722	f	polishcuisine
-I posted a new photo to Facebook http://t.co/eB4HIY5sDS	1432736995	603568821945917440	f	polishcuisine
-I posted a new photo to Facebook http://t.co/nnIBzG9zzR	1432736819	603568084662808578	f	polishcuisine
-I posted a new photo to Facebook http://t.co/zuI1llVPB8	1432736778	603567910917971968	f	polishcuisine
-I posted a new photo to Facebook http://t.co/3ROaZT5vjv	1432736631	603567294921465856	f	polishcuisine
+ @BLDG92 start your weekend with Friday's favorite at the Yard. Mouthwatering curries delicious mango lassie http://t.co/W8OIO6asM2	1437129333	621991620527955968	f	mausamnyc
+RT @dumbolot: We got @mausamnyc @ToumNYC and @bigdsgrub in the lot today!	1437062528	621711422964277249	f	mausamnyc
+Curry Thursday @dumbolot your savory famous Indian cuisine. Enjoy a delicious mango lassie http://t.co/8rw2YCVEsP	1437043691	621632415279226880	f	mausamnyc
+don't let the weather stop you! We're ready with our savory Indian cuisine 51st & Park Ave. http://t.co/d7qqLRCj0m	1436966787	621309856188862464	f	mausamnyc
+We're back @47 Street between Park and Lexington Avenue. Don't miss out! http://t.co/lht8TOoMdV	1436879906	620945451790016512	f	mausamnyc
+Beautiful weekend 2015 Midland Beach celebration @StatenIsland we're back! http://t.co/lN35QHrUeK	1436710531	620235038370758656	f	mausamnyc
+Beautiful weekend 2015 Midland Beach celebration @StatenIsland we're here with savory Indian flavors http://t.co/FrDcN1asnr	1436616207	619839418128539652	f	mausamnyc
+Happy Friday @BLDG92 Yes! Curry King is here to start you're weekend. Don't miss out! http://t.co/6sHPcwN31Q	1436523807	619451863730135040	f	mausamnyc
+Curry Thursday's @dumbolot authentic savory flavors entree & bites great day for our spices http://t.co/Wp7loyPsbT	1436437733	619090842284871680	f	mausamnyc
+Happy 4th July to All! Have a safe weekend. http://t.co/LeFuAp0oOA	1436023655	617354073503830016	f	mausamnyc
+Celebrate 4th July dinner until fireworks is over @Rooseveltisland with savory Indian flavors. http://t.co/2hIP5BiKNo	1435875193	616731378613420032	f	mausamnyc
+RT @dumbolot: We got @ToumNYC @MexicoBlvd and @mausamnyc today!	1435850860	616629319167815680	f	mausamnyc
+Curry Thursday @dumbolot savory flavors!curry your style mild,medium,spicy & don't forget mango lassie http://t.co/gRTIyeaCiX	1435832748	616553349383647233	f	mausamnyc
+RT @BLDG92: The sun is shining in the forecourt @BLDG92 Grab a picnic table and get in on some curry and Neapolitan pizza @mausamnyc @Bklyn...	1435767814	616280998343483392	f	mausamnyc
+@St_Peezy508 yes we do take charge cards	1435760298	616249472302100480	f	mausamnyc
+Spice up your day with savory Indian flavorful authentic curries N bites @BLDG95 @BLDG92 http://t.co/gXFa0GUGgA	1435746956	616193514167238656	f	mausamnyc
+Dinner @BLDG92 enjoy the greAtest Indian cuisine on wheels http://t.co/ROEPViAuHj	1435688488	615948279180824576	f	mausamnyc
+Thanks to @GovIslandFood and  @livefastgroup we'll be vending on @Gov_Island all summer http://t.co/L2sWeI0x06	1435501277	615163060551045120	f	mausamnyc
+\n Thanks to @GovIslandFood and  @livefastgroup we'll be vending on @Gov_Island all summer http://t.co/HwUX09RT0B	1435408004	614771844877549568	f	mausamnyc
+it's weekend with your favorite Indian Cuisine @Gov_Island we're here! Don't miss out! http://t.co/PLEvvhdg1A	1435407932	614771545253244928	f	mausamnyc
+We relocated to\nLexington and  86 street \nUntil 8:30 pm \nkettlecornnyc	1437167366	622151144576581637	f	kettlecornnyc
+We're located on 45th st. \nBetween 5th and 6th ave. \nuntil 3:30 pm\nkettlecornnyc http://t.co/EvrEgINV7f	1437148106	622070362466058240	f	kettlecornnyc
+We're on Amsterdam 82nd until 9	1437090813	621830058047614976	f	kettlecornnyc
+We relocated to Broadway and \n89 st. Until 8:30 pm\nkettlecornnyc	1437080120	621785207591579654	f	kettlecornnyc
+We're located on 45th street\nBetween 5th ave and 6th \nUntil 3:30 pm\nSee you soon\nkettlecornnyc	1437062337	621710618790395904	f	kettlecornnyc
+We are located at Columbus and 67th st. Until 8:30pm kettlecornnyc http://t.co/c6swK7TmTY	1437002116	621458035857321985	f	kettlecornnyc
+RT @MacKevinNYC: @jenconnic @KettleCornNYC so good! What did you get?	1436914455	621090360840855552	f	kettlecornnyc
+RT @jenconnic: I was able to catch the @KettleCornNYC truck today on my way to work. Was so happy since I keep missing them!	1436899489	621027586131496960	f	kettlecornnyc
+We are located on 45th st..\nBetween 5th ave and 6th ave\nUntil 3 pm\nkettlecornnyc http://t.co/9TTWuYzJMT	1436894010	621004606609444864	f	kettlecornnyc
+Too early to tell @MissJoyLewis for July 24th. Most likely 45th btw 5th&6th	1436721896	620282708560846848	f	kettlecornnyc
+We're in Forest Hills Queens today.	1436719164	620271247205769216	f	kettlecornnyc
+Hey @jesslorengreene, we're in midtown now until 330 pm\n45th btw 5&6	1436549493	619559598471684096	f	kettlecornnyc
+We're on 45th btw 5th & 6th until 330pm\nWe will be on Lexington and 86th after 4pm	1436544387	619538183097876481	f	kettlecornnyc
+We are located at east 47th \nand Lexington \nUntil 6:30 pm kettlecornnyc	1436110788	617719533445480448	f	kettlecornnyc
+We are located at Forest Hills Queens until 9 pm http://t.co/yCcg4N3bki	1436023591	617353805424934913	f	kettlecornnyc
+Today we are at \nLexington and 86 st.\nUntil 9pm http://t.co/LOkzas2NON	1435939473	617000988302536705	f	kettlecornnyc
+We relocated to Columbus and 67\nUntil 9pm	1435873796	616725520013754372	f	kettlecornnyc
+We're on 45th between 5th and 6th ave. until 3:30pm \nSee you soon \nkettlecornnyc http://t.co/Z2yBtypa70	1435851516	616632069117112320	f	kettlecornnyc
+Hey @eliane_mitchell come see us tomorrow.	1435774011	616306991758225408	f	kettlecornnyc
+RT @APBoardwalk: North Eats, the east coast's very first oceanside food truck court is serving up all kinds of tasty treats all... http://t...	1437156099	622103888796221440	f	neaexpress
+Find us at @avpbeach for the Volleyball tournament today through Sunday AVPNYC AVP2015	1437154742	622098196534296577	f	neaexpress
+Start your weekend off right with our pizzatruck at @bryantparknyc reclaimyourlunchbreak	1437146950	622065515020861440	f	neaexpress
+@AngelRdotMe we are so glad you enjoyed our pizza!	1437137750	622026927784763392	f	neaexpress
+Late night in Williamsburg tonight from 11pm to 5am foodtruck nightslice	1437094810	621846821086760960	f	neaexpress
+Interested in joining the @NeaExpress team? \nEmail work@neapolitanexpress.com w/ cover letter and resume neaexpress http://t.co/rD6zMtMeDz	1437072162	621751831438475264	f	neaexpress
+Just another parmalicious pizza NeapolitanExpress foodtrucks Harlem NYC NewForkCity ... http://t.co/ixoYL04Fh6 http://t.co/Ui2Yk01yVm	1437068836	621737879929266176	f	neaexpress
+RT @ekplate2014: Nation's first Oceanfront FoodTruck park Northeats opens in AsburyPark @NeaExpress @seoulfzn @PorkRollTruck http://t.c...	1437057856	621691826177748992	f	neaexpress
+It's always a good time to eat pizza! @RoyalPalmsClub See you for dinner tonight! FoodTruck	1436990426	621409003545866240	f	neaexpress
+We will be back to @JBLLivePier97 for the EverythingisAwsome tour with @SlightlyStoopid @dirtyheads @TheExpendables tonight at 5pm!	1436986821	621393885084815360	f	neaexpress
+Our pizza truck at NewYorkEDITION last night with @wondergiulio and @maxcrespo NYC food... http://t.co/sCEoqjwy95 http://t.co/WkJW6ySkqI	1436978934	621360802243706880	f	neaexpress
+Feeding the hungry crowd, Celebrating Over 50 Years of History @therollingstones @hoerlegu... http://t.co/LVtU2D3grO http://t.co/oBR8cH8Faj	1436976749	621351637148377088	f	neaexpress
+Lunchtime already? We will be at @BklynNavyYard and @dumbolot until 3pm today reclaimyourlunchbreak	1436972426	621333506182938624	f	neaexpress
+Music AND food? Find our foodtruck at the @JBLLivePier97 event with @ColbieCaillat, @christinaperri & @RachelPlatten tonight at 6!	1436904014	621046564069335040	f	neaexpress
+Try one of our mouth-watering pizzas! Mentioned in @grubstreet 30 Best Cheap Eats NY @nyma... http://t.co/5OYwxpYM6w http://t.co/6MUfZCrED3	1436820257	620695263112482816	f	neaexpress
+Excited to have made it on to Grub Street 30 Best Cheap Eats! Check us out here http://t.co/5hpwjjytfb @NYMag @grubstreet	1436817986	620685737067851776	f	neaexpress
+We will see you there with our pizzatruck https://t.co/ZYySesjXlw	1436716812	620261384413032448	f	neaexpress
+Excited to see all of you at @prospect_park today for the foodtruckrally  https://t.co/9EzT4dTl9s	1436713208	620246269282246656	f	neaexpress
+Late night in TWO locations: Meatpacking and  Williamsburg from 11pm-5am nightslice	1436662806	620034868462751746	f	neaexpress
+Pizza will be served all day on our ecofriendly truck on 33rd & Park @CE_NatGas	1436625005	619876318373515264	f	neaexpress
+TGIF!!! We are closed today due to a private event!! Shabbat Shalom!!	1437143196	622049766378242048	f	grillonwheelsny
+GOOD MORNING NYC WHAT A BEAUTIFUL DAY TO GO OUT AND GET LUNCH AT HANOVER SQUARE!!!	1437058212	621693320557953024	f	grillonwheelsny
+http://t.co/120K8HZcVa order online easiest way to stay as dry as possible	1436975705	621347259913998336	f	grillonwheelsny
+@TheRealEvanS depends how far you can call and ask	1436972794	621335049552703488	f	grillonwheelsny
+We know it may not be comfortable coming out if it rains but we got a great solution for you guys order online http://t.co/120K8HZcVa	1436971235	621328509978451970	f	grillonwheelsny
+Happy Wednesday Everybody!!! The weather is not great but the enticing smell wafting from Hanover Square makes it all seem so much better!!!	1436970326	621324696978616320	f	grillonwheelsny
+Tuesday is here and the skies are not exactly clear but at least there is good food at 46th street and 6th ave!! Hope to see u there!!	1436883492	620960491247116288	f	grillonwheelsny
+@Martin_B_R there's an issue of parking and planning ahead I will definitely bring it up to my boss though thank you for the suggestion	1436883413	620960161163800576	f	grillonwheelsny
+Happy National French Fries Day!!! Today we are at 46th street and 6th ave. Come on down and pick up some french fries with your order!!	1436797463	620599657975164928	f	grillonwheelsny
+TGIF!!!! WE ARE AT HANOVER SQUARE TODAY!! SEE U THERE!! SHABBAT SHALOM!!	1436538910	619515209921789952	f	grillonwheelsny
+46th and 6th ave today!! Hope to see you all there!!	1436458052	619176066284953600	f	grillonwheelsny
+Happy Thursday Everyone!!! Today we are at 46th street and 6th ave!!	1436451106	619146933605650432	f	grillonwheelsny
+Hey guys we are in HANOVER SQUARE today!!! Hope to see you there!!	1436373671	618822145217556480	f	grillonwheelsny
+@vbguru  unfortunately as much as we try there is no where to park in bk if you can help with that please do, I am so sorry!!	1436368783	618801642587209729	f	grillonwheelsny
+Hey guys we are at HANOVER SQUARE today!!! Hope to see you there!!	1436365679	618788625006903297	f	grillonwheelsny
+Tuesday is here and we are on 46th and 6th today. Come over and eat!!!kosherschwarmmatasty	1436279495	618427143102590976	f	grillonwheelsny
+We are at an event today!!! So we will see you tommorow Nyc	1436190684	618054643852136448	f	grillonwheelsny
+Monday is funday and Grill on Wheels is on 46th and 6th today. Come on down!!!!	1436186891	618038733850415104	f	grillonwheelsny
+We are back on 46th and 6th today!!! Grub on the grill!!! come and get it!!!	1435842285	616593353371713536	f	grillonwheelsny
+Grillin & Chillin  in Brooklyn, we are on Livingston between Hoyt and Smith today.	1435759780	616247300118192130	f	grillonwheelsny
+oldtraditionalpolishcuisine PolishTruck Polish pierogi kielbasa traditional NYC https://t.co/JcEssYptNJ	1437172388	622172207951806464	f	polishcuisine
+snackfixation's photo http://t.co/efACNBZCA9	1437171796	622169725804507136	f	polishcuisine
+vinnybogan's photo http://t.co/lFAu00WNCt	1437171738	622169483759587329	f	polishcuisine
+rocker2277's photo http://t.co/xMI5jJm4Tt	1437171595	622168882334183426	f	polishcuisine
+PolishTruck kielbasa traditional authentic https://t.co/RWnm423N94	1437170659	622164958370000900	f	polishcuisine
+PolishTruck pierogi NYC traditional https://t.co/clqiefK62Z	1437170512	622164337868828673	f	polishcuisine
+I posted a new photo to Facebook http://t.co/EWkEiVojhs	1437152969	622090760964415488	f	polishcuisine
+I posted a new photo to Facebook http://t.co/5mUz2pADZG	1437147207	622066590469783552	f	polishcuisine
+I posted a new photo to Facebook http://t.co/ClPmICaNTV	1437146838	622065045011345408	f	polishcuisine
+I posted a new photo to Facebook http://t.co/CUApXqTnEb	1437146687	622064411398774784	f	polishcuisine
+I posted a new photo to Facebook http://t.co/m5HlMn9uTo	1437146577	622063950142787584	f	polishcuisine
+Open at 11:00 - 47th b/w Park & Lexington - get your midtown lunch on the go!	1437143936	622052871765393408	f	polishcuisine
+Happy Friday on 47th bw Park & Lexington Don'tForgetYourPierogi midtown nyc	1437133980	622011113715167232	f	polishcuisine
+Great night downtown nyc private party dinner event http://t.co/TfAmrJBQSa	1437089341	621823882752839680	f	polishcuisine
+Dinner private party nyc downtown http://t.co/Io1rtd7qqn	1437084014	621801542895570945	f	polishcuisine
+@HauteCraigture till next time ;)	1437071954	621750957613928449	f	polishcuisine
+I posted a new photo to Facebook http://t.co/ZBeLjiCVhd	1437064464	621719543501688832	f	polishcuisine
+I posted a new photo to Facebook http://t.co/qvB4Dcufzp	1437063469	621715367451316224	f	polishcuisine
+I posted a new photo to Facebook http://t.co/Yx4teGQjst	1437063392	621715045169369088	f	polishcuisine
+Flatiron FLATIRON Flatiron lunchtime is here 5th ave & 21st street nyc traditional	1437063304	621714676506869760	f	polishcuisine
+Hello nyc we r open at 47th st. Between park ave. and Lexington ave. try our KOREAN BBQ beef, pork, shrimp  thank you very much	1436887762	620978398945521664	f	bobjotruck
+Tfx gigs sbzv. Vv. vegetable	1436371192	618811747286282240	f	bobjotruck
+Sunshine nyc we r open at 47th at between park and lex ave. try our world best korean BBQ(galbi,pork,shrimp) and burrito as well thank you	1436282902	618441434266529792	f	bobjotruck
+Good morning nyc !! We r ready to serve at 47th st. Btween park and lex Ave. try our korean bbq beef pork and shrimp. PlZ stop by thanx	1435850648	616628428247289856	f	bobjotruck
+Good morning nyc !! We r open at 47th st. Btween park and lex ave. try our korean BBQ beef,pork,shrimp !! PlZ stop by and enjoy Thx !!	1435592427	615545370697969664	f	bobjotruck
+Good morning nyc !! We r open at 47th st. Btween park and lex ave. try out korean BBQ beef,pork,shrimp !! PlZ stop by and enjoy Thx !!	1435592351	615545054342565888	f	bobjotruck
+Good morning nyc ! We gonna open @47th st. Btween park and lex ave. Try our BBQ beef(GALBI),pork,shrimp burrito as well ! PlZ stop by &enjoy	1434465902	610820381369323520	f	bobjotruck
+Good morning nyc we r open at 47th st. Btween park and lex ave. try our BBQ rice platter and burritos - beef park and chicken shrimp thanx	1434382170	610469185030893569	f	bobjotruck
+Welcome Friday! We gonna open at king and Hudson . PlZ stop by and enjoy our korean BBQ -beep pork and burrito as well thank you!	1434118851	609364745825742849	f	bobjotruck
+Hello nyc we r open at 47th st. Btween lex and park ave.	1434037957	609025452213202945	f	bobjotruck
+Welcome Monday ! We r reday to serve at 47th st. Btween lex and park ave. TRY OUR WORLD BEST KOREAN BBQ rice bowl!!!  Thank you	1433777135	607931483819507712	f	bobjotruck
+Welcome Friday ! We r open @47th st. Btween park and lex ave. try our BBQ beef pork shrimp , bbq burrito as well . PlZ stop by and enjoy Thx	1433518455	606846502586216448	f	bobjotruck
+We r move to open at varick and king st.  Try our korean bbq and bbq burrito!!	1433354239	606157731108659200	f	bobjotruck
 Good morning nyc we r ready to serve @47th btween park and lex Ave. try our bbq rice platter with beef, pork, shrimp. PlZ come by and enjoy~	1432826384	603943745143349248	f	bobjotruck
 Hello New York we r open at king and Hudson st. Try our Korean bbq  rice platter and bbq burrito as well. PlZ come by and enjoy thank you !	1432740890	603585157849833473	f	bobjotruck
 Hello NYC! We r open @47th st. Park and lex ave. try our Korean BBQ (Bef pork chicken and shrimp) , BBQ BURRITO as well plZ stop by! Thx	1432653139	603217106004484097	f	bobjotruck
@@ -2022,201 +2013,187 @@ Welcome Friday !! We r open at king and Hudson . Try our world best korean BBQ b
 Good morning! We r ready to serve at 46th st.btween 5th&6th ave. Try our Korean BBQ rice platter (beef,pork,chicken) and BBQ BURRITOS! Thx!!	1432222498	601410866412691456	f	bobjotruck
 Hello nyc we r open @king st. And Hudson now. Try our BBQ rice bowl and bbq burrito . PlZ come by and enjoy thank you !!	1432136231	601049036477566976	f	bobjotruck
 Hello nyc we r open at 46th brween 5th and 6th ave!! Try our KOREAN BBQ-. PlZ come by and enjoy thank you!!	1432050614	600689932982755328	f	bobjotruck
-Welcome Monday! We r ready to serve at 47th st. Btween park and lex ave. PLZ COME BY & try our best korean BBQ thank you	1431964183	600327412740661248	f	bobjotruck
-Hello nyc ! We r open @king and Hudson st. Try our BBQ rice platter! We r ready to serve beef(galbi)pork shrimp thank you ! Good day :)	1431441900	598136797953134592	f	bobjotruck
-Goodmorning we r ready 2 serve @47th st. Park and lex ave.try our BBQ RICE BOWL! And spicy chicken rice platter. PlZ come by and enjoy Thx	1431358418	597786652233375744	f	bobjotruck
-Welcome Friday !!  We r open @king st. and Hudson st. pen @king st. In front of (In front of  Jacques Torres Chocolate) try BBQ RICE BOWL	1431099924	596702446157754368	f	bobjotruck
-Good morning. We r open at 47th st. Btween park and lex ave. try our world best BBQ -beef(galbi),pork,chiecken. PlZ come by and enjoy Thx!!	1431013221	596338791046094850	f	bobjotruck
-Hello nyc ! We r open @king and Hudson st. Try our bbq rice platter! PlZ stop by and enjoy thank you!	1430924069	595964857951846401	f	bobjotruck
-Goodmorning! We r ready to serve at hanover sq. and water st. Try our new menu BBQ RICE PLATTER-pork beef(galbi) chicken ! PlZ come by thx!	1430839688	595610938486710274	f	bobjotruck
-Welcome Monday!! we r open at 47th btween park and lex ave. try our new menu KOREAN BBQ RICE PLATTER! MayThe4thBeWithYou Thx!	1430753804	595250716119273472	f	bobjotruck
-Welcome Friday !!  We r open @king st. and Hudson st. Try our BBQ rice platter! PlZ stop by and enjoy thank you! http://t.co/poob17Iv8q	1430495875	594168885089304576	f	bobjotruck
-Hello nyc ! We r open @king and Hudson st. Try our bbq rice platter! PlZ stop by and enjoy thank you!	1430409532	593806735745359872	f	bobjotruck
-SUNSHINE Newyork! We r open@hanover sq. & water st. We r ready to serve New menu Beef(Galbi) BBQ rice platter! Thx! http://t.co/JMtHbhR2MY	1430233639	593068986264346625	f	bobjotruck
-Morning NYC! We r open at 47th st. Park&Lex We start new menu Beef(GALBI)BBQ rice platter and Pork,shrimp as well.thx http://t.co/bJl1F5NHiW	1430147828	592709070039195648	f	bobjotruck
-Hello NYC !! We r open at 47th btween park and lex Ave. try our new men BBQ rice platter!!! PlZ come by and Thx	1429892013	591636100667547649	f	bobjotruck
-GOODMORNING BRONX NY!!!\nTODAY TGIF FRIDAY MAY 29TH WE ARE OPEN FOR LUNCH & EARLY DINNER! !... https://t.co/PsEmplIT1g	1432910888	604298180294021120	f	latinkitchennyc
-DINNER ANYONE??\nMI VIEJO SAN JUAN\n2920 BRUCKNER BLVD \nBRONX NY 10465\n347-691-3100\n***Today Thursday... https://t.co/iOlbc5A3t7	1432847363	604031736784244736	f	latinkitchennyc
-2NITE\nTKA LIVE\nDON COQUI WHITEPLAINS \nDJ LUCHO\nSHOWTIME 10PM\nFREE ADMISSION https://t.co/lpM0aYVRrV	1432840380	604002449419038720	f	latinkitchennyc
-TONIGHT!!!!\n THURSDAY MAY 28TH A VERY SPECIAL INTIMATE NIGHT AT DON COQUI WHITEPLAINS NY WITH A... https://t.co/7DEaHi47db	1432837965	603992321517031424	f	latinkitchennyc
-CHURRASCO CON MOFONGITO!\nYUM YUM YUM!!\nMI VIEJO SAN JUAN \n2920 BRUCKNER BLVD \nBRONX NY... https://t.co/NOzXAsABhb	1432826830	603945617837154305	f	latinkitchennyc
-THAT'S A TRIFONGO!!\nGOODMORNING BRONX NY! !\nTODAY THURSDAY MAY 28TH\nWE ARE OPEN FOR LUNCH & DINNER... https://t.co/SLS1chuldm	1432825036	603938090835693569	f	latinkitchennyc
-2MORO NIGHT THURSDAY MAY 28TH A VERY SPECIAL IMTIMATE NIGHT AT DON COQUI WHITEPLAINS NY WITH A... https://t.co/7DEaHi47db	1432779780	603748273837449216	f	latinkitchennyc
-GOODMORNING BRONX NY! \nHUMPDAY WEDNESDAYS \nMAY 27TH 2015\nWE ARE OPEN FOR LUNCH & DINNER\nMI VIEJO SAN... https://t.co/FzcQeiAVI0	1432740511	603583568103759872	f	latinkitchennyc
-OYE.....MAMI COCINO!!!\nHEY!!!! MY MOM IS COOKING!!!\nMI VIEJO SAN JUAN\n2920 BRUCKNER BLVD \nBRONX NY... https://t.co/3jEzn9COJG	1432664574	603265066931216385	f	latinkitchennyc
-WHILE YOUS PARTYING... WE AT THE STUDIO CREATING... YEA THAT'S MARIOSO... IF YOU DON'T KNOW ...GOOGLE... https://t.co/oxO3bIjxrY	1432532667	602711806604357632	f	latinkitchennyc
-TYPE IT IN YOUR URL... WE ARE ON AT\n10:55 PM \nWE ARE LIVE ON THE ANTHONY MANGINI SHOW TALKING ABOUT... https://t.co/2L4ljTWXw3	1432430919	602285046469414912	f	latinkitchennyc
-HAPPY MEMORIAL DAY WEEKEND! \nTODAY SATURDAY MAY 23RD\nWE ARE OPEN FOR EARLY DINNER \n3PM-11PM\nMI VIEJO... https://t.co/c7uSrWtAzm	1432392512	602123957282742272	f	latinkitchennyc
-CATCH ME AFTERWORK 2DAY ..\nDJ LUCHO SET 6PM\nHAPPY MEMORIAL DAY WEEKEND!! https://t.co/mTvQD8eqPg	1432320676	601822655046647809	f	latinkitchennyc
-CATCH ME 2NITE DON COQUI WHITEPLAINS DJ LUCHO SET 1AM..\nLET'S GO!! https://t.co/uxmnJRYfbc	1432320620	601822417309274112	f	latinkitchennyc
-TGIF !   TODAY FRIDAY MAY 22ND..\nWE ARE OPEN FOR LUNCH AND DINNER! 12PM-11PM\nHAPPY MEMORIAL DAY... https://t.co/33C7jiBjQy	1432308683	601772351861215232	f	latinkitchennyc
-START YOUR MEMORIAL DAY WEEKEND OFF RIGHT...\nMEET ME AFTERWORK AT SLATE..\nDJ LUCHO LIVE 6PM-10PM https://t.co/ACFuSB2ktW	1432303080	601748850878062594	f	latinkitchennyc
-We're back in SOHO!  Hudson and Charlton for lunch. mooshus mooshurito	1416579076	535797597085384707	f	mooshugrill
-EL TRIFONGO\nMI VIEJO SAN JUAN \n2920 BRUCKNER BLVD \nBRONX NY 10465\n347-691-3100\n***open till... https://t.co/sycrKc6nMi	1432251490	601532467724623873	f	latinkitchennyc
-THURSDAY MAY 21ST \nWE ARE OPEN FOR LUNCH AND DINNER! 12PM-9PM\nMI VIEJO SAN JUAN \n2920 BRUCKNER BLVD... https://t.co/iRMYcEriOt	1432229557	601440473895473152	f	latinkitchennyc
-THE QUEEN...ANANE VEGA! https://t.co/MmTzghCrWv	1432184109	601249851544862720	f	latinkitchennyc
-LAS 2 LOCAS Y EL HOMBRE!!! https://t.co/U1BZtdyweS	1432183959	601249219580690433	f	latinkitchennyc
-No truck today but find us on broadway btw 39 & 40th till 9 @UrbanSpaceNYC @GarmentDstrctNY and @AmericanExpress cafeteria till 230!	1432914394	604312888250077186	f	sweetchilinyc
-Sweet chili chicken. Get yours at old slip & water 1130-3 and broadway btw 39 & 40th 11-9! eaturban... https://t.co/vuWNhUQtiz	1432822509	603927493708521472	f	sweetchilinyc
-Get your sweet heat on today 1130-3 old slip & water AND @UrbanSpaceNYC @GarmentDstrctNY broadway btw 39 & 40 11-9! eatoutside spicy food	1432821911	603924986449899521	f	sweetchilinyc
-@Keelelk sorry we were in dumbo yesterday!	1432821842	603924696938098689	f	sweetchilinyc
-Pre order for the truck http://t.co/6nkTKLphud and click the order button! skiptheline come see me @ChefLisaNYC I'm on the truck today!	1432740944	603585384258379777	f	sweetchilinyc
-Truck @dumbolot 11-2\nMarket booth @UrbanSpaceNYC @GarmentDstrctNY broadway btw 39 & 40 11-9\n@AmericanExpress  @brookfieldplace 11-2	1432737272	603569982027526144	f	sweetchilinyc
-We will be @dumbolot again today 1130-2pm with plenty of tofu! jay & water. also catch us on Broadway btw 39 & 40th 11-9 at our booth!	1432732204	603548726410510338	f	sweetchilinyc
-We are @DumboLot 1130-3 today. limited tofu, sorry! also catch us on Broadway btw 39 & 40th 11-9 at our market booth!	1432652405	603214023488839680	f	sweetchilinyc
-RT @dumbolot: 4 day work week starts with @KimchiTruck @SweetChiliNYC and @carlssteaks!	1432649216	603200650365816832	f	sweetchilinyc
-We are rocking out on MemorialDay @gov_island 1130-6 & @UrbanSpaceNYC @GarmentDstrctNY broadway btw 39 & 40th 12-7! weekendplans sunday	1432567667	602858607806423040	f	sweetchilinyc
-Spend your MemorialDayWeekend with us @Gov_Island @GovIslandFood 11-6 &  @UrbanSpaceNYC @GarmentDstrctNY 12-7 bway btw 39 & 40! eatoutside	1432479677	602489552184471552	f	sweetchilinyc
-RT @GovIslandFood: Come grab some rays and some great food from our vendors @Gov_Island. Here every weekend.@SweetChiliNYC @mausamnyc @Deli...	1432475579	602472362743898112	f	sweetchilinyc
-all day @Gov_Island @GovIslandFood to celebrate the holiday weekend! happymemorialday. Also our kiosk @UrbanSpaceNYC bway btw 39 & 40 12-7!	1432393641	602128689531334657	f	sweetchilinyc
-RT @GovIslandFood: Opening day on @Gov_Island. stop by and enjoy the beautiful weather and great food from @SweetChiliNYC @carlssteaks @Del...	1432389601	602111745369473025	f	sweetchilinyc
-TGIF truck is @dumbolot 1130-3. Market booth @UrbanSpaceNYC @GarmentDstrctNY Broadway btw 39 & 40 11-9! eatoutside MemorialDayWeekend	1432305286	601758102736785408	f	sweetchilinyc
-tbt sweet chili on the set of @TheFollowingFOX with kevinbacon @nokidhungry raising money for... https://t.co/QLUAh9BhHN	1432218830	601395480237633536	f	sweetchilinyc
-Hungry? Truck on old slip & water 1130-3 & @UrbanSpaceNYC @GarmentDstrctNY broadway btw 39 & 40th 11-9! 2 days till @Gov_Island weekends!	1432218306	601393284162924544	f	sweetchilinyc
-Grab lunch today on broadway btw Houston & Bleeker till 3 OR broadway btw 39 & 40th till 9pm! eaturban happyhour specials after 4pm!	1432139464	601062596633067521	f	sweetchilinyc
-@truthtrebles thursday I promise!!	1432049795	600686494487982080	f	sweetchilinyc
-Open by noon today @dumbolot jay and water!	1432047900	600678546965659649	f	sweetchilinyc
-Lunch 2day @ 7 Hanover sq b/t water & pearl st. Burger of the week THE MARITAL BLISS. Preorder 9172929226 fidi	1432907255	604282943255789568	f	fritesnmeats
-Hello Brooklyn, Lunch 2day @ front & jay st. Burger of the week THE MARITAL BLISS. Preorder 9172929226 dumbo @DUMBOFoodTrucks	1432820538	603919225506390017	f	fritesnmeats
-Lunch 2day @ Hudson & king. Burger of the week THE MARITAL BLISS. Preorder 9172929226 soho	1432734502	603558364677873664	f	fritesnmeats
-Lunch 2day @ 7 Hanover sq b/t water & pearl st. Burger of the week THE MARITAL BLISS. Preorder 9172929226 fidi	1432647384	603192967327817728	f	fritesnmeats
-Lunch 2day @ 7 Hanover sq b/t water & pearl st. Burger of the week THE ITALIAN JOB preorder 9172929226 fidi	1432302985	601748452758925312	f	fritesnmeats
-Hello Brooklyn, Lunch 2day @ front & jay st. Burger of the week THE ITALIAN JOB  preorder 9172929226 dumbo @DUMBOFoodTrucks	1432216711	601386590313787392	f	fritesnmeats
-Lunch 2day @ Hudson & king. Burger of the week THE ITALIAN JOB preorder 9172929226 soho	1432129349	601020170476326912	f	fritesnmeats
-Lunch 2day @ 10 Hanover sq. b/t water & pearl st. burger of the week THE ITALIAN JOB preorder 9172929226 fidi	1432042252	600654857524092928	f	fritesnmeats
-Lunch 2day @ 50th st b/t 6th & 7th av. Burger of the week THE ITALIAN JOB. Preorder 9172929226 midtown	1431956463	600295034894864385	f	fritesnmeats
-Lunch 2day @ 7 Hanover sq b/t water & pearl st. Burger of the week THE AO TRUFFLE BURGER. Preorder 9172929226 fidi	1431696708	599205541097951232	f	fritesnmeats
-Hello Brooklyn, lunch 2day @ front & jay st. Burger of the week THE AO TRUFFLE BURGER preorder 9172929226 dumbo @DUMBOFoodTrucks	1431610990	598846014250967040	f	fritesnmeats
-Lunch 2day @ Hudson & king. Burger of the week THE AO TRUFFLE BURGER preorder 9172929226 soho	1431524591	598483632660025344	f	fritesnmeats
-Lunch 2day @ 7 Hanover sq b/t water & pearl st. Burger of the week THE AO TRUFFLE BURGER. Preorder 9172929226 fidi	1431438465	598122391911424000	f	fritesnmeats
-Lunch 2day @ 50th st b/t 6th & 7th av. Burger of the week THE AO TRUFFLE BURGER. Preorder 9172929226 Midtown	1431351210	597756417798451200	f	fritesnmeats
-HappyMothersDay to all the moms out there!  Don't forget to hug mom 2day!	1431279460	597455475861540864	f	fritesnmeats
-Lunch 2day @ 7 Hanover sq b/t water & pearl st. Burger of the week THE SPIZY JAZZ preorder 9172929226 fidi	1431092893	596672958229323777	f	fritesnmeats
-Hello Brooklyn, lunch 2day @ front & jay st. Burger of the week THE SPICY JAZZ.  Preorder 9172929226 dumbo @DUMBOFoodTrucks	1431006547	596310795769802752	f	fritesnmeats
-@kdoherty74 	1430943086	596044622310350848	f	fritesnmeats
-Lunch 2day @ Hudson & king. Burger of the week THE SPICY JAZZ. Preorder 9172929226 SOHO	1430920846	595951342490951680	f	fritesnmeats
-Peeps, we are off the road today	1430837085	595600019467739136	f	fritesnmeats
-Happy Friday. We will be on Charlton & Varick today.	1432913210	604307919153336320	f	schnitznthings
-Hey guys 26th & 11th ave is where we will be.  Serving up your Schnitzel for lunch.	1432827141	603946920004968450	f	schnitznthings
-It's lunch time. Were on Greenwich & Park.	1432656061	603229359734939648	f	schnitznthings
-Happy Friday. We will be on 49th 7th to 6th ave today. Come get your schnitz on! !!	1432307408	601767003578310658	f	schnitznthings
-53rd & Park for humpday woo!	1431527820	598497174721306625	f	biandangnyc
-Hey guys were on 26th street West side to 11th ave.  Its Schnitzel for lunch!!!	1432223305	601414251127959552	f	schnitznthings
-27Th & Park is where the Schnitzel cart will be.  Come by for your favorite Schnitzel lunch.	1432135647	601046586559430657	f	schnitznthings
-Hey guys. Greenwich & Park is where we will be serving up your favorite Schnitzel for lunch.	1432045781	600669659290013696	f	schnitznthings
-Hey Schnitzlers we will be on Charlton & Varick today.	1431962447	600320131592491008	f	schnitznthings
-Whats up midtown!! The cart will be on 49 street 7 to 6 ave today,,come by and schnitz with us!!	1431702487	599229779053780992	f	schnitznthings
-Hey Schnitzlers, we will be on 26th street West side to 11th ave.	1431616522	598869218839425024	f	schnitznthings
-@juan_mier No.	1431533018	598518974855380992	f	schnitznthings
-Hey guys we will be on 27th & Park today.	1431529490	598504179569688576	f	schnitznthings
-Hey Schnitzlers we will be on Greenwich & Park today.	1431446346	598155448987037698	f	schnitznthings
-Hey guys, we will be on Charlton & Varick today.	1431359640	597791776355786753	f	schnitznthings
-RT @alwaysaterrier: Was going to get Chipotle for lunch, but then @schnitznthings happened. http://t.co/3C847nWJQM	1431112351	596754572175155200	f	schnitznthings
-The schnitzel cart is on Charlton & Varick.  Happy Friday.	1431100717	596705772643418112	f	schnitznthings
-The Schnitzel Cart is on 27th & Park.	1430928680	595984198835576832	f	schnitznthings
-@rshawnmitchell 27th & Park today	1430928634	595984004039467009	f	schnitznthings
-@kristeen05 yes	1430928608	595983897474772993	f	schnitznthings
-@rshawnmitchell thanks for the love. Where did you get your lunch, The cart or truck?   We got you next time!!	1430868605	595732227218153472	f	schnitznthings
-@undoneforever LoL ! &lt;3 xoxo	1432931290	604383754564554753	f	korillabbq
-Sorry Midtown. Make that 12:30	1432913756	604310209599819776	f	korillabbq
-Midtown Friday! 47th & Park ready by 12	1432912582	604305287739281410	f	korillabbq
-Digging this Spicy Pork Burrito Bowl from @megjoneswall! eastvillage eeeeeats nyceats http://t.co/l1cIVJz77s	1432839866	604000294092083200	f	korillabbq
-RT @BklynAttorney: .@KorillaBBQ Attorneys of MZW taking a Metrotech lunch break at the KorillaBBQ truck. Brooklyn FoodTruck http://t.co...	1432838534	603994706985553920	f	korillabbq
-RT @ZiaJD: @KorillaBBQ feeding the masses at metrotech. KorillaBBQ workflow @ MetroTech Center https://t.co/SVbRD4s6p6	1432838529	603994685523234816	f	korillabbq
-Who else is digging this burrito bowl of Spicy Pork with veggies and somen noodles? Thanks... https://t.co/YL6XzlG8Ym	1432837793	603991597441814530	f	korillabbq
-Now serving FiDi ! (Old Slip & Front)	1432830720	603961931792306176	f	korillabbq
-Metrotech we ready for you at 12pm!	1432827810	603949729333018624	f	korillabbq
-Wsup FiDi! Front & Old Slip ready by 11:45	1432825792	603941262027259904	f	korillabbq
-Runnin a bit late Metrotech! Myrtle & Lawrence ready by 12:15	1432825651	603940671079198720	f	korillabbq
-Get up close and personal with Korilla at St. Mark's! Thanks @belenjung for this cool video! Snap a... https://t.co/HJGSsGZmWG	1432766550	603692785959628802	f	korillabbq
-Now serving FiDi! (Old Slip & Front)	1432742278	603590981699674112	f	korillabbq
-RT @FindEatDrink: Multi-color vegan bowl @korillabbq @queenskids @jeaniusnyc koreanfood NYC FEDguides travel streetfood http://t.co/8p...	1432680472	603331749054152704	f	korillabbq
-Done for the day!	1432665939	603270790344212480	f	korillabbq
-47th and park ready by 12!	1432653179	603217271193018368	f	korillabbq
-We're back and these balls are worthy of you hungry Tigers. Get your bite on at St. Mark's!  tigerballs eeeeeats http://t.co/mF9MKY0hVb	1432652100	603212744310001664	f	korillabbq
-In honor of Memorial Day, our food trucks and East Village shop will be closed. Enjoy your holiday and see you Tuesday!	1432520248	602659718776156161	f	korillabbq
-RT @jeaniusNYC: FF @choibites @mokbar_nyc @korillabbq @TheTasteofKorea @EpochTaste @maangchi @FindEatDrink @LUCKYRICEDOTCOM @koreasociety ...	1432338245	601896341527273472	f	korillabbq
-FF @EastVillageEats @nyuspoon @SpoonUniversity @NYUCampusCash @NYUgenerasian @GrnVillageNYC @eastvillagefeed @EastVillageNY @NHEastVillage	1432337707	601894086589689856	f	korillabbq
-BigRed is on 46th & 6th today	1432908956	604290077821399040	f	lobstertruckny
-OMG -- don't say it! madsqeats ends at 9 pm til Sept. Come party NOW! cold beer, hot lobster.	1432830871	603962567632003073	f	lobstertruckny
-LAST DAY OF MADISON EATS til Sept -- come and PARTY lobster madsqeats\nclawsup	1432830692	603961815450648576	f	lobstertruckny
-BigRed is off the street and booked for a private event. We'll see you tomorrow!	1432825937	603941869672865792	f	lobstertruckny
-BigRed will on 53rd & Park	1432741016	603585686160158720	f	lobstertruckny
-The Pound in Red Hook will be closed today for a private party.  We will reopen again tomorrow for lunch.  Thanks!	1432653242	603217534960193536	f	lobstertruckny
-It's not too late NJ, BigRed is still at Monmouth Park! http://t.co/33QRvtHEkc	1432582272	602919865167523841	f	lobstertruckny
-BigRed is stuffed with fresh Maine Lobster and in NJ! Join us at Monmouth Park http://t.co/TQCrXhVKFq	1432575080	602889699015921664	f	lobstertruckny
-BigRed in NJ all day til 5:00, race to Monmouth Park Racetrack for Food Truck Festival! http://t.co/GyIcSFS1XZ	1432567892	602859553798168577	f	lobstertruckny
-Day 3 of BigRed bringing a little Maine to New Jersey at the Monmouth Park Food Truck! JoinUsInNJ Festival http://t.co/4kCGmInbxs	1432560351	602827923515670528	f	lobstertruckny
-We've had so much fun, BigRed is going to be in New Jersey tomorrow too! http://t.co/k9bkOVMvu8	1432506655	602602703731236864	f	lobstertruckny
-This lobster truck is in New Jersey because New Jersey needs LobsterLUV too. http://t.co/sd9KJyC6nL http://t.co/Q1tTxbkcYV	1432480541	602493173693317121	f	lobstertruckny
-BigRed is in New Jersey all weekend! Come to Monmouth Park! http://t.co/EpiiCN2pQV	1432392340	602123233719099392	f	lobstertruckny
-BigRed will be invading Monmouth Park, NJ all weekend-show your LobsterLUV New Jersey! http://t.co/OXYnSZTeOg	1432337715	601894121427599360	f	lobstertruckny
-The truck has been booked for a private gig but fear not! We have options for CrustaceanElation http://t.co/ziIgYJJiQ9	1432308435	601771310730076160	f	lobstertruckny
-Expect world peace! BigRed will be at the UN tomorrow! http://t.co/ZMQTBQjOyX	1432165535	601171944344518656	f	lobstertruckny
-RANGERS GAME 8 PM 284 Van Brunt huge new PROJECTION TV! $3 Beer $5 codders, $25 Lobster dinners and RALPH! http://t.co/MJIX0iAOq3	1432160595	601151226378584064	f	lobstertruckny
-Your lunch is at 53rd & Park, it's lunchtime, you know what you have to do...	1432139729	601063706441719810	f	lobstertruckny
-Don't listen to Joey or Dee Dee - BigRed is on 53rd & Park http://t.co/0hc2dUiUp7	1432136127	601048600240640000	f	lobstertruckny
-BigRed is at 53rd & Park. They are melting butter and getting ready to make your lunch. MakeItHappen	1432131923	601030967302684675	f	lobstertruckny
-For one free dinges, do a bird call dinges dingesforeveryone	1432930231	604379311764807680	f	waffletruck
-RT @34thStNYC: Two times the spekuloos-fun in Midtown: Visit the @waffletruck cabana at Herald Square Park (35th & Bway) or new kiosk at @B...	1432921372	604342153599311873	f	waffletruck
-De CARTS 2/2:\nKotmadam @ 24th & 5th Ave til 9pm\nBierbeek @ De Great Lawn til 7pm	1432920578	604338824332763137	f	waffletruck
-De CARTS 1/2:\nGoesting @ 66th & Broadway til 10pm\nPagadder @ Brooklyn Bridge/City Hall til 9pm\nVedette @ 59th & 5th Ave (Manhattan) til 7pm	1432920565	604338768590426112	f	waffletruck
-WAFEL FRENZY FRIDAY! \nLe Cafe @ 15 Ave B til 10pm\nDe Wafel Cabana @ 35th & Broadway til 11pm\nWafel Kiosk @ W42nd & 6th, Bryant Park til 10pm	1432920536	604338646360051712	f	waffletruck
-For one free dinges, pantomime your way out of a box! dinges dingesforeveryone	1432836429	603985880106323968	f	waffletruck
-RT @MegWarshaw: @waffletruck bacon & syrup waffle with speculoos spread makes this gloomy Thursday morning so much better http://t.co/eX49f...	1432836423	603985850909728768	f	waffletruck
-De CARTS 2/2:\nKotmadam @ 24th & 5th Ave til 9pm\nBierbeek @ De Great Lawn til 7pm	1432823820	603932994030604289	f	waffletruck
-De CARTS 1/2:\nGoesting @ 66th & Broadway til 10pm\nPagadder @ Brooklyn Bridge/City Hall til 9pm\nVedette @ 59th & 5th Ave (Manhattan) til 7pm	1432823807	603932936006725632	f	waffletruck
-De Throwdown Thursday!\nCafe @ 15 Ave B til 10pm\nWafel Cabana @ 35th & Broadway til 11pm\nWafel Kiosk @ W42nd & 6th, Bryant Park til 10pm	1432823788	603932858256760832	f	waffletruck
-Sync up a Good Morning & NYC w/De Breakfast Special. Fresh Wafel & coffee at a great value! dinges dontmissdetrain http://t.co/x35PUl8qZW	1432820253	603918030653952000	f	waffletruck
-@RosettaChan we approve her approval, thank you! dingesforeveryone	1432742302	603591080341327872	f	waffletruck
-RT @RosettaChan: Enjoying wafflesanddinges with friends, one of which is a waffle newbie. She approves of @waffletruck	1432742260	603590906130898944	f	waffletruck
-@tomvinimation all around fam, where you at? I'll tell you the closest spot.	1432742181	603590574504030208	f	waffletruck
-RT @longislands: hell yeah finally tried it @waffletruck http://t.co/sFvnE9KItV	1432741910	603589437516308480	f	waffletruck
-De CARTS 2/2:\nKotmadam @ 24th & 5th Ave til 9pm\nBierbeek @ De Great Lawn til 7pm	1432741840	603589144988758016	f	waffletruck
-De CARTS 1/2:\nGoesting @ 66th & Broadway til 10pm\nPagadder @ Brooklyn Bridge/City Hall til 9pm\nVedette @ 59th & 5th Ave (Manhattan) til 7pm	1432741822	603589066316259328	f	waffletruck
-De TRUCK:\nKastaar @ 60 Wall St til 4pm	1432741808	603589010792013826	f	waffletruck
-WAFEL CRUSH WEDNESDAY\nLe Cafe @ 15 Ave B til 10pm\nDe Wafel Cabana @ 35th & Broadway til 11pm\nWafel Kiosk @ W42nd & 6th, Bryant Park til 10pm	1432741785	603588912779501569	f	waffletruck
-De CARTS 2/2:\nKotmadam @ 24th & 5th Ave til 9pm\nBierbeek @ De Great Lawn til 7pm	1432655759	603228091226451969	f	waffletruck
-Saw the work of our buds @TheISCollective at @BklynFoundation at the Invest-in-Youth open house @DriveChangeNYC http://t.co/dQwG2gIfqT	1432905659	604276248043470848	f	snowdaytruck
-@vendyawards @BilldeBlasio @MMViverito Great work everyone!!	1432834117	603976179519991809	f	snowdaytruck
-RT @NYCEDC: Happy 75th Bday, @EssexStMarket! Celebrate all month, meet the merchants, get hungry. http://t.co/pEzhLtW9uM http://t.co/5qh6Tg...	1432834050	603975899919319040	f	snowdaytruck
-RT @FordhamRoad_NYC: @SnowdayTruck is here! http://t.co/nkDJNrACdi	1432832184	603968074832805888	f	snowdaytruck
-.@colleenhagerty @ajplus thank you so much for a great video and sharing our story!! @DriveChangeNYC	1432829546	603957006660165632	f	snowdaytruck
-RT @ajplus: This food truck is serving up a side of social justice: http://t.co/K4e45ALd5o	1432829432	603956531139317762	f	snowdaytruck
-RT @colleenhagerty: Grilled cheese for social change: my first for @ajplus featuring @SnowdayTruck https://t.co/HuQl11DBrh raisetheage	1432769466	603705014704611328	f	snowdaytruck
-@carodjames private event today - back on the road later in the week! Hope to give you the maple GC fix	1432581575	602916944371646464	f	snowdaytruck
-Guess where we are today!? Come explore @gov_island on its OpeningDay and have lunch with us! NYC... https://t.co/IP06VfcIlT	1432387100	602101255494868992	f	snowdaytruck
-It's OPENING WEEKEND and we could not be more excited @GovIsAlliance @GovIslandFood - we will be on Gov Is sat-sun http://t.co/TqqGoZjl0X	1432386614	602099217000181760	f	snowdaytruck
-@thetinyraccoon check out the menu board http://t.co/1SEHVUy2B8	1432329065	601857839376834561	f	snowdaytruck
-RT @FoodtoEat: Had a great time kicking off our partnership w/@ManhattanDA & what better way then to start w/@SnowdayTruck eatlocal http:/...	1432327778	601852439092924417	f	snowdaytruck
-RT @ManhattanDA: Happening now: Manhattan DA's Office welcomes @SnowdayTruck! http://t.co/6wmF0sqHlW	1432326944	601848941307678720	f	snowdaytruck
-RaiseTheAgeNY and let our kids become productive adults. Take our kids out of adult facilities. Sign our petition: http://t.co/eAHc2qr116	1432300221	601736857295179776	f	snowdaytruck
-taste our farm fresh fare today - 1 Hogan Place - this one is on the menu as rethinkbail rice & farro salad http://t.co/M992Au8EMr	1432298802	601730905955299328	f	snowdaytruck
-Off to the DAs office for lunch - open to public at 1 Hogan Place - join us! We're naming things on our menu after reform we want to see	1432296790	601722467850268672	f	snowdaytruck
-RT @guestlistblog: . @snowdaytruck at @ChoiceStreets foodtruck Event. To-die-for grilledcheese & a great cause: http://t.co/WAQ0YbPq1T ht...	1432238959	601479905210179586	f	snowdaytruck
-@barton_david @villagevoice Thanks David!	1431910642	600102844558020608	f	snowdaytruck
-RT @NYjusticeleague: The official food truck of Justice League @SnowdayTruck is at Grand Army Plaza now!  w special guest @heyyymickeyyyy h...	1431894332	600034435518562304	f	snowdaytruck
-Our first @prospect_park foodtruckrally of the season!! Come get it Brooklyn - let's eat!	1431869581	599930621738229761	f	snowdaytruck
-RT @LaBellaTorte: FoodTruckFriday @livefastgroup @IntrepidMuseum @PapayaKingTruck @carlssteaks lbttrucknyc	1432911194	604299463277047808	f	papayakingtruck
-Join us on the Pier at the @IntrepidMuseum today and everyday throughout June 	1432909104	604290699350163456	f	papayakingtruck
-We are at the @IntrepidMuseum and @DowntownBklyn today for FoodTruckThursday come have lunch with us!	1432824444	603935609837748225	f	papayakingtruck
-RT @LaBellaTorte: Come to @IntrepidMuseum @livefastgroup @PapayaKingTruck great greatfoodthirsday	1432824396	603935405952651264	f	papayakingtruck
-RT @LaBellaTorte: Join us today and celebrate @IntrepidMuseum @carlssteaks @Papaya_King MemorialDay	1432569420	602865959838285824	f	papayakingtruck
-Join us on this beautiful MDW2015 on the @IntrepidMuseum \nFleetWeek	1432478174	602483247155642369	f	papayakingtruck
-RT @livefastgroup: Come stop by the @IntrepidMuseum for the perfect memorialdaywknd filled with fun & great food. @carlssteaks @PapayaKing...	1432476303	602475401135423489	f	papayakingtruck
-RT @livefastgroup: It's FleetWeek at the @IntrepidMuseum so come grab some food from our great vendors @LaBellaTorte @PapayaKingTruck @mel...	1432389716	602112226267377664	f	papayakingtruck
-@LanternAtrain just at the @IntrepidMuseum today	1432308249	601770529939451904	f	papayakingtruck
-@LanternAtrain at the @IntrepidMuseum	1432306252	601762153163575298	f	papayakingtruck
-RT @livefastgroup: It's FleetWeek at the @IntrepidMuseum so come grab some food from our great vendors @LaBellaTorte @PapayaKingTruck @mel...	1432306232	601762071819251712	f	papayakingtruck
-Never at our trucks/carts!!! - enjoy The Original when in NYC - NYC street vendor charging $30 for a hot dog & drink http://t.co/Hg4gO3gkOF	1432141485	601071071895388161	f	papayakingtruck
-Thanks to @livefastgroup we will be at  @IntrepidMuseum all day to celebrate FleetWeek. Come celebrate with us nyc intrepid foodtrucks	1432126315	601007442965716992	f	papayakingtruck
-Join us today at @prospect_park FoodTruckRally 11a-5p w/ our friends @NeaExpress	1431867437	599921631797084161	f	papayakingtruck
-RT @DispatchNY: .@prospect_park FoodTruckRally Tomorrow 5/17, 11a-5p w/ @NeaExpress @PapayaKingTruck http://t.co/qV9u4wZY2D	1431832366	599774533843853312	f	papayakingtruck
-@LSE14 closest is our saint marks location (8th St & 3rd Ave)	1431791491	599603088471793664	f	papayakingtruck
-RT @DispatchNY: .@Prospect_Park FoodTruckRally this SUNDAY 5/17, 11a-5p with @neaexpress @PapayaKingTruck http://t.co/KZYSInZk1x	1431455524	598193941712916481	f	papayakingtruck
-RT @livefastgroup: Today @IntrepidMuseum we are bringing in the best food trucks in NYC.10am-5pm @USAFoodTruck  @PapayaKingTruck @DeliNDogz...	1431355284	597773506936500224	f	papayakingtruck
-If you're visiting the @IntrepidMuseum today, you can also grab a frank and tropical drink! HappyMothersDay	1431273191	597429182122106880	f	papayakingtruck
-RT @IntrepidMuseum: Thanks to @Livefastgroup, we have some awesome food trucks on our pier today:@USAFoodTruck @LaBellaTorte @PapayaKingTru...	1431098739	596697477807484928	f	papayakingtruck
+GN WORLD!!! https://t.co/RlZlbashsg	1437208973	622325658186850304	f	latinkitchennyc
+SOLDOUT \nKELLZ\n@tcpent_ \nFOXWOODS CT. https://t.co/uIRTgfZ7iI	1437183347	622218174877069312	f	latinkitchennyc
+THE CALM B4 THE STORM\nRKELLY FOXWOODS SOLD OUT https://t.co/rvceShp8iq	1437176901	622191137206439936	f	latinkitchennyc
+2NITE!!!!  ROUND 2!!!\nBOSTON / RHODE ISLAND / MASSACHUSETTS / NEW YORK CITY / CONNECTICUT ... WE SOLD... https://t.co/K7eZ085dyN	1437168764	622157007550828544	f	latinkitchennyc
+GOODMORNING BRONX NY! \nTGIF!! TODAY FRIDAY JULY 17TH\nWE ARE OPEN FOR LUNCH & DINNER\nMI VIEJO SAN JUAN... https://t.co/5xgNiVMU4m	1437144828	622056613805981696	f	latinkitchennyc
+SOLD OUT SITUATION AT FOXWOODS CONNECTICUT! !\nTHE KING OF R+B KELLZ!!! https://t.co/iU2TLDqV4W	1437103597	621883677786685440	f	latinkitchennyc
+RKELLY CONCERT...WE HERE CT!!! https://t.co/YmaDUz8lnj	1437088942	621822209993109504	f	latinkitchennyc
+2NITE / 2MORO and SUNDAY\nTHE KING OF R+B RKELLY\nSOLDOUT AT FOXWOODS CT.\nDJ LUCHO LIVE B4 THE SHOW... https://t.co/DGJEQKYJOV	1437071028	621747071939383296	f	latinkitchennyc
+GOODMORNING BRONX NY! \nTODAY THURSDAY JULY 16th\nWE ARE OPEN FOR LUNCH & DINNER 12PM-10PM\nMI VIEJO SAN... https://t.co/6iJBqe8y3j	1437062213	621710101347500032	f	latinkitchennyc
+HUNGRY???\nMAKE YOUR WAY TO \nMI VIEJO SAN JUAN \n2920 BRUCKNER BLVD \nBRONX NY  10465\n347-6913100\n**open... https://t.co/ghFQaIEFWX	1437001367	621454893870641152	f	latinkitchennyc
+Goodmorning Bronx NY! \nWe are open for lunch and dinner \nMI VIEJO SAN JUAN \n2920 Bruckner Blvd \nBronx... https://t.co/ZLErDtkAnf	1436975584	621346754047426560	f	latinkitchennyc
+GOODMORNING BRONX NY! \nTODAY TUESDAY JULY 14TH\n(we are open for lunch and dinner  12pm-9pm)\nMI VIEJO... https://t.co/fn86Zr4R84	1436883404	620960122836271104	f	latinkitchennyc
+Goodtimes at Studio Square LIC Queens!!!\n\nk7tka djluchony feverrecords studiosquarenyc... https://t.co/G0v06W6jAo	1436804491	620629138009944064	f	latinkitchennyc
+My view Studio Square https://t.co/LAZnolGanz	1436755467	620423513648799744	f	latinkitchennyc
+HELLO BRONX NY!!\nTODAY SUNDAY JULY 12TH \nWE ARE OPEN FROM 2PM-9PM\nMI VIEJO SAN JUAN \n2920 BRUCKNER... https://t.co/WE2vnBYJMK	1436729076	620312824464678912	f	latinkitchennyc
+TODAY SUNDAY JULY 12 AT 4PM-10PM\nWE INVADE LIC QUEENS STUDIO SQUARE BEER GARDEN\nTKA \nROB BASE C+C... https://t.co/eA1QSfz93u	1436713334	620246796758065152	f	latinkitchennyc
+LOOK WHO I FIND AT AMOR CUBANO 111 st 3rd Ave El Barrio...   LUISITO QUINTERO!!! https://t.co/pxbJqIPyOt	1436665019	620044149157425152	f	latinkitchennyc
+PLEASE GET THERE EARLY..\nPHONES ARE OFF THE HOOK\nSTART TIME 4PM-10PM\nIT'S GONNA BE CRAZY!!! https://t.co/7YXN2KAwMT	1436663130	620036223957082112	f	latinkitchennyc
+HAPPY SATURDAY!!!\nHAVE YOU TRIED THE \nTRIFONOGO / JIBARITO / MAMIS POLLO / MAMIS FLAN DE COCO??\nMI... https://t.co/ubh7BNmg4t	1436636341	619923863015657472	f	latinkitchennyc
+2MORO SUNDAY \nALL ROADS LEAD TO STUDIO SQUARE LIC QUEENS\nOLD SCHOOL BBQ\nTKA SOUL SONIC FORCE ALYUS &... https://t.co/XoQ4tJX6Za	1436634567	619916424279126016	f	latinkitchennyc
+Lunch 2day @ 7 Hanover sq b/t water & pearl. Burger of the week THE TEXAN Preorder 9172929226 fidi	1437140830	622039846048124928	f	fritesnmeats
+Peep, we are off the road 2day for an private event	1437054200	621676491621990401	f	fritesnmeats
+Lunch 2 day @ hudson & king ST.  Burger of the week THE TEXAN preorder 9172929226 soho	1436968021	621315031871954944	f	fritesnmeats
+Lunch 2day @ 7 Hanover sq b/t water & pearl st. Burger of the week THE TEXAN preorder 9172929226 fidi	1436882218	620955148370714625	f	fritesnmeats
+Lunch 2day @ 50th st b/t 6th & 7th av. Burger of the week THE TEXAN. Preorder 9172929226 midtown	1436796015	620593585407328260	f	fritesnmeats
+Lunch 2day @ 10 Hanover sq b/t water & pearl st. Burger of the week THE CHEVRE TRUFFLE BURGER. Preorder 9172929226 fidi	1436535159	619499476672090113	f	fritesnmeats
+Hello Brooklyn, lunch 2day @ front & jay st. Burger of the week THE CHEVRE TRUFFLE BURGER. Preorder 9172929226 dumbo @DUMBOFoodTrucks	1436449769	619141322717401088	f	fritesnmeats
+Lunch 2day @ hudson & king. Burger of the week THE CHEVRE TRUFFLE BURGER. Preorder 9172929226 soho	1436364470	618783555850735616	f	fritesnmeats
+Lunch 2day @ 10 Hanover sq b/t water & pearl st. Burger of the week THE CHEVRE TRUFFLE BURGER. Preorder 9172929226 fidi	1436276934	618416400403701761	f	fritesnmeats
+Lunch 2day @ 50th st b/t 6th & 7th av. Burger of the week THE CHEVRE TRUFFLE BURGER. Preorder 9172929226 midtown	1436189766	618050794689052672	f	fritesnmeats
+HappyBirthdayU.S.A.Happy4thofJuly! Enjoy the show all!!	1436053765	617480363259101184	f	fritesnmeats
+Hello Brooklyn, lunch 2day @ jay & front st. Burger of the week THE BYMARK preorder 9172929226 dumbo @DUMBOFoodTrucks	1435845937	616608668017119232	f	fritesnmeats
+Lunch 2day @ Hudson & king. Burger of the week THE BYMARK. Preorder 9172929226 soho	1435758912	616243662180233216	f	fritesnmeats
+Lunch 2day @ 7 Hanover sq b/t water & pearl st. Burger of the week THE BYMARK preorder 9172929226 fidi	1435673003	615883333357182976	f	fritesnmeats
+Peeps, we are off the road 2day	1435585809	615517615184814080	f	fritesnmeats
+Lunch 2day @ 7 Hanover sq b/t water & pearl. Burger of the week THE HEAVENATOR preorder 9172929226 fidi	1435326417	614429645304426496	f	fritesnmeats
+RT @mperri99: I just sang Holiday Road to a bag of @fritesnmeats fries... ReasonsMyDietWontWork	1435277661	614225147353001984	f	fritesnmeats
+Hello Brooklyn, Lunch 2day @ front & jay st. Burger of the week THE HEAVENATOR preorder 9172929226 dumbo @DUMBOFoodTrucks	1435240218	614068098832965636	f	fritesnmeats
+RT @FoodtoEat: We love @fritesnmeats! Try their burgers and have their truck sent to cater to your office today! fritesnmeats foodtruckca...	1435175927	613798444088561664	f	fritesnmeats
+RT @EditrixDiane: There are 34 people waiting for @fritesnmeats burgers right now. They need two trucks!	1435175894	613798306830004224	f	fritesnmeats
+TGIF we are @dumbolot jay & water 1130-3! porkbelly friedegg sriracha fries nyc bacon sun thaietnamese lunch eatoutside spicy	1437146140	622062114392383489	f	sweetchilinyc
+americanexpress corporate cafeteria @ American Express Tower https://t.co/AP0gpbSa0A	1437061530	621707237501837312	f	sweetchilinyc
+Truck is on Old Slip & Water 1130-3! FiDi\nWe are also in the cafeteria @AmericanExpress @BrookfieldPLNY 1130-230! SweetHeat Lunch	1437057602	621690759603949568	f	sweetchilinyc
+Truck is on broadway btw Houston & Bleeker 1130-3! \nAlso catch us @AmericanExpress @BrookfieldPLNY in the cafeteria 1130-230! thaietnamese	1436969970	621323206411067393	f	sweetchilinyc
+@CLDesi810 yes!!	1436969909	621322947735748608	f	sweetchilinyc
+It's time for lunch @dumbolot jay & water 1130-3! porkbelly friedegg sriracha fries nyc foodtruck brooklyn	1436888914	620983233275146240	f	sweetchilinyc
+RT @dumbolot: Happy Tuesday with @carlssteaks @SweetChiliNYC and @KimchiTruck!	1436883625	620961050423369729	f	sweetchilinyc
+RT @FoodtoEat: Over @SweetChiliNYC they're taking Thai/Vietnamese to the next level with Chef Lisa Fernandes! Read about it here: http://t....	1436829097	620732342613737472	f	sweetchilinyc
+No truck today. Catch us tomorrow at jay & water 1130-3! Happy monday!	1436798375	620603481976610816	f	sweetchilinyc
+Wow what a beautiful sunday to be @Gov_Island @GovIslandFood @GovIsAlliance 1130-6! outside greatweather nature http://t.co/6VPeweLDLu	1436712318	620242536330829824	f	sweetchilinyc
+RT @GovIslandFood: What an amazing day out. Come over to @Gov_Island and bike around and grab some food from the yummy @SweetChiliNYC @carl...	1436636197	619923258519998468	f	sweetchilinyc
+We are hiring! http://t.co/6veoS050UZ	1436634084	619914397192953856	f	sweetchilinyc
+weekendplans??\nGet out to @gov_island today 1130-6 for some StreetEat delicious thaietnamese food sriracha fries and some sunshine! YES	1436624899	619875871030161408	f	sweetchilinyc
+Looking for an exciting outdoor summer job? We are hiring cashiers and truck line cooks! Email us info@sweetchilinyc.com jobs jobsearch	1436555631	619585341792616448	f	sweetchilinyc
+No truck today but catch us 1130-230 americanexpress @BrookfieldPLNY and tonight @LCSwing in Lincoln... https://t.co/1XSqmW12tI	1436452149	619151308583530496	f	sweetchilinyc
+@danielleodiamar @ninafrazier sorry! !!!	1436373444	618821195388088320	f	sweetchilinyc
+Sorry no truck today. Back tomorrow!	1436371680	618813796811960320	f	sweetchilinyc
+Evening @LCSwing we are here to dine and dance with you till 10pm! dance eat LCSwing	1436305983	618538243492048897	f	sweetchilinyc
+RT @dumbolot: Happy Tuesday with @carlssteaks @SweetChiliNYC and @KimchiTruck!	1436284248	618447077501218817	f	sweetchilinyc
+We are on old slip & water 1130-3! porkbelly friedegg sriracha fries nyc bacon sun thaietnamese lunch eatoutside spicy	1436195838	618076260242190336	f	sweetchilinyc
+Happy Friday. We are on 47th & Park. Its lunch time!	1437147034	622065864280547328	f	schnitznthings
+Happy Thursday Schnitzlers, we are on 52nd street & 6th ave today.	1437061232	621705985858650112	f	schnitznthings
+Come get your Schnitzel lunch, we are on 51st street Park & Madison.	1436977931	621356596908662785	f	schnitznthings
+@JPatanio is this your company?	1436213586	618150700460187649	f	mactruckny
+Sorry guys, had to change location.  We are at 51st street Park & Madison today.	1436977393	621354340356329472	f	schnitznthings
+Grab your Schnitzel lunch today, we will be on 52nd & 6th.	1436887324	620976562708553729	f	schnitznthings
+Hey Schnitzlers,  we will be on 47th & Park today.	1436800902	620614084560592896	f	schnitznthings
+Hey Schnitzlers Beets & Feta is back on the menu. Happy Friday	1436543388	619533992057008128	f	schnitznthings
+Hey guys we will be on 47th & Park today.	1436542258	619529252258598917	f	schnitznthings
+Hey Schnitzlers, we will be on 26th street West side to 11th ave today.	1436452752	619153834900856832	f	schnitznthings
+Hey guys, we will be on 47th & Park today.	1436370767	618809964916834307	f	schnitznthings
+Happy Tuesday. We will be on 52nd & 6th ave today for lunch.	1436281366	618434989001175040	f	schnitznthings
+Hey guys, we will be on 47th & Park today.	1436194627	618071182219300864	f	schnitznthings
+Happy Friday. We will be on Pearl & Broad today.	1435934650	616980760134852610	f	schnitznthings
+Wr are on 47 and park today!!!	1435770924	616294040712159232	f	schnitznthings
+Hey guys we will be on 52nd & 6th today for lunch.	1435680781	615915954673963008	f	schnitznthings
+Happy Monday. We will be on 47th & Park today.	1435593157	615548432116240385	f	schnitznthings
+Hey guys were on Pearl between Coenties & Broad come on down have you had your Schnitzel lunch today?	1435337380	614475625475252224	f	schnitznthings
+Happy Friday. We will be on Pearl Street & Broad today.	1435330624	614447288681934848	f	schnitznthings
+Hey Schnitzlers we will be on 26th street West to 11th ave today for lunch.	1435245788	614091461827633152	f	schnitznthings
+Lunch time Schnitzlers. We will be on 51st Park & Madison today.	1435161923	613739705469927425	f	schnitznthings
+RT @thegloryofphire: this burrito stands no chance based korilla nyc https://t.co/88SiiIc9EX	1437170586	622164648478048256	f	korillabbq
+RT @hydro528: If you watch the NY Korean News channel. Keep an eye out for my interview today at the Korilla food truck. Ground breaking st...	1437170573	622164596460265472	f	korillabbq
+RT @opavez: @KorillaBBQ thanks guys! Today lunch was awesome because of you  http://t.co/wmAHEVZswf	1437170528	622164405934014464	f	korillabbq
+Done in Midtown!	1437157072	622107967211597824	f	korillabbq
+And its FiDi Friday! Front & Old Slip ready by 12:30	1437147703	622068672325099520	f	korillabbq
+RT @Jordanleequinn: Finally had @KorillaBBQ last night......those pork tacos.....	1437147009	622065759750111232	f	korillabbq
+RT @JashonSingh: @KorillaBBQ for lunch today. hit the spot	1437147003	622065737449013248	f	korillabbq
+Thanks for the love, Bro!  https://t.co/1dyl2Bm8HV	1437146989	622065678116343808	f	korillabbq
+Were up for Americas Best Food Truck! Show us some love + vote!  http://t.co/OG7snO2MF7 via @TheDailyMeal http://t.co/KtHah6tEA2	1437145824	622060791081119745	f	korillabbq
+Wsup Midtown East! 47th & Park ready by 12	1437145711	622060314855645184	f	korillabbq
+Hot new topping for the summer!  Our Korean Potato Salad is made with red bliss potatoes steamed... https://t.co/ouNH9SlfB6	1437076151	621768561409794049	f	korillabbq
+Now serving 55th & Broadway!	1437063768	621716621430800384	f	korillabbq
+Lunch today at \nMidtown West (55th & Broadway)\nMetrotech (Myrtle & Lawrence)	1437056645	621686745986375680	f	korillabbq
+Were up for Americas Best Food Truck! Show us some love + vote!  http://t.co/OG7snO2MF7 via @TheDailyMeal http://t.co/6uPLHS5Nb4	1436982139	621374247387176960	f	korillabbq
+Now serving at FiDi Old slip and Front!	1436976977	621352594364100608	f	korillabbq
+@sevennn Catch us at our shop on 8th St & 3rd Ave or tmrw from 12-3pm @DUMBO (Jay St & Front St) or FiDi (front St @ Old Slip).	1436908193	621064095282896898	f	korillabbq
+Delivery in 15 mins! Order Chicken Salad Bowl or Spicy Pork Noodle Bowl via @TryCaviarNYC http://t.co/Z3TujudLhu http://t.co/oMfBOlYGAT	1436889161	620984269771554816	f	korillabbq
+Truck 2: Midtown West 55th & Bway ready by 12:30	1436886567	620973386731233280	f	korillabbq
+Truck 1: SOHO varick & vandam ready by 12!	1436884956	620966629669765120	f	korillabbq
+Order via @TryCaviarNYC!  https://t.co/HNEDGh6xqo	1436814292	620670244990918656	f	korillabbq
+Always a pleasure! https://t.co/MweNmQbgVl	1437181589	622210800757927937	f	waffletruck
+RT @jisooos: First goal of the day: @waffletruck in bryant park. Mission accomplished http://t.co/10vECCCNAV	1437180209	622205011020398592	f	waffletruck
+RT @lijodelmar:  @waffletruck http://t.co/2a7iQKZ6Sn	1437180190	622204934142955520	f	waffletruck
+IceCreamWeather & a view! http://t.co/YTDriiOCGW	1437173699	622177708051554305	f	waffletruck
+For one free dinges, impersonate your favorite emoji smiley face! dingesforeveryone	1437156856	622107063863353344	f	waffletruck
+De CARTS 2/2:\nBierbeek @ De Great Lawn, Central Park til 7pm	1437143673	622051770395688960	f	waffletruck
+De CARTS 1/2:\nVedette @ 59th & 5th Ave (Manhattan) til 7pm\nPagadder @ Brooklyn Bridge/City Hall til 9pm\nGoesting @ 66th & Broadway til 10pm	1437143660	622051712854065152	f	waffletruck
+THANK DINGES IT'S FRIDAY\nLe Cafe @ 15 Ave B til 11pm\nWafel Cabana @ 35th & Broadway til 10pm\nWafel Kiosk @ W42nd & 6th, Bryant Park til 10pm	1437143632	622051598638927872	f	waffletruck
+For one free dinges, order your wafel as if it were a State of the Union speech! dingesforeveryone	1437061988	621709155494178817	f	waffletruck
+De CARTS 2/2:\nBierbeek @ De Great Lawn, Central Park til 7pm	1437055243	621680868311085056	f	waffletruck
+De CARTS 1/2:\nVedette @ 59th & 5th Ave (Manhattan) til 7pm\nPagadder @ Brooklyn Bridge/City Hall til 9pm\nGoesting @ 66th & Broadway til 9pm	1437055229	621680805849513984	f	waffletruck
+DE THROWDOWN THURSDAY\nLe Cafe @ 15 Ave B til 11pm\nDe Wafel Cabana @ 35th & Broadway til 10pm\nWafel Kiosk @ W42nd & 6th, Bryant Park til 10pm	1437055214	621680745506058240	f	waffletruck
+For one free dinges, order your Wafel with an echo, echo, echo! dingesforeveryone	1436973889	621339641938079744	f	waffletruck
+De CARTS 1/2:\nVedette @ 59th & 5th Ave (Manhattan) til 7pm\nPagadder @ Brooklyn Bridge/City Hall til 9pm\nGoesting @ 66th & Broadway til 9pm	1436973154	621336560579915776	f	waffletruck
+De CARTS 2/2:\nBierbeek @ De Great Lawn, Central Park til 7pm	1436973154	621336560575737860	f	waffletruck
+WAFEL CRUSH WEDNESDAY\nLe Cafe @ 15 Ave B til 11pm\nDe Wafel Cabana @ 35th & Broadway til 10pm\nWafel Kiosk @ W42nd & 6th, Bryant Park til 10pm	1436973154	621336560567390208	f	waffletruck
+De CARTS 2/2:\nBierbeek @ De Great Lawn, Central Park til 7pm	1436878776	620940711765110784	f	waffletruck
+De CARTS 1/2:\nVedette @ 59th & 5th Ave (Manhattan) til 7pm\nPagadder @ Brooklyn Bridge/City Hall til 9pm\nGoesting @ 66th & Broadway til 9pm	1436878342	620938889054814208	f	waffletruck
+TANTALIZING TUESDAY!\nLe Cafe @ 15 Ave B til 11pm\nDe Wafel Cabana @ 35th & Broadway til 10pm\nWafel Kiosk @ W42nd & 6th, Bryant Park til 10pm	1436878317	620938787036770304	f	waffletruck
+For one free dinges, recite the ABCs as fast as possible dingesforeveryone	1436810665	620655031465873408	f	waffletruck
+@BrodesCPerry Glad to hear it! Thanks for trying BigRed	1437153489	622092938680619008	f	lobstertruckny
+It's Friday! TreatYoSelf to a lobster lunch at 46th and 6th HappyWeekend http://t.co/gxlCfPnHYa	1437149784	622077400545890304	f	lobstertruckny
+Check out BigRed's menu for this weekend at LauritaFoodTrucks http://t.co/x42Z9B7FSa http://t.co/vcNBerbfr0	1437147136	622066292179251200	f	lobstertruckny
+You can find BigRed at @njlauritawinery this weekend for wine, fireworks and tons of food! LauritaFoodTrucks http://t.co/lXcumX6zPI	1437145433	622059152211361792	f	lobstertruckny
+@BrodesCPerry We'll be there until 3pm!	1437143625	622051568544804864	f	lobstertruckny
+Happy Friday New York! BigRed will be on 46th and 6th today. Go get your lobster on!	1437141840	622044081405956097	f	lobstertruckny
+@AlisonBasford BigRed will be back on the street tomorrow.	1437082042	621793268251164672	f	lobstertruckny
+@BrodesCPerry We'll be sure to keep you posted! Welcome to New York :)	1437076764	621771132748845057	f	lobstertruckny
+RT @innozal: @lobstertruckny the clam chowder and shrimp role were amazing.  happy&full	1437073991	621759499326648325	f	lobstertruckny
+@BrodesCPerry you can still catch BigRed outside the library until 3:30!	1437073980	621759455093522433	f	lobstertruckny
+When you realize you get to eat a lobster roll for lunch. Catch BigRed at 40th and 5th! http://t.co/vMvOwfoM8w	1437062709	621712182766632960	f	lobstertruckny
+Who knew BigRed was such a book worm? Find us outside the New York Public Library at 40th and 5th! http://t.co/olAdn0PWCM	1437059057	621696863931138049	f	lobstertruckny
+BigRed is back on the streets serving up sunshine and lobster at 40th and 5th! http://t.co/HvBIenYzm2	1437055414	621681582760443904	f	lobstertruckny
+Hey @nicadomi ! We're serving up our delicious burger at our Red Hook location on 284 Van Brunt Street http://t.co/0E1o6yD40R	1436993415	621421541281153024	f	lobstertruckny
+This weekend BigRed will be @njlauritawinery sipping on estate wines and serving up hot rolls http://t.co/VqX4CGNPq8 http://t.co/QSH4zEaOsi	1436972700	621334654424096769	f	lobstertruckny
+@shefineperry BigRed is off the streets today for a private event. Check back in tomorrow!	1436969905	621322934204919808	f	lobstertruckny
+BigRed is booked today for a private event. If you would like to book, please email catering@redhooklobster.com	1436969097	621319544678842369	f	lobstertruckny
+RT @redhookflicks: What's for dinner during tonight's screening of COMING TO AMERICA? Lobster Rolls and Hot dogs courtesy of @Redhooklobste...	1436910420	621073434278236160	f	lobstertruckny
+BigRed will be heading to RedHookFlicks around 6:30 tonight for the screening of Coming to America. Get your lobster and laugh on!	1436907824	621062545571512321	f	lobstertruckny
+A little rain doesn't scare BigRed. Catch us @redhookflicks tonight!	1436904203	621047358445461504	f	lobstertruckny
+RT @glennEmartin: Statement on @POTUS' visit to a Federal prison today. @BuzzFeedAndrew  @mschwirtz  @MRSmithAP  @mniquette @BuzzFeed http:...	1437146585	622063981415518208	f	snowdaytruck
+RT @POTUS: Mass incarceration doesn't work. Let's build communities that give kids a shot at success and prisons that prepare people for a ...	1437143859	622052548812386305	f	snowdaytruck
+RT @BryanPaz_: Senator @CoryBooker makes a strong argument for CriminalJusticeReform. Let's get this done! http://t.co/8nJpgnZ9Mk	1437141833	622044051819397121	f	snowdaytruck
+See you hungry minds at 1 Hogan Place today ...lunch is served with a side of social justice @verainstitute @YouthRepresent	1437141774	622043804548382720	f	snowdaytruck
+Hello Manhattan! 1 Hogan Place for lunch tomorrow!!	1437069766	621741781785444352	f	snowdaytruck
+.@Zagat thanks for the love !! Make sure to find us Tailgate us @SnowdayTruck	1437003711	621464727638646784	f	snowdaytruck
+RT @Zagat: This NYC food truck hires people out of prison and gives them skills for their new life http://t.co/5n7CHoykFx http://t.co/AqogS...	1437003665	621464533052334081	f	snowdaytruck
+Honored to cater @NYCMayorsOffice of Criminal Justice Today - reformnow	1436958853	621276579109408768	f	snowdaytruck
+@BatteredCake private events until Friday at downtown Manhattan / city hall	1436817340	620683030814937088	f	snowdaytruck
+Do you tailgate us?? know where to find NYCs best new food truck - we're in @prospect_park Grand Army today 11-4:30 http://t.co/V5aRt5d08n	1436709921	620232482865213441	f	snowdaytruck
+A Day in the Life Feature by @Zagat & @HuffingtonPost - They joined us for a day on Gov Is. YOU SHOULD TOO!\nhttps://t.co/tkcKtaPMPK	1436641399	619945079361417216	f	snowdaytruck
+We're serving up award winning food with a side of social justice-Governors Island today & Prospect Park sun 11-5pm http://t.co/BsfTFbEvPl	1436630237	619898261630025728	f	snowdaytruck
+Y'all better come find us tomorrow on Governors Island - we're cooking up a storm & celebrating summer - keep trucking	1436576163	619671459946958848	f	snowdaytruck
+Get your good grub on @TheBronxBrewery - till 10pm	1436572878	619657681096310784	f	snowdaytruck
+Good morning NYCer's - after all the ticker-taping today with @ussoccer_wnt - you'll work up an appetite! Join us @TheBronxBrewery 5-10pm	1436529911	619477464528617472	f	snowdaytruck
+We asked our community to voice what they see as the biggest problem with the system @BronxDefenders blockparty http://t.co/NP3DX0B0go	1436447688	619132595687792644	f	snowdaytruck
+@galeabrewer we'd love to bring the truck tomorrow to celebrate @ussoccer_wnt at City Hall / @NYCMayorsOffice -it would be an honor.	1436443116	619113421276119040	f	snowdaytruck
+MindyTarlow @NYCMayorsOffice we want to serve NYCs finest fare to the worldchampions @ussoccer_wnt !! @galeabrewer great idea!	1436387930	618881953010458624	f	snowdaytruck
+We've got a great idea @BilldeBlasio @NYCMayorsOffice - hire us to serve food w/ a side of social justice to the @ussoccer_wnt this Fri!	1436387573	618880456034004992	f	snowdaytruck
+What a great day @BronxDefenders - this is love. This is community. This is the Bronx. http://t.co/ZTnYzo2VZr	1436381286	618854086792859648	f	snowdaytruck
+.@hillarydixler every other Thursday unfortunately, won't be back until next week. Veggie dogs are @YvesVeggie brand	1436906642	621057588801765376	f	papayakingtruck
+Serving at @prospect_park FoodTruckRally today2, 11a-5p http://t.co/fpYSIZng5u @dispatchny @nycfoodtruck	1436724430	620293337132703744	f	papayakingtruck
+Menu today at the @4knotsfest Festival FoodCart http://t.co/UeuSKUVkvy	1436632324	619907015368933376	f	papayakingtruck
+Today we are at @4knotsfest and a wedding after party at @Studio450 - looking to rent our truck? Email jason@papayaking.com	1436630136	619897837195776001	f	papayakingtruck
+Join us today at the @4knotsfest at Pier84 w/ @superfurry & @TwinPeaksDudes http://t.co/no8065CkGO @VoiceStreet 4Knots	1436620507	619857451484102656	f	papayakingtruck
+RT @Papaya_King: The only HotDogEatingContest worthy of watching http://t.co/q4LD2oQRNQ	1436028038	617372454491697153	f	papayakingtruck
+.@Macys firework party today at LICLanding w/ hot dogs provided by @Papaya_King  happy FourthofJuly 	1436023782	617354606440525825	f	papayakingtruck
+Join us @BelmontStakes StarsandStripes event today, our food truck is there!	1436023664	617354112078884864	f	papayakingtruck
+RT @TheNYRA: Look at entries for Belmont StarsandStripes: http://t.co/yH7NORjQlr & get more info on day: http://t.co/qbZZ8K2k1r! http://t...	1435789152	616370495496290304	f	papayakingtruck
+RT @Papaya_King: pride lovewins http://t.co/9ZHisxwQdi	1435507645	615189770558423041	f	papayakingtruck
+Join us at @prospect_park FoodTruckRally today, 6/28, 11a-5p http://t.co/PGKoy154b5 @dispatchny @nycfoodtruck http://t.co/NWat64Fn0b	1435496517	615143095429136384	f	papayakingtruck
+Join us at @prospect_park FoodTruckRally this SUNDAY 6/28, 11a-5p http://t.co/lujJcZCn8c @dispatchny @nycfoodtruck	1435343505	614501318045118464	f	papayakingtruck
+.@DowntownBklyn, we are back in metrotech. Come get the worlds greatest franks and tropical drinks	1435247479	614098553644953600	f	papayakingtruck
+RT @sizzlegriddle: You'll never experience food the way you should unless you eat it with your fingers!	1434547809	611163926169059328	f	papayakingtruck
+Stuck on a FatherDays gift? You still have time. 25% off Classic NY Hot Dog Gift Set from PapayaKing via @goldbely http://t.co/NXcCoixjcw	1434547597	611163038197137408	f	papayakingtruck
+Serving at the HRPGAMES today at Pier 25, Pier 26, and Pier 40 more info: http://t.co/hG9jjDsY8a https://t.co/q1tuDgjY7x	1434212391	609757080942190592	f	papayakingtruck
+Things To Do In Prospect Park This Month - http://t.co/WtqBziEbVB via @Shareaholic	1434146080	609478950398652417	f	papayakingtruck
+RT @MobileCuisine: Top Pitfalls Of Opening A FoodTruck & How To Avoid Them http://t.co/pguJj1cpl7	1434122037	609378106802049024	f	papayakingtruck
+RT @DowntownBklyn: Metrotech, lunch just got yummy. Added to the mix for Food Truck Thurs. Welcome @DomoTaco @CoolhausNY + faves @morristru...	1434031093	608996661671653376	f	papayakingtruck
+Beautiful day to eat at a food truck/cart. Visit us at the @IntrepidMuseum or on 5th Ave. and 16th St. http://t.co/bbH6EfKkT6	1433943405	608628870900781056	f	papayakingtruck
 @shahidkapoor best of luck	1412268299	517716886608703488	f	taipanexpress
 Best of luck my brother...	1412268232	517716605292523521	f	taipanexpress
 Good morning we are serving lunch at 46 st between 5&6ave from 11:30 to 3pm @FoodtoEat @midtownlunch @nystfood	1408622100	502423619595956225	f	taipanexpress
@@ -2254,6 +2231,7 @@ Catch us on 53rd & Park for the remainder of lunch!	1416851413	53693986032687923
 Kicked off of 46th by the cops:( scoping out alternate locations stay tuned!	1416850889	536937661609832448	f	mooshugrill
 MSG back at it on 46th & 6th ave today!	1416841987	536900324649598976	f	mooshugrill
 Happy Friday! MSG on Hudson and Charlton today!	1416583858	535817652791697408	f	mooshugrill
+We're back in SOHO!  Hudson and Charlton for lunch. mooshus mooshurito	1416579076	535797597085384707	f	mooshugrill
 MSG back in FiDi on Old Slip and Water st today!	1416496471	535451128851615744	f	mooshugrill
 New menu items includig soysaucechicken and orangebeef at MSG on 52nd & 6th today!	1416412261	535097926469824512	f	mooshugrill
 71st and york... it's friday	1414687317	527862983868039168	f	mrniceguytruck
@@ -2276,65 +2254,67 @@ Don't let this weather bring you down.. We are open and ready to take your order
 47 th and Park on this rainy hump day. Pass by and say hi	1412184956	517367320583606272	f	mrniceguytruck
 71st and York we are back. Place your orders.	1412090204	516969902142656512	f	mrniceguytruck
 The Truck is OFF but the store is Open. 914-457-4324 place your orders.	1412015339	516655897943105536	f	mrniceguytruck
-RT @ShortysTrivia: Stand by for great news  ... @shortysnyc @JJustine @JamieKleinberg @JillianSed @amandaseybold @LouFerrara @KelseyAnne...	1432932137	604387308503175170	f	shortysnyc
-Championship Trivia Night at ShortysFiDi Shortys ShortysNyc http://t.co/6wEypHGffg	1432172409	601200776954908673	f	shortysnyc
-RT @ShortysTrivia: Questions are already done. I need a beer. Less than 3 hours away! @shortysnyc @SixpointNYC @JJustine shortys http://t....	1432162937	601161048247443456	f	shortysnyc
-RT @ShortysTrivia: 1st Ave vs Pearl St ... TONIGHT 9pm!!! @shortysnyc @SixpointNYC @amandaseybold @JamieKleinberg @patandriola http://t.co/...	1432162927	601161007487135744	f	shortysnyc
-RT @FakeAdamLyons: Defending the Wall in NYC in a Philly Bar. FreeBrady @stoolpresidente @shortysnyc http://t.co/YHheYJCR4t	1432162923	601160990827356160	f	shortysnyc
-RT @RegularGuyNYC: Philly Cheesesteaks & Craft Beer in NYC? Oh yes,at Shorty's! http://t.co/WGwXsgSEGi ShortysUpperEast sandwich NYC be...	1432079183	600809756941524992	f	shortysnyc
-RT @ShortysTrivia: Last call for any winners or loyal teams! Here's who is locked in for tomorrow night! @shortysnyc @SixpointNYC http://...	1432068544	600765133984509954	f	shortysnyc
-RT @anigupta: Cheestakes and IPA. Yummy! And wifi rocks here! (at @ShortysNyc in New York, NY) https://t.co/QD84AqA3MR http://t.co/pKDU172p...	1431990560	600438047453380608	f	shortysnyc
-RT @Supreme_Dina: @shortysnyc has the BEST cheesesteaks. Turned my Monday around!	1431990557	600438035315044352	f	shortysnyc
-RT @JJustine: CHAMPIONSHIP THIS WEEK WEDNESDAY MAY 20th -- 9pm @shortysnyc  https://t.co/gMDseuQJTG	1431959777	600308933178335234	f	shortysnyc
-RT @Andrel1331: Beer and cocktail (at @ShortysNyc in New York, NY) https://t.co/4VZcyAjPIM http://t.co/L3LUDQ1ADX	1431918265	600134820765773824	f	shortysnyc
-RT @KarinRosner: If you're gonna have a diet cheat day, make it worth it. (at @ShortysNyc in New York, NY) https://t.co/Oi8xF5OCeV	1431918255	600134778306826240	f	shortysnyc
-RT @ShortysTrivia: Attn TEAMS!! please DM me and RSVP how many people will be on your team for Wed!! @shortysnyc @SixpointNYC @JamieKleinbe...	1431717403	599292342957436928	f	shortysnyc
-RT @HUViolet: It's been a while,  but finally reunited with @shortysnyc @ Shorty's Pearl Street https://t.co/YvvovyrGYo	1431603177	598813245831565313	f	shortysnyc
-RT @ShortysTrivia: Ok so it's official. 1 more week of Trivia this week and then the CHAMPIONSHIP will be Wed 5/20 @shortysnyc Pearl 9pm!! ...	1431386810	597905736904081409	f	shortysnyc
-@ElliotD224 no more truck elliot.  looking for new shorty's locations.  you can always call us for a delivery or stop by if you can.	1431354920	597771980419538944	f	shortysnyc
-RT @TheCrankyFan: Watching a million games at once.. (at @ShortysNyc in New York, NY) https://t.co/Cf64JQubKm	1431195577	597103646371880961	f	shortysnyc
-RT @shahofthewest: I u @shortysnyc	1431083305	596632742718283776	f	shortysnyc
-RT @ShortysTrivia: Tonight's winners!!! @shortysnyc 1stAve @PheebKingslayer @JJustine http://t.co/0NazwQgrfS	1430993721	596256999660199937	f	shortysnyc
-RT @RegularGuyNYC: Philly Cheesesteaks & Craft Beer in NYC? Oh yes,at Shorty's! http://t.co/WGwXsgSEGi ShortysUpperEast sandwich NYC be...	1430929119	595986038998310912	f	shortysnyc
-Getting ready on 53rd & Park!	1432909884	604293972232556546	f	biandangnyc
-53rd & Park for dumplings zhongzi and buns!	1432820181	603917730593378304	f	biandangnyc
-Almost open on 53rd & Park!	1432736548	603566948106899456	f	biandangnyc
-Happy Tuesday from 53rd & Park!	1432649302	603201010773852160	f	biandangnyc
-53rd and park. Have a great Memorial Day weekend. Will see you on Tuesday!	1432304045	601752896489660416	f	biandangnyc
-Yummy things stewing up on 53rd and Park! Swing by for a PorkBelly bowl today	1432218041	601392171682402304	f	biandangnyc
-Humpday today, but we got the cure on 53rd & Park!	1432131322	601028445296992256	f	biandangnyc
-SaltnPepperChicken is the perfect Tuesday pick-me-up! Get one on 53rd & Park today!	1432044544	600664469803376640	f	biandangnyc
-Haaaappy Monday from 53rd & Park!	1431959032	600305807498973184	f	biandangnyc
-Happy Fryday! 53rd & Park for your Taiwanese fix:)	1431698578	599213383561252864	f	biandangnyc
-Open on 53rd & Park today!	1431614131	598859188203302913	f	biandangnyc
-Sold out of chicken! Still got your pork chop, cutlet, pork belly and beef stew! Come get it!	1431450031	598170905391538177	f	biandangnyc
-Back at it on 53rd & Park! Catch up on all the extra porksauce you missed!	1431439492	598126698232717312	f	biandangnyc
-Guess whos back???????? 53rd and park... lesssssssssssssgo!!! http://t.co/6WGxb2yeVP	1431350716	597754345073938435	f	biandangnyc
-It's official! Bian Dang will be back on 53rd and Park on Monday! See you there!	1431211303	597169606868934656	f	biandangnyc
-The wait is over! Bian Dang back on 53rd & Park this Monday :)	1431130774	596831840951881728	f	biandangnyc
-Bian Dang is expected to be back out on the streets on 5/11! Sorry for the wait! Its out of our control... we miss yall so much!	1430407409	593797830138994688	f	biandangnyc
-We miss you all! Hopefully we can get our truck out again soon!	1428523228	585895001575432192	f	biandangnyc
-the Bian Dang truck is still getting some tender loving care. Please standby till our triumphant return.	1427298570	580758412004331520	f	biandangnyc
-Happy Friday @MexicoBlvd tacosssss 46th St	1432912626	604305473442050049	f	mexicoblvd
-Hola Amigos! Enjoy your day @MexicoBlvd @dumbolot Water&Jay	1432824704	603936698318348288	f	mexicoblvd
-RT @dumbolot: Lot is smelling fine with @MexicoBlvd @ToumNYC and @mausamnyc today!	1432824590	603936223099527168	f	mexicoblvd
-Good morning! guacamole flautas tortas  tacos @MexicoBlvd 51st St & Park	1432736664	603567432066867200	f	mexicoblvd
-Hola Midtown! Lunch @MexicoBlvd 46th St (6&7)	1432654814	603224127483322369	f	mexicoblvd
-Happy long weekend, charge your battery @MexicoBlvd  and enjoy it! tacotacotaco 46th St (6&7)	1432300221	601736856904957952	f	mexicoblvd
-Buenos dias! saboresdemexico @MexicoBlvd @dumbolot Water&Jay	1432219024	601396293320085504	f	mexicoblvd
-RT @dumbolot: A lot of good food with @ToumNYC @MexicoBlvd and @mausamnyc today! badumshh	1432218454	601393904739438592	f	mexicoblvd
-Warm smiles and your favorite lunch @MexicoBlvd 51st St & Park	1432133258	601036566576902144	f	mexicoblvd
-Aguacate in your tacos, tortas, flautas, quesadillas and of course in your guacamole @MexicoBlvd http://t.co/Mvp5eSRmtW	1432132508	601033417300512768	f	mexicoblvd
-Good morning Midtown! T for tacos adobo pastor tinga bistec @MexicoBlvd 46th St (6&7)	1432047220	600675696265043968	f	mexicoblvd
-Hola DUMBO! Feliz semana @MexicoBlvd @dumbolot Water&Jay	1431960644	600312570080288768	f	mexicoblvd
-RT @dumbolot: Monday again with @dubpies @MexicoBlvd and @ToumNYC!	1431960506	600311991316705280	f	mexicoblvd
-RT @NaimaEfuru: I made my COS IT guys walk for their taco fix fatkidatheart mexicoblvd https://t.co/LOWTrvLvct	1431802587	599649629035057152	f	mexicoblvd
-RT @BrownBoogz: Should out to mexicoblvd they hooked a brother up with some good eats today brooklynbridgepark... https://t.co/hPDIZvaiaA	1431699994	599219324696580096	f	mexicoblvd
-Just smile & eat tacos @MexicoBlvd It's Friday! 46th St (6&7)	1431698049	599211167211331585	f	mexicoblvd
-@LuckySevenTen you can come by and we will give you a new one	1431621636	598890665892814848	f	mexicoblvd
-@LuckySevenTen no we do not the only thing I could think about happening is that it naturally fermented if it was left out a while.	1431621598	598890509596303360	f	mexicoblvd
-RT @CelebrateBklyn: We've got @morristruck @MexicoBlvd @dubpies & @KimchiTruck at our dance party at @BklynBrdgPark tonight. Come hungry! h...	1431618489	598877468792094720	f	mexicoblvd
-Hola Dumbo! taquiza muymexicana @MexicoBlvd @dumbolot Water&Jay	1431617683	598874088036270080	f	mexicoblvd
+RT @ShortysTrivia: Dare I say that @LouFerrara is the Tom Brady of 1st Ave...Leader of a consistent WINNER!Tonight's Champs! @shortysnyc ht...	1437071581	621749394581401601	f	shortysnyc
+Trivia tonight @shortysnyc -- sponsored by Coney Island Beers. 1678 1st Ave. 8pm. http://t.co/jpmWO3b0i5	1436999669	621447774270308352	f	shortysnyc
+@ShortysTrivia 1st place prize tonight-- Four tickets to a @BrooklynCyclone game -- thanks @ConeyIslandBeer http://t.co/cvltzV2bRG	1436998957	621444786327822336	f	shortysnyc
+RT @ShortysTrivia: @FakeAdamLyons hosting Trivia tonight at 1st Ave!! @shortysnyc @Suburban_Dave @PheebKingslayer @LouFerrara @gracecgriffi...	1436998889	621444501182222336	f	shortysnyc
+RT @ShortysTrivia: 2nd place tonight! MyLittleDick ... Who says you need teammates to win Team Trivia!?!? @itsme_norris @shortysnyc http:/...	1436931360	621161265176662016	f	shortysnyc
+RT @ShortysTrivia: From worst to FIRST!!! QuestionableDrinkingHabits ... They bet it all  and took home 1st place!!! @shortysnyc http://t....	1436931347	621161207131676673	f	shortysnyc
+RT @ShortysTrivia: Wake Up!!! Only 12 more hours until Trivia @shortysnyc Pearl !! @JJustine @JamieKleinberg @JillianSed @ScottHansen04 @sw...	1436880607	620948390185144321	f	shortysnyc
+Trivia starts in 45min ... 1678 1st ave. ShortysNyc ShortysUpperEast UES http://t.co/eCwmNoDZzT	1436397381	618921594853978112	f	shortysnyc
+@markzito on the mic -- see you tonight UES ShortysNyc Beer CraftBeer GetPhillyWitIt https://t.co/AXbcOPyxgQ	1436395642	618914297553551364	f	shortysnyc
+RT @ShortysTrivia: No @TheRealDananino No Problem.  Last Night's WINNERS MoneyShot @amandaseybold @dschwarz58 @shortysnyc http://t.co/57...	1436395597	618914108755320834	f	shortysnyc
+Trivia tonight -- 62 Pearl St. 9pm.  @ShortysTrivia	1436300937	618517076697841664	f	shortysnyc
+RT @ShortysTrivia: LIGHTNING ROUND  @shortysnyc @JamieKleinberg @patandriola @JillianSed @TheRealDananino @gracecgriffin @LouFerrara http:...	1436238809	618256495197687809	f	shortysnyc
+RT @itsme_jamietx: Seriously craving a BroadStreetBully from @shortysnyc! Wishing for a DC location...a girl can dream.	1436117135	617746156878172160	f	shortysnyc
+USA Soccer ShortysNyc  http://t.co/ungdN9w0KW	1436116294	617742630529708034	f	shortysnyc
+RT @ShortysTrivia: TONIGHT 1ST AVE 8pm ! @shortysnyc @Suburban_Dave @LouFerrara @gracecgriffin @PheebKingslayer @JJustine @toneburst20 @Jak...	1435792349	616383905684434944	f	shortysnyc
+RT @ShortysTrivia: Tonight's WINNERS We wager Zero on the final question because we are smart Thunderdome @Maghielse @JillianSed http://...	1435730753	616125554341888000	f	shortysnyc
+RT @ShortysTrivia: 2nd place tonight...Loyalty + Consistency + Their own Twitter handle = @ShrtysTraumatcs  @JamieKleinberg @patandriola ht...	1435730738	616125491431522304	f	shortysnyc
+RT @ShortysTrivia: 3rd place tonight but 1st on the Sexy-Meter w/ that bite WizWit MoneyShot @TheRealDananino @shortysnyc @dschwarz58 htt...	1435724557	616099565637386240	f	shortysnyc
+USA ... Who will they face Sunday ... Check out all games at your favorite @shortysnyc location  GetPhillyWitIt	1435715823	616062930157764609	f	shortysnyc
+USA 	1435712093	616047288071254016	f	shortysnyc
+Yessss... it's almost the weekend! lets go to biandang on 53rd and park!	1437144480	622055151570915329	f	biandangnyc
+Chow down on some yummy Taiwanesefood on 53rd & Park today!	1437056062	621684300988162048	f	biandangnyc
+53rd and park ! biandang	1437055894	621683598287089665	f	biandangnyc
+Back to 53rd & Park for the humpday cure: extra porksauce	1436964781	621301439969689600	f	biandangnyc
+Happy Tuesday from FiDi! Taiwanesefood on Old Slip & Water today	1436878452	620939353309769728	f	biandangnyc
+back at it on 50th & 6th porkchop taiwanesefood yum	1436796533	620595758681706497	f	biandangnyc
+Happy Friday from 53rd & Park!	1436533077	619490744173248512	f	biandangnyc
+Back at it on 53rd & park	1436451873	619150150099935233	f	biandangnyc
+Happy humpday back on 53rd & Park today	1436364700	618784517927641088	f	biandangnyc
+Welcome back to reality! We can help alleviate some of that pain here on old slip and water!  http://t.co/UGxr1pyg69	1436272050	618395918052794368	f	biandangnyc
+Back at it on 50th & 6th! Switch out those bbq leftovers for buns and a biandang today!	1436190252	618052830172200960	f	biandangnyc
+RT @AaronZhongWen: :@biandangnyc ()!,I http://t.co/3scj5xFEN4	1435968078	617120964019662860	f	biandangnyc
+@huangbenjamin hey Ben. Working on expanding @DomoTaco	1435968050	617120847950671873	f	biandangnyc
+We're off the streets today but you could catch us back on 50th & 6th on Monday!	1435931460	616967380426735617	f	biandangnyc
+Happy Thursday from 53rd & Park!	1435846803	616612302536753153	f	biandangnyc
+Back on 53rd and park for lunch with the special of the day...PORK CHOPS!!!	1435757456	616237553893658624	f	biandangnyc
+Hello again FiDi! Catch yourself some Taiwanesefood for lunch on the north side of Old Slip & Water!	1435673510	615885459613450241	f	biandangnyc
+Back on Old Slip and Water. Bet you can't find us. Here's a hint. (See photo) http://t.co/5zlIvcm87D	1435664721	615848595342929924	f	biandangnyc
+Your favorite taiwanese food truck is back on 50th Btwn 6/7th ave! Come get it! http://t.co/ll8h9MtTp4	1435580990	615497402385072128	f	biandangnyc
+We are ready!! dumplings takeadumpling  http://t.co/8jQWF7SThl	1435334364	614462978231037952	f	biandangnyc
+RT @NaimaEfuru: I don't play when it comes to mexicoblvd guacamole HangryJames https://t.co/XhUVaEVSNJ	1437172812	622173984906440704	f	mexicoblvd
+RT @kln1920: @MexicoBlvd @juanpadayz . Best tacos ever. Thanks for a great lunch today.	1437159288	622117262103810048	f	mexicoblvd
+@juanpadayz 11:30-2:30 Midtown 46th St	1437145112	622057803725803520	f	mexicoblvd
+Hello NYC! Midtown 46th St. http://t.co/87x9KiaVJk	1437138388	622029601955577856	f	mexicoblvd
+Good day midtown. We are doing event today so the truck will not be out on the streets for regular service. We apologize for any withdrawal	1436966283	621307739978002432	f	mexicoblvd
+Hello Midtown! TacoTuesday @MexicoBlvd Today 11:30-2:00 46th St	1436879059	620941895896797184	f	mexicoblvd
+Buenos dias Dumbo! tacos tortas flautas @MexicoBlvd @dumbolot Water & Jay	1436799139	620606687301488640	f	mexicoblvd
+RT @dumbolot: We got @ToumNYC @MexicoBlvd and @dubpies in the lot today!	1436798739	620605010020311040	f	mexicoblvd
+RT @CovertEater: What's 4 lunch? Check out @MexicoBlvd 4 the best deal around! 3 flautas w/guac & chips. Now time for a nap. stuffed http...	1436555773	619585937643847681	f	mexicoblvd
+@MexicoBlvd Midtown 46th St	1436541548	619526273971392512	f	mexicoblvd
+Hola NYC! http://t.co/lITBKgzIQ4	1436533810	619493819038466048	f	mexicoblvd
+RT @LisaJ61: @MexicoBlvd made the rain go away w/the yummy deliciousness you bring to the 'hood!! Thank you.  http://t.co/rGpmXmYSvq	1436469428	619223782385917952	f	mexicoblvd
+RT @dumbolot: It's Thursday with @ToumNYC @MexicoBlvd and @mausamnyc	1436452337	619152093614579712	f	mexicoblvd
+Buenos dias Dumbo! Adobo Pastor Tinga Bistec Veggie @MexicoBlvd @dumbolot Water&Jay	1436448791	619137220490981376	f	mexicoblvd
+@AmeliaKaufman Hola, yes we have veggie tacos.	1436382222	618858011059200000	f	mexicoblvd
+Midtown 51st St. & Park http://t.co/91QnrtvU90	1436360149	618765430090543105	f	mexicoblvd
+Good morning! TacoTuesday @MexicoBlvd Midtown NYC 46th St.	1436278752	618424026113933312	f	mexicoblvd
+Hola Dumbo! Enjoy your lunch @MexicoBlvd @dumbolot and have a great week! Water&Jay	1436188069	618043673553575936	f	mexicoblvd
+RT @TaimonT717: I do love my MexicanFood here in Texas but mexicoblvd was where it was at!!! NYC FoodTrucks...cant... https://t.co/2KeqYFc...	1436123046	617770947978883073	f	mexicoblvd
+http://t.co/JKrJ2SDB5o	1436026125	617364431043993600	f	mexicoblvd
+Q+A with Shelby Welinder, Body Positive Model + Journalist http://t.co/j1jevszngC via @byomuse	1435693089	615967577685258240	f	delsnyc
 RT @nick_schultz: This @DelsNYC and @Gansettbeer shandy is delicious (and not even filling) http://t.co/NrhbCLNadi	1410028765	508323601901428736	f	delsnyc
 We are in DUMBO @BklynBrdgPark until 4:30, then we head over to @MadSqParkNYC to serve our Flatiron fiends from 6-9pm!	1410023623	508302033628463104	f	delsnyc
 RT @MadSqParkNYC: Refreshments for sale at MadSq200TASK include @Redhooklobster @souvlakitruck @DelsNYC @LaNewyorkina http://t.co/Yiwmkqw6...	1409848662	507568193733275648	f	delsnyc
@@ -2354,27 +2334,28 @@ This weekend we will be at Afropunk Fest with both of our trucks! Come check out
 Complimentary Del's available at Abington House!	1408579206	502243712429490176	f	delsnyc
 Happy National Lemonade Day! Find us at Abington House Summer Series Event at 500 W30th st 6-9pm @2910AH AHartpark	1408565494	502186200049152002	f	delsnyc
 21st & 5th all day today! Flatiron and @MadSqParkNYC are a home away from home for us.	1408377663	501398376387457024	f	delsnyc
-If you are looking for something fun, @Verboten is putting on a BBQ with DJs at 50 Kent Ave Willliamsburg. We are there from 3-10pm!	1408298570	501066636443795456	f	delsnyc
-M-e-t-h-od Man is down with Mamu Thai! WuTang bk nyc c.r.e.a.m. mamuthai @MamuThai http://t.co/TKVdP28E8B	1432938856	604415489884962816	f	mamuthainoodle
-We are super excited to join @thaithenticNYC for their second Chef Series pop-up event @starrettlehigh this evening 5pm-8pm Hungry yet?thai	1431624296	598901824263999488	f	mamuthainoodle
-Happy Mother's Day to all moms everywhere!	1431302874	597553681425391617	f	mamuthainoodle
-Thank you Brooklyn. Have a great weekend!	1431121430	596792651225178112	f	mamuthainoodle
-RT @VendorPower: One year ago, we kicked off our campaign for more permits. Here's the highlight vid https://t.co/gc5X41QUPP @foodchainwork...	1429908716	591706161579053056	f	mamuthainoodle
-Hellooo Dumbo! We're back for your noodle needs! Come by for your Thai noodle lunch! @dumbolot @DUMBOFoodTrucks it's the freakin' weeken'	1429892104	591636482366038016	f	mamuthainoodle
-ATTN: Mamu Thai is hiring! Truck or restaurant. FT/PT. Please write mamuthaicatering@gmail.com	1429821781	591341527521218560	f	mamuthainoodle
-RT @QueensEatsIG: Check out all the amazing things we ate and did on our whatakeover!!!\nRG weheartastoria: To end this... https://t.co/GBV76...	1429413597	589629480165109760	f	mamuthainoodle
-Thank you @Etsy for having us at your party!! Congrats on the big news! smallbiz to whoa nyc Brooklyn	1429312587	589205814168129536	f	mamuthainoodle
-It's Friday! Dumbo, we are here for you @dumbolot! Come by for the freshest Thai noodle in town! @DUMBOFoodTrucks	1429286646	589097007794495488	f	mamuthainoodle
-UPDATE: Sorry folks, We will be CLOSED for a special event tonight. We will be open for dinner tomorrow at 6pm	1429222086	588826223700246528	f	mamuthainoodle
-At Mamu QNS Today: We will be CLOSED from 3:00pm to 5:30pm, No Deliveries tonight, PICKUP ONLY. Friday :CLOSED for lunch, open @ 6pm webusy	1429212100	588784339607019521	f	mamuthainoodle
-TGID! Thank god it's Dumbo! Come by for your Thai noodle fix! @DUMBOFoodTrucks	1428682881	586564636826329088	f	mamuthainoodle
-@crimsoncor not really. We haven't ruled it out this season like we have in the past. It's just so over crowded with trucks. We'll let u kno	1428667492	586500090476519424	f	mamuthainoodle
-. @QueensEatsIG @fuelgrannie @MamuThai Thanks so much for stopping by! So happy that you liked our food! queens Astoria lic queenseats	1428629906	586342439805444099	f	mamuthainoodle
-RT @QueensEatsIG: @MamuThai so much thanks for the amazing meal	1428629781	586341918898057216	f	mamuthainoodle
-. @AstoriaCoffeeNY @radashlee @TacubaNYC @YelpQueens @MexicoBlvd  https://t.co/3iUPACgVGT	1428509941	585839271371747328	f	mamuthainoodle
-RT @MamuThai: Late tweet: Truck is @dumbolot ! Jay&water st. Come by for noodle! Green Curry noodle special today.	1428423262	585475716034207744	f	mamuthainoodle
-It's Friday and that is good enough for us! Dumbo come by & get your noodle fill! @dumbolot @DUMBOFoodTrucks	1428077281	584024565174665217	f	mamuthainoodle
-. @lulovestweets thanks for the compliment! @MamuThai we cook w/love&fresh ingredients! Noodles fresh daily & currypuffs by hand! hardlabor	1427659308	582271457381736448	f	mamuthainoodle
+Friday!! Dumbo day! Come to @dumbolot where we will be serving you the freshest Thai noodle! Hand cut this morning as per everyday! 11:30-3	1437144992	622057299968950273	f	mamuthainoodle
+Late tweet: Thursday uptown peeps you know where to get your thai noodle on! lunch NYC 	1437065005	621721809952616448	f	mamuthainoodle
+We are @BLDG92 in BK Navy Yard. Rainy just slowed down. Come by your Thai noodle lunch	1436975880	621347994663841792	f	mamuthainoodle
+Sorry 17th & 5th, we're having generator issues. Had to close early. Until next time... 	1436808344	620645298889736192	f	mamuthainoodle
+17th & 5th! Monday is your day! Come by for the freshest Thai noodle in town. We just hand cut them for you! mamuthai lunch nyc	1436802694	620621597859254272	f	mamuthainoodle
+RT @heartOFqueens: Day 51/100: Last week we grabbed some dinner at @mamuthainoodle before heading to the movies in... https://t.co/uRMEhBlxAT	1436652744	619992663035654144	f	mamuthainoodle
+@LosViajeros15 best of luck on your launch! Food truck life is crazy. See you on the streets!	1436498151	619344253127409664	f	mamuthainoodle
+RT @mnonsrichai: @RidingShotgunLA While in NYC, gotta head to Queens and check out @MamuThai (or their truck @mamuthainoodle)!	1436389145	618887047600832513	f	mamuthainoodle
+Thai Tuesday at our Uptown spot! You know where! Come by for lunch! mamuthai	1436280220	618430185583603712	f	mamuthainoodle
+Happy Monday! We're at 17th & 5th ave. today! Join us for your noodle lunch!	1436190619	618054371138514944	f	mamuthainoodle
+17th & 5th! Union Square! We're back again today! Come by for the freshest Thai noodle in NYC lunch FoodTruck mamuthai	1435762971	616260683274014724	f	mamuthainoodle
+Thai Tuesday is back! Come by Tuesday folks! You know where.. Hint: uptown mamuthai lunch	1435674817	615890940713148416	f	mamuthainoodle
+Happy Monday! Truck is on 17th & 5th today. It's been a while since we've been here. Come lunch w/us! NYC foodtrucks	1435591862	615543001067163648	f	mamuthainoodle
+RT @aimeelee1207: @fuelgrannie @mamuthainoodle that place is awesome!	1435359734	614569385370513408	f	mamuthainoodle
+Dumbo, it's Friday! Come by for your Thai noodle! Yes, they're handcut noodles & fresh off the press daily! @DUMBOFoodTrucks	1435334447	614463326894948352	f	mamuthainoodle
+We're back!!! To our loyal fans, we are at our secret Thursday spot! Ya know the corner. Come by!! Hint: uptown. mamuthai lunch nyc	1435245524	614090356473335808	f	mamuthainoodle
+RT @JoeDiStefano: HEY QUEENS NYC IS IT TOO EARLY IN THE MORNING TO SHOUT ABOUT THIS SECRET OMELET .@MAMUTHANOODLEI!!??... http://t.co/GSP...	1435075320	613376467666366466	f	mamuthainoodle
+. @JoeDiStefano @MamuThai @fuelgrannie thanks so much for coming by! Many more secrets to share next time! So glad you enjoyed our food!	1435069301	613351223656361984	f	mamuthainoodle
+@Stellar78 hey there! We are in talks with the navy yard about being there weekly. Will keep you posted!	1435068316	613347089364467712	f	mamuthainoodle
+We are back! Truck is finally out of the hospital! Dumbo! You know that means hot fresh Thai noodles! Join us for lunch! @DUMBOFoodTrucks	1434730018	611928165259321345	f	mamuthainoodle
+We hope to have CART out later this week	1436789968	620568221284999168	f	thepocketful
+We are rebuilding our Refridgerator system in truck. It's taking longer than expected. We miss u all in 50th	1436789859	620567763749310464	f	thepocketful
 Our cart is back on 50th between 6th and 7th. Enjoy the sunshine!	1430145608	592699756926873602	f	thepocketful
 We injured our cart today. We won't be on 50th, but will be back all fixed up on monday	1429888965	591623317460754432	f	thepocketful
 Our cart is permanently located on 50th between 6th and 7th. The truck is helping out baby for next few weeks.	1429110401	588357783088717824	f	thepocketful
@@ -2393,128 +2374,125 @@ Located on 50th between 6th&7th	1427469005	581473269162872832	f	thepocketful
 On 49th between 6th&7th. Police activity on 50th.	1427380200	581100793551552512	f	thepocketful
 We are on 50th between 6th and 7th. Enjoy the sunshine.,	1427295178	580744186783232001	f	thepocketful
 Located on 50th between 6th&7th	1427206096	580370548636667906	f	thepocketful
-Located on Hudson and King	1427125110	580030869294960640	f	thepocketful
-We r on 50th between 6th&7th	1426778682	578577843493429249	f	thepocketful
-Truck open at 55th street and Broadway. Come!!!	1432895891	604235278178480128	f	carpedonutnyc
-Truck open at 51st street and Park avenue. Come!!!	1432809145	603871441172504576	f	carpedonutnyc
-Open at 23rd street and park avenue south. Come!!!	1432723270	603511252749590528	f	carpedonutnyc
-Truck open Bergen and court. Come !!!	1432466577	602434607477334016	f	carpedonutnyc
-@bmxrocksya sorry we missed you yesterday. We were at a private event. We are back at Bergen St and Court St tomorrow from 7.30 am. Thanks!	1432396901	602142363918671872	f	carpedonutnyc
-Open now @ Bergen St and Court St. Come get some donuts now - we are only here till 12pm today!!	1432387418	602102588914413568	f	carpedonutnyc
-Open at 51st street and Park avenue. Come!!!	1432204620	601335879790133248	f	carpedonutnyc
-Open at 23rd street and Park avenue south. Come!!!	1432118127	600973100734361601	f	carpedonutnyc
-Food truck rally, grand army plaza. Come!!!	1431872380	599942363469983744	f	carpedonutnyc
-Truck open at 55th street and Broadway. Come!!!	1431685634	599159092473630720	f	carpedonutnyc
-Truck open at 51st street and Park avenue. Come!!!	1431600280	598801091845840896	f	carpedonutnyc
-Truck open @ 23rd street and park avenue south. Come!!!	1431513802	598438378816872449	f	carpedonutnyc
-Truckopen at Bergen and court street. Come!!!	1431255774	597356128566177792	f	carpedonutnyc
-Open @ Bergen St and Court St now!	1431171597	597003066840342528	f	carpedonutnyc
-Truck open at 55th street and Broadway. Come!!!	1431083215	596632366443036673	f	carpedonutnyc
-Truck open. 23rd street and park avenue south. come!!!	1430911307	595911332886683648	f	carpedonutnyc
-Truck open at 51st street and park avenue. Come!!!	1430735733	595174921547964416	f	carpedonutnyc
-Truck Food truck rally. Grand army plaza. Prospect park. Come!!!!	1430664096	594874452413919232	f	carpedonutnyc
-Come enjoy a donut with us on this beautiful spring day! Open at Bergen and Court - fresh donuts and refreshing beverages await!	1430567478	594469209087807488	f	carpedonutnyc
-Open @ 55th and Broadway now!	1430480371	594103853215305728	f	carpedonutnyc
-46st we are here, bet 5&6 Ave closer to 6 Ave serving lunch from 11:30 until 3:30 order online http://t.co/vR5tgBHsTH, get some schnitzi	1432820910	603920785699397633	f	schnitzi1
-add some chicken to your shavuot diet, let us help you,  @46 St b/5&6 serving lunch from 11:30-3:30 order online @www.schnitzi.com	1432647114	603191834630819840	f	schnitzi1
-It seems like it is going to be a nice day today, @46 St bet 5&6 serving lunch from 11:30 until 3:30 schnitzitruck http://t.co/vR5tgBHsTH	1432214325	601376584008912896	f	schnitzi1
-Today we are @46 St bet 5&6 Ave serving lunch from 11:30 until 3:30 order online @www.schnitzi.com schnitzitruck schnitzel	1432132692	601034189589348352	f	schnitzi1
-today we are @46 St bet 5&6 Ave serving lunch from 11:30 until 3:30 order online @www.schnitzi.com schnitzitruck foodtruck	1432042687	600656682591657985	f	schnitzi1
-Today @Hanover Sq serving lunch from 11-3 order online @www.schnitzi.com get some early start Schnitzi schnitzitruck kosher	1431958739	600304577372651521	f	schnitzi1
-Look for us @46 and the corner of 6 Ave serving lunch from 11:30-3:30 order online @www.schnitzi.com see you all soon	1431612664	598853034375020544	f	schnitzi1
-Good morning to all of Schnitzi fans, today we will serve lunch @46 St bet 5&6 Ave from 11:30-3:30 order online @www.schnitzi.com	1431524553	598483471363870721	f	schnitzi1
-@46 St bet 5&6 serving lunch from 11:30-3:30 don't wait , order online @www.schnitzi.com (pay online) schnitzitruck foodtruck	1431439968	598128695115698176	f	schnitzi1
-Get ready for some schnitzi @Hanover Sq,lunch from 11-3 order online @www.schnitzi.com schnitzitruck schnitzel foodtruck	1431352283	597760917317758977	f	schnitzi1
-@46 St on this beautiful day serving lunch from 11:30-3:30 @www.schnitzi.com, for dinner we will be Roosevelt Island from 6-8pm	1431005660	596307078081335296	f	schnitzi1
-Today @46 St right off the corner of 6 Ave serving lunch from 11:30-3:30 order online @www.schnitzi.com schnitzitruck schnitzel	1430921568	595954368194678784	f	schnitzi1
-46 St we are here bet 5&6 Ave serving lunch from 11:30 until 3:30 see you soon schnitzitruck foodtruck kosherfood http://t.co/vR5tgBHsTH	1430834396	595588743547002880	f	schnitzi1
-May the fourth be with you, today our Millennium falcon is parking @Hanover Sq serving lunch from 11-3 order @www.schnitzi.com	1430748481	595228390921220096	f	schnitzi1
-Today right off the corner of 46 and 6th Ave serving lunch from 11:30 until 3:30 get some schnitzi foodtruck @www.schnitzi.com	1430400748	593769891217416192	f	schnitzi1
-we are @46 St bet 5&6 serving lunch from 11:30 until 3:30 order online @www.schnitzi.com	1430315448	593412117195165696	f	schnitzi1
-First Schnitzi truck team needs to apologize for the waiting time yesterday we were missing one guy on our team	1430315402	593411924513067008	f	schnitzi1
-Today schnitzi truck is on 46 St bet 5&6 Ave serving lunch from 11:30 until 3:30  order online @www.schnitzi.com	1430229879	593053214913732608	f	schnitzi1
-Gorgeous day outside a perfect day for Schnitzi's,  @Hanover Sq serving lunch from 11 until 3 order online @www.schnitzi.com	1430144077	592693337196523522	f	schnitzi1
-Good morning Thursday we are @46 St bet 5&6 serving lunch from 11:30- 3:30 last day of our week,Sunday @israelifoodfestival @76&Amsterdam	1429796668	591236195201503232	f	schnitzi1
-@tobjustb sorry To hear that, We close at 6 pm, what time did u go?	1432857229	604073120434147328	f	palenquefood
-Are you thirsty ? Easy ! Come to @GansMarket and get yourself a Fresh agua de panela ! We do make it with tons of love	1432825693	603940849588789248	f	palenquefood
-Come to Rockaway Boardwalk on 96! http://t.co/IKnWDS9ayu	1432399216	602152074252558336	f	palenquefood
-Bringing the sunshine to the Rockaways with our delicious arepas, tostones & yuca fries!!	1432399087	602151533346738176	f	palenquefood
-Really Happy making Arepas! :) https://t.co/98BqAenstC	1431900675	600061041620422657	f	palenquefood
-Serving Arepas @NYRR marathon! https://t.co/YS10MYlfkL	1431869607	599930733516464128	f	palenquefood
-Lovely day! We are ready to feed you with the most delicious Colombian arepas at GANSEVOORT MARKET.	1431529011	598502170879733760	f	palenquefood
-@ShmidtBoris sorry u feel this way, We ask Customers We charge a fee using credit Cards! We want To reimburse u with any item from our Menu	1431524827	598484621261721600	f	palenquefood
-@ShmidtBoris sorry you feel this way, we charge regular tax + square fee! there is no fraude at all , please pay cash!	1431463203	598226148884094976	f	palenquefood
-RT @GansMarket: Stop in for an adventurous lunch break! @DonostiaNYC @MTerraneanNYC @CapponesNYC @edslobsterbar @Palenquefood @tacombi @PIG...	1431445541	598152070714241025	f	palenquefood
-It's Palenque time! Come by and try our delicious food in UrbanSpace at Broadway between 39 and 40th st http://t.co/eb5fhnuFMi	1431445365	598151334580363264	f	palenquefood
-Visit us at @GansMarket get any of our delicious arepas and don't forget to ask for the lunch special ;) colombianfood nyc	1431442689	598140106814423041	f	palenquefood
-Lovely day for some Colombian arepas. Come visit us at our meat-packing district location.  @GansMarket	1431362480	597803689647026176	f	palenquefood
-Today smorgasburg pier 5 Brooklyn bridge park until 6:00 pm beautiful day for a delicious arepa! https://t.co/4tE67x05Nt	1431279143	597454145818353664	f	palenquefood
-Having fun making Arepas smorgasburg N7 and river side Williamsburg https://t.co/Y6emKn8RNy	1431179723	597037148697661440	f	palenquefood
-Making healthy multigrain empanadas https://t.co/T1H77mz5uX	1431106698	596730860843446272	f	palenquefood
-You can also make yourself our home made quinoa arepas at home come visit us today at @gansmarket... https://t.co/t0tJiyMGdk	1431008453	596318792453492738	f	palenquefood
-RT @GansMarket: . It may be cloudy today but the market is celebrating HumpDay with so many tasty lunch options! @edslobsterbar @CapponesN...	1430928456	595983260515233792	f	palenquefood
-RT @HeyNannery: Every go to @Palenquefood in garmentdistrict @UrbanSpaceNYC right now! Get an arepa with a side of agua de panela! http://...	1430773517	595333398027177984	f	palenquefood
-RT @MayhemAndStout: New Market Monday. UrbanSpaceGarment opens today @ 11 & runs till June 14. Find us on B'way btwn 40th & 41st. @UrbanSp...	1430752372	595244710433792000	f	palenquefood
-Fries are ready! @govballnyc GovBallEEEEEATS http://t.co/b4u6m5clvZ	1402176073	475387025454280704	f	goburger
-RT @GovBallNYC: @GOBurger GovBallEeeeeats	1402175930	475386426239250432	f	goburger
-Welcome to VIP @govballnyc govballnyc http://t.co/Nf5AVVFsJv	1402174356	475379823721054208	f	goburger
-@JustinKopesky we will definitely refund you for the burger order. Please reach out to devorah at e2hospitality dot com and she'll handle.	1399914669	465902009078800384	f	goburger
-We're on 91st and Amsterdam for dinner tonight. See you soon!	1398896034	461629544118894592	f	goburger
-Rain, Rain, Go Away! We're on Varick and Vandam today!	1398873138	461533510680186880	f	goburger
-Dear UWS, see you at 76th and Broadway for dinner. I'll be the one in the truck.	1398806868	461255556175781889	f	goburger
-Good news for our Flatiron friends - we'll be on 20th and 5th this afternoon!	1398783044	461155628883644417	f	goburger
-Wish you were here...with us for dinner on Broadway between 88th and 89th. http://t.co/Dsg1xfyzbP	1398719730	460890072783798272	f	goburger
-It's a beautiful day for a burger and fries! Let us prove it - come to 27th and Park and meet us!	1398699737	460806215753138176	f	goburger
-Happy Weekend! Celebrate with burgers at 69th and broadway!	1398528954	460089900059357185	f	goburger
-Lunch today will be served at 25th and 6th Ave.	1398439580	459715035410227200	f	goburger
-Dinner time! Hit us up at 76th and Broadway!	1398379250	459461993347305472	f	goburger
-And we're back on 27th and Park for lunch!	1398356559	459366820882186240	f	goburger
-@colettesny right back attcha	1398271666	459010753945960448	f	goburger
-RT @colettesny: I love Go Burger!!!! http://t.co/ILBO6UkJ5f	1398271656	459010711453446146	f	goburger
-Happy Hump Day!! Celebrate with a burger on Varick and Vandam!	1398267380	458992776466948096	f	goburger
-@chelseymary by special request :) RT @GOBurger: Hello Upper West Side! We've moved to 88th and Broadway for dinner!	1398202520	458720734802878464	f	goburger
-Hello Upper West Side! We've moved to 88th and Broadway for dinner!	1398202486	458720592602996736	f	goburger
-Truth. Just awoke from hibernation but will be back over there! MT @quarropas it's been a while I think since you have been in midtown west.	1398180649	458629000668401664	f	goburger
-Lil Carl makes it 2015 debut today @IntrepidMuseum same great cheesesteaks as Big Carl which is at 55th st and... http://t.co/qarP5VBgmM	1432912042	604303021787500545	f	carlssteaks
-Scream it from rooftops it's CHEESESTEAK FRIDAY ! 56th st / Bdwy @randomfoodtruck @victoriasecret @UMG @Barclays... http://t.co/7spL7HYg2b	1432911642	604301342887256064	f	carlssteaks
-Lil Carl makes it 2015 debut today @IntrepidMuseum same great cheesesteaks as Big Carl which is at 55th st and Broadway today. 2x the Love!!	1432911621	604301255079542785	f	carlssteaks
-RT @LaBellaTorte: FoodTruckFriday @livefastgroup @IntrepidMuseum @PapayaKingTruck @carlssteaks lbttrucknyc	1432911510	604300789851516928	f	carlssteaks
-Scream it from rooftops it's CHEESESTEAK FRIDAY ! 56th st / Bdwy @randomfoodtruck @victoriasecret @UMG @Barclays @DefJamRecords GOT WHIZ?	1432906035	604277828851515392	f	carlssteaks
-HAPPY HAPPY DAY FOLKS!! PROUD TO SAY LIL CARL @carlssteaks HAS PASSED INSPECTION AND WILL BE BACk ON THE ROAD... http://t.co/XMR0trLKSR	1432830420	603960675338190850	f	carlssteaks
-We love Thursday ONE day closer to Friday folks 49th st 6 / 7 Av @Barclays @DefJamRecords @SIRIUSXM @SiriusXMNFL... http://t.co/tlCZdFhHxs	1432829996	603958895246213120	f	carlssteaks
-Happy hump day folks 47th st bet park / lex @MLB @nfl @UBSamericas @jpmorganchase @SIRIUSXM @SiriusXMNFL GOT WHIZ? http://t.co/ySZqN5D9QE	1432736276	603565803934457856	f	carlssteaks
-Happy hump day folks 47th st bet park / lex @MLB @nfl @UBSamericas @jpmorganchase @SIRIUSXM @SiriusXMNFL GOT WHIZ? http://t.co/Kv5C0EPdAH	1432736130	603565194816724993	f	carlssteaks
-Back in brooklyn baby!!! Start your 4 day workweek off right w a carls famous cheesesteak GOT WHIZ? nycsbest	1432649110	603200203554979841	f	carlssteaks
-RT @dumbolot: 4 day work week starts with @KimchiTruck @SweetChiliNYC and @carlssteaks!	1432649071	603200040476225536	f	carlssteaks
-RT @LaBellaTorte: Join us today and celebrate @IntrepidMuseum @carlssteaks @Papaya_King MemorialDay	1432569174	602864930749026304	f	carlssteaks
-RT @livefastgroup: Come Celebrate our Brave Troops and grab some great food. America mdw nyc food trucks intrepid... https://t.co/STkxHx...	1432565100	602847840163999744	f	carlssteaks
-RT @livefastgroup: Come stop by the @IntrepidMuseum for the perfect memorialdaywknd filled with fun & great food. @carlssteaks @PapayaKing...	1432475436	602471765101666305	f	carlssteaks
-RT @GovIslandFood: Opening day on @Gov_Island. stop by and enjoy the beautiful weather and great food from @SweetChiliNYC @carlssteaks @Del...	1432389592	602111709076189184	f	carlssteaks
-Enjoying fleet week @IntrepidMuseum so come by and grab a carls famous cheesesteak GOT WHIZ? http://t.co/Kb0lGNBlhS	1432322076	601828524807331840	f	carlssteaks
-RT @livefastgroup: It's FleetWeek at the @IntrepidMuseum so come grab some food from our great vendors @LaBellaTorte @PapayaKingTruck @mel...	1432304470	601754681950482432	f	carlssteaks
-Another great day @IntrepidMuseum for Fleet Week so let's celebrate our troops and grab a carls famous cheesesteak GOT WHIZ?	1432221200	601405421644062720	f	carlssteaks
-RT @livefastgroup: It's FleetWeek at the @IntrepidMuseum so come grab some food from our great vendors @LaBellaTorte @PapayaKingTruck @mel...	1432212230	601367796874932224	f	carlssteaks
-Thanks to @livefastgroup @carlssteaks be at the @IntrepidMuseum all day to celebrate FleetWeek.Come celebrate... http://t.co/L0Nis4fJFS	1432132237	601032283966017536	f	carlssteaks
-RT @AmandaBananasNJ: @mactruckny @ChefDomTes thanks for the Mac & Cheese at @Pier_13Hoboken !! Amanda approves hoboken pier13 http://t....	1432948919	604457693697470464	f	mactruckny
-@Mis_Ferreira not today, hoboken till 10	1432917074	604324128770887682	f	mactruckny
-Tonight hoboken PIER13 4-10pm foodtrucks @ChefDomTes	1432913797	604310383537573888	f	mactruckny
-Dont forget to follow my new page!!! @ChefDomTes foodnetwork FoodNetworkStar	1432730995	603543657451528192	f	mactruckny
-Good morning 47st!!! Between park and lex last truck on the block caboose	1432730877	603543159864479744	f	mactruckny
-@Mis_Ferreira likewise!!	1432319570	601818012837146624	f	mactruckny
-RT @thegreenradish1: Hanging with @mactruckny on 47th btw Park and Lex 11-2pm @jpmorgan @DharmaYogaNYC @Gothamist @EatStTweet @EaterNY @mas...	1432297634	601726006324506624	f	mactruckny
-Good morning 47st!! Between Park and Lex till 2pm 	1432294916	601714606684405760	f	mactruckny
-@Mayna73 tomorrow 47, park and lex	1432221800	601407936653565952	f	mactruckny
-@BlueMoonFelix @ChefDomTes tomorrow, finishing my prep as we tweet.	1432221342	601406017868554241	f	mactruckny
-@TimTurnerMusic I'll RT you if you RT me !!!!  Perhaps a boost? http://t.co/bTb0e7r3YQ	1432077982	600804721998340096	f	mactruckny
-Hey macheads do me a favor and cast your vote to make me a fanfavorite http://t.co/bTb0e7r3YQ FoodNetworkStar	1432077557	600802938278273026	f	mactruckny
-@AlbaGuBrath2 i will keep you posted.	1432055067	600708606854615041	f	mactruckny
-RT @ChefDomTes: surreal foodnetworkstar dominooch foodnetwork June 7th. https://t.co/FoOZeXRac0	1431981041	600398119096983553	f	mactruckny
-RT @ChefDomTes: Look who popped up at my window!! fitchef actionjackson machoman foodtrucks macncheese... https://t.co/ZYhLmNJAkB	1431962295	600319495698325505	f	mactruckny
-RT @morganinnyc: nervous and not feeling as prepared for the AirbnbBKHalf however I'm ready for the pre-party and mostly @mactruckny	1431658784	599046478800248832	f	mactruckny
-RT @Airbnb: @morganinnyc @mactruckny We can't get enough of this mac and cheese! carboload	1431658779	599046454473265152	f	mactruckny
-RT @mike_jules: @mactruckny  https://t.co/n6jHiTWcV6	1431658769	599046414719655936	f	mactruckny
-RT @taralarocca: Congrats to @ChefDomTes on being part of The Next Food Network Star!!\nYou are gonna kill it! Luv @mactruckny!Make ShaoLin ...	1431658754	599046350068707328	f	mactruckny
-RT @Momielee: Pulled pork Mac & cheese from @mactruckny was life changing. Oh lawd. 	1431658750	599046335120158720	f	mactruckny
+RT @randomfoodtruck: Been awhile since I was in on a Friday (humblebrag). Happy to see so many great trucks here! @CamionNYC @carlssteaks ...	1437146040	622061698267152384	f	camionnyc
+Old slip and water FiDi foodporn foodtruck tacos burritos camionmeanstruck... https://t.co/ldYJK0EKLg	1436974916	621343951967154176	f	camionnyc
+Good food, good beer and good tunes, join us licbeerproject fishtacos beers tgis summer foodporn... https://t.co/qJBKHwZLc7	1436642398	619949269177516032	f	camionnyc
+@tessypie we're here to help  glad you enjoyed.	1436560474	619605653330509824	f	camionnyc
+TGIF 56th & Broadway 11:30 to 2:30 today's especial Al pastor Tacos camionmodernmexican camionmeanstruck @randomfoodtruck Midtown	1436541204	619524830078074880	f	camionnyc
+Old slip and water til 2:30. foodporn foodtruck camionmodernmexican camionmeanstruck yummy https://t.co/SvLOiMwkQx	1436368796	618801698451001344	f	camionnyc
+Old slip and water til 2:30 we got the humpday cure Al pastor tacos with a pineapple relish FiDi fishtacos camionmodernmexican	1436368380	618799954363064320	f	camionnyc
+Today at 47th st and Park Abe. Come try today our 2 specials. Brisket taco and Al pastor taco. Today... https://t.co/ZxFkjSwL1J	1436283937	618445775350157316	f	camionnyc
+At Belmont park today for Americas birthday  belmont starsandstripes 4thofjuly https://t.co/unl8X68PGp	1436039898	617422201378238464	f	camionnyc
+Today at 46th and 6th ave. try our Al pastor tacos til 2:30 camionmodernmexican foodporn foodtruck... https://t.co/TvkBcPNhI5	1435766217	616274301503848448	f	camionnyc
+Old Slip & Water St till 2pm fidi foodporn foodtruck wallstreet alpastor tacos... https://t.co/dqL5nltv7Q	1435592555	615545908239945728	f	camionnyc
+Old Slip & Water St till 2pm Today this weeks especial Al Pastor tacos with pineapple Relish fidi foodporn http://t.co/sIzBzG2V18	1435592124	615544100788563968	f	camionnyc
+Corner of Tompkins St. & Monroe St. Brooklyn beerbraisedshortribs sincerelytommy foodporn... https://t.co/uEYphoSaqI	1435524538	615260624470286336	f	camionnyc
+Today at 56th st and Broadway. Come try the today special Al pastor tacos til 2:30 foodporn... https://t.co/6cnLutc4Cs	1435333637	614459926115655684	f	camionnyc
+47th St & Park Ave midtown foodporn fishtaco cod fritters foodtruck foodtrucklife yummy https://t.co/PKefl1cpRI	1435071383	613359955102564353	f	camionnyc
+relayforlife2015 bayridge foodporn modernmexican fishtacos foodporn foodtruck https://t.co/kYXQ78y1iO	1434823945	612322122304765952	f	camionnyc
+46th St & 6th Ave  midtown alpastor fishtaco modernmexican foodporn https://t.co/7LnDHAYFmi	1434632561	611519400076800000	f	camionnyc
+tacotuesday midtown fishtacos foodporn parkave @ E 47th St & Park Ave https://t.co/a3vhtGMaHx	1433864290	608297038741164032	f	camionnyc
+TGIF 56th & Broadway till 2:30 fishtacos Fryday midtown @randomfoodtruck http://t.co/Eqc9tPicMY	1433518085	606844950408478720	f	camionnyc
+@DKinskeyLebeda thanks David feels good to be back and thanks for the love fidi	1433359704	606180651092606976	f	camionnyc
+Truck open at 51st street and Park avenue. Come!!!	1437044501	621635811478532096	f	carpedonutnyc
+Truck open at 23rd street and Park avenue south. Come!!!!	1436958801	621276358266724352	f	carpedonutnyc
+Truck open at 51st street and Park ave. come!!!	1436785384	620548995602096128	f	carpedonutnyc
+Open at Grand Army Plaza. Prospect Park. Food Truck Rally. Come!!'	1436709816	620232042480013312	f	carpedonutnyc
+Truck open at 55th street and Broadway. Come!!!	1436526847	619464612149395456	f	carpedonutnyc
+Truck open at 51st street and park ave. come!!!	1436440072	619100650950033408	f	carpedonutnyc
+Truck open at 23rd street and park avenue south. Come!!!	1436353427	618737236436193280	f	carpedonutnyc
+Truck open at Bergen and court street.come!!!	1436094807	617652506777264128	f	carpedonutnyc
+Truck open at 55th street and Broadway. Come!!!!	1435920989	616923459592056832	f	carpedonutnyc
+Truck open at 51st street and park avenue. Come!!!	1435835561	616565150267670528	f	carpedonutnyc
+Truck open at 23rd street and park ave south. Come!!	1435748686	616200767251292160	f	carpedonutnyc
+Good morning. Truck open at Grand Army Plaza. Prospect Park. Come!!!!	1435499642	615156202377486336	f	carpedonutnyc
+Good morning! We're open at Bergen and Court street today - come by and enjoy a fresh donut and a cup of coffee!	1435404225	614755995722608640	f	carpedonutnyc
+Truck open at 55th street and Broadway. Come!!!	1435315906	614385558345940992	f	carpedonutnyc
+Truck open at 51st street and park ave. come!!!	1435230203	614026092396060672	f	carpedonutnyc
+Good morning. Truck open at 23rd street and Park avenue south. Come!!!	1435143973	613664418929451008	f	carpedonutnyc
+Good morning. Truck open at 51st street and park ave. come!!!	1434971334	612940317948575744	f	carpedonutnyc
+Open @ Bergen and Court!	1434800843	612225228249395200	f	carpedonutnyc
+Truck open at 55th street and Broadway. Come!!!	1434710939	611848142967980032	f	carpedonutnyc
+Truck open at 51st street and park ave. come!!!	1434625602	611490214096318464	f	carpedonutnyc
+Guys today it is our last day before our nine days vacation, so come to 46 St bet 5&6 Ave from 11:30-3:30 order @www.schnitzi.com	1437055426	621681634585219072	f	schnitzi1
+Today @46 bet 5&6 serving lunch from 11:30 until 3:30 order online @www.schnitzi.com schnitzitruck schnitzel foodtruck	1436968983	621319065907425280	f	schnitzi1
+Today @46 St bet 5&6 Ave serving lunch from 11:30 until 3:30 fill your Schnitzi stock before the nine days, order@www.schnitzi.com	1436882560	620956583363784704	f	schnitzi1
+today we are @Hanover Sq serving lunch from 11-3 order online @www.schnitzi.com schnitzitruck schnitzel foodtruck kosherfood	1436797034	620597857956012032	f	schnitzi1
+Governors Island we are here so come get your Schnitzi today schnitzitruck schnitzel foodtruck kosherfood http://t.co/vR5tgBHsTH	1436719903	620274347563974656	f	schnitzi1
+Yes we are @46 St bet 5&6 Ave between all the other food trucks, serving lunch from 11:30 - 3:30 order online @www.schnitzi.com	1436450413	619144024792920064	f	schnitzi1
+They say it's going to rain so come early we are @46 St bet 5&6 Ave 11:30 - 3:30 order online @www.schnitzi.com schnitzitruck	1436368483	618800387626270720	f	schnitzi1
+@46 St bet 5&6 Ave serving lunch from 11:30-2:30 come early we have an event after so we have to  leave @2:30  @www.schnitzi.com	1436278798	618424219785953280	f	schnitzi1
+Today we are @Hanover Sq serving lunch from 11-3 order online @www.schnitzi.com schnitzitruck schnitzel foodtruck kosherfood	1436191376	618057547593986050	f	schnitzi1
+Today our last day @46 St before the long weekend we will serve lunch from 11:30-3:30, get some garlic mayo before the weekend order online	1435846109	616609391140315136	f	schnitzi1
+Today @46 St bet 5&6 Ave serving lunch from 11:30-3:30 order online @www.schnitzi.com schnitzitruck foodtruck kosherfood	1435759733	616247104701362176	f	schnitzi1
+46 St we are here bet 5&6 serving lunch from 11:30 until 3:30 order online @www.schnitzi.com schnitzitruck schnitzel foodtruck	1435677022	615900188293615616	f	schnitzi1
+We are @Hanover Sq serving lunch from 11-3 get ready to rumble order online @www.schnitzi.com schnitzitruck schnitzel foodtruck	1435589548	615533296353705984	f	schnitzi1
+We think the sun will come out and shine on us @Governors Island so we are here today	1435498313	615150628927614976	f	schnitzi1
+Look for us @46 St bet 5&6 serving lunch from 11:30 until 3:30 order online @www.schnitzi.com schnitzitruck schnitzel foodtruck	1435242849	614079135732867072	f	schnitzi1
+@iamjoshuablum yes we are on 46 bet 5&6	1435168506	613767318544470016	f	schnitzi1
+Long time no see, we are back on 46st bet 5&6 Ave serving lunch from 11:30 until 3:30  schnitzitruck schnitzel foodtruck kosherfood	1435067913	613345401807220737	f	schnitzi1
+Today June 22 we will serve lunch at Hanover Sq from 11 until 3 order online @www.schnitzi.com schnitzitruck schnitzel	1434983721	612992272808984577	f	schnitzi1
+Look at the view from Govenors Island today, the second biggest ship in the world queen Mary 2 eat some schnitzi http://t.co/Yg37QfLAI6	1434900104	612641559545270272	f	schnitzi1
+Vote for The first real Kosher Schnitzi truck in Flo's Fabulous Food Truck Contest. flosfoodtruck https://t.co/JhjLGMRjRC	1434653646	611607838348193792	f	schnitzi1
+Were you @highlinenyc and it started raining? Come take cover @GansMarket and try a colorful arepa to beat this gray day	1436892798	620999521460453377	f	palenquefood
+RT @jgmahoney: Muchas gracias, amigas; me gustan las arepas colombinas. @Palenquefood http://t.co/HOqr5XhNwY	1436194703	618071501930168321	f	palenquefood
+What's more patriotic than the NewWhitney? Nothing really, how about paying it a visit and coming after to GansevoorMarket @Palenquefood	1436107952	617707639460466688	f	palenquefood
+saboreando arepa de quinoa y pollo en la playa https://t.co/dhKHCUXlAY	1436050947	617468544125661184	f	palenquefood
+4thofJuly has already started @theRockawaysNY, come join us for some arepas summer glutenfree homemade http://t.co/wiT81KssKs	1436033729	617396327484231681	f	palenquefood
+Feeling traditional or Gallo? Come try our different arepas, start the long weekend with the right foot. glutenfree http://t.co/Ub11chC6ZL	1435936759	616989606303670273	f	palenquefood
+Today we are happy To serve u @GansMarket    Until 6 pm delicious And nutritious Arepas http://t.co/Kmr87zHyjh	1435936443	616988279334936576	f	palenquefood
+They are going To Montreal! :) https://t.co/RxgbFEMolY	1435767181	616278341910446080	f	palenquefood
+@JPatanio sounds interesting, how do i utilize it?	1436213746	618151373134237701	f	mactruckny
+Whether is cold or hot in New York City we always down to serve y'all the best Colombian arepas in town ! Come visit us at @GansMarket	1435086535	613423504629886978	f	palenquefood
+Happy customer https://t.co/7S2yKmrzri	1434748497	612005672079785985	f	palenquefood
+@SamTellCo @UrbanSpaceNYC  vote for palenque https://t.co/fWvSboNBDf	1434747872	612003051474452484	f	palenquefood
+@SamTellCo @UrbanSpaceNYC  thanks, we prepare our food for you with love! :)	1434747668	612002196671086593	f	palenquefood
+https://t.co/tpYZhP26xE	1434746013	611995252556173312	f	palenquefood
+@KristinaMongan thanks :)	1434672670	611687630141394944	f	palenquefood
+@KristinaMongan  please vote for palenque https://t.co/fWvSbow0eF	1434670364	611677958462279680	f	palenquefood
+RT @KristinaMongan: @Palenquefood TY4my 1st eva Arepa! So friendly &delicious! BwayBites muy bueno! NomNom whatsnext vivacolumbia http...	1434670346	611677884223111168	f	palenquefood
+palenuqe & FOX\nhttp://t.co/aK7QA5nJUa	1434651719	611599756213796864	f	palenquefood
+We need 50 more votes please, click in the link below, write  palenque and vote! thanks so much for your support! https://t.co/tpYZhP26xE	1434651312	611598049891233792	f	palenquefood
+Today, we make Arepas with Telemundo! :) https://t.co/aPCiTLkRsf	1434650670	611595354497282049	f	palenquefood
+In rockaway An honguisa and a beautiful girl! :) https://t.co/KhUPhV9mmj	1434144023	609470326578221058	f	palenquefood
+It's the @carlssteaks TRIFECTA FRIDAY folks\nBIG CARL - 56TH ST / BDWY \nLIL CARL @INTREPIDMUSEUM 46TH ST / 12TH AV... http://t.co/4oIZD8MKVn	1437144992	622057300845572096	f	carlssteaks
+Scream from the rooftops it's CHEESESTEAK FRIDAY folks 56th st / Bdwy @randomfoodtruck @victoriasecret... http://t.co/qO7c58P4HE	1437144794	622056469106716672	f	carlssteaks
+Kickin it old school tonight @RoyalPalmsClub in brooklyn aka Del Boca Vista PHASE 2 ha, cheesesteaks & flyin... http://t.co/JL8cYe6H1o	1437083549	621799588647829505	f	carlssteaks
+Kickin it old school tonight @RoyalPalmsClub in brooklyn aka Del Boca Vista PHASE 2 ha, cheesesteaks & flyin biscuits GOT WHIZ? nycsbest	1437083500	621799382896279552	f	carlssteaks
+Reunited & it feels so good! Back @10 Hanover sq /water st @EmblemHealth @UBSamericas @AIGinsurance cheesesteaks... http://t.co/2y5TqyHfe9	1437055390	621681481652547585	f	carlssteaks
+Reunited & it feels so good! Back @10 Hanover sq /water st @EmblemHealth @UBSamericas @AIGinsurance cheesesteaks for all GOT WHIZ? nycsbest	1437055363	621681368435658752	f	carlssteaks
+Happy hump day folks 47th st bet park / lex @MLB @nfl @UBSamericas @jpmorganchase @SIRIUSXM @SiriusXMNFL @FoxNews... http://t.co/nIfqeij3Tg	1436969200	621319973974241280	f	carlssteaks
+Tuesday Brooklyn day @dumbolot Jay st and water st GOT WHIZ? nycsbest  cheesesteaks for all! ! http://t.co/9yhbpsW8ms	1436883012	620958477901524992	f	carlssteaks
+Start your Monday off right with carls famous cheesesteak 52nd st bet 6th/ 7th Av @UBSamericas @Barclays @SIRIUSXM @MHFI GOT WHIZ? nycsbest	1436797628	620600350895120384	f	carlssteaks
+Hey folks serving up our famous cheesesteaks @prospect_park, @dispatchny, foodtruckrally GOT WHIZ? nycsbest http://t.co/jqPrJpI0y6	1436714243	620250609103597568	f	carlssteaks
+Showin 2x the love today folks\nBIG CARL'S @governorsisland \nLIL CARL'S @INTREPIDMUSEUM 46TH ST /12TH AV... http://t.co/gWPw1KeKcT	1436622689	619866604684361728	f	carlssteaks
+Showin 2x the love today folks\nBIG CARL'S @gov_island \nLIL CARL'S intrepidmuseum 46TH ST /12TH AV... https://t.co/5pBjtQpBD9	1436622617	619866299896856576	f	carlssteaks
+Scream from the rooftops it's CHEESESTEAK FRIDAY folks! \nBIG CARL 56TH st/ Bdwy @randomfoodtruck @victoriasecret... http://t.co/enc3HWhNfv	1436537793	619510523810476032	f	carlssteaks
+Another day of 3x of live from Carls famous cheesesteaks BIG CARLS 49th st 6 / 7 Av @Barclays @SIRIUSXM... http://t.co/ebnVcu2Q0L	1436453756	619158046128893952	f	carlssteaks
+Showing 3X THE LOVE TODAY FOLKS!!!\nBIG Carl's 47th st bet lex / park @MLB @nfl @UBSamericas @jpmorganchase\n LIL... http://t.co/KGtKqeq1AR	1436376863	618835534534868992	f	carlssteaks
+Tuesdays are brooklyn lovin day!! @dumbolot Jay st and water st GOT WHIZ? nycsbest http://t.co/Ns6hnCG8cO	1436283122	618442356602314752	f	carlssteaks
+Tuesdays are brooklyn lovin day!! @dumbolot Jay st and water st GOT WHIZ? nycsbest http://t.co/qrIHhYEJ7P	1436283058	618442088598904832	f	carlssteaks
+Start your Monday off right with a carls famous cheesesteak 52nd st bet 6th / 7th Av @UBSamericas @Barclays... http://t.co/eQsPin6vVq	1436189717	618050586269892608	f	carlssteaks
+Start your Monday off right with carls famous cheesesteak GOT WHIZ 52nd st bet 6th/ 7th Av @UBSamericas @Barclays @SIRIUSXM @MHFI GOT WHIZ?	1436189474	618049566487805952	f	carlssteaks
+Showing ny 2x the love today @Yankees and @gov_island so stop by and grab a carls famous cheesesteak... https://t.co/kU8DF9dV1W	1436121875	617766036167913477	f	carlssteaks
+RT @ChefDomTes: @FoodNetwork @mactruckny http://t.co/aAXihvMPqw	1437076271	621769063824523264	f	mactruckny
+RT @ChefDomTeam: Waking up with a taste for Mac'N'Cheese! FoodNetworkStar TeamDom @ChefDomTes @mactruckny http://t.co/kbMRuVYvKb	1437020353	621534525861044224	f	mactruckny
+RT @ChefDomTeam: I could see this happening! @mactruckny @ChefDomTes TeamDom http://t.co/206cuP3lW1	1437020350	621534514687397888	f	mactruckny
+@htico33 thank you so much!! I appreciate you coming to the truck! 	1436885562	620969173775216641	f	mactruckny
+RT @Anna_Maes: happy macncheese day fellow macologists- @MacMartTruck @mactruckny - Mac n cheese  it's a lifestyle choice	1436885486	620968854483783680	f	mactruckny
+Hoboken pier13 12-10. Last chance till September NYC NJ for that cheesy mac. Then off to the races for the rest of the summer saratoga 	1436716908	620261788307849216	f	mactruckny
+RT @TFQfoodtruck: Beautiful day @Pier_13Hoboken with @mactruckny @PVPIZZATRUCK @waffledelys @themoofoodtruck @AmandaBananasNJ @Aroy_D Sund...	1436716718	620260988403752960	f	mactruckny
+RT @TFQfoodtruck: FoodTruckFriday @Pier_13Hoboken with @PVPIZZATRUCK @bylthr @waffledelys @mactruckny @Aroy_D @AmandaBananasNJ Hoboken B...	1436560654	619606410972803072	f	mactruckny
+Tonight hoboken pier13 4-10	1436559281	619600652273102856	f	mactruckny
+@WaxMeisster i dont have the nyc permit anymore... Maybe never!!! 	1436549076	619557847513333764	f	mactruckny
+@WaxMeisster no lunch, pier 13 4-10 hoboken nj	1436538454	619513295314251776	f	mactruckny
+Tonight hoboken NJ pier 13 4-10	1436471340	619231801144385536	f	mactruckny
+RT @ChefDomTes: The truck will be in hoboken tonight 4-10\nFriday 4-10 and sunday 12-10 come get some!!!! @mactruckny	1436464157	619201670828920833	f	mactruckny
+@JPatanio FB, IG and twiiter. Is already more than i can keep up with!! @ChefDomTes	1436215114	618157109629349888	f	mactruckny
+RT @JPatanio: EdTech Passport is out! http://t.co/qO1EF94Xqe Stories via @kwillsonyshs @mactruckny @classroom_tech	1436213997	618152424927313921	f	mactruckny
+@JPatanio gotcha, ill check it out when i get outta work.	1436213993	618152408154292224	f	mactruckny
+RT @RobWBailey: Tonight! @FoodNetwork FoodNetworkStar machead Support StatenIsland @ChefDomTes @mactruckny http://t.co/jwghPNTrrg http:/...	1436125806	617782525436514304	f	mactruckny
+RT @Valduccis: Who is having Sunday dinner today @greenboxny @Foodtruckgirl7 @FoodtoEat @mactruckny @foodNfest bestpizza meatballs http:/...	1436109774	617715281754984448	f	mactruckny
 @dchiuable  Sorry to inform you that we are closed for the season. Please keep following us for our return in March 2015 :)	1419358370	547454803237154823	f	funbunsnyc
 RT @dchiuable: @funbunsnyc are u guys around midtown by any chance? Thx!	1419358342	547454684131516416	f	funbunsnyc
 Happy thanksgiving weekend everyone.  \nShooting our first commercial in midtown. http://t.co/l28iw4YIB2	1417201536	538408385516146689	f	funbunsnyc
@@ -2535,66 +2513,66 @@ Parked @DUMBOFoodTrucks in the lot on\nJay st / water st Brooklyn till 230pm htt
 RT @dumbolot: Sorry @DomoTaco won't be joining us today. Instead we got the @funbunsnyc cart joining us for mad fun bun!	1412780139	519863700954836993	f	funbunsnyc
 @The_Levich yesssss	1412351079	518064090582093824	f	funbunsnyc
 Thanks to nicolescherzinger for stopping by http://t.co/8I6vGTbADC \n50th st between 6 / 7 ave midtown lunch . FREE Tea egg with any rice	1412349560	518057723506982912	f	funbunsnyc
-This Saturday we will be at the Meadowlands food truck mashup! Back at Pier 13 Sunday!	1432818664	603911366831898624	f	nautimobile
-RT @LukesLobster: NewJersey, you ready for a showdown? @nautimobile will be lobster rollin' at the FoodTruckMashup May 30. Tix here: http...	1432814666	603894595508928512	f	nautimobile
-It's great to have Ben (Benster) back for this beautiful weekend on Pier13. He's a comedian, so ask him to tell you a joke. He loves that!	1432484790	602510995374739456	f	nautimobile
-RT @LifeByAngelina: Starting MemorialDayWeekend right with this lobster roll from the @LukesLobster @NautiMobile at @pier13hoboken! http:/...	1432416114	602222951090499584	f	nautimobile
-RT @AmandaBananasNJ: Today at @Pier_13Hoboken  @AmandaBananasNJ @PVPIZZATRUCK @NautiMobile @EmpanadaGuy1 @plumontherun @waffledelys @OINK...	1432388218	602105944445722625	f	nautimobile
-Our Hoboken shop's outdoor seating is ready! Bring your friends! hoboken https://t.co/Svn2kGyqCB	1432337269	601892247227990016	f	nautimobile
-Wondering where Nauti is? We are spending the weekdays in our new Hoboken shop, but we will be exploring new NJ weekday locations soon!	1432003148	600490844530040832	f	nautimobile
-Put down that sad Baloney sandwich you made for lunch, and meet us at Pier 13. We are making lobster rolls!	1431882336	599984123818704896	f	nautimobile
-Pier 13 today! Don't forget we also have our new shop downtown at 207 Washintgon st! hoboken all day!	1431808766	599675548252659712	f	nautimobile
-@AmandaBananasNJ thank you! You guys are the best	1431692352	599187272379039744	f	nautimobile
-Welp it's about as nice as it could get out here at Pier 13. Shout out to all the moms out there, we love you http://t.co/lek5FM7zuU	1431282893	597469876719112192	f	nautimobile
-Nauti will be at Pier 13 in Hoboken every weekend! As for weekday spots in NJ, we are working on those! Updates soon!	1431025495	596390271480438784	f	nautimobile
-@AZ88sundevil mid May! Official announcement coming soon!	1430836675	595598303422713856	f	nautimobile
-We are hiring in NJ for our truck and Hoboken store location! http://t.co/x0L2ZaBhjC	1430758709	595271289176227841	f	nautimobile
-So scenic, so tasty. @pier_13hoboken all day. https://t.co/ORSS8BZgnl	1430676865	594928009297158144	f	nautimobile
-Pier 13 classic lineup today. Check it... @Aroy_D @PVPIZZATRUCK @AmandaBananasNJ @TFQfoodtruck @waffledelys	1430666175	594883172611059713	f	nautimobile
-It's our first day back at @pier_13hoboken for the season. Teammate Morton is soakin' it all in.... https://t.co/ZgIomk7xqL	1430588515	594557442417131521	f	nautimobile
-We're ready to get spicy with some @HAHTSAHS on our BBQ from @OINKandMOObbq. Life is good on @Pier_13Hoboken 	1430587449	594552973734346753	f	nautimobile
-Fans of beer, food and summertime, follow @Pier_13Hoboken . Today starts the first weekend of the season. 	1430578641	594516027293196290	f	nautimobile
-It's the most wonderful time of year. Pier 13 opening day with a championship lineup. We got @AmandaBananasNJ @OINKandMOObbq .. Can't wait	1430570158	594480449126322176	f	nautimobile
-Kasar truck is at 2nd avenue and 44th street until 7pm, and at 7th avenue and Christopher street until 4am	1432918263	604329114879696896	f	chipsykingny
-Kasar truck is at union square\nBroadway and 16th street\nAll day until 8pm	1407255461	496691523397103617	f	chipsykingny
-Kasar truck is at Broadway and 56th street all day until 7pm	1407171379	496338854430146560	f	chipsykingny
-Kasar truck is in Soho, broadway and spring street. All day until 7pm	1407078076	495947513867022336	f	chipsykingny
-Kasar truck is in Soho, Broadway and spring street until 8pm.	1406991756	495585462338478080	f	chipsykingny
-Kasar truck is at 46th and 6th until 6 pm	1406739254	494526391250341888	f	chipsykingny
-Kasar truck is at Union square and 16th street \nJoin us!!!	1406638650	494104430279925760	f	chipsykingny
-Kasar truck is at 46th street and 6th avenue all day until 8pm. Happy Friday !!!	1406294528	492661074727297024	f	chipsykingny
-Kasar truck is at 52nd street and 6th avenue until 6 pm	1405524386	489430866859675649	f	chipsykingny
-Kasar truck is in soho, broadway and spring street until 6 pm, join us	1405264800	488342084408324096	f	chipsykingny
-Kasar truck is in Soho, broadway and spring street until 8pm	1405180332	487987801708068865	f	chipsykingny
-Kasar truck is at 55th and Broadway until 6pm	1405010701	487276314823778304	f	chipsykingny
-Kasar truck is at park avenue and 47th street, until 6 pm	1404829973	486518286033887232	f	chipsykingny
-Kasar truck is at 46th street and 6th avenue. Until 6 pm	1404738529	486134742988120064	f	chipsykingny
-Kasar truck is at park avenue and 47th street, all day until 6pm	1404219615	483958258550718464	f	chipsykingny
-Kasar truck is at 46th street and 6th avenue, until 6pm. Join us	1404137751	483614896379400193	f	chipsykingny
-Kasar truck is in Soho, broadway and spring street, until 8pm.	1403972755	482922855685160962	f	chipsykingny
-Kasar truck is at 47th and park avenue. Until 5:30. Happy Friday!!!!	1403880466	482535766141460480	f	chipsykingny
-Kasar truck is at 46th street and 6th avenue. All day until 6pm.	1403699258	481775727042654208	f	chipsykingny
-Kasar truck is at broadway and 55th street, until 6pm	1403625146	481464876330909697	f	chipsykingny
-@LetsFeedMe check out our Neapolitan style pizza at urban space garment district on 38&broadway  http://t.co/5EEc4RefDn	1432905115	604273968871297024	f	pontirossifood
-@UrbanSpaceNYC pizzaforbreakfast pizzaforlunch neapolitanpizza margherita pizza buffAlomozz http://t.co/cDPZG2CJKZ	1432069117	600767539631763456	f	pontirossifood
-Today's special Panuozzo with homemade Burrata cheese, prosciutto Di Parma,baby arugula, shaved Parmesan and truffle oil ! Come taste it 	1431358816	597788321897648128	f	pontirossifood
-RT @fewdblognyc: Yesterday's lunch pizza @pontirossifood urbanspacenyc food Yummy chewy crust. http://t.co/NHXuxuxXyo	1430968298	596150368029024257	f	pontirossifood
-@stefferonipizza e vieni vieni vieniti a prendere la pizza ! :-)  38th & bdway	1430920856	595951381707653120	f	pontirossifood
-Oven is up and BURNING. We got authentic Neapolitan pizza! garmentdistrict @UrbanSpaceNYC MAMMA MIA  http://t.co/AUca1TxL1G	1430838010	595603900654321664	f	pontirossifood
-Buongiorno  garmentdistrict Authentic Neapolitan Pizza made by Neapolitans for everyone ! Come get it @UrbanSpaceNYC pizzamargherita	1430746609	595220539737841665	f	pontirossifood
-Getting ready for our first season at @UrbanSpaceNYC urbanspacegarment eaturbanSERVING NEAPOLITAN STYLE PIZZA !!! starts next week!come by	1430276609	593249214269894656	f	pontirossifood
-RT @dumbolot: @mausamnyc @mamuthainoodle @PontiRossiFood at the lot today! @dumbolot	1429881026	591590020726837248	f	pontirossifood
-RT @nycfoodtruck: 15 many foodtrucks in 1 place! @Prospect_Park Food Truck Rally on Sunday: http://t.co/amCwlP8hic @papaya_king @PontiRoss...	1429732029	590965081246212097	f	pontirossifood
-RT @GovBallNYC: Just announced: Food Lineup curated by @infatuation, get ready for some GovBallEEEEEATS http://t.co/HNZ67evgvo http://t.co...	1429724019	590931482824331264	f	pontirossifood
-Governors Ball 2015 Food Lineup, Curated By The Infatuation http://t.co/dsIruQMl0R PONTI ROSSI WILL BE THERE FOR THE FIRST TIME ! 	1429723989	590931357439754240	f	pontirossifood
-@BrunoVespa graZie mille Dottor Vespa! La aspetto Al truck per altra pasta in CASA! Grazie, grazie e mo saluti l'	1429386125	589514254270734336	f	pontirossifood
-Fantastica giornata piena di risate, musica, professionalita' e PASTA! GRAZIE DI CUORE Dott. @BrunoVespa & @ilvolo http://t.co/EVcrN0egXR	1429385991	589513690090708993	f	pontirossifood
-@undoneforever no worries you'll see us back Friday 	1429319324	589234071320002561	f	pontirossifood
-@undoneforever glad you missed us and we miss youse too. how do you know we went to shoot in FiDi? $ its not everything.We love to feed you	1429299389	589150458939363328	f	pontirossifood
-@undoneforever Absolutely,we'll be back Fri and every Friday at @dumbolot.Today we had to shoot a show for the Italian tv rai.That's all:)	1429299308	589150116537356288	f	pontirossifood
-@DispatchNY @prospect_park Thanks 4 having us,Sunday isn't Sunday without pasta.Thanks coming to FoodTruckRally  http://t.co/BtVcTgzruR	1428894980	587454241402396673	f	pontirossifood
-@skinnypasta greetings from NYC my fellow brother sister cousin  in pasta we trust 	1428837189	587211851118809088	f	pontirossifood
-RT @ChoiceEats: A food truck serving homemade pasta? It exists and they're called @PontiRossiFood! Visit them at ChoiceStreets 5/5! http:/...	1428782482	586982392415399936	f	pontirossifood
+A swarm of food trucks are approaching Hoboken for the Pier 13 frenzy tonight! It'll be a tasty swarm, we promise. Not like most swarms.	1437068804	621737747410198528	f	nautimobile
+hey, enjoy a smile today. Pier 13 on this beautiful sunday.	1436716698	620260904559636480	f	nautimobile
+Lobster rolls from us are a great choice today, however our favorite Thai food, @Aroy_D is at the pier today. This is a magical place.	1436112804	617727988856156160	f	nautimobile
+Mexican Dry Rub Wings from @TFQfoodtruck today at the pier. If you weren't convinced to come down, this should do it http://t.co/O4ccjP2c2Z	1436037338	617411464073211905	f	nautimobile
+@mikewaskom sportin' the bandanas you got us 3 years ago today btw http://t.co/Yi7QNsOHZU	1436025197	617360540063633408	f	nautimobile
+It's 4th of July on Pier 13. Springsteen on the speakers, and the sun is on her way. Come get fed! @Aroy_D @PVPIZZATRUCK @AmandaBananasNJ	1436023178	617352073701642244	f	nautimobile
+If you're wondering, we will be at Pier 13 tomorrow and sunday for the holiday weekend!	1435959584	617085339908329472	f	nautimobile
+@ttchee not the truck.  But we have a shop at 207 Washington at always open!	1435865308	616689916001546241	f	nautimobile
+@benwietmarschen this is the best news I've heard all year	1435512075	615208351169933312	f	nautimobile
+Word on the street is the sun is coming out! Get outside today, let's celebrate together at Pier13 &lt;3 http://t.co/cxgkk2JNi6	1435507033	615187204349001728	f	nautimobile
+Pier13 is closed today, but we are going to stick around for a few hours if anyone wants to stop by for some lunch and good conversation.	1435416781	614808659240034305	f	nautimobile
+@Abby_Borovitz We no longer have a truck in NY. We do have shops all over the city, if you check http://t.co/Fs9C5juXha you can find one!	1435244546	614086250862129152	f	nautimobile
+Getting some inquiries, just to clear up. We moved the food truck to NJ, as NYCs permitting situation is intensely backwards and difficult.	1435244508	614086093600890880	f	nautimobile
+@Abby_Borovitz We are not on the road today. We moved the truck permanent to NJ, if you're looking in NYC	1435244406	614085663814758400	f	nautimobile
+@robattitudev3 @Pier_13Hoboken Nono, thank you!	1434920243	612726028075692034	f	nautimobile
+It's cloudy, but we're still here on Pier 13! There's nothing to be afraid of. Embrace nature.	1434823332	612319555004821504	f	nautimobile
+Best food trucks in AMERICA at Pier13 today! Not even kidding a little @PVPIZZATRUCK @AmandaBananasNJ @Aroy_D @themoofoodtruck @waffledelys	1434296631	610110409924812800	f	nautimobile
+It's Pier 13 day! SOOO sunny, SOOO tasty. We bought a pack of wrestling trading cards to celebrate! Come visit! honkytonkman	1434223642	609804272323174400	f	nautimobile
+Hammonton food truck festival today! We've never been to Hammonton before, but this place has a whimsical wonderment to it.	1434137699	609443798234611713	f	nautimobile
+Hey South Jersey! Nauti is making the trip to see you this Friday at the Hammonton Food Truck Festival! That should be fun?!	1433964996	608719433125752833	f	nautimobile
+Flemish Beignets :: Coming this monday :: http://t.co/5nKpzhKu70	1437171978	622170487116857344	f	chipsykingny
+New addition to our menu, Belgian Dumplings http://t.co/dPUSKyD9uM	1437171897	622170149659893760	f	chipsykingny
+Our new menu, as of monday. We hope everyone enjoys these additions. http://t.co/GGdR0WzM1S	1437171832	622169875281121280	f	chipsykingny
+Kasar truck is at 46th and 6th avenue until 7pm	1436448508	619136035667099648	f	chipsykingny
+Kasar truck is at 33rd and park ave, until 4pm	1436202743	618105223928623105	f	chipsykingny
+Kasar truck is in soho\nBroadway and spring street until 6pm and at Christopher and 7th avenue until 4am	1436027582	617370543826677760	f	chipsykingny
+Kasar truck is at Christopher street and 7th avenue, until 4am	1435961229	617092238439354368	f	chipsykingny
+Kasar truck is at 33rd street and park avenue until 5pm	1435767334	616278986029531136	f	chipsykingny
+Kasar truck is in Soho, Broadway and spring street until 6pm	1435512651	615210765205684224	f	chipsykingny
+Kasar truck will be at Christopher and 7th avenue from 8pm until 3am	1435345846	614511136184991744	f	chipsykingny
+Kasar truck is at 46th and 6th avenue\nUntil 7pm	1435324019	614419584662114305	f	chipsykingny
+Kasar truck is at 52nd and park avenue until 6pm	1435245717	614091163952254980	f	chipsykingny
+Kasar truck is at union square \nUntil 5pm	1435065878	613336862891978753	f	chipsykingny
+Kasar truck is at park avenue and 33rd street until 4pm	1434979460	612974399528906752	f	chipsykingny
+Kasar truck is in Soho, Broadway and spring street	1434806172	612247580429320193	f	chipsykingny
+Kasar truck is at Christopher and 7th avenue until 4am	1434761152	612058749423910912	f	chipsykingny
+Kasar truck is at 33rd and park avenue until 4pm	1434547311	611161838185611264	f	chipsykingny
+Kasar truck is in soho, Broadway and spring street until 6 pm	1434295554	610105890910253058	f	chipsykingny
+Kasar truck is in Soho, broadway and spring street until 8pm, and at seventh avenue and Christopher until 4am	1434205183	609726849581608960	f	chipsykingny
+Kasar truck is at Christopher and 7th avenue until 4am	1434160403	609539025670516737	f	chipsykingny
+Dumbo here we go again ! shutupamdeatpastawithus 3475069616 try our amazing lobster ravioli and homemade meatballs ! Buon Appetito	1437146486	622063565890039808	f	pontirossifood
+RT @dumbolot: ricebowls @SweetChiliNYC, pastas @PontiRossiFood, & noodles @mamuthainoodle. great way to start the weekend! carboload carb...	1437146377	622063110719963136	f	pontirossifood
+@ColangeloGiu Giuseppe I did but you guys need to open an office in NYC. The minimum order is way too high for us. Thanks for following up	1437138307	622029264238563328	f	pontirossifood
+The rain won't stop us... Polpette di Nonna Maria in rotation! 3475069616 http://t.co/N33S8b87sy	1436974922	621343976608657409	f	pontirossifood
+@Foodtruckgirl7	1436962985	621293907486375936	f	pontirossifood
+Today FiDi at the corner of water and old slip get your pasta garofalo cooked by Italians ! Order at 3475069616  http://t.co/ELyNJcDIpa	1436962912	621293601620914177	f	pontirossifood
+@ColangeloGiu manda mail catalogo prezzi a: alessandro@pontirossifood.com	1436919341	621110850875748352	f	pontirossifood
+@ColangeloGiu ciao per caso producete truffle oil ?	1436890735	620990868393213952	f	pontirossifood
+RT @Vee_RoRo: I'm at @PontiRossiFood in New York, NY https://t.co/VQFIf7IaLU	1436735284	620338862926233600	f	pontirossifood
+Today we will be serving our pasta at @RoyalPalmsClub!Try our special Homemade lobster ravioli in lemon zest cream sauce! pastaneversleeps	1436638385	619932435535523840	f	pontirossifood
+RT @RiberaRuedaWine: Getting tasting-happy for foodtruckfriday. Would you pair wine w/ @langostruck @vlaic or @pontirossifood?? http://t.c...	1436554351	619579972370460672	f	pontirossifood
+@dumbolot Guess who is back ?!?come get your lunch.Call in to pre order your gluten free pasta 3475069616!Special is Maine lobster ravioli	1436538196	619512213905252352	f	pontirossifood
+Buongiorno midtown come get your lunch on 47&park. Call in orders 3475069616. Today's special is lobster ravioli in a lemon zest cream sauce	1436452543	619152958094229504	f	pontirossifood
+Good bless America ! Happy 4th of July everyone !  http://t.co/eBg88WbKPl	1436025631	617362359259168768	f	pontirossifood
+We will be out of the streets for the 4th of July weekend. Happy 4t of July everyone ! Ciao America buona festa dell'Indipendenza 	1435976602	617156719878270977	f	pontirossifood
+@adri817 good morning! We are off for the 4th of July weekend. We will be back Monday	1435939023	616999099590680576	f	pontirossifood
+Ciao Midtown!Guess who's back?come get your lunch on 47th btw park/lex aves.Pre order your glutenfree 347-506-9616 http://t.co/ryPgafCz0P	1435846555	616611263347589122	f	pontirossifood
+Happy Father's day everyone! Buona festa del papa' a tutti ! Happy Sunday! Buona domenica a tutti pasta pontirossifood FathersDay	1434901342	612646750101356544	f	pontirossifood
+RT @cobycycles: .@MetroNorth then 7 to Queens to see free @ArmstrongFest! Thx @PontiRossiFood ArmstrongFest Rails + free concerts  http:...	1434863808	612489323355721728	f	pontirossifood
+RT @EdibleManhattan: .@BlondiesBS, @pontirossifood, @grillboystruck, see you at the foodtruckderby on 8/14 in Bridgehampton! http://t.co/r...	1434577173	611287089670422530	f	pontirossifood
 RT @njlauritawinery: We kick off the return of LauritaIdol at the winery in 3 hours! Join us as a contestant or as a guest! http://t.co/1d...	1428064651	583971589881995264	f	hibachiheaven
 @mpooz44 we apologize but due to some truck problems we will be off the road for a couple of days	1424714772	569921179433086976	f	hibachiheaven
 RT @njlauritawinery: It's officially Ice Sculpture Festival Week!!\n\nJust FIVE DAYS left until the big event!! This weekend will be... http:...	1424114795	567404695560265730	f	hibachiheaven
@@ -2615,45 +2593,26 @@ Good morning NYC we are on 46  & 6 from 11:00 to 2:30	1423229862	563693015533768
 RT @LinzyPiinzy: http://t.co/dOWiRc2qny	1423058207	562973041945501696	f	hibachiheaven
 Hey NYC we are parked on the corner of 5th Ave and W 21st ST. Open 11:00 to 2:30 come get your yumyum	1423055781	562962868212346880	f	hibachiheaven
 Good morning midtown we are on 46th St. between 5th & 6th ave. Open 11:00 to 3:00	1422964989	562582057956560896	f	hibachiheaven
-Braised Beef Borito - Angus Brisket, Black Beans, Manchego Cheese and Siriacha Mole Sauce http://t.co/MgXZNmelWH	1403394007	480495409945923584	f	mikenwillies
-Stay tuned, big and exciting changes coming our way...	1403381976	480444949012705281	f	mikenwillies
-Big and exciting changes coming our way.  Stay tuned for the big reveal...	1403381850	480444418752004096	f	mikenwillies
-Happy Monday!!!! A little late start due to a flat tire but we'll be open and ready to serve 2:15-8pm south... http://t.co/cDUv67RuyV	1402940145	478591772663107585	f	mikenwillies
-Hello DUMBO beautiful weather for worldcup outdoor viewing @RooftopFilms @DUMBOBID Anchorage Pl and Water Street till 8pm	1402765766	477860374549504001	f	mikenwillies
-RT @Sweet_Taters: Congratulations @call_me_symone! You win the $100 Trade Joe's gift for sharing your sweetsonthestreet at @mikenwillies! ...	1402754454	477812928708493312	f	mikenwillies
-@blusfynx @TribecaTaco thanks for your feedback	1402694379	477560957799890944	f	mikenwillies
-Friday the 13th!!! We're not scared of a little rain, we are scared of not ending the week with a full belly... http://t.co/CLuSsEoUEC	1402670743	477461820211331072	f	mikenwillies
-Happy Taco Tuesday!! South st seaport Front St. & Fulton St 12-8 ComeGetSome	1402414859	476388565639630848	f	mikenwillies
-Beautiful day to end the week were at the seaport today Water St & Fulton St 12-8	1402069809	474941322055647233	f	mikenwillies
-RT @Sweet_Taters: Celebrate the gorgeous day w/ @mikenwillies Sweet Potato Shroom Taco at Front St & Old Slip, tweet a pic & you could win ...	1401822600	473904452261666818	f	mikenwillies
-Beautiful day!!! FIDI today Front St and Old Slip slinging your favorite Tacos, Sliders, Burritos and Rice Bowls comegetsome	1401807479	473841028777009153	f	mikenwillies
-Beautiful Day at Liberty State Park for vcpoloclassic @veuveclicquot   http://t.co/PYueUEw7XW http://t.co/Mr6xw2Vs8v	1401546007	472744336728535040	f	mikenwillies
-RT @asphaltpunk: Big Bad Brisket and Lil Piggies from @mikenwillies - had to sneak out of BEA14 for these yummy sliders! http://t.co/vvW1W...	1401471595	472432229122322432	f	mikenwillies
-RT @randomfoodtruck: Lunch at the office from @Chefsamirtruck @souvlakitruck @carlssteaks @CarpeDonutNYC @funbunsnyc and at Javits from @mi...	1401471548	472432032249704448	f	mikenwillies
-RT @Sweet_Taters: Grab your Sweet Potato Shroom Taco at @mikenwillies at the @javitscenter today! Tweet a pic & you could win a $100 GC sw...	1401395649	472113686904340482	f	mikenwillies
-We're at the @javitscenter today for the  @BookExpoAmerica with your favorites characters BigbadBrisket lilPiggie Pea-Nocchio	1401374548	472025186091278336	f	mikenwillies
-RT @GovIslandFood: Only 2 more days till we are back @Gov_Island with @SweetChiliNYC, @DiSOSNYC, @carlssteaks, @Getstuffednow, @MayhemAndSt...	1401368180	471998474871767040	f	mikenwillies
-Thinking of those that have made the ultimate sacrifice for our country on this Memorial Day.  Thank you to all... http://t.co/gMrpRYtn7v	1401117086	470945310189957121	f	mikenwillies
-Yummmm! Grilled cheese with bacon this Friday is just what you need to start your weekend.... https://t.co/880ribZioF	1432927992	604369921246695424	f	usafoodtruck
-Dude who plays Aladdin on Broadway is a regular and tells us we have the best chicken in nyc.  Come discover NYC's diamond in the rough.nyc	1432919388	604333834427998209	f	usafoodtruck
-Fried Day! Come and get the best food in the city at 39th and Broadway at urbanspace or swing by the Intrepid for your base. gorangers	1432917729	604326873292771328	f	usafoodtruck
-We've heard your cries, people. Here's our National Burger Day contribution! Get it anyway you want... https://t.co/gXDCyUA09L	1432853991	604059540431228928	f	usafoodtruck
-@dhmeyer hey let's talk about launching the next great nyc restaurant chain. Yankee Doodle Dandy's.	1432844328	604019010322198528	f	usafoodtruck
-Hope everyone had a good Memorial Day Weekend! We're back and better than ever with our chicken... https://t.co/yyp529YxaQ	1432742041	603589984998789121	f	usafoodtruck
-RT @TheNYRA: 11 days to the BelmontStakes? That number sounds familiar! RT the legends & follow us to win @BelmontStakes goodies! http://t...	1432687994	603363297983897600	f	usafoodtruck
-@ablogslife1205 thanks for the kind words! We do our best.	1432686943	603358886305931264	f	usafoodtruck
-RT @ablogslife1205: @USAFoodTruck best chicken in NYC if you ask me!	1432664700	603265595719704576	f	usafoodtruck
-RT @RichImports: Every time I eat @USAFoodTruck, it's like the first time I ate it. greatfood ReadyForANap	1432576787	602896861830189056	f	usafoodtruck
-Thank you will never be enough, but we will always, always remember. https://t.co/274h4F5O9d	1432573654	602883719209295872	f	usafoodtruck
-Happy Memorial Day! Come celebrate Murica with YDD's at the USS Intrepid at 46th and 12th Ave or our Urbanspace market at 39th and Broadway	1432571167	602873289288069121	f	usafoodtruck
-Don't like our homemade potato salad? How?!? But anyway...were trying to give you the option of fresh watermelon sub http://t.co/clRdq3R0kp	1432479974	602490798987411457	f	usafoodtruck
-RT @RichImports: Just had the best chicken club sandwich from @USAFoodTruck. Those guys are gonna blow up for real. GreatFood GreatOwners	1432479905	602490506686373888	f	usafoodtruck
-Happy Sunday! We're continuing MDW and FleetWeek today at intrepidmuseum and urbanspacenyc! Come... https://t.co/2p9jjbq90I	1432475223	602470871509381120	f	usafoodtruck
-Happy Memorial Day Weekend everyone! We have the perfect MDW food for all of you here at the... https://t.co/GRZSCbgYp1	1432394326	602131565070651392	f	usafoodtruck
-Who's ready for memorialdayweekend? We got all your American foods right here, even down to the... https://t.co/rpxFKQqaA3	1432324792	601839918822854656	f	usafoodtruck
-@ericgrant I'm serious. Message me on Twitter when you're showing up next. I'll be there and make it myself.	1432322522	601830394477060097	f	usafoodtruck
-@ericgrant got ya. Well, give it another try when I'm there. Place and time and guarantee ya it will surpass your expectations.	1432314330	601796036068253697	f	usafoodtruck
-@ericgrant time out. Where did you get your food from and when?	1432313730	601793520442171392	f	usafoodtruck
+Baltimore, who's hungry?! Start @promoandarts weekend right with our comforting Triple Play Grilled... https://t.co/lq4EjpozTT	1437162453	622130539294793728	f	usafoodtruck
+Travelin' down the (b)East Coast today, but before you miss us too much, here's a shot of our Love Me... https://t.co/2OC8i4nrFY	1437051851	621666639575154689	f	usafoodtruck
+Love, love, LOVE our sister city Baltimore! We'll be here all weekend slinging tenders for the... https://t.co/C7tkMbtDaP	1437011628	621497930432802816	f	usafoodtruck
+Check out our grilled chicken club on a brioche bun, since we're feeling fancy today ... https://t.co/HgJlMuPDGx	1436917492	621103097948016640	f	usafoodtruck
+@mattyulrich we are the USS Intrepid today :)	1436458565	619178219502223360	f	usafoodtruck
+RT @mattyulrich: @USAFoodTruck Where are you today, chickenman?	1436458547	619178143094579200	f	usafoodtruck
+Back to basics.  fried chicken streeteats foodtruck foodtrucks... https://t.co/9W9iD4Lf1X	1436374168	618824230365474816	f	usafoodtruck
+It's National Fried Chicken Day, y'all! Even though we thought that was yesterday...  come grab... https://t.co/BZYCWcMKJw	1436226529	618204986997100545	f	usafoodtruck
+@ShanghaiMKS we're at the USS Intrepid today! Come on down! ydd nationalfriedchickenday	1436201885	618101622502203393	f	usafoodtruck
+RT @ShanghaiMKS: Today is NationalFriedChickenDay! You know what that means, we are heading over to @USAFoodTruck for lunch!	1436201831	618101395519066112	f	usafoodtruck
+Juicy, freshly fried hand breaded chicken tenders, crispy, fluffy fries, buttered Texas toast and... https://t.co/F72ry2vMeh	1436074383	617566841867739136	f	usafoodtruck
+Happy 4th everyone!!  We're at the @macys 4th of July Fireworks at Hunter's Point... https://t.co/3sS4h18YiC	1436050305	617465852544331776	f	usafoodtruck
+Who's ready for the 4th of July?! We're getting there...  we'll be slinging chicken at the mays... https://t.co/HprnKWFPeS	1436019065	617334819975004160	f	usafoodtruck
+the bikers who shut down the idiots in Ft. Greene who tried to burn the flag get all-you-can eat 'Murican food this weekend! ftgreene usa	1435862120	616676545055354880	f	usafoodtruck
+RT @TheNYRA: Look at entries for Belmont StarsandStripes: http://t.co/yH7NORjQlr & get more info on day: http://t.co/qbZZ8K2k1r! http://t...	1435789359	616371365021634560	f	usafoodtruck
+@bryantparknyc hey there! How do we get involved with food trucks on 5th? We'd love to be part of it.	1435686653	615940585166381056	f	usafoodtruck
+We're finishing out the weekend at farmboroughfest with this delicious Love Me Tender chicken... https://t.co/qk8KaFifX8	1435503743	615173405520826370	f	usafoodtruck
+RT @jsoupzzz: . @USAFoodTruck perfect concept, story, decor and food. Just needs a Dale decal. 3ForDale  	1435467797	615022637027356672	f	usafoodtruck
+Hey @maddieandtae! After that great set you should come grab a grilled cheese and fries! We're super... https://t.co/p0X2Brlsbg	1435357211	614558805314158594	f	usafoodtruck
+@bkcheka hey Cheka! We're at the USS Intrepid until early July, we may be back down that way soon though! Thanks for the love. loveu2	1435255912	614133924189601792	f	usafoodtruck
 Check out Toast Monster on Korean TV show: \nhttp://t.co/hM2ad1OAJM	1428680926	586556433107394560	f	toastmonsternyc
 @jack_of_knaves Looks great! Can't wait to see more.	1425314475	572436516129132545	f	toastmonsternyc
 @jack_of_knaves also http://t.co/JWTNKENR9H is very awesome.	1425314193	572435332957913088	f	toastmonsternyc
@@ -2674,67 +2633,70 @@ Happy new year @gofooda !	1420095743	550547567374000129	f	toastmonsternyc
 Herro New York @gofooda friends family. Thank you for blessing Toast Monster with your support. Hope you have a toastie holiday. Rawr.	1419367750	547494142264483840	f	toastmonsternyc
 Ten.	1418358672	543261762296889344	f	toastmonsternyc
 @gofooda 	1417825512	541025529722580992	f	toastmonsternyc
-Yep it's that time again! Phil's Phriday on 51st (yes, Phifty Phirst) and Park. Make it happen 11-230!	1432908372	604287628838604802	f	philssteaks
-We're hanging out on Broadway btw 67/68, slanging steaks until 8	1432846700	604028956673712128	f	philssteaks
-TBT to that time we won a Vendy.... Come get an award winning cheesesteak today on 52nd & 6th from 11-3. jawn http://t.co/YjcusxkVWV	1432823021	603929639363436544	f	philssteaks
-52nd n 6th 11-3. Phil's Jawn has got it going on. If you don't know you betta...\nGet your Phil today!	1432822776	603928613700919296	f	philssteaks
-Whiz Wednesday is here! The Jawn is ready at 41st between 6th and Broadway for all your Whiz desires. 11-3	1432738219	603573954456981504	f	philssteaks
-Second shift on Broadway between 67/68 open at 4, come get it! afternoondelight cheesesteaks jawn	1432670223	603288758843265025	f	philssteaks
-Hope you had a wonderful holiday weekend! The Jawn is here to take the edge off the return to reality. 55/Broadway 11:30-3. @randomfoodtruck	1432649346	603201193465290752	f	philssteaks
-TBT 2012 OG Jawn. classic OG original jawn  We're on 52nd between 6/7 today 11-3 https://t.co/sYDiQBno7j	1432216994	601387778316869632	f	philssteaks
-Second shift at Broadway between 67/68 in front of the Apple Store til about 8.	1432152857	601118768962625536	f	philssteaks
-It's Whiz Wednesday! Celebrate Kraft's best invention ever with a Whiz Wit' from the jawn! 41st... https://t.co/tLXmE8SlwP	1432128110	601014971191930881	f	philssteaks
-Trying a new second shift location today. Broadway between 67/68 in front of the Apple Store until 7ish. Come thru!	1432064096	600746478836031488	f	philssteaks
-55th and Broadway today 11-3. @randomfoodtruck	1432044180	600662943701803008	f	philssteaks
-47th between Park and Lex today 11-2	1431957646	600299996932677632	f	philssteaks
-RT @Soulspazm: RIP B.B. King.  The Thrill Is Gone.  https://t.co/oeXu3vF7jr BBKing BBKingRIP http://t.co/2iRLrUAaL2	1431708204	599253757365526529	f	philssteaks
-Phil's Phriday in effect at 51st n Park 11-2!	1431700979	599223456509624320	f	philssteaks
-TBT The Legendary peterock stops by the jawn. Rocking classic Pete tracks 2day. 52nd n 6th 11-2 come... https://t.co/t2J3jvW1V2	1431612822	598853696726966272	f	philssteaks
-Whiz Wednesday is in effect at 41st between 6th and Broadway 11-2. See you there!	1431528016	598497994657366016	f	philssteaks
-@vickilopresti you're welcome Vicki! Glad you and Judy loved them!	1431465284	598234880535883776	f	philssteaks
-RT @vickilopresti: thanks again Kevin for the most delicious Philly cheesesteak sandwich I've ever had !! @PhilsSteaks	1431465205	598234548216954880	f	philssteaks
-RT @vickilopresti: I have absolutely no self control when it comes to food .. ESPECIALLY Philly cheesesteaks. @PhilsSteaks	1431465199	598234522262593536	f	philssteaks
-LGR	1432948482	604455860581068800	f	morristruck
-Hey hungry people- come check us out @BillyIdol tonight @ Pier 97! You might like us so much we'll be catering your White Wedding.	1432913385	604308653026451456	f	morristruck
-Another beautiful day to PraiseCheeses, @DowntownBklyn Metrotech on Bridge St, and tonight @BRICartsmedia @BklynBrdgPark DanceParty!	1432825341	603939373130866688	f	morristruck
-Catching some sun on the last day @MonmouthPark praisecheeses MemorialDay	1432563952	602843028353519616	f	morristruck
-Another beautiful day @MonmouthPark and we're ready to serve ya in Crown Heights! MemorialDayWeekend	1432480254	602491971849039872	f	morristruck
-Happy MemorialDayWeekend ! Get your grilled cheese fixes @MonmouthPark all wkend and our shop in Crown Heights. Can't wait to feed ya!	1432393370	602127552875012096	f	morristruck
-Don't let the grey get ya down come lunch with us at metrotech @DowntownBklyn and then put your party pants on for @BRICartsmedia dancing!	1432220834	601403883391430656	f	morristruck
-Happy Wednesday! We're off the streets today gearing up for a Thursday of lunch  metrotech @DowntownBklyn and dancing with @BRICartsmedia	1432133121	601035990480859137	f	morristruck
-The sun is out and so are we! Back at the East Woods spring fair in oyster bay and ready to brunch with ya in Crown Heights! 	1431875088	599953722278584320	f	morristruck
-Happy Saturday! Check us out at our shop in Crown Heights or the East Woods Spring fair in oyster bay today and tmr! praisecheeses	1431795148	599618429411274752	f	morristruck
-ThreeXthecheese today! @DowntownBklyn @ Bridge St 1130-3, AirbnbBKHalf & @BRICartsmedia Dance Party tonight @BklynBrdgPark! PraiseCheeses	1431615994	598867002346713088	f	morristruck
-Tonight! AirbnbBKHalf at Pier 1! We're there 4-9p till Friday, & tomorrow night @BRICartsmedia 1st DanceParty of the year! PraiseCheeses	1431553134	598603350213537792	f	morristruck
-Not on the streets today, but lots of love @BklynBrdgPark- AirbnbBKHalf W-F & @BRICartsmedia party Thurs! http://t.co/XvYCJZgXFv for more!	1431359036	597789243423993856	f	morristruck
-After all the sandwiches moms made you, isn't it time to return the favor (and buy her one)? Sandwich shop 10-6, truck @NYBG 11-6!	1431272202	597425033267585026	f	morristruck
-Loving on @BuzzFeed for including us in their roundup of the top street foods that will change your life. EATMOR http://t.co/uvvlrBDwoh	1431222141	597215064442204160	f	morristruck
-Happy weekend! You can find the truck @NYBG all weekend for the MothersDayGardenParty, & the shop is open 10-6 for your brunching pleasure!	1431181732	597045576098848769	f	morristruck
-Metrotech GrilledCheese Thursdays!\n\nLawrence st, on the Commons, 1130-3! Come and EAT!	1431011532	596331705323118592	f	morristruck
-KimchiFalafel on deck at 53rd & Park and 39th & Broadway! http://t.co/txRrmpB8iW	1432218176	601392739066994688	f	domotaco
-Good morning, CrownHeights- shop will be closed, temporarily, for weekdays in May. As always, check our website for truck locations.	1430743387	595207023115038721	f	morristruck
-Whatever you're doing this weekend, plan on making sandwiches a part of it. SandwichShops open all weekend long!	1430503435	594200590735007746	f	morristruck
-RT @ElizabethReede: @BlumenfeldEmily @sjgstone @morristruck best grilled cheese in NYC	1430423217	593864132375511040	f	morristruck
-!!! Fri, May 29th no truck spots today! Our shop      open 9am-6pm! 521 Court st brooklyn	1432912884	604306553542426624	f	thetreatstruck
-!!! 3:45-7pm Bway (86th& 87th) !!!	1432842510	604011385606017024	f	thetreatstruck
-!!! 12-2:30pm 45th st & 6th ave! Then 3:45ish-7pm Bway (86th & 87th)!!!	1432828485	603952557459902464	f	thetreatstruck
-!!! Wed May 27th private party today! Summer time parties have begun! We'll do best to come to our regular spots thurs/fri!	1432740105	603581867481239552	f	thetreatstruck
-!!! Tues,May 26th no truck today! Our shop open 12pm-6pm! 521 Court st brooklyn	1432652854	603215910455902208	f	thetreatstruck
-!!! Fri, May 22nd our truck is closed for the holiday weekend! Our shop is open today 9am-6pm! 521 Court st Brooklyn	1432293690	601709467659534337	f	thetreatstruck
-!!! Our truck is taking this week & weekend off! Have a great week & Memorial Day weekend!!!	1432132864	601034912955768832	f	thetreatstruck
-!!! Truck spot on Wed!!!	1432049406	600684866041159680	f	thetreatstruck
-!!! Sun, May 17th our shop open 9am-6pm today! 521 Court st. Brooklyn	1431870587	599934843015831553	f	thetreatstruck
-!!! Sat, May 16th Our shop open Sat & Sun 9am-6pm!!! 521 Court St brooklyn	1431774949	599533707842715648	f	thetreatstruck
-!!! 4:30-7pm 18th st & 7th ave !!!	1431721785	599310721411883008	f	thetreatstruck
-!!!stayed a little longer at 45th! On our way to 18th st & 7th ave! We'll let you know when we get there!!!	1431720047	599303431505973251	f	thetreatstruck
-@Chalay721 we're back!! Thanks for asking! 45th & 6th ave 12-3:30 today!!!	1431706324	599245872774385667	f	thetreatstruck
-!!! Fri, May 15th 12-3:30 45th st & 6th ave!! Then we head to 18th st & 7th ave! We'll let you know those hours later!!!	1431704196	599236949564612609	f	thetreatstruck
-!!! Thurs, May 14th 3:30-7pm Bway (86th & 87th st)!!!	1431632243	598935156624330752	f	thetreatstruck
-@Chalay721 we ended up having a private event today, too!  Sorry! Hope to be back soon!	1431538468	598541834340671488	f	thetreatstruck
-!!! Wed,May 13th private gig today! Sorry, 45thers!! We'll be back soon! Have a great day!!!	1431531993	598514676767563776	f	thetreatstruck
-@Chalay721 we had a private event today. Tomorrow we will head to 45th &6th ave and 18th st & 7th ave!!	1431448739	598165483511222272	f	thetreatstruck
-@MetroPictures NinaBeier breakfast viewing from 10am - noon thetreatstruck  http://t.co/Bw3j7zqnFN\n\nhttp://t.co/PAxMx2O5S0	1431441520	598135207468912640	f	thetreatstruck
-!!! Mon, May 11th no truck today! Have a great day & see you soon!!!	1431348174	597743684441001984	f	thetreatstruck
+And a very phine Phil's Phriday to you! The Jawn is on 51st and Park 11-2 just waiting for you. Come thru!	1437144382	622054742064300032	f	philssteaks
+Who's ready for the greatest day ever??!!?! @Brunchbounce livefastgroup https://t.co/MTpr3Qu6NQ	1437082926	621796976884105216	f	philssteaks
+brunchbounce's photo https://t.co/Vmvy7B5gas	1437082447	621794968617811968	f	philssteaks
+52nd n 6th until 3. Broadway n 67/68 4-7. Get your Phil!	1437062617	621711796655796224	f	philssteaks
+RT @sanjamooch: @PhilsSteaks Hot damn your cheesesteaks are good!!!	1437015287	621513278473306112	f	philssteaks
+Celebrate whiz Wednesday the only way you know how - with steaks from the Jawn! 41st n 6th 11-3.	1436971911	621331347848712193	f	philssteaks
+1 mo' day @BryantParkNYC 4 FoodTrucksOn5th yay! 40th n 5th 11-7. @nypl ireadeverywhere	1436886289	620972222753148928	f	philssteaks
+RT @Yahatetoseeit: @PhilsSteaks is the best cheesesteak in NYC... Get on that	1436818520	620687979770695680	f	philssteaks
+RT @RedKhan1: @babses1 @WSJ and it's got me hungry.... [eats @PhilsSteaks sammich] http://t.co/ZzzGHIvnsg	1436818514	620687953531138048	f	philssteaks
+RT @RealAntwon: Came to @PhilsSteaks to order The Antwon, which as you all know, is a sharp provolone cheesesteak with sweet peppers and...	1436818506	620687919708282880	f	philssteaks
+RT @whokickedit: @PhilsSteaks tried 99 and tha jawn still reigns supreme!  Rep that bread! @AmorosoBaking	1436798232	620602885882163200	f	philssteaks
+@slous77 we'll be there Thursday	1436912932	621083969468166144	f	domotaco
+It's our last day @BryantParkNYC for FoodTrucksOn5th - we're rocking 11-7 so come to the Jawn! ireadeverywhere	1436798005	620601933120819200	f	philssteaks
+And a very good Phil's Phriday to you! Come find the Jawn on 51st and Park from 11-2. Phil's, it's what's for lunch!	1436536613	619505574229745664	f	philssteaks
+RT @whokickedit: @RealAntwon @PhilsSteaks @99milestophilly @AmorosoBaking amoroso rolls tastes so good bcuz of the good gully water in Phil...	1436536241	619504014707806208	f	philssteaks
+52nd and 6th per usual on this TBT. Get your Phil!	1436455371	619164822719066112	f	philssteaks
+Whiz Wednesday is here! 41st and 6th 11-3 http://t.co/xODs28UnM4	1436367356	618795658368126976	f	philssteaks
+Would you run to 55th and Broadway immediately? http://t.co/gZ3SPtnHJ7	1436280866	618432895179464704	f	philssteaks
+Moody Tuesday? Cheer up with steaks from the Jawn! 55th n Broadway 11-3. @randomfoodtruck	1436280036	618429414137659392	f	philssteaks
+@piccolocafenyc you guys rock as well! Great to meet you!	1436274736	618407183110250496	f	philssteaks
+RT @bryantparknyc: Ease those Monday blues with a cheesesteak from @PhilsSteaks as part of the foodtrucksonfifth program: http://t.co/FsiC...	1436201779	618101178241548289	f	philssteaks
+TGIF are we right?? Come celebrate with sandwiches @BroadwayBites @Njlorita winery or @TangerOutlets! bwaybites grilledcheese yaywhey	1437144604	622055671664627712	f	morristruck
+fbf to our appearance on @gma, cheesin for the cams/fans.  https://t.co/szScT1NB0Y	1437144301	622054401184800768	f	morristruck
+Find us today! BwayBites as per usual till 9, and @SlightlyStoopid Pier97 tonight!	1436973211	621336800414593024	f	morristruck
+Schedule for the week:\n@SlightlyStoopid Pier97 Weds 6-10p\n@TangerOutlets in Deer Park Saturday\n@njlauritawinery Sat/Sun\nfindus eatcheese	1436887247	620976241835945984	f	morristruck
+Fingers crossed for another sunset like last night's. Gorgeous light at the hamptons artanddesign... https://t.co/CtW7C8g9uA	1436642920	619951459698933761	f	morristruck
+All over NY today! Cart @DowntownBklyn Lawrence st, booth @ BwayBites, & find us & @gladyscaribbean @artMRKT in Bridgehampton all weekend!	1436454645	619161774248624128	f	morristruck
+Be sure to stop by BwayBites today to cure that Red, White & Blue hangover!	1436197147	618081752377073664	f	morristruck
+Exercise your freedom to eat a delicious sandwich! All weekend long at BwayBites!	1435937168	616991318791876608	f	morristruck
+SANDWICHES SANDWICHES SANDWICHES We're at BwayBites all day, and tonight Pier97 for @barenakedladies!	1435763536	616263055954026496	f	morristruck
+Last day here @FarmBoroughFest, and what a day it's gonna be! You can also find us at BwayBites till 9pm!	1435503701	615173226126254080	f	morristruck
+Big weekend @FarmBoroughFest & BwayBites! Hope to see y'all there!\n\n Sandwich Shop is closed the next 3 weekends, stay tuned for updates!	1435328175	614437017670299648	f	morristruck
+Find the cart @DowntownBklyn @ Lawrence St till 3, and at BwayBites till 9!	1435253367	614123251825012736	f	morristruck
+Schedule for the week: \nEveryday @ BwayBites, Greeley Sq 11-9\nThursday @DowntownBklyn metrotech Lawrence St 11-3\nWeekend @FarmBoroughFest!	1435072820	613365982095085568	f	morristruck
+Case of the Mondays? Sounds like you need a sandwich and an Aperol Spritz from our booth at BwayBites in Greeley Sq. We're there till 9!	1434985885	613001350511767552	f	morristruck
+@ARaeNeedham Our sandwich shop at 569 Lincoln Pl is Crown Heights is open till 6, and our booth @ BwayBites in Greeley Sq is open till 9!	1434907271	612671618503081984	f	morristruck
+Dads love Sandwiches. MorrisSandwichShop BwayBites	1434901962	612649350259453952	f	morristruck
+Sandwiches Today BwayBites MorrisSandwichShop !	1434815378	612286191384293376	f	morristruck
+@nkjemisin we're honored to be missed! There's a new rotation of trucks- we'll be there every other week. See you next Thursday!	1434648742	611587270534123520	f	morristruck
+We're over the hump! The weekend is pretty much here, come celebrate with beer and sandwiches at BwayBites! 33rd & Broadway 11-9 Everyday	1434640624	611553222042456065	f	morristruck
+RT @thulnasty: @morristruck Mona hit the spot for VeggieDay! So good: marinated kale, cauliflower puree, hard-boiled eggs, pickled radish,...	1434577434	611288180403380225	f	morristruck
+Happy Thursday! Our truck and shop are on summer holiday, but we're still taking special orders. Contact us at info@treatstruck.com!!!!	1437066216	621726890550775808	f	thetreatstruck
+Happy Summer everyone!!\n\nOur truck is on vacation!\nBut, If you're craving a delicious treat we're still taking... http://t.co/O7cgCCvTJK	1437065939	621725728183349248	f	thetreatstruck
+!!!! Our truck. & shop are closed for the holiday weekend! Have a wonderful holiday, everyone!!!	1435938326	616996178815811584	f	thetreatstruck
+@NicoleMerino8 today's spot at 18th was 1-2:30 & then 4-7pm Bway! Wish we could be at both right now for you!	1435874180	616727129347223552	f	thetreatstruck
+@NicoleMerino8 Bway (86th & 87th) 'till 7pm!!!	1435872207	616718852584411137	f	thetreatstruck
+!!! On Bway (86. & 87th) 'til 7pm!!!	1435867244	616698035582545920	f	thetreatstruck
+Our truck will be on vacation after today for 6 weeks! You can still order for deliver, shipping or pick up at our bakery!!!	1435858290	616660483660251136	f	thetreatstruck
+!!! Thurs, July 2nd 1-2:30 18th st & 7th ave! Then 3:30ish-7pm Bway (86 & 87th)!!!	1435856136	616651447778869248	f	thetreatstruck
+!!! 4-7pm 18th st &7th ave!!!	1435781190	616337099206316032	f	thetreatstruck
+@hellodontmindme we just take cash at the truck!	1435767786	616280880148054017	f	thetreatstruck
+!!! Wed,July 1st 12-3:30 45th st & 6th! Last day on 45th before our summer break! Come on by! Then 4ish-7pm 18th st & 7th ave!!!	1435762655	616259361271336960	f	thetreatstruck
+This week we were planning on 45th& 6th both Wed&Thurs, but there is a tv crew on Thurs, so looks like just Wed!	1435762554	616258937642426368	f	thetreatstruck
+@hellodontmindme yes sireee!!!	1435762411	616258334606401538	f	thetreatstruck
+!!! Happy Pride!!!!  lovewins all50states	1435511202	615204690087780353	f	thetreatstruck
+@notrossgeller_ we'll have spots next week. Wed&Thurs!!	1435404295	614756288703143936	f	thetreatstruck
+!!! Truck spots next week Wed/Thurs!! Deliveries all the time, too!  Have a great weekend & see you next week!!!	1435325962	614427737403617280	f	thetreatstruck
+3:30-7pm Bway (86 & 87th)!!!	1435261071	614155562939498497	f	thetreatstruck
+Hey 45th & 6thers! Only a few more days on 45th before we take our summer break! Today &  Wed/Thurs (maybe fri?) next week!!!	1435252375	614119088504373248	f	thetreatstruck
+!!! Thurs, June 25th 1-3pm 45th st & 6th ave, then 4ish-7pm Bway (86& 87th)!!! Come today! We're off tomorrow!	1435249444	614106795552935936	f	thetreatstruck
+Thursday plans! 45th & 6th for lunchtime! Then UWS Bway (86 & 87th) for the late afternoon! Hooray!!!	1435178009	613807177959084032	f	thetreatstruck
+@maximumbennis its a beer Cheddar sauce. What do you think?	1418845749	545304711902281728	f	shadydawgnyc
+Retweeted Brooklyn United (@brooklynunited):\n\nOur top 3 @TheSteelCart offerings, in memoriam: 1. Hole-in-one eggs... http://t.co/H6Q98DJ2b2	1436887174	620975933969825792	f	thesteelcart
+RT @brooklynunited: Our top 3 @TheSteelCart offerings, in memoriam: 1. Hole-in-one eggs 2. Grits and gorgonzola 3. Homemade Turkish coffee....	1436887170	620975918060847104	f	thesteelcart
 @vllg Miss you guys! Thanks for letting us feed you. Best of luck next year with the Habs!	1432226274	601426701168574464	f	thesteelcart
 @puzzzl Thanks so much Andy. We'll miss you.	1431019828	596366499587174400	f	thesteelcart
 @Peppage Aww!  We'll miss you.	1431016978	596354545636237312	f	thesteelcart
@@ -2753,8 +2715,8 @@ Makin a grand finale on Front & Jay! Stick it to the weatherman with a toasted s
 One more Front & Jay Monday! Rustic Chicken Noodle soup on board. @DUMBOFoodTrucks	1419862364	549568705097912320	f	thesteelcart
 One more round for Dumbo! Front & Jay through lunch. Soups are Split Pea & Ham + Rustic Chicken Noodle. @DUMBOFoodTrucks	1419345151	547399356950011906	f	thesteelcart
 Making a Christmas cameo on Front & Jay in Dumbo!!! Soups are Split Pea + Rustic Chicken Noodle. @DUMBOFoodTrucks	1419256271	547026568670089216	f	thesteelcart
-Last day on Front & Jay! We'll miss you Dumbo. Have a great winter! Serving the usual + Split Pea Soup through lunch. @DUMBOFoodTrucks	1417009699	537603759468457984	f	thesteelcart
-Last day on 56th & Broadway! Soups are Split Pea & Rustic Chicken.	1416928831	537264575562149888	f	thesteelcart
+http://t.co/xLy88zFRBe	1433610398	607232138396758016	f	thecrepestruck
+@BelmontPark for the big race. Check us out in the food truck village.	1433610335	607231876248571904	f	thecrepestruck
 LeTriomphe crepes courtesy of TennisChannel in NYC for the FrenchOpen http://t.co/qpPiqThu7u	1430844040	595629192366202881	f	thecrepestruck
 TennisChannel handing out free crepes in Manhattan today. RG15 FrenchOpen RolandGarros http://t.co/cq8wvtHUOT	1430833425	595584668885483521	f	thecrepestruck
 Sad day for two NYPD families right before X-mas.  @NYPDLivesMatter	1419176770	546693114875097088	f	thecrepestruck
@@ -2773,8 +2735,6 @@ TheHub has a new show called KidPresident. Free ice cream today! http://t.co/YD9
 airfrance & AirFranceExpo  are giving away free ice cream. Today through Saturday http://t.co/jmgBDPaVik	1403797564	482188050664267777	f	thecrepestruck
 The Hub has a new TV show titled Kid President. Free ice cream today and tomorrow. http://t.co/an9pPzEjhu	1403713515	481835521438920705	f	thecrepestruck
 VisitCaymanIslands is giving away free ice cream today!\n\nUnion Square West & 14 Street http://t.co/V3Q165zMTR	1403196954	479668909592039424	f	thecrepestruck
-@VistCaymanIslands  is giving away free ice cream all week long. \n\nEnter to win a free trip to Cayman Islands http://t.co/F6Cle7U4Rq	1402941240	478596368882466816	f	thecrepestruck
-MikeEpps visits NewEraCap Promo Truck SuperBowl with CrystinaPoncher ESPN\nhttp://t.co/k0PPVYUhBq http://t.co/3MeumAKTUz	1391084755	428866664227024896	f	thecrepestruck
 It's FreeFriesFriday! Join us on @LoyalTree + use code FREEFRIESFRIDAY to get free fries at the truck! http://t.co/fGizQekoe7	1422628122	561169136282501121	f	shadydawgnyc
 We're parked on 47th Street in between Lexington and Park today!	1422628088	561168994456330240	f	shadydawgnyc
 Today we're parked on Hudson Street and King Street! Stop by for some dawgs! Check out our menu: http://t.co/QaZQMWARyU	1422460394	560465632601600000	f	shadydawgnyc
@@ -2785,7 +2745,6 @@ Its FreeFriesFriday! Follow us on @LoyalTree + use code FREEFRIESFRIDAY for free
 We're parked on 46th Street and 6th Avenue today! Brave the snow and stop by for a gourmet dawg! http://t.co/qGH4ggxTCS	1420822095	553594110633066496	f	shadydawgnyc
 @foodNfest how was it?	1418845788	545304876516126720	f	shadydawgnyc
 @Khameleon619 were open now!	1418845770	545304801672982528	f	shadydawgnyc
-@maximumbennis its a beer Cheddar sauce. What do you think?	1418845749	545304711902281728	f	shadydawgnyc
 Come get your dawgs at Hudson St. and King St. today!	1418751808	544910695872339969	f	shadydawgnyc
 Thrilled to see @EdwardNorton at the @shadydawgnyc truck today!	1418595939	544256931922472961	f	shadydawgnyc
 RT @steveorefreshed: @ShadyDawgNYC is amazing!... if you're in NYC come to the truck boyeeeee!..... http://t.co/xmqZU3qy8Y	1418585801	544214412660584448	f	shadydawgnyc
@@ -2815,26 +2774,47 @@ Its finally here...    Our last day =( we came to 55th and broadway for one last
 19th st and 5th ave RT @nay_60: @Blend_Express where are u guys today??	1383150783	395589173794832385	f	blend_express
 Tomorrow it our last day!! Find us! We're on the corner of 19th st and 5th ave! Get it while u can and TreatYourself	1383150765	395589097257189377	f	blend_express
 Our season ending week! Today we are located on 55th and broadway! Come check us out! Not now but right now!	1382976806	394859462814871552	f	blend_express
-@starrettlehigh  come on down We are ready !!!! http://t.co/7omYjzU5Gy	1432915482	604317450570743809	f	valduccis
-@starrettlehigh  We are outside Come down for a free Zeppoli  and some Pizza too @MarthaStewart @TommyHilfiger http://t.co/YynyUSxbO1	1432908925	604289948427128832	f	valduccis
-@starrettlehigh  Valduccis Pizza Truck is serving lunch outside the Your building Today !!!  Paninni and salad Too !! http://t.co/vsxrqhBLW7	1432898071	604244422251954177	f	valduccis
-http://t.co/qQPgqTx2Iy http://t.co/qwSGKIr6l3	1432843584	604015888719843329	f	valduccis
-RT @RepCharlesNJ: SHOUTOUT to the folks tossing the dough @Valduccis	1432843535	604015681454088192	f	valduccis
-Catering Baby !!!! http://t.co/qQPgqTx2Iy @greenboxny @FoodNetwork @FoodPorn http://t.co/WKZeL5jZmq	1432831276	603964264647385088	f	valduccis
-Miss Liberty in this mornings Fog !!!! http://t.co/1rXjRCSgW8	1432831207	603963974720352256	f	valduccis
-Baked potato wedges http://t.co/kbk8Pb4TrY @greenboxny @FoodtoEat @foodNfest @FoodPorn @gofooda @FoodNetwork http://t.co/tIAMH7BQYo	1432831071	603963406140481536	f	valduccis
-Catering is our specialty http://t.co/QonTGksajn http://t.co/A4x3VeFpad	1432760225	603666255351050241	f	valduccis
-Delivery available @greenboxny @FoodtoEat @foodNfest @FoodPornGuru @MobileFoodInfo @FoodNetwork http://t.co/PxPpGxIIBR	1432750031	603623500667031552	f	valduccis
-Catering Baby !!! http://t.co/UyDMpNasMm	1432664569	603265045867438082	f	valduccis
-RT @BKLYNDESIGNS: We're excited for today's foodtruck vendors, organized by @FoodtoEat : Lebanese by @ToumNYC & pizza by @Valduccis http:/...	1432664446	603264528349036545	f	valduccis
-Get a personal Pie 8$ and a free Zeppoli @greenboxny @FoodtoEat @foodNfest  call FoodtoEat for pickup !!!!!!!!!!! http://t.co/FnknB4KKDB	1432651427	603209922675867649	f	valduccis
-RT @nycfoodtruck: NYC Food Truck Obsessions found at VillageVoice Choice Streets: http://t.co/mDx0rIt6q1 w/ @GCNYC1 @TheTreatsTruck @valdu...	1432651263	603209237616041984	f	valduccis
-Free Zeppoli 51 n Park @FoodPorn @FoodtoEat @foodNfest @greenboxny @Foodtruckstars_ @SocialManhattan @cheechandchong http://t.co/qrNNgfxcfu	1432651216	603209038491361283	f	valduccis
-The Sauce. !!! @FoodPorn @greenboxny @FoodtoEat @foodNfest @Foodtruckgirl7 @Foodtruckstars_ @UpuauatAlpha @MobileFood http://t.co/k4cpX851pV	1432486729	602519128650457088	f	valduccis
-RT @nycfoodtruck: NYC Food Truck Obsessions found at VillageVoice Choice Streets: http://t.co/wStjy0qSs0 w/ @GCNYC1 @TheTreatsTruck @valdu...	1432345430	601926477156884481	f	valduccis
-Best pizza !! 50st 6ave @greenboxny @Foodtruckstars_ @foodNfest @FoodtoEat @FoodPorn @UpuauatAlpha @FoodNetwork http://t.co/jsqiXroWjq	1432301524	601742324402651136	f	valduccis
-50th St.at 6 ave @FoodStartupsPod @cheepeats@FoodPorn@foodtoeat http://t.co/rmfMkAiEcu	1432300986	601740066784997376	f	valduccis
-http://t.co/qQPgqTODA6 http://t.co/ODXQVlmOud	1432232479	601452726413701120	f	valduccis
+Good Morning NYC,\nTh Truck is down for repairs, Have a great day.	1437134530	622013418900426752	f	lobsterrolling
+Good Afternoon NYC,\nWe are closed today for Truck Repairs. \nHave a great day.	1437072563	621753513647951872	f	lobsterrolling
+Good Morning NYC,\nWe are parked on E20 Street & 5th Ave today. Come enjoy Fresh Lobster Rolls, Sliders, Gazpacho. Have a great day.	1436970443	621325188920156161	f	lobsterrolling
+Good Morning NYC,\nWe are parked on W58 Street & 8th Ave, Come enjoy our Lobster Rolls, Sliders, Gazpacho @tjmaxx, @ColumbusCircle	1436907553	621061409615519744	f	lobsterrolling
+We're on 40th btwn 5th & 6th ave. Come enjoy our fresh quarter pound Lobster Rolls ! @bryantparknyc @moviemonday	1436804944	620631035114618881	f	lobsterrolling
+Good Morning NYC,\nWe are parked on 77 Street & Columbus Ave today. Come enjoy a Fresh Lobster Roll, Sliders & Gazpacho. Have a beautiful day	1436712346	620242650915053569	f	lobsterrolling
+Hello NYC,\nWe are on 58 Street & Broadway now. Come enjoy a Fresh Lobster Roll, Sliders & Gazpacho. Have a goodnight NY.	1436649190	619977755057385472	f	lobsterrolling
+Good Afternoon NYC,\nWe are now parked on W57 Street & 8th Ave. Come by for a Fresh Lobster Roll, Sliders & Gazpacho.	1436637607	619929176150274048	f	lobsterrolling
+Good Morning NYC,\nWe are parked on 70St & York today, Come & enjoy a Fresh Lobster Roll, Sliders & Gazpacho today. @Sothebys @Chase @Cornell	1436629470	619895044313583616	f	lobsterrolling
+Good Afternoon NYC,\nWe are parked on W58 St & 8th Ave today. Come & enjoy our Lobster Rolls, Sliders & Gazpacho. Have a lovely day N.Y	1436550541	619563991321456640	f	lobsterrolling
+NYC,Lobster Truck will be closed today due to weather. Feel free to come to our restaurant in Greenpoint for some New England comfort food	1436466710	619212381365903361	f	lobsterrolling
+Good Morning NYC,\nWe are on 70st & York Ave today. Come enjoy Fresh Lobster Rolls, Sliders & Gazpacho. Have a great day. @Sothebys @Chase	1436367034	618794310809554944	f	lobsterrolling
+Good Morning NYC,\nWe are parked on W57 St & 8th Ave today till 4pm. Come enjoy Fresh Lobster Rolls, Sliders & Gazpacho. Have a great one NY.	1436278228	618421829779243008	f	lobsterrolling
+Thank you Huntington For a Great Morning.	1436207645	618125780791488513	f	lobsterrolling
+Good Afternoon NYC,\nWe will be parked on 40 St between 5th & 6th Ave today till 10pm. @bryantparknyc Come & enjoy Fresh Lobster Rolls.	1436207608	618125626634014721	f	lobsterrolling
+Good Morning NYC,\nWe are parked in Huntington Station, Long Island. Today till 3pm. Lobster Rolls, Sliders & Gazpacho. Have a great day.	1436192064	618060432616632320	f	lobsterrolling
+Last Call For NY Best Lobster Rolls. We will be leaving at 8pm. Thank you Columbus Ave & 77 St. Have a goodnight NYC.	1436138104	617834105439449088	f	lobsterrolling
+Thank you NYC for last night. It was great. http://t.co/2YTgg0kSBG	1436108561	617710195976839168	f	lobsterrolling
+On our way to the @dumbolot on Jay & Water!	1436964674	621300992072617984	f	domotaco
+Good Morning NYC,\nWe are parked on W76 St & Columbus Ave today. Come enjoy Lobster Rolls, Sliders & Gazpacho. Have a great day.	1436108482	617709863808954368	f	lobsterrolling
+Happy 4th NYC, we are parked on N 7St & Kent Ave today. Come & enjoy Lobster Rolls, Sliders & Gazpacho. Have a great one.	1436035725	617404697981374464	f	lobsterrolling
+bestpizza bestcatering @greenboxny @FoodtoEat @Foodtruckgirl7 @eatupnewyork http://t.co/hvLlrDz8r7	1437000004	621449177134944256	f	valduccis
+Who likes cheese ? Everybody !!! @greenboxny@@Foodtruckgirl7 @FoodtoEat @eatupnewyork @foodNfest @Foodtruckstars_ http://t.co/E9cplLJTz7	1436826859	620722956025622528	f	valduccis
+RT @BeautePublicist: FF @MrFootyNewss, @lumavera1, @goldenpath, @Valduccis, @beautyADDICTS, @PaulaMacArthur\n@Attavanti_com	1436669450	620062734793711616	f	valduccis
+RT @becausestartup: http://t.co/oUjt0paloa rajyyz @valduccis -  My dad's favorite pizza. Plain Brooklyn style fitness model fash... http...	1436618805	619850314133409792	f	valduccis
+bestpizza @greenboxny @FoodtoEat @eatupnewyork @foodNfest http://t.co/PHvHINt1j3	1436578443	619681024210022400	f	valduccis
+World Cup Champions team USA valduccis @greenboxny @FoodtoEat @Foodtruckgirl7 @eatupnewyork @foodNfest http://t.co/Be0kgl6tG5	1436538342	619512827200569344	f	valduccis
+Catering jobs start with the best homemade rolls @Cater2me @greenboxny @Foodtruckgirl7  bestcatering nycatering http://t.co/ictc9bfhIa	1436443889	619116663552765952	f	valduccis
+bestpizza cateringBest hero @greenboxny http://t.co/EvY8jCX2Fz	1436372191	618815939648319488	f	valduccis
+Catering bestpizza @greenboxny @eatupnewyork @FoodtoEat @mactruckny Dom I think you're going to win  http://t.co/gvtMPcfisP	1436372133	618815694130561026	f	valduccis
+And some rice balls to your next catering bestpizza bestcatering @greenboxny @eatupnewyork @FoodtoEat @foodNfest http://t.co/5kN41wcdPC	1436294157	618488638410657792	f	valduccis
+RT @eatupnewyork: @Valduccis Looks incredible!	1436293306	618485071876620288	f	valduccis
+Just made another big boy.  And to wait till you taste it. !!!  @greenboxny @Foodtruckgirl7 @eatupnewyork http://t.co/QSvCNDlNZj	1436291193	618476210604089344	f	valduccis
+Look at our new big boy Best pizza@FoodPorn @greenboxny @FoodtoEat @Foodtruckgirl7 @eatupnewyork @foodNfest nypizza http://t.co/Ck8gYxae9s	1436275326	618409659330916352	f	valduccis
+New big boy Sicilian http://t.co/bv1atpjcLl	1436223889	618193914344960000	f	valduccis
+http://t.co/qQPgqTx2Iy we deliver anywhere Best pizza Best catering New York City pizza http://t.co/x3sEcYOvx3	1436182324	618019578124369920	f	valduccis
+Who is having Sunday dinner today @greenboxny @Foodtruckgirl7 @FoodtoEat @mactruckny @foodNfest bestpizza meatballs http://t.co/LBpzNbat7i	1436101674	617681307439599616	f	valduccis
+Happy birthday America best Country @greenboxny @gabbyvalls @FoodPorn @FoodtoEat @Foodtruckgirl7 @eatupnewyork http://t.co/UoSTUTwJ95	1436030830	617384166028673028	f	valduccis
+Happy Fourth of July.  Everybody have a safe day http://t.co/JiTYK7GFNM	1436022344	617348572569280512	f	valduccis
+Come join us in Central Park for a day of Tennis NY Open sidekicks bestpizza valduccis @greenboxny @FoodtoEat @Foo http://t.co/2bZqtAfa1b	1435934492	616980095497031680	f	valduccis
+RT @adnanshamsi: AWESOME! @NYOpen2015 @CentralParkNYC w/@DaleCaldwell @NatlAutismNYM @Valduccis http://t.co/oaYaKtktKK @AutismFitnessEC @Bi...	1435934323	616979388396085248	f	valduccis
 @BillGates My Uncle invented waste water sewage treatment years ago! https://t.co/lX9433WJf6 He even tried reaching out to you! notright	1421905524	558138340906926081	f	miamimachinenyc
 RT @YouGotSmoked: Park Ave btw 33rd St and 32nd St from 11:00 to 3:00 today! New York Aged Cheddar Mac and Cheese! Delicious nyc http://t...	1389964561	424168229477826560	f	miamimachinenyc
 RT @YouGotSmoked: Check us out today @dumbolot @DUMBOFoodTrucks from 11:00 to 3:00! slowsmokedpork applewoodsmokedchicken	1389793800	423452005034901504	f	miamimachinenyc
@@ -2855,25 +2835,24 @@ Check us out on @EatStTweet tonight! 8:00 PM Cooking Channel! Formerly known as 
 Check out our Brand New Catering Menu! http://t.co/HRxxJhtMuV http://t.co/PRqbwOl0cP	1384525987	401357198309486592	f	miamimachinenyc
 RT @bongobros: Catering Now Available! Call 908 591 4972 or Email miamifoodmachine@gmail.com for details http://t.co/vsHPD5PCs2	1384452084	401047226291855360	f	miamimachinenyc
 Catering Now Available! Call 908 591 4972 or Email miamifoodmachine@gmail.com for details http://t.co/gjyuYENKg8	1384441885	401004449772347392	f	miamimachinenyc
-Happy Friday! Catch the truck on Water & Old Slip or our booth on 39th & Broadway!	1432909853	604293839822528512	f	domotaco
-Get your fill of tacos before the rain! 53rd & Park for the truck or 39th & Broadway for the booth!	1432820152	603917608862130177	f	domotaco
-Catch us in the @dumbolot on jay & water today, or our booth on 39th & Broadway!	1432736467	603566608334790656	f	domotaco
-Here to help the transition back to the work week! Truck on Hudson & King and booth on 39th & Broadway!	1432649254	603200808776146945	f	domotaco
-Fish Fryday! Old Slip and water till 2:30! You can also find us on 39th and Broadway till 9pm. asiantaqueria urbanspace	1432304007	601752737424932864	f	domotaco
-Catch us on Jay & Water in the @dumbolot, or our booth on 39th & Broadway!	1432131274	601028244683431936	f	domotaco
-Catch the truck on Hudson & King, or our UrbanSpaceGarment booth on 39th & Broadway!	1432044615	600664770757308416	f	domotaco
-We're here to brighten up your Monday on 52nd & 6th! Also be sure to check out our booth on 39th & Broadway!	1431959013	600305729287815168	f	domotaco
-Fresh off the press catering nolines http://t.co/3vyFhKihGW	1431702544	599230021060993024	f	domotaco
-Happy Friday from FiDi! Catch the truck on Old Slip & Water or our booth on 39th & Broadway!	1431698557	599213295745126403	f	domotaco
-It's Thursday which means you find the truck on 53rd & Park! Also check out our Garment District booth on 39th & Broadway!	1431614015	598858703559892992	f	domotaco
-Catch us out on the @dumbolot on jay & water, or our booth on 39th & Broadway!	1431527779	598497001517535232	f	domotaco
-RT @crimsong19: Oh, @DomoTaco, you're my starving lunchtime savior! urbanspacegarment http://t.co/dfqSeBHh4Y http://t.co/mwfQYGGjn6	1431488458	598332076807606272	f	domotaco
-RT @StunningRyan: Tried @DomoTaco for lunch at @UrbanSpaceNYC. Excellent tacos.	1431488418	598331909282910208	f	domotaco
-RT @thirstyreveler: Grabbed a burrito from @domotaco at the great @urbandspacenyc spot on Bway today. Great stuff! http://t.co/AvVq0LyFub	1431488408	598331866224136193	f	domotaco
-SoHo today on Hudson & King, or catch our Garment District booth on 39th & Broadway!	1431439331	598126024556183552	f	domotaco
-Happy Monday! Catch the truck out on 52nd & 6th or our @UrbanSpaceNYC booth on 39th & Broadway today	1431353644	597766628353417216	f	domotaco
-52nd and 6 for lunch or catch our booth on 39th and broadway asiantaqueria urbanspacegarment	1431350789	597754652751302657	f	domotaco
-http://t.co/PXYe72Pj4L Catch us over the... http://t.co/DN6gzUJ7eS	1431211430	597170139251879938	f	domotaco
+old slip and water ftw till 2:30pm. also on 33rd and broadway till 9pm! it's friday!!! tgif	1437144530	622055362980630528	f	domotaco
+Happy Thursday from 53rd & Park! Bwaybites also open on 33rd & Broadway from 11-9!	1437056018	621684119018295296	f	domotaco
+Back at 53rd and park till 2:30! Broadway bites on 33rd and Broadway till 9pm!	1437055863	621683466325893120	f	domotaco
+BwayBites open daily from 11-9! Catch Domo Taco asiantaqueria on 33rd & Broadway!	1436964733	621301241042345984	f	domotaco
+SoHo today on Hudson & King! Also be sure to check out our booth on 33rd & Broadway from 11-9 daily!	1436878411	620939180730925056	f	domotaco
+Happy Monday back on 52nd & 6th ave! Also the last 2 weeks to catch us at BwayBites on 33rd & Broadway	1436796451	620595412538232833	f	domotaco
+Happy fryday from Old Slip & Water! Also catch our booth on 33rd & Broadway open til 9!	1436533030	619490548378923008	f	domotaco
+Catch our truck for lunch by metrotech in Brooklyn today, or our booth on 33rd & Broadway open til 9!	1436452562	619153038658437120	f	domotaco
+Truck in @dumbolot today with our booth open on 33rd & Broadway	1436372708	618818106618707968	f	domotaco
+Hudson and King till 2:30! 33rd and Broadway till 9pm! asiantaqueria	1436272162	618396386862632960	f	domotaco
+Welcome back! Catch our truck on 52nd & 6th ave or our BwayBites booth on 33rd & Broadway!	1436190355	618053263640805376	f	domotaco
+RT @cakeladybx: @DomoTaco I think I need to stop by afterwork.. I can't stop thinking about the rice bowl I had a few weeks ago loveatfirs...	1435968115	617121119619915776	f	domotaco
+Truck is off the streets today but you could still catch our BwayBites booth on 33rd & Broadway!	1435931061	616965703611064320	f	domotaco
+33rd and broadway till 9pm! 53rd and park till 2:30pm!	1435849011	616621560707817472	f	domotaco
+53rd and park! let's go!	1435848986	616621459553787904	f	domotaco
+We're @dumbolot today, jay and water st.  asiantaqueria	1435757375	616237213383294976	f	domotaco
+Sorry truck is NOT out today but you could still catch us at BwayBites on 33rd & Broadway!	1435673577	615885739348361216	f	domotaco
+52nd and 6/7th for asiantaqueria till 2:30. Or you can catch us at broadwaybites till 9pm! 33rd and Broadway	1435584578	615512449555505152	f	domotaco
 Love @Gett as much I do? Use my code: GTYUNLI1 for $20 off your 1st ride http://t.co/POJKdysjxA	1430948975	596069322981822464	f	shanghaisogo
 Love @Gett as much I do? Use my code: GTYUNLI1 for $20 off your 1st ride http://t.co/POJKdysjxA	1427207419	580376100011945984	f	shanghaisogo
 Here I am again! A must go place every time when I back to the NYC. (@ T-swirl crepe) on Yelp http://t.co/M1ROXk0cfS	1426984585	579441465568280576	f	shanghaisogo
@@ -2894,67 +2873,68 @@ New York & New Jersey. So far the FreeSample is going hot & crazy. Love to work 
 RT @kevsteimle: Prudential Center to unveil new on-ice presentation @NHLDevils home opener http://t.co/4KH97tW2CW via @AsburyParkPress @NHL...	1413479479	522796946768285696	f	shanghaisogo
 RT @PruCenter: Stop by College Ave and Somerset St at @RutgersU for FREE PRUeats! http://t.co/LF6tBlmIsq	1413479467	522796894259785728	f	shanghaisogo
 RT @PruCenter: Today's menu of PRUeats at @RutgersU! Everything is free! http://t.co/NKPL5my694	1413479455	522796846285324288	f	shanghaisogo
-Lunch is being served today on varick and king!	1432913005	604307062517043200	f	eddiespizzany
-Happy Friday everyone! We are parked on Varick & King street. Stop by and see us. Start your weekend off right by... http://t.co/KRqY07RGXG	1432904069	604269578944958464	f	eddiespizzany
-@kristinahsays 46th and 6th. We will be at 10 Hanover square for lunch tomorow	1432761765	603672713006317568	f	eddiespizzany
-Happy Tuesday everyone. We hope you all had a wonderful holiday. Today we are parked on E.47street between... http://t.co/3n0gLHc1sE	1432652131	603212877974102016	f	eddiespizzany
-Its Friday come see us on Varick and King street	1432312747	601789398154379264	f	eddiespizzany
-Lunch until 2pm on varick and king	1432308880	601773175676997632	f	eddiespizzany
-Lunch is being served until 3pm downtown on Hanover and water street. Call ahead your order to 9174397522 http://t.co/KIRk3xAXer	1432221939	601408518831374336	f	eddiespizzany
-It's hump day people and what better way to enjoy this day than by having hot fresh pizza or one of our delicious... http://t.co/QCxcfD7DHO	1432134567	601042055427694593	f	eddiespizzany
-Catch us for lunch today on 46th and 6th until 3pm.	1432123295	600994779338559488	f	eddiespizzany
-Stop by Eddie's pizza truck and have some lunch. We are parked on the corner of 10 Hanover sq. Have a pleasant day	1431618623	598878028383526913	f	eddiespizzany
-Stop by Eddie's pizza truck today and treat yourself to a fresh hot pizza or sandwich. We are parked on W.46st&6th ave. Have a great day.	1431528910	598501745430495232	f	eddiespizzany
-No lunch today due to maintenance. See you all tomorrow	1431430980	598090997885706240	f	eddiespizzany
-Happy Monday everyone! Stop by Eddie's pizza truck and have yourself a hot, fresh pizza or sandwich. We are... http://t.co/rKdaVtpcQg	1431355266	597773428863737856	f	eddiespizzany
-RT @TakumiTacoNY: Come visit us today at smorgasburg takumitaco tagyourtaco smorgasburg @ Brooklyn Bridge Park (Pier 5) https://t.co/blI...	1431274712	597435561658417153	f	eddiespizzany
-Go check out our friends @TakumiTacoNY who are opening may 1-28 at madison square eats on 25th and Broadway! http://t.co/zqxyOhpySF	1430436907	593921552632160257	f	eddiespizzany
-Wishing everyone a Happy New Years. Today we will be at 97th and Columbus ave	1420223348	551082781795966977	f	elpasotruck
-Its lunch time. Stop by and try our weekly special. Pizza topped with short rib, mushrooms and caramelized onions... http://t.co/BxNXFyEVxs	1430234925	593074378079895552	f	eddiespizzany
-RT @smorgasburg: Hop Aboard The Bus To Smorg For Easy Passage To Williamsburg On Saturday. More here: http://t.co/dZhmrHJGFa http://t.co/WV...	1429807546	591281823658991616	f	eddiespizzany
-Weekly special white pie mushroom olives garlic and roasted red peppers. Monday's at starrettlehigh... http://t.co/VxVdAQbLW3	1429548113	590193682176946177	f	eddiespizzany
-Weekly special white pie mushroom olives garlic and roasted red peppers. Monday's at starrettlehigh... https://t.co/5lxtaTyi2g	1429548111	590193672618172416	f	eddiespizzany
-RT @TDBank_US: @EddiesPizzaNY Thanks for joining us today! Hope everyone is having a good time! :-) ^YD	1429287967	589102550365949954	f	eddiespizzany
-TAIMTUESDAY on 20th and 5th in flatiron!  It's a beautiful day for falafal!  nyceats nycfoodtruck flatiron	1432654141	603221305685647360	f	taimmobile
-VANDAM & VARICK TODAY IN HUDSONSQUARE!  FALAFELDAYISEVERDAY nycfoodtruck nyceats delicious falafel	1432221793	601407905829650432	f	taimmobile
-foodtruck is on 20th and 5th today!  humpday by taimfalafel! nyceats nycfoodtruck falafel smoothies	1432135860	601047480445317120	f	taimmobile
-RT @GraceKendallLit: There should be a dating app for people waiting in line @TaimMobile. We all have at least one major lifestyle priority...	1432063346	600743334949314560	f	taimmobile
-20th and 5th for taimtuesdays in flatiron!  falafel smoothies foodtruck nyceats vegan	1432052778	600699006013075457	f	taimmobile
-Got a case of the Mondays?  Come visit our truck on water and broad in fidi today.  nycfoodtruck falafel harissa nyceats	1431962908	600322065422495744	f	taimmobile
-What's better than falafel and smoothies in the park? Truck is at prospectparkfoodtruckrally today! @prospect_park GrandArmyPlaza	1431876631	599960194752323584	f	taimmobile
-Hi falafel fans!  We're on vandam and varick today in hudsonsquare!  nycfoodtruck	1431616770	598870258024321024	f	taimmobile
-Today is nationalhummusday & we are so excited!  Come celebrate with @TaimMobile on 20th & 5th! hummus falafel nycfoodtruck flatiron	1431531211	598511395433488387	f	taimmobile
-20th and 5th we're here for you!  Get your harissa on with a sandwich or platter!  taimfalafel flatiron nycfoodtruck	1431445733	598152875869614081	f	taimmobile
-@brown_organics Yes we are!	1431445625	598152423815913472	f	taimmobile
-FiDi We're back!! See you on water and broad!  itsfalafeltime	1431356989	597780657864073218	f	taimmobile
-taimmobile is off for the weekend!   Enjoy the beautiful weather and HappyMothersDay!	1431122024	596795143665098752	f	taimmobile
-Craving a greenfalafel sandwich?  Come visit us on Vandam and Varick in HudsonSquare! nycfoodtruck taimfalafel	1431013102	596338292003569664	f	taimmobile
-falafel helps you get over the hump! In flatiron today on 20th and 5th! happyhumpday nycfoodtruck happyhumpday	1430926454	595974863547977728	f	taimmobile
-20th and 5th in flatiron today!  falafel nycfoodtruck	1430840507	595614375391711232	f	taimmobile
-No parking today downtown.  Come visit us on 20th and 5th in flatiron!  It's almost 80 degrees and we have datelimebananasmoothies.	1430754399	595253210710986752	f	taimmobile
-Perfect day for a picnic in the parc! Stop by Prospect Parc's Food Truck Rally and get your greenfalafel and datelimebanana smoothie!	1430663605	594872394398961664	f	taimmobile
-BALLING in hudsonsquare today. falafelballing that is!  Come visit us on the corner of Varick and Vandam! hudsonsquare nycfoodtruck	1430408491	593802366970892288	f	taimmobile
-Reasons to eat @TaimMobile on 20th & 5th in flatiron... 1. Its humpday 2. the weather in nyc is perfect and we have smoothies	1430322729	593442658183487488	f	taimmobile
-A big thank you to our 20,2K followers who follow us daily and welcome to the new ones ! Tell us a little more about you :) followers	1432907954	604285873581084672	f	sweeterynyc
-A big thank you to our 3700 fans who follow us daily and welcome to the new ones, thank you for joining the page... http://t.co/NtnGGiZXL5	1432907714	604284868055437312	f	sweeterynyc
-RT @FoodTruckPages: The Food Truck Daily is out! http://t.co/Utid8jOmoq Stories via @TheCupcakeBrake @klpsmedia @SweeteryNYC	1432905759	604276667364827136	f	sweeterynyc
-Serving at Hudson/King St 375 Hudson Street New York From 7:30AM-3:00PM EDT http://t.co/aR2bxNYVPT	1432899308	604249610941521920	f	sweeterynyc
-My favorite flavor cupcake is ... cupcakes flavor SweeteryNYC Quiz choice sweets http://t.co/2PqjmJy5u5	1432825170	603938653954519041	f	sweeterynyc
-Serving at Hudson/King St 375 Hudson Street New York From 7:30AM-3:00PM EDT http://t.co/aR2bxNYVPT	1432812910	603887231594569728	f	sweeterynyc
-Today SweeteryNYC needs your help ! We would like to know what YOU think because we are nothing without you, our... http://t.co/94xqItl6xM	1432744578	603600625411186691	f	sweeterynyc
-RT @FoodTruckPages: The Food Truck Daily is out! http://t.co/QvYFH5bpb3 Stories via @SweeteryNYC @leocantalista @Joanevr	1432736465	603566597932982274	f	sweeterynyc
-Serving at Hudson/King St 375 Hudson Street New York From 7:30AM-3:00PM EDT http://t.co/aR2bxNYVPT	1432726508	603524836229545985	f	sweeterynyc
-Serving at Hudson/King St 375 Hudson Street New York From 7:30AM-3:00PM EDT http://t.co/aR2bxNYVPT	1432640107	603162444639395840	f	sweeterynyc
-Sweetery solutes the men & woman & families who have sacrificed so much to keep our country safe & for us to enjoy the freedoms that we do.	1432569147	602864815502139392	f	sweeterynyc
-Serving at Hudson/King St 375 Hudson Street New York From 7:30AM-3:00PM EDT http://t.co/aR2bxNYVPT	1432553708	602800062213795840	f	sweeterynyc
-RT @laurenentransit: @SweeteryNYC macarellas !!!	1432319649	601818347139923968	f	sweeterynyc
-What is your favorite sweet from our food truck ? Croissant ? Muffin ? Whoopie Pie ? Ice Cream Sandwich ? Too... http://t.co/koObqBev8h	1432306001	601761100221325313	f	sweeterynyc
-Serving at Hudson/King St 375 Hudson Street New York From 7:30AM-3:00PM EDT http://t.co/aR2bxNYVPT	1432294508	601712896154988544	f	sweeterynyc
-SweeteryNYC supports RedNoseDay ! http://t.co/ELanlp0QRb	1432217899	601391576749867008	f	sweeterynyc
-Don't forget, it's RedNoseDay today, a campaign dedicated to raising money for children and young people living... http://t.co/44tvmaFAex	1432217193	601388614841462784	f	sweeterynyc
-Serving at Hudson/King St 375 Hudson Street New York From 7:30AM-3:00PM EDT http://t.co/aR2bxNYVPT	1432208114	601350533404880896	f	sweeterynyc
-I posted 71 photos on Facebook in the album Food Network Magazine's Travel Truck http://t.co/qbHMt8KdhZ	1432135635	601046535086931969	f	sweeterynyc
-FoodTruck - Catering - Events DescribeYourselfIn3Words SweeteryNYC foodtruck catering	1432131318	601028429149011968	f	sweeterynyc
+Tuesday: 48th between park and lex for lunch until 3p. Call ahead your order 917 439 7522 http://t.co/ZlgbGfUZ1z	1436879099	620942066718257152	f	eddiespizzany
+Tuesday: 48th between park and lex for lunch until 3p. Call ahead your order 917 439 7522 https://t.co/9j7R88pAQ3	1436879097	620942058010865664	f	eddiespizzany
+http://t.co/Ag0AnfapSp http://t.co/PJj7IJ8CrC	1436832926	620748403023179776	f	eddiespizzany
+starrettlehigh Takumi specials @ Starrett-Lehigh https://t.co/DJmjLtTZs9	1436804085	620627431393767424	f	eddiespizzany
+Special: Pedro pasta, Mac n cheese bites, and drink for $8. Monday @starrettlehigh http://t.co/SO1koyRquk	1436797183	620598483502940162	f	eddiespizzany
+Special: Pedro pasta, Mac n cheese bites, and drink for $8. Monday @starrettlehigh @ Starrett-Lehigh https://t.co/PVSkhF2V2H	1436797181	620598477559570432	f	eddiespizzany
+@jennyhutt 5163549780. Call the restaurant and someone would be happy to help you.	1436538441	619513240729600000	f	eddiespizzany
+Friday: charlton st between hudson and varick. http://t.co/zePJrrbKQD	1436527926	619469136977096704	f	eddiespizzany
+Friday: charlton st between hudson and varick. https://t.co/ydpXg7gfRN	1436527924	619469131528716288	f	eddiespizzany
+We are serving lunch today on 26th and 12th @starrettlehigh from 11am until 3pm http://t.co/hlruXYZkVq	1436191794	618059300863406080	f	eddiespizzany
+We will be closed today for a private event. See you all tomorow.	1435671152	615875569671081984	f	eddiespizzany
+We will be closed today for a private event. see you all tomorow.	1435671125	615875455061770240	f	eddiespizzany
+Today's special: 2 sliders, 1 side, 1drink for $10 eddiespizza starrettlehigh http://t.co/KAQiM86DoH	1435593164	615548461199552513	f	eddiespizzany
+Catch us for lunch today on 26th between 11th and 12th at starret lehigh building. You can always call in your... http://t.co/oQ8owMIJGZ	1435590298	615536440982814720	f	eddiespizzany
+RT @TakumiTacoNY: Come visit us @smorgasburg and chelsea market today! http://t.co/3Zh38Uwj3g	1435423404	614836435997335552	f	eddiespizzany
+Stop by Eddie's pizza truck. We are parked on Hanover square and Water street. Looking forward to serving you.	1435243337	614081182397927425	f	eddiespizzany
+We are serving lunch today on 46th and 6th. http://t.co/fPkXARZaFW	1435159231	613728414089003008	f	eddiespizzany
+We had a great time catering a bar mitzvah last night!	1434802190	612230879285518336	f	eddiespizzany
+No lunch today due to a private event. See you all next week	1434715570	611867567456690176	f	eddiespizzany
+We will be off the streets tomorow for a private event. See you all next week.	1434673008	611689049494044672	f	eddiespizzany
+@captainwoo Haha!  You got us!	1436976361	621350010366611456	f	taimmobile
+It's raining it's pooring... but don't let that stop you from a delicious lunch @TaimMobile! See you on 20th and 5th today!	1436974603	621342637166039040	f	taimmobile
+On Fastbite today! Order a falafel platter today and receive it under 10 minutes! trycaviarnyc... https://t.co/8JdZUjb5Ml	1436974523	621342302699659264	f	taimmobile
+Vote for us!!! Taim Mobile!! https://t.co/ueQj6dpLWy	1436824471	620712938446430208	f	taimmobile
+We're at Water street and Broad today - Financial District! Start your week off with Taim!	1436800067	620610579590418432	f	taimmobile
+Yum yum 10yearsoftaim http://t.co/RYvhO2KA2v	1436728479	620310319043358725	f	taimmobile
+10 Years baby!!!! Free falafel Party at the West-Village until 4pm today!! http://t.co/D12ylQVoMB	1436720487	620276799579246592	f	taimmobile
+RT @EinatAdmony: It's @TaimMobile's birthday tomorrow! Stop by the West Village from 12-4 for free falafel and fun! http://t.co/WHSBPtoE5a	1436631168	619902168921980928	f	taimmobile
+@lizzeyj Spring and Varick today!	1436462751	619195774191185920	f	taimmobile
+RT @EinatAdmony: Tune in tomorrow at the 9 am hour to watch me on Good Day New York! I will be making hummus and talking all about @TaimMo...	1436407392	618963581183356928	f	taimmobile
+20th and 5th today! Come celebrate humpday with some falafel and smoothies!	1436369764	618805757111332864	f	taimmobile
+Taimtuesdays on 20th and 5th today!	1436284300	618447298109014016	f	taimmobile
+Too many hot dogs this weekend?  Come visit us in FiDi on the corner of Water and Broad for some yummy, vegan falafel!	1436195613	618075318792921088	f	taimmobile
+varick and spring on this beautiful day! What could be better than escaping the office for some sun, and enjoying a falafel sandwich?!	1435852062	616634359995629568	f	taimmobile
+Celebrating humpday on 20th and 5th! See you there!	1435762673	616259436542304256	f	taimmobile
+TaimTuesdays on 20th and 5th in flatiron!	1435676091	615896282255626240	f	taimmobile
+Order our Greek salad by 12pm today to get it in 15 minutes or less from trycaviarnyc with fastbite... https://t.co/3x6u1jJgNI	1435676033	615896042278637568	f	taimmobile
+Get your falafel on today in FiDi on the corner of Water & Broad Street!	1435592813	615546989544144896	f	taimmobile
+We're at prospectpark today! Come visit us at the Grand Army Plaza! @nycfoodtruck	1435499877	615157188739354624	f	taimmobile
+vandam & varick today!	1435249828	614108407361110017	f	taimmobile
+If u know Sweetery u know we love 2 give away FREE. On Mon we'll b giving away 10,000 treats...& that's just the beginning of our summer fun	1437073583	621757790529437696	f	sweeterynyc
+We're gearing up for a busy next few days of events... paypalipo corporatepicnic sweets sweeterynyc	1437051805	621666444611162112	f	sweeterynyc
+Hey @MECidears did u know ur friends @Flashtalking have a spl @Sweeterynyc trk @ ur office w/free treats http://t.co/stwusItYmo	1436881548	620952336865824768	f	sweeterynyc
+We can barely contain our enthusiasm, but SweeteryNYC has so many free give away events coming up, it's hard to keep up. StayHungreyFriends	1436816808	620680796261740544	f	sweeterynyc
+Serving at Hudson/King St 375 Hudson Street New York From 7:30AM-3:00PM EDT https://t.co/2cDIucjsTY	1435923308	616933186044567553	f	sweeterynyc
+Serving at Hudson/King St 375 Hudson Street New York From 7:30AM-3:00PM EDT https://t.co/2cDIucjsTY	1435836908	616570801039503360	f	sweeterynyc
+I posted 10 photos on Facebook in the album Fitbit IPO! http://t.co/Bdt4CBXOH8	1435777729	616322582682296326	f	sweeterynyc
+Serving at Hudson/King St 375 Hudson Street New York From 7:30AM-3:00PM EDT https://t.co/2cDIucjsTY	1435750510	616208418811064320	f	sweeterynyc
+Serving at Hudson/King St 375 Hudson Street New York From 7:30AM-3:00PM EDT https://t.co/2cDIucjsTY	1435664108	615846023219572737	f	sweeterynyc
+Serving at Hudson/King St 375 Hudson Street New York From 7:30AM-3:00PM EDT https://t.co/2cDIucjsTY	1435577708	615483634317979648	f	sweeterynyc
+We had such fun yesterday celebrating Xaxis 4th Birthday! How cool did the branded cupcakes look??! XaxisAt4... http://t.co/ynXiURTGM9	1435335608	614468195785666560	f	sweeterynyc
+Serving at Hudson/King St 375 Hudson Street New York From 7:30AM-3:00PM EDT https://t.co/2cDIucjsTY	1435318512	614396486890164224	f	sweeterynyc
+@3TopInc Chocolate chip with vanilla ice cream, Snickerdoodle with strawberry ice cream, and snickerdoodle with banana ice cream.	1435314762	614380761190375424	f	sweeterynyc
+Hey GroupM come down and say hello! The Xaxis truck is here celebrating their 4th Birthday with FREE cupcakes!... http://t.co/VV3mdVUm4r	1435262380	614161053153234944	f	sweeterynyc
+@MECideas were on our way! Free cupcakes on behalf of @Xaxistweets for their 4th Birthday! XaxisAt4	1435250941	614113076925857792	f	sweeterynyc
+@WiedenKennedy come down and visit the @Xaxistweets birthday truck! freecupcakes  https://t.co/ewfSrOzeVv	1435247782	614099824959426562	f	sweeterynyc
+Excited to help celebrate @Xaxistweets 4th birthday today! XaxisAt4	1435237674	614057429203030016	f	sweeterynyc
+Serving at Hudson/King St 375 Hudson Street New York From 7:30AM-3:00PM EDT https://t.co/2cDIucjsTY	1435232110	614034094213697537	f	sweeterynyc
+Serving at Hudson/King St 375 Hudson Street New York From 7:30AM-3:00PM EDT https://t.co/2cDIucjsTY	1435145712	613671710957641728	f	sweeterynyc
+It's National Pink Day! How fun are these branded macarons we produced for Vanity Fair?! nationalpinkday... http://t.co/8IAVzan8gV	1435082191	613405287588827137	f	sweeterynyc
+I'm ready to EAT @RED DRINK @RED SAVE LIVES! Let's 86AIDS. Join us & sign up here: http://t.co/bktfrIjrJ9	1433525962	606877988198694914	f	lovemamak
+RT @i8and8: Best Things To Eat At Smorgasburg Brooklyn Bridge Park - NYC @Lovemamak  http://t.co/W771kkzYsp	1433520093	606853370939179008	f	lovemamak
 Food Vendor Caught Charging Clueless Tourists $30 For Dirty Water Dogs  http://t.co/s1Eukda1Ng via @EaterNY	1432276046	601635460427821056	f	lovemamak
 Pre vacation feel with coconut meal @lovemamak @smorgasburg http://t.co/HM2vdWdNzC	1428854214	587283256812380160	f	lovemamak
 RT @i8and8: GO! We'll be there tomorrow w/ @LoveMamak. Come say hi! @YelpQueens @TGRdnb @weheartastoria @YelpNYC @WixLounge YelpHelps	1428340179	585127237332021248	f	lovemamak
@@ -2973,28 +2953,26 @@ Steamed Lime garlic chilli striped bass http://t.co/NNd3nX0EsA	1419931808	549859
 I just earned the Rookie badge on Yelp!	1419664070	548737000786767873	f	lovemamak
 ON THE PLATE http://t.co/7dVduKuthr	1419116692	546441129340968960	f	lovemamak
 Pho Ga in a cold weather ? Sure http://t.co/9eTWSNe13O	1418948372	545735143525474304	f	lovemamak
-Mamak on Yelp: Curry Laksa ( Malaysian Ramen ) http://t.co/xKUOieQCHI	1417590010	540037759843319808	f	lovemamak
-@jerewumuwegab we are at 174 2nd ave 10003	1417587804	540028510547755009	f	lovemamak
-http://t.co/rTeRgAxvsB	1432947037	604449800990253056	f	shukanyc
-@ShukaNYC: SUNDAY !! SUNDAY !! SUNDAY !! After a week of technical problems the Shuka Truck will be back on Sunday ! @IAC_NYC @Gov_Island	1432906155	604278328611184641	f	shukanyc
-SUNDAY !! SUNDAY !! SUNDAY !! After a week of technical problems the Shuka Truck will be back on Sunday !... http://t.co/cRNOPlB3YL	1432905818	604276918347669504	f	shukanyc
-The Shuka Truck Will not be parked today on 47st ! Continuing technical problems!	1432737936	603572767364001792	f	shukanyc
-@DavidLeshaw yes ! Go Kosher - challav Israel!	1432730547	603541775266017283	f	shukanyc
-Repost @natgeo with @thephotosociety  New York City rises like the land of Oz behind the newly landscaped... http://t.co/mBZaHPnezQ	1432656786	603232401536512000	f	shukanyc
-Repost natgeo with @alvarezphoto  New York City rises like the land of Oz behind the newly... https://t.co/6k5W9rQTb9	1432656577	603231525614788608	f	shukanyc
-Starting NEXT Sunday - GOVERNORS ISLAND ! Don't miss your Kosher SHAKSHUKA! Happy Holiday!	1432570145	602869001702776832	f	shukanyc
-Starting NEXT Sunday - GOVERNORS ISLAND ! Don't miss your Kosher SHAKSHUKA! Happy Holiday! @... https://t.co/Hz2d9HigbH	1432570058	602868636546703360	f	shukanyc
-Unfortunately the Shuka Truck will not be parked today on 46th st & 6th Av because of technical problems , have a Eggcellent weekend!	1432296478	601721157348421633	f	shukanyc
-This Is SHAKSHKA- Shakahuka is an Israeli dish of eggs poached in tomato sauce that spiced with Harisa, Bell... http://t.co/j9W5Ki7y4Z	1432217529	601390022324035584	f	shukanyc
-This Is SHAKSHKA- Shakahuka is an Israeli dish of eggs poached in tomato sauce that spiced with... https://t.co/FAGPTlATF2	1432217300	601389062075850752	f	shukanyc
-http://t.co/DrFcyb9jef	1432170687	601193553738399744	f	shukanyc
-Amazing day to have lunch at your Favorite FOOD TRUCK ! Today @ 46th St & 6th Av - between 5th & 6th !! Have a... http://t.co/cgkMZYASj6	1432134821	601043121301037056	f	shukanyc
-Amazing day to have lunch at your Favorite FOOD TRUCK ! Today @ 46th St & 6th Av - between 5th & 6th... https://t.co/0CUBOkdSrH	1432134726	601042722888261632	f	shukanyc
-No More WAITING!! Order & pick up with the new SHUKA app !! Tuesday is FIDI - Hanover Sq - 11:30-3:00 http://t.co/IpEE2NsbLw	1432049206	600684026924560384	f	shukanyc
-No More WAITING!! Order & pick up with the new SHUKA app !! Tuesday is FIDI - Hanover Sq -... https://t.co/vByusggbiR	1432049140	600683746736644097	f	shukanyc
-@Tweat_It we Would love to join your app!!	1431962805	600321634143215616	f	shukanyc
-Great Day for a NEW Location ! Monday is @ABCnetwork ! Have a great day ! See you tomorrow FIDI- Hanover Sq ! http://t.co/89KzlWUWAD	1431952730	600279376228417537	f	shukanyc
-Great Day for a NEW Location ! Monday is @ABCnetwork ! Have a great day ! See you tomorrow FIDI-... https://t.co/H7bzvdQwVT	1431952631	600278959402651648	f	shukanyc
+@rbccdnse Wednesday!!	1437150739	622081407100284928	f	shukanyc
+@krdshrk Sorry Nick ! Will be back next - Friday-Thursday	1437146751	622064677737074689	f	shukanyc
+@JBlechner sure thing !	1437143960	622052971354955776	f	shukanyc
+@JBlechner that's how it's called!	1437143661	622051717908180992	f	shukanyc
+@JBlechner yes ! We will be on 21st & 5th Today !	1437143330	622050332042989568	f	shukanyc
+Simply EggCellent !! We are BACK !! Only today we will be on 21st St & 5th Av !!! ShukaNation http://t.co/zX9FfntyJV	1437143311	622050250967121920	f	shukanyc
+Simply EggCellent !! We are BACK !! Only today we will be on 21st St & 5th Av !!! ShukaNation http://t.co/66gzIGAXjD	1437143272	622050085367640064	f	shukanyc
+will not be working this week ! We are working on SHUKA's new future!! Top secret  ! Will be back Friday the 17th of July !	1436793775	620584188975161345	f	shukanyc
+The SHUKA Truck will not be working this week ! We are working on SHUKA's new future!! Top secret ! Will be... http://t.co/APUScDQOXX	1436793694	620583850343813120	f	shukanyc
+Great Day for Great memories! TODAY - GOVERNORS ISLAND !  like our nature, and once you get a taste, you always... http://t.co/0VqJpPXhlF	1436713261	620246489563013120	f	shukanyc
+TOGETHER WE WILL MAKE IT !! Friday is 46th St & 6th Av ! It's A SHUKA NATION!! http://t.co/I6KHPTHbRQ	1436542469	619530136115875840	f	shukanyc
+@sethmg lol ! Next time !!	1436457554	619173977798213632	f	shukanyc
+The SHUKA Truck will take the day to Shoot with MASTER CHEF POLAND !! See you tomorrow 46th St & 6th Av ! http://t.co/jl3txHCNa4	1436451361	619148000154161153	f	shukanyc
+@KarinaKabbash we close at 3:00 daily !	1436407262	618963036536074240	f	shukanyc
+@boredis89 have everything	1436370905	618810543625736194	f	shukanyc
+ Wednesday's are 47th St & Park Av ! It's time for your SHAKSHUKA experience! @vendyawards streetfood Vendycitizenjudge !!	1436367524	618796365632516096	f	shukanyc
+HALLELUJAH IT'S RAINING CHIPS! THE BEST CRAVING -Thin- Sliced , Homemade Potato Chips With Za'atar and Cumin !... http://t.co/GKJlj1swWu	1436280414	618430998368387072	f	shukanyc
+HALLELUJAH IT'S RAINING CHIPS! THE BEST CRAVING -Thin- Sliced , Homemade Potato Chips With Za'atar and Cumin!Tuesday's are FIDI - Hanover Sq	1436280391	618430901907656704	f	shukanyc
+Sun:  Governors Island . \nMon: 20st & 5th Av \nTue: FIDI-Hanover Sq, \nWed: 47th & Park   , \nThu: 46th & 6th,\nFri: 46 & 6th .	1436192679	618063012138606593	f	shukanyc
+It's A  New Week At The SHUKA TRUCK ! Today 20st St & 5th Av ! Sun:  Governors Island . \nMon: 20st & 5th Av... http://t.co/NOCvBTZ9MF	1436192658	618062921374003200	f	shukanyc
 RT @meeses: BUT, I prefer @ElPasoTruck's tacos, which are so, SO GOOD	1425157921	571779882788782081	f	elpasotruck
 RT @MobileEaters: There was delicious food & service with a smile at @ElPasoTruck last night latergram foodtruck Snowmageddon2015 http:/...	1425157913	571779848152211457	f	elpasotruck
 Check our restaurant, is the perfect weekend.  http://t.co/g851MmANa4 http://t.co/ryNfVoE1Di	1423872239	566387340575522816	f	elpasotruck
@@ -3011,29 +2989,30 @@ RT @MockTurtleMoon: @ElPasoTruck you are welcome, great truck!	1422379082	560124
 @MockTurtleMoon thats a CoolPic thank you !!	1422309112	559831109543145472	f	elpasotruck
 RT @MockTurtleMoon: As long as the @ElPasoTruck is on the corner of 72nd I can cope with anything Snowmageddon2015 throws at me NYC  htt...	1422309080	559830977707798529	f	elpasotruck
 Thanks @ilusstration. design FoodTruckDesign Food Truck	1422205544	559396715879743488	f	elpasotruck
+Wishing everyone a Happy New Years. Today we will be at 97th and Columbus ave	1420223348	551082781795966977	f	elpasotruck
 Celebrate New Years Eve with Us !!  http://t.co/YHbJCrYe9T http://t.co/85XYlpJFTY	1419965480	550001205133737984	f	elpasotruck
 http://t.co/YHbJCrYe9T http://t.co/KB24a8uHoc	1419888169	549676937963393026	f	elpasotruck
 Make your reservations today : http://t.co/YHbJCrYe9T http://t.co/OUbTh45CWh	1419639881	548635544377643009	f	elpasotruck
-RT @riverroadbooks: @VeganLunchTruck is coming to @riverroadbooks to sign copies of Street Vegan!  We heard a rumor of free donuts with boo...	1432914561	604313586257805313	f	veganlunchtruck
-Seriously perfect truffled potato pierogis with horseradish mustard cream from our new cookbook Street Vegan.... http://t.co/QSkhE3Tuec	1432815227	603896950166056960	f	veganlunchtruck
-Graduation cake we made for someone special heading to an aerospace company! http://t.co/aXkEaFFS3h	1432767450	603696560262815744	f	veganlunchtruck
-RT @diannewenz: Get The Cinnamon Snail's recipe for Cinnamon Snails & enter to win Adam Sobel's new cookbook Street Vegan too! \nhttp://t....	1432765245	603687311625322496	f	veganlunchtruck
-We have part time work available for someone with line cooking skill.  \n\nEvery Sunday in red bank nj and... http://t.co/cRN3A8ogYI	1432649882	603203444548177920	f	veganlunchtruck
-RT @VegSweetSimple: My review of @VeganLunchTruck cookbook: Street Vegan, with glutenfree cinnamon snail recipe! http://t.co/hMuGaBBX0Q ht...	1432503520	602589556307800066	f	veganlunchtruck
-RT @live_lovin: Wait never mind I crushed them! The infamous cinnamon snails from @VeganLunchTruck - hollaaaaa!  http://t.co/NnnCeYZt2s	1432503439	602589217588441088	f	veganlunchtruck
-We are sold out of everything but burgers!\n\nWe will close at 2:00. \nSorry for any inconvenience. \n\nWe will bring much more food next week 	1432487388	602521896077422592	f	veganlunchtruck
-RT @savannahahaha18: I don't need a man I have vegan donuts  @VeganLunchTruck cinnamonsnail http://t.co/8h3WB2w2fE	1432479007	602486742915112960	f	veganlunchtruck
-Parked at the Red Bank NJ farmers market 9:00-3:00 at the galleria parking lot (corner of west front st &... http://t.co/urI5C3xjxv	1432471731	602456224542683138	f	veganlunchtruck
-RT @live_lovin: The BEST vegan cookbooks:  @VeganLunchTruck @rawsomevegan @ohsheglows @KeepinItKind @IsaChandra @ChloeCoscarelli http://...	1432429649	602279720848338944	f	veganlunchtruck
-Very thrilled to have our truck back at the Red Bank NJ farmers market tomorrow 9:00-3:00! (w. front/Shrewsbury ave) http://t.co/B7Cq5S7BlJ	1432418008	602230892074000384	f	veganlunchtruck
-RT @nerdyorkcity: Behold the Vegan Gochujang Burger inside @VeganLunchTruck's new cookbook! http://t.co/8OsyApa98k http://t.co/d4dWhLgf1V	1432320556	601822150228627456	f	veganlunchtruck
-Amped to sling veggies @TheSeedExp June 20/21st in BK!\n\nGet 50% off tix using code cinnamon\nhttps://t.co/eiV1lm7H1p http://t.co/BouGqXqgQe	1432313991	601794616120193025	f	veganlunchtruck
-Who has made some yummy food from our new cook book StreetVegan? Any favorite recipes so far? http://t.co/NlpsLtJm1n	1432171979	601198970677919744	f	veganlunchtruck
-This Sunday we will be back at the Red Bank NJ farmers market 9:00-3:00 & we will be there every weekend this summer! http://t.co/1wXQcw7JZX	1432056014	600712580517199873	f	veganlunchtruck
-RT @nerdyorkcity: Tuck into Maple Mustard Breakfast Seitan Strips in @VeganLunchTruck's new vegan cookbook! http://t.co/8OsyApa98k http://t...	1431982904	600405933899030528	f	veganlunchtruck
-Parked at the @TheSeedExp until 6:00 trucks out front w/ the yums\nI'm inside signing/selling my new book streetvegan\nhttp://t.co/kLAPWNyhd7	1431875163	599954035593105409	f	veganlunchtruck
-These almond fritters on the truck today were made by basically 1,000 wild ass unicorns playing trombones into an... http://t.co/LQLN40DeOC	1431863869	599906666897879040	f	veganlunchtruck
-RT @eatdrinkshrink1: The recipe for my favorite vegan sweet from the famous Cinnamon Snail up on the blog today!! Meyer... https://t.co/teL44...	1431818901	599718055023902720	f	veganlunchtruck
+RT @Mega_Munchies: Who makes the best doughnuts in NYC? @VeganLunchTruck @DoughLoco @doughbrooklyn please state your case. http://t.co/0N...	1437070235	621743747550871552	f	veganlunchtruck
+@joemaleh only in red bank on Sunday	1436877689	620936151247917060	f	veganlunchtruck
+Sick of making only boring old porridge for dinner every night?  Get your hands on a copy of our cookbook Street... http://t.co/RHFQFLhfY8	1436812218	620661547522768896	f	veganlunchtruck
+RT @MrsSole: I need this vegan Ganesha cake for my bday from @VeganLunchTruck  chocolate or some kind of... https://t.co/AWzSGybl2d	1436788714	620562963552821248	f	veganlunchtruck
+@Hogtownvegan give me this you damned Canadians.	1436741331	620364222065676288	f	veganlunchtruck
+Parked at the red bank NJ farmers market 9:00-3:00\n(W. Front st. / Shrewsbury Ave)\n\nSome of today's yums include:... http://t.co/GVI4eH2Q8l	1436706618	620218627971772416	f	veganlunchtruck
+RT @OptimistsInc: I don't wanna tell you how to live your life, NYC, but if you're not getting lunch @VeganLunchTruck in Brooklyn, you're d...	1436641331	619944793066614784	f	veganlunchtruck
+Back at the Vegan Shop-Up\n12:00-6:00 at 12 grattan st in Brooklyn. Pine Box Rock Shop\n\nRaspberry cheesecake... http://t.co/U78NmdQcDY	1436628259	619889963719610368	f	veganlunchtruck
+Back at the Vegan Shop-Up tomorrow!\n12:00-6:00 at 12 grattan st in Brooklyn. Pine Box Rock Shop\n\nPHOTO: Beastmode... http://t.co/RJ3rHAifPx	1436567258	619634109581783040	f	veganlunchtruck
+Free tomorrow?\nGot food service experience?\n\nWe are looking for someone in a pinch to come work on our truck with... http://t.co/WhniqPGqlI	1436553288	619575513619767298	f	veganlunchtruck
+RT @CamilleDeMere: Thanks @VeganLunchTruck for helping to make my morning. Beautiful slow Friday morning with a Thai... https://t.co/ZlJXgY6B...	1436543490	619534417019604992	f	veganlunchtruck
+We had a donut catastrophe early this morning, and we lost almost all of the pastries we made for the truck... http://t.co/QfAK6oehmM	1436539380	619517180313534469	f	veganlunchtruck
+@sideshowfreak we had chipotle seitan breakfast burritos and pancakes!	1436537490	619509253313683457	f	veganlunchtruck
+@thetinyraccoon we can get single day permits for events that we are invited to.  Believe me, if we could have a full time permit we would.	1436537020	619507280715714560	f	veganlunchtruck
+Parked on 45th/1st 9:00-3:00\n\nPasionafruit glazed donuts, blue corn pancakes, Thai bbq tempeh, chipotle seitan breakfast burritos	1436532177	619486968796327936	f	veganlunchtruck
+See yall tomorrow in midtown 9:00-3:00! http://t.co/6Vylss8tKL	1436462613	619195195993796609	f	veganlunchtruck
+RT @veganjari: I'm not a big cook book person but STREET VEGAN is defo one to get. Well done @VeganLunchTruck http://t.co/1UJnYc75pM vegan...	1436443508	619115062695825408	f	veganlunchtruck
+The truck is out a few days in a row this wek!\nFriday-45th/1st 9:00-3:00\nSaturday-@veganshopup in BK 12:00-6:00\nSunday-Red Bank NJ 9:00-3:00	1436367221	618795094234169344	f	veganlunchtruck
+PLEASE RT:\n\nThe Snail is making a rare appearance in Midtown this Friday!\n\n45th/1st\n\nSo psyched to be back THIS FRIDAY ONLY!	1436205056	618114923344736257	f	veganlunchtruck
+Cinnamon Snails made from the recipe in our new cookbook Street Vegan\n\nSnag a copy from your favey local... http://t.co/1EYjTKasUz	1435946802	617031728645976064	f	veganlunchtruck
 @losanno	1421616846	556927535175729152	f	crafflesnyc
 @losanno @AsBestRecipes @yelpchicago @SteeleWines @AmaroMonte @ChicagoPORKCHOP @ChiFrenchMarket @chicagofoodieg	1416007474	533400123444035584	f	crafflesnyc
 Come get your crepe or waffle @ 68 lex!! Warm up your day with our gourmet coffee!! : ) : )	1415899235	532946139348496385	f	crafflesnyc
@@ -3054,139 +3033,112 @@ Craffles at Brooklyn College... http://t.co/qRIr2w8nzK	1387054396	41196211358716
 Hey guys. Warm it up yourself with hot coffee or chocolate with fresh made waffles or crepes.We are staying on 6th ave and 58th st.	1387045723	411925735683919872	f	crafflesnyc
 Hi, Craffles truck outside of Columbia university, craffle your day with the nice hot waffle or crepe.	1386961048	411570582506205184	f	crafflesnyc
 Snowflakes give us incredible spirit of holiday!!! crafflesnyccraffles http://t.co/ZmgvbOsx3w	1386909009	411352315720110081	f	crafflesnyc
-@nikifocus gladly.  We were on that road for a good 3 hrs. Could have done lunch and dinner.	1432985246	604610061441179648	f	nuchasnyc
-RT @ChefDomTes: Almost that time!!! June 7th FoodNetworkStar FoodNetwork dominooch hollywoodlife chef FoodieFriday http://t.co/Fdes1H...	1432985223	604609965270151169	f	mactruckny
-The lobster sauce was so sweet. http://t.co/mTmXrBqF1h	1432988108	604622065409368065	f	valduccis
-!!! Email or call us to place orders & deliveries!!!	1432990799	604633351362891776	f	thetreatstruck
-!!! Our shop & truck are closed this weekend! Have a great weekend & see you next week!!!	1432990716	604633005949362176	f	thetreatstruck
-RT @GovIslandFood: Another beautiful day on @Gov_Island. Come grab some amazing food from @SweetChiliNYC @carlssteaks @meltbakery @USAFoodT...	1432991175	604634931067781122	f	sweetchilinyc
-RT @GovIslandFood: Another beautiful day on @Gov_Island. Come grab some amazing food from @SweetChiliNYC @carlssteaks @meltbakery @USAFoodT...	1432994048	604646980627902464	f	carlssteaks
-Where at the food truck extravaganza in the boogie down Bronx at Bryan Park from 12-7pm! Join us for a fun filled day with deliciousness!	1432995064	604651240845377536	f	toumnyc
-It's Saturday so you know where we'll be! Williamsburg @smorgasburg at E River Park until 6:00pm! Get your sandwich with a view.	1432994416	604648525649969152	f	milktrucknyc
-De CARTS 2/2:\nKotmadam @ 24th & 5th Ave til 9pm\nBierbeek @ De Great Lawn til 7pm	1432995851	604654543893229569	f	waffletruck
-De CARTS 1/2:\nGoesting @ 66th & Broadway til 10pm\nPagadder @ Brooklyn Bridge/City Hall til 9pm\nVedette @ 59th & 5th Ave (Manhattan) til 7pm	1432995839	604654493465051136	f	waffletruck
-WAFEL SATISFACTION SATURDAY\nCafe @ 15 Ave B til 10pm\nWafel Cabana @ 35th & Broadway til 11pm\nWafel Kiosk @ W42nd & 6th, Bryant Park til 10pm	1432995819	604654407687405568	f	waffletruck
-Visit our kiosk at @TheSeaport, open EVERY DAY(!!) from 11-8 at 19 Fulton Street. We've got tator tots at this location only- try them!	1432998013	604663611923922945	f	milktrucknyc
-Thanks to @GovIslandFood and  @livefastgroup we will be vending on @Gov_Island all summer http://t.co/1Zl1Inc4EI	1433000174	604672675043266560	f	mausamnyc
-Thanks to @GovIslandFood and  @livefastgroup we will be vending on @Gov_Island all summer http://t.co/2uHocPSpLX	1433000034	604672086653698048	f	mausamnyc
-Get you donut fix on Governor's Island today until 5pm.  It is a perfect day for a Frodo!	1432998910	604667370850922496	f	carpedonutnyc
-What a great day  head over to @gov_island enjoy thenisland, weather and of course a carls famous... https://t.co/1FCTdqE5Xb	1432998786	604666851289907200	f	carlssteaks
-Gonna get al mashed up today at the food truck mashup at the Meadowlands here in Jersey. Sooo many food trucks, hope you're hungry!	1433001033	604676278860562432	f	nautimobile
-DUB Pies Pop-up in full effect @NYCCraftBeerFest, come check it out! http://t.co/86wAuAWgoU	1433004283	604689906695290880	f	dubpies
-For one free dinges, do a bird call dinges dingesforeveryone	1433004555	604691049462657024	f	waffletruck
-@CalicoAvenger all day, today	1433006485	604699144553426944	f	dubpies
-@CalicoAvenger all day	1433006388	604698736271454208	f	dubpies
-HELLO BRONX NY!!!\n***today Saturday May 30th\nDUE TO A PRIVATE EVENT\nWe are open for late Dinner... https://t.co/njwMO4p041	1433006019	604697189072404480	f	latinkitchennyc
-Kasar truck is in Soho, spring and broadway until 8pm, and at Christopher and 7th avenue until 4am.	1433005556	604695248183255040	f	chipsykingny
-RT @GovIslandFood: Another beautiful day on @Gov_Island. Come grab some amazing food from @SweetChiliNYC @carlssteaks @meltbakery @USAFoodT...	1433007434	604703122955628545	f	usafoodtruck
-It's Saturday aka brunch so let loose on a DUBpies breakfast pie. Williamsburg we'll see you tonight @ N7th/Bedford http://t.co/U1skv6FIS7	1433008361	604707014988730368	f	dubpies
-5 Food Festivals To Plan Your Next Vacation Around | via @TheSavory http://t.co/yF9ngaEbMv http://t.co/86dkmN3uiN	1433009120	604710198461218817	f	souvlakitruck
-Guess who was the first to get a vegetarian whole wheat Hero.  David Kirsch Wellness !! For his 6 year old daughter http://t.co/SNaiOTsjJL	1433010729	604716945393496064	f	valduccis
-RT @TFQfoodtruck: foodtruckmashup @TheMeadowlands with @AmandaBananasNJ @NautiMobile @cowandthecurd @Aroy_D @EmpanadaGuy1 @TheIncrediballs...	1433012856	604725867969953792	f	nautimobile
-A day on The Green Radish... http://t.co/KWx8gewydF	1433017431	604745053404311552	f	thegreenradish1
-@stefferonipizza che emozione 	1433020126	604756358420942848	f	pontirossifood
-@stefferonipizza Siamo qui sulla 38&broadway fino Alle 7 pm  ciaooooo Stefyyy	1433019687	604754518811807744	f	pontirossifood
-View from atop Nauti right now! Holy cow New Jersey loves food trucks! So much fun! Here with  some... https://t.co/tW3PqaRXIi	1433023928	604772306582446080	f	nautimobile
-Guys!  We got a beautiful, bountiful burger, with a bevy of fries that'll bring tears to yo eyes!... https://t.co/Bwa24dJ8nM	1433023995	604772586845810688	f	usafoodtruck
-The best team... https://t.co/Iu0AsT13t1	1433028920	604793242626981888	f	thegreenradish1
-. @PieburyCorner congrats on the well deserved win.  @Arsenal class act today.	1433028331	604790775382188033	f	dubpies
-RT @PieburyCorner: @MrMike1975 4-0 to The Arsenal, 4-0 to The Arsenal. We're the famous Piebury and we went to Wembley! Wembley! What a day...	1433028136	604789953462214656	f	dubpies
-We don't stop in many bars to simply chill... but when we do it's usually @commonwealthbar.	1433027560	604787538826543104	f	dubpies
-GOODMORNING BRONX NY! \nTODAY SUNDAY MAY 31ST ..\nWE WILL BE OPEN FOR DINNER 3PM-9PM\nMI VIEJO SAN JUAN... https://t.co/SJU7pTujg8	1433062647	604934704807223296	f	latinkitchennyc
-SITUATION\ncopacabananyc \nAny QUESTIONS? https://t.co/c0i6xjeck1	1433046536	604867129926684672	f	latinkitchennyc
-@iMag_yum our latest operation tonight is Bryant Park	1433035099	604819159340449792	f	waffletruck
-RT @SholzTalks10s: Repost mrk814 with repostapp. - this was de bom @waffletruck \nI'd say our day is off to a... https://t.co/13UdGDdBuI	1433034907	604818353077821440	f	waffletruck
-@PinupGirl_Jayne please refer to the daily locations post, all posted earlier today!	1433034840	604818075779743744	f	waffletruck
-RT @CarrOlson: This was fun to do in the middle of Lincoln Center.  https://t.co/3xfOM5Y60F	1433034384	604816160031391744	f	waffletruck
-@JamesJadotte we haven't forgotten LIC, in due time	1433034173	604815278384541697	f	waffletruck
-Deez nuts, WALNUTS! What's your favorite dinges to put on your Wafels? GotEm dingesforeveryone	1433033463	604812299547877376	f	waffletruck
-Waiting on line gets hot. Best way to cool down here at the Food Truck Frenzy? @AmandaBananasNJ I like mine w/ whipped cream & extra jimmys	1433029408	604795291255099392	f	nautimobile
-Truck open at Bergen and court street.come!!!	1433071460	604971669090910208	f	carpedonutnyc
-Perfect day! Thanks to @GovIslandFood and  @livefastgroup we will be vending on @Gov_Island all summer http://t.co/Ea6PQ6N110	1433079414	605005030865928192	f	mausamnyc
-!!! Happy Sunday! See you next week!!!	1433079280	605004467021455360	f	thetreatstruck
-Parked in red bank NJ at the farmers market (corner of west front/ Shrewsbury Ave) until 3:00\n\nS'mores donuts,... http://t.co/zu3jxKFkB7	1433079630	605005937259253762	f	veganlunchtruck
-Today we're at Pier 5 @smorgasburg until 6pm and at @TheSeaport all day 'til 8pm, 19 Fulton Street. You deserve a grilled cheese.	1433082608	605018429444071424	f	milktrucknyc
-De CARTS 2/2:\nKotmadam @ 24th & 5th Ave til 9pm\nBierbeek @ De Great Lawn, Central Park til 7pm	1433081608	605014234523648000	f	waffletruck
-De CARTS 1/2:\nGoesting @ 66th & Broadway til 10pm\nPagadder @ Brooklyn Bridge/City Hall til 9pm\nVedette @ 59th & 5th Ave (Manhattan) til 7pm	1433081583	605014127526989824	f	waffletruck
-SUNNY DINGES SUNDAY!\nLe Cafe @ 15 Ave B til 11pm\nDe Wafel Cabana @ 35th & Broadway til 11pm\nWafel Kiosk @ W42nd & 6th, Bryant Park til 11pm	1433081571	605014079753867264	f	waffletruck
-Come get your good morning, De Breakfast Special is ready DAILY 8am-11am earlydinges http://t.co/CYYSEMRGw6	1433080876	605011164985049088	f	waffletruck
-Today today today !! Pier 94 + governors island (: come and taste the best shakshuka in town!!!!	1433082293	605017106413957120	f	shukanyc
-happysunday weekendplans come to @Gov_Island @GovIslandFood till 5! Or @UrbanSpaceNYC @GarmentDstrctNY 12-7 it's kinda brunch 	1433084293	605025496519327745	f	sweetchilinyc
-RT @arlizzard: @waffletruck http://t.co/mFjd3WJU2S	1433084357	605025764770217984	f	waffletruck
-Join us for SundayFunday at Washington Square Park in the village! @WorldSciFest is going on until 6pm! shawarma vegan LebaneseEats	1433086988	605036797224218624	f	toumnyc
-Chilled white asparagus soup - come to @Gov_Island  @GovIsAlliance http://t.co/bPbNfChxKp	1433086356	605034146449268736	f	snowdaytruck
-RT @ajplus: Former Rikers Island inmates are getting a second chance thanks to a food truck: http://t.co/8Dk9t9Wqji	1433085964	605032502588256257	f	snowdaytruck
-Keep New York RED. Watch the match at @BklynBrdgPark with us! @NewYorkRedBulls \n\nhttp://t.co/n6nN5Qw9ZI  SEAvNY http://t.co/Es0uT31hKK	1433086597	605035158488629249	f	papayakingtruck
-If you're at the @IntrepidMuseum today, stop by the truck on the pier	1433086265	605033764377493507	f	papayakingtruck
-Today we are celebrating Israel @pier 94 all day, come for Rita and get some schnitzi on the way order online @www.schnitzi.com	1433084422	605026037848797184	f	schnitzi1
-Thanks to @ExposureNJ for a great Food Truck Masn-Up last night. so many people, so much tasty food.	1433085776	605031715673927680	f	nautimobile
-Kasar truck is in Soho, broadway and spring street all day until 6pm	1433085550	605030765311574017	f	chipsykingny
-Sunday Brunchday at the Shop, and getting ready for BwayBites @UrbanSpaceNYC @34thStNYC to start tomorrow! EatUrban	1433085804	605031833554796545	f	morristruck
-Govenors Island!!! Come taste the BEST SHAKSHUKA in Town !! http://t.co/4mpGsP7ZwI	1433086666	605035446700265472	f	shukanyc
-Govenors Island!!! Come taste the BEST SHAKSHUKA in Town !! @ Governors Island https://t.co/q41qTOaQl4	1433086466	605034608191787009	f	shukanyc
-RT @JustJerseyFest: @gcnyc1 Did someone say comfort food? Plenty of that at the Just Jersey Food Truck&Music Fest 6/27 JJFTF http://t.co/U...	1433089893	605048983577350145	f	gcnyc1
-Long Island City get ready for a Polish traditional dinner this week - day TBD http://t.co/HHDCt0V4L7	1433092332	605059211836452864	f	polishcuisine
-The Five Best Coastal Towns of Greece, according to @GreekReporter: http://t.co/fohXZaLBAe http://t.co/DXtOH51o3V	1433095831	605073888826040320	f	souvlakitruck
-Closing at 2:30 today.	1433095417	605072154233815040	f	veganlunchtruck
-Hey NYC! We got your club on a bun... On a Sunday. Got the sauce on the bun and it's... '76! we can... https://t.co/nBgF0UgO90	1433098469	605084951437012994	f	usafoodtruck
-I posted a new photo to Facebook http://t.co/l11iSUG9aq	1433100767	605094592862662656	f	polishcuisine
-I posted a new photo to Facebook http://t.co/bxoCEvdU3u	1433100689	605094266394824705	f	polishcuisine
-I posted a new photo to Facebook http://t.co/WzNV8WqsQi	1433100537	605093626679541760	f	polishcuisine
-I posted a new photo to Facebook http://t.co/7rRDqqDi12	1433100436	605093204988448768	f	polishcuisine
-I posted a new photo to Facebook http://t.co/1QigRTKwsI	1433100386	605092993050263552	f	polishcuisine
-RT @jeaniusNYC: @CNN says Korean Food Potential Driving Force of Korean Wave @Business_Korea https://t.co/88BWahF5Z3 hallyu	1433115126	605154819406462977	f	korillabbq
-RT @RaerForm: OutofOffice Post Production Meeting=Chili Cheesesteaks and Amber Ale @shortysnyc  indiefilmaking... https://t.co/o4VRc4mXOg	1433112491	605143764517199872	f	shortysnyc
-Gorilla Rockin the Cheese @NikonJBT w/ @NuchasNYC @pitbull @DiRealShaggy \nComeToTheCheeseYo http://t.co/bo3iUxjYCW	1433118468	605168834417442816	f	gcnyc1
-@1035KTU @NikonJBT @DiRealShaggy @pitbull ComeToTheCheeseYo http://t.co/GVa9QMIMHX	1433119254	605172132528668674	f	gcnyc1
-RT @nycfattykat: Korilla killing the cheese fries game!  Must try the Kimcheez Waffle Fries with homemade kimchi,... https://t.co/hTDFSuenIJ	1433120270	605176394646228992	f	korillabbq
-RT @nycfat: Can't sleep. Send tacos. \nPhoto credit: @grubshotsnyc\n\nNYCFAT @ Korilla BBQ https://t.co/dsxnIGIenP	1433120254	605176326362906625	f	korillabbq
-RT @RegularGuyNYC: Tasty Korean Tacos and Tiger Balls at Korilla BBQ NYC! http://t.co/qdX7JuzAVu KorillaBBQ Korean food foodie taco Y...	1433120137	605175833586737152	f	korillabbq
-RT @TheClayFox: Rawwwr! Love you @korilla. Gonna miss you guys. http://t.co/CTv2xTdV5u http://t.co/1WzxzZ5xjM	1433120086	605175621694701568	f	korillabbq
-RT @FiorellaEats: Korilla At BillyJoel concert West Side Highway http://t.co/n5HvDmntLP	1433120081	605175598797979648	f	korillabbq
-RT @LocalReviewNYC: Brandon R.'s Review of Korilla BBQ - New York (5/5) on Yelp: I've been here a few times now and every... http://t.co/sS...	1433120051	605175474248105984	f	korillabbq
-Traffic in nyc sucks right now. wtf	1433118694	605169782594387968	f	usafoodtruck
-@undoneforever lol we'll be there wednesday this week fo sure!	1433120748	605178396923031554	f	korillabbq
-@alanwdang @dumbolot sorry we'll be there wednesday this week!	1433120712	605178248914472960	f	korillabbq
-Heroes of Wafels (Alfredo & Danny) make sure dinges runs smoothly batmanvssuperman dingesforeveryone thankyou http://t.co/YRAnAYCmOi	1433129866	605216642956705793	f	waffletruck
-See ya for lunch!	1433159949	605342817729302528	f	bigdsgrub
-RT @MooreShannon: I confirm it's an amazing grilled cheese! https://t.co/PUUNxZWnLa	1433159176	605339577386180608	f	milktrucknyc
-RT @HeathJosephine: Smorgasburg all stars @goodbatch @milktrucknyc @doughbrooklyn @BigMozzNYC  http://t.co/hEBUDjKVMe	1433159170	605339553252167680	f	milktrucknyc
-We are serving lunch today at starrett lehigh building on 26th between 11th and 12th avenue from 11am-3pm. call... http://t.co/taVPGUrs8f	1433160568	605345417593823232	f	eddiespizzany
-This is how it went down at @VeuveClicquot VCPoloClassic ClicquotStyle bigdsgrub http://t.co/pGAQIY2jLw	1433162427	605353210992295936	f	bigdsgrub
-D1 is grillin' it up at Hudson/King St. http://t.co/qFIBfSyCwq	1433163881	605359310047211520	f	bigdsgrub
-Come brighten your day w/ a delicious lunch! 50th Street btwn 6th and 7th Avenue. Preorders call 646-543-2443 http://t.co/1cJC2N3c3u	1433163807	605358999496716288	f	bigdsgrub
-@bringdownfence loving this write up & loving our fans! So happy you enjoyed our falafel, we certainly enjoyed serving it up @MonmouthPark !	1433165237	605364999817691136	f	toumnyc
-RT @bringdownfence: @ToumNYC We love your falafel sandwich and featured it in our latest travel blog post!  You guys rock! welovetoum  htt...	1433165147	605364623018225664	f	toumnyc
-Peeps, we are off the road 2day	1433164648	605362528714145792	f	fritesnmeats
-Hey folks, the shop will remain closed while we move our operations to our new pop-up location @ BwayBites with @UrbanSpaceNYC! Come visit!	1433165147	605364620052819969	f	morristruck
-Happy rainy Monday. We'll catch you guys in DUMBO tmrw.	1433166302	605369464268283905	f	kimchitruck
-De CARTS 2/2:\nKotmadam @ 24th & 5th Ave til 9pm\nBierbeek @ De Great Lawn, Central Park til 7pm	1433166637	605370872011100160	f	waffletruck
-De CARTS 1/2:\nGoesting @ 66th & Broadway til 10pm\nPagadder @ Brooklyn Bridge/City Hall til 9pm\nVedette @ 59th & 5th Ave (Manhattan) til 7pm	1433166622	605370809058791424	f	waffletruck
-WafelMania Monday!\nLe Cafe @ 15 Ave B til 11pm\nDe Wafel Cabana @ 35th & Broadway til 11pm\nWafel Kiosk @ W42nd & 6th, Bryant Park til 11pm	1433166602	605370723830505472	f	waffletruck
-Saturday I'm signing my new book STREET VEGAN @riverroadbooks in Fairhaven.\nFREE donuts w/ book while supplies last!\nhttp://t.co/JteTzkilg8...	1433167169	605373101929590785	f	veganlunchtruck
-@sherylmandel drop us a line info (at) dubpies (dot) com	1433168040	605376753696153600	f	dubpies
-RT @whitMN: @oharris69 @Princess_Holly @dubpies OMG. I'd move to Australia just for those.	1433167854	605375974776172544	f	dubpies
-We are off the road today RainyDay RainRainGoAway	1433168094	605376983858593792	f	polishcuisine
-We are off today preparing for @GovBallNYC and @IntrepidMuseum later this week	1433167516	605374556182855680	f	papayakingtruck
-Stewing up porkbelly and beefstew on 53rd & Park!	1433167398	605374062135644160	f	biandangnyc
-Today we are @Hanover Sq serving lunch from 11-3, we are a little short stuffed today, so please be patient, or order online in advance	1433167952	605376385813778433	f	schnitzi1
-@sherylmandel of course!We would love to help you.Please give me a call at 347-506-9616 so we can discuss details.Thanks for reaching out	1433167651	605375125375057920	f	pontirossifood
-Truck under maintenance today but catch our UrbanSpaceGarment booth on 39th & B'way! Also the grand opening of... http://t.co/EWFFn32TAs	1433167507	605374519310573571	f	domotaco
-Buenos dias amigos de Dumbo tacos tortas flautas @MexicoBlvd @dumbolot Water&Jay	1433168845	605380131624992768	f	mexicoblvd
-Due to the coming rain storm the Shuka Truck will not be parked on 21st & 5th !	1433168690	605379481533095937	f	shukanyc
-Don't let the rain stop you from having a delicious LebaneseLunch! Pre-order at 917-TOUM-350 & pick up from Jay & Water St in @DumboNYC!	1433169417	605382532952166401	f	toumnyc
-Good Morning Mtbll Lovers!   Tough weekend loss for the Rangers but great season!  Now this droopy Monday.... http://t.co/lO0rfdlxw5	1433169564	605383146125819904	f	mtblls
-Such an important day as we celebrate International Children's Day today....love and protection is something... http://t.co/KA3UF5zWDr	1433169173	605381508388503552	f	polishcuisine
-We're back in FLATIRON today ! Catch us on 25th & Broadway!\n+ Midtown (47th & Park)	1433169803	605384152037359616	f	korillabbq
-Join us at the 147th Belmont Stakes this weekend @BelmontStakes  | June 4-6, 2015 | BelmontStakes	1433169286	605381982042910720	f	papayakingtruck
-June greeted us with a wet kiss but the weather looks great this weekend for @GovBallNYC! We're toughing it out today. 47 n Park/Lex 11-3	1433169892	605384525301063680	f	philssteaks
-Looking for some folks to work part time in our Brooklyn prep kitchen. \n\nEmail us with a resume at thecinnamonsnail@gmail.com	1433170238	605385972637954048	f	veganlunchtruck
-Hey guys we will be on Charlton & Varick today.	1433171703	605392117750476800	f	schnitznthings
+PolishTruck oldtraditionalpolishcuisine kielbasa NYC nycdining https://t.co/zMJ0SRQY09	1437221703	622379051093725184	f	polishcuisine
+Good Morning NYC,\nWe are closed for today. Have a great one.	1437224037	622388838233714688	f	lobsterrolling
+Thanks to @GovIslandFood and  @livefastgroup we'll be vending on @Gov_Island all summer http://t.co/eeYVuAZpDI	1437225965	622396927322267648	f	mausamnyc
+De CARTS 2/2:\nBierbeek @ De Great Lawn, Central Park til 7pm	1437227887	622404987637923840	f	waffletruck
+De CARTS 1/2:\nVedette @ 59th & 5th Ave (Manhattan) til 7pm\nPagadder @ Brooklyn Bridge/City Hall til 9pm\nGoesting @ 66th & Broadway til 10pm	1437227865	622404895405162496	f	waffletruck
+SENSATIONAL SATURDAY\nLe Cafe @ 15 Ave B til 11pm\nDe Wafel Cabana @ 35th & Broadway til 10pm\nWafel Kiosk @ W42nd & 6th, Bryant Park til 10pm	1437227775	622404518282661888	f	waffletruck
+Greatest Day Ever is today!!! @brunchbounce livefastgroup 50Kent williamsburg bk allday https://t.co/egljh0RO1r	1437229601	622412176314245120	f	philssteaks
+We are located at 6th avenue\n and 18th street. http://t.co/oCfSrbsWpT	1437233084	622426786241097728	f	kettlecornnyc
+A great day to watch Beach Volleyball at the Kingston NYC Open @avpbeach AVPNYC foodtru... http://t.co/yhX30jMLaC http://t.co/cIDkUXUUk8	1437231676	622420879344013312	f	neaexpress
+Excited for our pizzatruck from11am- 2am at @RoyalPalmsClub?	1437231618	622420634820177920	f	neaexpress
+We are @TangerOutlets in deer park till 4pm! longisland weekendplans shopping eating http://t.co/FcQpKpmnHy	1437231715	622421045618864129	f	sweetchilinyc
+BigRed is headed to Laurita! Meet us at the vineyard http://t.co/A6e2n0mWsK http://t.co/zuMNjPpksr	1437231763	622421244927979520	f	lobstertruckny
+Had a great time at @promoandarts after-hours last night! Looking forward to slinging more chicken... https://t.co/q4TF9oF7wM	1437234059	622430873959448576	f	usafoodtruck
+Start your wkend off right with us at Broadway bites, @tangeroutlets in deer park and @njlauritawinery praisecheeses	1437232121	622422748141367296	f	morristruck
+Its NYC Body Painting Day!!! Come check us out @47th & 2nd! Serving here till 5pm	1437236805	622442393690841088	f	korillabbq
+GreatestDayEver is today at 50 Kent - Fun starts at 1PM https://t.co/x6PsvW2mvU @Brunchbounce @Livefastgroup	1437237337	622444624263663616	f	papayakingtruck
+Find our foodtruck at http://t.co/fY1phJOpPO Breezy presents Grits & BIiscuits 5th Anniversary Block Party @JBLLivePier97	1437238813	622450815895101440	f	neaexpress
+Today we are hanging out on Long Island @TangerOutlets Deer Park @gcnyc1 @nycfoodtruck @nystfood	1437240897	622459555662929920	f	andysitalianice
+@Pier_13Hoboken w/@AmandaBananasNJ @pier13hoboken @PVPIZZATRUCK @EmpanadaGuy1 @NautiMobile @themoofoodtruck @waffledelys	1437239657	622454356051382273	f	gcnyc1
+G1 @Pier_13Hoboken \nG2 @TangerOutlets deer park\nfoodtrucks\nComeToTheCheeseYo	1437239625	622454221833674752	f	gcnyc1
+RT @AmandaBananasNJ: We're at @pier13hoboken today w/ @PVPIZZATRUCK @EmpanadaGuy1 @NautiMobile @gcnyc1 @themoofoodtruck @waffledelys Hobok...	1437239530	622453821600608257	f	gcnyc1
+Kasar truck is in soho, broadway and prince street	1437241508	622462117019385856	f	chipsykingny
+JIBARITO CHURRASCO TRIPLETA!!\nGOOD AFTERNOON BRONX NY!\nTODAY SATURDAY JULY 18TH \nWE OPEN AT... https://t.co/p7zBswEPSC	1437242785	622467474873823232	f	latinkitchennyc
+Catering one MASSIVE corporate pool party!! Call 646-543-BIGD (Sliders, hickory smoke pulled pork, fruit skewers,etc) http://t.co/doO8ihID8y	1437246779	622484226437447684	f	bigdsgrub
+@ctgarcialeon we will be in Prospect Park tomorrow !!	1437251945	622505892785881089	f	snowdaytruck
+RT @QueensEatsIG: We so happy! Loving our friends and the Mango Sticky Rice at @mamuthainoodle! itsinqueens mamuthai... https://t.co/ifStTI...	1437250733	622500811034243072	f	mamuthainoodle
+De catering buffet has been set up, dinges shall be had!  https://t.co/AnrwAUUH9A	1437257583	622529541760786432	f	waffletruck
+Hello @mattaningram as we rotate locations to cover NYC Kotmadam is currently looking for new space but we always return to past locations.	1437257511	622529241456988161	f	waffletruck
+RT @stsh: @waffletruck's kiosk at @bryantparknyc continues to delight. :) http://t.co/fBPzefJbu7	1437257332	622528488575250432	f	waffletruck
+RT @BklynRoasting: Fun times, excellent wafels and BRC coffees... all at the @waffletruck kiosk in Bryant Park. https://t.co/hatWPl7gCc	1437257295	622528332966555648	f	waffletruck
+SpecialThanks to @Theorossi for comin out to support MacTruck & @ChefDomTes juice FoodNetworkStar @FoodNetwork  http://t.co/IQaQPUPGdA	1437259495	622537559680393216	f	mactruckny
+RT @BorelliJoe: One of the best parts of today \nATU picnic was seeing my buddy and food network star Dom Tesoriero @mactruckny http://t.co/...	1437258003	622531302634430464	f	mactruckny
+RT @Theorossi: So proud of SINY's own @chefdomtes for kicking ass on @foodnetwork \n\nBest MacNCheese in the business. @mactruckny http://t...	1437257995	622531268878671872	f	mactruckny
+We deliver @greenboxny @FoodtoEat @eatupnewyork valduccis.com http://t.co/q2FdNGmRT2	1437256916	622526745766457344	f	valduccis
+http://t.co/te7L3MZMr4	1437265936	622564578958946305	f	kettlecornnyc
+http://t.co/crHNTwKxpg	1437265926	622564533870153729	f	kettlecornnyc
+http://t.co/wu7aqphTXf	1437265173	622561377597657088	f	kettlecornnyc
+We understand the excitement but please watch your strength when running to your wafel! dingesforeveryone http://t.co/XsRC5Fm2Fa	1437267690	622571934744772608	f	waffletruck
+@Carolarias we accept cc/debit. We had an issue with our iPad last night so we were not able accept cc's.	1437268701	622576174418513920	f	domotaco
+@KennySaySo sorry about that...our iPad had some issues last night so we weren't able to process credit cards.	1437268594	622575726412341248	f	domotaco
+RT @gberg88: Nice to chat with you today, Josh. Best of luck and GO VOLS (obviously)! @USAFoodTruck	1437302431	622717648049152000	f	usafoodtruck
+Parked at the red bank NJ farmers market 9:00-3:00\n(W. Front st. / Shrewsbury Ave)\n\nSome of today's yums include:... http://t.co/4MlCPL9LfB	1437306821	622736061488308224	f	veganlunchtruck
+@hydro528 Could you send us the link to the feature? We'd love to share it! Thanks!	1437307931	622740717262241792	f	korillabbq
+RT @LocalReviewNYC: Sandy X.'s Review of Korilla BBQ - New York (4/5) on Yelp: I love the concept of this place. I got th... http://t.co/zH...	1437307870	622740462164680704	f	korillabbq
+RT @aniistoll: This to-go Korean BBQ is excellent!!! @ Korilla BBQ https://t.co/qPT10ii3QZ	1437307853	622740390991560704	f	korillabbq
+RT @ExplosionLimit: Kimcheese fries at Korilla https://t.co/hKwhabrtbR	1437307848	622740368069672960	f	korillabbq
+RT @opavez: @ZuWeeStore sorry... I've learned that with @KorillaBBQ menu there are not leftovers ;)	1437307830	622740294325374976	f	korillabbq
+RT @Violawiz92: @KorillaBBQ is providing food today!! Yay!! NYBPD @bodypaintingday http://t.co/tWs9vtu4cS	1437307819	622740247630188544	f	korillabbq
+Last day of @avpbeach tournament today foodtruck	1437310807	622752778364960769	f	neaexpress
+Disos at it again..  Daily News write up\n\nhttp://t.co/AzdCEtPmzQ	1437311830	622757068957712384	f	disosnyc
+The society at it again.. Daily News write up... http://t.co/VjXrkthtta	1437311203	622754442224517120	f	disosnyc
+Beautiful sunny day. We're here! Will you? First \nExtravagant Urban Music Festival! food/music/shopping http://t.co/DmRTrmIWuS	1437313198	622762808892104704	f	mausamnyc
+SundayFunday is in full effect at the @prospect_park GrandArmyPlaza FoodTruckRally! Join us from 11-5pm! LebaneseEats Brooklyn	1437316170	622775274657218560	f	toumnyc
+A sunny day @inAsburyParkNJ calls for organic nonGMO pizza from the food truck park	1437316203	622775412129595393	f	neaexpress
+On the truck in Red Bank today:\n\nLavender pear almond milk French toast with smoked almonds and maple syrup http://t.co/9wff8DghgY	1437315886	622774080488505345	f	veganlunchtruck
+brooklyn we're here for you! At the prospectpark foodtruckrally today!	1437317158	622779419258683392	f	taimmobile
+GOVERNORS ISLAND !! It's a SHUKA- Sunday and we are Ready For You !! Today on Governors Island- See you  http://t.co/qyQGrULKWk	1437317990	622782907728424960	f	shukanyc
+Thanks to our cheesy fans.... great week  we are taking rest today.....	1437318042	622783123449901058	f	gcnyc1
+Brooklyn, let's do this! foodtruckrally going on, NOW. prospectpark	1437318442	622784802157015045	f	kimchitruck
+We are located on \nBroadway and 51st St.\nkettlecornnyc http://t.co/ixX6xBhFCz	1437318803	622786316825165824	f	kettlecornnyc
+We are located on \nBroadway and 51st St.\nkettlecornnyc http://t.co/KxoNPCqNSw	1437318547	622785242202533888	f	kettlecornnyc
+Another beautiful day @njlauritawinery and Broadway bites, see you there!	1437318383	622784555410456576	f	morristruck
+GOVERNORS ISLAND !! It's a SHUKA- Sunday and we are Ready For You !! Today on Governors Island- See you nyc http://t.co/UOtiW28j3K	1437318025	622783056080949248	f	shukanyc
+RT @thedailymeal: Is Los Angeles's @kogibbq a better food truck than NYC's @VeganLunchTruck? VOTE: http://t.co/w6eJ9YUJPI http://t.co/DfK7r...	1437320002	622791345724239872	f	veganlunchtruck
+De CARTS 2/2:\nBierbeek @ De Great Lawn, Central Park til 7pm	1437321045	622795720152715265	f	waffletruck
+De CARTS 1/2:\nVedette @ 59th & 5th Ave (Manhattan) til 7pm\nPagadder @ Brooklyn Bridge/City Hall til 9pm\nGoesting @ 66th & Broadway til 10pm	1437321034	622795673256243200	f	waffletruck
+SUNDAY FUNDAY dinges\nLe Cafe @ 15 Ave B til 11pm\nDe Wafel Cabana @ 35th & Broadway til 10pm\nWafel Kiosk @ W42nd & 6th, Bryant Park til 10pm	1437320999	622795525990019072	f	waffletruck
+@Sshyma21 planning for Thursday evening, Lexington 86	1437323550	622806228276748289	f	kettlecornnyc
+@Sshyma21 we can meet you there tonight. Text me 646 765 3210 to connect	1437321611	622798096154656768	f	kettlecornnyc
+It's NationalIceCreamDay you know we came prepared! IceCreamWeather dingesforeveryone http://t.co/PEMcN4HGXY	1437324284	622809305444687872	f	waffletruck
+Hey @helenchu we will be at the same locations as today, check first that Sunday because plans are always subject to change.	1437322076	622800045142855680	f	waffletruck
+Hello @AngelicaAbe we may be at the same locations as this past week, just check first because plans may change.	1437322015	622799790498291712	f	waffletruck
+NationalIceCreamDay For one free dinges, sing a jingle for your favorite flavor of ice cream! IceCreamWeather	1437321900	622799305036972032	f	waffletruck
+Showing 2x the love today folks\n@IntrepidMuseum 46th st / 12th av & @Yankees in Da Bronx so enjoy a game or... http://t.co/DMMIMELHSQ	1437324532	622810348345774080	f	carlssteaks
+Showing 2x the love today folks\n@IntrepidMuseum 46th st / 12th av & @Yankees in Da Bronx so enjoy a game or checkout some cool war planes	1437324457	622810031965229058	f	carlssteaks
+RT @nycfoodtruck: It's time to EAT! @Prospect_Park FoodTruckRally now thru 5pm. http://t.co/WhlcuJOIw5 w/ @GCNYC1 @KELVINSLUSH @NeaExpress...	1437327541	622822965659467776	f	neaexpress
+Welp it's perfect weather today. Turn off those real housewives, get off the couch and come outside. Pier 13 today.	1437325413	622814041216544769	f	nautimobile
+Late start but we are @prospect_park for the rest of the day. @nycfoodtruck italianices andysitalianicesnyc	1437330926	622837163428700160	f	andysitalianice
+RT @Kerri_Lauren: @ClayThomson @KettleCornNYC ME TOO! I have notifications set to tell me where they are & then I have a group text to tell...	1437329884	622832792372682752	f	kettlecornnyc
+I posted a new photo to Facebook http://t.co/5Ee77X1QRv	1437329252	622830144193986564	f	kettlecornnyc
+http://t.co/srkcEvRhlB	1437329217	622829995375771648	f	kettlecornnyc
+RT @ClayThomson: mystrangeaddiction  KettleCornNYC @KettleCornNYC http://t.co/iUqIxlHYim	1437329202	622829935766425600	f	kettlecornnyc
+Polish traditional authentic NYC Crepes homemade nalesniki https://t.co/OOy603lxAH	1437330052	622833500517978112	f	polishcuisine
+Barkfest by @barkbox is today more info: http://t.co/CznbufETwZ N 11th Kent Ave. - Papaya King will be serving all the humans frankfurters	1437328935	622828816029863936	f	papayakingtruck
+PLEASE RT:\n\nThink the Cinnamon Snail is the best street food in the USA? VOTE FOR US HERE: http://t.co/NpVjWByElB http://t.co/jp4aRl6rgz	1437332411	622843391819284480	f	veganlunchtruck
+Yes, we'll be serving dinner back starting today from 5-10pm @Rooseveltisland http://t.co/MwRJcggJGc	1437333483	622847887765041153	f	mausamnyc
+http://t.co/P0JpN17fvC	1437334625	622852681363816448	f	kettlecornnyc
+MI VIEJO SAN JUAN \n2920 BRUCKNER BLVD \nBRONX NY 10465\n347-691-3100\n(Today Sunday July 19th we are... https://t.co/PEub6ww5lb	1437334969	622854122514026497	f	latinkitchennyc
+INTRODUCING LA JIBARITA\nWHAT IS IT??\nCOME AND FIND OUT \nMI VIEJO SAN JUAN \n2920 BRUCKNER BLVD\nBRONX... https://t.co/F0Rw7Zi7XA	1437335688	622857138961018880	f	latinkitchennyc
+Torte Bella http://t.co/8AYuPvqLzh	1437335800	622857609662582784	f	valduccis
+RT @accomad: @montecatinierbe @erbolarioita @DuduLaura @HotelClelia @SegatDavide @monicamontenero @BenazziPeter @Dolce_N_Jeans @Valduccis c...	1437335686	622857131478360064	f	valduccis
+2NITE ROUND 3 R KELLY CONCERT FOXWOODS CONNECTICUT \nSHOW TIME 8PM .. BUT NOW WE HEAD TO THE POOL..... https://t.co/KpdrJOX3fm	1437338159	622867501077168132	f	latinkitchennyc
+Tomorrow SweeteryNYC will be celebrating @Paypal IPO in front of the NASDAQ giving away thousands of FREE cups of coffee donuts from 8a-2p	1437341987	622883559410401280	f	sweeterynyc
+KELLZ BLACK PANTY TOUR LAST SHOW 2NITE \nFOXWOODS CONNECTICUT \nDJ LUCHO LIVE AT 8PM .\n. https://t.co/m8nfSQ672j	1437344293	622893230707863552	f	latinkitchennyc
+De Game Changer Wafel. NationalIceCreamDay IceCreamWeather dingesforeveryone http://t.co/OCWHLAjmHC	1437347729	622907640008572930	f	waffletruck
+.@lionelohayon thanks so much for spreading the word - MAD LOVE!  https://t.co/iNPUkWMB1A	1437356370	622943886743371776	f	snowdaytruck
+RT @logoffandcallme: Amazing food from @SnowdayTruck at grand army plaza. Also an amazing mission: http://t.co/nbjfgP0UlY http://t.co/0w5iW...	1437356140	622942919184515072	f	snowdaytruck
+.@logoffandcallme thanks so much for sharing and spreading the word - mad love	1437356137	622942905573998592	f	snowdaytruck
+To all our followers we are taking this week off as respect to the nine days before Tisha beav we will be back on the road next Monday	1437356777	622945591711113217	f	schnitzi1
+RT @mike_jules: Food trucks? thatsCAKE @ChefDomTes @FoodNetwork @mactruckny	1437364450	622977773397757952	f	mactruckny
+RT @MobileCuisine: 10 Signs Youve Worked In A Food Truck http://t.co/tS8XvmI0EB	1437367288	622989678468329472	f	disosnyc
 \.
 
 
 --
--- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: mpeppleradmin
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: mca
 --
 
 COPY users (id, email, password, admin) FROM stdin;
@@ -3195,14 +3147,14 @@ COPY users (id, email, password, admin) FROM stdin;
 
 
 --
--- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mpeppleradmin
+-- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mca
 --
 
 SELECT pg_catalog.setval('users_id_seq', 1, true);
 
 
 --
--- Name: images_id_key; Type: CONSTRAINT; Schema: public; Owner: mpeppleradmin; Tablespace: 
+-- Name: images_id_key; Type: CONSTRAINT; Schema: public; Owner: mca; Tablespace: 
 --
 
 ALTER TABLE ONLY images
@@ -3210,7 +3162,7 @@ ALTER TABLE ONLY images
 
 
 --
--- Name: locations_display_key; Type: CONSTRAINT; Schema: public; Owner: mpeppleradmin; Tablespace: 
+-- Name: locations_display_key; Type: CONSTRAINT; Schema: public; Owner: mca; Tablespace: 
 --
 
 ALTER TABLE ONLY locations
@@ -3218,7 +3170,7 @@ ALTER TABLE ONLY locations
 
 
 --
--- Name: trucks_id_key; Type: CONSTRAINT; Schema: public; Owner: mpeppleradmin; Tablespace: 
+-- Name: trucks_id_key; Type: CONSTRAINT; Schema: public; Owner: mca; Tablespace: 
 --
 
 ALTER TABLE ONLY trucks
@@ -3226,7 +3178,7 @@ ALTER TABLE ONLY trucks
 
 
 --
--- Name: tweets_id_key; Type: CONSTRAINT; Schema: public; Owner: mpeppleradmin; Tablespace: 
+-- Name: tweets_id_key; Type: CONSTRAINT; Schema: public; Owner: mca; Tablespace: 
 --
 
 ALTER TABLE ONLY tweets
@@ -3234,12 +3186,12 @@ ALTER TABLE ONLY tweets
 
 
 --
--- Name: public; Type: ACL; Schema: -; Owner: mpeppleradmin
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
 --
 
 REVOKE ALL ON SCHEMA public FROM PUBLIC;
-REVOKE ALL ON SCHEMA public FROM mpeppleradmin;
-GRANT ALL ON SCHEMA public TO mpeppleradmin;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
