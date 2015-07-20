@@ -1,0 +1,30 @@
+<table class="table table-minimal">
+	<thead>
+		<tr>
+			<th>Truck</th>
+			<th>Location</th>
+			<th>Time</th>
+			<th class="noMobile">Menu</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{ range .trucks }}
+			<tr>
+				<td>
+					<a class="truck" href="/truck/{{ .Id }}">{{ .Name }}</a>
+				</td>
+				<td>
+					{{ .Location.Value }}
+				</td>
+				<td>
+					{{ .PrettyDate }}
+				</td>
+				<td class="noMobile">
+					{{ if .Image.Value }}
+						<img src="http://irs0.4sqi.net/img/general/width30{{ .Image.Value }}" />
+					{{ end }}
+				</td>
+			</tr>
+		{{ end }}
+	</tbody>
+</table>

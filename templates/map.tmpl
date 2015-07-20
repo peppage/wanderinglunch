@@ -1,0 +1,86 @@
+<div id="map-canvas" style="height:500px"></div>
+
+<script type="text/javascript"
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAN8Jk0062QBOMPmXH-Totg9zi1GCw3o3w">
+</script>
+<script type="text/javascript">
+  var markers = new Array;
+  var infoWindow = new google.maps.InfoWindow({
+    content: '',
+  });
+  var t;
+  var m;
+  function initialize() {
+    var trucks = [];
+    $.ajax({
+      url: "/updatedTrucks",
+    })
+    .done(function( msg ) {
+      trucks = msg.markers;
+      t = trucks;
+      console.log(trucks)
+      var mapOptions = {
+        center: { lat: 40.755575, lng: -73.982404},
+        zoom: 12
+      };
+      var map = new google.maps.Map(document.getElementById('map-canvas'),
+          mapOptions);
+      m = map;
+
+      google.maps.event.addListener(map, 'click', function() {
+
+      });
+      setMarkers(map, trucks);
+    });
+
+
+  }
+
+  function getMarkerAt(latLng) {
+    for(var j=0; j < markers.length; j++) {
+          if(latLng.A === markers[j].position.A && latLng.F === markers[j].position.F) {
+            return markers[j];
+          }
+        }
+  }
+
+  function setMarkers(map, locations) {
+    for (var i = 0; i < locations.length; i++) {
+        var loc = locations[i];
+        var infowindow = new google.maps.InfoWindow({
+            content: loc.Name,
+        });
+        var myLatLng = new google.maps.LatLng(loc.Lat, loc.Long);
+
+        var existingMarker = getMarkerAt(myLatLng);
+
+        if(existingMarker != null) {
+          existingMarker.title += '<a href="/truck/'+ loc.Id + '" />' + loc.Name + '</a><br>';
+
+        } else {
+          var marker = new google.maps.Marker({
+              position: myLatLng,
+              map: map,
+              title: '<a href="/truck/'+ loc.Id + '" />' + loc.Name + '</a><br>',
+              zIndex: 1,
+              display: loc.Display,
+              id: loc.Id,
+          });
+
+          markers.push(marker);
+
+          google.maps.event.addListener(marker, 'click', function() {
+            if(infoWindow.getContent() != '') {
+              infoWindow.setContent('');
+              infoWindow.close();
+            }
+
+            infoWindow.setContent('<h3>' + this.display + '</h3>' + this.title);
+            infoWindow.open(map, this);
+          });
+      }
+    }
+  }
+
+  google.maps.event.addDomListener(window, 'load', initialize);
+</script>

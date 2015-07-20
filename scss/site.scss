@@ -1,0 +1,201 @@
+@import "bourbon";
+@import "neat";
+
+$desktop: new-breakpoint(min-width 901px 12);
+$smallScreen: new-breakpoint(max-width 900px 8);
+$mobile: new-breakpoint(max-width 750px 4);
+
+$linkColor: #48b9a3;
+$linkColorHover: darken($linkColor, 12);
+$linkActiveColor: #f7972c;
+$linkActiveColorHover: darken($linkActiveColor, 12);
+$fontSize: 14pt;
+$nav-color: white;
+$nav-height: 60px;
+
+@import "zindex";
+
+html, body {
+  height: 100%;
+}
+
+body {
+	margin: 0;
+	font-family: sans-serif;
+	color: #333;
+	font-size: $fontSize;
+	padding-top: $nav-height + 15px;
+}
+
+a {
+	color: $linkColor;
+	text-decoration: none;
+}
+
+a:hover {
+	color: $linkColorHover;
+}
+
+a.active {
+	color: $linkActiveColor;
+}
+
+a:hover.active {
+	color: $linkActiveColorHover;
+}
+
+.truck {
+	color: $linkColor;
+}
+
+.logo {
+	height: 40px;
+	@include media($desktop) {
+    background-image: url(/static/images/wl-temp-1.png);
+    width: 368px;
+  }
+  @include media($smallScreen) {
+    background-image: url(/static/images/wl-temp-sm.png);
+    width: 142px;
+  }
+  @include media($mobile) {
+    background-image: url(/static/images/wl-temp-sm.png);
+    width: 142px;
+  }
+}
+
+.content-wrapper {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: 0 auto -4em;
+}
+
+.content-wrapper:after {
+  content: "";
+  display: block;
+}
+
+footer, .content-wrapper:after {
+  $large-screen: em(860) !default;
+  height: 12em;
+  @include media($large-screen) {
+    height: 4em;
+  }
+}
+
+.section {
+  @include outer-container(900px);
+}
+
+.row {
+	@include media($desktop) {
+		@include span-columns(12);
+	}
+}
+
+// Navigation
+header.nav {
+  background-color: $nav-color;
+  min-height: $nav-height;
+  width: 100%;
+  margin-bottom: 15px;
+  top: 0;
+  position: fixed;
+  @include transition(all 0.2s linear);
+  z-index: $zIndex-2--nav;
+  font-size: $fontSize + 2pt;
+  padding-left: 20px;
+}
+
+.nav a {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+.nav-shadow {
+  box-shadow: 0px 0px 1em black;
+}
+
+header.nav .nav-wrapper {
+  @include clearfix;
+  @include outer-container;
+  position: relative;
+}
+
+header.nav .nav-left {
+  float: left;
+  line-height: $nav-height;
+}
+
+header.nav .nav-right {
+  float: right;
+  line-height: $nav-height;
+}
+
+// Trucks Table
+.table-minimal {
+  $base-border-color: gainsboro !default;
+  $base-border-radius: 3px !default;
+  $base-background-color: white !default;
+  $base-line-height: 1.5em !default;
+  $base-spacing: 1.5em !default;
+  $action-color: #477DCA !default;
+  $dark-gray: #333 !default;
+  $light-gray: #DDD !default;
+  $base-font-color: $dark-gray !default;
+  $table-border-color: $base-border-color;
+  $table-border: 1px solid $table-border-color;
+  $table-background: $base-background-color;
+  $table-header-background: lighten($table-background, 10);
+  $table-hover-background: darken($table-background, 2);
+  $table-stripe-background: darken($table-background, 4);
+  $table-stripe-background-hover: darken($table-stripe-background, 5);
+  $table-padding: .75em 1em;
+
+  tbody {
+    tr:hover > td, tr:hover > th {
+      background-color: $table-hover-background;
+    }
+    tr:first-child td {
+      border-top: 2px solid $table-border-color;
+    }
+  }
+
+  thead {
+    th {
+      background-color: $table-header-background;
+      border-bottom: 0px;
+      padding: $table-padding;
+      text-align: left;
+    }
+  }
+
+  tbody {
+    background-color: $table-background;
+
+    td {
+      border-bottom: 0px;
+      border-top: 1px solid $table-border-color;
+      line-height: $base-line-height;
+      padding: $table-padding;
+    }
+  }
+
+  @include media($desktop) {
+    min-width: 800px;
+  }
+  @include media($smallScreen) {
+    width: 100%;
+  }
+}
+
+.noMobile {
+	@include media($mobile) {
+		display: none;
+	}
+}
+
+.support-area {
+  text-align: center;
+}
