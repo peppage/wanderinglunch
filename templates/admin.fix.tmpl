@@ -14,6 +14,17 @@
 	</p>
 
 	<h2>Tweets</h2>
+	<a href="#">Next Page</a>
+	<table>
+		<thead>
+			<th>Tweet</th>
+			<th>Functions</th>
+		</thead>
+		<tbody data-bind="foreach: tweets">
+			<td data-bind="text: Contents"></td>
+			<td><a href="#">Convert</a>
+		</tbody>
+	</table>
 
 
 	<script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-3.1.0.js"></script>
@@ -28,6 +39,9 @@
 				for(var x = 0; x <= tweets.length; x++) {
 					console.log(msg.tweets[x]);
 				}
+				ko.applyBindings({
+					tweets: msg.tweets,
+				});
 			});
 		});
 	</script>
