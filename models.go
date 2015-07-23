@@ -67,3 +67,9 @@ type Marker struct {
 	Long    string
 	Display string
 }
+
+type Tweet struct {
+	Contents string
+	Time 	 string
+	Id 	     string
+}

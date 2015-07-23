@@ -145,9 +145,10 @@ func main() {
 
 	admin := web.New()
 	goji.Handle("/admin/*", admin)
+	goji.Get("/admin", http.RedirectHandler("/admin/", 301))
 	admin.Use(middleware.SubRouter)	
 	admin.Get("/", adminRoot)
-	goji.Get("/admin", http.RedirectHandler("/admin/", 301))
-
+	admin.Get("/fix/:id", adminFix)
+	admin.Get("/tweets/:twitname/:page", adminTweets)
 	goji.Serve()
 }

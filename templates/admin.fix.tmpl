@@ -1,0 +1,35 @@
+{{ with .truck }}
+	<h1>{{ .Name }}</h1>
+	<h2>Information</h2>
+	<p>
+		<ul>
+			<li><a href="http://twitter.com/{{ .Twitname }}">Twitter</a></li>
+			{{ if .Weburl.Value }}
+				<li><a href="{{ .Weburl.Value }}">Website</a></li>
+			{{ end }}
+			{{ if .Foursquare.Value }}
+				<li><a href="http://foursquare.com/v/{{ .Foursquare.Value }}?ref=P1JDYDE13QQDC11VUSA4LV3VV25OTRPHV1WAV5WP3VCE0QUP">Foursquare</a></li>
+			{{ end }}
+		</ul>
+	</p>
+
+	<h2>Tweets</h2>
+
+
+	<script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-3.1.0.js"></script>
+	<script>
+		$(document).ready(function() {
+			var page = 0;
+			$.ajax({
+				url: "/admin/tweets/{{ .Twitname }}/" + page,
+
+			}).done(function(msg) {
+				var tweets = msg.tweets;
+				for(var x = 0; x <= tweets.length; x++) {
+					console.log(msg.tweets[x]);
+				}
+			});
+		});
+	</script>
+
+{{ end }}
