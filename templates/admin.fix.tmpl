@@ -27,22 +27,20 @@
 	</table>
 
 
-	<script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-3.1.0.js"></script>
 	<script>
-		$(document).ready(function() {
+		document.addEventListener('DOMContentLoaded', function() {
 			var page = 0;
-			$.ajax({
-				url: "/admin/tweets/{{ .Twitname }}/" + page,
-
-			}).done(function(msg) {
-				var tweets = msg.tweets;
-				for(var x = 0; x <= tweets.length; x++) {
-					console.log(msg.tweets[x]);
-				}
+			var r = new XMLHttpRequest();
+			r.open('GET', '/admin/tweets/{{ .Twitname }}/' + page, true);
+			r.onreadystatechange = function() {
+				if(r.readyState != 4 || r.status != 200 ) return;
+				console.log(r.responseText);
+				var j = JSON.parse(r.responseText);
 				ko.applyBindings({
-					tweets: msg.tweets,
+					tweets: j.tweets,
 				});
-			});
+			};
+			r.send();
 		});
 	</script>
 
