@@ -47,6 +47,10 @@ func adminTweets(c web.C, w http.ResponseWriter, r *http.Request) {
 	page, _ := strconv.Atoi(c.URLParams["page"])
 	tweets := getTweets(c.URLParams["twitname"], 10, page)
 
+	for key := range tweets {
+		tweets[key].DoSubs()
+	}
+
 	data := make(map[string]interface{})
 	data["tweets"] = tweets
 	renderer.JSON(w, http.StatusOK, data)

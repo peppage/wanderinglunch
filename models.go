@@ -6,6 +6,7 @@ import(
 	"database/sql"
 	"strconv"
 	"math"
+	"regexp"
 )
 
 type Truck struct {
@@ -75,6 +76,14 @@ type Tweet struct {
 	Id 	     string
 }
 
+func (t *Tweet) DoSubs() {
+	subs := getSubs()
+	for key := range subs {
+		re := regexp.MustCompile(subs[key].Regex)
+		t.Contents = re.ReplaceAllString(t.Contents, subs[key].Replacement)
+	}
+}
+
 func getTweets(twitname string, amount int, page int) []*Tweet {
 	tweets := []*Tweet{}
 	o := amount * page
@@ -83,4 +92,18 @@ func getTweets(twitname string, amount int, page int) []*Tweet {
 		fmt.Println(err)
 	}
 	return tweets
+}
+
+type Subs struct {
+	Regex 	    string
+	Replacement string
+}
+
+func getSubs() []*Subs {
+	subs := []*Subs{}
+	err := db.Select(&subs, `SELECT regex, replacement FROM subs`)
+	if err != nil {
+		fmt.Println(err)
+	}
+	return subs
 }

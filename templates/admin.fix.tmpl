@@ -13,35 +13,35 @@
 		</ul>
 	</p>
 
-	<h2>Tweets</h2>
-	<a href="#">Next Page</a>
-	<table>
+	<h2>Tweets <button data-bind="click: nextPage">Next Page</button></h2>
+	<table class="table table-minimal">
 		<thead>
-			<th>Tweet</th>
-			<th>Functions</th>
+			<th>Tweet </th>
 		</thead>
 		<tbody data-bind="foreach: tweets">
 			<td data-bind="text: Contents"></td>
-			<td><a href="#">Convert</a>
 		</tbody>
 	</table>
 
-
 	<script>
 		document.addEventListener('DOMContentLoaded', function() {
-			var page = 0;
-			var r = new XMLHttpRequest();
-			r.open('GET', '/admin/tweets/{{ .Twitname }}/' + page, true);
-			r.onreadystatechange = function() {
-				if(r.readyState != 4 || r.status != 200 ) return;
-				console.log(r.responseText);
-				var j = JSON.parse(r.responseText);
-				ko.applyBindings({
-					tweets: j.tweets,
-				});
-			};
-			r.send();
+			$.getJSON('/admin/tweets/{{ .Twitname }}/0', function(data) {
+				ko.applyBindings(new AdminFixModel(data.tweets));	
+			});
 		});
+
+		function AdminFixModel(initialData) {
+			var self = this;
+			self.tweets = ko.observableArray(initialData);
+			self.page = 0;
+
+			self.nextPage = function() {
+				self.page = self.page + 1;
+				$.getJSON('/admin/tweets/{{ .Twitname }}/' + self.page, function(data) {
+					self.tweets(data.tweets);
+				});
+			}
+		}
 	</script>
 
 {{ end }}
