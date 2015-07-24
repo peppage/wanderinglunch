@@ -44,13 +44,8 @@ func adminFix(c web.C, w http.ResponseWriter, r *http.Request) {
 }
 
 func adminTweets(c web.C, w http.ResponseWriter, r *http.Request) {
-	tweets := []*Tweet{}
 	page, _ := strconv.Atoi(c.URLParams["page"])
-	o := 10 * page
-	err := db.Select(&tweets, `SELECT contents, time, id FROM tweets where twitname=$1 ORDER BY time DESC LIMIT 10 OFFSET $2`, c.URLParams["twitname"], o)
-	if err != nil {
-		fmt.Println(err)
-	}
+	tweets := getTweets(c.URLParams["twitname"], 10, page)
 
 	data := make(map[string]interface{})
 	data["tweets"] = tweets
