@@ -19,7 +19,7 @@
 			<th>Tweet </th>
 		</thead>
 		<tbody data-bind="foreach: tweets">
-			<td data-bind="text: Contents"></td>
+			<td><a href="#" data-bind="click: $parent.fix"><span data-bind="text: Contents"></span></a></td>
 		</tbody>
 	</table>
 
@@ -40,6 +40,10 @@
 				$.getJSON('/admin/tweets/{{ .Twitname }}/' + self.page, function(data) {
 					self.tweets(data.tweets);
 				});
+			}
+
+			self.fix = function(tweet) {
+				window.location.assign('/admin/location/new/' + tweet.Id)
 			}
 		}
 	</script>

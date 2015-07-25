@@ -23,6 +23,7 @@ func adminRoot(c web.C, w http.ResponseWriter, r *http.Request) {
 	data := make(map[string]interface{})
 	data["trucks"] = trucks
 	data["title"] = "Wandering Lunch: NYC Food Truck Finder | Admin"
+	data["admin"] = true
 
 	renderer.HTML(w, http.StatusOK, "admin.index", data)
 }
@@ -38,7 +39,8 @@ func adminFix(c web.C, w http.ResponseWriter, r *http.Request) {
 
 	data := make(map[string]interface{})
 	data["truck"] = t
-	data["title"] = "Wandering Lunch: NYC Food Truck Finder | Admin - Fixing" + t.Name
+	data["title"] = "Wandering Lunch: NYC Food Truck Finder | Admin - Fixing " + t.Name
+	data["admin"] = true
 
 	renderer.HTML(w, http.StatusOK, "admin.fix", data)
 }
