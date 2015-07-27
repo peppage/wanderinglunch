@@ -37,7 +37,7 @@
 
 			self.nextPage = function() {
 				self.page = self.page + 1;
-				$.getJSON('/admin/tweets/{{ .Twitname }}/' + self.page, function(data) {
+				$.getJSON('/api/trucks/{{ .Twitname }}/converted/' + self.page, function(data) {
 					self.tweets(data.tweets);
 				});
 			}

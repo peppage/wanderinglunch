@@ -13,12 +13,9 @@
   function initialize() {
     var trucks = [];
     $.ajax({
-      url: "/updatedTrucks",
+      url: "/api/markers/current",
     })
-    .done(function( msg ) {
-      trucks = msg.markers;
-      t = trucks;
-      console.log(trucks)
+    .done(function( trucks ) {
       var mapOptions = {
         center: { lat: 40.755575, lng: -73.982404},
         zoom: 12

@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"net/http"
 	"time"
-	"strconv"
 
 	"github.com/zenazn/goji/web"
 )
@@ -43,17 +42,4 @@ func adminFix(c web.C, w http.ResponseWriter, r *http.Request) {
 	data["admin"] = true
 
 	renderer.HTML(w, http.StatusOK, "admin.fix", data)
-}
-
-func adminTweets(c web.C, w http.ResponseWriter, r *http.Request) {
-	page, _ := strconv.Atoi(c.URLParams["page"])
-	tweets := getTweets(c.URLParams["twitname"], 10, page)
-
-	for key := range tweets {
-		tweets[key].DoSubs()
-	}
-
-	data := make(map[string]interface{})
-	data["tweets"] = tweets
-	renderer.JSON(w, http.StatusOK, data)
 }

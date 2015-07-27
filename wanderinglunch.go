@@ -99,22 +99,6 @@ func maps(c web.C, w http.ResponseWriter, r *http.Request) {
 	renderer.HTML(w, http.StatusOK, "map", data)
 }
 
-func updatedTrucks(c web.C, w http.ResponseWriter, r *http.Request) {
-	t := time.Now().Add(-8 * (time.Minute * 60)).Unix()
-
-	m := []*Marker{}
-	err := db.Select(&m, `SELECT trucks.id AS id, trucks.name, locations.display AS display,
-		locations.lat AS lat, locations.long AS long FROM trucks LEFT JOIN locations ON (locations.id = trucks.loc)
-		WHERE lastupdate > $1`, t)
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	data := make(map[string]interface{})
-	data["markers"] = m
-	renderer.JSON(w, http.StatusOK, data)
-}
-
 func support(c web.C, w http.ResponseWriter, r *http.Request) {
 	renderer.HTML(w, http.StatusOK, "support", nil)
 }
@@ -140,7 +124,6 @@ func main() {
 	goji.Get("/truck/:id", truck)
 	goji.Get("/alltrucks", allTrucks)
 	goji.Get("/map", maps)
-	goji.Get("/updatedTrucks", updatedTrucks)
 	goji.Get("/support", support)
 
 	admin := web.New()
@@ -149,6 +132,28 @@ func main() {
 	admin.Use(middleware.SubRouter)	
 	admin.Get("/", adminRoot)
 	admin.Get("/fix/:id", adminFix)
-	admin.Get("/tweets/:twitname/:page", adminTweets)
+
+	api := web.New()
+	goji.Handle("/api/*", api)
+	api.Use(middleware.SubRouter)
+	goji.Get("/api", http.RedirectHandler("/api/", 301))
+	api.Get("/trucks", trucks)
+	api.Get("/trucks/current", trucksCurrent)
+	api.Post("/trucks/add", truckSave)
+	api.Get("/trucks/:id", truckById)
+	api.Get("/trucks/:id/images", truckImages)
+	api.Get("/trucks/:id/tweets/:page", tweets)
+	api.Get("/trucks/:id/converted/:page", tweetsWithSubs)
+	api.Delete("/trucks/:id/delete", truckDelete)
+	api.Get("/subs", substitutions)
+	api.Get("/subs/:id", subsitution)
+	api.Get("/markers/current", currentMarkers)
+	api.Get("/locations", locations)
+	api.Get("/locations/:id", location)
+	api.Get("/images", images)
+	api.Get("/images/:id", image)
+	api.Post("/images/add", imageSave)
+	api.Delete("/images/:id/delete", imageDelete)
+
 	goji.Serve()
 }

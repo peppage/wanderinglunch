@@ -1,62 +1,9 @@
 package main
 
 import(
-	"time"
 	"fmt"
-	"database/sql"
-	"strconv"
-	"math"
-	"regexp"
+	"time"
 )
-
-type Truck struct {
-	Id          string
-	Name        string
-	Twitname    string
-	Weburl      sql.NullString
-	Retweeted   bool
-	Lasttweet   sql.NullInt64
-	Lastupdate  sql.NullInt64
-	Type        string
-	About       sql.NullString
-	Foursquare  sql.NullString
-	Location    sql.NullString
-	Hood		sql.NullString
-	Image		sql.NullString
-}
-
-func (t *Truck) PrettyDate() string {
-	u, _ := t.Lastupdate.Value()
-	if u == nil {
-		u = time.Now().Unix()
-	}
-	elapsed := time.Now().Sub(time.Unix(u.(int64), 0))
-
-	d := math.Trunc(elapsed.Hours() / 24)
-	if d == 1 {
-		return "a day ago"
-	} else if d > 100 {
-		return ""
-	} else if d > 1 {
-		return  strconv.FormatFloat(d, 'f', -1, 32) + " days ago"
-	}
-
-	h := math.Trunc(elapsed.Hours())
-	if h == 1 {
-		return "an hour ago"
-	} else if h > 1 {
-		return strconv.FormatFloat(h, 'f', -1, 32) + " hours ago"
-	}
-
-	m := math.Trunc(elapsed.Minutes())
-	if m == 1 {
-		return "a minute ago"
-	} else if m > 1 {
-		return strconv.FormatFloat(m, 'f', -1, 32) + " minutes ago"
-	}
-
-	return "seconds ago"
-}
 
 type Message struct {
 	Message string
@@ -70,40 +17,119 @@ type Marker struct {
 	Display string
 }
 
-type Tweet struct {
-	Contents string
-	Time 	 string
-	Id 	     string
-}
+func getCurrentMarkers() []*Marker {
+	t := time.Now().Add(-8 * (time.Minute * 60)).Unix()
 
-func (t *Tweet) DoSubs() {
-	subs := getSubs()
-	for key := range subs {
-		re := regexp.MustCompile(subs[key].Regex)
-		t.Contents = re.ReplaceAllString(t.Contents, subs[key].Replacement)
-	}
-}
-
-func getTweets(twitname string, amount int, page int) []*Tweet {
-	tweets := []*Tweet{}
-	o := amount * page
-	err := db.Select(&tweets, `SELECT contents, time, id FROM tweets where twitname=$1 ORDER BY time DESC LIMIT 10 OFFSET $2`, twitname, o)
+	m := []*Marker{}
+	err := db.Select(&m, `SELECT trucks.id AS id, trucks.name, locations.display AS display,
+		locations.lat AS lat, locations.long AS long FROM trucks LEFT JOIN locations ON (locations.id = trucks.loc)
+		WHERE lastupdate > $1`, t)
 	if err != nil {
 		fmt.Println(err)
 	}
-	return tweets
+
+	return m
 }
 
-type Subs struct {
+type Sub struct {
+	Id          int
 	Regex 	    string
 	Replacement string
 }
 
-func getSubs() []*Subs {
-	subs := []*Subs{}
-	err := db.Select(&subs, `SELECT regex, replacement FROM subs`)
+func getSubs() []*Sub {
+	subs := []*Sub{}
+	err := db.Select(&subs, `SELECT regex, replacement, id FROM subs ORDER BY id`)
 	if err != nil {
 		fmt.Println(err)
 	}
 	return subs
 }
+
+func getSub(id string) Sub {
+	var s Sub
+	err := db.QueryRowx(`SELECT regex, replacement, id FROM subs WHERE id=$1`, id).StructScan(&s)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	return s
+}
+
+type Location struct {
+	Id      int
+	Display string
+	Matcher string
+	Region  string
+	Lat     string
+	Long    string
+	Hood    string
+}
+
+func getLocations() []*Location {
+	locs := []*Location{}
+	err := db.Select(&locs, `SELECT * FROM locations ORDER BY id`)
+	if err != nil {
+		fmt.Println(err)
+	}
+	return locs
+}
+
+func getLocation(id int) Location {
+	var l Location
+	err := db.QueryRowx(`SELECT * FROM locations WHERE id=$1`, id).StructScan(&l)
+	if err != nil {
+		fmt.Println(err)
+	}
+	return l
+}
+
+type Image struct {
+	Id         string
+	Suffix     string
+	Visibility string
+	Twitname   string
+	Menu	   bool
+}
+
+func getImages() []*Image {
+	images := []*Image{}
+	err := db.Select(&images, `SELECT * FROM images ORDER BY id`)
+	if err != nil {
+		fmt.Println(err)
+	}
+	return images
+}
+
+func getImage(id string) Image {
+	var i Image
+	err := db.QueryRowx(`SELECT * FROM images WHERE id=$1`, id).StructScan(&i)
+	if err != nil {
+		fmt.Println(err)
+	}
+	return i
+}
+
+func addImage(i Image) bool {
+	result, err := db.Exec(`INSERT INTO images (id, suffix, twitname, menu) VALUES ($1, $2, $3, $4)`,
+		i.Id, i.Suffix, i.Twitname, i.Menu)
+	if err != nil {
+		fmt.Println(err)
+	}
+	if result != nil {
+		return true
+	}
+	return false
+}
+
+func deleteImage(id string) bool {
+	result, err := db.Exec(`DELETE FROM images WHERE id=$1`, id)
+	if err != nil {
+		fmt.Println(err)
+	}
+	if result != nil {
+		return true
+	}
+	return false
+}
+
