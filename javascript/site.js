@@ -1,11 +1,17 @@
-'use strict';
+window.onscroll=function(){ checkShadow(); };
 
-$(window).scroll(function() {
-  var scroll = $(window).scrollTop();
+function checkShadow() {
+  'use strict';
+  var scroll = window.pageYOffset | document.body.scrollTop;
+  var header = document.getElementsByTagName('header')[0];
   if (scroll > 0) {
-      $('header').addClass('nav-shadow');
-  }
+  	if(!header.classList.contains('nav-shaodw')) {
+  		header.classList.add('nav-shadow');
+  	}
+ 	}
   else {
-      $('header').removeClass('nav-shadow');
+  		if(header.classList.contains('nav-shadow')) {
+  			header.classList.remove('nav-shadow');		
+  		}
   }
-});
+}

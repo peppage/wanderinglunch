@@ -1,0 +1,51 @@
+{{ with .truck }}
+	<h1>{{ .Name }}</h1>
+	<h2>Information</h2>
+	<p>
+		<ul>
+			<li><a href="http://twitter.com/{{ .Twitname }}">Twitter</a></li>
+			{{ if .Weburl.Value }}
+				<li><a href="{{ .Weburl.Value }}">Website</a></li>
+			{{ end }}
+			{{ if .Foursquare.Value }}
+				<li><a href="http://foursquare.com/v/{{ .Foursquare.Value }}?ref=P1JDYDE13QQDC11VUSA4LV3VV25OTRPHV1WAV5WP3VCE0QUP">Foursquare</a></li>
+			{{ end }}
+		</ul>
+	</p>
+
+	<h2>Tweets <button data-bind="click: nextPage">Next Page</button></h2>
+	<table class="table table-minimal">
+		<thead>
+			<th>Tweet </th>
+		</thead>
+		<tbody data-bind="foreach: tweets">
+			<td><a href="#" data-bind="click: $parent.fix"><span data-bind="text: Contents"></span></a></td>
+		</tbody>
+	</table>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			$.getJSON('/admin/tweets/{{ .Twitname }}/0', function(data) {
+				ko.applyBindings(new AdminFixModel(data.tweets));	
+			});
+		});
+
+		function AdminFixModel(initialData) {
+			var self = this;
+			self.tweets = ko.observableArray(initialData);
+			self.page = 0;
+
+			self.nextPage = function() {
+				self.page = self.page + 1;
+				$.getJSON('/api/trucks/{{ .Twitname }}/converted/' + self.page, function(data) {
+					self.tweets(data.tweets);
+				});
+			}
+
+			self.fix = function(tweet) {
+				window.location.assign('/admin/location/new/' + tweet.Id)
+			}
+		}
+	</script>
+
+{{ end }}
