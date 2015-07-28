@@ -139,6 +139,7 @@ func main() {
 	goji.Get("/api", http.RedirectHandler("/api/", 301))
 	api.Get("/trucks", trucks)
 	api.Get("/trucks/current", trucksCurrent)
+	api.Get("/trucks/failures", failures)
 	api.Post("/trucks/add", truckSave)
 	api.Get("/trucks/:id", truckById)
 	api.Get("/trucks/:id/images", truckImages)

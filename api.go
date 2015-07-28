@@ -81,6 +81,7 @@ func currentMarkers(c web.C, w http.ResponseWriter, r *http.Request) {
 }
 
 func failures(c web.C, w http.ResponseWriter, r *http.Request) {
+	renderer.JSON(w, http.StatusOK, getFailedUpdates())
 }
 
 func tweets(c web.C, w http.ResponseWriter, r *http.Request) {
