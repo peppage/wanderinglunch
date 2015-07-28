@@ -9,19 +9,21 @@ import (
 )
 
 type Truck struct {
-	Id         string
-	Name       string
-	Twitname   string
-	Weburl     sql.NullString
-	Retweeted  bool
-	Lasttweet  sql.NullInt64
-	Lastupdate sql.NullInt64
-	Type       string
-	About      sql.NullString
-	Foursquare sql.NullString
-	Location   sql.NullString
-	Hood       sql.NullString
-	Image      sql.NullString
+	Id          string
+	Name        string
+	Twitname    string
+	Weburl      sql.NullString
+	Retweeted   bool
+	Lasttweet   sql.NullInt64
+	Lastupdate  sql.NullInt64
+	Type        string
+	About       sql.NullString
+	Foursquare  sql.NullString
+	Location    sql.NullString
+	Hood        sql.NullString
+	Image       sql.NullString
+	Matcher     sql.NullString
+	Matchmethod sql.NullString
 }
 
 func (t *Truck) PrettyDate() string {
@@ -95,8 +97,8 @@ func getTruck(id string) Truck {
 }
 
 func addTruck(t Truck) bool {
-	result, err := db.Exec(`INSERT INTO trucks (id, name, twitname, weburl, type, about, foursquare) VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-		t.Id, t.Name, t.Twitname, t.Weburl, t.Type, t.About, t.Foursquare)
+	result, err := db.Exec(`INSERT INTO trucks (id, name, twitname, weburl, type, about, foursquare, matcher, matchmethod) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
+		t.Id, t.Name, t.Twitname, t.Weburl, t.Type, t.About, t.Foursquare, t.Matcher, t.Matchmethod)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -108,6 +110,18 @@ func addTruck(t Truck) bool {
 
 func deleteTruck(id string) bool {
 	result, err := db.Exec(`DELETE FROM trucks where id=$1`, id)
+	if err != nil {
+		fmt.Println(err)
+	}
+	if result != nil {
+		return true
+	}
+	return false
+}
+
+func updateTruck(t Truck) bool {
+	result, err := db.Exec(`UPDATE trucks SET (name, twitname, weburl, type, about, foursquare, matcher, matchmethod) = ($1, $2, $3, $4, $5, $6, $7, $8) WHERE id=$9`,
+		t.Name, t.Twitname, t.Weburl, t.Type, t.About, t.Foursquare, t.Matcher, t.Matchmethod, t.Id)
 	if err != nil {
 		fmt.Println(err)
 	}

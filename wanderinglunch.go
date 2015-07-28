@@ -144,6 +144,7 @@ func main() {
 	api.Get("/trucks/:id/images", truckImages)
 	api.Get("/trucks/:id/tweets/:page", tweets)
 	api.Get("/trucks/:id/converted/:page", tweetsWithSubs)
+	api.Post("/trucks/:id/update", truckUpdate)
 	api.Delete("/trucks/:id/delete", truckDelete)
 	api.Get("/subs", substitutions)
 	api.Get("/subs/:id", subsitution)
