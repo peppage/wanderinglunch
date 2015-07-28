@@ -20,7 +20,7 @@ type Marker struct {
 func getCurrentMarkers() []*Marker {
 	t := time.Now().Add(-8 * (time.Minute * 60)).Unix()
 
-	m := []*Marker{}
+	var m []*Marker
 	err := db.Select(&m, `SELECT trucks.id AS id, trucks.name, locations.display AS display,
 		locations.lat AS lat, locations.long AS long FROM trucks LEFT JOIN locations ON (locations.id = trucks.loc)
 		WHERE lastupdate > $1`, t)
@@ -38,7 +38,7 @@ type Sub struct {
 }
 
 func getSubs() []*Sub {
-	subs := []*Sub{}
+	var subs []*Sub
 	err := db.Select(&subs, `SELECT regex, replacement, id FROM subs ORDER BY id`)
 	if err != nil {
 		fmt.Println(err)
@@ -67,7 +67,7 @@ type Location struct {
 }
 
 func getLocations() []*Location {
-	locs := []*Location{}
+	var locs []*Location
 	err := db.Select(&locs, `SELECT * FROM locations ORDER BY id`)
 	if err != nil {
 		fmt.Println(err)
@@ -93,7 +93,7 @@ type Image struct {
 }
 
 func getImages() []*Image {
-	images := []*Image{}
+	var images []*Image
 	err := db.Select(&images, `SELECT * FROM images ORDER BY id`)
 	if err != nil {
 		fmt.Println(err)

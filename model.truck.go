@@ -58,7 +58,7 @@ func (t *Truck) PrettyDate() string {
 }
 
 func getTrucks() []*Truck {
-	trucks := []*Truck{}
+	var trucks []*Truck
 	err := db.Select(&trucks, `SELECT trucks.id AS id, trucks.name, trucks.twitname, trucks.lastupdate, locations.display AS location, 
 		images.suffix AS image FROM trucks LEFT JOIN locations ON (locations.id = trucks.loc) LEFT JOIN (SELECT * FROM images WHERE 
 		menu='t') AS images ON (images.twitname = trucks.twitname) ORDER BY name`)
@@ -72,7 +72,7 @@ func getTrucks() []*Truck {
 func getCurrentTrucks() []*Truck {
 	t := time.Now().Add(-8 * (time.Minute * 60)).Unix()
 
-	trucks := []*Truck{}
+	var trucks []*Truck
 	err := db.Select(&trucks, `SELECT trucks.id AS id, trucks.name, trucks.twitname, trucks.lastupdate, locations.display AS location, 
 		locations.hood as hood, images.suffix AS image FROM trucks LEFT JOIN locations ON (locations.id = trucks.loc) LEFT JOIN
 		(SELECT * FROM images WHERE  menu='t') AS images ON (images.twitname = trucks.twitname) WHERE lastupdate > $1 ORDER BY lat DESC`, t)

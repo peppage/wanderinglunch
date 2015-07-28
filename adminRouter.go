@@ -13,7 +13,7 @@ func adminRoot(c web.C, w http.ResponseWriter, r *http.Request) {
 	now := time.Now()
 	t2 := time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, now.Location()).Unix()
 	
-	trucks := []*Truck{}
+	var trucks []*Truck
 	err := db.Select(&trucks, `SELECT twitname, id FROM trucks WHERE lastupdate < $1 AND lastupdate > $2`, t1, t2)
 	if err != nil {
 		fmt.Println(err)
