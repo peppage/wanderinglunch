@@ -1,27 +1,27 @@
 package main
 
 import (
-	"time"
 	"database/sql"
 	"fmt"
 	"math"
 	"strconv"
+	"time"
 )
 
 type Truck struct {
-	Id          string
-	Name        string
-	Twitname    string
-	Weburl      sql.NullString
-	Retweeted   bool
-	Lasttweet   sql.NullInt64
-	Lastupdate  sql.NullInt64
-	Type        string
-	About       sql.NullString
-	Foursquare  sql.NullString
-	Location    sql.NullString
-	Hood		sql.NullString
-	Image		sql.NullString
+	Id         string
+	Name       string
+	Twitname   string
+	Weburl     sql.NullString
+	Retweeted  bool
+	Lasttweet  sql.NullInt64
+	Lastupdate sql.NullInt64
+	Type       string
+	About      sql.NullString
+	Foursquare sql.NullString
+	Location   sql.NullString
+	Hood       sql.NullString
+	Image      sql.NullString
 }
 
 func (t *Truck) PrettyDate() string {
@@ -37,7 +37,7 @@ func (t *Truck) PrettyDate() string {
 	} else if d > 100 {
 		return ""
 	} else if d > 1 {
-		return  strconv.FormatFloat(d, 'f', -1, 32) + " days ago"
+		return strconv.FormatFloat(d, 'f', -1, 32) + " days ago"
 	}
 
 	h := math.Trunc(elapsed.Hours())

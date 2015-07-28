@@ -2,16 +2,16 @@ package main
 
 import (
 	"fmt"
+	"html/template"
 	"log"
 	"net/http"
 	"time"
-	"html/template"
 
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
+	"github.com/unrolled/render"
 	"github.com/zenazn/goji"
 	"github.com/zenazn/goji/web"
-	"github.com/unrolled/render"
 	"github.com/zenazn/goji/web/middleware"
 )
 
@@ -111,10 +111,10 @@ func init() {
 	}
 
 	renderer = render.New(render.Options{
-        IndentJSON: false,
-        IsDevelopment: true,
-        Layout: "layout",
-    })
+		IndentJSON:    false,
+		IsDevelopment: true,
+		Layout:        "layout",
+	})
 
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("./static/"))))
 }
@@ -129,7 +129,7 @@ func main() {
 	admin := web.New()
 	goji.Handle("/admin/*", admin)
 	goji.Get("/admin", http.RedirectHandler("/admin/", 301))
-	admin.Use(middleware.SubRouter)	
+	admin.Use(middleware.SubRouter)
 	admin.Get("/", adminRoot)
 	admin.Get("/fix/:id", adminFix)
 

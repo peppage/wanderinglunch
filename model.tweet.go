@@ -1,19 +1,19 @@
 package main
 
 import (
-	"regexp"
 	"fmt"
+	"regexp"
 )
 
 type Tweet struct {
 	Contents string
-	Time 	 string
-	Id 	     string
+	Time     string
+	Id       string
 }
 
 func (t *Tweet) Converted() string {
 	subs := getSubs()
-	tweet := t.Contents 
+	tweet := t.Contents
 	for key := range subs {
 		re := regexp.MustCompile(subs[key].Regex)
 		tweet = re.ReplaceAllString(tweet, subs[key].Replacement)

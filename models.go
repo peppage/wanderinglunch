@@ -1,6 +1,6 @@
 package main
 
-import(
+import (
 	"fmt"
 	"time"
 )
@@ -10,9 +10,9 @@ type Message struct {
 }
 
 type Marker struct {
-	Id	 	string
-	Name 	string
-	Lat  	string
+	Id      string
+	Name    string
+	Lat     string
 	Long    string
 	Display string
 }
@@ -33,7 +33,7 @@ func getCurrentMarkers() []*Marker {
 
 type Sub struct {
 	Id          int
-	Regex 	    string
+	Regex       string
 	Replacement string
 }
 
@@ -89,7 +89,7 @@ type Image struct {
 	Suffix     string
 	Visibility string
 	Twitname   string
-	Menu	   bool
+	Menu       bool
 }
 
 func getImages() []*Image {
@@ -132,4 +132,3 @@ func deleteImage(id string) bool {
 	}
 	return false
 }
-

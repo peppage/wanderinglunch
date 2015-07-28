@@ -1,9 +1,9 @@
 package main
 
 import (
+	"database/sql"
 	"net/http"
 	"strconv"
-	"database/sql"
 
 	"github.com/zenazn/goji/web"
 )
@@ -37,10 +37,10 @@ func truckSave(c web.C, w http.ResponseWriter, r *http.Request) {
 	t.Id = r.FormValue("id")
 	t.Name = r.FormValue("name")
 	t.Twitname = r.FormValue("twitname")
-	t.Weburl = sql.NullString { String: r.FormValue("weburl"), Valid: true}
+	t.Weburl = sql.NullString{String: r.FormValue("weburl"), Valid: true}
 	t.Type = r.FormValue("type")
-	t.About = sql.NullString { String: r.FormValue("about"), Valid: true }
-	t.Foursquare = sql.NullString { String: r.FormValue("foursquare"), Valid: true }
+	t.About = sql.NullString{String: r.FormValue("about"), Valid: true}
+	t.Foursquare = sql.NullString{String: r.FormValue("foursquare"), Valid: true}
 	if addTruck(t) {
 		renderer.JSON(w, http.StatusOK, getTruck(t.Id))
 		return
@@ -146,7 +146,7 @@ func imageSave(c web.C, w http.ResponseWriter, r *http.Request) {
 	renderer.JSON(w, http.StatusInternalServerError, nil)
 }
 
-func imageDelete(c web.C, w http.ResponseWriter, r * http.Request) {
+func imageDelete(c web.C, w http.ResponseWriter, r *http.Request) {
 	if deleteImage(c.URLParams["id"]) {
 		renderer.JSON(w, http.StatusNoContent, nil)
 		return
