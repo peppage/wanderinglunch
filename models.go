@@ -52,34 +52,6 @@ func getSub(id string) Sub {
 	return s
 }
 
-type Location struct {
-	Id      int
-	Display string
-	Matcher string
-	Region  string
-	Lat     string
-	Long    string
-	Hood    string
-}
-
-func getLocations() []*Location {
-	var locs []*Location
-	err := db.Select(&locs, `SELECT * FROM locations ORDER BY id`)
-	if err != nil {
-		fmt.Println(err)
-	}
-	return locs
-}
-
-func getLocation(id int) Location {
-	var l Location
-	err := db.QueryRowx(`SELECT * FROM locations WHERE id=$1`, id).StructScan(&l)
-	if err != nil {
-		fmt.Println(err)
-	}
-	return l
-}
-
 type Image struct {
 	Id         string
 	Suffix     string

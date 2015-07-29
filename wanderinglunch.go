@@ -148,6 +148,8 @@ func main() {
 	api.Get("/markers/current", currentMarkers)
 	api.Get("/locations", locations)
 	api.Get("/locations/:id", location)
+	api.Post("/locations/add", locationSave)
+	api.Delete("/trucks/:id/delete", locationDelete)
 	api.Get("/images", images)
 	api.Get("/images/:id", image)
 	api.Post("/images/add", imageSave)

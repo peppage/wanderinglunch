@@ -125,8 +125,7 @@ func locations(c web.C, w http.ResponseWriter, r *http.Request) {
 }
 
 func location(c web.C, w http.ResponseWriter, r *http.Request) {
-	id, _ := strconv.Atoi(c.URLParams["id"])
-	loc := getLocation(id)
+	loc := getLocation(c.URLParams["id"])
 	if loc.Id == 0 {
 		renderer.JSON(w, http.StatusNotFound, nil)
 		return
@@ -135,6 +134,26 @@ func location(c web.C, w http.ResponseWriter, r *http.Request) {
 }
 
 func locationSave(c web.C, w http.ResponseWriter, r *http.Request) {
+	var l Location
+	l.Display = r.FormValue("display")
+	l.Matcher = r.FormValue("matcher")
+	l.Region = r.FormValue("region")
+	l.Lat = r.FormValue("lat")
+	l.Long = r.FormValue("long")
+	l.Hood = r.FormValue("hood")
+	if addLocation(l) {
+		renderer.JSON(w, http.StatusOK, getLocationByDisplay(l.Display))
+		return
+	}
+	renderer.JSON(w, http.StatusInternalServerError, nil)
+}
+
+func locationDelete(c web.C, w http.ResponseWriter, r *http.Request) {
+	if deleteLocation(c.URLParams["id"]) {
+		renderer.JSON(w, http.StatusNoContent, nil)
+		return
+	}
+	renderer.JSON(w, http.StatusInternalServerError, nil)
 }
 
 func images(c web.C, w http.ResponseWriter, r *http.Request) {
