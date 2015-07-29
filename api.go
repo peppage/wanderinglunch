@@ -172,4 +172,20 @@ func imageDelete(c web.C, w http.ResponseWriter, r *http.Request) {
 }
 
 func messageSave(c web.C, w http.ResponseWriter, r *http.Request) {
+	var m Message
+	m.Message = r.FormValue("message")
+	if addMessage(m) {
+		renderer.JSON(w, http.StatusOK, getMessage())
+		return
+	}
+	renderer.JSON(w, http.StatusInternalServerError, nil)
+}
+
+func message(c web.C, w http.ResponseWriter, r *http.Request) {
+	m := getMessage()
+	if m.Message == "" {
+		renderer.JSON(w, http.StatusNotFound, nil)
+		return
+	}
+	renderer.JSON(w, http.StatusOK, m)
 }

@@ -42,11 +42,7 @@ func root(c web.C, w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	var message Message
-	err = db.QueryRowx(`SELECT message FROM messages ORDER BY date DESC LIMIT 1`).StructScan(&message)
-	if err != nil {
-		fmt.Println(err)
-	}
+	message := getMessage()
 
 	data := make(map[string]interface{})
 	data["title"] = "Wandering Lunch: NYC Food Truck Finder"
@@ -156,6 +152,8 @@ func main() {
 	api.Get("/images/:id", image)
 	api.Post("/images/add", imageSave)
 	api.Delete("/images/:id/delete", imageDelete)
+	api.Get("/messages/current", message)
+	api.Post("/messages/add", messageSave)
 
 	goji.Serve()
 }

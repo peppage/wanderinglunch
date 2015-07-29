@@ -5,10 +5,6 @@ import (
 	"time"
 )
 
-type Message struct {
-	Message string
-}
-
 type Marker struct {
 	Id      string
 	Name    string
