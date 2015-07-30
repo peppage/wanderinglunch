@@ -158,7 +158,7 @@ func main() {
 	api.Get("/images/:id", image)
 	api.Post("/images/add", imageSave)
 	api.Delete("/images/:id/delete", imageDelete)
-	//api.Post("/images/:id/update", imageUpdate)
+	api.Post("/images/:id/update", imageUpdate)
 	api.Get("/messages/current", message)
 	api.Post("/messages/add", messageSave)
 

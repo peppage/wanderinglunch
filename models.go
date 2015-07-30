@@ -141,3 +141,14 @@ func deleteImage(id string) bool {
 	}
 	return false
 }
+
+func updateImage(i Image) bool {
+	result, err := db.NamedExec(`UPDATE images SET (suffix, visibility, twitname, menu) = (:suffix, :visibility, :twitname, :menu) WHERE id=:id`, i)
+	if err != nil {
+		fmt.Println(err)
+	}
+	if result != nil {
+		return true
+	}
+	return false
+}

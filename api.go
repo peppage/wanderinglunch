@@ -230,6 +230,19 @@ func imageDelete(c web.C, w http.ResponseWriter, r *http.Request) {
 	renderer.JSON(w, http.StatusInternalServerError, nil)
 }
 
+func imageUpdate(c web.C, w http.ResponseWriter, r *http.Request) {
+	var i Image
+	i.Id = c.URLParams["id"]
+	i.Suffix = r.FormValue("suffix")
+	i.Twitname = r.FormValue("twitname")
+	i.Menu, _ = strconv.ParseBool(r.FormValue("menu"))
+	if updateImage(i) {
+		renderer.JSON(w, http.StatusOK, getImage(c.URLParams["id"]))
+		return
+	}
+	renderer.JSON(w, http.StatusInternalServerError, nil)
+}
+
 func messageSave(c web.C, w http.ResponseWriter, r *http.Request) {
 	var m Message
 	m.Message = r.FormValue("message")
