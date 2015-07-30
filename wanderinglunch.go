@@ -1,11 +1,9 @@
 package main
 
 import (
-	"fmt"
 	"html/template"
 	"log"
 	"net/http"
-	"time"
 
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
@@ -20,15 +18,7 @@ var renderer *render.Render
 
 func root(c web.C, w http.ResponseWriter, r *http.Request) {
 
-	t := time.Now().Add(-8 * (time.Minute * 60)).Unix()
-
-	var trucks []*Truck
-	err := db.Select(&trucks, `SELECT trucks.id AS id, trucks.name, trucks.twitname, trucks.lastupdate, locations.display AS location, 
-		locations.hood as hood, images.suffix AS image FROM trucks LEFT JOIN locations ON (locations.id = trucks.loc) LEFT JOIN
-		(SELECT * FROM images WHERE  menu='t') AS images ON (images.twitname = trucks.twitname) WHERE lastupdate > $1 ORDER BY lat DESC`, t)
-	if err != nil {
-		fmt.Println(err)
-	}
+	trucks := getCurrentTrucks()
 
 	var m []*Truck
 	var b []*Truck
@@ -55,13 +45,7 @@ func root(c web.C, w http.ResponseWriter, r *http.Request) {
 }
 
 func allTrucks(c web.C, w http.ResponseWriter, r *http.Request) {
-	var trucks []*Truck
-	err := db.Select(&trucks, `SELECT trucks.id AS id, trucks.name, trucks.twitname, trucks.lastupdate, locations.display AS location, 
-		images.suffix AS image FROM trucks LEFT JOIN locations ON (locations.id = trucks.loc) LEFT JOIN (SELECT * FROM images WHERE 
-		menu='t') AS images ON (images.twitname = trucks.twitname) ORDER BY name`)
-	if err != nil {
-		fmt.Println(err)
-	}
+	trucks := getTrucks()
 
 	data := make(map[string]interface{})
 	data["trucks"] = trucks
@@ -72,12 +56,8 @@ func allTrucks(c web.C, w http.ResponseWriter, r *http.Request) {
 }
 
 func truck(c web.C, w http.ResponseWriter, r *http.Request) {
-	var t Truck
-	err := db.QueryRowx(`SELECT trucks.id AS id, trucks.name, trucks.twitname, trucks.lastupdate, locations.display AS location, 
-		images.suffix AS image FROM trucks LEFT JOIN locations ON (locations.id = trucks.loc) LEFT JOIN (SELECT * FROM images WHERE 
-		menu='t') AS images ON (images.twitname = trucks.twitname) WHERE trucks.id=$1`, c.URLParams["id"]).StructScan(&t)
-	if err != nil {
-		fmt.Println(err)
+	var t = getTruck(c.URLParams["id"])
+	if t.Id == "" {
 		http.Redirect(w, r, "/", http.StatusNotFound)
 		return
 	}
