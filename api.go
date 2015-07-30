@@ -180,6 +180,22 @@ func locationDelete(c web.C, w http.ResponseWriter, r *http.Request) {
 	renderer.JSON(w, http.StatusInternalServerError, nil)
 }
 
+func locationUpdate(c web.C, w http.ResponseWriter, r *http.Request) {
+	var l Location
+	l.Id, _ = strconv.Atoi(c.URLParams["id"])
+	l.Display = r.FormValue("display")
+	l.Matcher = r.FormValue("matcher")
+	l.Region = r.FormValue("region")
+	l.Lat = r.FormValue("lat")
+	l.Long = r.FormValue("long")
+	l.Hood = r.FormValue("hood")
+	if updateLocation(l) {
+		renderer.JSON(w, http.StatusOK, getLocation(c.URLParams["id"]))
+		return
+	}
+	renderer.JSON(w, http.StatusInternalServerError, nil)
+}
+
 func images(c web.C, w http.ResponseWriter, r *http.Request) {
 	renderer.JSON(w, http.StatusOK, getImages())
 }

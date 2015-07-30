@@ -64,7 +64,7 @@ func deleteLocation(id string) bool {
 
 func updateLocation(l Location) bool {
 	result, err := db.NamedExec(
-		`UPDATE locations SET (display, matcher, region, lat, long, hood) VALUES (:display, :matcher, :region, :lat, :long, :hood) WHERE id=:id`, l)
+		`UPDATE locations SET (display, matcher, region, lat, long, hood) = (:display, :matcher, :region, :lat, :long, :hood) WHERE id=:id`, l)
 	if err != nil {
 		fmt.Println(err)
 	}

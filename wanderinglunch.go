@@ -152,7 +152,7 @@ func main() {
 	api.Get("/locations", locations)
 	api.Get("/locations/:id", location)
 	api.Post("/locations/add", locationSave)
-	//api.Post("/locations/:id/update", locationUpdate)
+	api.Post("/locations/:id/update", locationUpdate)
 	api.Delete("/locations/:id/delete", locationDelete)
 	api.Get("/images", images)
 	api.Get("/images/:id", image)
