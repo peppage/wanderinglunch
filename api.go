@@ -132,6 +132,18 @@ func subDelete(c web.C, w http.ResponseWriter, r *http.Request) {
 	renderer.JSON(w, http.StatusInternalServerError, nil)
 }
 
+func subUpdate(c web.C, w http.ResponseWriter, r *http.Request) {
+	var s Sub
+	s.Id, _ = strconv.Atoi(c.URLParams["id"])
+	s.Regex = r.FormValue("regex")
+	s.Replacement = r.FormValue("replacement")
+	if updateSub(s) {
+		renderer.JSON(w, http.StatusOK, getSub(c.URLParams["id"]))
+		return
+	}
+	renderer.JSON(w, http.StatusInternalServerError, nil)
+}
+
 func locations(c web.C, w http.ResponseWriter, r *http.Request) {
 	renderer.JSON(w, http.StatusOK, getLocations())
 }

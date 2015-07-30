@@ -82,6 +82,17 @@ func deleteSub(id string) bool {
 	return false
 }
 
+func updateSub(s Sub) bool {
+	result, err := db.NamedExec(`UPDATE subs SET (regex, replacement) = (:regex, :replacement) WHERE id=:id`, s)
+	if err != nil {
+		fmt.Println(err)
+	}
+	if result != nil {
+		return true
+	}
+	return false
+}
+
 type Image struct {
 	Id         string
 	Suffix     string
