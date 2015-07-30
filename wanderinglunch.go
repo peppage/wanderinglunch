@@ -146,7 +146,7 @@ func main() {
 	api.Get("/markers/current", currentMarkers)
 	api.Get("/subs", substitutions)
 	api.Get("/subs/:id", subsitution)
-	api.Post("/subs/add", subAdd)
+	api.Post("/subs/add", subSave)
 	api.Delete("/subs/:id/delete", subDelete)
 	api.Get("/locations", locations)
 	api.Get("/locations/:id", location)

@@ -115,9 +115,21 @@ func subsitution(c web.C, w http.ResponseWriter, r *http.Request) {
 }
 
 func subSave(c web.C, w http.ResponseWriter, r *http.Request) {
+	var s Sub
+	s.Regex = r.FormValue("regex")
+	s.Replacement = r.FormValue("replacement")
+	if addSub(s) {
+		renderer.JSON(w, http.StatusOK, getSubByRegex(s.Regex))
+	}
+	renderer.JSON(w, http.StatusInternalServerError, nil)
 }
 
 func subDelete(c web.C, w http.ResponseWriter, r *http.Request) {
+	if deleteSub(c.URLParams["id"]) {
+		renderer.JSON(w, http.StatusNoContent, nil)
+		return
+	}
+	renderer.JSON(w, http.StatusInternalServerError, nil)
 }
 
 func locations(c web.C, w http.ResponseWriter, r *http.Request) {

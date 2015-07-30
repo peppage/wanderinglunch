@@ -44,12 +44,42 @@ func getSubs() []*Sub {
 
 func getSub(id string) Sub {
 	var s Sub
-	err := db.QueryRowx(`SELECT regex, replacement, id FROM subs WHERE id=$1`, id).StructScan(&s)
+	err := db.QueryRowx(`SELECT * FROM subs WHERE id=$1`, id).StructScan(&s)
 	if err != nil {
 		fmt.Println(err)
 	}
-
 	return s
+}
+
+func getSubByRegex(regex string) Sub {
+	var s Sub
+	err := db.QueryRowx(`SELECT * FROM subs WHERE regex=$1`, regex).StructScan(&s)
+	if err != nil {
+		fmt.Println(err)
+	}
+	return s
+}
+
+func addSub(s Sub) bool {
+	result, err := db.NamedExec(`INSERT INTO subs (regex, replacement) VALUES (:regex, :replacement)`, s)
+	if err != nil {
+		fmt.Println(err)
+	}
+	if result != nil {
+		return true
+	}
+	return false
+}
+
+func deleteSub(id string) bool {
+	result, err := db.Exec(`DELETE FROM subs WHERE id = $1`, id)
+	if err != nil {
+		fmt.Println(err)
+	}
+	if result != nil {
+		return true
+	}
+	return false
 }
 
 type Image struct {
