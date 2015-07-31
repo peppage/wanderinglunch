@@ -25,27 +25,7 @@
 
 	<script>
 		document.addEventListener('DOMContentLoaded', function() {
-			$.getJSON('/api/trucks/{{ .Twitname }}/converted/0', function(data) {
-				ko.applyBindings(new AdminFixModel(data));	
-			});
+			ko.applyBindings(new AdminFixModel('{{ .Twitname }}'));	
 		});
-
-		function AdminFixModel(initialData) {
-			var self = this;
-			self.tweets = ko.observableArray(initialData);
-			self.page = 0;
-
-			self.nextPage = function() {
-				self.page = self.page + 1;
-				$.getJSON('/api/trucks/{{ .Twitname }}/converted/' + self.page, function(data) {
-					self.tweets(data);
-				});
-			}
-
-			self.fix = function(tweet) {
-				window.location.assign('/admin/location/new/' + tweet.Id)
-			}
-		}
 	</script>
-
 {{ end }}
