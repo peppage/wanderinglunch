@@ -16,6 +16,32 @@ function checkShadow() {
   }
 }
 
+function indexModel() {
+  var self = this;
+  self.trucks = ko.observableArray();
+  self.showTables = ko.observable(false);
+
+  $.getJSON('/api/trucks/current', function(data) {
+    self.trucks(data);
+    if(data && data.length > 0) {
+        self.showTables(true);
+    }
+  });
+
+  self.update = function() {
+    $.getJSON('/api/trucks/current', function(data) {
+      self.trucks(data);
+      if(data && data.length > 0) {
+          self.showTables(true);
+      } else {
+        self.showTables(false);
+      }
+    });
+  }
+
+  setInterval(self.update, 900000);
+}
+
 function AdminFixModel(twitname) {
   var self = this;
   self.tweets = ko.observableArray();

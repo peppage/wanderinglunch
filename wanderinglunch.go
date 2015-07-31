@@ -18,7 +18,7 @@ var renderer *render.Render
 
 func root(c web.C, w http.ResponseWriter, r *http.Request) {
 
-	trucks := getCurrentTrucks()
+	/*trucks := getCurrentTrucks()
 
 	var m []*Truck
 	var b []*Truck
@@ -30,15 +30,15 @@ func root(c web.C, w http.ResponseWriter, r *http.Request) {
 		} else {
 			m = append(m, trucks[i])
 		}
-	}
+	}*/
 
 	message := getMessage()
 
 	data := make(map[string]interface{})
 	data["title"] = "Wandering Lunch: NYC Food Truck Finder"
-	data["m"] = m
-	data["b"] = b
-	data["total"] = len(m) + len(b)
+	//data["m"] = m
+	//data["b"] = b
+	//data["total"] = len(m) + len(b)
 	data["message"] = template.HTML(message.Message)
 
 	renderer.HTML(w, http.StatusOK, "index", data)
