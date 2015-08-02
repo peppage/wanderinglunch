@@ -16,6 +16,7 @@ type Truck struct {
 	Retweeted   bool
 	Lasttweet   sql.NullInt64
 	Lastupdate  sql.NullInt64
+	NiceDate    string
 	Type        string
 	About       sql.NullString
 	Foursquare  sql.NullString
@@ -68,6 +69,10 @@ func getTrucks() []*Truck {
 		fmt.Println(err)
 	}
 
+	for i := 0; i < len(trucks); i++ {
+		trucks[i].NiceDate = trucks[i].PrettyDate()
+	}
+
 	return trucks
 }
 
@@ -81,6 +86,12 @@ func getCurrentTrucks() []*Truck {
 	if err != nil {
 		fmt.Println(err)
 	}
+
+	for i := 0; i < len(trucks); i++ {
+		trucks[i].NiceDate = trucks[i].PrettyDate()
+		fmt.Println(trucks[i].NiceDate)
+	}
+
 	return trucks
 }
 

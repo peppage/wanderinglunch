@@ -102,7 +102,7 @@
 			<tbody data-bind="foreach: visible">
 				<td><a data-bind="attr: { href: '/truck/'+Id }"><span data-bind="text: Name"></span></a></td>
 				<td><span data-bind="text: Location.String"></span></td>
-				<td><span data-bind="text: Lastupdate.Int64"></span></td>
+				<td><span data-bind="text: NiceDate"></span></td>
 				<td class="noMobile">
 					<span data-bind="if: Image.String">
 						<img data-bind="attr { src: 'http://irs0.4sqi.net/img/general/width30'+ Image.String }" />
