@@ -21,7 +21,7 @@ type Truck struct {
 	About       sql.NullString
 	Foursquare  sql.NullString
 	Location    sql.NullString
-	Hood        string
+	Zone        string `json:"zone"`
 	Image       sql.NullString
 	Matcher     sql.NullString
 	Matchmethod sql.NullString
@@ -81,7 +81,7 @@ func getCurrentTrucks() []*Truck {
 
 	var trucks []*Truck
 	err := db.Select(&trucks, `SELECT trucks.id AS id, trucks.name, trucks.twitname, trucks.lastupdate, locations.display AS location, 
-		locations.hood as hood, images.suffix AS image FROM trucks LEFT JOIN locations ON (locations.id = trucks.loc) LEFT JOIN
+		locations.zone as zone, images.suffix AS image FROM trucks LEFT JOIN locations ON (locations.id = trucks.loc) LEFT JOIN
 		(SELECT * FROM images WHERE  menu='t') AS images ON (images.twitname = trucks.twitname) WHERE lastupdate > $1 ORDER BY lat DESC`, t)
 	if err != nil {
 		fmt.Println(err)

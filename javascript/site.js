@@ -35,10 +35,9 @@ function indexModel() {
   }
 
   self.setVisible = function() {
-    console.log(self.location());
     self.visible.removeAll();
     for(var x = 0; x < self.trucks().length; x++) {
-      if(self.trucks()[x].Hood.toLowerCase() === self.location()) {
+      if(self.trucks()[x].zone.toLowerCase() === self.location()) {
         self.visible.push(self.trucks()[x]);
       } 
     }
