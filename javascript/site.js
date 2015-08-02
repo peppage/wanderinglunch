@@ -38,7 +38,7 @@ function indexModel() {
     console.log(self.location());
     self.visible.removeAll();
     for(var x = 0; x < self.trucks().length; x++) {
-      if(self.trucks()[x].Hood.String.toLowerCase() === self.location()) {
+      if(self.trucks()[x].Hood.toLowerCase() === self.location()) {
         self.visible.push(self.trucks()[x]);
       } 
     }

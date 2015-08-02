@@ -20,7 +20,7 @@ type Truck struct {
 	About       sql.NullString
 	Foursquare  sql.NullString
 	Location    sql.NullString
-	Hood        sql.NullString
+	Hood        string
 	Image       sql.NullString
 	Matcher     sql.NullString
 	Matchmethod sql.NullString
