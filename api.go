@@ -84,6 +84,16 @@ func failures(c web.C, w http.ResponseWriter, r *http.Request) {
 	renderer.JSON(w, http.StatusOK, getFailedUpdates())
 }
 
+func tweet(c web.C, w http.ResponseWriter, r *http.Request) {
+	id, _ := strconv.Atoi(c.URLParams["id"])
+	t := getTweet(id)
+	if t.Id == 0 {
+		renderer.JSON(w, http.StatusNotFound, nil)
+		return
+	}
+	renderer.JSON(w, http.StatusOK, t)
+}
+
 func tweets(c web.C, w http.ResponseWriter, r *http.Request) {
 	page, _ := strconv.Atoi(c.URLParams["page"])
 	tweets := getTweets(c.URLParams["id"], 10, page)
@@ -165,6 +175,8 @@ func locationSave(c web.C, w http.ResponseWriter, r *http.Request) {
 	l.Lat = r.FormValue("lat")
 	l.Long = r.FormValue("long")
 	l.Hood = r.FormValue("hood")
+	l.Zone = r.FormValue("zone")
+	l.Site = r.FormValue("site")
 	if addLocation(l) {
 		renderer.JSON(w, http.StatusOK, getLocationByDisplay(l.Display))
 		return

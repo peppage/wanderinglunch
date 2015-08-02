@@ -96,7 +96,7 @@ func getCurrentTrucks() []*Truck {
 
 func getTruck(id string) Truck {
 	var t Truck
-	err := db.QueryRowx(`SELECT trucks.id AS id, trucks.name, trucks.twitname, trucks.lastupdate, locations.display AS location, 
+	err := db.QueryRowx(`SELECT trucks.id AS id, trucks.name, trucks.twitname, trucks.lastupdate, trucks.foursquare, trucks.weburl, locations.display AS location, 
 		images.suffix AS image FROM trucks LEFT JOIN locations ON (locations.id = trucks.loc) LEFT JOIN (SELECT * FROM images WHERE 
 		menu='t') AS images ON (images.twitname = trucks.twitname) WHERE trucks.id=$1`, id).StructScan(&t)
 	if err != nil {

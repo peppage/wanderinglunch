@@ -90,6 +90,7 @@ func main() {
 	admin.Use(middleware.SubRouter)
 	admin.Get("/", adminRoot)
 	admin.Get("/fix/:id", adminFix)
+	admin.Get("/location/new/:tweetId", adminNewLoc)
 
 	api := web.New()
 	goji.Handle("/api/*", api)
@@ -123,6 +124,7 @@ func main() {
 	api.Post("/images/:id/update", imageUpdate)
 	api.Get("/messages/current", message)
 	api.Post("/messages/add", messageSave)
+	api.Get("/tweets/:id", tweet)
 
 	goji.Serve()
 }

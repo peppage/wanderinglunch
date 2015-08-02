@@ -28,10 +28,8 @@ func adminRoot(c web.C, w http.ResponseWriter, r *http.Request) {
 }
 
 func adminFix(c web.C, w http.ResponseWriter, r *http.Request) {
-	var t Truck
-	err := db.QueryRowx(`SELECT id, name, twitname, weburl, foursquare FROM trucks where id = $1`, c.URLParams["id"]).StructScan(&t)
-	if err != nil {
-		fmt.Println(err)
+	t := getTruck(c.URLParams["id"])
+	if t.Id == "" {
 		http.Redirect(w, r, "/admin", http.StatusNotFound)
 		return
 	}
@@ -42,4 +40,12 @@ func adminFix(c web.C, w http.ResponseWriter, r *http.Request) {
 	data["admin"] = true
 
 	renderer.HTML(w, http.StatusOK, "admin.fix", data)
+}
+
+func adminNewLoc(c web.C, w http.ResponseWriter, r *http.Request) {
+	data := make(map[string]interface{})
+	data["title"] = "Wandering Lunch: NYC Food Truck Finder | Admin - Add Location"
+	data["id"] = c.URLParams["tweetId"]
+
+	renderer.HTML(w, http.StatusOK, "admin.newloc", data)
 }

@@ -3,13 +3,15 @@ package main
 import "fmt"
 
 type Location struct {
-	Id      int
-	Display string
-	Matcher string
-	Region  string
-	Lat     string
-	Long    string
-	Hood    string
+	Id      int    `json:"id"`
+	Display string `json:"display"`
+	Matcher string `json:"matcher"`
+	Region  string `json:"region"`
+	Lat     string `json:"lat"`
+	Long    string `json:"long"`
+	Hood    string `json:"hood"`
+	Zone    string `json:"zone"`
+	Site    string `json:"site"`
 }
 
 func getLocations() []*Location {
@@ -40,8 +42,9 @@ func getLocationByDisplay(display string) Location {
 }
 
 func addLocation(l Location) bool {
+	fmt.Println(l)
 	result, err := db.NamedExec(
-		`INSERT INTO locations (display, matcher, region, lat, long, hood) VALUES (:display, :matcher, :region, :lat, :long, :hood)`, l)
+		`INSERT INTO locations (display, matcher, region, lat, long, hood, zone, site) VALUES (:display, :matcher, :region, :lat, :long, :hood, :zone, :site)`, l)
 	if err != nil {
 		fmt.Println(err)
 	}

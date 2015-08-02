@@ -6,9 +6,11 @@ import (
 )
 
 type Tweet struct {
-	Contents string
-	Time     string
-	Id       int
+	Contents  string `json:"contents"`
+	Time      string
+	Id        int
+	Retweeted bool
+	Twitname  string
 }
 
 func (t *Tweet) Converted() string {

@@ -5,10 +5,10 @@ update table set menu='f' where menu IS NULL;
 drop table messages;
 create table message (id serial, message text NOT NULL);
 
-alter table locations add column site text;
+alter table locations add column site text NOT NULL;
 update locations set site='nyc';
 
-alter table locations add column zone text;
+alter table locations add column zone text NOT NULL;
 update locations set zone='Brooklyn' where hood='Brooklyn';
 update locations set zone='Manhatten' where zone IS NULL;
 
