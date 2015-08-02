@@ -8,7 +8,7 @@ import (
 type Tweet struct {
 	Contents string
 	Time     string
-	Id       string
+	Id       int
 }
 
 func (t *Tweet) Converted() string {
@@ -29,4 +29,13 @@ func getTweets(twitname string, amount int, page int) []*Tweet {
 		fmt.Println(err)
 	}
 	return tweets
+}
+
+func getTweet(id int) Tweet {
+	var t Tweet
+	err := db.QueryRowx(`SELECT * FROM tweets WHERE id=$1`, id).StructScan(&t)
+	if err != nil {
+		fmt.Println(err)
+	}
+	return t
 }
