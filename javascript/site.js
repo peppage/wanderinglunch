@@ -43,13 +43,12 @@ function indexModel() {
   }
 
   self.setVisible = function() {
+    console.log(self.location());
     self.visible.removeAll();
     for(var x = 0; x < self.trucks().length; x++) {
-      if(self.trucks()[x].Hood.String != 'Brooklyn' && self.location() === 'manhatten') {
+      if(self.trucks()[x].Hood.String.toLowerCase() === self.location()) {
         self.visible.push(self.trucks()[x]);
-      } else if( self.trucks()[x].Hood.String == 'Brookly') {
-        self.visible.push(self.trucks()[x]);
-      }
+      } 
     }
     return true;
   }
