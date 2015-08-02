@@ -36,6 +36,17 @@ gulp.task('movejs', function() {
     .pipe(gulp.dest('static'));
 });
 
+gulp.task('compress', function() {
+  return gulp.src('javascript/admin.js')
+    .pipe(uglify())
+    .pipe(gulp.dest('static'));
+});
+
+gulp.task('movejs', function() {
+  return gulp.src('javascript/admin.js')
+    .pipe(gulp.dest('static'));
+});
+
 gulp.task('watch', function() {
     gulp.watch('scss/*.scss', ['sass-dev']);
     gulp.watch('javascript/*.js', ['movejs']);
