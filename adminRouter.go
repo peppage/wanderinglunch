@@ -46,6 +46,7 @@ func adminNewLoc(c web.C, w http.ResponseWriter, r *http.Request) {
 	data := make(map[string]interface{})
 	data["title"] = "Wandering Lunch: NYC Food Truck Finder | Admin - Add Location"
 	data["id"] = c.URLParams["tweetId"]
+	data["admin"] = true
 
 	renderer.HTML(w, http.StatusOK, "admin.newloc", data)
 }
