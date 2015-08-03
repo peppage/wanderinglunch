@@ -13,9 +13,9 @@ function AdminFixModel(twitname) {
     $.getJSON('/api/trucks/' + twitname + '/converted/' + self.page, function(data) {
       self.tweets(data);
     });
-  }
+  };
 
   self.fix = function(tweet) {
-    window.location.assign('/admin/location/new/' + tweet.Id)
-  }
+    window.location.assign('/admin/location/new/' + tweet.Id);
+  };
 }

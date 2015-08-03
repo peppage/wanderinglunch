@@ -45,7 +45,7 @@ function indexModel() {
       self.trucks(data);
       self.setVisible();
     });
-  }
+  };
 
   self.setVisible = function() {
     self.visible.removeAll();
@@ -55,6 +55,6 @@ function indexModel() {
       } 
     }
     return true;
-  }
+  };
   setInterval(self.update, 900000);
 }
