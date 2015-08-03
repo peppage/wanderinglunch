@@ -22,12 +22,18 @@
 				<a {{if eq current "map" }} class="active" {{ end }} href="/map">Map</a>
 				<a href="/feed">Live Feed</a>
 				<a class="noMobile" href="http://twitter.com/peppage">Twitter</a>
+				{{ if .admin }}
+					<span class="dropItem">
+						<a href="/admin" class="dropItem-header">Admin</a>
+						<div class="dropItem-sub">
+							<a href="/admin/locations">Locations</a><br>
+							<a href="/admin/subs">Subs</a>
+						</div>
+					</span>
+				{{ end }}
 			</div>
       	</div>
 	</header>
-	{{ if .admin }}
-		This is an admin area
-	{{ end }}
 	<div class="section">
 		<div class="content-wrapper">
 			{{ yield }}

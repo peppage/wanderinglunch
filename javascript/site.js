@@ -5,7 +5,7 @@ function checkShadow() {
   var scroll = window.pageYOffset | document.body.scrollTop;
   var header = document.getElementsByTagName('header')[0];
   if (scroll > 0) {
-  	if(!header.classList.contains('nav-shaodw')) {
+  	if(!header.classList.contains('nav-shadow')) {
   		header.classList.add('nav-shadow');
   	}
  	}
@@ -15,6 +15,19 @@ function checkShadow() {
   		}
   }
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+  var menuItems = document.querySelectorAll('.dropItem');
+  for(var x=0; x < menuItems.length; x++) {
+    var hidden = menuItems[x].querySelector('.dropItem-sub');
+    menuItems[x].onmouseover = function() {
+      hidden.classList.add('is-shown');
+    };
+    menuItems[x].onmouseout = function() {
+      hidden.classList.remove('is-shown');
+    };
+  }
+});
 
 function indexModel() {
   var self = this;

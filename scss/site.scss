@@ -135,7 +135,7 @@ header.nav {
 }
 
 .nav-shadow {
-  box-shadow: 0px 0px 1em black;
+  box-shadow: 0px 0px 1em #333;
 }
 
 header.nav .nav-wrapper {
@@ -152,6 +152,35 @@ header.nav .nav-left {
 header.nav .nav-right {
   float: right;
   line-height: $nav-height;
+}
+
+header.nav .dropItem-header:after {
+  @include position(absolute, auto -0.4em auto auto);
+  content: '\25BE';
+}
+
+header.nav .dropItem {
+  position: relative;
+}
+
+header.nav .dropItem-sub {
+  z-index: $zIndex-3--nav-subItem;
+  opacity: 0;
+  right: 0;
+  top: 20px;
+  visibility: hidden;
+  position: absolute;
+  @include transition-property(opacity);
+  @include transition-duration(0.3s);
+  @include transition-timing-function(ease-in);
+  @include transition-delay(0.0s);
+  box-shadow: 0 15px 28px 0 rgba(34,36,38,.12);
+  background-color: white;
+}
+
+header.nav .dropItem-sub.is-shown {
+  opacity: 1;
+  visibility: visible;
 }
 
 .noMobile {
