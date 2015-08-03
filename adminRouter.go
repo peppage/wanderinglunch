@@ -58,3 +58,12 @@ func adminLocs(c web.C, w http.ResponseWriter, r *http.Request) {
 
 	renderer.HTML(w, http.StatusOK, "admin.locations", data)
 }
+
+func adminEditLoc(c web.C, w http.ResponseWriter, r *http.Request) {
+	data := make(map[string]interface{})
+	data["title"] = "Wandering Lunch: NYC Food Truck Finder | Admin - Location " + c.URLParams["id"]
+	data["admin"] = true
+	data["id"] = c.URLParams["id"]
+
+	renderer.HTML(w, http.StatusOK, "admin.location", data)
+}
