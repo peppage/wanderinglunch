@@ -32,18 +32,13 @@ gulp.task('compress', function() {
 });
 
 gulp.task('movejs', function() {
-  return gulp.src('javascript/site.js')
+  return gulp.src('javascript/*.js')
     .pipe(gulp.dest('static'));
 });
 
-gulp.task('compress', function() {
+gulp.task('compress-admin', function() {
   return gulp.src('javascript/admin.js')
     .pipe(uglify())
-    .pipe(gulp.dest('static'));
-});
-
-gulp.task('movejs', function() {
-  return gulp.src('javascript/admin.js')
     .pipe(gulp.dest('static'));
 });
 
@@ -54,4 +49,4 @@ gulp.task('watch', function() {
 
 gulp.task('dev', ['watch']);
 
-gulp.task('default', ['sass', 'compress']);
+gulp.task('default', ['sass', 'compress', 'compress-admin']);
