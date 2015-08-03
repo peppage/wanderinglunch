@@ -8,7 +8,7 @@ import (
 type Tweet struct {
 	Contents  string `json:"contents"`
 	Time      string
-	Id        int
+	Id        string
 	Retweeted bool
 	Twitname  string
 }

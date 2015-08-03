@@ -87,7 +87,7 @@ func failures(c web.C, w http.ResponseWriter, r *http.Request) {
 func tweet(c web.C, w http.ResponseWriter, r *http.Request) {
 	id, _ := strconv.Atoi(c.URLParams["id"])
 	t := getTweet(id)
-	if t.Id == 0 {
+	if t.Id == "" {
 		renderer.JSON(w, http.StatusNotFound, nil)
 		return
 	}
