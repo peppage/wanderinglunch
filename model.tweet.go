@@ -7,10 +7,10 @@ import (
 
 type Tweet struct {
 	Contents  string `json:"contents"`
-	Time      string
-	Id        string
-	Retweeted bool
-	Twitname  string
+	Time      string `json:"time"`
+	ID        string `json:"id"`
+	Retweeted bool   `json:"retweeted"`
+	Twitname  string `json:"twitname"`
 }
 
 func (t *Tweet) Converted() string {
