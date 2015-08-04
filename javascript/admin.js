@@ -16,6 +16,6 @@ function AdminFixModel(twitname) {
   };
 
   self.fix = function(tweet) {
-    window.location.assign('/admin/location/new/' + tweet.Id);
+    window.location.assign('/admin/location/new/' + tweet.id);
   };
 }

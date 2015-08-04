@@ -45,23 +45,23 @@
     for (var i = 0; i < locations.length; i++) {
         var loc = locations[i];
         var infowindow = new google.maps.InfoWindow({
-            content: loc.Name,
+            content: loc.name,
         });
-        var myLatLng = new google.maps.LatLng(loc.Lat, loc.Long);
+        var myLatLng = new google.maps.LatLng(loc.lat, loc.long);
 
         var existingMarker = getMarkerAt(myLatLng);
 
         if(existingMarker != null) {
-          existingMarker.title += '<a href="/truck/'+ loc.Id + '" />' + loc.Name + '</a><br>';
+          existingMarker.title += '<a href="/truck/'+ loc.id + '" />' + loc.name + '</a><br>';
 
         } else {
           var marker = new google.maps.Marker({
               position: myLatLng,
               map: map,
-              title: '<a href="/truck/'+ loc.Id + '" />' + loc.Name + '</a><br>',
+              title: '<a href="/truck/'+ loc.id + '" />' + loc.name + '</a><br>',
               zIndex: 1,
-              display: loc.Display,
-              id: loc.Id,
+              display: loc.display,
+              id: loc.id,
           });
 
           markers.push(marker);

@@ -3,8 +3,8 @@ package main
 import "fmt"
 
 type Message struct {
-	Id      int
-	Message string
+	ID      int    `json:"id"`
+	Message string `json:"message"`
 }
 
 func addMessage(m Message) bool {

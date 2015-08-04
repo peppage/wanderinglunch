@@ -9,22 +9,22 @@ import (
 )
 
 type Truck struct {
-	Id          string
-	Name        string
-	Twitname    string
-	Weburl      sql.NullString
-	Retweeted   bool
-	Lasttweet   sql.NullInt64
-	Lastupdate  sql.NullInt64
-	Updated     string
-	Type        string
-	About       sql.NullString
-	Foursquare  sql.NullString
-	Location    sql.NullString
-	Zone        string `json:"zone"`
-	Image       sql.NullString
-	Matcher     sql.NullString
-	Matchmethod sql.NullString
+	ID          string         `json:"id"`
+	Name        string         `json:"name"`
+	Twitname    string         `json:"twitname"`
+	Weburl      sql.NullString `json:"weburl"`
+	Retweeted   bool           `json:"retweeted"`
+	Lasttweet   sql.NullInt64  `json:"lasttweet"`
+	Lastupdate  sql.NullInt64  `json:"lastupdate"`
+	Updated     string         `json:"updated"`
+	Type        string         `json:"type"`
+	About       sql.NullString `json:"about"`
+	Foursquare  sql.NullString `json:"foursquare"`
+	Location    sql.NullString `json:"location"`
+	Zone        string         `json:"zone"`
+	Image       sql.NullString `json:"image"`
+	Matcher     sql.NullString `json:"matcher"`
+	Matchmethod sql.NullString `json:"matchmethod"`
 }
 
 func (t *Truck) PrettyDate() string {
@@ -63,8 +63,8 @@ func (t *Truck) PrettyDate() string {
 func getTrucks() []*Truck {
 	var trucks []*Truck
 	err := db.Select(&trucks, `SELECT trucks.id AS id, trucks.name, trucks.twitname, trucks.lastupdate, locations.display AS location, 
-		images.suffix AS image FROM trucks LEFT JOIN locations ON (locations.id = trucks.loc) LEFT JOIN (SELECT * FROM images WHERE 
-		menu='t') AS images ON (images.twitname = trucks.twitname) ORDER BY name`)
+        images.suffix AS image FROM trucks LEFT JOIN locations ON (locations.id = trucks.loc) LEFT JOIN (SELECT * FROM images WHERE 
+        menu='t') AS images ON (images.twitname = trucks.twitname) ORDER BY name`)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -81,8 +81,8 @@ func getCurrentTrucks() []*Truck {
 
 	var trucks []*Truck
 	err := db.Select(&trucks, `SELECT trucks.id AS id, trucks.name, trucks.twitname, trucks.lastupdate, locations.display AS location, 
-		locations.zone as zone, images.suffix AS image FROM trucks LEFT JOIN locations ON (locations.id = trucks.loc) LEFT JOIN
-		(SELECT * FROM images WHERE  menu='t') AS images ON (images.twitname = trucks.twitname) WHERE lastupdate > $1 ORDER BY lat DESC`, t)
+        locations.zone as zone, images.suffix AS image FROM trucks LEFT JOIN locations ON (locations.id = trucks.loc) LEFT JOIN
+        (SELECT * FROM images WHERE  menu='t') AS images ON (images.twitname = trucks.twitname) WHERE lastupdate > $1 ORDER BY lat DESC`, t)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -97,8 +97,8 @@ func getCurrentTrucks() []*Truck {
 func getTruck(id string) Truck {
 	var t Truck
 	err := db.QueryRowx(`SELECT trucks.id AS id, trucks.name, trucks.twitname, trucks.lastupdate, trucks.foursquare, trucks.weburl, locations.display AS location, 
-		images.suffix AS image FROM trucks LEFT JOIN locations ON (locations.id = trucks.loc) LEFT JOIN (SELECT * FROM images WHERE 
-		menu='t') AS images ON (images.twitname = trucks.twitname) WHERE trucks.id=$1`, id).StructScan(&t)
+        images.suffix AS image FROM trucks LEFT JOIN locations ON (locations.id = trucks.loc) LEFT JOIN (SELECT * FROM images WHERE 
+        menu='t') AS images ON (images.twitname = trucks.twitname) WHERE trucks.id=$1`, id).StructScan(&t)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -108,7 +108,7 @@ func getTruck(id string) Truck {
 
 func addTruck(t Truck) bool {
 	result, err := db.Exec(`INSERT INTO trucks (id, name, twitname, weburl, type, about, foursquare, matcher, matchmethod) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
-		t.Id, t.Name, t.Twitname, t.Weburl, t.Type, t.About, t.Foursquare, t.Matcher, t.Matchmethod)
+		t.ID, t.Name, t.Twitname, t.Weburl, t.Type, t.About, t.Foursquare, t.Matcher, t.Matchmethod)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -131,7 +131,7 @@ func deleteTruck(id string) bool {
 
 func updateTruck(t Truck) bool {
 	result, err := db.Exec(`UPDATE trucks SET (name, twitname, weburl, type, about, foursquare, matcher, matchmethod) = ($1, $2, $3, $4, $5, $6, $7, $8) WHERE id=$9`,
-		t.Name, t.Twitname, t.Weburl, t.Type, t.About, t.Foursquare, t.Matcher, t.Matchmethod, t.Id)
+		t.Name, t.Twitname, t.Weburl, t.Type, t.About, t.Foursquare, t.Matcher, t.Matchmethod, t.ID)
 	if err != nil {
 		fmt.Println(err)
 	}

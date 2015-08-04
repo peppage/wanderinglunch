@@ -29,7 +29,7 @@ func adminRoot(c web.C, w http.ResponseWriter, r *http.Request) {
 
 func adminFix(c web.C, w http.ResponseWriter, r *http.Request) {
 	t := getTruck(c.URLParams["id"])
-	if t.Id == "" {
+	if t.ID == "" {
 		http.Redirect(w, r, "/admin", http.StatusNotFound)
 		return
 	}

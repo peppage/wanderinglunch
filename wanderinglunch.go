@@ -39,7 +39,7 @@ func allTrucks(c web.C, w http.ResponseWriter, r *http.Request) {
 
 func truck(c web.C, w http.ResponseWriter, r *http.Request) {
 	var t = getTruck(c.URLParams["id"])
-	if t.Id == "" {
+	if t.ID == "" {
 		http.Redirect(w, r, "/", http.StatusNotFound)
 		return
 	}

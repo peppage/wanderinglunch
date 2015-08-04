@@ -18,7 +18,7 @@ func trucksCurrent(c web.C, w http.ResponseWriter, r *http.Request) {
 
 func truckById(c web.C, w http.ResponseWriter, r *http.Request) {
 	truck := getTruck(c.URLParams["id"])
-	if truck.Id == "" {
+	if truck.ID == "" {
 		renderer.JSON(w, http.StatusNotFound, nil)
 		return
 	}
@@ -34,7 +34,7 @@ func truckMarker(c web.C, w http.ResponseWriter, r *http.Request) {
 
 func truckSave(c web.C, w http.ResponseWriter, r *http.Request) {
 	var t Truck
-	t.Id = r.FormValue("id")
+	t.ID = r.FormValue("id")
 	t.Name = r.FormValue("name")
 	t.Twitname = r.FormValue("twitname")
 	t.Weburl = sql.NullString{String: r.FormValue("weburl"), Valid: true}
@@ -44,7 +44,7 @@ func truckSave(c web.C, w http.ResponseWriter, r *http.Request) {
 	t.Matcher = sql.NullString{String: r.FormValue("matcher"), Valid: true}
 	t.Matchmethod = sql.NullString{String: r.FormValue("matchmethod"), Valid: true}
 	if addTruck(t) {
-		renderer.JSON(w, http.StatusOK, getTruck(t.Id))
+		renderer.JSON(w, http.StatusOK, getTruck(t.ID))
 		return
 	}
 	renderer.JSON(w, http.StatusInternalServerError, nil)
@@ -52,7 +52,7 @@ func truckSave(c web.C, w http.ResponseWriter, r *http.Request) {
 
 func truckUpdate(c web.C, w http.ResponseWriter, r *http.Request) {
 	var t Truck
-	t.Id = c.URLParams["id"]
+	t.ID = c.URLParams["id"]
 	t.Name = r.FormValue("name")
 	t.Twitname = r.FormValue("twitname")
 	t.Weburl = sql.NullString{String: r.FormValue("weburl"), Valid: true}
@@ -62,7 +62,7 @@ func truckUpdate(c web.C, w http.ResponseWriter, r *http.Request) {
 	t.Matcher = sql.NullString{String: r.FormValue("matcher"), Valid: true}
 	t.Matchmethod = sql.NullString{String: r.FormValue("matchmethod"), Valid: true}
 	if updateTruck(t) {
-		renderer.JSON(w, http.StatusOK, getTruck(t.Id))
+		renderer.JSON(w, http.StatusOK, getTruck(t.ID))
 		return
 	}
 	renderer.JSON(w, http.StatusInternalServerError, nil)
@@ -87,7 +87,7 @@ func failures(c web.C, w http.ResponseWriter, r *http.Request) {
 func tweet(c web.C, w http.ResponseWriter, r *http.Request) {
 	id, _ := strconv.Atoi(c.URLParams["id"])
 	t := getTweet(id)
-	if t.Id == "" {
+	if t.ID == "" {
 		renderer.JSON(w, http.StatusNotFound, nil)
 		return
 	}
@@ -160,7 +160,7 @@ func locations(c web.C, w http.ResponseWriter, r *http.Request) {
 
 func location(c web.C, w http.ResponseWriter, r *http.Request) {
 	loc := getLocation(c.URLParams["id"])
-	if loc.Id == 0 {
+	if loc.ID == 0 {
 		renderer.JSON(w, http.StatusNotFound, nil)
 		return
 	}
@@ -194,7 +194,7 @@ func locationDelete(c web.C, w http.ResponseWriter, r *http.Request) {
 
 func locationUpdate(c web.C, w http.ResponseWriter, r *http.Request) {
 	var l Location
-	l.Id, _ = strconv.Atoi(c.URLParams["id"])
+	l.ID, _ = strconv.Atoi(c.URLParams["id"])
 	l.Display = r.FormValue("display")
 	l.Matcher = r.FormValue("matcher")
 	l.Region = r.FormValue("region")

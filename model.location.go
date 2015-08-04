@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 type Location struct {
-	Id      int    `json:"id"`
+	ID      int    `json:"id"`
 	Display string `json:"display"`
 	Matcher string `json:"matcher"`
 	Region  string `json:"region"`
