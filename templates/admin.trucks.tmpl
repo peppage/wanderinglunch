@@ -12,9 +12,12 @@
 	<tbody data-bind="foreach: results">
 		<td><a data-bind="attr: { href: '/admin/truck/'+id }"><span data-bind="text: name"></span></a></td>
 	</tbody>
+
 </table>
-<button data-bind="click: prev, visible: hasPrevious">Prev</button>
-<button data-bind="click: next, visible: hasNext">Next</button>
+<div data-bind="ifnot: query().length">
+	<button data-bind="click: prev, visible: hasPrevious">Prev</button>
+	<button data-bind="click: next, visible: hasNext">Next</button>
+</div>
 
 
 
@@ -66,9 +69,14 @@
 		};
 
 		self.results = ko.computed(function() {
-			return ko.utils.arrayFilter(self.trucks(), function(item) {
+			var items = ko.utils.arrayFilter(self.trucks(), function(item) {
 				return item.name.toLowerCase().indexOf(self.query().toLowerCase()) >= 0;
 			});
+			if(items.length < self.perPage) {
+				self.pageNumber(0);
+			}
+			var first = self.pageNumber() * self.perPage;
+			return items.slice(first, first + self.perPage);
 		});
 	}
 </script>
