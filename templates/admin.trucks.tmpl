@@ -1,0 +1,74 @@
+<h1>Trucks</h1>
+
+<input id="search" type="search" name="search" placeholder="Search..."
+	   data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off" />
+
+<table class="table table-minimal">
+	<thead>
+		<tr>
+			<th>Name</th>
+		</tr>
+	</thead>
+	<tbody data-bind="foreach: results">
+		<td><a data-bind="attr: { href: '/admin/truck/'+id }"><span data-bind="text: name"></span></a></td>
+	</tbody>
+</table>
+<button data-bind="click: prev, visible: hasPrevious">Prev</button>
+<button data-bind="click: next, visible: hasNext">Next</button>
+
+
+
+<script type="text/javascript">
+	document.addEventListener('DOMContentLoaded', function() {
+		ko.applyBindings(new AdminTrucks());	
+	});
+	
+	function AdminTrucks() {
+		var self = this;
+		self.trucks = ko.observable([]);
+		self.pageNumber = ko.observable(0);
+		self.perPage = 10;
+		self.query = ko.observable('');
+
+		$.getJSON('/api/trucks', function(data) {
+  			self.trucks(data);
+		});
+
+		self.totalPages = ko.computed(function() {
+			var div = Math.floor(self.trucks().length / self.perPage);
+			div += self.trucks().length % self.perPage > 0 ? 1 : 0;
+			return div - 1;
+		});
+
+		self.paginated = ko.computed(function() {
+			var first = self.pageNumber() * self.perPage;
+			return self.trucks().slice(first, first + self.perPage);
+		});
+
+		self.hasPrevious = ko.computed(function() {
+			return self.pageNumber() !== 0;
+		});
+
+		self.hasNext = ko.computed(function() {
+			return self.pageNumber() !== self.totalPages;
+		});
+
+		self.next = function() {
+			if(self.pageNumber() < self.totalPages()) {
+				self.pageNumber(self.pageNumber() + 1);
+			}
+		};
+
+		self.prev = function() {
+			if(self.pageNumber() !== 0) {
+				self.pageNumber(self.pageNumber() - 1);
+			}
+		};
+
+		self.results = ko.computed(function() {
+			return ko.utils.arrayFilter(self.trucks(), function(item) {
+				return item.name.toLowerCase().indexOf(self.query().toLowerCase()) >= 0;
+			});
+		});
+	}
+</script>
