@@ -31,9 +31,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function indexModel() {
   var self = this;
-  self.trucks = ko.observableArray();
+  self.trucks = ko.observableArray([]);
   self.location = ko.observable('manhatten');
-  self.visible = ko.observableArray();
+  self.visible = ko.observableArray([]);
 
   $.getJSON('/api/trucks/current', function(data) {
     self.trucks(data);
