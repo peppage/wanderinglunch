@@ -1,0 +1,57 @@
+<h1>Edit Truck</h1>
+
+<p>
+	
+</p>
+
+<label>Id</label><br>
+<input type="text" data-bind="value: truck().id"><br>
+
+<label>Name</label><br>
+<input type="text" data-bind="value: truck().name"><br>
+
+<label>Twitname</label><br>
+<input type="text" data-bind="value: truck().twitname"><br>
+
+<label>Web Url</label><br>
+<input type="text" data-bind="value: truck().weburl"><br>
+
+<label>Type</label><br>
+<input type="text" data-bind="value: truck().type"><br>
+
+<label>About</label><br>
+<input type="text" data-bind="value: truck().about"><br>
+
+<label>Foursquare</label><br>
+<input type="text" data-bind="value: truck().foursquare"><br>
+
+<label>Matcher</label><br>
+<input type="text" data-bind="value: truck().matcher"><br>
+
+<label>Match Method</label><br>
+<input type="text" data-bind="value: truck().matchmethod"><br>
+
+<button data-bind="click: save">Save</button>
+
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		ko.applyBindings(new AdminEditTruck({{ .id }}));
+	});
+	
+	function AdminEditTruck(id) {
+		var self = this;
+		self.truck = ko.observable({});
+		
+		$.getJSON('/api/trucks/' + id, function(data) {
+  			self.truck(data);
+		});
+
+		self.save = function() {
+			console.log(ko.toJS(self.truck));
+			$.post('/api/trucks/' + id + '/update', ko.toJS(self.truck), function(data) {
+				console.log(data);
+			});
+			return true;
+		};
+	}
+</script>
