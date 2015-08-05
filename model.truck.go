@@ -1,7 +1,6 @@
 package main
 
 import (
-	"database/sql"
 	"fmt"
 	"math"
 	"strconv"
@@ -11,22 +10,22 @@ import (
 )
 
 type Truck struct {
-	ID          string        `json:"id"`
-	Name        string        `json:"name"`
-	Twitname    string        `json:"twitname"`
-	Weburl      null.String   `json:"weburl"`
-	Retweeted   bool          `json:"retweeted"`
-	Lasttweet   sql.NullInt64 `json:"lasttweet"`
-	Lastupdate  sql.NullInt64 `json:"lastupdate"`
-	Updated     string        `json:"updated"`
-	Type        string        `json:"type"`
-	About       null.String   `json:"about"`
-	Foursquare  null.String   `json:"foursquare"`
-	Location    null.String   `json:"location"`
-	Zone        string        `json:"zone"`
-	Image       null.String   `json:"image"`
-	Matcher     null.String   `json:"matcher"`
-	Matchmethod null.String   `json:"matchmethod"`
+	ID          string      `json:"id"`
+	Name        string      `json:"name"`
+	Twitname    string      `json:"twitname"`
+	Weburl      null.String `json:"weburl"`
+	Retweeted   bool        `json:"retweeted"`
+	Lasttweet   null.Int    `json:"lasttweet"`
+	Lastupdate  null.Int    `json:"lastupdate"`
+	Updated     string      `json:"updated"`
+	Type        string      `json:"type"`
+	About       null.String `json:"about"`
+	Foursquare  null.String `json:"foursquare"`
+	Location    null.String `json:"location"`
+	Zone        string      `json:"zone"`
+	Image       null.String `json:"image"`
+	Matcher     null.String `json:"matcher"`
+	Matchmethod null.String `json:"matchmethod"`
 }
 
 func (t *Truck) PrettyDate() string {
