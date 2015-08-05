@@ -4,16 +4,10 @@
 	<thead>
 		<tr>
 			<th>Display</th>
-			<th>Matcher</th>
-			<th>Actions</th>
 		</tr>
 	</thead>
 	<tbody data-bind="foreach: paginated">
 		<td><a data-bind="attr: { href: '/admin/location/'+id }"><span data-bind="text: display"></span></a></td>
-		<td><span data-bind="text: matcher"></span></td>
-		<td>
-			<button>Edit</button>
-		</td>
 	</tbody>
 </table>
 <button data-bind="click: prev, visible: hasPrevious">Prev</button>
