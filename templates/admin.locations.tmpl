@@ -1,18 +1,21 @@
 <h1>Locations</h1>
 
+<input id="search" type="search" name="search" placeholder="Search..."
+	   data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off" />
 <table class="table table-minimal">
 	<thead>
 		<tr>
 			<th>Display</th>
 		</tr>
 	</thead>
-	<tbody data-bind="foreach: paginated">
+	<tbody data-bind="foreach: results">
 		<td><a data-bind="attr: { href: '/admin/location/'+id }"><span data-bind="text: display"></span></a></td>
 	</tbody>
 </table>
-<button data-bind="click: prev, visible: hasPrevious">Prev</button>
-<button data-bind="click: next, visible: hasNext">Next</button>
-
+<div data-bind="ifnot: query().length">
+	<button data-bind="click: prev, visible: hasPrevious">Prev</button>
+	<button data-bind="click: next, visible: hasNext">Next</button>
+</div>
 
 
 <script type="text/javascript">
@@ -25,6 +28,7 @@
 		self.locs = ko.observable([]);
 		self.pageNumber = ko.observable(0);
 		self.perPage = 10;
+		self.query = ko.observable('');
 
 		$.getJSON('/api/locations', function(data) {
   			self.locs(data);
@@ -60,5 +64,16 @@
 				self.pageNumber(self.pageNumber() - 1);
 			}
 		};
+
+		self.results = ko.computed(function() {
+			var items = ko.utils.arrayFilter(self.locs(), function(item) {
+				return item.display.toLowerCase().indexOf(self.query().toLowerCase()) >= 0;
+			});
+			if(items.length < self.perPage) {
+				self.pageNumber(0);
+			}
+			var first = self.pageNumber() * self.perPage;
+			return items.slice(first, first + self.perPage);
+		});
 	}
 </script>
