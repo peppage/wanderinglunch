@@ -24,7 +24,7 @@ func adminRoot(c web.C, w http.ResponseWriter, r *http.Request) {
 	data["title"] = "Wandering Lunch: NYC Food Truck Finder | Admin"
 	data["admin"] = true
 
-	renderer.HTML(w, http.StatusOK, "admin.index", data)
+	renderer.HTML(w, http.StatusOK, "admin/index", data)
 }
 
 func adminFix(c web.C, w http.ResponseWriter, r *http.Request) {
@@ -39,7 +39,7 @@ func adminFix(c web.C, w http.ResponseWriter, r *http.Request) {
 	data["title"] = "Wandering Lunch: NYC Food Truck Finder | Admin - Fixing " + t.Name
 	data["admin"] = true
 
-	renderer.HTML(w, http.StatusOK, "admin.fix", data)
+	renderer.HTML(w, http.StatusOK, "admin/fix", data)
 }
 
 func adminNewLoc(c web.C, w http.ResponseWriter, r *http.Request) {
@@ -56,7 +56,7 @@ func adminLocs(c web.C, w http.ResponseWriter, r *http.Request) {
 	data["title"] = "Wandering Lunch: NYC Food Truck Finder | Admin - Locations"
 	data["admin"] = true
 
-	renderer.HTML(w, http.StatusOK, "admin.locations", data)
+	renderer.HTML(w, http.StatusOK, "admin/locations", data)
 }
 
 func adminEditLoc(c web.C, w http.ResponseWriter, r *http.Request) {
@@ -65,7 +65,7 @@ func adminEditLoc(c web.C, w http.ResponseWriter, r *http.Request) {
 	data["admin"] = true
 	data["id"] = c.URLParams["id"]
 
-	renderer.HTML(w, http.StatusOK, "admin.location", data)
+	renderer.HTML(w, http.StatusOK, "admin/location", data)
 }
 
 func adminTrucks(c web.C, w http.ResponseWriter, r *http.Request) {
@@ -73,7 +73,7 @@ func adminTrucks(c web.C, w http.ResponseWriter, r *http.Request) {
 	data["title"] = "Wandering Lunch: NYC Food Truck Finder | Admin - Trucks "
 	data["admin"] = true
 
-	renderer.HTML(w, http.StatusOK, "admin.trucks", data)
+	renderer.HTML(w, http.StatusOK, "admin/trucks", data)
 }
 
 func adminEditTruck(c web.C, w http.ResponseWriter, r *http.Request) {
@@ -82,7 +82,7 @@ func adminEditTruck(c web.C, w http.ResponseWriter, r *http.Request) {
 	data["admin"] = true
 	data["id"] = c.URLParams["id"]
 
-	renderer.HTML(w, http.StatusOK, "admin.truck", data)
+	renderer.HTML(w, http.StatusOK, "admin/truck", data)
 }
 
 func adminMessage(c web.C, w http.ResponseWriter, r *http.Request) {
@@ -90,5 +90,5 @@ func adminMessage(c web.C, w http.ResponseWriter, r *http.Request) {
 	data["title"] = "Wandering Lunch: NYC Food Truck Finder | Admin - Message"
 	data["admin"] = true
 
-	renderer.HTML(w, http.StatusOK, "admin.message", data)
+	renderer.HTML(w, http.StatusOK, "admin/message", data)
 }
