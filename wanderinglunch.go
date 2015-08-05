@@ -95,6 +95,7 @@ func main() {
 	admin.Get("/location/:id", adminEditLoc)
 	admin.Get("/trucks", adminTrucks)
 	admin.Get("/truck/:id", adminEditTruck)
+	admin.Get("/message", adminMessage)
 
 	api := web.New()
 	goji.Handle("/api/*", api)
