@@ -6,25 +6,27 @@ import (
 	"math"
 	"strconv"
 	"time"
+
+	"gopkg.in/guregu/null.v2"
 )
 
 type Truck struct {
-	ID          string         `json:"id"`
-	Name        string         `json:"name"`
-	Twitname    string         `json:"twitname"`
-	Weburl      sql.NullString `json:"weburl"`
-	Retweeted   bool           `json:"retweeted"`
-	Lasttweet   sql.NullInt64  `json:"lasttweet"`
-	Lastupdate  sql.NullInt64  `json:"lastupdate"`
-	Updated     string         `json:"updated"`
-	Type        string         `json:"type"`
-	About       sql.NullString `json:"about"`
-	Foursquare  sql.NullString `json:"foursquare"`
-	Location    sql.NullString `json:"location"`
-	Zone        string         `json:"zone"`
-	Image       sql.NullString `json:"image"`
-	Matcher     sql.NullString `json:"matcher"`
-	Matchmethod sql.NullString `json:"matchmethod"`
+	ID          string        `json:"id"`
+	Name        string        `json:"name"`
+	Twitname    string        `json:"twitname"`
+	Weburl      null.String   `json:"weburl"`
+	Retweeted   bool          `json:"retweeted"`
+	Lasttweet   sql.NullInt64 `json:"lasttweet"`
+	Lastupdate  sql.NullInt64 `json:"lastupdate"`
+	Updated     string        `json:"updated"`
+	Type        string        `json:"type"`
+	About       null.String   `json:"about"`
+	Foursquare  null.String   `json:"foursquare"`
+	Location    null.String   `json:"location"`
+	Zone        string        `json:"zone"`
+	Image       null.String   `json:"image"`
+	Matcher     null.String   `json:"matcher"`
+	Matchmethod null.String   `json:"matchmethod"`
 }
 
 func (t *Truck) PrettyDate() string {
