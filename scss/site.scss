@@ -216,6 +216,11 @@ input:focus {
   outline: none;
 }
 
+label {
+  font-weight: bold;
+  margin-bottom: 0.375em;
+}
+
 // Trucks Table
 .table-minimal {
   $base-border-color: gainsboro !default;
