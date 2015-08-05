@@ -19,7 +19,7 @@
 			<th>Tweet </th>
 		</thead>
 		<tbody data-bind="foreach: tweets">
-			<td><a href="#" data-bind="click: $parent.fix"><span data-bind="text: contents"></span></a></td>
+			<td><a href="#" data-bind="attr: {href: '/admin/location/new/'+id }"><span data-bind="text: contents"></span></a></td>
 		</tbody>
 	</table>
 

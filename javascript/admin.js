@@ -14,8 +14,4 @@ function AdminFixModel(twitname) {
       self.tweets(data);
     });
   };
-
-  self.fix = function(tweet) {
-    window.location.assign('/admin/location/new/' + tweet.id);
-  };
 }
