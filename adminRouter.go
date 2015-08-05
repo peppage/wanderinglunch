@@ -48,7 +48,7 @@ func adminNewLoc(c web.C, w http.ResponseWriter, r *http.Request) {
 	data["id"] = c.URLParams["tweetId"]
 	data["admin"] = true
 
-	renderer.HTML(w, http.StatusOK, "admin.newloc", data)
+	renderer.HTML(w, http.StatusOK, "admin/newloc", data)
 }
 
 func adminLocs(c web.C, w http.ResponseWriter, r *http.Request) {
