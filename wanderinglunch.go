@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -8,6 +9,7 @@ import (
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
 	"github.com/unrolled/render"
+	"github.com/ymichael/sessions"
 	"github.com/zenazn/goji"
 	"github.com/zenazn/goji/web"
 	"github.com/zenazn/goji/web/middleware"
@@ -15,6 +17,9 @@ import (
 
 var db *sqlx.DB
 var renderer *render.Render
+var secret = "thisismysecret"
+var inMemorySessionStore = sessions.MemoryStore{}
+var Sessions = sessions.NewSessionOptions(secret, &inMemorySessionStore)
 
 func root(c web.C, w http.ResponseWriter, r *http.Request) {
 	message := getMessage()
@@ -61,6 +66,21 @@ func support(c web.C, w http.ResponseWriter, r *http.Request) {
 	renderer.HTML(w, http.StatusOK, "support", nil)
 }
 
+func login(c web.C, w http.ResponseWriter, r *http.Request) {
+	renderer.HTML(w, http.StatusOK, "login", nil)
+}
+
+func loginHandle(c web.C, w http.ResponseWriter, r *http.Request) {
+	u, err := getUser(r.FormValue("email"))
+	if err != nil {
+		http.Redirect(w, r, "/login", 302) // The user is invalid!
+		return
+	}
+	s := Sessions.GetSessionObject(&c)
+	s["user"] = u.Email
+	http.Redirect(w, r, "/admin", 302)
+}
+
 func init() {
 	var err error
 	db, err = sqlx.Open("postgres", "user=mca dbname=foodtruck sslmode=disable")
@@ -83,8 +103,12 @@ func main() {
 	goji.Get("/alltrucks", allTrucks)
 	goji.Get("/map", maps)
 	goji.Get("/support", support)
+	goji.Get("/login", login)
+	goji.Post("/login", loginHandle)
 
 	admin := web.New()
+	admin.Use(Sessions.Middleware())
+	admin.Use(Secure)
 	goji.Handle("/admin/*", admin)
 	goji.Get("/admin", http.RedirectHandler("/admin/", 301))
 	admin.Use(middleware.SubRouter)
