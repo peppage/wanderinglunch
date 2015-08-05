@@ -34,11 +34,11 @@
 			</thead>
 			<tbody data-bind="foreach: visible">
 				<td><a data-bind="attr: { href: '/truck/'+id }"><span data-bind="text: name"></span></a></td>
-				<td><span data-bind="text: location.String"></span></td>
+				<td><span data-bind="text: location"></span></td>
 				<td><span data-bind="text: updated"></span></td>
 				<td class="noMobile">
-					<span data-bind="if: image.String">
-						<img data-bind="attr { src: 'http://irs0.4sqi.net/img/general/width30'+ image.String }" />
+					<span data-bind="if: image">
+						<img data-bind="attr { src: 'http://irs0.4sqi.net/img/general/width30'+ image }" />
 					</span>
 				</td>
 			</tbody>
