@@ -72,12 +72,12 @@ func login(c web.C, w http.ResponseWriter, r *http.Request) {
 func loginHandle(c web.C, w http.ResponseWriter, r *http.Request) {
 	u, err := verifyPassword(r.FormValue("email"), r.FormValue("password"))
 	if err != nil {
-		http.Redirect(w, r, "/login", 302) // The user is invalid!
+		http.Redirect(w, r, "/login", http.StatusTemporaryRedirect) // The user is invalid!
 		return
 	}
 	s := Sessions.GetSessionObject(&c)
 	s["user"] = u.Email
-	http.Redirect(w, r, "/admin", 302)
+	http.Redirect(w, r, "/admin", http.StatusTemporaryRedirect)
 }
 
 func init() {
@@ -107,7 +107,7 @@ func main() {
 	goji.Post("/login", loginHandle)
 
 	goji.Handle("/admin/*", admin)
-	goji.Get("/admin", http.RedirectHandler("/admin/", 301))
+	goji.Get("/admin", http.RedirectHandler("/admin/", http.StatusMovedPermanently))
 	admin := web.New()
 	admin.Use(Secure)
 	admin.Use(middleware.SubRouter)
@@ -123,7 +123,7 @@ func main() {
 	goji.Handle("/api/*", api)
 	api := web.New()
 	api.Use(middleware.SubRouter)
-	goji.Get("/api", http.RedirectHandler("/api/", 301))
+	goji.Get("/api", http.RedirectHandler("/api/", http.StatusMovedPermanently))
 	api.Get("/trucks", trucks)
 	api.Get("/trucks/current", trucksCurrent)
 	api.Get("/trucks/failures", failures)
