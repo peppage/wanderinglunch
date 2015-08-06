@@ -97,6 +97,7 @@ func init() {
 }
 
 func main() {
+	goji.Use(Sessions.Middleware())
 	goji.Get("/", root)
 	goji.Get("/truck/:id", truck)
 	goji.Get("/alltrucks", allTrucks)
@@ -104,12 +105,11 @@ func main() {
 	goji.Get("/support", support)
 	goji.Get("/login", login)
 	goji.Post("/login", loginHandle)
-	goji.Use(Sessions.Middleware())
 
-	admin := web.New()
-	admin.Use(Secure)
 	goji.Handle("/admin/*", admin)
 	goji.Get("/admin", http.RedirectHandler("/admin/", 301))
+	admin := web.New()
+	admin.Use(Secure)
 	admin.Use(middleware.SubRouter)
 	admin.Get("/", adminRoot)
 	admin.Get("/fix/:id", adminFix)
@@ -120,8 +120,8 @@ func main() {
 	admin.Get("/truck/:id", adminEditTruck)
 	admin.Get("/message", adminMessage)
 
-	api := web.New()
 	goji.Handle("/api/*", api)
+	api := web.New()
 	api.Use(middleware.SubRouter)
 	goji.Get("/api", http.RedirectHandler("/api/", 301))
 	api.Get("/trucks", trucks)
