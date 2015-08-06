@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -71,7 +70,7 @@ func login(c web.C, w http.ResponseWriter, r *http.Request) {
 }
 
 func loginHandle(c web.C, w http.ResponseWriter, r *http.Request) {
-	u, err := getUser(r.FormValue("email"))
+	u, err := verifyPassword(r.FormValue("email"), r.FormValue("password"))
 	if err != nil {
 		http.Redirect(w, r, "/login", 302) // The user is invalid!
 		return
@@ -105,9 +104,9 @@ func main() {
 	goji.Get("/support", support)
 	goji.Get("/login", login)
 	goji.Post("/login", loginHandle)
+	goji.Use(Sessions.Middleware())
 
 	admin := web.New()
-	admin.Use(Sessions.Middleware())
 	admin.Use(Secure)
 	goji.Handle("/admin/*", admin)
 	goji.Get("/admin", http.RedirectHandler("/admin/", 301))
