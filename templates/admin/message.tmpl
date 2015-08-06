@@ -20,7 +20,7 @@
 		
 		self.save = function() {
 			$.post('/api/messages/add', ko.toJS(self.message), function(data) {
-				console.log(data);
+				self.message(data)
 			});
 			return true;
 		};
