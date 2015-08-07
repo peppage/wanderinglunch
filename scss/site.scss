@@ -282,6 +282,10 @@ label {
   }
 }
 
+.sortable {
+  cursor: pointer;
+}
+
 //Button Group
 .button-group {  
   $base-border-color: gainsboro !default;

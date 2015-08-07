@@ -31,13 +31,8 @@ func root(c web.C, w http.ResponseWriter, r *http.Request) {
 }
 
 func allTrucks(c web.C, w http.ResponseWriter, r *http.Request) {
-	trucks := getTrucks()
-
 	data := make(map[string]interface{})
-	data["trucks"] = trucks
 	data["title"] = "Wandering Lunch: NYC Food Truck Finder | All Trucks List"
-	data["active"] = "trucks"
-
 	renderer.HTML(w, http.StatusOK, "alltrucks", data)
 }
 

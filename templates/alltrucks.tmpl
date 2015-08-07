@@ -1,30 +1,57 @@
+<input id="search" type="search" name="search" placeholder="Search by name..."
+	   data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off" />
+
 <table class="table table-minimal">
 	<thead>
 		<tr>
-			<th>Truck</th>
-			<th>Location</th>
-			<th>Time</th>
+			<th class="sortable" data-bind="orderable: {collection: 'trucks', field: 'name', defaultField: true, defaultDirection: 'desc' }">Truck</th>
+			<th class="sortable" data-bind="orderable: {collection: 'trucks', field: 'location' }">Location</th>
+			<th class="sortable" data-bind="orderable: {collection: 'trucks', field: 'lastupdate' }">Time</th>
 			<th class="noMobile">Menu</th>
 		</tr>
 	</thead>
-	<tbody>
-		{{ range .trucks }}
-			<tr>
-				<td>
-					<a class="truck" href="/truck/{{ .ID }}">{{ .Name }}</a>
-				</td>
-				<td>
-					{{ .Location.Value }}
-				</td>
-				<td>
-					{{ .PrettyDate }}
-				</td>
-				<td class="noMobile">
-					{{ if .Image.Value }}
-						<img src="http://irs0.4sqi.net/img/general/width30{{ .Image.Value }}" />
-					{{ end }}
-				</td>
-			</tr>
-		{{ end }}
+	<tbody data-bind="foreach: results">
+		<tr>
+			<td>
+				<a data-bind="attr: { href: '/truck/'+id }"><span data-bind="text: name"></span></a>
+			</td>
+			<td>
+				<span data-bind="text: location"></span>
+			</td>
+			<td>
+				<span data-bind="text: updated"></span>
+			</td>
+			<td class="noMobile">
+				<span data-bind="if: image">
+					<img data-bind="attr { src: 'http://irs0.4sqi.net/img/general/width30'+ image }" />
+				</span>
+			</td>
+		</tr>
 	</tbody>
 </table>
+
+<script type="text/javascript">
+	document.addEventListener('DOMContentLoaded', function() {
+		ko.applyBindings(new AllTrucksModel());	
+	});
+	
+	function AllTrucksModel() {
+		var self = this;
+		self.trucks = ko.observableArray([]);
+		self.query = ko.observable('');
+
+		$.getJSON('/api/trucks', function(data) {
+  			self.trucks(data);
+  			self.trucks.orderDirection('asc');
+  			self.trucks.orderField('name');
+		});
+
+
+		self.results = ko.computed(function() {
+			var items = ko.utils.arrayFilter(self.trucks(), function(item) {
+				return item.name.toLowerCase().indexOf(self.query().toLowerCase()) >= 0;
+			});
+			return items;
+		});
+	}
+</script>
