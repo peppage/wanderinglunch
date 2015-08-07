@@ -6,11 +6,15 @@
 <table class="table table-minimal">
 	<thead>
 		<tr>
+			<th>Id</th>
 			<th>Name</th>
+			<th></th>
 		</tr>
 	</thead>
 	<tbody data-bind="foreach: results">
+		<td><span data-bind="text: id"></span></td>
 		<td><a data-bind="attr: { href: '/admin/truck/'+id }"><span data-bind="text: name"></span></a></td>
+		<td><a data-bind="click: $parent.delete">delete</a></td>
 	</tbody>
 
 </table>
@@ -28,7 +32,7 @@
 	
 	function AdminTrucks() {
 		var self = this;
-		self.trucks = ko.observable([]);
+		self.trucks = ko.observableArray([]);
 		self.pageNumber = ko.observable(0);
 		self.perPage = 10;
 		self.query = ko.observable('');
@@ -67,6 +71,17 @@
 				self.pageNumber(self.pageNumber() - 1);
 			}
 		};
+
+		self.delete = function(truck) {
+			$.ajax({
+			    url: '/api/trucks/' + truck.id + '/delete',
+			    type: 'DELETE',
+			    success: function(data) {
+			        console.log(data);
+					self.trucks.remove(truck);
+			    }
+			});
+		}
 
 		self.results = ko.computed(function() {
 			var items = ko.utils.arrayFilter(self.trucks(), function(item) {
