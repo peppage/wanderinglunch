@@ -29,6 +29,12 @@
 		</tr>
 	</tbody>
 </table>
+<noscript>
+	{{ range .trucks }}
+		<a class="truck" href="/truck/{{ .ID }}">{{ .Name }}</a><br>
+	{{ end }}
+</noscript>
+
 
 <script type="text/javascript">
 	document.addEventListener('DOMContentLoaded', function() {
