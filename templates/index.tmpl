@@ -6,7 +6,7 @@
 		<img src="http://placehold.it/300x250" />
 	</div>
 </div>
-<div class="row" data-bind="if: visible().length">
+<div class="row" data-bind="if: trucks().length">
 	<div class="col-buttons">
 		<div class="button-group">
 			<label>
@@ -20,8 +20,8 @@
 		</div>
 	</div>
 </div>
-<div class="row" data-bind="if: visible().length">
-	<div class="col-12">
+<div class="row">
+	<div class="col-12" data-bind="if: visible().length">
 		<button class="js-update" data-bind="click: update">Update</button>
 		<table class="table table-minimal">
 			<thead>
