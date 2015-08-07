@@ -80,7 +80,7 @@ func getTrucks() []*Truck {
 func getCurrentTrucks() []*Truck {
 	t := time.Now().Add(-8 * (time.Minute * 60)).Unix()
 
-	var trucks []*Truck
+	trucks := []*Truck{}
 	err := db.Select(&trucks, `SELECT trucks.id AS id, trucks.name, trucks.twitname, trucks.lastupdate, locations.display AS location, 
         locations.zone as zone, images.suffix AS image FROM trucks LEFT JOIN locations ON (locations.id = trucks.loc) LEFT JOIN
         (SELECT * FROM images WHERE  menu='t') AS images ON (images.twitname = trucks.twitname) WHERE lastupdate > $1 ORDER BY lat DESC`, t)
