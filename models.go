@@ -3,7 +3,11 @@ package main
 import (
 	"fmt"
 	"time"
+
+	"github.com/pmylund/go-cache"
 )
+
+var Cache = cache.New(2*time.Minute, 30*time.Second)
 
 type Marker struct {
 	Id      string

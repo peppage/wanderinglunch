@@ -6,6 +6,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/pmylund/go-cache"
 	"gopkg.in/guregu/null.v2"
 	"gopkg.in/guregu/null.v2/zero"
 )
@@ -64,35 +65,42 @@ func (t *Truck) PrettyDate() string {
 
 func getTrucks() []*Truck {
 	var trucks []*Truck
-	err := db.Select(&trucks, `SELECT trucks.id AS id, trucks.name, trucks.twitname, trucks.lastupdate, locations.display AS location, 
-        images.suffix AS image FROM trucks LEFT JOIN locations ON (locations.id = trucks.loc) LEFT JOIN (SELECT * FROM images WHERE 
-        menu='t') AS images ON (images.twitname = trucks.twitname) ORDER BY name`)
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	for i := 0; i < len(trucks); i++ {
-		trucks[i].Updated = trucks[i].PrettyDate()
+	if object, found := Cache.Get("trucks"); found {
+		trucks = object.([]*Truck)
+	} else {
+		err := db.Select(&trucks, `SELECT trucks.id AS id, trucks.name, trucks.twitname, trucks.lastupdate, locations.display AS location, 
+			images.suffix AS image FROM trucks LEFT JOIN locations ON (locations.id = trucks.loc) LEFT JOIN (SELECT * FROM images WHERE 
+		    menu='t') AS images ON (images.twitname = trucks.twitname) ORDER BY name`)
+		if err != nil {
+			fmt.Println(err)
+		}
+		for i := 0; i < len(trucks); i++ {
+			trucks[i].Updated = trucks[i].PrettyDate()
+		}
+		Cache.Set("trucks", trucks, cache.DefaultExpiration)
 	}
 
 	return trucks
 }
 
 func getCurrentTrucks() []*Truck {
-	t := time.Now().Add(-8 * (time.Minute * 60)).Unix()
-
-	trucks := []*Truck{}
-	err := db.Select(&trucks, `SELECT trucks.id AS id, trucks.name, trucks.twitname, trucks.lastupdate, locations.display AS location, 
-        locations.zone as zone, images.suffix AS image FROM trucks LEFT JOIN locations ON (locations.id = trucks.loc) LEFT JOIN
-        (SELECT * FROM images WHERE  menu='t') AS images ON (images.twitname = trucks.twitname) WHERE lastupdate > $1 ORDER BY lat DESC`, t)
-	if err != nil {
-		fmt.Println(err)
+	var trucks []*Truck
+	if object, found := Cache.Get("currentTrucks"); found {
+		trucks = object.([]*Truck)
+	} else {
+		t := time.Now().Add(-8 * (time.Minute * 60)).Unix()
+		trucks = []*Truck{}
+		err := db.Select(&trucks, `SELECT trucks.id AS id, trucks.name, trucks.twitname, trucks.lastupdate, locations.display AS location, 
+	        locations.zone as zone, images.suffix AS image FROM trucks LEFT JOIN locations ON (locations.id = trucks.loc) LEFT JOIN
+	        (SELECT * FROM images WHERE  menu='t') AS images ON (images.twitname = trucks.twitname) WHERE lastupdate > $1 ORDER BY lat DESC`, t)
+		if err != nil {
+			fmt.Println(err)
+		}
+		for i := 0; i < len(trucks); i++ {
+			trucks[i].Updated = trucks[i].PrettyDate()
+		}
+		Cache.Set("trucks", trucks, cache.DefaultExpiration)
 	}
-
-	for i := 0; i < len(trucks); i++ {
-		trucks[i].Updated = trucks[i].PrettyDate()
-	}
-
 	return trucks
 }
 
