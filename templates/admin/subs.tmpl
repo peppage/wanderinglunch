@@ -8,11 +8,13 @@
 		<tr>
 			<th>Replacement</th>
 			<th>Regex</th>
+			<th></th>
 		</tr>
 	</thead>
 	<tbody data-bind="foreach: results">
 		<td><a data-bind="attr: { href: '/admin/sub/'+id }"><span data-bind="text: replacement"></span></a></td>
 		<td><span data-bind="text: regex"></span></td>
+		<td><a data-bind="click: $parent.delete">delete</a></td>
 	</tbody>
 
 </table>
@@ -28,7 +30,7 @@
 
 	function AdminSubs() {
 		var self = this;
-		self.subs = ko.observable([]);
+		self.subs = ko.observableArray([]);
 		self.pageNumber = ko.observable(0);
 		self.perPage = 10;
 		self.query = ko.observable('');
@@ -64,6 +66,17 @@
 			if(self.pageNumber() !== 0) {
 				self.pageNumber(self.pageNumber() - 1);
 			}
+		};
+
+		self.delete = function(sub) {
+			$.ajax({
+			    url: '/api/subs/' + sub.id + '/delete',
+			    type: 'DELETE',
+			    success: function(data) {
+			        console.log(data);
+					self.subs.remove(sub);
+			    }
+			});
 		};
 
 		self.results = ko.computed(function() {
