@@ -53,6 +53,10 @@ a:hover.active {
 	color: $linkColor;
 }
 
+.menu {
+  cursor: pointer;
+}
+
 .logo {
 	height: 40px;
 	@include media($desktop) {
