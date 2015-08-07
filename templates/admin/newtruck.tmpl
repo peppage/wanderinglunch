@@ -1,0 +1,58 @@
+<h1>Add Truck</h1>
+
+<label>Id</label><br>
+<input type="text" data-bind="value: truck.id"><br>
+
+<label>Name</label><br>
+<input type="text" data-bind="value: truck.name"><br>
+
+<label>Twitname</label><br>
+<input type="text" data-bind="value: truck.twitname"><br>
+
+<label>Web Url</label><br>
+<input type="text" data-bind="value: truck.weburl"><br>
+
+<label>Type</label><br>
+<input type="text" data-bind="value: truck.type"><br>
+
+<label>About</label><br>
+<input type="text" data-bind="value: truck.about"><br>
+
+<label>Foursquare</label><br>
+<input type="text" data-bind="value: truck.foursquare"><br>
+
+<label>Matcher</label><br>
+<input type="text" data-bind="value: truck.matcher"><br>
+
+<label>Match Method</label><br>
+<input type="text" data-bind="value: truck.matchmethod"><br>
+
+<button data-bind="click: save">Save</button>
+
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		ko.applyBindings(new AdminAddTruck());	
+	});
+	
+	function AdminAddTruck() {
+		var self = this;
+		self.truck = {
+			id: ko.observable(),
+			name: ko.observable(),
+			twitname: ko.observable(),
+			weburl: ko.observable(),
+			type: ko.observable(),
+			about: ko.observable(),
+			foursquare: ko.observable(),
+			matcher: ko.observable(),
+			matchmethdo: ko.observable(),
+		};
+		
+		self.save = function() {
+			$.post('/api/trucks/add', ko.toJS(self.truck), function(data) {
+				console.log(data);
+			});
+			return true;
+		}
+	}
+</script>

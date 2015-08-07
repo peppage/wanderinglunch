@@ -117,6 +117,7 @@ func main() {
 	admin.Get("/locations", adminLocs)
 	admin.Get("/location/:id", adminEditLoc)
 	admin.Get("/trucks", adminTrucks)
+	admin.Get("/truck/add", adminNewTruck)
 	admin.Get("/truck/:id", adminEditTruck)
 	admin.Get("/message", adminMessage)
 	admin.Get("/subs", adminSubs)

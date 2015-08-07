@@ -85,6 +85,14 @@ func adminEditTruck(c web.C, w http.ResponseWriter, r *http.Request) {
 	renderer.HTML(w, http.StatusOK, "admin/truck", data)
 }
 
+func adminNewTruck(c web.C, w http.ResponseWriter, r *http.Request) {
+	data := make(map[string]interface{})
+	data["title"] = "Wandering Lunch: NYC Food Truck Finder | Admin - Add Truck "
+	data["admin"] = true
+
+	renderer.HTML(w, http.StatusOK, "admin/newtruck", data)
+}
+
 func adminMessage(c web.C, w http.ResponseWriter, r *http.Request) {
 	data := make(map[string]interface{})
 	data["title"] = "Wandering Lunch: NYC Food Truck Finder | Admin - Message"
