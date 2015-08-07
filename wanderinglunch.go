@@ -60,6 +60,12 @@ func support(c web.C, w http.ResponseWriter, r *http.Request) {
 	renderer.HTML(w, http.StatusOK, "support", nil)
 }
 
+func search(c web.C, w http.ResponseWriter, r *http.Request) {
+	data := make(map[string]interface{})
+	data["trucks"] = getTrucks()
+	renderer.HTML(w, http.StatusOK, "search", data)
+}
+
 func login(c web.C, w http.ResponseWriter, r *http.Request) {
 	renderer.HTML(w, http.StatusOK, "login", nil)
 }
@@ -98,6 +104,7 @@ func main() {
 	goji.Get("/alltrucks", allTrucks)
 	goji.Get("/map", maps)
 	goji.Get("/support", support)
+	goji.Get("/search", search)
 	goji.Get("/login", login)
 	goji.Post("/login", loginHandle)
 
