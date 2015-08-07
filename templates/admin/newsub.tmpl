@@ -1,0 +1,30 @@
+<h1>Add Sub</h1>
+
+<label>Regex</label><br>
+<input type="text" data-bind="value: sub.regex"><br>
+
+<label>Replacement</label><br>
+<input type="text" data-bind="value: sub.replacement"><br>
+
+<button data-bind="click: save">Save</button>
+
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		ko.applyBindings(new AdminAddSub());	
+	});
+	
+	function AdminAddSub() {
+		var self = this;
+		self.sub = {
+			regex: ko.observable(),
+			replacement: ko.observable(),
+		};
+		
+		self.save = function() {
+			$.post('/api/subs/add', ko.toJS(self.sub), function(data) {
+				console.log(data);
+			});
+			return true;
+		};
+	}
+</script>
