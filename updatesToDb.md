@@ -14,4 +14,6 @@ update locations set zone='Brooklyn' where hood='Brooklyn';
 update locations set zone='Manhatten' where zone IS NULL;
 alter table locations alter column zone set NOT NULL;
 
+update subs set regex='(btwen|btween|b & (w|t)|b\\/w|btwn|btw|bw)' where replacement='between';
+
 // might need to update trucks with their "site" (nyc, buffalo, jC)
