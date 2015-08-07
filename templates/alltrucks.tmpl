@@ -23,7 +23,7 @@
 			</td>
 			<td class="noMobile">
 				<span data-bind="if: image">
-					<img data-bind="attr { src: 'http://irs0.4sqi.net/img/general/width30'+ image }" />
+					<img data-bind="attr { src: 'http://irs0.4sqi.net/img/general/width30'+ image }, click: $parent.showMenu" />
 				</span>
 			</td>
 		</tr>
@@ -46,12 +46,20 @@
   			self.trucks.orderField('name');
 		});
 
-
 		self.results = ko.computed(function() {
 			var items = ko.utils.arrayFilter(self.trucks(), function(item) {
 				return item.name.toLowerCase().indexOf(self.query().toLowerCase()) >= 0;
 			});
 			return items;
 		});
+
+		self.showMenu = function(truck) {
+			$.magnificPopup.open({
+			  items: {
+			    src: 'http://irs0.4sqi.net/img/general/width960' + truck.image
+			  },
+			  type: 'image'
+			}, 0);
+		};
 	}
 </script>
