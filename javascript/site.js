@@ -17,6 +17,7 @@ function checkShadow() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+  $('.image-link').magnificPopup({type:'image'});
   var menuItems = document.querySelectorAll('.dropItem');
   for(var x=0; x < menuItems.length; x++) {
     var hidden = menuItems[x].querySelector('.dropItem-sub');
