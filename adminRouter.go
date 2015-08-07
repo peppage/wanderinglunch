@@ -100,3 +100,12 @@ func adminSubs(c web.C, w http.ResponseWriter, r *http.Request) {
 
 	renderer.HTML(w, http.StatusOK, "admin/subs", data)
 }
+
+func adminSub(c web.C, w http.ResponseWriter, r *http.Request) {
+	data := make(map[string]interface{})
+	data["title"] = "Wandering Lunch: NYC Food Truck Finder | Admin - Sub " + c.URLParams["id"]
+	data["admin"] = true
+	data["id"] = c.URLParams["id"]
+
+	renderer.HTML(w, http.StatusOK, "admin/sub", data)
+}

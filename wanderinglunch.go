@@ -120,6 +120,7 @@ func main() {
 	admin.Get("/truck/:id", adminEditTruck)
 	admin.Get("/message", adminMessage)
 	admin.Get("/subs", adminSubs)
+	admin.Get("/sub/:id", adminSub)
 
 	api := web.New()
 	api.Use(middleware.SubRouter)

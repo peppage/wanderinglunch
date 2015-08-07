@@ -1,0 +1,34 @@
+<h1>Edit Sub</h1>
+
+<label>Id</label><br>
+<input type="text" data-bind="value: sub().id" disabled><br>
+
+<label>Regex</label><br>
+<input type="text" data-bind="value: sub().regex"><br>
+
+<label>Replacement</label><br>
+<input type="text" data-bind="value: sub().replacement"><br>
+
+<button data-bind="click: save">Save</button>
+
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		ko.applyBindings(new AdminEditSub({{ .id }}));
+	});
+	
+	function AdminEditSub(id) {
+		var self = this;
+		self.sub = ko.observable({});
+		
+		$.getJSON('/api/subs/' + id, function(data) {
+  			self.sub(data);
+		});
+
+		self.save = function() {
+			$.post('/api/trucks/' + id + '/update', ko.toJS(self.sub), function(data) {
+				console.log(data);
+			});
+			return true;
+		};
+	}
+</script>
