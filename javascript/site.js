@@ -58,3 +58,9 @@ function indexModel() {
   };
   setInterval(self.update, 900000);
 }
+
+function totalPages(arraySize, itemsPerPage) {
+  var div = Math.floor(arraySize / itemsPerPage);
+  div += arraySize % itemsPerPage > 0 ? 1 : 0;
+  return div - 1;
+}

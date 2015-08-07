@@ -28,9 +28,9 @@ func getCurrentMarkers() []*Marker {
 }
 
 type Sub struct {
-	Id          int
-	Regex       string
-	Replacement string
+	ID          int    `json:"id"`
+	Regex       string `json:"regex"`
+	Replacement string `json:"replacement"`
 }
 
 func getSubs() []*Sub {

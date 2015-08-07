@@ -92,3 +92,11 @@ func adminMessage(c web.C, w http.ResponseWriter, r *http.Request) {
 
 	renderer.HTML(w, http.StatusOK, "admin/message", data)
 }
+
+func adminSubs(c web.C, w http.ResponseWriter, r *http.Request) {
+	data := make(map[string]interface{})
+	data["title"] = "Wandering Lunch: NYC Food Truck Finder | Admin - Subs"
+	data["admin"] = true
+
+	renderer.HTML(w, http.StatusOK, "admin/subs", data)
+}

@@ -119,6 +119,7 @@ func main() {
 	admin.Get("/trucks", adminTrucks)
 	admin.Get("/truck/:id", adminEditTruck)
 	admin.Get("/message", adminMessage)
+	admin.Get("/subs", adminSubs)
 
 	api := web.New()
 	api.Use(middleware.SubRouter)

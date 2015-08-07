@@ -117,7 +117,7 @@ func substitutions(c web.C, w http.ResponseWriter, r *http.Request) {
 
 func subsitution(c web.C, w http.ResponseWriter, r *http.Request) {
 	sub := getSub(c.URLParams["id"])
-	if sub.Id == 0 {
+	if sub.ID == 0 {
 		renderer.JSON(w, http.StatusNotFound, nil)
 		return
 	}
@@ -144,7 +144,7 @@ func subDelete(c web.C, w http.ResponseWriter, r *http.Request) {
 
 func subUpdate(c web.C, w http.ResponseWriter, r *http.Request) {
 	var s Sub
-	s.Id, _ = strconv.Atoi(c.URLParams["id"])
+	s.ID, _ = strconv.Atoi(c.URLParams["id"])
 	s.Regex = r.FormValue("regex")
 	s.Replacement = r.FormValue("replacement")
 	if updateSub(s) {
