@@ -1,3 +1,82 @@
-{{ with .truck }}
-	<h1>{{ .Name }}</h1>
-{{ end }}
+<h1 class="name" data-bind="text: truck().name"></h1>
+<div class="type" data-bind="text: truck().type"></div>
+<div class="location">Last Location: <span data-bind="text: truck().location"></span></div>
+<div class="gallery">
+	<div id="images" class="owl-carousel" data-bind="foreach: truck().images">
+		<div calss="item"><img data-bind="attr: { src: 'http://irs0.4sqi.net/img/general/500x500' + suffix }"></div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-6" style="border-right: 1px solid #d3d4d5;">
+		<ul data-bind="foreach: tweets">
+			<li><span data-bind="text: contents"></span></li>
+		</ul>
+	</div>
+	<div class="col-6 noMobile">
+		<b>Last Updated:</b> <span data-bind="text: truck().updated"></span><br><br>
+		<span data-bind="if: truck().weburl">
+			<a data-bind="attr: { href: truck().weburl }">Website</a><br>
+		</span>
+		<a data-bind="attr: { href: 'http://twitter.com/'+truck().twitname }">Twitter</a><br>
+		<span data-bind="if: truck().foursquare">
+			<a data-bind="attr: { href: 'http://foursquare.com/v/' + truck().foursquare + '?ref=P1JDYDE13QQDC11VUSA4LV3VV25OTRPHV1WAV5WP3VCE0QUP' }">Foursquare</a><br>	
+		</span>
+	</div>
+</div>
+
+<h2 class="withLine">Other trucks on location</h2>
+<div data-bind="foreach: others">
+	<a data-bind="text: name, click: $parent.switch"></a><br>
+</div>
+
+<noscript>
+	{{ with .truck }}
+		<h1>{{ .Name }}</h1>
+	{{ end }}
+</noscript>
+
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		ko.applyBindings(new truckModel({{ .id }}));	
+	});
+
+	function truckModel(id) {
+		var self = this;
+		self.truck = ko.observable({});
+		self.tweets = ko.observableArray([]);
+		self.others = ko.observableArray([]);
+		update(id);
+
+		function update(truckId) {
+			$.getJSON('/api/trucks/' + truckId, function(data) {
+				$('#images').trigger('destroy.owl.carousel').removeClass('owl-carousel owl-loaded');
+				$('#images').find('.owl-stage-outer').children().unwrap();
+				$('#images').empty();
+				self.truck(data);
+				self.tweets(data.tweets.slice(0, 5));
+				
+				$('#images').owlCarousel({
+					items: 1,
+					loop: true,
+					nav: true,
+					navText: [
+						'Prev',
+						'Next'
+					],
+					dots: true,
+					animateIn: 'fadeIn',
+					animateOut: 'fadeOut',
+				});
+				$.getJSON('/api/locations/' + data.loc + '/trucks/current', function(d) {
+					self.others(d);
+				});
+			});
+		}
+
+		self.switch = function(truck) {
+			window.scrollTo(0, 0);
+			window.history.pushState(null, 'Wandering Lunch: NYC Food Truck Finder | ' + truck.name, '/truck/' + truck.id);
+			update(truck.id);
+		};
+	}
+</script>

@@ -23,7 +23,16 @@ func (t *Tweet) Converted() string {
 	return tweet
 }
 
-func getTweets(twitname string, amount int, page int) []*Tweet {
+func getTweets(twitname string) []*Tweet {
+	var tweets []*Tweet
+	err := db.Select(&tweets, `SELECT contents, time, id FROM tweets where twitname=$1`, twitname)
+	if err != nil {
+		fmt.Println(err)
+	}
+	return tweets
+}
+
+func getTweetsByPage(twitname string, amount int, page int) []*Tweet {
 	var tweets []*Tweet
 	o := amount * page
 	err := db.Select(&tweets, `SELECT contents, time, id FROM tweets where twitname=$1 ORDER BY time DESC LIMIT 10 OFFSET $2`, twitname, o)

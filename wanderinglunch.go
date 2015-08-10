@@ -47,6 +47,7 @@ func truck(c web.C, w http.ResponseWriter, r *http.Request) {
 	data := make(map[string]interface{})
 	data["truck"] = t
 	data["title"] = "Wandering Lunch: NYC Food Truck Finder | " + t.Name
+	data["id"] = c.URLParams["id"]
 
 	renderer.HTML(w, http.StatusOK, "truck", data)
 }
@@ -130,10 +131,11 @@ func main() {
 	api.Post("/trucks/add", truckSave)
 	api.Get("/trucks/:id", truckById)
 	api.Get("/trucks/:id/images", truckImages)
-	api.Get("/trucks/:id/tweets/:page", tweets)
+	//api.Get("/trucks/:id/tweets/:page", tweets)
 	api.Get("/trucks/:id/converted/:page", tweetsWithSubs)
 	api.Post("/trucks/:id/update", truckUpdate)
 	api.Delete("/trucks/:id/delete", truckDelete)
+	api.Get("/tweets/:id", tweets)
 	api.Get("/markers/current", currentMarkers)
 	api.Get("/subs", substitutions)
 	api.Get("/subs/:id", subsitution)
@@ -141,6 +143,7 @@ func main() {
 	api.Post("/subs/:id/update", subUpdate)
 	api.Delete("/subs/:id/delete", subDelete)
 	api.Get("/locations", locations)
+	api.Get("/locations/:id/trucks/current", currentTrucksAt)
 	api.Get("/locations/:id", location)
 	api.Post("/locations/add", locationSave)
 	api.Post("/locations/:id/update", locationUpdate)
