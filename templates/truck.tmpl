@@ -46,7 +46,7 @@
 		var self = this;
 		self.truck = ko.observable({});
 		self.tweets = ko.observableArray([]);
-		self.others = ko.observableArray([]);
+		self.others = ko.observableArray([]).extend({ rateLimit: 50 });
 		update(id);
 
 		function update(truckId) {
