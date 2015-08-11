@@ -95,20 +95,20 @@ func tweet(c web.C, w http.ResponseWriter, r *http.Request) {
 }
 
 func tweets(c web.C, w http.ResponseWriter, r *http.Request) {
-	page, _ := strconv.Atoi(c.URLParams["page"])
-	tweets := getTweets(c.URLParams["id"], 10, page)
+	//page, _ := strconv.Atoi(c.URLParams["page"])
+	tweets := getTweets(c.URLParams["id"])
 	renderer.JSON(w, http.StatusOK, tweets)
 }
 
 func tweetsWithSubs(c web.C, w http.ResponseWriter, r *http.Request) {
-	page, _ := strconv.Atoi(c.URLParams["page"])
-	tweets := getTweets(c.URLParams["id"], 10, page)
+	//page, _ := strconv.Atoi(c.URLParams["page"])
+	//tweets := getTweets(c.URLParams["id"], 10, page)
 
-	for key := range tweets {
-		tweets[key].Contents = tweets[key].Converted()
-	}
+	//for key := range tweets {
+	//	tweets[key].Contents = tweets[key].Converted()
+	//}
 
-	renderer.JSON(w, http.StatusOK, tweets)
+	//renderer.JSON(w, http.StatusOK, tweets)
 }
 
 func substitutions(c web.C, w http.ResponseWriter, r *http.Request) {
@@ -214,7 +214,7 @@ func images(c web.C, w http.ResponseWriter, r *http.Request) {
 
 func image(c web.C, w http.ResponseWriter, r *http.Request) {
 	i := getImage(c.URLParams["id"])
-	if i.Id == "" {
+	if i.ID == "" {
 		renderer.JSON(w, http.StatusNotFound, nil)
 		return
 	}
@@ -223,12 +223,12 @@ func image(c web.C, w http.ResponseWriter, r *http.Request) {
 
 func imageSave(c web.C, w http.ResponseWriter, r *http.Request) {
 	var i Image
-	i.Id = r.FormValue("id")
+	i.ID = r.FormValue("id")
 	i.Suffix = r.FormValue("suffix")
 	i.Twitname = r.FormValue("twitname")
 	i.Menu, _ = strconv.ParseBool(r.FormValue("menu"))
 	if addImage(i) {
-		renderer.JSON(w, http.StatusOK, getImage(i.Id))
+		renderer.JSON(w, http.StatusOK, getImage(i.ID))
 		return
 	}
 	renderer.JSON(w, http.StatusInternalServerError, nil)
@@ -244,7 +244,7 @@ func imageDelete(c web.C, w http.ResponseWriter, r *http.Request) {
 
 func imageUpdate(c web.C, w http.ResponseWriter, r *http.Request) {
 	var i Image
-	i.Id = c.URLParams["id"]
+	i.ID = c.URLParams["id"]
 	i.Suffix = r.FormValue("suffix")
 	i.Twitname = r.FormValue("twitname")
 	i.Menu, _ = strconv.ParseBool(r.FormValue("menu"))
@@ -272,4 +272,9 @@ func message(c web.C, w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	renderer.JSON(w, http.StatusOK, m)
+}
+
+func currentTrucksAt(c web.C, w http.ResponseWriter, r *http.Request) {
+	t := getTrucksCurrentlyAtLocation(c.URLParams["id"])
+	renderer.JSON(w, http.StatusOK, t)
 }

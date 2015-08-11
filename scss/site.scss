@@ -13,12 +13,14 @@ $fontSize: 14pt;
 $nav-color: white;
 $nav-height: 60px;
 $textColor: #333;
+$typeColor: #8d8d8d;
 
 $form-hover: #c4c4c4;
 $form-focus: $linkActiveColor;
 
 @import "zindex";
 @import "magnific";
+@import "owl";
 
 html, body {
   height: 100%;
@@ -55,22 +57,6 @@ a:hover.active {
 
 .menu {
   cursor: pointer;
-}
-
-.logo {
-	height: 40px;
-	@include media($desktop) {
-    background-image: url(/static/images/wl-temp-1.png);
-    width: 368px;
-  }
-  @include media($smallScreen) {
-    background-image: url(/static/images/wl-temp-sm.png);
-    width: 142px;
-  }
-  @include media($mobile) {
-    background-image: url(/static/images/wl-temp-sm.png);
-    width: 142px;
-  }
 }
 
 .content-wrapper {
@@ -119,6 +105,78 @@ footer, .content-wrapper:after {
 
 .row {
   @include row();
+}
+
+/* TRUCK PAGE */
+.name {
+  margin-bottom: 0;
+}
+
+.type {
+  font-size: 2em;
+  color: $typeColor;
+}
+
+.owl-controls {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.owl-controls .owl-nav [class*=owl-] {
+  color: #fff;
+  font-size: 14px;
+  margin: 5px;
+  padding: 4px 7px;
+  background: $linkColor;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.owl-dots .owl-dot span {
+  width: 10px;
+  height: 10px;
+  margin: 5px 7px;
+  background: $linkColor;
+  display: block;
+  transition: opacity 200ms ease;
+  border-radius: 30px;
+}
+
+.owl-dots .owl-dot.active span, .owl-dots .owl-dot:hover span {
+  background: $linkActiveColor;
+}
+
+.owl-dots .owl-dot {
+  display: inline-block;
+  zoom: 1;
+}
+
+.logo {
+  height: 40px;
+  @include media($desktop) {
+    background-image: url(/static/images/wl-temp-1.png);
+    width: 368px;
+  }
+  @include media($smallScreen) {
+    background-image: url(/static/images/wl-temp-sm.png);
+    width: 142px;
+  }
+  @include media($mobile) {
+    background-image: url(/static/images/wl-temp-sm.png);
+    width: 142px;
+  }
+}
+
+.gallery {
+  width: 500px;
+  margin-bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.withLine {
+  margin-bottom: 50px;
+  border-bottom: 1px solid #d3d4d5;
 }
 
 // Navigation

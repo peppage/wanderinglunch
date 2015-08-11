@@ -98,16 +98,25 @@ func updateSub(s Sub) bool {
 }
 
 type Image struct {
-	Id         string
-	Suffix     string
-	Visibility string
-	Twitname   string
-	Menu       bool
+	ID         string `json:"id"`
+	Suffix     string `json:"suffix"`
+	Visibility string `json:"visibility"`
+	Twitname   string `jon:"twitname"`
+	Menu       bool   `json:"menu"`
 }
 
 func getImages() []*Image {
 	var images []*Image
 	err := db.Select(&images, `SELECT * FROM images ORDER BY id`)
+	if err != nil {
+		fmt.Println(err)
+	}
+	return images
+}
+
+func getTruckImages(twitname string) []*Image {
+	var images []*Image
+	err := db.Select(&images, `SELECT * FROM images WHERE twitname = $1 ORDER BY menu DESC, id`, twitname)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -125,7 +134,7 @@ func getImage(id string) Image {
 
 func addImage(i Image) bool {
 	result, err := db.Exec(`INSERT INTO images (id, suffix, twitname, menu) VALUES ($1, $2, $3, $4)`,
-		i.Id, i.Suffix, i.Twitname, i.Menu)
+		i.ID, i.Suffix, i.Twitname, i.Menu)
 	if err != nil {
 		fmt.Println(err)
 	}
