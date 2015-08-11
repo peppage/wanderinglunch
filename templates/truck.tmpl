@@ -24,9 +24,11 @@
 	</div>
 </div>
 
-<h2 class="withLine">Other trucks on location</h2>
-<div data-bind="foreach: others">
-	<a data-bind="text: name, click: $parent.switch"></a><br>
+<div data-bind="if: others().length">
+	<h2 class="withLine">Other trucks on location</h2>
+	<div data-bind="foreach: others">
+		<a data-bind="text: name, click: $parent.switch"></a><br>
+	</div>
 </div>
 
 <noscript>
@@ -37,7 +39,7 @@
 
 <script>
 	document.addEventListener('DOMContentLoaded', function() {
-		ko.applyBindings(new truckModel({{ .id }}));	
+		ko.applyBindings(new truckModel({{ .id }}));
 	});
 
 	function truckModel(id) {
@@ -68,7 +70,11 @@
 					animateOut: 'fadeOut',
 				});
 				$.getJSON('/api/locations/' + data.loc + '/trucks/current', function(d) {
-					self.others(d);
+					for(var y = 0; y < d.length; y++) {
+						if(d[y].id !== self.truck().id) {
+							self.others.push(d[y]);
+						}
+					}
 				});
 			});
 		}
