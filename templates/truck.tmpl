@@ -70,6 +70,7 @@
 					animateOut: 'fadeOut',
 				});
 				$.getJSON('/api/locations/' + data.loc + '/trucks/current', function(d) {
+					self.others.removeAll();
 					for(var y = 0; y < d.length; y++) {
 						if(d[y].id !== self.truck().id) {
 							self.others.push(d[y]);
