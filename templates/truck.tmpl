@@ -1,18 +1,18 @@
 <h1 class="name" data-bind="text: truck().name"></h1>
 <div class="type" data-bind="text: truck().type"></div>
-<div class="location">Last Location: <span data-bind="text: truck().location"></span></div>
 <div class="gallery">
 	<div id="images" class="owl-carousel" data-bind="foreach: truck().images">
 		<div calss="item"><img data-bind="attr: { src: 'http://irs0.4sqi.net/img/general/500x500' + suffix }"></div>
 	</div>
 </div>
 <div class="row">
-	<div class="col-6" style="border-right: 1px solid #d3d4d5;">
-		<ul data-bind="foreach: tweets">
-			<li><span data-bind="text: contents"></span></li>
-		</ul>
+	<div class="col-7 noMobile" style="border-right: 1px solid #d3d4d5;padding-right:10px;">
+		<ol class="tweetList" data-bind="foreach: tweets">
+			<li class="tweet" data-bind="text: contents"></li>
+		</ol>
 	</div>
-	<div class="col-6 noMobile">
+	<div class="col-4">
+		<b>Last Location:</b> <span data-bind="text: truck().location"></span><br>
 		<b>Last Updated:</b> <span data-bind="text: truck().updated"></span><br><br>
 		<span data-bind="if: truck().weburl">
 			<a data-bind="attr: { href: truck().weburl }">Website</a><br>

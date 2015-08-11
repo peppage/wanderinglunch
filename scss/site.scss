@@ -95,6 +95,18 @@ footer, .content-wrapper:after {
   }
 }
 
+.col-7 {
+  @include media($desktop) {
+    @include span-columns(7);
+  }
+}
+
+.col-3 {
+  @include media($desktop) {
+    @include span-columns(4);
+  }
+}
+
 .col-buttons {
   @include media($desktop) {
     @include span-columns(5);
@@ -149,6 +161,19 @@ footer, .content-wrapper:after {
 .owl-dots .owl-dot {
   display: inline-block;
   zoom: 1;
+}
+
+.tweetList {
+  list-style: none;
+}
+
+.tweet {
+  background: #fff;
+  border-bottom: 1px solid #e1e8ed;
+  background-clip: padding-box;
+  list-style: none;
+  padding-bottom: 15px;
+  padding-top: 15px;
 }
 
 .logo {
