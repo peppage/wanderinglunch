@@ -108,29 +108,40 @@ func getCurrentTrucks() []*Truck {
 }
 
 func getTrucksCurrentlyAtLocation(loc string) []*Truck {
-	t := time.Now().Add(-8 * (time.Minute * 60)).Unix()
 	var trucks []*Truck
-	err := db.Select(&trucks, `SELECT trucks.id AS id, trucks.name, trucks.twitname, trucks.lastupdate, locations.display AS location, 
+	if object, found := Cache.Get("trucksAt" + loc); found {
+		trucks = object.([]*Truck)
+	} else {
+		t := time.Now().Add(-8 * (time.Minute * 60)).Unix()
+		err := db.Select(&trucks, `SELECT trucks.id AS id, trucks.name, trucks.twitname, trucks.lastupdate, locations.display AS location, 
 		locations.zone as zone, images.suffix AS image FROM trucks LEFT JOIN locations ON (locations.id = trucks.loc) LEFT JOIN
 		(SELECT * FROM images WHERE  menu='t') AS images ON (images.twitname = trucks.twitname) WHERE lastupdate > $1 AND loc = $2 ORDER BY name`, t, loc)
-	if err != nil {
-		fmt.Println(err)
+		if err != nil {
+			fmt.Println(err)
+		}
+		Cache.Set("trucksAt"+loc, trucks, cache.DefaultExpiration)
 	}
+
 	return trucks
 }
 
 func getTruck(id string) Truck {
 	var t Truck
-	err := db.QueryRowx(`SELECT trucks.id AS id, trucks.loc, trucks.name, trucks.twitname, trucks.type, trucks.lastupdate, trucks.type, trucks.about,
+	if object, found := Cache.Get("truck" + id); found {
+		t = object.(Truck)
+	} else {
+		err := db.QueryRowx(`SELECT trucks.id AS id, trucks.loc, trucks.name, trucks.twitname, trucks.type, trucks.lastupdate, trucks.type, trucks.about,
 		trucks.foursquare, trucks.weburl, trucks.matcher, trucks.matchmethod, locations.display AS location, 
         images.suffix AS image FROM trucks LEFT JOIN locations ON (locations.id = trucks.loc) LEFT JOIN (SELECT * FROM images WHERE 
         menu='t') AS images ON (images.twitname = trucks.twitname) WHERE trucks.id=$1`, id).StructScan(&t)
-	if err != nil {
-		fmt.Println(err)
+		if err != nil {
+			fmt.Println(err)
+		}
+		t.Updated = t.PrettyDate()
+		t.Images = getTruckImages(t.Twitname)
+		t.Tweets = getTweets(t.Twitname)
+		Cache.Set("truck"+id, t, cache.DefaultExpiration)
 	}
-	t.Updated = t.PrettyDate()
-	t.Images = getTruckImages(t.Twitname)
-	t.Tweets = getTweets(t.Twitname)
 
 	return t
 }
