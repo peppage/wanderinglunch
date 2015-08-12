@@ -123,6 +123,7 @@ func main() {
 
 	api := web.New()
 	api.Use(middleware.SubRouter)
+	api.Use(SecurePost)
 	goji.Handle("/api/*", api)
 	goji.Get("/api", http.RedirectHandler("/api/", http.StatusMovedPermanently))
 	api.Get("/trucks", trucks)
