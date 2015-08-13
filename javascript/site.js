@@ -32,8 +32,14 @@ document.addEventListener('DOMContentLoaded', function() {
 function indexModel() {
   var self = this;
   self.trucks = ko.observableArray([]);
-  self.location = ko.observable('manhattan');
+  self.location = ko.observable();
   self.visible = ko.observableArray([]);
+
+  if(localStorage.getItem('loc')) {
+    self.location(localStorage.getItem('loc'));
+  } else {
+    self.location('manhattan');
+  }
 
   $.getJSON('/api/trucks/current', function(data) {
     self.trucks(data);
@@ -48,6 +54,7 @@ function indexModel() {
   };
 
   self.setVisible = function() {
+    localStorage.setItem('loc', self.location());
     self.visible.removeAll();
     for(var x = 0; x < self.trucks().length; x++) {
       if(self.trucks()[x].zone.toLowerCase() === self.location()) {
