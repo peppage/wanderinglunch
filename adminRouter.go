@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"time"
 
+	"bitbucket.org/peppage/wlapi/model"
 	"github.com/zenazn/goji/web"
 )
 
@@ -13,7 +14,7 @@ func adminRoot(c web.C, w http.ResponseWriter, r *http.Request) {
 	now := time.Now()
 	t2 := time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, now.Location()).Unix()
 
-	var trucks []*Truck
+	var trucks []*model.Truck
 	err := db.Select(&trucks, `SELECT twitname, id FROM trucks WHERE lastupdate < $1 AND lastupdate > $2`, t1, t2)
 	if err != nil {
 		fmt.Println(err)
@@ -28,7 +29,7 @@ func adminRoot(c web.C, w http.ResponseWriter, r *http.Request) {
 }
 
 func adminFix(c web.C, w http.ResponseWriter, r *http.Request) {
-	t := getTruck(c.URLParams["id"])
+	t := model.GetTruck(c.URLParams["id"])
 	if t.ID == "" {
 		http.Redirect(w, r, "/admin", http.StatusNotFound)
 		return
