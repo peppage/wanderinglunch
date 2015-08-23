@@ -1,9 +1,5 @@
 <h1>Edit Truck</h1>
 
-<p>
-	
-</p>
-
 <label>Id</label><br>
 <input type="text" data-bind="value: truck().id" disabled><br>
 
@@ -33,6 +29,27 @@
 
 <button data-bind="click: save">Save</button>
 
+<table class="table table-minimal">
+	<thead>
+		<tr>
+			<th>Image</th>
+			<th>Menu</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody data-bind="foreach: truck().images">
+		<tr>
+			<td>
+				<div data-bind="css: visibility">
+					<img data-bind="attr { src: 'http://irs0.4sqi.net/img/general/width60'+ suffix}" />
+				</div>
+			</td>
+			<td><span data-bind="text: menu"></span></td>
+			<td><a data-bind="click: $parent.delete">delete</a></td>
+		</tr>
+	</tbody>
+</table>
+
 <script>
 	document.addEventListener('DOMContentLoaded', function() {
 		ko.applyBindings(new AdminEditTruck({{ .id }}));
@@ -56,6 +73,16 @@
 			    }
 			});
 			return true;
+		};
+
+		self.delete = function(image) {
+			$.ajax({
+			    url: API_URL + '/images/' + image.id,
+			    type: 'DELETE',
+			    success: function(data) {
+					self.images.remove(image);
+			    }
+			});
 		};
 	}
 </script>
