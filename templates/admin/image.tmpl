@@ -1,0 +1,46 @@
+<h1>Edit Image</h1>
+
+<label>Id</label><br>
+<input type="text" data-bind="value: image().id" disabled><br>
+
+<label>Suffix</label><br>
+<input type="text" data-bind="value: image().suffix"><br>
+
+<label>Visibility</label><br>
+<input type="text" data-bind="value: image().visibility"><br>
+
+<label>Twitname</label><br>
+<input type="text" data-bind="value: image().twitname"><br>
+
+<label>Menu
+	<input type="checkbox" data-bind="checked: image().menu">
+</label><br>
+
+<button data-bind="click: save">Save</button>
+
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		ko.applyBindings(new AdminEditImage({{ .id }}));
+	});
+	
+	function AdminEditImage(id) {
+		var self = this;
+		self.image = ko.observable({});
+		
+		$.getJSON(API_URL + '/images/' + id, function(data) {
+  			self.image(data);
+		});
+
+		self.save = function() {
+			$.ajax({
+			    url: API_URL + '/images/' + id,
+			    method: 'PUT',
+			    data: ko.toJS(self.image),
+			    success: function(data) {
+			    	
+			    }
+			});
+			return true;
+		};
+	}
+</script>

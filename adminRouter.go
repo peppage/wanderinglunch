@@ -135,10 +135,19 @@ func adminNewSub(c web.C, w http.ResponseWriter, r *http.Request) {
 
 func adminImages(c web.C, w http.ResponseWriter, r *http.Request) {
 	data := make(map[string]interface{})
-	data["title"] = "Wandering Lunch: NYC Food Truck Finder | Admin - Add Sub "
+	data["title"] = "Wandering Lunch: NYC Food Truck Finder | Admin - Invalid Images "
 	data["admin"] = true
 
 	renderer.HTML(w, http.StatusOK, "admin/images", data)
+}
+
+func adminImage(c web.C, w http.ResponseWriter, r *http.Request) {
+	data := make(map[string]interface{})
+	data["title"] = "Wandering Lunch: NYC Food Truck Finder | Admin - Edit Image "
+	data["admin"] = true
+	data["id"] = c.URLParams["id"]
+
+	renderer.HTML(w, http.StatusOK, "admin/image", data)
 }
 
 func adminFoursquareImages(c web.C, w http.ResponseWriter, r *http.Request) {

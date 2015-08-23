@@ -41,7 +41,7 @@
 		<tr>
 			<td>
 				<div data-bind="css: visibility">
-					<img data-bind="attr { src: 'http://irs0.4sqi.net/img/general/width60'+ suffix}" />
+					<img data-bind="attr { src: 'http://irs0.4sqi.net/img/general/width60'+ suffix}, click: $parent.editImage" style="cursor: pointer;"/>
 				</div>
 			</td>
 			<td><span data-bind="text: menu"></span></td>
@@ -53,7 +53,7 @@
 <button data-bind="click: getImages">Get Images</button>
 <div data-bind="if: page().length">
 	<div data-bind="foreach: page">
-		<img data-bind="attr { src: prefix + 'width100'+ suffix}, click: $parent.addImage" />
+		<img data-bind="attr { src: prefix + 'width100'+ suffix}, click: $parent.addImage" style="cursor: pointer;"/>
 	</div>
 	<div>
 		<button data-bind="click: prev, visible: hasPrevious">Prev</button>
@@ -160,6 +160,10 @@
 				self.truckImages.push(data);
 			});
 			console.log(image);
+		};
+
+		self.editImage = function(image) {
+			window.location.assign('/admin/image/' + image.id);
 		};
 	}
 </script>
