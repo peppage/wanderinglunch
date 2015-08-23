@@ -5,7 +5,7 @@
 </p>
 
 <label>Id</label><br>
-<input type="text" data-bind="value: truck().id"><br>
+<input type="text" data-bind="value: truck().id" disabled><br>
 
 <label>Name</label><br>
 <input type="text" data-bind="value: truck().name"><br>
@@ -42,14 +42,18 @@
 		var self = this;
 		self.truck = ko.observable({});
 		
-		$.getJSON('/api/trucks/' + id, function(data) {
+		$.getJSON(API_URL + '/trucks/' + id, function(data) {
   			self.truck(data);
 		});
 
 		self.save = function() {
-			console.log(ko.toJS(self.truck));
-			$.post('/api/trucks/' + id + '/update', ko.toJS(self.truck), function(data) {
-				console.log(data);
+			$.ajax({
+			    url: API_URL + '/trucks/' + id,
+			    method: 'PUT',
+			    data: ko.toJS(self.truck),
+			    success: function(data) {
+					console.log(data);
+			    }
 			});
 			return true;
 		};

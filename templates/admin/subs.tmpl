@@ -35,7 +35,7 @@
 		self.perPage = 10;
 		self.query = ko.observable('');
 
-		$.getJSON('/api/subs', function(data) {
+		$.getJSON(API_URL + '/subs', function(data) {
 			self.subs(data);
 		});
 
@@ -70,10 +70,9 @@
 
 		self.delete = function(sub) {
 			$.ajax({
-			    url: '/api/subs/' + sub.id + '/delete',
+			    url: API_URL + '/subs/' + sub.id,
 			    type: 'DELETE',
 			    success: function(data) {
-			        console.log(data);
 					self.subs.remove(sub);
 			    }
 			});

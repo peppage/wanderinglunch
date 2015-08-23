@@ -10,7 +10,7 @@
 
 <script>
 	document.addEventListener('DOMContentLoaded', function() {
-		ko.applyBindings(new AdminAddSub());	
+		ko.applyBindings(new AdminAddSub());
 	});
 	
 	function AdminAddSub() {
@@ -21,8 +21,12 @@
 		};
 		
 		self.save = function() {
-			$.post('/api/subs/add', ko.toJS(self.sub), function(data) {
-				console.log(data);
+			$.ajax({
+				url: API_URL + '/subs',
+				method: 'POST',
+				data: ko.toJS(self.sub),
+			}).done(function(data) {
+				window.location.assign('/admin/sub/' + data.id);
 			});
 			return true;
 		};

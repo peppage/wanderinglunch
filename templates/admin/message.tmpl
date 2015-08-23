@@ -14,13 +14,13 @@
 		var self = this;
 		self.message = ko.observable({});
 
-		$.getJSON('/api/messages/current', function(data) {
+		$.getJSON(API_URL + '/messages?amount=1', function(data) {
   			self.message(data);
 		});
 		
 		self.save = function() {
-			$.post('/api/messages/add', ko.toJS(self.message), function(data) {
-				self.message(data)
+			$.post(API_URL + '/messages', ko.toJS(self.message), function(data) {
+				self.message(data);
 			});
 			return true;
 		};

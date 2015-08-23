@@ -52,16 +52,15 @@
 		};
 		
 		$.getJSON('/api/tweets/' + tweetid, function(data) {
-  		self.tweet(data.contents);
+  			self.tweet(data.contents);
 		});
 
 		self.save = function() {
-			console.log(ko.toJS(self.loc));
 			$.post('/api/locations/add', ko.toJS(self.loc), function(data) {
 				console.log(data);
 			});
 			return true;
-		}
+		};
 
 	}
 </script>

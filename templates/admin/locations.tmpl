@@ -32,7 +32,7 @@
 		self.perPage = 10;
 		self.query = ko.observable('');
 
-		$.getJSON('/api/locations', function(data) {
+		$.getJSON(API_URL + '/locations', function(data) {
   			self.locs(data);
 		});
 
@@ -69,11 +69,10 @@
 
 		self.delete = function(loc) {
 			$.ajax({
-			    url: '/api/locations/' + loc.id + '/delete',
+			    url: API_URL + '/locations/' + loc.id,
 			    type: 'DELETE',
 			    success: function(data) {
-			        console.log(data);
-					self.trucks.remove(loc);
+					self.locs.remove(loc);
 			    }
 			});
 		};

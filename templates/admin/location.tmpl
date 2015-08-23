@@ -43,14 +43,19 @@
 		var self = this;
 		self.loc = ko.observable({});
 		
-		$.getJSON('/api/locations/' + id, function(data) {
+		$.getJSON(API_URL + '/locations/' + id, function(data) {
   			self.loc(data);
 		});
 
 		self.save = function() {
 			console.log(ko.toJS(self.loc));
-			$.post('/api/locations/' + id + '/update', ko.toJS(self.loc), function(data) {
-				console.log(data);
+			$.ajax({
+			    url: API_URL + '/locations/' + id,
+			    method: 'PUT',
+			    data: ko.toJS(self.loc),
+			    success: function(data) {
+					console.log(data);
+			    }
 			});
 			return true;
 		};

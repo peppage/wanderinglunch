@@ -37,7 +37,7 @@
 		self.perPage = 10;
 		self.query = ko.observable('');
 
-		$.getJSON('/api/trucks', function(data) {
+		$.getJSON(API_URL + '/trucks', function(data) {
   			self.trucks(data);
 		});
 
@@ -74,14 +74,13 @@
 
 		self.delete = function(truck) {
 			$.ajax({
-			    url: '/api/trucks/' + truck.id + '/delete',
+			    url: API_URL + '/trucks/' + truck.id,
 			    type: 'DELETE',
 			    success: function(data) {
-			        console.log(data);
 					self.trucks.remove(truck);
 			    }
 			});
-		}
+		};
 
 		self.results = ko.computed(function() {
 			var items = ko.utils.arrayFilter(self.trucks(), function(item) {
