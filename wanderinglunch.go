@@ -22,7 +22,7 @@ var inMemorySessionStore = sessions.MemoryStore{}
 var Sessions = sessions.NewSessionOptions(secret, &inMemorySessionStore)
 
 func root(c web.C, w http.ResponseWriter, r *http.Request) {
-	message := model.GetMessage()
+	message := model.GetMessage(1)
 
 	data := make(map[string]interface{})
 	data["title"] = "Wandering Lunch: NYC Food Truck Finder"
@@ -34,7 +34,7 @@ func root(c web.C, w http.ResponseWriter, r *http.Request) {
 func allTrucks(c web.C, w http.ResponseWriter, r *http.Request) {
 	data := make(map[string]interface{})
 	data["title"] = "Wandering Lunch: NYC Food Truck Finder | All Trucks List"
-	data["trucks"] = model.GetTrucks()
+	data["trucks"] = model.Trucks(8, "lat", "desc", 0)
 	renderer.HTML(w, http.StatusOK, "alltrucks", data)
 }
 

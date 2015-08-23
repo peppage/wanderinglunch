@@ -50,7 +50,7 @@
 		update(id);
 
 		function update(truckId) {
-			$.getJSON('/api/trucks/' + truckId, function(data) {
+			$.getJSON(API_URL + '/trucks/' + truckId, function(data) {
 				$('#images').trigger('destroy.owl.carousel').removeClass('owl-carousel owl-loaded');
 				$('#images').find('.owl-stage-outer').children().unwrap();
 				$('#images').empty();
@@ -70,7 +70,7 @@
 					animateIn: 'fadeIn',
 					animateOut: 'fadeOut',
 				});
-				$.getJSON('/api/locations/' + data.loc + '/trucks/current', function(d) {
+				$.getJSON(API_URL + '/trucks?updated_since=8&location_id=' + data.loc, function(d) {
 					self.others.removeAll();
 					for(var y = 0; y < d.length; y++) {
 						if(d[y].id !== self.truck().id) {

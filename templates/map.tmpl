@@ -13,7 +13,7 @@
   function initialize() {
     var trucks = [];
     $.ajax({
-      url: "/api/markers/current",
+      url: API_URL + '/markers?updated_since=8',
     })
     .done(function( trucks ) {
       var mapOptions = {

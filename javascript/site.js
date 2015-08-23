@@ -1,5 +1,7 @@
 window.onscroll=function(){ checkShadow(); };
 
+var API_URL = "http://api.wanderinglunch.com";
+
 function checkShadow() {
   'use strict';
   var scroll = window.pageYOffset | document.body.scrollTop;
@@ -41,13 +43,13 @@ function indexModel() {
     self.location('manhattan');
   }
 
-  $.getJSON('/api/trucks/current', function(data) {
+  $.getJSON(API_URL + '/trucks?updated_since=8&sort=lat&sort_dir=desc', function(data) {
     self.trucks(data);
     self.setVisible();
   });
 
   self.update = function() {
-    $.getJSON('/api/trucks/current', function(data) {
+    $.getJSON(API_URL + '/trucks?updated_since=8&sort=lat&sort_dir=desc', function(data) {
       self.trucks(data);
       self.setVisible();
     });
