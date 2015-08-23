@@ -126,3 +126,11 @@ func adminNewSub(c web.C, w http.ResponseWriter, r *http.Request) {
 
 	renderer.HTML(w, http.StatusOK, "admin/newsub", data)
 }
+
+func adminImages(c web.C, w http.ResponseWriter, r *http.Request) {
+	data := make(map[string]interface{})
+	data["title"] = "Wandering Lunch: NYC Food Truck Finder | Admin - Add Sub "
+	data["admin"] = true
+
+	renderer.HTML(w, http.StatusOK, "admin/images", data)
+}

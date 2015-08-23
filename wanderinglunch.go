@@ -121,6 +121,7 @@ func main() {
 	admin.Get("/subs", adminSubs)
 	admin.Get("/sub/add", adminNewSub)
 	admin.Get("/sub/:id", adminSub)
+	admin.Get("/images", adminImages)
 
 	goji.Serve()
 }

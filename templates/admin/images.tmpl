@@ -1,0 +1,45 @@
+<h1>Invalid Images</h1>
+
+<table class="table table-minimal">
+	<thead>
+		<tr>
+			<th>Twitname</th>
+			<th>Image</th>
+			<th>Menu</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody data-bind="foreach: images">
+		<tr>
+			<td><span data-bind="text: twitname"></span></td>
+			<td><img data-bind="attr { src: 'http://irs0.4sqi.net/img/general/width60'+ suffix}" /></td>
+			<td><span data-bind="text: menu"></span></td>
+			<td><a data-bind="click: $parent.delete">delete</a></td>
+		</tr>
+	</tbody>
+</table>
+
+<script type="text/javascript">
+	document.addEventListener('DOMContentLoaded', function() {
+		ko.applyBindings(new InvalidImagesModel());	
+	});
+	
+	function InvalidImagesModel() {
+		var self = this;
+		self.images = ko.observableArray([]);
+
+		$.getJSON(API_URL + '/images?visibility=private', function(data) {
+  			self.images(data);
+		});
+
+		self.delete = function(image) {
+			$.ajax({
+			    url: API_URL + '/images/' + image.id,
+			    type: 'DELETE',
+			    success: function(data) {
+					self.images.remove(image);
+			    }
+			});
+		};
+	}
+</script>
