@@ -13,15 +13,19 @@
 		</ul>
 	</p>
 
-	<h2>Tweets <button data-bind="click: nextPage">Next Page</button></h2>
+	<h2>Tweets</h2>
 	<table class="table table-minimal">
 		<thead>
 			<th>Tweet </th>
 		</thead>
-		<tbody data-bind="foreach: tweets">
+		<tbody data-bind="foreach: results">
 			<td><a href="#" data-bind="attr: {href: '/admin/location/new/'+id }"><span data-bind="text: contents"></span></a></td>
 		</tbody>
 	</table>
+	<div>
+		<button data-bind="click: prev, visible: hasPrevious">Prev</button>
+		<button data-bind="click: next, visible: hasNext">Next</button>
+	</div>
 
 	<script>
 		document.addEventListener('DOMContentLoaded', function() {

@@ -51,12 +51,12 @@
 			site: ko.observable('nyc'),
 		};
 		
-		$.getJSON('/api/tweets/' + tweetid, function(data) {
+		$.getJSON(API_URL + '/tweets/' + tweetid + '?with_subs=1', function(data) {
   			self.tweet(data.contents);
 		});
 
 		self.save = function() {
-			$.post('/api/locations/add', ko.toJS(self.loc), function(data) {
+			$.post(API_URL + '/locations', ko.toJS(self.loc), function(data) {
 				console.log(data);
 			});
 			return true;
