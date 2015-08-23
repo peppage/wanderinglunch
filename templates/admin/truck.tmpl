@@ -37,7 +37,7 @@
 			<th></th>
 		</tr>
 	</thead>
-	<tbody data-bind="foreach: truck().images">
+	<tbody data-bind="foreach: truckImages">
 		<tr>
 			<td>
 				<div data-bind="css: visibility">
@@ -50,6 +50,17 @@
 	</tbody>
 </table>
 
+<button data-bind="click: getImages">Get Images</button>
+<div data-bind="if: page().length">
+	<div data-bind="foreach: page">
+		<img data-bind="attr { src: prefix + 'width100'+ suffix}, click: $parent.addImage" />
+	</div>
+	<div>
+		<button data-bind="click: prev, visible: hasPrevious">Prev</button>
+		<button data-bind="click: next, visible: hasNext">Next</button>
+	</div>
+</div>
+
 <script>
 	document.addEventListener('DOMContentLoaded', function() {
 		ko.applyBindings(new AdminEditTruck({{ .id }}));
@@ -58,9 +69,14 @@
 	function AdminEditTruck(id) {
 		var self = this;
 		self.truck = ko.observable({});
+		self.truckImages = ko.observableArray([]);
+		self.images = ko.observableArray([]);
+		self.pageNumber = ko.observable(0);
+		self.perPage = 10;
 		
 		$.getJSON(API_URL + '/trucks/' + id, function(data) {
   			self.truck(data);
+  			self.truckImages(data.images);
 		});
 
 		self.save = function() {
@@ -80,9 +96,70 @@
 			    url: API_URL + '/images/' + image.id,
 			    type: 'DELETE',
 			    success: function(data) {
-					self.images.remove(image);
+					self.truckImages.remove(image);
 			    }
 			});
+		};
+
+		self.getImages = function() {
+			$.getJSON('/admin/foursquare/' + self.truck().foursquare, function(data) {
+  				self.images(data);
+			});
+		};
+
+		self.totalPages = ko.computed(function() {
+			var div = Math.floor(self.images().length / self.perPage);
+			div += self.images().length % self.perPage > 0 ? 1 : 0;
+			return div - 1;
+		});
+
+		self.paginated = ko.computed(function() {
+			var first = self.pageNumber() * self.perPage;
+			return self.images().slice(first, first + self.perPage);
+		});
+
+		self.hasPrevious = ko.computed(function() {
+			return self.pageNumber() !== 0;
+		});
+
+		self.hasNext = ko.computed(function() {
+			return self.pageNumber() !== self.totalPages;
+		});
+
+		self.next = function() {
+			if(self.pageNumber() < self.totalPages()) {
+				self.pageNumber(self.pageNumber() + 1);
+			}
+		};
+
+		self.prev = function() {
+			if(self.pageNumber() !== 0) {
+				self.pageNumber(self.pageNumber() - 1);
+			}
+		};
+
+		self.page = ko.computed(function() {
+			if(self.images().length < self.perPage) {
+				self.pageNumber(0);
+			}
+			var first = self.pageNumber() * self.perPage;
+			return self.images.slice(first, first + self.perPage);
+		});
+
+		self.addImage = function(image) {
+			$.ajax({
+				url: API_URL + '/images',
+				method: 'POST',
+				data: {
+					id: image.id,
+					suffix: image.suffix,
+					twitname: self.truck().twitname
+				}
+			}).done(function(data) {
+				console.log(data);
+				self.truckImages.push(data);
+			});
+			console.log(image);
 		};
 	}
 </script>

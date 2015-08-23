@@ -3,11 +3,17 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"net/url"
+	"os"
 	"time"
 
 	"bitbucket.org/peppage/wlapi/model"
+	"github.com/peppage/foursquarego"
 	"github.com/zenazn/goji/web"
 )
+
+var CLIENT_ID = os.Getenv("CLIENT_ID")
+var CLIENT_SECRET = os.Getenv("CLIENT_SECRET")
 
 func adminRoot(c web.C, w http.ResponseWriter, r *http.Request) {
 	t1 := time.Now().Add(-24 * (time.Minute * 60)).Unix()
@@ -133,4 +139,15 @@ func adminImages(c web.C, w http.ResponseWriter, r *http.Request) {
 	data["admin"] = true
 
 	renderer.HTML(w, http.StatusOK, "admin/images", data)
+}
+
+func adminFoursquareImages(c web.C, w http.ResponseWriter, r *http.Request) {
+	api := foursquarego.NewFoursquareApi(CLIENT_ID, CLIENT_SECRET)
+	uv := url.Values{}
+	uv.Set("limit", "200")
+	p, err := api.VenuePhotos(c.URLParams["id"], uv)
+	if err != nil {
+		fmt.Println(err)
+	}
+	renderer.JSON(w, http.StatusOK, p)
 }
