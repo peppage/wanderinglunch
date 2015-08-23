@@ -3,3 +3,29 @@
 
 <h1>Updated Recently but no address</h1>
 
+<table class="table table-minimal">
+	<thead>
+		<tr>
+			<th>Id</th>
+		</tr>
+	</thead>
+	<tbody data-bind="foreach: trucks">
+		<td><a data-bind="attr: { href: '/admin/fix/'+id }"><span data-bind="text: id"></span></a></td>
+	</tbody>
+
+</table>
+
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		ko.applyBindings(new Admin());	
+	});
+	
+	function Admin() {
+		var self = this;
+		self.trucks = ko.observableArray([]);
+
+		$.getJSON(API_URL + '/trucks/failures', function(data) {
+  			self.trucks(data);
+		});
+	}
+</script>
