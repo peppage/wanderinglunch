@@ -56,10 +56,15 @@
 				$('#images').empty();
 				self.truck(data);
 				self.tweets(data.tweets.slice(0, 5));
+
+				var loopable = false;
+				if(data.images.length > 1) {
+					loopable = true;
+				}
 				
 				$('#images').owlCarousel({
 					items: 1,
-					loop: true,
+					loop: loopable,
 					nav: true,
 					navText: [
 						'Prev',
