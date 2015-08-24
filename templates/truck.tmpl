@@ -13,7 +13,8 @@
 				<a data-bind="attr: {href: 'http://twitter.com/' + twitname + '/status/' + id}">
 					<img src="/static/images/twitter.png" style="height:20px;">
 				</a>
-				<span data-bind="html: contents"></span>
+				<span data-bind="html: contents"></span><br>
+				<span data-bind="text: time" class="tweet-time"></span>
 			</li>
 		</ol>
 	</div>

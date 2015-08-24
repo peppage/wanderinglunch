@@ -129,6 +129,12 @@ footer, .content-wrapper:after {
   color: $typeColor;
 }
 
+.tweet-time {
+  font-size: 0.7em;
+  color: $typeColor;
+  float: right;
+}
+
 .owl-controls {
   text-align: center;
   margin-top: 10px;
