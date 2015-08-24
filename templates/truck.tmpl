@@ -35,6 +35,8 @@
 <noscript>
 	{{ with .truck }}
 		<h1>{{ .Name }}</h1>
+		<h2>{{ .Type }}</h2>
+		Location: {{ .Location.String }}
 	{{ end }}
 </noscript>
 
