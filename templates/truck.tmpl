@@ -9,7 +9,12 @@
 <div class="row">
 	<div class="col-7 noMobile" style="border-right: 1px solid #d3d4d5;padding-right:10px;">
 		<ol class="tweetList" data-bind="foreach: tweets">
-			<li class="tweet" data-bind="text: contents"></li>
+			<li class="tweet">
+				<a data-bind="attr: {href: 'http://twitter.com/' + twitname + '/status/' + id}">
+					<img src="/static/images/twitter.png" style="height:20px;">
+				</a>
+				<span data-bind="html: contents"></span>
+			</li>
 		</ol>
 	</div>
 	<div class="col-4">
