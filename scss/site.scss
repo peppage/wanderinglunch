@@ -407,6 +407,17 @@ label {
 
 .sortable {
   cursor: pointer;
+  background-image: url(/static/images/sortable.gif);
+  background-repeat: no-repeat;
+  background-position: center right;
+}
+
+.asc {
+  background-image: url(/static/images/asc.gif);
+}
+
+.desc {
+ background-image: url(/static/images/desc.gif); 
 }
 
 //Button Group
