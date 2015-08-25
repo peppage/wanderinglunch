@@ -1,6 +1,6 @@
 window.onscroll=function(){ checkShadow(); };
 
-var API_URL = "http://api.wanderinglunch.com";
+var API_URL = 'http://api.wanderinglunch.com';
 
 function checkShadow() {
   'use strict';
@@ -29,6 +29,20 @@ document.addEventListener('DOMContentLoaded', function() {
       hidden.classList.remove('is-shown');
     };
   }
+
+  $.getJSON(API_URL + '/messages?amount=1', function(data) {
+    if (data.date > (new Date()).getTime() / 1000 - 604800) {
+      var div = document.createElement('div');
+      div.innerHTML = data.message;
+      div.id = 'siteNews';
+      div.className = 'mfp-hide white-popup';
+      document.body.appendChild(div);
+      $('.js-siteNews').magnificPopup({
+        type:'inline',
+        midClick: true // Allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source in href.
+      });
+    }
+  });
 });
 
 function indexModel() {

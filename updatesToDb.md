@@ -3,7 +3,7 @@ alter table images alter menu set default 'f';
 update images set menu='f' where menu IS NULL;
 
 drop table messages;
-create table messages (id serial, message text NOT NULL);
+create table messages (id serial, message text NOT NULL, date int);
 
 alter table locations add column site text;
 update locations set site='nyc';
