@@ -51,6 +51,10 @@
 		ko.applyBindings(new truckModel({{ .id }}));
 	});
 
+	window.onpopstate = function() {
+		location.reload();
+	}
+
 	function truckModel(id) {
 		var self = this;
 		self.truck = ko.observable({});
