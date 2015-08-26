@@ -57,7 +57,7 @@
 		self.trucks = ko.observableArray([]);
 		self.query = ko.observable('');
 
-		$.getJSON(API_URL + '/trucks', function(data) {
+		$.getJSON(API_URL + '/trucks?updated_since=1440', function(data) {
   			self.trucks(data);
   			self.trucks.orderDirection('asc');
   			self.trucks.orderField('name');
