@@ -1,34 +1,39 @@
-<input id="search" type="search" name="search" placeholder="Search by name..."
-	   data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off" />
+<div data-bind="visible: isLoaded">
+	<input id="search" type="search" name="search" placeholder="Search by name..."
+		   data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off" />
 
-<table class="table table-minimal">
-	<thead>
-		<tr>
-			<th class="sortable" data-bind="orderable: {collection: 'trucks', field: 'name', defaultField: true, defaultDirection: 'desc' }">Truck</th>
-			<th class="sortable" data-bind="orderable: {collection: 'trucks', field: 'location' }">Location</th>
-			<th class="sortable" data-bind="orderable: {collection: 'trucks', field: 'lastupdate' }">Time</th>
-			<th class="noMobile">Menu</th>
-		</tr>
-	</thead>
-	<tbody data-bind="foreach: results">
-		<tr>
-			<td>
-				<a data-bind="attr: { href: '/truck/'+id }"><span data-bind="text: name"></span></a>
-			</td>
-			<td>
-				<span data-bind="text: location"></span>
-			</td>
-			<td>
-				<span data-bind="text: updated"></span>
-			</td>
-			<td class="noMobile">
-				<span data-bind="if: image">
-					<img class="menu" data-bind="attr { src: 'http://irs0.4sqi.net/img/general/width30'+ image, alt: name + ' menu'}, click: $parent.showMenu" />
-				</span>
-			</td>
-		</tr>
-	</tbody>
-</table>
+	<table class="table table-minimal">
+		<thead>
+			<tr>
+				<th class="sortable" data-bind="orderable: {collection: 'trucks', field: 'name', defaultField: true, defaultDirection: 'desc' }">Truck</th>
+				<th class="sortable" data-bind="orderable: {collection: 'trucks', field: 'location' }">Location</th>
+				<th class="sortable" data-bind="orderable: {collection: 'trucks', field: 'lastupdate' }">Time</th>
+				<th class="noMobile">Menu</th>
+			</tr>
+		</thead>
+		<tbody data-bind="foreach: results">
+			<tr>
+				<td>
+					<a data-bind="attr: { href: '/truck/'+id }"><span data-bind="text: name"></span></a>
+				</td>
+				<td>
+					<span data-bind="text: location"></span>
+				</td>
+				<td>
+					<span data-bind="text: updated"></span>
+				</td>
+				<td class="noMobile">
+					<span data-bind="if: image">
+						<img class="menu" data-bind="attr { src: 'http://irs0.4sqi.net/img/general/width30'+ image, alt: name + ' menu'}, click: $parent.showMenu" />
+					</span>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div data-bind="ifnot: isLoaded" style="text-align:center;">
+	<div class="loader">Loading...</div>
+</div>
 <div style="text-align:center">
 	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 	<!-- wandering2 -->
@@ -54,6 +59,7 @@
 	
 	function AllTrucksModel() {
 		var self = this;
+		self.isLoaded = ko.observable(false);
 		self.trucks = ko.observableArray([]);
 		self.query = ko.observable('');
 
@@ -61,6 +67,7 @@
   			self.trucks(data);
   			self.trucks.orderDirection('asc');
   			self.trucks.orderField('name');
+  			self.isLoaded(true);
 		});
 
 		self.results = ko.computed(function() {

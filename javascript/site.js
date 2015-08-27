@@ -1,6 +1,6 @@
 window.onscroll=function(){ checkShadow(); };
 
-var API_URL = 'http://api.wanderinglunch.com';
+var API_URL = 'http://localhost:8001';//'http://api.wanderinglunch.com';
 
 function checkShadow() {
   'use strict';
@@ -47,6 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function indexModel() {
   var self = this;
+  self.isLoaded = ko.observable(false);
   self.trucks = ko.observableArray([]);
   self.location = ko.observable();
   self.visible = ko.observableArray([]);
@@ -60,6 +61,7 @@ function indexModel() {
   $.getJSON(API_URL + '/trucks?updated_since=8&sort=lat&sort_dir=desc', function(data) {
     self.trucks(data);
     self.setVisible();
+    self.isLoaded(true);
   });
 
   self.update = function() {
