@@ -1,6 +1,6 @@
 window.onscroll=function(){ checkShadow(); };
 
-var API_URL = 'http://localhost:8001';//'http://api.wanderinglunch.com';
+var API_URL = 'http://api.wanderinglunch.com';
 
 function checkShadow() {
   'use strict';
