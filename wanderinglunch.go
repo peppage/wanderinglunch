@@ -8,8 +8,8 @@ import (
 	"bitbucket.org/peppage/wlapi/model"
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
+	"github.com/peppage/sessions"
 	"github.com/unrolled/render"
-	"github.com/ymichael/sessions"
 	"github.com/zenazn/goji"
 	"github.com/zenazn/goji/web"
 	"github.com/zenazn/goji/web/middleware"
@@ -18,12 +18,11 @@ import (
 var db *sqlx.DB
 var renderer *render.Render
 var secret = "thisismysecret"
-var inMemorySessionStore = sessions.MemoryStore{}
-var Sessions = sessions.NewSessionOptions(secret, &inMemorySessionStore)
+var redisSessionStore = sessions.NewRedisStore("tcp", "127.0.0.1:6379")
+var Sessions = sessions.NewSessionOptions(secret, redisSessionStore, ".wanderinglunch.com")
 
 func root(c web.C, w http.ResponseWriter, r *http.Request) {
 	message := model.GetMessage(1)
-
 	data := make(map[string]interface{})
 	data["title"] = "Wandering Lunch: NYC Food Truck Finder"
 	data["message"] = template.HTML(message.Message)
