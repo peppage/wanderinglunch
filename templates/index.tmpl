@@ -33,14 +33,14 @@
 					<tr>
 						<th>Truck</th>
 						<th>Location</th>
-						<th>Time</th>
+						<th class="noMobile">Time</th>
 						<th class="noMobile">Menu</th>
 					</tr>
 				</thead>
 				<tbody data-bind="foreach: visible">
 					<td><a data-bind="attr: { href: '/truck/'+id }"><span data-bind="text: name"></span></a></td>
 					<td><span data-bind="text: location"></span></td>
-					<td><span data-bind="text: updated"></span></td>
+					<td class="noMobile"><span data-bind="text: updated"></span></td>
 					<td class="noMobile">
 						<span data-bind="if: image">
 							<img class="menu" data-bind="attr { src: 'http://irs0.4sqi.net/img/general/width30'+ image, alt: name + ' menu' }, click: $parent.showMenu"/>
