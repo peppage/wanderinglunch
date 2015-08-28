@@ -78,6 +78,12 @@ func loginHandle(c web.C, w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/admin", http.StatusTemporaryRedirect)
 }
 
+func serveSingle(pattern string, filename string) {
+	http.HandleFunc(pattern, func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, filename)
+	})
+}
+
 func init() {
 	var err error
 	db, err = sqlx.Open("postgres", "user=mca dbname=foodtruck sslmode=disable")
@@ -95,6 +101,9 @@ func init() {
 }
 
 func main() {
+
+	serveSingle("/favicon.ico", "./static/images/favicon.ico")
+
 	goji.Use(Sessions.Middleware())
 	goji.Get("/", root)
 	goji.Get("/truck/:id", truck)
