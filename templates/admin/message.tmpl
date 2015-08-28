@@ -14,14 +14,30 @@
 		var self = this;
 		self.message = ko.observable({});
 
-		$.getJSON(API_URL + '/messages?amount=1', function(data) {
-  			self.message(data);
-		});
+		$.ajax({
+	    	dataType: 'json',
+	    	url: API_URL + '/messages?amount=1',
+	    	xhrFields: {
+	      		withCredentials: true
+	    	}
+	  	}).done(function(data) {
+	  		self.message(data);
+	  	});
 		
 		self.save = function() {
-			$.post(API_URL + '/messages', ko.toJS(self.message), function(data) {
-				self.message(data);
-			});
+			$.ajax({
+		    	dataType: 'json',
+		    	url: API_URL + '/messages',
+		    	method: 'POST',
+		    	data: ko.toJS(self.message),
+		    	xhrFields: {
+		      		withCredentials: true
+		    	}
+		  	}).done(function(data) {
+		  		self.message(data);
+		  	}).fail(function(data) {
+		  		
+		  	});
 			return true;
 		};
 	}

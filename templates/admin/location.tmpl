@@ -43,20 +43,30 @@
 		var self = this;
 		self.loc = ko.observable({});
 		
-		$.getJSON(API_URL + '/locations/' + id, function(data) {
-  			self.loc(data);
-		});
+		$.ajax({
+	    	dataType: 'json',
+	    	url: API_URL + '/locations/' + id,
+	    	xhrFields: {
+	      		withCredentials: true
+	    	}
+	  	}).done(function(data) {
+	  		self.loc(data);
+	  	});
 
 		self.save = function() {
-			console.log(ko.toJS(self.loc));
 			$.ajax({
-			    url: API_URL + '/locations/' + id,
-			    method: 'PUT',
-			    data: ko.toJS(self.loc),
-			    success: function(data) {
-					console.log(data);
-			    }
-			});
+		    	dataType: 'json',
+		    	url: API_URL + '/locations/' + id,
+		    	method: 'PUT',
+		    	data: ko.toJS(self.loc),
+		    	xhrFields: {
+		      		withCredentials: true
+		    	}
+		  	}).done(function(data) {
+		  		
+		  	}).fail(function(data) {
+
+		  	});
 			return true;
 		};
 	}

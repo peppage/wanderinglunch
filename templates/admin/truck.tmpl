@@ -74,19 +74,29 @@
 		self.pageNumber = ko.observable(0);
 		self.perPage = 10;
 		
-		$.getJSON(API_URL + '/trucks/' + id, function(data) {
-  			self.truck(data);
+		$.ajax({
+	    	dataType: 'json',
+	    	url: API_URL + '/trucks/' + id,
+	    	xhrFields: {
+	      		withCredentials: true
+	    	}
+	  	}).done(function(data) {
+	  		self.truck(data);
   			self.truckImages(data.images);
-		});
+	  	});
 
 		self.save = function() {
 			$.ajax({
 			    url: API_URL + '/trucks/' + id,
 			    method: 'PUT',
 			    data: ko.toJS(self.truck),
-			    success: function(data) {
-					console.log(data);
-			    }
+			    xhrFields: {
+		      		withCredentials: true
+		    	}
+			}).done(function(data) {
+
+			}).fail(function(data) {
+
 			});
 			return true;
 		};
@@ -95,16 +105,26 @@
 			$.ajax({
 			    url: API_URL + '/images/' + image.id,
 			    type: 'DELETE',
-			    success: function(data) {
-					self.truckImages.remove(image);
-			    }
+			    xhrFields: {
+		      		withCredentials: true
+		    	}
+			}).done(function(data) {
+				self.truckImages.remove(image);
+			}).fail(function(data) {
+
 			});
 		};
 
 		self.getImages = function() {
-			$.getJSON('/admin/foursquare/' + self.truck().foursquare, function(data) {
-  				self.images(data);
-			});
+			$.ajax({
+		    	dataType: 'json',
+		    	url: '/admin/foursquare/' + self.truck().foursquare,
+		    	xhrFields: {
+		      		withCredentials: true
+		    	}
+		  	}).done(function(data) {
+		  		self.images(data);
+		  	});
 		};
 
 		self.totalPages = ko.computed(function() {
@@ -154,12 +174,15 @@
 					id: image.id,
 					suffix: image.suffix,
 					twitname: self.truck().twitname
-				}
+				},
+				xhrFields: {
+		      		withCredentials: true
+		    	}
 			}).done(function(data) {
-				console.log(data);
 				self.truckImages.push(data);
+			}).fail(function(data) {
+				
 			});
-			console.log(image);
 		};
 
 		self.editImage = function(image) {

@@ -49,10 +49,19 @@
 		};
 		
 		self.save = function() {
-			$.post('/api/trucks/add', ko.toJS(self.truck), function(data) {
-				console.log(data);
-			});
+			$.ajax({
+		    	dataType: 'json',
+		    	url: '/api/trucks/add',
+		    	method: 'POST',
+		    	data: ko.toJS(self.truck),
+		    	xhrFields: {
+		      		withCredentials: true
+		    	}
+		  	}).done(function(data) {
+		  	}).fail(function(data) {
+
+		  	});
 			return true;
-		}
+		};
 	}
 </script>

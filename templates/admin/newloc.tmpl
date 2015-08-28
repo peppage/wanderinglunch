@@ -51,14 +51,29 @@
 			site: ko.observable('nyc'),
 		};
 		
-		$.getJSON(API_URL + '/tweets/' + tweetid + '?with_subs=1', function(data) {
-  			self.tweet(data.contents);
-		});
+		$.ajax({
+	    	dataType: 'json',
+	    	url: API_URL + '/tweets/' + tweetid + '?with_subs=1',
+	    	xhrFields: {
+	      		withCredentials: true
+	    	}
+	  	}).done(function(data) {
+	  		self.tweet(data.contents);
+	  	});
 
 		self.save = function() {
-			$.post(API_URL + '/locations', ko.toJS(self.loc), function(data) {
-				console.log(data);
-			});
+			$.ajax({
+		    	dataType: 'json',
+		    	url: API_URL + '/locations',
+		    	method: 'POST',
+		    	data: ko.toJS(self.loc),
+		    	xhrFields: {
+		      		withCredentials: true
+		    	}
+		  	}).done(function(data) {
+		  	}).fail(function(data) {
+
+		  	});
 			return true;
 		};
 

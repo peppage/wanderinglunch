@@ -30,7 +30,13 @@ document.addEventListener('DOMContentLoaded', function() {
     };
   }
 
-  $.getJSON(API_URL + '/messages?amount=1', function(data) {
+  $.ajax({
+    dataType: 'json',
+    url: API_URL + '/messages?amount=1',
+    xhrFields: {
+      withCredentials: true
+    }
+  }).done(function(data) {
     if (data.date > (new Date()).getTime() / 1000 - 604800) {
       var div = document.createElement('div');
       div.innerHTML = data.message;
@@ -58,18 +64,21 @@ function indexModel() {
     self.location('manhattan');
   }
 
-  $.getJSON(API_URL + '/trucks?updated_since=8&sort=lat&sort_dir=desc', function(data) {
-    self.trucks(data);
-    self.setVisible();
-    self.isLoaded(true);
-  });
-
   self.update = function() {
-    $.getJSON(API_URL + '/trucks?updated_since=8&sort=lat&sort_dir=desc', function(data) {
+    $.ajax({
+      dataType: 'json',
+      url: API_URL + '/trucks?updated_since=8&sort=lat&sort_dir=desc',
+      xhrFields: {
+        withCredentials: true
+      }
+    }).done(function(data) {
       self.trucks(data);
       self.setVisible();
+      self.isLoaded(true);
     });
   };
+
+  self.update();
 
   self.setVisible = function() {
     localStorage.setItem('loc', self.location());

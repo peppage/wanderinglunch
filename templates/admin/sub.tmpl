@@ -20,18 +20,28 @@
 		var self = this;
 		self.sub = ko.observable({});
 		
-		$.getJSON(API_URL + '/subs/' + id, function(data) {
-  			self.sub(data);
-		});
+		$.ajax({
+	    	dataType: 'json',
+	    	url: API_URL + '/subs/' + id,
+	    	xhrFields: {
+	      		withCredentials: true
+	    	}
+	  	}).done(function(data) {
+	  		self.sub(data);
+	  	});
 
 		self.save = function() {
 			$.ajax({
 			    url: API_URL + '/subs/' + id,
 			    method: 'PUT',
 			    data: ko.toJS(self.sub),
-			    success: function(data) {
-					console.log(data);
-			    }
+			    xhrFields: {
+	      			withCredentials: true
+	    		}
+			}).done(function(data) {
+
+			}).fail(function(data) {
+
 			});
 			return true;
 		};

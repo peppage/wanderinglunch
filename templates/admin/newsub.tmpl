@@ -25,8 +25,13 @@
 				url: API_URL + '/subs',
 				method: 'POST',
 				data: ko.toJS(self.sub),
+				xhrFields: {
+	      			withCredentials: true
+	    		}
 			}).done(function(data) {
 				window.location.assign('/admin/sub/' + data.id);
+			}).fail(function(data) {
+				
 			});
 			return true;
 		};

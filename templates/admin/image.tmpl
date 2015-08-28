@@ -30,19 +30,30 @@
 		var self = this;
 		self.image = ko.observable({});
 		
-		$.getJSON(API_URL + '/images/' + id, function(data) {
-  			self.image(data);
-		});
+		$.ajax({
+	    	dataType: 'json',
+	    	url: API_URL + '/images/' + id,
+	    	xhrFields: {
+	      		withCredentials: true
+	    	}
+	  	}).done(function(data) {
+	  		self.image(data);
+	  	});
 
 		self.save = function() {
 			$.ajax({
-			    url: API_URL + '/images/' + id,
-			    method: 'PUT',
-			    data: ko.toJS(self.image),
-			    success: function(data) {
-			    	
-			    }
-			});
+		    	dataType: 'json',
+		    	method: 'PUT',
+		    	url: API_URL + '/images/' + id,
+		    	data: ko.toJS(self.image),
+		    	xhrFields: {
+		      		withCredentials: true
+		    	}
+		  	}).done(function(data) {
+		  		
+		  	}).fail(function(data) {
+		  		
+		  	});
 			return true;
 		};
 	}

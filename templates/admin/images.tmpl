@@ -28,18 +28,28 @@
 		var self = this;
 		self.images = ko.observableArray([]);
 
-		$.getJSON(API_URL + '/images?visibility=private', function(data) {
-  			self.images(data);
-		});
+		$.ajax({
+	    	dataType: 'json',
+	    	url: API_URL + '/images?visibility=private',
+	    	xhrFields: {
+	      		withCredentials: true
+	    	}
+	  	}).done(function(data) {
+	  		self.images(data);
+	  	});
 
 		self.delete = function(image) {
 			$.ajax({
-			    url: API_URL + '/images/' + image.id,
-			    type: 'DELETE',
-			    success: function(data) {
-					self.images.remove(image);
-			    }
-			});
+		    	dataType: 'json',
+		    	url: API_URL + '/images/' + image.id,
+		    	method: 'DELETE',
+		    	xhrFields: {
+		      		withCredentials: true
+		    	}
+		  	}).done(function(data) {
+		  		self.images.remove(image);
+		  	}).fail(function(data) {
+		  	});
 		};
 	}
 </script>

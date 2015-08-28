@@ -24,9 +24,12 @@
   function initialize() {
     var trucks = [];
     $.ajax({
+      dataType: 'json',
       url: API_URL + '/markers?updated_since=8',
-    })
-    .done(function( trucks ) {
+      xhrFields: {
+        withCredentials: true
+      }
+    }).done(function( trucks ) {
       var mapOptions = {
         center: { lat: 40.755575, lng: -73.982404},
         zoom: 12

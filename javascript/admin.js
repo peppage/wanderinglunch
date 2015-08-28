@@ -5,7 +5,13 @@ function AdminFixModel(id) {
   self.perPage = 5;
   self.id = id;
 
-  $.getJSON(API_URL + '/trucks/' + id + '/tweets?with_subs=1', function(data) {
+  $.ajax({
+    dataType: 'json',
+    url: API_URL + '/trucks/' + id + '/tweets?with_subs=1',
+    xhrFields: {
+      withCredentials: true
+    }
+  }).done(function(data) {
     self.tweets(data);
   });
 

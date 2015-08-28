@@ -24,8 +24,14 @@
 		var self = this;
 		self.trucks = ko.observableArray([]);
 
-		$.getJSON(API_URL + '/trucks/failures', function(data) {
-  			self.trucks(data);
-		});
+		$.ajax({
+	    	dataType: 'json',
+	    	url: API_URL + '/trucks/failures',
+	    	xhrFields: {
+	      		withCredentials: true
+	    	}
+	  	}).done(function(data) {
+	  		self.trucks(data);
+	  	});
 	}
 </script>

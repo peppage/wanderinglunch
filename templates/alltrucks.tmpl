@@ -63,8 +63,14 @@
 		self.trucks = ko.observableArray([]);
 		self.query = ko.observable('');
 
-		$.getJSON(API_URL + '/trucks?updated_since=1440', function(data) {
-  			self.trucks(data);
+		$.ajax({
+			dataType: 'json',
+			url: API_URL + '/trucks?updated_since=1440',
+			xhrFields: {
+			  withCredentials: true
+			}
+		}).done(function(data) {
+			self.trucks(data);
   			self.trucks.orderDirection('asc');
   			self.trucks.orderField('name');
   			self.isLoaded(true);
