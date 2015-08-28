@@ -110,7 +110,7 @@ footer, .content-wrapper:after {
 .col-buttons {
   @include media($desktop) {
     @include span-columns(5);
-    @include shift(3);
+    @include shift(4);
     padding-top: 10px;
   }
 }
