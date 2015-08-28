@@ -1,8 +1,8 @@
 @import "bourbon";
 @import "neat";
 
-$desktop: new-breakpoint(min-width 901px 12);
-$smallScreen: new-breakpoint(max-width 900px 8);
+$desktop: new-breakpoint(min-width 861px 12);
+$smallScreen: new-breakpoint(max-width 860px 8);
 $mobile: new-breakpoint(max-width 750px 4);
 
 $linkColor: #48b9a3;
@@ -233,11 +233,13 @@ $color-loader: $linkColor;
   }
   @include media($smallScreen) {
     background-image: url(/static/images/wl-temp-sm.png);
-    width: 142px;
+    width: 95px;
+    background-repeat: no-repeat;
   }
   @include media($mobile) {
     background-image: url(/static/images/wl-temp-sm.png);
-    width: 142px;
+    width: 95px;
+    background-repeat: no-repeat;
   }
 }
 
