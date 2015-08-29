@@ -26,15 +26,18 @@ gulp.task('sass', function() {
     .pipe(gulp.dest('static'));
 });
 
+var jsScripts = ['javascript/site.js', 'javascript/magnific.js', 'javascript/owl.js',
+                 'javascript/site.map.js', 'javascript/site.alltrucks.js', 'javascript/site.truck.js'];
+
 gulp.task('compress', function() {
-  return gulp.src(['javascript/site.js', 'javascript/magnific.js', 'javascript/owl.js'])
+  return gulp.src(jsScripts)
     .pipe(concat('site.js'))
     .pipe(uglify())
     .pipe(gulp.dest('static'));
 });
 
 gulp.task('movejs', function() {
-  return gulp.src(['javascript/site.js', 'javascript/magnific.js', 'javascript/owl.js'])
+  return gulp.src(jsScripts)
     .pipe(concat('site.js'))
     .pipe(gulp.dest('static'));
 });
