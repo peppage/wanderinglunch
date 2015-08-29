@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -83,6 +84,14 @@ func serveSingle(pattern string, filename string) {
 	})
 }
 
+func maxAgeHandler(seconds int, h http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Add("Cache-Control", fmt.Sprintf("max-age=%d, public, must-revalidate, proxy-revalidate", seconds))
+		w.Header().Add("Vary", "Accept-Encoding")
+		h.ServeHTTP(w, r)
+	})
+}
+
 func init() {
 	var err error
 	db, err = sqlx.Open("postgres", "user=mca dbname=foodtruck sslmode=disable")
@@ -96,7 +105,7 @@ func init() {
 		Layout:        "layout",
 	})
 
-	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("./static/"))))
+	http.Handle("/static/", http.StripPrefix("/static/", maxAgeHandler(31536000, http.FileServer(http.Dir("./static/")))))
 }
 
 func main() {
