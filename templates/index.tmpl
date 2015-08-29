@@ -1,0 +1,72 @@
+<div class="row noMobile">
+	<div class="col-12" style="text-align:center;">
+		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<!-- wandering -->
+		<ins class="adsbygoogle"
+		     style="display:inline-block;width:728px;height:90px"
+		     data-ad-client="ca-pub-4098082757736151"
+		     data-ad-slot="3902951461"></ins>
+		<script>
+		(adsbygoogle = window.adsbygoogle || []).push({});
+		</script>
+	</div>
+</div>
+<div data-bind="visible: isLoaded">
+	<div class="row" data-bind="if: trucks().length">
+		<div class="col-buttons">
+			<div class="button-group">
+				<label>
+					<input type="radio" name="button-group" value="manhattan" checked data-bind="checked: location, click: setVisible">
+					<span class="button-group-item">Manhattan</span>
+				</label>
+				<label>
+					<input type="radio" name="button-group" value="brooklyn" data-bind="checked: location, click: setVisible" />
+					<span class="button-group-item">Brooklyn</span>
+				</label>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-12" data-bind="if: visible().length">
+			<table class="table table-minimal">
+				<thead>
+					<tr>
+						<th>Truck</th>
+						<th>Location</th>
+						<th class="noMobile">Time</th>
+						<th class="noMobile">Menu</th>
+					</tr>
+				</thead>
+				<tbody data-bind="foreach: visible">
+					<td><a data-bind="attr: { href: '/truck/'+id }"><span data-bind="text: name"></span></a></td>
+					<td><span data-bind="text: location"></span></td>
+					<td class="noMobile"><span data-bind="text: updated"></span></td>
+					<td class="noMobile">
+						<span data-bind="if: image">
+							<img class="menu" data-bind="attr { src: 'http://irs0.4sqi.net/img/general/width30'+ image, alt: name + ' menu' }, click: $parent.showMenu"/>
+						</span>
+					</td>
+				</tbody>
+			</table>
+		</div>
+		<div data-bind="visible: trucks().length">
+			<div class="col-12" data-bind="visible: !visible().length">
+				No trucks in this area.
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-12" data-bind="ifnot: trucks().length">
+			<h1 class="centerText">Your hunger cannot be satisfied, no trucks are tweeting</h1>
+			<p class="centerText">If it's late, bookmark the site and come back around lunchtime! <br></p>
+			<p class="centerText">There will be a list of trucks here, <a target="_blank" href="https://twitter.com/intent/tweet?text=Wandering Lunch&url=http://wanderinglunch.com">tweet</a> at yourself so you don't forget.<br></p>
+			<p class="centerText">Check out <a href="/alltrucks">a list of all the trucks</a> on the site while you wait.</p>
+		</div>
+	</div>
+</div>
+<div data-bind="ifnot: isLoaded" style="text-align:center;">
+	<div class="loader">Loading...</div>
+</div>
+<script>
+	ko.applyBindings(new indexModel());
+</script>

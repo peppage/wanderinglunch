@@ -1,4 +1,5 @@
 node_modules/
-public/stylesheets/site.css
-public/stylesheets/index.css
-public/stylesheets/truck.css
+*.exe
+static/*.css
+static/*.js
+static/*.map
