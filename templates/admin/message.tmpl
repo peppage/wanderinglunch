@@ -1,0 +1,44 @@
+<h1>New Message</h1>
+
+<label>Message</label><br>
+<textarea data-bind="value: message().message"></textarea><br>
+
+<button data-bind="click: save">Save</button>
+
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		ko.applyBindings(new AdminMessage());
+	});
+	
+	function AdminMessage() {
+		var self = this;
+		self.message = ko.observable({});
+
+		$.ajax({
+	    	dataType: 'json',
+	    	url: API_URL + '/messages?amount=1',
+	    	xhrFields: {
+	      		withCredentials: true
+	    	}
+	  	}).done(function(data) {
+	  		self.message(data);
+	  	});
+		
+		self.save = function() {
+			$.ajax({
+		    	dataType: 'json',
+		    	url: API_URL + '/messages',
+		    	method: 'POST',
+		    	data: ko.toJS(self.message),
+		    	xhrFields: {
+		      		withCredentials: true
+		    	}
+		  	}).done(function(data) {
+		  		self.message(data);
+		  	}).fail(function(data) {
+		  		
+		  	});
+			return true;
+		};
+	}
+</script>

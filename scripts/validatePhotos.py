@@ -20,7 +20,7 @@ with conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as cur:
         with conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as imageCur:
             imageCur.execute("SELECT * FROM images WHERE twitname='" + truck['twitname']+ "';")
             if imageCur.rowcount > 0:
-                data = client.venues.photos(truck['foursquare'], params={'limit': 100})
+                data = client.venues.photos(truck['foursquare'], params={'limit': 200})
                 photoItems = data['photos']['items']
                 for image in imageCur:
                     found = False

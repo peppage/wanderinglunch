@@ -1,83 +1,114 @@
-<div id="map-canvas" style="height:500px"></div>
-
-<script type="text/javascript"
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAN8Jk0062QBOMPmXH-Totg9zi1GCw3o3w">
-</script>
+<div id="map" style="height:500px"></div>
+<br>
+<div style="text-align:center">
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <!-- wandering2 -->
+  <ins class="adsbygoogle"
+       style="display:inline-block;width:300px;height:250px"
+       data-ad-client="ca-pub-4098082757736151"
+       data-ad-slot="1938459065"></ins>
+  <script>
+  (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
 <script type="text/javascript">
-  var markers = new Array;
-  var infoWindow = new google.maps.InfoWindow({
-    content: '',
-  });
-  var t;
-  var m;
-  function initialize() {
-    var trucks = [];
+  var map;
+  var markers = [];
+  var infoWindow;
+  var activeMarker;
+  function initMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+      center: { lat: 40.755575, lng: -73.982404},
+      zoom: 12
+    });
+    infoWindow = new google.maps.InfoWindow({
+      content: '',
+    });
     $.ajax({
-      url: "/api/markers/current",
-    })
-    .done(function( trucks ) {
-      var mapOptions = {
-        center: { lat: 40.755575, lng: -73.982404},
-        zoom: 12
-      };
-      var map = new google.maps.Map(document.getElementById('map-canvas'),
-          mapOptions);
-      m = map;
-
+      dataType: 'json',
+      url: API_URL + '/markers?updated_since=8',
+      xhrFields: {
+        withCredentials: true,
+      },
+    }).done(function( trucks ) {
+      setMarkers(map, trucks);
       google.maps.event.addListener(map, 'click', function() {
 
       });
-      setMarkers(map, trucks);
+      google.maps.event.addListener(map, "mouseover", function() {
+        
+      });
+      google.maps.event.addListener(map, "mouseout", function() {
+          
+      });
+      google.maps.event.addListener(infoWindow, 'closeclick', function() {
+          activeMarker = null;
+        });
     });
+  }
 
-
+  function render(display, title) {
+    return '<h3>' + display + '</h3>' + title;
   }
 
   function getMarkerAt(latLng) {
     for(var j=0; j < markers.length; j++) {
-          if(latLng.A === markers[j].position.A && latLng.F === markers[j].position.F) {
-            return markers[j];
-          }
-        }
-  }
-
-  function setMarkers(map, locations) {
-    for (var i = 0; i < locations.length; i++) {
-        var loc = locations[i];
-        var infowindow = new google.maps.InfoWindow({
-            content: loc.Name,
-        });
-        var myLatLng = new google.maps.LatLng(loc.Lat, loc.Long);
-
-        var existingMarker = getMarkerAt(myLatLng);
-
-        if(existingMarker != null) {
-          existingMarker.title += '<a href="/truck/'+ loc.Id + '" />' + loc.Name + '</a><br>';
-
-        } else {
-          var marker = new google.maps.Marker({
-              position: myLatLng,
-              map: map,
-              title: '<a href="/truck/'+ loc.Id + '" />' + loc.Name + '</a><br>',
-              zIndex: 1,
-              display: loc.Display,
-              id: loc.Id,
-          });
-
-          markers.push(marker);
-
-          google.maps.event.addListener(marker, 'click', function() {
-            if(infoWindow.getContent() != '') {
-              infoWindow.setContent('');
-              infoWindow.close();
-            }
-
-            infoWindow.setContent('<h3>' + this.display + '</h3>' + this.title);
-            infoWindow.open(map, this);
-          });
+      if(latLng.G === markers[j].position.G && latLng.K === markers[j].position.K) {
+        return markers[j];
       }
     }
   }
 
-  google.maps.event.addDomListener(window, 'load', initialize);
+  function setMarkers(map, locations) {
+    for (var i = 0; i < locations.length; i++) {
+      var loc = locations[i];
+      var myLatLng = new google.maps.LatLng(loc.lat, loc.long);
+
+      var existingMarker = getMarkerAt(myLatLng);
+
+      if(existingMarker != null) {
+        existingMarker.infoWindowContent += '<a href="/truck/'+ loc.id + '" />' + loc.name + '</a><br>';
+
+      } else {
+        var marker = new google.maps.Marker({
+            position: myLatLng,
+            map: map,
+            zIndex: 1,
+            infoWindowContent: render(loc.display, '<a href="/truck/'+ loc.id + '" />' + loc.name + '</a><br>'),
+            id: loc.id,
+        });
+
+        markers.push(marker);
+
+        google.maps.event.addListener(marker, 'click', function() {
+          if(infoWindow.getContent() != '') {
+            infoWindow.setContent('');
+            infoWindow.close();
+            activeMarker = null;
+          }
+
+          infoWindow.setContent(this.infoWindowContent);
+          infoWindow.open(map, this);
+          activeMarker = this;
+        });
+
+        google.maps.event.addListener(marker, 'mouseover', function() {
+          if (activeMarker == undefined) {
+            infoWindow.setContent(this.infoWindowContent);
+            infoWindow.open(map, this);
+          }
+         });
+
+        google.maps.event.addListener(marker, 'mouseout', function() {
+          if (infoWindow.getContent() === this.infoWindowContent && activeMarker != this) {
+            infoWindow.setContent("");
+            infoWindow.close();
+          }
+        });
+      }
+    }
+  }
+</script>
+<script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAN8Jk0062QBOMPmXH-Totg9zi1GCw3o3w&callback=initMap">
 </script>

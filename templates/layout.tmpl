@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>
@@ -9,6 +9,12 @@
 	<script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-3.1.0.js"></script>
 	<link rel="stylesheet" media="screen" href="/static/site.css">
 	<script src="/static/site.js"></script>
+	<meta name="description" content="Track and find food trucks around New York City. Updated everyday from twitter" />
+	<link href="/favicon.ico" rel="shortcut icon">
+  	<meta property="og:title" contents="Wandering Lunch: NYC Food Truck Finder" />
+  	<meta property="og:type" contents="website" />
+  	<meta property="og:url" contents="http://wanderinglunch.com" />
+  	<meta property="og:img" contents="http://wanderinglunch.com/images/logo.png" />
 </head>
 <body>
 	<header class="nav">
@@ -17,27 +23,41 @@
 				<div class="logo"></div>
 			</div>
 			<div class="nav-right">
+				<a href="#siteNews" class="js-siteNews noMobile">Updates!</a>
 				<a {{if eq current "index" }} class="active" {{ end }} href="/">Home</a>
 				<a class="noMobile {{if eq current "alltrucks" }}active{{ end }}" href="/alltrucks">All Trucks</a>
 				<a {{if eq current "map" }} class="active" {{ end }} href="/map">Map</a>
-				<a href="/feed">Live Feed</a>
 				<a class="noMobile" href="http://twitter.com/peppage">Twitter</a>
+				{{ if .admin }}
+					<span class="dropItem">
+						<a href="/admin" class="dropItem-header">Admin</a>
+						<div class="dropItem-sub"><a href="/admin/subs">Subs</a><a href="/admin/images">Images</a><a href="/admin/locations">Locations</a><a href="/admin/trucks">Trucks</a><a href="/admin/message">Message</a>
+						</div>
+					</span>
+				{{ end }}
 			</div>
       	</div>
 	</header>
-	{{ if .admin }}
-		This is an admin area
-	{{ end }}
 	<div class="section">
 		<div class="content-wrapper">
-			<div class="row">
-				{{ yield }}
-			</div>
+			{{ yield }}
 		</div>
 	</div>
 	<div class="section">
 		<footer class="footer">
 		</footer>
 	</div>
+	{{ if .admin }}
+		<script src="/static/admin.js"></script>
+	{{ end }}
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	  	ga('create', 'UA-39921062-3', 'auto');
+	  	ga('send', 'pageview');
+	</script>
 </body>
 </html>

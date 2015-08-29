@@ -1,0 +1,81 @@
+<h1>Add Location</h1>
+
+<a href="http://maps.google.com">Google Maps</a><br>
+<a href="http://regex101.com">Regex101</a>
+
+<p data-bind="text: tweet">
+</p>
+
+<label>Display</label><br>
+<input id="display" type="text" data-bind="value: loc.display"><br>
+
+<label>Matcher</label><br>
+<input id="matcher" type="text" data-bind="value: loc.matcher"><br>
+
+<label>Region</label><br>
+<input id="region" type="text" data-bind="value: loc.region"><br>
+
+<label>Latitude</label><br>
+<input id="lat" type="text" data-bind="value: loc.lat"><br>
+
+<label>Longitude</label><br>
+<input id="long" type="text" data-bind="value: loc.long"><br>
+
+<label>Hood</label><br>
+<input id="hood" type="text" data-bind="value: loc.hood"><br>
+
+<label>Zone</label><br>
+<input id="zone" type="text" data-bind="value: loc.zone"><br>
+
+<label>Site</label><br>
+<input id="site" type="text" disabled="true" data-bind="value: loc.site"><br>
+
+<button data-bind="click: save">Save</button>
+
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		ko.applyBindings(new AdminAddLoc({{ .id }}));	
+	});
+	
+	function AdminAddLoc(tweetid) {
+		var self = this;
+		self.tweet = ko.observable();
+		self.loc = {
+			display: ko.observable(),
+			matcher: ko.observable(),
+			region: ko.observable(),
+			lat: ko.observable(),
+			long: ko.observable(),
+			hood: ko.observable(),
+			zone: ko.observable(),
+			site: ko.observable('nyc'),
+		};
+		
+		$.ajax({
+	    	dataType: 'json',
+	    	url: API_URL + '/tweets/' + tweetid + '?with_subs=1',
+	    	xhrFields: {
+	      		withCredentials: true
+	    	}
+	  	}).done(function(data) {
+	  		self.tweet(data.contents);
+	  	});
+
+		self.save = function() {
+			$.ajax({
+		    	dataType: 'json',
+		    	url: API_URL + '/locations',
+		    	method: 'POST',
+		    	data: ko.toJS(self.loc),
+		    	xhrFields: {
+		      		withCredentials: true
+		    	}
+		  	}).done(function(data) {
+		  	}).fail(function(data) {
+
+		  	});
+			return true;
+		};
+
+	}
+</script>

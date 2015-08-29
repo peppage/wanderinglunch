@@ -5,8 +5,10 @@ import (
 	"log"
 	"net/http"
 
+	"bitbucket.org/peppage/wlapi/model"
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
+	"github.com/peppage/sessions"
 	"github.com/unrolled/render"
 	"github.com/zenazn/goji"
 	"github.com/zenazn/goji/web"
@@ -15,49 +17,29 @@ import (
 
 var db *sqlx.DB
 var renderer *render.Render
+var secret = "thisismysecret"
+var redisSessionStore = sessions.NewRedisStore("tcp", "127.0.0.1:6379")
+var Sessions = sessions.NewSessionOptions(secret, redisSessionStore, ".wanderinglunch.com")
 
 func root(c web.C, w http.ResponseWriter, r *http.Request) {
-
-	trucks := getCurrentTrucks()
-
-	var m []*Truck
-	var b []*Truck
-
-	for i := 0; i < len(trucks); i++ {
-		h, _ := trucks[i].Hood.Value()
-		if h == "Brooklyn" {
-			b = append(b, trucks[i])
-		} else {
-			m = append(m, trucks[i])
-		}
-	}
-
-	message := getMessage()
-
+	message := model.GetMessage(1)
 	data := make(map[string]interface{})
 	data["title"] = "Wandering Lunch: NYC Food Truck Finder"
-	data["m"] = m
-	data["b"] = b
-	data["total"] = len(m) + len(b)
 	data["message"] = template.HTML(message.Message)
 
 	renderer.HTML(w, http.StatusOK, "index", data)
 }
 
 func allTrucks(c web.C, w http.ResponseWriter, r *http.Request) {
-	trucks := getTrucks()
-
 	data := make(map[string]interface{})
-	data["trucks"] = trucks
 	data["title"] = "Wandering Lunch: NYC Food Truck Finder | All Trucks List"
-	data["active"] = "trucks"
-
+	data["trucks"] = model.Trucks(8, "lat", "desc", 0)
 	renderer.HTML(w, http.StatusOK, "alltrucks", data)
 }
 
 func truck(c web.C, w http.ResponseWriter, r *http.Request) {
-	var t = getTruck(c.URLParams["id"])
-	if t.Id == "" {
+	var t = model.GetTruck(c.URLParams["id"])
+	if t.ID == "" {
 		http.Redirect(w, r, "/", http.StatusNotFound)
 		return
 	}
@@ -65,6 +47,7 @@ func truck(c web.C, w http.ResponseWriter, r *http.Request) {
 	data := make(map[string]interface{})
 	data["truck"] = t
 	data["title"] = "Wandering Lunch: NYC Food Truck Finder | " + t.Name
+	data["id"] = c.URLParams["id"]
 
 	renderer.HTML(w, http.StatusOK, "truck", data)
 }
@@ -77,6 +60,27 @@ func maps(c web.C, w http.ResponseWriter, r *http.Request) {
 
 func support(c web.C, w http.ResponseWriter, r *http.Request) {
 	renderer.HTML(w, http.StatusOK, "support", nil)
+}
+
+func login(c web.C, w http.ResponseWriter, r *http.Request) {
+	renderer.HTML(w, http.StatusOK, "login", nil)
+}
+
+func loginHandle(c web.C, w http.ResponseWriter, r *http.Request) {
+	u, err := model.VerifyPassword(r.FormValue("email"), r.FormValue("password"))
+	if err != nil {
+		http.Redirect(w, r, "/login", http.StatusTemporaryRedirect) // The user is invalid!
+		return
+	}
+	s := Sessions.GetSessionObject(&c)
+	s["user"] = u.Email
+	http.Redirect(w, r, "/admin", http.StatusTemporaryRedirect)
+}
+
+func serveSingle(pattern string, filename string) {
+	http.HandleFunc(pattern, func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, filename)
+	})
 }
 
 func init() {
@@ -96,51 +100,38 @@ func init() {
 }
 
 func main() {
+
+	serveSingle("/favicon.ico", "./static/images/favicon.ico")
+
+	goji.Use(Sessions.Middleware())
 	goji.Get("/", root)
 	goji.Get("/truck/:id", truck)
 	goji.Get("/alltrucks", allTrucks)
 	goji.Get("/map", maps)
 	goji.Get("/support", support)
+	goji.Get("/login", login)
+	goji.Post("/login", loginHandle)
 
 	admin := web.New()
+	goji.Get("/admin", http.RedirectHandler("/admin/", http.StatusMovedPermanently))
 	goji.Handle("/admin/*", admin)
-	goji.Get("/admin", http.RedirectHandler("/admin/", 301))
+	admin.Use(Secure)
 	admin.Use(middleware.SubRouter)
 	admin.Get("/", adminRoot)
 	admin.Get("/fix/:id", adminFix)
-
-	api := web.New()
-	goji.Handle("/api/*", api)
-	api.Use(middleware.SubRouter)
-	goji.Get("/api", http.RedirectHandler("/api/", 301))
-	api.Get("/trucks", trucks)
-	api.Get("/trucks/current", trucksCurrent)
-	api.Get("/trucks/failures", failures)
-	api.Post("/trucks/add", truckSave)
-	api.Get("/trucks/:id", truckById)
-	api.Get("/trucks/:id/images", truckImages)
-	api.Get("/trucks/:id/tweets/:page", tweets)
-	api.Get("/trucks/:id/converted/:page", tweetsWithSubs)
-	api.Post("/trucks/:id/update", truckUpdate)
-	api.Delete("/trucks/:id/delete", truckDelete)
-	api.Get("/markers/current", currentMarkers)
-	api.Get("/subs", substitutions)
-	api.Get("/subs/:id", subsitution)
-	api.Post("/subs/add", subSave)
-	api.Post("/subs/:id/update", subUpdate)
-	api.Delete("/subs/:id/delete", subDelete)
-	api.Get("/locations", locations)
-	api.Get("/locations/:id", location)
-	api.Post("/locations/add", locationSave)
-	api.Post("/locations/:id/update", locationUpdate)
-	api.Delete("/locations/:id/delete", locationDelete)
-	api.Get("/images", images)
-	api.Get("/images/:id", image)
-	api.Post("/images/add", imageSave)
-	api.Delete("/images/:id/delete", imageDelete)
-	api.Post("/images/:id/update", imageUpdate)
-	api.Get("/messages/current", message)
-	api.Post("/messages/add", messageSave)
+	admin.Get("/location/new/:tweetId", adminNewLoc)
+	admin.Get("/locations", adminLocs)
+	admin.Get("/location/:id", adminEditLoc)
+	admin.Get("/trucks", adminTrucks)
+	admin.Get("/truck/add", adminNewTruck)
+	admin.Get("/truck/:id", adminEditTruck)
+	admin.Get("/message", adminMessage)
+	admin.Get("/subs", adminSubs)
+	admin.Get("/sub/add", adminNewSub)
+	admin.Get("/sub/:id", adminSub)
+	admin.Get("/images", adminImages)
+	admin.Get("/image/:id", adminImage)
+	admin.Get("/foursquare/:id", adminFoursquareImages)
 
 	goji.Serve()
 }
