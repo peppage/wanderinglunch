@@ -80,6 +80,8 @@ func loginHandle(c web.C, w http.ResponseWriter, r *http.Request) {
 
 func serveSingle(pattern string, filename string) {
 	http.HandleFunc(pattern, func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Add("Cache-Control", "max-age=31536000, public, must-revalidate, proxy-revalidate")
+		w.Header().Add("Vary", "Accept-Encoding")
 		http.ServeFile(w, r, filename)
 	})
 }
