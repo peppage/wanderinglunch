@@ -228,16 +228,16 @@ $color-loader: $linkColor;
 .logo {
   height: 40px;
   @include media($desktop) {
-    background-image: url(/static/images/wl-temp-1.png);
+    background-image: url(/static/images/wl.png);
     width: 368px;
   }
   @include media($smallScreen) {
-    background-image: url(/static/images/wl-temp-sm.png);
+    background-image: url(/static/images/wl-sm.png);
     width: 95px;
     background-repeat: no-repeat;
   }
   @include media($mobile) {
-    background-image: url(/static/images/wl-temp-sm.png);
+    background-image: url(/static/images/wl-sm.png);
     width: 95px;
     background-repeat: no-repeat;
   }
