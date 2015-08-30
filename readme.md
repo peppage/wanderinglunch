@@ -7,7 +7,7 @@
 1. apt-get upgrade
 
 ### install required apps ###
-1. apt-get install nginx
+1. apt-get install nginx redis-server
 1. apt-get update
 1. curl -sL https://deb.nodesource.com/setup | sudo bash -
 1. apt-get install nodejs
