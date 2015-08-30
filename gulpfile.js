@@ -27,6 +27,7 @@ gulp.task('sass', function() {
       includePaths: ['sass'].concat(neat),
       outputStyle: 'compressed',
     }))
+    .pipe(rev())
     .pipe(gulp.dest('static'))
     .pipe(rev.manifest({
       base: 'static',
