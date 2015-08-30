@@ -16,10 +16,12 @@
 	<h2>Tweets</h2>
 	<table class="table table-minimal">
 		<thead>
-			<th>Tweet </th>
+			<th>Tweet</th>
+			<th style="width:260px;">Time</th>
 		</thead>
 		<tbody data-bind="foreach: results">
 			<td><a href="#" data-bind="attr: {href: '/admin/location/new/'+id }"><span data-bind="text: contents"></span></a></td>
+			<td data-bind="text: time"></td>
 		</tbody>
 	</table>
 	<div>
