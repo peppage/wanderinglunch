@@ -30,6 +30,9 @@ func adminRoot(c web.C, w http.ResponseWriter, r *http.Request) {
 	data["trucks"] = trucks
 	data["title"] = "Wandering Lunch: NYC Food Truck Finder | Admin"
 	data["admin"] = true
+	data["css"] = statics.SiteCss
+	data["js"] = statics.SiteJs
+	data["adminjs"] = statics.AdminJs
 
 	renderer.HTML(w, http.StatusOK, "admin/index", data)
 }
@@ -45,6 +48,9 @@ func adminFix(c web.C, w http.ResponseWriter, r *http.Request) {
 	data["truck"] = t
 	data["title"] = "Wandering Lunch: NYC Food Truck Finder | Admin - Fixing " + t.Name
 	data["admin"] = true
+	data["css"] = statics.SiteCss
+	data["js"] = statics.SiteJs
+	data["adminjs"] = statics.AdminJs
 
 	renderer.HTML(w, http.StatusOK, "admin/fix", data)
 }
@@ -54,6 +60,9 @@ func adminNewLoc(c web.C, w http.ResponseWriter, r *http.Request) {
 	data["title"] = "Wandering Lunch: NYC Food Truck Finder | Admin - Add Location"
 	data["id"] = c.URLParams["tweetId"]
 	data["admin"] = true
+	data["css"] = statics.SiteCss
+	data["js"] = statics.SiteJs
+	data["adminjs"] = statics.AdminJs
 
 	renderer.HTML(w, http.StatusOK, "admin/newloc", data)
 }
@@ -62,6 +71,9 @@ func adminLocs(c web.C, w http.ResponseWriter, r *http.Request) {
 	data := make(map[string]interface{})
 	data["title"] = "Wandering Lunch: NYC Food Truck Finder | Admin - Locations"
 	data["admin"] = true
+	data["css"] = statics.SiteCss
+	data["js"] = statics.SiteJs
+	data["adminjs"] = statics.AdminJs
 
 	renderer.HTML(w, http.StatusOK, "admin/locations", data)
 }
@@ -71,6 +83,9 @@ func adminEditLoc(c web.C, w http.ResponseWriter, r *http.Request) {
 	data["title"] = "Wandering Lunch: NYC Food Truck Finder | Admin - Location " + c.URLParams["id"]
 	data["admin"] = true
 	data["id"] = c.URLParams["id"]
+	data["css"] = statics.SiteCss
+	data["js"] = statics.SiteJs
+	data["adminjs"] = statics.AdminJs
 
 	renderer.HTML(w, http.StatusOK, "admin/location", data)
 }
@@ -79,6 +94,9 @@ func adminTrucks(c web.C, w http.ResponseWriter, r *http.Request) {
 	data := make(map[string]interface{})
 	data["title"] = "Wandering Lunch: NYC Food Truck Finder | Admin - Trucks "
 	data["admin"] = true
+	data["css"] = statics.SiteCss
+	data["js"] = statics.SiteJs
+	data["adminjs"] = statics.AdminJs
 
 	renderer.HTML(w, http.StatusOK, "admin/trucks", data)
 }
@@ -88,6 +106,9 @@ func adminEditTruck(c web.C, w http.ResponseWriter, r *http.Request) {
 	data["title"] = "Wandering Lunch: NYC Food Truck Finder | Admin - Truck " + c.URLParams["id"]
 	data["admin"] = true
 	data["id"] = c.URLParams["id"]
+	data["css"] = statics.SiteCss
+	data["js"] = statics.SiteJs
+	data["adminjs"] = statics.AdminJs
 
 	renderer.HTML(w, http.StatusOK, "admin/truck", data)
 }
@@ -96,6 +117,9 @@ func adminNewTruck(c web.C, w http.ResponseWriter, r *http.Request) {
 	data := make(map[string]interface{})
 	data["title"] = "Wandering Lunch: NYC Food Truck Finder | Admin - Add Truck "
 	data["admin"] = true
+	data["css"] = statics.SiteCss
+	data["js"] = statics.SiteJs
+	data["adminjs"] = statics.AdminJs
 
 	renderer.HTML(w, http.StatusOK, "admin/newtruck", data)
 }
@@ -104,6 +128,9 @@ func adminMessage(c web.C, w http.ResponseWriter, r *http.Request) {
 	data := make(map[string]interface{})
 	data["title"] = "Wandering Lunch: NYC Food Truck Finder | Admin - Message"
 	data["admin"] = true
+	data["css"] = statics.SiteCss
+	data["js"] = statics.SiteJs
+	data["adminjs"] = statics.AdminJs
 
 	renderer.HTML(w, http.StatusOK, "admin/message", data)
 }
@@ -112,6 +139,9 @@ func adminSubs(c web.C, w http.ResponseWriter, r *http.Request) {
 	data := make(map[string]interface{})
 	data["title"] = "Wandering Lunch: NYC Food Truck Finder | Admin - Subs"
 	data["admin"] = true
+	data["css"] = statics.SiteCss
+	data["js"] = statics.SiteJs
+	data["adminjs"] = statics.AdminJs
 
 	renderer.HTML(w, http.StatusOK, "admin/subs", data)
 }
@@ -121,6 +151,9 @@ func adminSub(c web.C, w http.ResponseWriter, r *http.Request) {
 	data["title"] = "Wandering Lunch: NYC Food Truck Finder | Admin - Sub " + c.URLParams["id"]
 	data["admin"] = true
 	data["id"] = c.URLParams["id"]
+	data["css"] = statics.SiteCss
+	data["js"] = statics.SiteJs
+	data["adminjs"] = statics.AdminJs
 
 	renderer.HTML(w, http.StatusOK, "admin/sub", data)
 }
@@ -129,6 +162,9 @@ func adminNewSub(c web.C, w http.ResponseWriter, r *http.Request) {
 	data := make(map[string]interface{})
 	data["title"] = "Wandering Lunch: NYC Food Truck Finder | Admin - Add Sub "
 	data["admin"] = true
+	data["css"] = statics.SiteCss
+	data["js"] = statics.SiteJs
+	data["adminjs"] = statics.AdminJs
 
 	renderer.HTML(w, http.StatusOK, "admin/newsub", data)
 }
@@ -137,6 +173,9 @@ func adminImages(c web.C, w http.ResponseWriter, r *http.Request) {
 	data := make(map[string]interface{})
 	data["title"] = "Wandering Lunch: NYC Food Truck Finder | Admin - Invalid Images "
 	data["admin"] = true
+	data["css"] = statics.SiteCss
+	data["js"] = statics.SiteJs
+	data["adminjs"] = statics.AdminJs
 
 	renderer.HTML(w, http.StatusOK, "admin/images", data)
 }
@@ -146,6 +185,9 @@ func adminImage(c web.C, w http.ResponseWriter, r *http.Request) {
 	data["title"] = "Wandering Lunch: NYC Food Truck Finder | Admin - Edit Image "
 	data["admin"] = true
 	data["id"] = c.URLParams["id"]
+	data["css"] = statics.SiteCss
+	data["js"] = statics.SiteJs
+	data["adminjs"] = statics.AdminJs
 
 	renderer.HTML(w, http.StatusOK, "admin/image", data)
 }

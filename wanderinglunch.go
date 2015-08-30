@@ -1,10 +1,12 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"html/template"
 	"log"
 	"net/http"
+	"os"
 
 	"bitbucket.org/peppage/wlapi/model"
 	"github.com/jmoiron/sqlx"
@@ -21,13 +23,21 @@ var renderer *render.Render
 var secret = "D3MtG1ixqlhavdbxmBclkKvjYtBqWUQexsVCsr5xNWO1af36hZnZP"
 var redisSessionStore = sessions.NewRedisStore("tcp", "127.0.0.1:6379")
 var Sessions = sessions.NewSessionOptions(secret, redisSessionStore, ".wanderinglunch.com")
+var siteJs string
+
+var statics struct {
+	SiteCss string `json:"site.css"`
+	SiteJs  string `json:"site.js"`
+	AdminJs string `json:"admin.js"`
+}
 
 func root(c web.C, w http.ResponseWriter, r *http.Request) {
 	message := model.GetMessage(1)
 	data := make(map[string]interface{})
 	data["title"] = "Wandering Lunch: NYC Food Truck Finder"
 	data["message"] = template.HTML(message.Message)
-
+	data["css"] = statics.SiteCss
+	data["js"] = statics.SiteJs
 	renderer.HTML(w, http.StatusOK, "index", data)
 }
 
@@ -35,6 +45,8 @@ func allTrucks(c web.C, w http.ResponseWriter, r *http.Request) {
 	data := make(map[string]interface{})
 	data["title"] = "Wandering Lunch: NYC Food Truck Finder | All Trucks List"
 	data["trucks"] = model.Trucks(8, "lat", "desc", 0)
+	data["css"] = statics.SiteCss
+	data["js"] = statics.SiteJs
 	renderer.HTML(w, http.StatusOK, "alltrucks", data)
 }
 
@@ -49,22 +61,31 @@ func truck(c web.C, w http.ResponseWriter, r *http.Request) {
 	data["truck"] = t
 	data["title"] = "Wandering Lunch: NYC Food Truck Finder | " + t.Name
 	data["id"] = c.URLParams["id"]
-
+	data["css"] = statics.SiteCss
+	data["js"] = statics.SiteJs
 	renderer.HTML(w, http.StatusOK, "truck", data)
 }
 
 func maps(c web.C, w http.ResponseWriter, r *http.Request) {
 	data := make(map[string]interface{})
 	data["title"] = "Wandering Lunch: NYC Food Truck Finder | Map"
+	data["css"] = statics.SiteCss
+	data["js"] = statics.SiteJs
 	renderer.HTML(w, http.StatusOK, "map", data)
 }
 
 func support(c web.C, w http.ResponseWriter, r *http.Request) {
-	renderer.HTML(w, http.StatusOK, "support", nil)
+	data := make(map[string]interface{})
+	data["css"] = statics.SiteCss
+	data["js"] = statics.SiteJs
+	renderer.HTML(w, http.StatusOK, "support", data)
 }
 
 func login(c web.C, w http.ResponseWriter, r *http.Request) {
-	renderer.HTML(w, http.StatusOK, "login", nil)
+	data := make(map[string]interface{})
+	data["css"] = statics.SiteCss
+	data["js"] = statics.SiteJs
+	renderer.HTML(w, http.StatusOK, "login", data)
 }
 
 func loginHandle(c web.C, w http.ResponseWriter, r *http.Request) {
@@ -108,6 +129,16 @@ func init() {
 	})
 
 	http.Handle("/static/", http.StripPrefix("/static/", maxAgeHandler(31536000, http.FileServer(http.Dir("./static/")))))
+
+	staticFiles, err := os.Open("rev-manifest.json")
+	if err != nil {
+		fmt.Println("opening config file", err.Error())
+	}
+	jsonParser := json.NewDecoder(staticFiles)
+	if err = jsonParser.Decode(&statics); err != nil {
+		fmt.Println("parsing config file", err.Error())
+	}
+	defer staticFiles.Close()
 }
 
 func main() {

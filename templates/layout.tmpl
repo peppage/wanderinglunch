@@ -7,8 +7,8 @@
 	</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 	<script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-3.1.0.js"></script>
-	<link rel="stylesheet" media="screen" href="/static/site.css">
-	<script src="/static/site.js"></script>
+	<link rel="stylesheet" media="screen" href="/static/{{ .css }}">
+	<script src="/static/{{ .js }}"></script>
 	<meta name="description" content="Track and find food trucks around New York City. Updated everyday from twitter" />
 	<link href="/favicon.ico" rel="shortcut icon">
   	<meta property="og:title" contents="Wandering Lunch: NYC Food Truck Finder" />
@@ -48,7 +48,7 @@
 		</footer>
 	</div>
 	{{ if .admin }}
-		<script src="/static/admin.js"></script>
+		<script src="/static/{{ .adminjs }}"></script>
 	{{ end }}
 	<script>
 		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

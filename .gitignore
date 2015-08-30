@@ -3,3 +3,4 @@ node_modules/
 static/*.css
 static/*.js
 static/*.map
+rev-manifest.json
