@@ -76,7 +76,7 @@ def doTruck(twitterHandle):
             search(truck)
 
 
-def findLocations(contents):
+def findLocations(contents, site):
     """ Search the contents of a tweet for an address
 
     Keyword arguments:
@@ -85,7 +85,7 @@ def findLocations(contents):
     """
     locations = []
     with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
-        cur.execute("SELECT * from locations;")
+        cur.execute("SELECT * FROM locations WHERE site='" + site + "';")
 
         for location in cur:
             
@@ -155,7 +155,7 @@ def search(truck):
 
         contents = cleanTweet(contents)
         location = False
-        locations = findLocations(contents)
+        locations = findLocations(contents, truck['site'])
         if len(locations) == 1:
             if truck['matchmethod'] == "two":
                 if int(truck['matcher']) == 1:
