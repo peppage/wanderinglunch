@@ -61,7 +61,7 @@ function indexModel() {
   if(localStorage.getItem('loc')) {
     self.location(localStorage.getItem('loc'));
   } else {
-    self.location('manhattan');
+    self.location('Manhattan');
   }
 
   self.update = function() {
@@ -84,7 +84,7 @@ function indexModel() {
     localStorage.setItem('loc', self.location());
     self.visible.removeAll();
     for(var x = 0; x < self.trucks().length; x++) {
-      if(self.trucks()[x].zone.toLowerCase() === self.location()) {
+      if(self.trucks()[x].zone === self.location()) {
         self.visible.push(self.trucks()[x]);
       } 
     }

@@ -38,6 +38,7 @@ func root(c web.C, w http.ResponseWriter, r *http.Request) {
 	data["message"] = template.HTML(message.Message)
 	data["css"] = statics.SiteCss
 	data["js"] = statics.SiteJs
+	data["zones"] = model.Zones("nyc")
 	renderer.HTML(w, http.StatusOK, "index", data)
 }
 
