@@ -101,7 +101,7 @@ func init() {
 
 	renderer = render.New(render.Options{
 		IndentJSON:    false,
-		IsDevelopment: true,
+		IsDevelopment: false,
 		Layout:        "layout",
 	})
 
