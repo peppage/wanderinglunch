@@ -18,7 +18,7 @@ import (
 
 var db *sqlx.DB
 var renderer *render.Render
-var secret = "thisismysecret"
+var secret = "D3MtG1ixqlhavdbxmBclkKvjYtBqWUQexsVCsr5xNWO1af36hZnZP"
 var redisSessionStore = sessions.NewRedisStore("tcp", "127.0.0.1:6379")
 var Sessions = sessions.NewSessionOptions(secret, redisSessionStore, ".wanderinglunch.com")
 
