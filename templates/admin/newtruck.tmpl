@@ -27,6 +27,9 @@
 <label>Match Method</label><br>
 <input type="text" data-bind="value: truck.matchmethod"><br>
 
+<label>Site</label><br>
+<input type="text" data-bind="value: truck.site"><br>
+
 <button data-bind="click: save">Save</button>
 
 <script>
@@ -46,21 +49,32 @@
 			foursquare: ko.observable(),
 			matcher: ko.observable(),
 			matchmethdo: ko.observable(),
+			site: ko.observable()
 		};
 		
 		self.save = function() {
 			$.ajax({
-		    	dataType: 'json',
-		    	url: '/api/trucks/add',
-		    	method: 'POST',
-		    	data: ko.toJS(self.truck),
-		    	xhrFields: {
-		      		withCredentials: true
-		    	}
-		  	}).done(function(data) {
-		  	}).fail(function(data) {
-
-		  	});
+				dataType: 'json',
+				url: API_URL + '/trucks',
+				method: 'POST',
+				data: ko.toJS(self.truck),
+				xhrFields: {
+					withCredentials: true
+				}
+			}).done(function(data) {
+				var s = document.getElementsByClassName('success')[0];
+				s.innerText = 'Success!';
+				s.classList.remove('hide');
+				window.location = '/admin/truck/' + data.id;
+			}).fail(function(data) {
+				var json = data.responseJSON;
+				var e = document.getElementsByClassName('error')[0];
+				e.innerText = '';
+				for(var x = 0; x < json.errors.length; x++) {
+					e.innerText += json.errors[x].message;
+				}
+				e.classList.remove('hide');
+			});
 			return true;
 		};
 	}
