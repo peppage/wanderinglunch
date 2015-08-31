@@ -144,9 +144,19 @@ footer, .content-wrapper:after {
 
 .col-buttons {
   @include media($desktop) {
-    @include span-columns(5);
-    @include shift(4);
     padding-top: 10px;
+  }
+}
+
+.buttons-2 {
+  @include media($desktop) {
+    margin-left: 31%;
+  }
+}
+
+.buttons-3 {
+  @include media($desktop) {
+    margin-left: 25%;
   }
 }
 

@@ -13,7 +13,7 @@
 </div>
 <div data-bind="visible: isLoaded">
 	<div class="row" data-bind="if: trucks().length">
-		<div class="col-buttons">
+		<div class="col-buttons buttons-{{ len .zones }} ">
 			<div class="button-group">
 				{{ range .zones }}
 					<label>
