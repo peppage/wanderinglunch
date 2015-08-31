@@ -12,12 +12,6 @@ gulp.task('sass-dev', function() {
     .pipe(sass({
       includePaths: ['sass'].concat(neat),
     }))
-    .pipe(rev())
-    .pipe(gulp.dest('static'))
-    .pipe(rev.manifest({
-      base: 'static',
-      merge: true,
-    }))
     .pipe(gulp.dest('static'));
 });
 
@@ -55,12 +49,6 @@ gulp.task('compress', function() {
 gulp.task('movejs', function() {
   return gulp.src(jsScripts)
     .pipe(concat('site.js'))
-    .pipe(rev())
-    .pipe(gulp.dest('static'))
-    .pipe(rev.manifest({
-      base: 'static',
-      merge: true,
-    }))
     .pipe(gulp.dest('static'));
 });
 
@@ -78,12 +66,6 @@ gulp.task('compress-admin', function() {
 
 gulp.task('movejs-admin', function() {
   return gulp.src(['javascript/admin.js'])
-    .pipe(rev())
-    .pipe(gulp.dest('static'))
-    .pipe(rev.manifest({
-      base: 'static',
-      merge: true,
-    }))
     .pipe(gulp.dest('static'));
 });
 
