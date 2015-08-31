@@ -18,6 +18,32 @@ function checkShadow() {
   }
 }
 
+function success(message) {
+  var s = document.getElementsByClassName('success')[0];
+  if (message == null) {
+    s.innerText = 'Success!';
+  }
+  else {
+    s.innerText = message;
+  }
+  s.classList.remove('hide');
+  window.setTimeout(function() {
+    s.classList.add('hide');
+  }, 5000);
+}
+
+function error(errors) {
+  var e = document.getElementsByClassName('error')[0];
+  e.innerText = '';
+  for(var x = 0; x < errors.length; x++) {
+    e.innerText += errors[x].message;
+  }
+  e.classList.remove('hide');
+  window.setTimeout(function() {
+    e.classList.add('hide');
+  }, 5000);
+}
+
 document.addEventListener('DOMContentLoaded', function() {
   var menuItems = document.querySelectorAll('.dropItem');
   for(var x=0; x < menuItems.length; x++) {

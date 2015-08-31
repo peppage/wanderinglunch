@@ -62,9 +62,6 @@
 					withCredentials: true
 				}
 			}).done(function(data) {
-				var s = document.getElementsByClassName('success')[0];
-				s.innerText = 'Success!';
-				s.classList.remove('hide');
 				window.location = '/admin/truck/' + data.id;
 			}).fail(function(data) {
 				var json = data.responseJSON;

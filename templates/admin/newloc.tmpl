@@ -71,8 +71,15 @@
 		      		withCredentials: true
 		    	}
 		  	}).done(function(data) {
+				window.location = '/admin/location/' + data.id;
 		  	}).fail(function(data) {
-
+		  		var json = data.responseJSON;
+				var e = document.getElementsByClassName('error')[0];
+				e.innerText = '';
+				for(var x = 0; x < json.errors.length; x++) {
+					e.innerText += json.errors[x].message;
+				}
+				e.classList.remove('hide');
 		  	});
 			return true;
 		};

@@ -94,9 +94,10 @@
 		      		withCredentials: true
 		    	}
 			}).done(function(data) {
-
+				success();
 			}).fail(function(data) {
-
+				var json = data.responseJSON;
+				error(json.errors);
 			});
 			return true;
 		};
