@@ -43,7 +43,9 @@ document.addEventListener('DOMContentLoaded', function() {
       div.id = 'siteNews';
       div.className = 'mfp-hide white-popup';
       document.body.appendChild(div);
-      $('.js-siteNews').magnificPopup({
+      var news = document.getElementsByClassName('js-siteNews')[0];
+      news.classList.remove('hide');
+      nav.magnificPopup({
         type:'inline',
         midClick: true // Allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source in href.
       });
