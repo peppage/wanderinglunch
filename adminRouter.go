@@ -196,7 +196,7 @@ func adminFoursquareImages(c web.C, w http.ResponseWriter, r *http.Request) {
 	api := foursquarego.NewFoursquareApi(CLIENT_ID, CLIENT_SECRET)
 	uv := url.Values{}
 	uv.Set("limit", "200")
-	p, err := api.VenuePhotos(c.URLParams["id"], uv)
+	p, err := api.GetVenuePhotos(c.URLParams["id"], uv)
 	if err != nil {
 		fmt.Println(err)
 	}
