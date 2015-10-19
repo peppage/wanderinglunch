@@ -103,6 +103,10 @@ func loginHandle(c web.C, w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/admin", http.StatusTemporaryRedirect)
 }
 
+func notFound(c web.C, w http.ResponseWriter, r *http.Request) {
+	renderer.HTML(w, http.StatusNotFound, "404", nil)
+}
+
 func serveSingle(pattern string, filename string) {
 	http.HandleFunc(pattern, func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Add("Cache-Control", "max-age=31536000, public, must-revalidate, proxy-revalidate")
@@ -158,6 +162,8 @@ func main() {
 	goji.Get("/support", support)
 	goji.Get("/login", login)
 	goji.Post("/login", loginHandle)
+
+	goji.NotFound(notFound)
 
 	admin := web.New()
 	goji.Get("/admin", http.RedirectHandler("/admin/", http.StatusMovedPermanently))

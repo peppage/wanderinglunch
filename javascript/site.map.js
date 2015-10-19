@@ -23,10 +23,10 @@ function initMap() {
 
     });
     google.maps.event.addListener(map, "mouseover", function() {
-      
+
     });
     google.maps.event.addListener(map, "mouseout", function() {
-        
+
     });
     google.maps.event.addListener(infoWindow, 'closeclick', function() {
         activeMarker = null;
@@ -40,7 +40,7 @@ function render(display, title) {
 
 function getMarkerAt(latLng) {
   for(var j=0; j < markers.length; j++) {
-    if(latLng.G === markers[j].position.G && latLng.K === markers[j].position.K) {
+    if(latLng.lat === markers[j].position.lat && latLng.lng === markers[j].position.lng) {
       return markers[j];
     }
   }
