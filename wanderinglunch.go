@@ -25,6 +25,8 @@ var redisSessionStore = sessions.NewRedisStore("tcp", "127.0.0.1:6379")
 var Sessions = sessions.NewSessionOptions(secret, redisSessionStore, ".wanderinglunch.com")
 var siteJs string
 
+var TITLE = "Wandering Lunch: NYC Food Truck Finder | "
+
 var statics struct {
 	SiteCss string `json:"site.css"`
 	SiteJs  string `json:"site.js"`
@@ -44,7 +46,7 @@ func root(c web.C, w http.ResponseWriter, r *http.Request) {
 
 func allTrucks(c web.C, w http.ResponseWriter, r *http.Request) {
 	data := make(map[string]interface{})
-	data["title"] = "Wandering Lunch: NYC Food Truck Finder | All Trucks List"
+	data["title"] = TITLE + "All Trucks List"
 	data["trucks"] = model.Trucks(8, "lat", "desc", 0)
 	data["css"] = statics.SiteCss
 	data["js"] = statics.SiteJs
@@ -60,7 +62,7 @@ func truck(c web.C, w http.ResponseWriter, r *http.Request) {
 
 	data := make(map[string]interface{})
 	data["truck"] = t
-	data["title"] = "Wandering Lunch: NYC Food Truck Finder | " + t.Name
+	data["title"] = TITLE + t.Name
 	data["id"] = c.URLParams["id"]
 	data["css"] = statics.SiteCss
 	data["js"] = statics.SiteJs
@@ -69,7 +71,7 @@ func truck(c web.C, w http.ResponseWriter, r *http.Request) {
 
 func maps(c web.C, w http.ResponseWriter, r *http.Request) {
 	data := make(map[string]interface{})
-	data["title"] = "Wandering Lunch: NYC Food Truck Finder | Map"
+	data["title"] = TITLE + "Map"
 	data["css"] = statics.SiteCss
 	data["js"] = statics.SiteJs
 	renderer.HTML(w, http.StatusOK, "map", data)
