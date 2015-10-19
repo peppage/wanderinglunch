@@ -1,6 +1,6 @@
 window.onscroll=function(){ checkShadow(); };
 
-var API_URL = 'http://api.wanderinglunch.com';
+var API_URL = '/api';
 
 function checkShadow() {
   'use strict';
@@ -13,7 +13,7 @@ function checkShadow() {
  	}
   else {
   		if(header.classList.contains('nav-shadow')) {
-  			header.classList.remove('nav-shadow');		
+  			header.classList.remove('nav-shadow');
   		}
   }
 }
@@ -114,7 +114,7 @@ function indexModel() {
     for(var x = 0; x < self.trucks().length; x++) {
       if(self.trucks()[x].zone === self.location()) {
         self.visible.push(self.trucks()[x]);
-      } 
+      }
     }
     return true;
   };
@@ -127,7 +127,7 @@ function indexModel() {
       type: 'image'
     }, 0);
   };
-    
+
   setInterval(self.update, 900000);
 }
 
@@ -197,7 +197,7 @@ ko.bindingHandlers.orderable = {
         var defaultField = valueAccessor().defaultField;
         var defaultDirection = valueAccessor().defaultDirection || "asc";
         if (defaultField) {
-            viewModel[collection].orderField(field);            
+            viewModel[collection].orderField(field);
             viewModel[collection].orderDirection(defaultDirection);
             ko.bindingHandlers.orderable.sort(viewModel, collection, field);
         }
@@ -205,7 +205,7 @@ ko.bindingHandlers.orderable = {
         //set order observables on table header click
         $(element).click(function (e) {
             e.preventDefault();
-            
+
             //flip sort direction if current sort field is clicked again
             if (viewModel[collection].orderField() == field) {
                 if (viewModel[collection].orderDirection() == "asc") {
@@ -214,7 +214,7 @@ ko.bindingHandlers.orderable = {
                     viewModel[collection].orderDirection("asc");
                 }
             }
-            
+
             viewModel[collection].orderField(field);
         });
 
@@ -232,7 +232,7 @@ ko.bindingHandlers.orderable = {
         var collection = valueAccessor().collection;
         var field = valueAccessor().field;
         var isOrderedByThisField = viewModel[collection].orderField() == field;
-            
+
         //apply css binding programmatically
         ko.bindingHandlers.css.update(
             element,

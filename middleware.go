@@ -24,7 +24,7 @@ func Secure(c *web.C, h http.Handler) http.Handler {
  */
 func SecurePost(c *web.C, h http.Handler) http.Handler {
 	fn := func(w http.ResponseWriter, r *http.Request) {
-		if r.Method == "POST" || r.Method == "DELETE" {
+		if r.Method == "POST" || r.Method == "DELETE" || r.Method == "PUT" {
 			s := Sessions.GetSessionObject(c)
 			if s["user"] == nil {
 				w.WriteHeader(http.StatusUnauthorized)
