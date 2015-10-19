@@ -3,6 +3,8 @@ update trucks set site='nyc';
 alter table trucks alter column site set NOT NULL;
 alter table locations drop column "region"
 alter table locations drop column "hood";
+alter table locations later column long type float using (long::float);
+alter table locations alter column long type float using (long::float);
 
 https://twitter.com/mordisfoodtruck
 https://twitter.com/TheIncrediballs

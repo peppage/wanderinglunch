@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"net/url"
+	"strconv"
 
 	"github.com/pmylund/go-cache"
 )
@@ -18,13 +19,13 @@ import (
  * @apiParam {String} site What website this location belongs to
  */
 type Location struct {
-	ID      int    `json:"id"`
-	Display string `json:"display"`
-	Matcher string `json:"matcher"`
-	Lat     string `json:"lat"`
-	Long    string `json:"long"`
-	Zone    string `json:"zone"`
-	Site    string `json:"site"`
+	ID      int     `json:"id"`
+	Display string  `json:"display"`
+	Matcher string  `json:"matcher"`
+	Lat     float32 `json:"lat"`
+	Long    float32 `json:"long"`
+	Zone    string  `json:"zone"`
+	Site    string  `json:"site"`
 }
 
 func GetLocations() []*Location {
@@ -55,7 +56,7 @@ func GetLocationByDisplay(display string) Location {
 }
 
 func AddLocation(l Location) error {
-	if l.Display == "" || l.Matcher == "" || l.Lat == "" || l.Long == "" || l.Zone == "" || l.Site == "" {
+	if l.Display == "" || l.Matcher == "" || l.Lat == 0 || l.Long == 0 || l.Zone == "" || l.Site == "" {
 		return errors.New("Display, Matcher, Lat, Long, Zone, and Site are required")
 	}
 	result, err := db.NamedExec(
@@ -82,7 +83,7 @@ func DeleteLocation(id string) bool {
 }
 
 func UpdateLocation(l Location) error {
-	if l.Display == "" || l.Matcher == "" || l.Lat == "" || l.Long == "" || l.Zone == "" || l.Site == "" {
+	if l.Display == "" || l.Matcher == "" || l.Lat == 0 || l.Long == 0 || l.Zone == "" || l.Site == "" {
 		return errors.New("Display, Matcher, Lat, Long, Zone, and Site are required")
 	}
 	result, err := db.NamedExec(
@@ -100,8 +101,18 @@ func LocationMarshal(v url.Values) Location {
 	var l Location
 	l.Display = v.Get("display")
 	l.Matcher = v.Get("matcher")
-	l.Lat = v.Get("lat")
-	l.Long = v.Get("long")
+	var lat, err = strconv.ParseFloat(v.Get("lat"), 32)
+	if err != nil {
+		l.Lat = float32(lat)
+	} else {
+		l.Lat = 0
+	}
+	var long, err2 = strconv.ParseFloat(v.Get("long"), 32)
+	if err2 != nil {
+		l.Long = float32(long)
+	} else {
+		l.Long = 0
+	}
 	l.Zone = v.Get("zone")
 	l.Site = v.Get("site")
 	return l
