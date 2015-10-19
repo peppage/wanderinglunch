@@ -7,7 +7,8 @@ import (
 	"os"
 	"time"
 
-	"bitbucket.org/peppage/wlapi/model"
+	"wanderinglunch/model"
+
 	"github.com/peppage/foursquarego"
 	"github.com/zenazn/goji/web"
 )
