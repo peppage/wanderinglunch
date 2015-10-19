@@ -12,17 +12,11 @@
 <label>Matcher</label><br>
 <input id="matcher" type="text" data-bind="value: loc.matcher"><br>
 
-<label>Region</label><br>
-<input id="region" type="text" data-bind="value: loc.region"><br>
-
 <label>Latitude</label><br>
 <input id="lat" type="text" data-bind="value: loc.lat"><br>
 
 <label>Longitude</label><br>
 <input id="long" type="text" data-bind="value: loc.long"><br>
-
-<label>Hood</label><br>
-<input id="hood" type="text" data-bind="value: loc.hood"><br>
 
 <label>Zone</label><br>
 <input id="zone" type="text" data-bind="value: loc.zone"><br>
@@ -34,9 +28,9 @@
 
 <script>
 	document.addEventListener('DOMContentLoaded', function() {
-		ko.applyBindings(new AdminAddLoc({{ .id }}));	
+		ko.applyBindings(new AdminAddLoc({{ .id }}));
 	});
-	
+
 	function AdminAddLoc(tweetid) {
 		var self = this;
 		self.tweet = ko.observable();
@@ -50,7 +44,7 @@
 			zone: ko.observable(),
 			site: ko.observable('nyc'),
 		};
-		
+
 		$.ajax({
 	    	dataType: 'json',
 	    	url: API_URL + '/tweets/' + tweetid + '?with_subs=1',

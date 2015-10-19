@@ -12,10 +12,8 @@ import (
  * @apiDefine Location
  * @apiParam {String} display What the location looks like on the site
  * @apiParam {String} matcher The regex to match inside the tweet
- * @apiParam {String} region What part of NYC the location is in
  * @apiParam {String} lat The latitude of the location
  * @apiParam {String} long The longitude of the location
- * @apiParam {String} hood The neighborhood
  * @apiParam {String} zone
  * @apiParam {String} site What website this location belongs to
  */
@@ -23,10 +21,8 @@ type Location struct {
 	ID      int    `json:"id"`
 	Display string `json:"display"`
 	Matcher string `json:"matcher"`
-	Region  string `json:"region"`
 	Lat     string `json:"lat"`
 	Long    string `json:"long"`
-	Hood    string `json:"hood"`
 	Zone    string `json:"zone"`
 	Site    string `json:"site"`
 }
@@ -63,8 +59,8 @@ func AddLocation(l Location) error {
 		return errors.New("Display, Matcher, Lat, Long, Zone, and Site are required")
 	}
 	result, err := db.NamedExec(
-		`INSERT INTO locations (display, matcher, region, lat, long, hood, zone, site)
-			VALUES (:display, :matcher, :region, :lat, :long, :hood, :zone, :site)`, l)
+		`INSERT INTO locations (display, matcher, lat, long, zone, site)
+			VALUES (:display, :matcher, :lat, :long, :zone, :site)`, l)
 	if err != nil {
 		return err
 	}
@@ -90,7 +86,7 @@ func UpdateLocation(l Location) error {
 		return errors.New("Display, Matcher, Lat, Long, Zone, and Site are required")
 	}
 	result, err := db.NamedExec(
-		`UPDATE locations SET (display, matcher, region, lat, long, hood) = (:display, :matcher, :region, :lat, :long, :hood) WHERE id=:id`, l)
+		`UPDATE locations SET (display, matcher, lat, long) = (:display, :matcher, :lat, :long) WHERE id=:id`, l)
 	if err != nil {
 		return err
 	}
@@ -104,10 +100,8 @@ func LocationMarshal(v url.Values) Location {
 	var l Location
 	l.Display = v.Get("display")
 	l.Matcher = v.Get("matcher")
-	l.Region = v.Get("region")
 	l.Lat = v.Get("lat")
 	l.Long = v.Get("long")
-	l.Hood = v.Get("hood")
 	l.Zone = v.Get("zone")
 	l.Site = v.Get("site")
 	return l

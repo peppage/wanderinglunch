@@ -78,10 +78,8 @@ func markers(c web.C, w http.ResponseWriter, r *http.Request) {
  *    "id": 1,
  *    "display": "20th & 5th",
  *    "matcher": "(5(th|ave)?|20(th)?) & (5th|20(th)?)",
- *    "region": "mid",
  *    "lat": "40.739680",
  *    "long": "-73.990847",
- *    "hood": "Flatiron",
  *    "zone": "Manhatten",
  *    "site": "nyc"
  *  },
@@ -89,10 +87,8 @@ func markers(c web.C, w http.ResponseWriter, r *http.Request) {
  *    "id": 2,
  *    "display": "26th between 11th & 12th",
  *    "matcher": "26th between 11th & 12th",
- *    "region": "mid",
  *    "lat": "40.751356",
  *    "long": "-74.006822",
- *    "hood": "Chelsea",
  *    "zone": "Manhatten",
  *    "site": "nyc"
  *  }
@@ -115,10 +111,8 @@ func locations(c web.C, w http.ResponseWriter, r *http.Request) {
 *    "id": 1,
 *    "display": "20th & 5th",
 *    "matcher": "(5(th|ave)?|20(th)?) & (5th|20(th)?)",
-*    "region": "mid",
 *    "lat": "40.739680",
 *    "long": "-73.990847",
-*    "hood": "Flatiron",
 *    "zone": "Manhatten",
 *    "site": "nyc"
 *  }

@@ -1,6 +1,8 @@
 alter table trucks add column site text;
 update trucks set site='nyc';
 alter table trucks alter column site set NOT NULL;
+alter table locations drop column "region"
+alter table locations drop column "hood";
 
 https://twitter.com/mordisfoodtruck
 https://twitter.com/TheIncrediballs
