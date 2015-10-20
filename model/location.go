@@ -127,8 +127,22 @@ func Zones(site string) []string {
 		if err != nil {
 			fmt.Println(err)
 		}
-		Cache.Set("zones"+site, zones, cache.NoExpiration)
+		Cache.Set("zones"+site, zones, cache.DefaultExpiration)
 	}
 
 	return zones
+}
+
+func Sites() []string {
+	var sites []string
+	if o, found := Cache.Get("sites"); found {
+		sites = o.([]string)
+	} else {
+		err := db.Select(&sites, `SELECT site FROM locations GROUP BY site`)
+		if err != nil {
+			fmt.Println(err)
+		}
+		Cache.Set("sites", sites, cache.DefaultExpiration)
+	}
+	return sites
 }

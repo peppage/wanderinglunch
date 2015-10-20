@@ -30,13 +30,27 @@
 <label>Site</label><br>
 <input type="text" data-bind="value: truck.site"><br>
 
+<label>Existing Sites</label>
+<select class="js-sites">
+	<option value="">Select</option>
+	{{ range $element := .sites }}
+		<option value="{{ $element }}">{{ $element }}</option>
+	{{ end }}
+</select>
+<br><br>
+
 <button data-bind="click: save">Save</button>
 
 <script>
+var adminAddTruck = new AdminAddTruck();
 	document.addEventListener('DOMContentLoaded', function() {
-		ko.applyBindings(new AdminAddTruck());	
+		ko.applyBindings(adminAddTruck);
+
+		document.querySelector('.js-sites').addEventListener('change', function() {
+			adminAddTruck.truck.site(this.value);
+		});
 	});
-	
+
 	function AdminAddTruck() {
 		var self = this;
 		self.truck = {
@@ -51,7 +65,7 @@
 			matchmethdo: ko.observable(),
 			site: ko.observable()
 		};
-		
+
 		self.save = function() {
 			$.ajax({
 				dataType: 'json',

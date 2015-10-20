@@ -181,7 +181,7 @@ $color-loader: $linkColor;
   font-weight: 900;
   color: $color-loader;
   letter-spacing: 0.2em;
-  
+
   &::before, &::after {
     content: "";
     display: block;
@@ -191,11 +191,11 @@ $color-loader: $linkColor;
     position: absolute;
     animation: load .7s infinite alternate ease-in-out;
   }
-  
+
   &::before {
     top: 0;
   }
-  
+
   &::after {
     bottom: 0;
   }
@@ -395,7 +395,7 @@ header.nav .dropItem-sub.is-shown {
 }
 
 // Forms
-input, textarea {
+input, textarea, select {
   border-radius: 3px;
   transition: border-color;
   border: 1px solid #DDD;
@@ -406,11 +406,11 @@ input, textarea {
   color: $textColor;
 }
 
-input:hover, textarea:hover {
+input:hover, textarea:hover, select:hover {
   border-color: $form-hover;
 }
 
-input:focus, , textarea:focus {
+input:focus, , textarea:focus, select:hover {
   border-color: $form-focus;
   box-shadow: inset 0 1px 3px rgba(0,0,0,0.06),0 0 5px $form-focus;
   outline: none;
@@ -513,11 +513,11 @@ label {
 }
 
 .desc {
- background-image: url(/static/images/desc.gif); 
+ background-image: url(/static/images/desc.gif);
 }
 
 //Button Group
-.button-group {  
+.button-group {
   $base-border-color: gainsboro !default;
   $base-border-radius: 3px !default;
   $base-line-height: 1.5em !default;
