@@ -22,13 +22,27 @@
 <input id="zone" type="text" data-bind="value: loc.zone"><br>
 
 <label>Site</label><br>
-<input id="site" type="text" disabled="true" data-bind="value: loc.site"><br>
+<input id="site" type="text" data-bind="value: loc.site"><br>
+
+<label>Existing Sites</label>
+<select class="js-sites">
+	<option value="">Select</option>
+	{{ range $element := .sites }}
+		<option value="{{ $element }}">{{ $element }}</option>
+	{{ end }}
+</select>
+<br><br>
 
 <button data-bind="click: save">Save</button>
 
 <script>
+	var adminAddLoc = new AdminAddLoc({{ .id }});
 	document.addEventListener('DOMContentLoaded', function() {
-		ko.applyBindings(new AdminAddLoc({{ .id }}));
+		ko.applyBindings(adminAddLoc);
+
+		document.querySelector('.js-sites').addEventListener('change', function() {
+			adminAddLoc.loc.site(this.value);
+		});
 	});
 
 	function AdminAddLoc(tweetid) {
@@ -42,7 +56,7 @@
 			long: ko.observable(),
 			hood: ko.observable(),
 			zone: ko.observable(),
-			site: ko.observable('nyc'),
+			site: ko.observable(),
 		};
 
 		$.ajax({

@@ -64,6 +64,7 @@ func adminNewLoc(c web.C, w http.ResponseWriter, r *http.Request) {
 	data["css"] = statics.SiteCss
 	data["js"] = statics.SiteJs
 	data["adminjs"] = statics.AdminJs
+	data["sites"] = model.Sites()
 
 	renderer.HTML(w, http.StatusOK, "admin/newloc", data)
 }
