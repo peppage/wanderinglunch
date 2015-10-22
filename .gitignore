@@ -4,3 +4,4 @@ static/*.css
 static/*.js
 static/*.map
 rev-manifest.json
+doc/
