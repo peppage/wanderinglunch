@@ -13,8 +13,8 @@ import (
 	"github.com/zenazn/goji/web"
 )
 
-var CLIENT_ID = os.Getenv("CLIENT_ID")
-var CLIENT_SECRET = os.Getenv("CLIENT_SECRET")
+var clientID = os.Getenv("CLIENT_ID")
+var clientSecret = os.Getenv("CLIENT_SECRET")
 
 func adminRoot(c web.C, w http.ResponseWriter, r *http.Request) {
 	t1 := time.Now().Add(-24 * (time.Minute * 60)).Unix()
@@ -196,7 +196,7 @@ func adminImage(c web.C, w http.ResponseWriter, r *http.Request) {
 }
 
 func adminFoursquareImages(c web.C, w http.ResponseWriter, r *http.Request) {
-	api := foursquarego.NewFoursquareApi(CLIENT_ID, CLIENT_SECRET)
+	api := foursquarego.NewFoursquareApi(clientID, clientSecret)
 	uv := url.Values{}
 	uv.Set("limit", "200")
 	p, err := api.GetVenuePhotos(c.URLParams["id"], uv)
