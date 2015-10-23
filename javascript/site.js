@@ -122,7 +122,7 @@ function indexModel() {
   self.showMenu = function(truck) {
     $.magnificPopup.open({
       items: {
-        src: 'http://irs0.4sqi.net/img/general/width960' + truck.image
+        src: 'https://irs0.4sqi.net/img/general/width960' + truck.image
       },
       type: 'image'
     }, 0);
