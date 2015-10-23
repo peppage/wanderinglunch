@@ -6,6 +6,7 @@ import (
 
 	"wanderinglunch/model"
 
+	"github.com/labstack/echo"
 	"github.com/zenazn/goji/web"
 )
 
@@ -46,9 +47,9 @@ import (
  *  }
  * ]
  */
-func trucks(c web.C, w http.ResponseWriter, r *http.Request) {
+func trucks(c *echo.Context) error {
 	var ae apiErrors
-	h := r.FormValue("updated_since")
+	h := c.Query("updated_since")
 	hours := 500000
 	if h != "" {
 		var err error
@@ -58,7 +59,7 @@ func trucks(c web.C, w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	s := r.FormValue("sort")
+	s := c.Query("sort")
 	sort := "name"
 	if s != "" {
 		if s == "name" || s == "lat" {
@@ -68,7 +69,7 @@ func trucks(c web.C, w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	d := r.FormValue("sort_dir")
+	d := c.Query("sort_dir")
 	dir := "asc"
 	if d != "" {
 		if d == "asc" || d == "desc" {
@@ -78,7 +79,7 @@ func trucks(c web.C, w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	l := r.FormValue("location_id")
+	l := c.Query("location_id")
 	loc := 0
 	if l != "" {
 		var err error
@@ -89,11 +90,11 @@ func trucks(c web.C, w http.ResponseWriter, r *http.Request) {
 	}
 
 	if len(ae.Errors) > 0 {
-		renderer.JSON(w, http.StatusBadRequest, ae)
-		return
+		c.JSON(http.StatusBadRequest, ae)
+		return nil //Not sure why ae doesn't work
 	}
-	renderer.JSON(w, http.StatusOK, model.Trucks(hours, sort, dir, loc))
-	return
+	c.JSON(http.StatusOK, model.Trucks(hours, sort, dir, loc))
+	return nil
 }
 
 /**

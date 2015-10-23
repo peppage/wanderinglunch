@@ -9,8 +9,11 @@ import (
 	"os"
 
 	"wanderinglunch/model"
+	"wanderinglunch/tmpl"
 
 	"github.com/jmoiron/sqlx"
+	"github.com/labstack/echo"
+	mw "github.com/labstack/echo/middleware"
 	_ "github.com/lib/pq"
 	"github.com/peppage/sessions"
 	"github.com/unrolled/render"
@@ -22,8 +25,8 @@ import (
 var db *sqlx.DB
 var renderer *render.Render
 var secret = "D3MtG1ixqlhavdbxmBclkKvjYtBqWUQexsVCsr5xNWO1af36hZnZP"
-var redisSessionStore = sessions.NewRedisStore("tcp", "127.0.0.1:6379")
-var Sessions = sessions.NewSessionOptions(secret, redisSessionStore, ".wanderinglunch.com")
+var redisSessionStore = sessions.MemoryStore{}
+var Sessions = sessions.NewSessionOptions(secret, &redisSessionStore, "*")
 var siteJs string
 
 var TITLE = "Wandering Lunch: NYC Food Truck Finder | "
@@ -43,6 +46,10 @@ func root(c web.C, w http.ResponseWriter, r *http.Request) {
 	data["js"] = statics.SiteJs
 	data["zones"] = model.Zones("nyc")
 	renderer.HTML(w, http.StatusOK, "index", data)
+}
+
+func index(c *echo.Context) error {
+	return c.HTML(http.StatusOK, tmpl.Index(model.Zones("nyc")))
 }
 
 func allTrucks(c web.C, w http.ResponseWriter, r *http.Request) {
@@ -152,6 +159,19 @@ func init() {
 
 func main() {
 
+	e := echo.New()
+	e.Use(mw.Logger())
+	e.Use(mw.Recover())
+
+	e.Static("/static/", "static")
+
+	e.Get("/", index)
+
+	a := e.Group("/api")
+	a.Get("/trucks", trucks)
+
+	e.Run(":1234")
+
 	serveSingle("/favicon.ico", "./static/images/favicon.ico")
 
 	goji.Use(Sessions.Middleware())
@@ -191,7 +211,6 @@ func main() {
 	goji.Handle("/api/*", api)
 	api.Use(SecurePost)
 	api.Use(middleware.SubRouter)
-	api.Get("/trucks", trucks)
 	api.Get("/trucks/failures", failures)
 	api.Get("/trucks/:id", truckById)
 	api.Put("/trucks/:id", truckUpdate)
