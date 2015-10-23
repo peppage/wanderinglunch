@@ -25,7 +25,9 @@ function truckModel(id) {
 				var loopable = false;
 				if(data.images && data.images.length > 1) {
 					loopable = true;
-				}
+				} else if(!data.images) {
+          $('.gallery').addClass('hide');
+        }
 
 				$('#images').owlCarousel({
 					items: 1,
