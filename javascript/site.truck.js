@@ -23,7 +23,7 @@ function truckModel(id) {
 				self.tweets(data.tweets.slice(0, 5));
 
 				var loopable = false;
-				if(data.images.length > 1) {
+				if(data.images && data.images.length > 1) {
 					loopable = true;
 				}
 
