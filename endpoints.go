@@ -7,6 +7,7 @@ import (
 
 	"wanderinglunch/model"
 
+	"github.com/labstack/echo"
 	"github.com/zenazn/goji/web"
 )
 
@@ -360,9 +361,9 @@ func messageSave(c web.C, w http.ResponseWriter, r *http.Request) {
  *   "message": "New trucks added to site!"
  * }
  */
-func message(c web.C, w http.ResponseWriter, r *http.Request) {
+func message(c *echo.Context) error {
 	var ae apiErrors
-	a := r.FormValue("amount")
+	a := c.Query("amount")
 	amount := 1
 	if a != "" {
 		var err error
@@ -373,9 +374,10 @@ func message(c web.C, w http.ResponseWriter, r *http.Request) {
 	}
 
 	if len(ae.Errors) > 0 {
-		renderer.JSON(w, http.StatusBadRequest, ae)
-		return
+		c.JSON(http.StatusBadRequest, ae)
+		return ae
 	}
 
-	renderer.JSON(w, http.StatusOK, model.GetMessage(amount))
+	c.JSON(http.StatusOK, model.GetMessage(amount))
+	return nil
 }

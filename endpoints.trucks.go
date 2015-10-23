@@ -91,7 +91,7 @@ func trucks(c *echo.Context) error {
 
 	if len(ae.Errors) > 0 {
 		c.JSON(http.StatusBadRequest, ae)
-		return nil //Not sure why ae doesn't work
+		return ae
 	}
 	c.JSON(http.StatusOK, model.Trucks(hours, sort, dir, loc))
 	return nil

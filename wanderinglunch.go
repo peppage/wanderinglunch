@@ -169,6 +169,7 @@ func main() {
 
 	a := e.Group("/api")
 	a.Get("/trucks", trucks)
+	a.Get("/messages", message)
 
 	e.Run(":1234")
 
@@ -218,7 +219,6 @@ func main() {
 	api.Delete("/trucks/:id", truckDelete)
 	api.Post("/trucks", truckInsert)
 	api.Get("/markers", markers)
-	api.Get("/messages", message)
 	api.Post("/messages", messageSave)
 	api.Get("/subs", substitutions)
 	api.Get("/subs/:id", subsitution)
