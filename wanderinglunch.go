@@ -71,29 +71,19 @@ func maps(c *echo.Context) error {
 	return c.HTML(http.StatusOK, tmpl.Map())
 }
 
-func support(c web.C, w http.ResponseWriter, r *http.Request) {
-	data := make(map[string]interface{})
-	data["css"] = statics.SiteCss
-	data["js"] = statics.SiteJs
-	renderer.HTML(w, http.StatusOK, "support", data)
+func login(c *echo.Context) error {
+	return c.HTML(http.StatusOK, tmpl.Login())
 }
 
-func login(c web.C, w http.ResponseWriter, r *http.Request) {
-	data := make(map[string]interface{})
-	data["css"] = statics.SiteCss
-	data["js"] = statics.SiteJs
-	renderer.HTML(w, http.StatusOK, "login", data)
-}
-
-func loginHandle(c web.C, w http.ResponseWriter, r *http.Request) {
-	u, err := model.VerifyPassword(r.FormValue("email"), r.FormValue("password"))
+func loginHandle(c *echo.Context) error {
+	_, err := model.VerifyPassword(c.Form("email"), c.Form("password"))
 	if err != nil {
-		http.Redirect(w, r, "/login", http.StatusTemporaryRedirect) // The user is invalid!
-		return
+		c.Response().Header().Set("Method", "GET")
+		return c.Redirect(http.StatusSeeOther, "/login") // The user is invalid!
 	}
-	s := Sessions.GetSessionObject(&c)
-	s["user"] = u.Email
-	http.Redirect(w, r, "/admin", http.StatusTemporaryRedirect)
+	//s := Sessions.GetSessionObject(&c)
+	//s["user"] = u.Email
+	return c.Redirect(http.StatusSeeOther, "/admin")
 }
 
 func notFound(c web.C, w http.ResponseWriter, r *http.Request) {
@@ -129,9 +119,6 @@ func init() {
 		Layout:        "layout",
 	})
 
-	http.Handle("/doc/", http.StripPrefix("/doc/", http.FileServer(http.Dir("./doc/"))))
-	http.Handle("/static/", http.StripPrefix("/static/", maxAgeHandler(31536000, http.FileServer(http.Dir("./static/")))))
-
 	staticFiles, err := os.Open("rev-manifest.json")
 	if err != nil {
 		fmt.Println("opening config file", err.Error())
@@ -150,11 +137,15 @@ func main() {
 	e.Use(mw.Recover())
 
 	e.Static("/static/", "static")
+	e.Static("/doc/", "doc")
+	e.Favicon("./static/images/favicon.ico")
 
 	e.Get("/", index)
 	e.Get("/alltrucks", allTrucks)
 	e.Get("/truck/:id", truck)
 	e.Get("/map", maps)
+	e.Get("/login", login)
+	e.Post("/login", loginHandle)
 
 	a := e.Group("/api")
 	a.Get("/trucks", trucks)
@@ -164,12 +155,7 @@ func main() {
 
 	e.Run(":1234")
 
-	serveSingle("/favicon.ico", "./static/images/favicon.ico")
-
 	goji.Use(Sessions.Middleware())
-	goji.Get("/support", support)
-	goji.Get("/login", login)
-	goji.Post("/login", loginHandle)
 
 	goji.NotFound(notFound)
 
