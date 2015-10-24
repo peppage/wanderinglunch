@@ -58,12 +58,10 @@ func markers(c *echo.Context) error {
 	}
 
 	if len(ae.Errors) > 0 {
-		c.JSON(http.StatusBadRequest, ae)
-		return ae
+		return c.JSON(http.StatusBadRequest, ae)
 	}
 
-	c.JSON(http.StatusOK, model.Markers(hours))
-	return nil
+	return c.JSON(http.StatusOK, model.Markers(hours))
 }
 
 /**
@@ -375,10 +373,8 @@ func message(c *echo.Context) error {
 	}
 
 	if len(ae.Errors) > 0 {
-		c.JSON(http.StatusBadRequest, ae)
-		return ae
+		return c.JSON(http.StatusBadRequest, ae)
 	}
 
-	c.JSON(http.StatusOK, model.GetMessage(amount))
-	return nil
+	return c.JSON(http.StatusOK, model.GetMessage(amount))
 }
