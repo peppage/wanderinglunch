@@ -158,15 +158,16 @@ func trucks(c *echo.Context) error {
  *   ]
  *  }
  */
-func truckById(c web.C, w http.ResponseWriter, r *http.Request) {
+func truckById(c *echo.Context) error {
 	var ae apiErrors
-	truck := model.GetTruck(c.URLParams["id"])
+	truck := model.GetTruck(c.Param("id"))
 	if truck.ID == "" {
 		ae.Errors = append(ae.Errors, apiError{Message: "No truck with that id found"})
-		renderer.JSON(w, http.StatusNotFound, ae)
-		return
+		c.JSON(http.StatusNotFound, ae)
+		return ae
 	}
-	renderer.JSON(w, http.StatusOK, truck)
+	c.JSON(http.StatusOK, truck)
+	return nil
 }
 
 /**

@@ -1,0 +1,72 @@
+@{
+	import (
+		"wanderinglunch/model"
+		"wanderinglunch/tmpl/helper"
+		"wanderinglunch/tmpl/layout/base"
+	)
+	var truck model.Truck
+}
+
+@section menu {
+	@helper.Menu("truck", false)	
+}
+
+@section htmlTitle {
+	return "| " + truck.Name
+}
+
+<h1 class="name" data-bind="text: truck().name"></h1>
+<div class="type" data-bind="text: truck().type"></div>
+<div class="gallery noMobile">
+	<img src="/static/images/foursquare.png">
+	<div id="images" class="owl-carousel" data-bind="foreach: truck().images">
+		<div class="item"><img data-bind="attr: { src: 'https://irs0.4sqi.net/img/general/500x500' + suffix }"></div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-7" style="border-right: 1px solid #d3d4d5;padding-right:10px;">
+		<ol class="tweetList" data-bind="foreach: tweets">
+			<li class="tweet">
+				<a data-bind="attr: {href: 'http://twitter.com/' + twitname + '/status/' + id}">
+					<img src="/static/images/twitter.png" style="height:20px;">
+				</a>
+				<span data-bind="html: contents"></span><br>
+				<span data-bind="text: time" class="tweet-time"></span>
+			</li>
+		</ol>
+	</div>
+	<div class="col-4">
+		<b>Last Location:</b> <span data-bind="text: truck().location"></span><br>
+		<b>Last Updated:</b> <span data-bind="text: truck().updated"></span><br><br>
+		<span data-bind="if: truck().weburl">
+			<a data-bind="attr: { href: truck().weburl }">Website</a><br>
+		</span>
+		<a data-bind="attr: { href: 'https://twitter.com/'+truck().twitname }">Twitter</a><br>
+		<span data-bind="if: truck().foursquare">
+			<a data-bind="attr: { href: 'https://foursquare.com/v/' + truck().foursquare + '?ref=P1JDYDE13QQDC11VUSA4LV3VV25OTRPHV1WAV5WP3VCE0QUP' }">Foursquare</a><br>
+		</span>
+	</div>
+</div>
+
+<div data-bind="if: others().length">
+	<h2 class="withLine">Other trucks on location</h2>
+	<div data-bind="foreach: others">
+		<a data-bind="text: name, click: $parent.switch"></a><br>
+	</div>
+</div>
+
+<noscript>
+	<h1>@truck.Name</h1>
+	<h2>@truck.Type</h2>
+	Location: @truck.Location.String
+</noscript>
+
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		ko.applyBindings(new truckModel('@truck.ID'));
+	});
+
+	window.onpopstate = function() {
+		location.reload();
+	};
+</script>

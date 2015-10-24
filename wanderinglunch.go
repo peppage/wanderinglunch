@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"html/template"
 	"log"
@@ -56,20 +57,14 @@ func allTrucks(c *echo.Context) error {
 	return c.HTML(http.StatusOK, tmpl.Alltrucks(model.Trucks(730, "lat", "desc", 0)))
 }
 
-func truck(c web.C, w http.ResponseWriter, r *http.Request) {
-	var t = model.GetTruck(c.URLParams["id"])
+func truck(c *echo.Context) error {
+	var t = model.GetTruck(c.Param("id"))
 	if t.ID == "" {
-		http.Redirect(w, r, "/", http.StatusNotFound)
-		return
+		c.Redirect(http.StatusNotFound, "/")
+		return errors.New("Not found")
 	}
-
-	data := make(map[string]interface{})
-	data["truck"] = t
-	data["title"] = TITLE + t.Name
-	data["id"] = c.URLParams["id"]
-	data["css"] = statics.SiteCss
-	data["js"] = statics.SiteJs
-	renderer.HTML(w, http.StatusOK, "truck", data)
+	c.HTML(http.StatusOK, tmpl.Truck(t))
+	return nil
 }
 
 func maps(c web.C, w http.ResponseWriter, r *http.Request) {
@@ -162,17 +157,18 @@ func main() {
 
 	e.Get("/", index)
 	e.Get("/alltrucks", allTrucks)
+	e.Get("/truck/:id", truck)
 
 	a := e.Group("/api")
 	a.Get("/trucks", trucks)
 	a.Get("/messages", message)
+	a.Get("/trucks/:id", truckById)
 
 	e.Run(":1234")
 
 	serveSingle("/favicon.ico", "./static/images/favicon.ico")
 
 	goji.Use(Sessions.Middleware())
-	goji.Get("/truck/:id", truck)
 	goji.Get("/map", maps)
 	goji.Get("/support", support)
 	goji.Get("/login", login)
@@ -207,7 +203,6 @@ func main() {
 	api.Use(SecurePost)
 	api.Use(middleware.SubRouter)
 	api.Get("/trucks/failures", failures)
-	api.Get("/trucks/:id", truckById)
 	api.Put("/trucks/:id", truckUpdate)
 	api.Get("/trucks/:id/tweets", truckTweets)
 	api.Delete("/trucks/:id", truckDelete)
