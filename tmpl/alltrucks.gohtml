@@ -1,0 +1,75 @@
+@{
+	import (
+		"wanderinglunch/model"
+		"wanderinglunch/tmpl/helper"
+		"wanderinglunch/tmpl/layout/base"
+	)
+	var trucks []*model.Truck
+}
+
+@section menu {
+	@helper.Menu("alltrucks", false)	
+}
+
+@section htmlTitle {
+	return "| All Trucks List"
+}
+
+<div data-bind="visible: isLoaded">
+	<input id="search" type="search" name="search" placeholder="Search by name..."
+		   data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off" />
+
+	<table class="table table-minimal">
+		<thead>
+			<tr>
+				<th class="sortable" data-bind="orderable: {collection: 'trucks', field: 'name', defaultField: true, defaultDirection: 'desc' }">Truck</th>
+				<th class="sortable" data-bind="orderable: {collection: 'trucks', field: 'location' }">Location</th>
+				<th class="sortable" data-bind="orderable: {collection: 'trucks', field: 'lastupdate' }">Time</th>
+				<th class="noMobile">Menu</th>
+			</tr>
+		</thead>
+		<tbody data-bind="foreach: results">
+			<tr>
+				<td>
+					<a data-bind="attr: { href: '/truck/'+id }"><span data-bind="text: name"></span></a>
+				</td>
+				<td>
+					<span data-bind="text: location"></span>
+				</td>
+				<td>
+					<span data-bind="text: updated"></span>
+				</td>
+				<td class="noMobile">
+					<span data-bind="if: image">
+						<img class="menu" data-bind="attr { src: 'https://irs0.4sqi.net/img/general/width30'+ image, alt: name + ' menu'}, click: $parent.showMenu" />
+					</span>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div data-bind="ifnot: isLoaded" style="text-align:center;">
+	<div class="loader">Loading...</div>
+</div>
+<div style="text-align:center">
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	<!-- wandering2 -->
+	<ins class="adsbygoogle"
+	     style="display:inline-block;width:300px;height:250px"
+	     data-ad-client="ca-pub-4098082757736151"
+	     data-ad-slot="1938459065"></ins>
+	<script>
+	(adsbygoogle = window.adsbygoogle || []).push({});
+	</script>
+</div>
+<noscript>
+	@for _, t := range trucks {
+		<a class="truck" href="/truck/@t.ID">@t.Name</a><br>	
+	}
+</noscript>
+
+<script type="text/javascript">
+	document.addEventListener('DOMContentLoaded', function() {
+		ko.applyBindings(new AllTrucksModel());
+	});
+</script>

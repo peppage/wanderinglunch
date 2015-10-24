@@ -52,13 +52,8 @@ func index(c *echo.Context) error {
 	return c.HTML(http.StatusOK, tmpl.Index(model.Zones("nyc")))
 }
 
-func allTrucks(c web.C, w http.ResponseWriter, r *http.Request) {
-	data := make(map[string]interface{})
-	data["title"] = TITLE + "All Trucks List"
-	data["trucks"] = model.Trucks(8, "lat", "desc", 0)
-	data["css"] = statics.SiteCss
-	data["js"] = statics.SiteJs
-	renderer.HTML(w, http.StatusOK, "alltrucks", data)
+func allTrucks(c *echo.Context) error {
+	return c.HTML(http.StatusOK, tmpl.Alltrucks(model.Trucks(730, "lat", "desc", 0)))
 }
 
 func truck(c web.C, w http.ResponseWriter, r *http.Request) {
@@ -166,6 +161,7 @@ func main() {
 	e.Static("/static/", "static")
 
 	e.Get("/", index)
+	e.Get("/alltrucks", allTrucks)
 
 	a := e.Group("/api")
 	a.Get("/trucks", trucks)
@@ -176,9 +172,7 @@ func main() {
 	serveSingle("/favicon.ico", "./static/images/favicon.ico")
 
 	goji.Use(Sessions.Middleware())
-	goji.Get("/", root)
 	goji.Get("/truck/:id", truck)
-	goji.Get("/alltrucks", allTrucks)
 	goji.Get("/map", maps)
 	goji.Get("/support", support)
 	goji.Get("/login", login)

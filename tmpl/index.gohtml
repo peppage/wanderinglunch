@@ -1,8 +1,16 @@
 @{
 	import (
+		"wanderinglunch/tmpl/helper"
 		"wanderinglunch/tmpl/layout/base"
 	)
 	var zones []string
+}
+
+@section menu {
+	@helper.Menu("index", false)
+}
+
+@section htmlTitle {
 }
 
 <div class="row noMobile">
