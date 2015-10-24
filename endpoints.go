@@ -45,9 +45,9 @@ import (
  *  }
  * ]
  */
-func markers(c web.C, w http.ResponseWriter, r *http.Request) {
+func markers(c *echo.Context) error {
 	var ae apiErrors
-	h := r.FormValue("updated_since")
+	h := c.Query("updated_since")
 	hours := 500000
 	if h != "" {
 		var err error
@@ -58,11 +58,12 @@ func markers(c web.C, w http.ResponseWriter, r *http.Request) {
 	}
 
 	if len(ae.Errors) > 0 {
-		renderer.JSON(w, http.StatusBadRequest, ae)
-		return
+		c.JSON(http.StatusBadRequest, ae)
+		return ae
 	}
 
-	renderer.JSON(w, http.StatusOK, model.Markers(hours))
+	c.JSON(http.StatusOK, model.Markers(hours))
+	return nil
 }
 
 /**

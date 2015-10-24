@@ -67,12 +67,8 @@ func truck(c *echo.Context) error {
 	return nil
 }
 
-func maps(c web.C, w http.ResponseWriter, r *http.Request) {
-	data := make(map[string]interface{})
-	data["title"] = TITLE + "Map"
-	data["css"] = statics.SiteCss
-	data["js"] = statics.SiteJs
-	renderer.HTML(w, http.StatusOK, "map", data)
+func maps(c *echo.Context) error {
+	return c.HTML(http.StatusOK, tmpl.Map())
 }
 
 func support(c web.C, w http.ResponseWriter, r *http.Request) {
@@ -158,18 +154,19 @@ func main() {
 	e.Get("/", index)
 	e.Get("/alltrucks", allTrucks)
 	e.Get("/truck/:id", truck)
+	e.Get("/map", maps)
 
 	a := e.Group("/api")
 	a.Get("/trucks", trucks)
 	a.Get("/messages", message)
 	a.Get("/trucks/:id", truckById)
+	a.Get("/markers", markers)
 
 	e.Run(":1234")
 
 	serveSingle("/favicon.ico", "./static/images/favicon.ico")
 
 	goji.Use(Sessions.Middleware())
-	goji.Get("/map", maps)
 	goji.Get("/support", support)
 	goji.Get("/login", login)
 	goji.Post("/login", loginHandle)
@@ -207,7 +204,6 @@ func main() {
 	api.Get("/trucks/:id/tweets", truckTweets)
 	api.Delete("/trucks/:id", truckDelete)
 	api.Post("/trucks", truckInsert)
-	api.Get("/markers", markers)
 	api.Post("/messages", messageSave)
 	api.Get("/subs", substitutions)
 	api.Get("/subs/:id", subsitution)
