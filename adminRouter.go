@@ -8,7 +8,9 @@ import (
 	"time"
 
 	"wanderinglunch/model"
+	"wanderinglunch/tmpl"
 
+	"github.com/labstack/echo"
 	"github.com/peppage/foursquarego"
 	"github.com/zenazn/goji/web"
 )
@@ -16,7 +18,7 @@ import (
 var clientID = os.Getenv("CLIENT_ID")
 var clientSecret = os.Getenv("CLIENT_SECRET")
 
-func adminRoot(c web.C, w http.ResponseWriter, r *http.Request) {
+func adminRoot(c *echo.Context) error {
 	t1 := time.Now().Add(-24 * (time.Minute * 60)).Unix()
 	now := time.Now()
 	t2 := time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, now.Location()).Unix()
@@ -27,15 +29,7 @@ func adminRoot(c web.C, w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err)
 	}
 
-	data := make(map[string]interface{})
-	data["trucks"] = trucks
-	data["title"] = TITLE + "Admin"
-	data["admin"] = true
-	data["css"] = statics.SiteCss
-	data["js"] = statics.SiteJs
-	data["adminjs"] = statics.AdminJs
-
-	renderer.HTML(w, http.StatusOK, "admin/index", data)
+	return c.HTML(http.StatusOK, tmpl.Adminindex())
 }
 
 func adminFix(c web.C, w http.ResponseWriter, r *http.Request) {

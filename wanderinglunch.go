@@ -155,6 +155,9 @@ func main() {
 	e.Get("/login", login)
 	e.Post("/login", loginHandle)
 
+	ad := e.Group("/admin")
+	ad.Get("", adminRoot)
+
 	a := e.Group("/api")
 	a.Get("/trucks", trucks)
 	a.Get("/messages", message)
@@ -172,7 +175,6 @@ func main() {
 	goji.Handle("/admin/*", admin)
 	admin.Use(Secure)
 	admin.Use(middleware.SubRouter)
-	admin.Get("/", adminRoot)
 	admin.Get("/fix/:id", adminFix)
 	admin.Get("/location/new/:tweetId", adminNewLoc)
 	admin.Get("/locations", adminLocs)
