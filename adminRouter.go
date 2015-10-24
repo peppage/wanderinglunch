@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"wanderinglunch/model"
-	"wanderinglunch/tmpl"
+	"wanderinglunch/tmpl/admin"
 
 	"github.com/labstack/echo"
 	"github.com/peppage/foursquarego"
@@ -29,7 +29,7 @@ func adminRoot(c *echo.Context) error {
 		fmt.Println(err)
 	}
 
-	return c.HTML(http.StatusOK, tmpl.Adminindex())
+	return c.HTML(http.StatusOK, admin.Index())
 }
 
 func adminFix(c web.C, w http.ResponseWriter, r *http.Request) {
