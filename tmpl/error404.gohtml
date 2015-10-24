@@ -1,0 +1,34 @@
+@{
+	import (
+		"wanderinglunch/tmpl/helper"
+		"wanderinglunch/tmpl/layout/base"
+	)
+}
+
+@section menu {
+	@helper.Menu("404", false)
+}
+
+@section htmlTitle {
+	return "| 404 Not Found"
+}
+<style>
+	header {
+		display: none;
+	}
+	body {
+		background-color: #333;
+  		color: whitesmoke;
+	}
+</style>
+<div class="errorPage">
+	<div class="errorSection">
+		<h1>404 - Wandering Lunch can't find that page</h1>
+		<p>
+			The page you are trying to reach does not exist.
+		</p>
+		<p>
+			<a href="http://wanderinglunch.com">Return to main page</a>
+		</p>
+	</div>
+</div>

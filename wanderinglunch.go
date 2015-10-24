@@ -79,7 +79,7 @@ func loginHandle(c *echo.Context) error {
 	_, err := model.VerifyPassword(c.Form("email"), c.Form("password"))
 	if err != nil {
 		c.Response().Header().Set("Method", "GET")
-		return c.Redirect(http.StatusSeeOther, "/login") // The user is invalid!
+		return echo.NewHTTPError(http.StatusUnauthorized) //c.Redirect(http.StatusSeeOther, "/login") // The user is invalid!
 	}
 	//s := Sessions.GetSessionObject(&c)
 	//s["user"] = u.Email
@@ -104,6 +104,12 @@ func maxAgeHandler(seconds int, h http.Handler) http.Handler {
 		w.Header().Add("Vary", "Accept-Encoding")
 		h.ServeHTTP(w, r)
 	})
+}
+
+func errorHandler(err error, c *echo.Context) {
+	if err.Error() == "Not Found" {
+		c.HTML(http.StatusNotFound, tmpl.Error404())
+	}
 }
 
 func init() {
@@ -133,6 +139,8 @@ func init() {
 func main() {
 
 	e := echo.New()
+
+	e.SetHTTPErrorHandler(errorHandler)
 	e.Use(mw.Logger())
 	e.Use(mw.Recover())
 
