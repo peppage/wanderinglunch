@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
 	"html/template"
 	"log"
@@ -60,11 +59,9 @@ func allTrucks(c *echo.Context) error {
 func truck(c *echo.Context) error {
 	var t = model.GetTruck(c.Param("id"))
 	if t.ID == "" {
-		c.Redirect(http.StatusNotFound, "/")
-		return errors.New("Not found")
+		return echo.NewHTTPError(http.StatusNotFound)
 	}
-	c.HTML(http.StatusOK, tmpl.Truck(t))
-	return nil
+	return c.HTML(http.StatusOK, tmpl.Truck(t))
 }
 
 func maps(c *echo.Context) error {
