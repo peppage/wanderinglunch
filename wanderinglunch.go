@@ -154,11 +154,13 @@ func main() {
 
 	ad := e.Group("/admin")
 	ad.Get("", adminRoot)
+	ad.Get("/fix/:id", adminFix)
 
 	a := e.Group("/api")
 	a.Get("/trucks", trucks)
 	a.Get("/messages", message)
 	a.Get("/trucks/:id", truckById)
+	a.Get("/trucks/:id/tweets", truckTweets)
 	a.Get("/markers", markers)
 
 	e.Run(":1234")
@@ -172,7 +174,6 @@ func main() {
 	goji.Handle("/admin/*", admin)
 	admin.Use(Secure)
 	admin.Use(middleware.SubRouter)
-	admin.Get("/fix/:id", adminFix)
 	admin.Get("/location/new/:tweetId", adminNewLoc)
 	admin.Get("/locations", adminLocs)
 	admin.Get("/location/:id", adminEditLoc)
@@ -194,7 +195,6 @@ func main() {
 	api.Use(middleware.SubRouter)
 	api.Get("/trucks/failures", failures)
 	api.Put("/trucks/:id", truckUpdate)
-	api.Get("/trucks/:id/tweets", truckTweets)
 	api.Delete("/trucks/:id", truckDelete)
 	api.Post("/trucks", truckInsert)
 	api.Post("/messages", messageSave)

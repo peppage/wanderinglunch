@@ -276,10 +276,10 @@ func failures(c web.C, w http.ResponseWriter, r *http.Request) {
  * ]
  */
 
-func truckTweets(c web.C, w http.ResponseWriter, r *http.Request) {
+func truckTweets(c *echo.Context) error {
 	var ae apiErrors
 
-	ws := r.FormValue("with_subs")
+	ws := c.Form("with_subs")
 	withSubs := false
 	if ws != "" {
 		var err error
@@ -289,7 +289,7 @@ func truckTweets(c web.C, w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	pt := r.FormValue("pretty_time")
+	pt := c.Form("pretty_time")
 	prettyTime := true
 	if pt != "" {
 		var err error
@@ -299,7 +299,7 @@ func truckTweets(c web.C, w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	p := r.FormValue("parsed")
+	p := c.Form("parsed")
 	parsed := false
 	if p != "" {
 		var err error
@@ -309,16 +309,14 @@ func truckTweets(c web.C, w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	truck := model.GetTruck(c.URLParams["id"])
+	truck := model.GetTruck(c.Param("id"))
 	if truck.ID == "" {
 		ae.Errors = append(ae.Errors, apiError{Message: "No truck with that id found"})
-		renderer.JSON(w, http.StatusNotFound, ae)
-		return
+		return c.JSON(http.StatusNotFound, ae)
 	}
 
 	if len(ae.Errors) > 0 {
-		renderer.JSON(w, http.StatusBadRequest, ae)
-		return
+		return c.JSON(http.StatusBadRequest, ae)
 	}
-	renderer.JSON(w, http.StatusOK, model.GetTweets(truck.Twitname, withSubs, prettyTime, parsed))
+	return c.JSON(http.StatusOK, model.GetTweets(truck.Twitname, withSubs, prettyTime, parsed))
 }

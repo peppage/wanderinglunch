@@ -1,0 +1,53 @@
+@{
+	import (
+		"wanderinglunch/model"
+		"wanderinglunch/tmpl/helper"
+		"wanderinglunch/tmpl/layout/base"
+	)
+	var truck model.Truck
+}
+
+@section menu {
+	@helper.Menu("adminindex", true)
+}
+
+@section htmlTitle {
+	return "Admin - Fix " + truck.Name
+}
+
+	<h1>@truck.Name</h1>
+	<h2>Information</h2>
+	<p>
+		<ul>
+			<li><a href="http://twitter.com/@truck.Twitname">Twitter</a></li>
+			@if truck.Weburl.Value == nil {
+				<li><a href="@truck.Weburl.Value">Website</a></li>
+			}
+
+			@if truck.Foursquare.Value == nil {
+				<li><a href="http://foursquare.com/v/@truck.Foursquare.Value?ref=P1JDYDE13QQDC11VUSA4LV3VV25OTRPHV1WAV5WP3VCE0QUP">Foursquare</a></li>
+			}
+		</ul>
+	</p>
+
+	<h2>Tweets</h2>
+	<table class="table table-minimal">
+		<thead>
+			<th>Tweet</th>
+			<th style="width:260px;">Time</th>
+		</thead>
+		<tbody data-bind="foreach: results">
+			<td><a href="#" data-bind="attr: {href: '/admin/location/new/'+id }"><span data-bind="text: contents"></span></a></td>
+			<td data-bind="text: time"></td>
+		</tbody>
+	</table>
+	<div>
+		<button data-bind="click: prev, visible: hasPrevious">Prev</button>
+		<button data-bind="click: next, visible: hasNext">Next</button>
+	</div>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			ko.applyBindings(new AdminFixModel('@truck.ID'));	
+		});
+	</script>

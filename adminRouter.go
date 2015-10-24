@@ -32,22 +32,12 @@ func adminRoot(c *echo.Context) error {
 	return c.HTML(http.StatusOK, admin.Index())
 }
 
-func adminFix(c web.C, w http.ResponseWriter, r *http.Request) {
-	t := model.GetTruck(c.URLParams["id"])
+func adminFix(c *echo.Context) error {
+	t := model.GetTruck(c.Param("id"))
 	if t.ID == "" {
-		http.Redirect(w, r, "/admin", http.StatusNotFound)
-		return
+		return echo.NewHTTPError(http.StatusNotFound)
 	}
-
-	data := make(map[string]interface{})
-	data["truck"] = t
-	data["title"] = TITLE + "Admin - Fixing " + t.Name
-	data["admin"] = true
-	data["css"] = statics.SiteCss
-	data["js"] = statics.SiteJs
-	data["adminjs"] = statics.AdminJs
-
-	renderer.HTML(w, http.StatusOK, "admin/fix", data)
+	return c.HTML(http.StatusOK, admin.Fix(t))
 }
 
 func adminNewLoc(c web.C, w http.ResponseWriter, r *http.Request) {
