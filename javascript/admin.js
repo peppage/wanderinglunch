@@ -54,3 +54,52 @@ function AdminFixModel(id) {
       return self.tweets.slice(first, first + self.perPage);
     });
 }
+
+function AdminAddLoc(tweetid) {
+    var self = this;
+    self.tweet = ko.observable();
+    self.loc = {
+      display: ko.observable(),
+      matcher: ko.observable(),
+      region: ko.observable(),
+      lat: ko.observable(),
+      long: ko.observable(),
+      hood: ko.observable(),
+      zone: ko.observable(),
+      site: ko.observable(),
+    };
+
+    $.ajax({
+        dataType: 'json',
+        url: API_URL + '/tweets/' + tweetid + '?with_subs=1',
+        xhrFields: {
+            withCredentials: true
+        }
+      }).done(function(data) {
+        self.tweet(data.contents);
+      });
+
+    self.save = function() {
+      $.ajax({
+          dataType: 'json',
+          url: API_URL + '/locations',
+          method: 'POST',
+          data: ko.toJS(self.loc),
+          xhrFields: {
+              withCredentials: true
+          }
+        }).done(function(data) {
+        window.location = '/admin/location/' + data.id;
+        }).fail(function(data) {
+          var json = data.responseJSON;
+        var e = document.getElementsByClassName('error')[0];
+        e.innerText = '';
+        for(var x = 0; x < json.errors.length; x++) {
+          e.innerText += json.errors[x].message;
+        }
+        e.classList.remove('hide');
+        });
+      return true;
+    };
+
+  }

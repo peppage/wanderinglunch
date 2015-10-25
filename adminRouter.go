@@ -40,17 +40,8 @@ func adminFix(c *echo.Context) error {
 	return c.HTML(http.StatusOK, admin.Fix(t))
 }
 
-func adminNewLoc(c web.C, w http.ResponseWriter, r *http.Request) {
-	data := make(map[string]interface{})
-	data["title"] = TITLE + "Admin - Add Location"
-	data["id"] = c.URLParams["tweetId"]
-	data["admin"] = true
-	data["css"] = statics.SiteCss
-	data["js"] = statics.SiteJs
-	data["adminjs"] = statics.AdminJs
-	data["sites"] = model.Sites()
-
-	renderer.HTML(w, http.StatusOK, "admin/newloc", data)
+func adminNewLoc(c *echo.Context) error {
+	return c.HTML(http.StatusOK, admin.Newloc(model.Sites(), c.Param("tweetId")))
 }
 
 func adminLocs(c web.C, w http.ResponseWriter, r *http.Request) {
