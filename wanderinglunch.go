@@ -1,11 +1,9 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
-	"os"
 
 	"wanderinglunch/model"
 	"wanderinglunch/tmpl"
@@ -15,26 +13,16 @@ import (
 	mw "github.com/labstack/echo/middleware"
 	_ "github.com/lib/pq"
 	"github.com/peppage/sessions"
-	"github.com/unrolled/render"
 	"github.com/zenazn/goji"
 	"github.com/zenazn/goji/web"
 	"github.com/zenazn/goji/web/middleware"
 )
 
 var db *sqlx.DB
-var renderer *render.Render
 var secret = "D3MtG1ixqlhavdbxmBclkKvjYtBqWUQexsVCsr5xNWO1af36hZnZP"
 var redisSessionStore = sessions.MemoryStore{}
 var Sessions = sessions.NewSessionOptions(secret, &redisSessionStore, "*")
 var siteJs string
-
-var TITLE = "Wandering Lunch: NYC Food Truck Finder | "
-
-var statics struct {
-	SiteCss string `json:"site.css"`
-	SiteJs  string `json:"site.js"`
-	AdminJs string `json:"admin.js"`
-}
 
 func index(c *echo.Context) error {
 	return c.HTML(http.StatusOK, tmpl.Index(model.Zones("nyc")))
@@ -71,10 +59,6 @@ func loginHandle(c *echo.Context) error {
 	return c.Redirect(http.StatusSeeOther, "/admin")
 }
 
-func notFound(c web.C, w http.ResponseWriter, r *http.Request) {
-	renderer.HTML(w, http.StatusNotFound, "404", nil)
-}
-
 func serveSingle(pattern string, filename string) {
 	http.HandleFunc(pattern, func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Add("Cache-Control", "max-age=31536000, public, must-revalidate, proxy-revalidate")
@@ -103,22 +87,6 @@ func init() {
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	renderer = render.New(render.Options{
-		IndentJSON:    false,
-		IsDevelopment: false,
-		Layout:        "layout",
-	})
-
-	staticFiles, err := os.Open("rev-manifest.json")
-	if err != nil {
-		fmt.Println("opening config file", err.Error())
-	}
-	jsonParser := json.NewDecoder(staticFiles)
-	if err = jsonParser.Decode(&statics); err != nil {
-		fmt.Println("parsing config file", err.Error())
-	}
-	defer staticFiles.Close()
 }
 
 func main() {
@@ -188,8 +156,6 @@ func main() {
 	e.Run(":1234")
 
 	goji.Use(Sessions.Middleware())
-
-	goji.NotFound(notFound)
 
 	admin := web.New()
 	admin.Use(Secure)
