@@ -154,5 +154,5 @@ func main() {
 	a.Post("/messages", messageSave)
 
 	e.Use(mw.Recover())
-	e.Run(":1234")
+	e.Run(":8000")
 }
