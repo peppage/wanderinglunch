@@ -12,17 +12,12 @@ import (
 	"github.com/labstack/echo"
 	mw "github.com/labstack/echo/middleware"
 	_ "github.com/lib/pq"
-	"github.com/peppage/sessions"
-	"github.com/zenazn/goji"
-	"github.com/zenazn/goji/web"
-	"github.com/zenazn/goji/web/middleware"
+	"github.com/syntaqx/echo-middleware/session"
 )
 
 var db *sqlx.DB
 var secret = "D3MtG1ixqlhavdbxmBclkKvjYtBqWUQexsVCsr5xNWO1af36hZnZP"
-var redisSessionStore = sessions.MemoryStore{}
-var Sessions = sessions.NewSessionOptions(secret, &redisSessionStore, "*")
-var siteJs string
+var store = session.NewCookieStore([]byte(secret))
 
 func index(c *echo.Context) error {
 	return c.HTML(http.StatusOK, tmpl.Index(model.Zones("nyc")))
@@ -49,13 +44,14 @@ func login(c *echo.Context) error {
 }
 
 func loginHandle(c *echo.Context) error {
-	_, err := model.VerifyPassword(c.Form("email"), c.Form("password"))
+	u, err := model.VerifyPassword(c.Form("email"), c.Form("password"))
 	if err != nil {
 		c.Response().Header().Set("Method", "GET")
-		return echo.NewHTTPError(http.StatusUnauthorized) //c.Redirect(http.StatusSeeOther, "/login") // The user is invalid!
+		return echo.NewHTTPError(http.StatusUnauthorized) // The user is invalid!
 	}
-	//s := Sessions.GetSessionObject(&c)
-	//s["user"] = u.Email
+	session := session.Default(c)
+	session.Set("user", u.Email)
+	session.Save()
 	return c.Redirect(http.StatusSeeOther, "/admin")
 }
 
@@ -79,6 +75,9 @@ func errorHandler(err error, c *echo.Context) {
 	if err.Error() == "Not Found" {
 		c.HTML(http.StatusNotFound, tmpl.Error404())
 	}
+	if err.Error() == "Permission denied!" {
+		c.HTML(http.StatusOK, tmpl.Login())
+	}
 }
 
 func init() {
@@ -92,10 +91,9 @@ func init() {
 func main() {
 
 	e := echo.New()
-
+	e.Use(session.Sessions("session", store))
 	e.SetHTTPErrorHandler(errorHandler)
 	e.Use(mw.Logger())
-	e.Use(mw.Recover())
 
 	e.Static("/static/", "static")
 	e.Static("/doc/", "doc")
@@ -109,6 +107,7 @@ func main() {
 	e.Post("/login", loginHandle)
 
 	ad := e.Group("/admin")
+	ad.Use(secure())
 	ad.Get("", adminRoot)
 	ad.Get("/fix/:id", adminFix)
 	ad.Get("/location/new/:tweetId", adminNewLoc)
@@ -153,16 +152,6 @@ func main() {
 	a.Delete("/images/:id", imageDelete)
 	a.Post("/messages", messageSave)
 
+	e.Use(mw.Recover())
 	e.Run(":1234")
-
-	goji.Use(Sessions.Middleware())
-
-	admin := web.New()
-	admin.Use(Secure)
-
-	api := web.New()
-	api.Use(SecurePost)
-	api.Use(middleware.SubRouter)
-
-	goji.Serve()
 }
