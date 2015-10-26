@@ -44,27 +44,12 @@ func adminNewLoc(c *echo.Context) error {
 	return c.HTML(http.StatusOK, admin.Newloc(model.Sites(), c.Param("tweetId")))
 }
 
-func adminLocs(c web.C, w http.ResponseWriter, r *http.Request) {
-	data := make(map[string]interface{})
-	data["title"] = TITLE + "Admin - Locations"
-	data["admin"] = true
-	data["css"] = statics.SiteCss
-	data["js"] = statics.SiteJs
-	data["adminjs"] = statics.AdminJs
-
-	renderer.HTML(w, http.StatusOK, "admin/locations", data)
+func adminLocs(c *echo.Context) error {
+	return c.HTML(http.StatusOK, admin.Locations())
 }
 
-func adminEditLoc(c web.C, w http.ResponseWriter, r *http.Request) {
-	data := make(map[string]interface{})
-	data["title"] = TITLE + "Admin - Location " + c.URLParams["id"]
-	data["admin"] = true
-	data["id"] = c.URLParams["id"]
-	data["css"] = statics.SiteCss
-	data["js"] = statics.SiteJs
-	data["adminjs"] = statics.AdminJs
-
-	renderer.HTML(w, http.StatusOK, "admin/location", data)
+func adminEditLoc(c *echo.Context) error {
+	return c.HTML(http.StatusOK, admin.Editloc(c.Param("id")))
 }
 
 func adminTrucks(c web.C, w http.ResponseWriter, r *http.Request) {

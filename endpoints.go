@@ -94,8 +94,8 @@ func markers(c *echo.Context) error {
  *  }
  * ]
  */
-func locations(c web.C, w http.ResponseWriter, r *http.Request) {
-	renderer.JSON(w, http.StatusOK, model.GetLocations())
+func locations(c *echo.Context) error {
+	return c.JSON(http.StatusOK, model.GetLocations())
 }
 
 /**
@@ -117,13 +117,12 @@ func locations(c web.C, w http.ResponseWriter, r *http.Request) {
 *    "site": "nyc"
 *  }
 */
-func location(c web.C, w http.ResponseWriter, r *http.Request) {
-	loc := model.GetLocation(c.URLParams["id"])
+func location(c *echo.Context) error {
+	loc := model.GetLocation(c.Param("id"))
 	if loc.ID == 0 {
-		renderer.JSON(w, http.StatusNotFound, nil)
-		return
+		return c.JSON(http.StatusNotFound, nil)
 	}
-	renderer.JSON(w, http.StatusOK, loc)
+	return c.JSON(http.StatusOK, loc)
 }
 
 /**
@@ -134,21 +133,15 @@ func location(c web.C, w http.ResponseWriter, r *http.Request) {
  * @apiUse Location
  * @apiGroup Locations
  */
-func locationInsert(c web.C, w http.ResponseWriter, r *http.Request) {
-	err := r.ParseForm()
-	if err != nil {
-		renderer.JSON(w, http.StatusInternalServerError, nil)
-		return
-	}
-	l := model.LocationMarshal(r.Form)
-	err = model.AddLocation(l)
+func locationInsert(c *echo.Context) error {
+	l := model.LocationMarshal(c)
+	err := model.AddLocation(l)
 	if err != nil {
 		var ae apiErrors
 		ae.Errors = append(ae.Errors, apiError{Message: err.Error()})
-		renderer.JSON(w, http.StatusBadRequest, ae)
-		return
+		return c.JSON(http.StatusBadRequest, ae)
 	}
-	renderer.JSON(w, http.StatusOK, model.GetLocationByDisplay(l.Display))
+	return c.JSON(http.StatusOK, model.GetLocationByDisplay(l.Display))
 }
 
 /**
@@ -158,12 +151,11 @@ func locationInsert(c web.C, w http.ResponseWriter, r *http.Request) {
  * @apiParam {Number} id Id of the location to delete
  * @apiGroup Locations
  */
-func locationDelete(c web.C, w http.ResponseWriter, r *http.Request) {
-	if model.DeleteLocation(c.URLParams["id"]) {
-		renderer.JSON(w, http.StatusNoContent, nil)
-		return
+func locationDelete(c *echo.Context) error {
+	if model.DeleteLocation(c.Param("id")) {
+		return c.JSON(http.StatusNoContent, nil)
 	}
-	renderer.JSON(w, http.StatusInternalServerError, nil)
+	return c.JSON(http.StatusInternalServerError, nil)
 }
 
 /**
@@ -175,22 +167,16 @@ func locationDelete(c web.C, w http.ResponseWriter, r *http.Request) {
  * @apiUse Location
  * @apiGroup Locations
  */
-func locationUpdate(c web.C, w http.ResponseWriter, r *http.Request) {
-	err := r.ParseForm()
-	if err != nil {
-		renderer.JSON(w, http.StatusInternalServerError, nil)
-		return
-	}
-	l := model.LocationMarshal(r.Form)
-	l.ID, _ = strconv.Atoi(c.URLParams["id"])
-	err = model.UpdateLocation(l)
+func locationUpdate(c *echo.Context) error {
+	l := model.LocationMarshal(c)
+	l.ID, _ = strconv.Atoi(c.Param("id"))
+	err := model.UpdateLocation(l)
 	if err != nil {
 		var ae apiErrors
 		ae.Errors = append(ae.Errors, apiError{Message: err.Error()})
-		renderer.JSON(w, http.StatusBadRequest, ae)
-		return
+		return c.JSON(http.StatusBadRequest, ae)
 	}
-	renderer.JSON(w, http.StatusOK, model.GetLocation(c.URLParams["id"]))
+	return c.JSON(http.StatusOK, model.GetLocation(c.Param("id")))
 }
 
 /**

@@ -3,9 +3,9 @@ package model
 import (
 	"errors"
 	"fmt"
-	"net/url"
 	"strconv"
 
+	"github.com/labstack/echo"
 	"github.com/pmylund/go-cache"
 )
 
@@ -97,24 +97,24 @@ func UpdateLocation(l Location) error {
 	return errors.New("Unknown error")
 }
 
-func LocationMarshal(v url.Values) Location {
+func LocationMarshal(c *echo.Context) Location {
 	var l Location
-	l.Display = v.Get("display")
-	l.Matcher = v.Get("matcher")
-	var lat, err = strconv.ParseFloat(v.Get("lat"), 32)
-	if err != nil {
+	l.Display = c.Form("display")
+	l.Matcher = c.Form("matcher")
+	var lat, err = strconv.ParseFloat(c.Form("lat"), 32)
+	if err == nil {
 		l.Lat = float32(lat)
 	} else {
 		l.Lat = 0
 	}
-	var long, err2 = strconv.ParseFloat(v.Get("long"), 32)
-	if err2 != nil {
+	var long, err2 = strconv.ParseFloat(c.Form("long"), 32)
+	if err2 == nil {
 		l.Long = float32(long)
 	} else {
 		l.Long = 0
 	}
-	l.Zone = v.Get("zone")
-	l.Site = v.Get("site")
+	l.Zone = c.Form("zone")
+	l.Site = c.Form("site")
 	return l
 }
 

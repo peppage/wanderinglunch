@@ -159,6 +159,8 @@ func main() {
 	ad.Get("/subs", adminSubs)
 	ad.Get("/sub/add", adminNewSub)
 	ad.Get("/sub/:id", adminSub)
+	ad.Get("/locations", adminLocs)
+	ad.Get("/location/:id", adminEditLoc)
 
 	a := e.Group("/api")
 	a.Get("/trucks", trucks)
@@ -172,6 +174,11 @@ func main() {
 	a.Get("/subs/:id", subsitution)
 	a.Put("/subs/:id", subUpdate)
 	a.Delete("/subs/:id", subDelete)
+	a.Get("/locations", locations)
+	a.Get("/locations/:id", location)
+	a.Post("/locations", locationInsert)
+	a.Put("/locations/:id", locationUpdate)
+	a.Delete("/locations/:id", locationDelete)
 
 	e.Run(":1234")
 
@@ -184,8 +191,7 @@ func main() {
 	goji.Handle("/admin/*", admin)
 	admin.Use(Secure)
 	admin.Use(middleware.SubRouter)
-	admin.Get("/locations", adminLocs)
-	admin.Get("/location/:id", adminEditLoc)
+
 	admin.Get("/trucks", adminTrucks)
 	admin.Get("/truck/add", adminNewTruck)
 	admin.Get("/truck/:id", adminEditTruck)
@@ -204,11 +210,7 @@ func main() {
 	api.Delete("/trucks/:id", truckDelete)
 	api.Post("/trucks", truckInsert)
 	api.Post("/messages", messageSave)
-	api.Get("/locations", locations)
-	api.Get("/locations/:id", location)
-	api.Post("/locations", locationInsert)
-	api.Put("/locations/:id", locationUpdate)
-	api.Delete("/locations/:id", locationDelete)
+
 	api.Get("/images", images)
 	api.Get("/images/:id", image)
 	api.Post("/images", imageInsert)

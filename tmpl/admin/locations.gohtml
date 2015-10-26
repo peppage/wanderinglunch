@@ -1,0 +1,46 @@
+@{
+	import (
+		"wanderinglunch/tmpl/helper"
+		"wanderinglunch/tmpl/layout/base"
+	)
+}
+
+@section js {
+	<script src="/static/admin.js"></script>
+}
+
+@section menu {
+	@helper.Menu("adminlocs", true)
+}
+
+@section htmlTitle {
+	return "Admin - Locations"
+}
+
+<h1>Locations</h1>
+
+<input id="search" type="search" name="search" placeholder="Search..."
+	   data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off" />
+<table class="table table-minimal">
+	<thead>
+		<tr>
+			<th>Display</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody data-bind="foreach: results">
+		<td><a data-bind="attr: { href: '/admin/location/'+id }"><span data-bind="text: display"></span></a></td>
+		<td><a data-bind="click: $parent.delete">delete</a></td>
+	</tbody>
+</table>
+<div data-bind="ifnot: query().length">
+	<button data-bind="click: prev, visible: hasPrevious">Prev</button>
+	<button data-bind="click: next, visible: hasNext">Next</button>
+</div>
+
+
+<script type="text/javascript">
+	document.addEventListener('DOMContentLoaded', function() {
+		ko.applyBindings(new AdminLocs());	
+	});
+</script>
