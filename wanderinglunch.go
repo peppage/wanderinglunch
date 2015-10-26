@@ -161,9 +161,16 @@ func main() {
 	ad.Get("/sub/:id", adminSub)
 	ad.Get("/locations", adminLocs)
 	ad.Get("/location/:id", adminEditLoc)
+	ad.Get("/trucks", adminTrucks)
+	ad.Get("/truck/:id", adminEditTruck)
+	ad.Get("/truck/add", adminNewTruck)
 
 	a := e.Group("/api")
 	a.Get("/trucks", trucks)
+	a.Put("/trucks/:id", truckUpdate)
+	a.Delete("/trucks/:id", truckDelete)
+	a.Post("/trucks", truckInsert)
+	a.Get("/trucks/failures", failures)
 	a.Get("/messages", message)
 	a.Get("/trucks/:id", truckById)
 	a.Get("/trucks/:id/tweets", truckTweets)
@@ -187,14 +194,8 @@ func main() {
 	goji.NotFound(notFound)
 
 	admin := web.New()
-	goji.Get("/admin", http.RedirectHandler("/admin/", http.StatusMovedPermanently))
-	goji.Handle("/admin/*", admin)
 	admin.Use(Secure)
-	admin.Use(middleware.SubRouter)
 
-	admin.Get("/trucks", adminTrucks)
-	admin.Get("/truck/add", adminNewTruck)
-	admin.Get("/truck/:id", adminEditTruck)
 	admin.Get("/message", adminMessage)
 	admin.Get("/images", adminImages)
 	admin.Get("/image/:id", adminImage)
@@ -205,10 +206,7 @@ func main() {
 	goji.Handle("/api/*", api)
 	api.Use(SecurePost)
 	api.Use(middleware.SubRouter)
-	api.Get("/trucks/failures", failures)
-	api.Put("/trucks/:id", truckUpdate)
-	api.Delete("/trucks/:id", truckDelete)
-	api.Post("/trucks", truckInsert)
+
 	api.Post("/messages", messageSave)
 
 	api.Get("/images", images)

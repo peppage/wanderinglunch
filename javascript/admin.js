@@ -312,3 +312,241 @@ function AdminAddLoc(tweetid) {
       return true;
     };
   }
+
+    function AdminTrucks() {
+    var self = this;
+    self.trucks = ko.observableArray([]);
+    self.pageNumber = ko.observable(0);
+    self.perPage = 10;
+    self.query = ko.observable('');
+
+    $.ajax({
+        dataType: 'json',
+        url: API_URL + '/trucks',
+        xhrFields: {
+            withCredentials: true
+        }
+      }).done(function(data) {
+        self.trucks(data);
+      });
+
+    self.totalPages = ko.computed(function() {
+      var div = Math.floor(self.trucks().length / self.perPage);
+      div += self.trucks().length % self.perPage > 0 ? 1 : 0;
+      return div - 1;
+    });
+
+    self.paginated = ko.computed(function() {
+      var first = self.pageNumber() * self.perPage;
+      return self.trucks().slice(first, first + self.perPage);
+    });
+
+    self.hasPrevious = ko.computed(function() {
+      return self.pageNumber() !== 0;
+    });
+
+    self.hasNext = ko.computed(function() {
+      return self.pageNumber() !== self.totalPages;
+    });
+
+    self.next = function() {
+      if(self.pageNumber() < self.totalPages()) {
+        self.pageNumber(self.pageNumber() + 1);
+      }
+    };
+
+    self.prev = function() {
+      if(self.pageNumber() !== 0) {
+        self.pageNumber(self.pageNumber() - 1);
+      }
+    };
+
+    self.delete = function(truck) {
+      $.ajax({
+          url: API_URL + '/trucks/' + truck.id,
+          type: 'DELETE',
+          xhrFields: {
+              withCredentials: true
+          }
+      }).done(function(data) {
+        self.trucks.remove(truck);
+      }).fail(function(data) {
+
+      });
+    };
+
+    self.results = ko.computed(function() {
+      var items = ko.utils.arrayFilter(self.trucks(), function(item) {
+        return item.name.toLowerCase().indexOf(self.query().toLowerCase()) >= 0;
+      });
+      if(items.length < self.perPage) {
+        self.pageNumber(0);
+      }
+      var first = self.pageNumber() * self.perPage;
+      return items.slice(first, first + self.perPage);
+    });
+  }
+
+  function AdminEditTruck(id) {
+    var self = this;
+    self.truck = ko.observable({});
+    self.truckImages = ko.observableArray([]);
+    self.images = ko.observableArray([]);
+    self.pageNumber = ko.observable(0);
+    self.perPage = 10;
+
+    $.ajax({
+        dataType: 'json',
+        url: API_URL + '/trucks/' + id,
+        xhrFields: {
+            withCredentials: true
+        }
+      }).done(function(data) {
+        self.truck(data);
+        self.truckImages(data.images);
+      });
+
+    self.save = function() {
+      $.ajax({
+          url: API_URL + '/trucks/' + id,
+          method: 'PUT',
+          data: ko.toJS(self.truck),
+          xhrFields: {
+              withCredentials: true
+          }
+      }).done(function(data) {
+        success();
+      }).fail(function(data) {
+        var json = data.responseJSON;
+        error(json.errors);
+      });
+      return true;
+    };
+
+    self.delete = function(image) {
+      $.ajax({
+          url: API_URL + '/images/' + image.id,
+          type: 'DELETE',
+          xhrFields: {
+              withCredentials: true
+          }
+      }).done(function(data) {
+        self.truckImages.remove(image);
+      }).fail(function(data) {
+
+      });
+    };
+
+    self.getImages = function() {
+      $.ajax({
+          dataType: 'json',
+          url: '/admin/foursquare/' + self.truck().foursquare,
+          xhrFields: {
+              withCredentials: true
+          }
+        }).done(function(data) {
+          self.images(data);
+        });
+    };
+
+    self.totalPages = ko.computed(function() {
+      var div = Math.floor(self.images().length / self.perPage);
+      div += self.images().length % self.perPage > 0 ? 1 : 0;
+      return div - 1;
+    });
+
+    self.paginated = ko.computed(function() {
+      var first = self.pageNumber() * self.perPage;
+      return self.images().slice(first, first + self.perPage);
+    });
+
+    self.hasPrevious = ko.computed(function() {
+      return self.pageNumber() !== 0;
+    });
+
+    self.hasNext = ko.computed(function() {
+      return self.pageNumber() !== self.totalPages;
+    });
+
+    self.next = function() {
+      if(self.pageNumber() < self.totalPages()) {
+        self.pageNumber(self.pageNumber() + 1);
+      }
+    };
+
+    self.prev = function() {
+      if(self.pageNumber() !== 0) {
+        self.pageNumber(self.pageNumber() - 1);
+      }
+    };
+
+    self.page = ko.computed(function() {
+      if(self.images().length < self.perPage) {
+        self.pageNumber(0);
+      }
+      var first = self.pageNumber() * self.perPage;
+      return self.images.slice(first, first + self.perPage);
+    });
+
+    self.addImage = function(image) {
+      $.ajax({
+        url: API_URL + '/images',
+        method: 'POST',
+        data: {
+          id: image.id,
+          suffix: image.suffix,
+          twitname: self.truck().twitname
+        },
+        xhrFields: {
+              withCredentials: true
+          }
+      }).done(function(data) {
+        self.truckImages.push(data);
+      }).fail(function(data) {
+
+      });
+    };
+
+    self.editImage = function(image) {
+      window.location.assign('/admin/image/' + image.id);
+    };
+  }
+
+  function AdminAddTruck() {
+    var self = this;
+    self.truck = {
+      id: ko.observable(),
+      name: ko.observable(),
+      twitname: ko.observable(),
+      weburl: ko.observable(),
+      type: ko.observable(),
+      about: ko.observable(),
+      foursquare: ko.observable(),
+      matcher: ko.observable(),
+      matchmethdo: ko.observable(),
+      site: ko.observable()
+    };
+
+    self.save = function() {
+      $.ajax({
+        dataType: 'json',
+        url: API_URL + '/trucks',
+        method: 'POST',
+        data: ko.toJS(self.truck),
+        xhrFields: {
+          withCredentials: true
+        }
+      }).done(function(data) {
+        window.location = '/admin/truck/' + data.id;
+      }).fail(function(data) {
+        var json = data.responseJSON;
+        var e = document.getElementsByClassName('error')[0];
+        e.innerText = '';
+        for(var x = 0; x < json.errors.length; x++) {
+          e.innerText += json.errors[x].message;
+        }
+        e.classList.remove('hide');
+      });
+      return true;
+    };
+  }

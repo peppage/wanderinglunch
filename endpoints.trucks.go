@@ -7,7 +7,6 @@ import (
 	"wanderinglunch/model"
 
 	"github.com/labstack/echo"
-	"github.com/zenazn/goji/web"
 )
 
 /**
@@ -178,21 +177,16 @@ func truckById(c *echo.Context) error {
  * @apiGroup Trucks
  * @apiUse Truck
  */
-func truckInsert(c web.C, w http.ResponseWriter, r *http.Request) {
-	err := r.ParseForm()
-	if err != nil {
-		renderer.JSON(w, http.StatusInternalServerError, nil)
-	}
-	t := model.TruckMarshal(r.Form)
+func truckInsert(c *echo.Context) error {
+	t := model.TruckMarshal(c)
 
 	truck, err := model.AddTruck(t)
 	if err != nil {
 		var ae apiErrors
 		ae.Errors = append(ae.Errors, apiError{Message: err.Error()})
-		renderer.JSON(w, http.StatusBadRequest, ae)
-		return
+		return c.JSON(http.StatusBadRequest, ae)
 	}
-	renderer.JSON(w, http.StatusOK, truck)
+	return c.JSON(http.StatusOK, truck)
 }
 
 /**
@@ -203,19 +197,13 @@ func truckInsert(c web.C, w http.ResponseWriter, r *http.Request) {
  * @apiVersion 1.0.0
  * @apiGroup Trucks
  */
-func truckUpdate(c web.C, w http.ResponseWriter, r *http.Request) {
-	err := r.ParseForm()
-	if err != nil {
-		renderer.JSON(w, http.StatusInternalServerError, nil)
-		return
-	}
-	t := model.TruckMarshal(r.Form)
+func truckUpdate(c *echo.Context) error {
+	t := model.TruckMarshal(c)
 
 	if model.UpdateTruck(t) {
-		renderer.JSON(w, http.StatusOK, model.GetTruck(t.ID))
-		return
+		return c.JSON(http.StatusOK, model.GetTruck(t.ID))
 	}
-	renderer.JSON(w, http.StatusInternalServerError, nil)
+	return c.JSON(http.StatusInternalServerError, nil)
 }
 
 /**
@@ -226,12 +214,11 @@ func truckUpdate(c web.C, w http.ResponseWriter, r *http.Request) {
  * @apiVersion 1.0.0
  * @apiGroup Trucks
  */
-func truckDelete(c web.C, w http.ResponseWriter, r *http.Request) {
-	if model.DeleteTruck(c.URLParams["id"]) {
-		renderer.JSON(w, http.StatusNoContent, nil)
-		return
+func truckDelete(c *echo.Context) error {
+	if model.DeleteTruck(c.Param("id")) {
+		return c.JSON(http.StatusNoContent, nil)
 	}
-	renderer.JSON(w, http.StatusInternalServerError, nil)
+	return c.JSON(http.StatusInternalServerError, nil)
 }
 
 /**
@@ -241,8 +228,8 @@ func truckDelete(c web.C, w http.ResponseWriter, r *http.Request) {
  * @apiVersion 1.0.0
  * @apiName GetFailedTrucks
  */
-func failures(c web.C, w http.ResponseWriter, r *http.Request) {
-	renderer.JSON(w, http.StatusOK, model.GetFailedUpdates())
+func failures(c *echo.Context) error {
+	return c.JSON(http.StatusOK, model.GetFailedUpdates())
 }
 
 /**

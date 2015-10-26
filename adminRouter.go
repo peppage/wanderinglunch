@@ -52,39 +52,16 @@ func adminEditLoc(c *echo.Context) error {
 	return c.HTML(http.StatusOK, admin.Editloc(c.Param("id")))
 }
 
-func adminTrucks(c web.C, w http.ResponseWriter, r *http.Request) {
-	data := make(map[string]interface{})
-	data["title"] = TITLE + "Admin - Trucks "
-	data["admin"] = true
-	data["css"] = statics.SiteCss
-	data["js"] = statics.SiteJs
-	data["adminjs"] = statics.AdminJs
-
-	renderer.HTML(w, http.StatusOK, "admin/trucks", data)
+func adminTrucks(c *echo.Context) error {
+	return c.HTML(http.StatusOK, admin.Trucks())
 }
 
-func adminEditTruck(c web.C, w http.ResponseWriter, r *http.Request) {
-	data := make(map[string]interface{})
-	data["title"] = TITLE + "Admin - Truck " + c.URLParams["id"]
-	data["admin"] = true
-	data["id"] = c.URLParams["id"]
-	data["css"] = statics.SiteCss
-	data["js"] = statics.SiteJs
-	data["adminjs"] = statics.AdminJs
-
-	renderer.HTML(w, http.StatusOK, "admin/truck", data)
+func adminEditTruck(c *echo.Context) error {
+	return c.HTML(http.StatusOK, admin.Edittruck(c.Param("id")))
 }
 
-func adminNewTruck(c web.C, w http.ResponseWriter, r *http.Request) {
-	data := make(map[string]interface{})
-	data["title"] = TITLE + "Admin - Add Truck "
-	data["admin"] = true
-	data["css"] = statics.SiteCss
-	data["js"] = statics.SiteJs
-	data["adminjs"] = statics.AdminJs
-	data["sites"] = model.Sites()
-
-	renderer.HTML(w, http.StatusOK, "admin/newtruck", data)
+func adminNewTruck(c *echo.Context) error {
+	return c.HTML(http.StatusOK, admin.Newtruck(model.Sites()))
 }
 
 func adminMessage(c web.C, w http.ResponseWriter, r *http.Request) {
