@@ -313,7 +313,7 @@ function AdminAddLoc(tweetid) {
     };
   }
 
-    function AdminTrucks() {
+  function AdminTrucks() {
     var self = this;
     self.trucks = ko.observableArray([]);
     self.pageNumber = ko.observable(0);
@@ -547,6 +547,99 @@ function AdminAddLoc(tweetid) {
         }
         e.classList.remove('hide');
       });
+      return true;
+    };
+  }
+
+  function InvalidImagesModel() {
+    var self = this;
+    self.images = ko.observableArray([]);
+
+    $.ajax({
+        dataType: 'json',
+        url: API_URL + '/images?visibility=private',
+        xhrFields: {
+            withCredentials: true
+        }
+      }).done(function(data) {
+        self.images(data);
+      });
+
+    self.delete = function(image) {
+      $.ajax({
+          dataType: 'json',
+          url: API_URL + '/images/' + image.id,
+          method: 'DELETE',
+          xhrFields: {
+              withCredentials: true
+          }
+        }).done(function(data) {
+          self.images.remove(image);
+        }).fail(function(data) {
+        });
+    };
+  }
+
+  function AdminEditImage(id) {
+    var self = this;
+    self.image = ko.observable({});
+
+    $.ajax({
+        dataType: 'json',
+        url: API_URL + '/images/' + id,
+        xhrFields: {
+            withCredentials: true
+        }
+      }).done(function(data) {
+        self.image(data);
+      });
+
+    self.save = function() {
+      $.ajax({
+          dataType: 'json',
+          method: 'PUT',
+          url: API_URL + '/images/' + id,
+          data: ko.toJS(self.image),
+          xhrFields: {
+              withCredentials: true
+          }
+        }).done(function(data) {
+
+        }).fail(function(data) {
+
+        });
+      return true;
+    };
+  }
+
+  function AdminMessage() {
+    var self = this;
+    self.message = ko.observable({});
+
+    $.ajax({
+        dataType: 'json',
+        url: API_URL + '/messages?amount=1',
+        xhrFields: {
+            withCredentials: true
+        }
+      }).done(function(data) {
+        self.message(data);
+      });
+
+    self.save = function() {
+      $.ajax({
+          dataType: 'json',
+          url: API_URL + '/messages',
+          method: 'POST',
+          data: ko.toJS(self.message),
+          xhrFields: {
+              withCredentials: true
+          }
+        }).done(function(data) {
+          self.message(data);
+        }).fail(function(data) {
+
+        });
       return true;
     };
   }

@@ -1,0 +1,31 @@
+@{
+	import (
+		"wanderinglunch/tmpl/helper"
+		"wanderinglunch/tmpl/layout/base"
+	)
+}
+
+@section js {
+	<script src="/static/admin.js"></script>
+}
+
+@section menu {
+	@helper.Menu("adminmessage", true)
+}
+
+@section htmlTitle {
+	return "Admin - Message"
+}
+
+<h1>New Message</h1>
+
+<label>Message</label><br>
+<textarea data-bind="value: message().message"></textarea><br>
+
+<button data-bind="click: save">Save</button>
+
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		ko.applyBindings(new AdminMessage());
+	});
+</script>

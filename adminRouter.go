@@ -12,7 +12,6 @@ import (
 
 	"github.com/labstack/echo"
 	"github.com/peppage/foursquarego"
-	"github.com/zenazn/goji/web"
 )
 
 var clientID = os.Getenv("CLIENT_ID")
@@ -64,15 +63,8 @@ func adminNewTruck(c *echo.Context) error {
 	return c.HTML(http.StatusOK, admin.Newtruck(model.Sites()))
 }
 
-func adminMessage(c web.C, w http.ResponseWriter, r *http.Request) {
-	data := make(map[string]interface{})
-	data["title"] = TITLE + "Admin - Message"
-	data["admin"] = true
-	data["css"] = statics.SiteCss
-	data["js"] = statics.SiteJs
-	data["adminjs"] = statics.AdminJs
-
-	renderer.HTML(w, http.StatusOK, "admin/message", data)
+func adminMessage(c *echo.Context) error {
+	return c.HTML(http.StatusOK, admin.Message())
 }
 
 func adminSubs(c *echo.Context) error {
@@ -87,36 +79,21 @@ func adminNewSub(c *echo.Context) error {
 	return c.HTML(http.StatusOK, admin.Newsub())
 }
 
-func adminImages(c web.C, w http.ResponseWriter, r *http.Request) {
-	data := make(map[string]interface{})
-	data["title"] = TITLE + "Admin - Invalid Images "
-	data["admin"] = true
-	data["css"] = statics.SiteCss
-	data["js"] = statics.SiteJs
-	data["adminjs"] = statics.AdminJs
-
-	renderer.HTML(w, http.StatusOK, "admin/images", data)
+func adminImages(c *echo.Context) error {
+	return c.HTML(http.StatusOK, admin.Images())
 }
 
-func adminImage(c web.C, w http.ResponseWriter, r *http.Request) {
-	data := make(map[string]interface{})
-	data["title"] = TITLE + "Admin - Edit Image "
-	data["admin"] = true
-	data["id"] = c.URLParams["id"]
-	data["css"] = statics.SiteCss
-	data["js"] = statics.SiteJs
-	data["adminjs"] = statics.AdminJs
-
-	renderer.HTML(w, http.StatusOK, "admin/image", data)
+func adminImage(c *echo.Context) error {
+	return c.HTML(http.StatusOK, admin.Image(c.Param("id")))
 }
 
-func adminFoursquareImages(c web.C, w http.ResponseWriter, r *http.Request) {
+func adminFoursquareImages(c *echo.Context) error {
 	api := foursquarego.NewFoursquareApi(clientID, clientSecret)
 	uv := url.Values{}
 	uv.Set("limit", "200")
-	p, err := api.GetVenuePhotos(c.URLParams["id"], uv)
+	p, err := api.GetVenuePhotos(c.Param("id"), uv)
 	if err != nil {
 		fmt.Println(err)
 	}
-	renderer.JSON(w, http.StatusOK, p)
+	return c.JSON(http.StatusOK, p)
 }

@@ -164,6 +164,10 @@ func main() {
 	ad.Get("/trucks", adminTrucks)
 	ad.Get("/truck/:id", adminEditTruck)
 	ad.Get("/truck/add", adminNewTruck)
+	ad.Get("/images", adminImages)
+	ad.Get("/image/:id", adminImage)
+	ad.Get("/message", adminMessage)
+	ad.Get("/foursquare/:id", adminFoursquareImages)
 
 	a := e.Group("/api")
 	a.Get("/trucks", trucks)
@@ -186,6 +190,12 @@ func main() {
 	a.Post("/locations", locationInsert)
 	a.Put("/locations/:id", locationUpdate)
 	a.Delete("/locations/:id", locationDelete)
+	a.Get("/images", images)
+	a.Get("/images/:id", image)
+	a.Post("/images", imageInsert)
+	a.Put("/images/:id", imageUpdate)
+	a.Delete("/images/:id", imageDelete)
+	a.Post("/messages", messageSave)
 
 	e.Run(":1234")
 
@@ -196,24 +206,9 @@ func main() {
 	admin := web.New()
 	admin.Use(Secure)
 
-	admin.Get("/message", adminMessage)
-	admin.Get("/images", adminImages)
-	admin.Get("/image/:id", adminImage)
-	admin.Get("/foursquare/:id", adminFoursquareImages)
-
 	api := web.New()
-	goji.Get("/api", http.RedirectHandler("/api/", http.StatusMovedPermanently))
-	goji.Handle("/api/*", api)
 	api.Use(SecurePost)
 	api.Use(middleware.SubRouter)
-
-	api.Post("/messages", messageSave)
-
-	api.Get("/images", images)
-	api.Get("/images/:id", image)
-	api.Post("/images", imageInsert)
-	api.Put("/images/:id", imageUpdate)
-	api.Delete("/images/:id", imageDelete)
 
 	goji.Serve()
 }

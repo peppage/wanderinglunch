@@ -1,0 +1,48 @@
+@{
+	import (
+		"wanderinglunch/tmpl/helper"
+		"wanderinglunch/tmpl/layout/base"
+	)
+	var ID string
+}
+
+@section js {
+	<script src="/static/admin.js"></script>
+}
+
+@section menu {
+	@helper.Menu("adminimage", true)
+}
+
+@section htmlTitle {
+	return "Admin - Image " + ID
+}
+
+<h1>Edit Image</h1>
+
+<label>Id</label><br>
+<input type="text" data-bind="value: image().id" disabled><br>
+
+<label>Suffix</label><br>
+<input type="text" data-bind="value: image().suffix"><br>
+
+<label>Visibility</label><br>
+<input type="text" data-bind="value: image().visibility"><br>
+
+<label>Twitname</label><br>
+<input type="text" data-bind="value: image().twitname"><br>
+
+<label>Menu
+	<input type="checkbox" data-bind="checked: image().menu">
+</label><br>
+
+<button data-bind="click: save">Save</button>
+<br><br>
+
+<img data-bind="attr: { src: 'http://irs0.4sqi.net/img/general/500x500' + image().suffix }">
+
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		ko.applyBindings(new AdminEditImage('@ID'));
+	});
+</script>

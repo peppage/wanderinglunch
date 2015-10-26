@@ -8,7 +8,6 @@ import (
 	"wanderinglunch/model"
 
 	"github.com/labstack/echo"
-	"github.com/zenazn/goji/web"
 )
 
 /**
@@ -206,9 +205,9 @@ func locationUpdate(c *echo.Context) error {
  *  }
  * ]
  */
-func images(c web.C, w http.ResponseWriter, r *http.Request) {
+func images(c *echo.Context) error {
 	var ae apiErrors
-	v := r.FormValue("visibility")
+	v := c.Query("visibility")
 	visibility := "public"
 	if v != "" {
 		if v == "public" || v == "private" {
@@ -219,11 +218,10 @@ func images(c web.C, w http.ResponseWriter, r *http.Request) {
 	}
 
 	if len(ae.Errors) > 0 {
-		renderer.JSON(w, http.StatusBadRequest, ae)
-		return
+		return c.JSON(http.StatusBadRequest, ae)
 	}
 
-	renderer.JSON(w, http.StatusOK, model.GetImages(visibility))
+	return c.JSON(http.StatusOK, model.GetImages(visibility))
 }
 
 /**
@@ -244,13 +242,12 @@ func images(c web.C, w http.ResponseWriter, r *http.Request) {
  *   "menu": false
  * }
  */
-func image(c web.C, w http.ResponseWriter, r *http.Request) {
-	i := model.GetImage(c.URLParams["id"])
+func image(c *echo.Context) error {
+	i := model.GetImage(c.Param("id"))
 	if i.ID == "" {
-		renderer.JSON(w, http.StatusNotFound, nil)
-		return
+		return c.JSON(http.StatusNotFound, nil)
 	}
-	renderer.JSON(w, http.StatusOK, i)
+	return c.JSON(http.StatusOK, i)
 }
 
 /**
@@ -261,17 +258,16 @@ func image(c web.C, w http.ResponseWriter, r *http.Request) {
  * @apiUse Image
  * @apiGroup Images
  */
-func imageInsert(c web.C, w http.ResponseWriter, r *http.Request) {
+func imageInsert(c *echo.Context) error {
 	var i model.Image
-	i.ID = r.FormValue("id")
-	i.Suffix = r.FormValue("suffix")
-	i.Twitname = r.FormValue("twitname")
-	i.Menu, _ = strconv.ParseBool(r.FormValue("menu"))
+	i.ID = c.Form("id")
+	i.Suffix = c.Form("suffix")
+	i.Twitname = c.Form("twitname")
+	i.Menu, _ = strconv.ParseBool(c.Form("menu"))
 	if model.AddImage(i) {
-		renderer.JSON(w, http.StatusOK, model.GetImage(i.ID))
-		return
+		return c.JSON(http.StatusOK, model.GetImage(i.ID))
 	}
-	renderer.JSON(w, http.StatusInternalServerError, nil)
+	return c.JSON(http.StatusInternalServerError, nil)
 }
 
 /**
@@ -283,18 +279,17 @@ func imageInsert(c web.C, w http.ResponseWriter, r *http.Request) {
  * @apiUse Image
  * @apiGroup Images
  */
-func imageUpdate(c web.C, w http.ResponseWriter, r *http.Request) {
+func imageUpdate(c *echo.Context) error {
 	var i model.Image
-	i.ID = c.URLParams["id"]
-	i.Visibility = r.FormValue("visibility")
-	i.Suffix = r.FormValue("suffix")
-	i.Twitname = r.FormValue("twitname")
-	i.Menu, _ = strconv.ParseBool(r.FormValue("menu"))
+	i.ID = c.Param("id")
+	i.Visibility = c.Form("visibility")
+	i.Suffix = c.Form("suffix")
+	i.Twitname = c.Form("twitname")
+	i.Menu, _ = strconv.ParseBool(c.Form("menu"))
 	if model.UpdateImage(i) {
-		renderer.JSON(w, http.StatusOK, model.GetImage(c.URLParams["id"]))
-		return
+		return c.JSON(http.StatusOK, model.GetImage(c.Param("id")))
 	}
-	renderer.JSON(w, http.StatusInternalServerError, nil)
+	return c.JSON(http.StatusInternalServerError, nil)
 }
 
 /**
@@ -304,12 +299,11 @@ func imageUpdate(c web.C, w http.ResponseWriter, r *http.Request) {
  * @apiParam {Number} id Id of the image to delete
  * @apiGroup Images
  */
-func imageDelete(c web.C, w http.ResponseWriter, r *http.Request) {
-	if model.DeleteImage(c.URLParams["id"]) {
-		renderer.JSON(w, http.StatusNoContent, nil)
-		return
+func imageDelete(c *echo.Context) error {
+	if model.DeleteImage(c.Param("id")) {
+		return c.JSON(http.StatusNoContent, nil)
 	}
-	renderer.JSON(w, http.StatusInternalServerError, nil)
+	return c.JSON(http.StatusInternalServerError, nil)
 }
 
 /**
@@ -319,15 +313,14 @@ func imageDelete(c web.C, w http.ResponseWriter, r *http.Request) {
  * @apiGroup Messages
  * @apiParam {String} message The message to store, HTML is OK
  */
-func messageSave(c web.C, w http.ResponseWriter, r *http.Request) {
+func messageSave(c *echo.Context) error {
 	var m model.Message
-	m.Message = r.FormValue("message")
+	m.Message = c.Form("message")
 	m.Date = time.Now().Unix()
 	if model.AddMessage(m) {
-		renderer.JSON(w, http.StatusOK, model.GetMessage(1))
-		return
+		return c.JSON(http.StatusOK, model.GetMessage(1))
 	}
-	renderer.JSON(w, http.StatusInternalServerError, nil)
+	return c.JSON(http.StatusInternalServerError, nil)
 }
 
 /**
