@@ -76,7 +76,7 @@ func errorHandler(err error, c *echo.Context) {
 		c.HTML(http.StatusNotFound, tmpl.Error404())
 	}
 	if err.Error() == "Permission denied!" {
-		c.HTML(http.StatusOK, tmpl.Login())
+		c.HTML(http.StatusUnauthorized, tmpl.Error401())
 	}
 }
 
@@ -125,6 +125,7 @@ func main() {
 	ad.Get("/foursquare/:id", adminFoursquareImages)
 
 	a := e.Group("/api")
+	a.Use(secureApi())
 	a.Get("/trucks", trucks)
 	a.Put("/trucks/:id", truckUpdate)
 	a.Delete("/trucks/:id", truckDelete)
