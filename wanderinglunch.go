@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"html/template"
 	"log"
 	"net/http"
 	"os"
@@ -35,17 +34,6 @@ var statics struct {
 	SiteCss string `json:"site.css"`
 	SiteJs  string `json:"site.js"`
 	AdminJs string `json:"admin.js"`
-}
-
-func root(c web.C, w http.ResponseWriter, r *http.Request) {
-	message := model.GetMessage(1)
-	data := make(map[string]interface{})
-	data["title"] = "Wandering Lunch: NYC Food Truck Finder"
-	data["message"] = template.HTML(message.Message)
-	data["css"] = statics.SiteCss
-	data["js"] = statics.SiteJs
-	data["zones"] = model.Zones("nyc")
-	renderer.HTML(w, http.StatusOK, "index", data)
 }
 
 func index(c *echo.Context) error {
