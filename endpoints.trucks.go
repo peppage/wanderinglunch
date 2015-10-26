@@ -89,11 +89,9 @@ func trucks(c *echo.Context) error {
 	}
 
 	if len(ae.Errors) > 0 {
-		c.JSON(http.StatusBadRequest, ae)
-		return ae
+		return c.JSON(http.StatusBadRequest, ae)
 	}
-	c.JSON(http.StatusOK, model.Trucks(hours, sort, dir, loc))
-	return nil
+	return c.JSON(http.StatusOK, model.Trucks(hours, sort, dir, loc))
 }
 
 /**
@@ -162,11 +160,9 @@ func truckById(c *echo.Context) error {
 	truck := model.GetTruck(c.Param("id"))
 	if truck.ID == "" {
 		ae.Errors = append(ae.Errors, apiError{Message: "No truck with that id found"})
-		c.JSON(http.StatusNotFound, ae)
-		return ae
+		return c.JSON(http.StatusNotFound, ae)
 	}
-	c.JSON(http.StatusOK, truck)
-	return nil
+	return c.JSON(http.StatusOK, truck)
 }
 
 /**
