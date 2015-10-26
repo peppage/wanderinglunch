@@ -153,6 +153,7 @@ func init() {
 func main() {
 
 	serveSingle("/favicon.ico", "./static/images/favicon.ico")
+	serveSingle("/google7edb19ba8a4a91bb.html", "./static/google7edb19ba8a4a91bb.html")
 
 	goji.Use(Sessions.Middleware())
 	goji.Get("/", root)
