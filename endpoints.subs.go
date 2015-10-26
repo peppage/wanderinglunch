@@ -88,11 +88,15 @@ func subInsert(c *echo.Context) error {
  */
 func subUpdate(c *echo.Context) error {
 	s := model.SubMarshal(c)
-	s.ID, _ = strconv.Atoi(c.Param("id"))
+	var err error
+	s.ID, err = strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, nil)
+	}
 	if model.UpdateSub(s) {
 		return c.JSON(http.StatusOK, model.GetSub(c.Param("id")))
 	}
-	return c.JSON(http.StatusBadRequest, nil)
+	return c.JSON(http.StatusInternalServerError, nil)
 }
 
 /**
