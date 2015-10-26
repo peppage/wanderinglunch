@@ -6,7 +6,7 @@ import (
 
 	"wanderinglunch/model"
 
-	"github.com/zenazn/goji/web"
+	"github.com/labstack/echo"
 )
 
 /**
@@ -31,8 +31,8 @@ import (
  *    }
  *  ]
  */
-func substitutions(c web.C, w http.ResponseWriter, r *http.Request) {
-	renderer.JSON(w, http.StatusOK, model.GetSubs())
+func substitutions(c *echo.Context) error {
+	return c.JSON(http.StatusOK, model.GetSubs())
 }
 
 /**
@@ -51,15 +51,14 @@ func substitutions(c web.C, w http.ResponseWriter, r *http.Request) {
  *    "replacement": " "
  *  }
  */
-func subsitution(c web.C, w http.ResponseWriter, r *http.Request) {
+func subsitution(c *echo.Context) error {
 	var ae apiErrors
-	sub := model.GetSub(c.URLParams["id"])
+	sub := model.GetSub(c.Param("id"))
 	if sub.ID == 0 {
 		ae.Errors = append(ae.Errors, apiError{Message: "No substitution with that id found"})
-		renderer.JSON(w, http.StatusNotFound, ae)
-		return
+		return c.JSON(http.StatusNotFound, ae)
 	}
-	renderer.JSON(w, http.StatusOK, sub)
+	return c.JSON(http.StatusOK, sub)
 }
 
 /**
@@ -70,17 +69,12 @@ func subsitution(c web.C, w http.ResponseWriter, r *http.Request) {
  * @apiUse Sub
  * @apiGroup Substitutions
  */
-func subInsert(c web.C, w http.ResponseWriter, r *http.Request) {
-	err := r.ParseForm()
-	if err != nil {
-		renderer.JSON(w, http.StatusInternalServerError, nil)
-	}
-	s := model.SubMarshal(r.Form)
+func subInsert(c *echo.Context) error {
+	s := model.SubMarshal(c)
 	if model.AddSub(s) {
-		renderer.JSON(w, http.StatusOK, model.GetSubByRegex(s.Regex))
-		return
+		return c.JSON(http.StatusOK, model.GetSubByRegex(s.Regex))
 	}
-	renderer.JSON(w, http.StatusInternalServerError, nil)
+	return c.JSON(http.StatusBadRequest, nil)
 }
 
 /**
@@ -92,18 +86,13 @@ func subInsert(c web.C, w http.ResponseWriter, r *http.Request) {
  * @apiUse Sub
  * @apiGroup Substitutions
  */
-func subUpdate(c web.C, w http.ResponseWriter, r *http.Request) {
-	err := r.ParseForm()
-	if err != nil {
-		renderer.JSON(w, http.StatusInternalServerError, nil)
-	}
-	s := model.SubMarshal(r.Form)
-	s.ID, _ = strconv.Atoi(c.URLParams["id"])
+func subUpdate(c *echo.Context) error {
+	s := model.SubMarshal(c)
+	s.ID, _ = strconv.Atoi(c.Param("id"))
 	if model.UpdateSub(s) {
-		renderer.JSON(w, http.StatusOK, model.GetSub(c.URLParams["id"]))
-		return
+		return c.JSON(http.StatusOK, model.GetSub(c.Param("id")))
 	}
-	renderer.JSON(w, http.StatusInternalServerError, nil)
+	return c.JSON(http.StatusBadRequest, nil)
 }
 
 /**
@@ -113,10 +102,9 @@ func subUpdate(c web.C, w http.ResponseWriter, r *http.Request) {
  * @apiParam {Number} id Id of the sub to delete
  * @apiGroup Substitutions
  */
-func subDelete(c web.C, w http.ResponseWriter, r *http.Request) {
-	if model.DeleteSub(c.URLParams["id"]) {
-		renderer.JSON(w, http.StatusNoContent, nil)
-		return
+func subDelete(c *echo.Context) error {
+	if model.DeleteSub(c.Param("id")) {
+		return c.JSON(http.StatusNoContent, nil)
 	}
-	renderer.JSON(w, http.StatusInternalServerError, nil)
+	return c.JSON(http.StatusInternalServerError, nil)
 }

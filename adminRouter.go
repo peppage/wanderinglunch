@@ -113,38 +113,16 @@ func adminMessage(c web.C, w http.ResponseWriter, r *http.Request) {
 	renderer.HTML(w, http.StatusOK, "admin/message", data)
 }
 
-func adminSubs(c web.C, w http.ResponseWriter, r *http.Request) {
-	data := make(map[string]interface{})
-	data["title"] = TITLE + "Admin - Subs"
-	data["admin"] = true
-	data["css"] = statics.SiteCss
-	data["js"] = statics.SiteJs
-	data["adminjs"] = statics.AdminJs
-
-	renderer.HTML(w, http.StatusOK, "admin/subs", data)
+func adminSubs(c *echo.Context) error {
+	return c.HTML(http.StatusOK, admin.Subs())
 }
 
-func adminSub(c web.C, w http.ResponseWriter, r *http.Request) {
-	data := make(map[string]interface{})
-	data["title"] = TITLE + "Admin - Sub " + c.URLParams["id"]
-	data["admin"] = true
-	data["id"] = c.URLParams["id"]
-	data["css"] = statics.SiteCss
-	data["js"] = statics.SiteJs
-	data["adminjs"] = statics.AdminJs
-
-	renderer.HTML(w, http.StatusOK, "admin/sub", data)
+func adminSub(c *echo.Context) error {
+	return c.HTML(http.StatusOK, admin.Sub(c.Param("id")))
 }
 
-func adminNewSub(c web.C, w http.ResponseWriter, r *http.Request) {
-	data := make(map[string]interface{})
-	data["title"] = TITLE + "Admin - Add Sub "
-	data["admin"] = true
-	data["css"] = statics.SiteCss
-	data["js"] = statics.SiteJs
-	data["adminjs"] = statics.AdminJs
-
-	renderer.HTML(w, http.StatusOK, "admin/newsub", data)
+func adminNewSub(c *echo.Context) error {
+	return c.HTML(http.StatusOK, admin.Newsub())
 }
 
 func adminImages(c web.C, w http.ResponseWriter, r *http.Request) {

@@ -1,0 +1,38 @@
+@{
+	import (
+		"wanderinglunch/tmpl/helper"
+		"wanderinglunch/tmpl/layout/base"
+	)
+	var ID string
+}
+
+@section js {
+	<script src="/static/admin.js"></script>
+}
+
+@section menu {
+	@helper.Menu("adminsub", true)
+}
+
+@section htmlTitle {
+	return "Admin - Sub " + ID
+}
+
+<h1>Edit Sub</h1>
+
+<label>Id</label><br>
+<input type="text" data-bind="value: sub().id" disabled><br>
+
+<label>Regex</label><br>
+<input type="text" data-bind="value: sub().regex"><br>
+
+<label>Replacement</label><br>
+<input type="text" data-bind="value: sub().replacement"><br>
+
+<button data-bind="click: save">Save</button>
+
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		ko.applyBindings(new AdminEditSub('@ID'));
+	});
+</script>
