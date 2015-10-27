@@ -4,7 +4,6 @@ var gulp = require('gulp');
 var uglify = require('gulp-uglify');
 var concat = require('gulp-concat');
 var sass = require('gulp-sass');
-var rev = require('gulp-rev');
 var neat = require('node-neat').includePaths;
 
 gulp.task('sass-dev', function() {
@@ -21,13 +20,7 @@ gulp.task('sass', function() {
       includePaths: ['sass'].concat(neat),
       outputStyle: 'compressed',
     }))
-    .pipe(rev())
     .pipe(gulp.dest('static'))
-    .pipe(rev.manifest({
-      base: 'static',
-      merge: true,
-    }))
-    .pipe(gulp.dest('static'));
 });
 
 var jsScripts = ['javascript/site.js', 'javascript/magnific.js', 'javascript/owl.js',
@@ -36,14 +29,8 @@ var jsScripts = ['javascript/site.js', 'javascript/magnific.js', 'javascript/owl
 gulp.task('compress', function() {
   return gulp.src(jsScripts)
     .pipe(concat('site.js'))
-    .pipe(rev())
     .pipe(uglify())
     .pipe(gulp.dest('static'))
-    .pipe(rev.manifest({
-      base: 'static',
-      merge: true,
-    }))
-    .pipe(gulp.dest('static'));
 });
 
 gulp.task('movejs', function() {
@@ -54,14 +41,8 @@ gulp.task('movejs', function() {
 
 gulp.task('compress-admin', function() {
   return gulp.src('javascript/admin.js')
-    .pipe(rev())
     .pipe(uglify())
     .pipe(gulp.dest('static'))
-    .pipe(rev.manifest({
-      base: 'static',
-      merge: true,
-    }))
-    .pipe(gulp.dest('static'));
 });
 
 gulp.task('movejs-admin', function() {

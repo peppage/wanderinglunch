@@ -1,8 +1,6 @@
 @{
 	import (
-		"os"
-		"fmt"
-		"encoding/json"
+		"wanderinglunch/web"
 	)
 	var body string
 	var js string
@@ -12,20 +10,12 @@
 
 @{
 	var statics struct {
-		SiteCss string `json:"site.css"`
-		SiteJs  string `json:"site.js"`
-		AdminJs string `json:"admin.js"`
+		SiteCss string
+		SiteJs  string
 	}
 
-	staticFiles, err := os.Open("rev-manifest.json")
-	if err != nil {
-		fmt.Println("opening config file", err.Error())
-	}
-	jsonParser := json.NewDecoder(staticFiles)
-	if err = jsonParser.Decode(&statics); err != nil {
-		fmt.Println("parsing config file", err.Error())
-	}
-	defer staticFiles.Close()
+	statics.SiteJs = "site.js?v=" + web.Md5File("site.js")
+	statics.SiteCss = "site.css?v=" + web.Md5File("site.css")
 }
 <!DOCTYPE html>
 <html lang="en">

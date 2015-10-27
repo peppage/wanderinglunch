@@ -2,12 +2,17 @@
 	import (
 		"wanderinglunch/tmpl/helper"
 		"wanderinglunch/tmpl/layout/base"
+		"wanderinglunch/web"
 	)
 	var ID string
 }
 
+@{
+	adminJs := "/static/admin.js?v=" + web.Md5File("admin.js")
+}
+
 @section js {
-	<script src="/static/admin.js"></script>
+	<script src="@adminJs"></script>
 }
 
 @section menu {
