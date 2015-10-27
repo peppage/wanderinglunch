@@ -2,7 +2,8 @@ package model
 
 import (
 	"fmt"
-	"net/url"
+
+	"github.com/labstack/echo"
 )
 
 /**
@@ -76,9 +77,9 @@ func UpdateSub(s Sub) bool {
 	return false
 }
 
-func SubMarshal(v url.Values) Sub {
+func SubMarshal(c *echo.Context) Sub {
 	var s Sub
-	s.Regex = v.Get("regex")
-	s.Replacement = v.Get("replacement")
+	s.Regex = c.Form("regex")
+	s.Replacement = c.Form("replacement")
 	return s
 }

@@ -1,3 +1,27 @@
+@{
+	import (
+		"wanderinglunch/tmpl/helper"
+		"wanderinglunch/tmpl/layout/base"
+		"wanderinglunch/web"
+	)
+}
+
+@{
+	adminJs := "/static/admin.js?v=" + web.Md5File("admin.js")
+}
+
+@section js {
+	<script src="@adminJs"></script>
+}
+
+@section menu {
+	@helper.Menu("adminimages", true)
+}
+
+@section htmlTitle {
+	return "Admin - Images"
+}
+
 <h1>Invalid Images</h1>
 
 <table class="table table-minimal">
@@ -23,33 +47,4 @@
 	document.addEventListener('DOMContentLoaded', function() {
 		ko.applyBindings(new InvalidImagesModel());	
 	});
-	
-	function InvalidImagesModel() {
-		var self = this;
-		self.images = ko.observableArray([]);
-
-		$.ajax({
-	    	dataType: 'json',
-	    	url: API_URL + '/images?visibility=private',
-	    	xhrFields: {
-	      		withCredentials: true
-	    	}
-	  	}).done(function(data) {
-	  		self.images(data);
-	  	});
-
-		self.delete = function(image) {
-			$.ajax({
-		    	dataType: 'json',
-		    	url: API_URL + '/images/' + image.id,
-		    	method: 'DELETE',
-		    	xhrFields: {
-		      		withCredentials: true
-		    	}
-		  	}).done(function(data) {
-		  		self.images.remove(image);
-		  	}).fail(function(data) {
-		  	});
-		};
-	}
 </script>

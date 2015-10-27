@@ -6,7 +6,7 @@ import (
 
 	"wanderinglunch/model"
 
-	"github.com/zenazn/goji/web"
+	"github.com/labstack/echo"
 )
 
 /**
@@ -29,14 +29,14 @@ import (
  *  "twitname": "mtblls"
  * }
  */
-func tweetById(c web.C, w http.ResponseWriter, r *http.Request) {
+func tweetById(c *echo.Context) error {
 	var ae apiErrors
-	id, err := strconv.Atoi(c.URLParams["id"])
+	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		ae.Errors = append(ae.Errors, apiError{Message: "Invalid tweet id"})
 	}
 
-	ws := r.FormValue("with_subs")
+	ws := c.Form("with_subs")
 	withSubs := false
 	if ws != "" {
 		var err error
@@ -46,7 +46,7 @@ func tweetById(c web.C, w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	pt := r.FormValue("pretty_time")
+	pt := c.Form("pretty_time")
 	prettyTime := true
 	if pt != "" {
 		var err error
@@ -56,7 +56,7 @@ func tweetById(c web.C, w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	p := r.FormValue("parsed")
+	p := c.Form("parsed")
 	parsed := false
 	if p != "" {
 		var err error
@@ -67,15 +67,13 @@ func tweetById(c web.C, w http.ResponseWriter, r *http.Request) {
 	}
 
 	if len(ae.Errors) > 0 {
-		renderer.JSON(w, http.StatusNotFound, ae)
-		return
+		return c.JSON(http.StatusBadRequest, ae)
 	}
 
 	tweet := model.GetTweet(id, withSubs, prettyTime, parsed)
 	if tweet.ID == "" {
 		ae.Errors = append(ae.Errors, apiError{Message: "No tweet with that id found"})
-		renderer.JSON(w, http.StatusNotFound, ae)
-		return
+		return c.JSON(http.StatusNotFound, ae)
 	}
-	renderer.JSON(w, http.StatusOK, tweet)
+	return c.JSON(http.StatusOK, tweet)
 }

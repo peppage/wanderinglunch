@@ -6,7 +6,7 @@ import (
 
 	"wanderinglunch/model"
 
-	"github.com/zenazn/goji/web"
+	"github.com/labstack/echo"
 )
 
 /**
@@ -46,9 +46,9 @@ import (
  *  }
  * ]
  */
-func trucks(c web.C, w http.ResponseWriter, r *http.Request) {
+func trucks(c *echo.Context) error {
 	var ae apiErrors
-	h := r.FormValue("updated_since")
+	h := c.Query("updated_since")
 	hours := 500000
 	if h != "" {
 		var err error
@@ -58,7 +58,7 @@ func trucks(c web.C, w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	s := r.FormValue("sort")
+	s := c.Query("sort")
 	sort := "name"
 	if s != "" {
 		if s == "name" || s == "lat" {
@@ -68,7 +68,7 @@ func trucks(c web.C, w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	d := r.FormValue("sort_dir")
+	d := c.Query("sort_dir")
 	dir := "asc"
 	if d != "" {
 		if d == "asc" || d == "desc" {
@@ -78,7 +78,7 @@ func trucks(c web.C, w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	l := r.FormValue("location_id")
+	l := c.Query("location_id")
 	loc := 0
 	if l != "" {
 		var err error
@@ -89,11 +89,9 @@ func trucks(c web.C, w http.ResponseWriter, r *http.Request) {
 	}
 
 	if len(ae.Errors) > 0 {
-		renderer.JSON(w, http.StatusBadRequest, ae)
-		return
+		return c.JSON(http.StatusBadRequest, ae)
 	}
-	renderer.JSON(w, http.StatusOK, model.Trucks(hours, sort, dir, loc))
-	return
+	return c.JSON(http.StatusOK, model.Trucks(hours, sort, dir, loc))
 }
 
 /**
@@ -157,15 +155,14 @@ func trucks(c web.C, w http.ResponseWriter, r *http.Request) {
  *   ]
  *  }
  */
-func truckById(c web.C, w http.ResponseWriter, r *http.Request) {
+func truckById(c *echo.Context) error {
 	var ae apiErrors
-	truck := model.GetTruck(c.URLParams["id"])
+	truck := model.GetTruck(c.Param("id"))
 	if truck.ID == "" {
 		ae.Errors = append(ae.Errors, apiError{Message: "No truck with that id found"})
-		renderer.JSON(w, http.StatusNotFound, ae)
-		return
+		return c.JSON(http.StatusNotFound, ae)
 	}
-	renderer.JSON(w, http.StatusOK, truck)
+	return c.JSON(http.StatusOK, truck)
 }
 
 /**
@@ -176,21 +173,16 @@ func truckById(c web.C, w http.ResponseWriter, r *http.Request) {
  * @apiGroup Trucks
  * @apiUse Truck
  */
-func truckInsert(c web.C, w http.ResponseWriter, r *http.Request) {
-	err := r.ParseForm()
-	if err != nil {
-		renderer.JSON(w, http.StatusInternalServerError, nil)
-	}
-	t := model.TruckMarshal(r.Form)
+func truckInsert(c *echo.Context) error {
+	t := model.TruckMarshal(c)
 
 	truck, err := model.AddTruck(t)
 	if err != nil {
 		var ae apiErrors
 		ae.Errors = append(ae.Errors, apiError{Message: err.Error()})
-		renderer.JSON(w, http.StatusBadRequest, ae)
-		return
+		return c.JSON(http.StatusBadRequest, ae)
 	}
-	renderer.JSON(w, http.StatusOK, truck)
+	return c.JSON(http.StatusOK, truck)
 }
 
 /**
@@ -201,19 +193,13 @@ func truckInsert(c web.C, w http.ResponseWriter, r *http.Request) {
  * @apiVersion 1.0.0
  * @apiGroup Trucks
  */
-func truckUpdate(c web.C, w http.ResponseWriter, r *http.Request) {
-	err := r.ParseForm()
-	if err != nil {
-		renderer.JSON(w, http.StatusInternalServerError, nil)
-		return
-	}
-	t := model.TruckMarshal(r.Form)
+func truckUpdate(c *echo.Context) error {
+	t := model.TruckMarshal(c)
 
 	if model.UpdateTruck(t) {
-		renderer.JSON(w, http.StatusOK, model.GetTruck(t.ID))
-		return
+		return c.JSON(http.StatusOK, model.GetTruck(t.ID))
 	}
-	renderer.JSON(w, http.StatusInternalServerError, nil)
+	return c.JSON(http.StatusInternalServerError, nil)
 }
 
 /**
@@ -224,12 +210,11 @@ func truckUpdate(c web.C, w http.ResponseWriter, r *http.Request) {
  * @apiVersion 1.0.0
  * @apiGroup Trucks
  */
-func truckDelete(c web.C, w http.ResponseWriter, r *http.Request) {
-	if model.DeleteTruck(c.URLParams["id"]) {
-		renderer.JSON(w, http.StatusNoContent, nil)
-		return
+func truckDelete(c *echo.Context) error {
+	if model.DeleteTruck(c.Param("id")) {
+		return c.JSON(http.StatusNoContent, nil)
 	}
-	renderer.JSON(w, http.StatusInternalServerError, nil)
+	return c.JSON(http.StatusInternalServerError, nil)
 }
 
 /**
@@ -239,8 +224,8 @@ func truckDelete(c web.C, w http.ResponseWriter, r *http.Request) {
  * @apiVersion 1.0.0
  * @apiName GetFailedTrucks
  */
-func failures(c web.C, w http.ResponseWriter, r *http.Request) {
-	renderer.JSON(w, http.StatusOK, model.GetFailedUpdates())
+func failures(c *echo.Context) error {
+	return c.JSON(http.StatusOK, model.GetFailedUpdates())
 }
 
 /**
@@ -274,10 +259,10 @@ func failures(c web.C, w http.ResponseWriter, r *http.Request) {
  * ]
  */
 
-func truckTweets(c web.C, w http.ResponseWriter, r *http.Request) {
+func truckTweets(c *echo.Context) error {
 	var ae apiErrors
 
-	ws := r.FormValue("with_subs")
+	ws := c.Form("with_subs")
 	withSubs := false
 	if ws != "" {
 		var err error
@@ -287,7 +272,7 @@ func truckTweets(c web.C, w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	pt := r.FormValue("pretty_time")
+	pt := c.Form("pretty_time")
 	prettyTime := true
 	if pt != "" {
 		var err error
@@ -297,7 +282,7 @@ func truckTweets(c web.C, w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	p := r.FormValue("parsed")
+	p := c.Form("parsed")
 	parsed := false
 	if p != "" {
 		var err error
@@ -307,16 +292,14 @@ func truckTweets(c web.C, w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	truck := model.GetTruck(c.URLParams["id"])
+	truck := model.GetTruck(c.Param("id"))
 	if truck.ID == "" {
 		ae.Errors = append(ae.Errors, apiError{Message: "No truck with that id found"})
-		renderer.JSON(w, http.StatusNotFound, ae)
-		return
+		return c.JSON(http.StatusNotFound, ae)
 	}
 
 	if len(ae.Errors) > 0 {
-		renderer.JSON(w, http.StatusBadRequest, ae)
-		return
+		return c.JSON(http.StatusBadRequest, ae)
 	}
-	renderer.JSON(w, http.StatusOK, model.GetTweets(truck.Twitname, withSubs, prettyTime, parsed))
+	return c.JSON(http.StatusOK, model.GetTweets(truck.Twitname, withSubs, prettyTime, parsed))
 }

@@ -1,3 +1,21 @@
+@{
+	import (
+		"wanderinglunch/tmpl/helper"
+		"wanderinglunch/tmpl/layout/base"
+	)
+}
+
+@section js {
+}
+
+@section menu {
+	@helper.Menu("map", false)
+}
+
+@section htmlTitle {
+	return "| Map"
+}
+
 <div id="map" style="height:500px"></div>
 <br>
 <div style="text-align:center">

@@ -1,3 +1,28 @@
+@{
+	import (
+		"wanderinglunch/tmpl/helper"
+		"wanderinglunch/tmpl/layout/base"
+		"wanderinglunch/web"
+	)
+	var ID string
+}
+
+@{
+	adminJs := "/static/admin.js?v=" + web.Md5File("admin.js")
+}
+
+@section js {
+	<script src="@adminJs"></script>
+}
+
+@section menu {
+	@helper.Menu("admineditloc", true)
+}
+
+@section htmlTitle {
+	return "Admin - Location " + ID
+}
+
 <h1>Edit Location</h1>
 
 <p>
@@ -30,39 +55,6 @@
 
 <script>
 	document.addEventListener('DOMContentLoaded', function() {
-		ko.applyBindings(new AdminEditLoc({{ .id }}));
+		ko.applyBindings(new AdminEditLoc('@ID'));
 	});
-
-	function AdminEditLoc(id) {
-		var self = this;
-		self.loc = ko.observable({});
-
-		$.ajax({
-	    	dataType: 'json',
-	    	url: API_URL + '/locations/' + id,
-	    	xhrFields: {
-	      		withCredentials: true
-	    	}
-	  	}).done(function(data) {
-	  		self.loc(data);
-	  	});
-
-		self.save = function() {
-			$.ajax({
-		    	dataType: 'json',
-		    	url: API_URL + '/locations/' + id,
-		    	method: 'PUT',
-		    	data: ko.toJS(self.loc),
-		    	xhrFields: {
-		      		withCredentials: true
-		    	}
-		  	}).done(function(data) {
-				success();
-		  	}).fail(function(data) {
-				var json = data.responseJSON;
-				error(json.errors);
-		  	});
-			return true;
-		};
-	}
 </script>

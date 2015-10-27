@@ -1,3 +1,21 @@
+@{
+	import (
+		"wanderinglunch/tmpl/helper"
+		"wanderinglunch/tmpl/layout/base"
+	)
+}
+
+@section js {
+}
+
+@section menu {
+	@helper.Menu("login", false)
+}
+
+@section htmlTitle {
+	return "| Login"
+}
+
 <form method="post">
 	<label>Username</label><br>
 	<input type="text" id="email" name="email" /><br>

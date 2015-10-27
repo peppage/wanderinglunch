@@ -7,7 +7,7 @@ import (
 
 	"wanderinglunch/model"
 
-	"github.com/zenazn/goji/web"
+	"github.com/labstack/echo"
 )
 
 /**
@@ -44,9 +44,9 @@ import (
  *  }
  * ]
  */
-func markers(c web.C, w http.ResponseWriter, r *http.Request) {
+func markers(c *echo.Context) error {
 	var ae apiErrors
-	h := r.FormValue("updated_since")
+	h := c.Query("updated_since")
 	hours := 500000
 	if h != "" {
 		var err error
@@ -57,11 +57,10 @@ func markers(c web.C, w http.ResponseWriter, r *http.Request) {
 	}
 
 	if len(ae.Errors) > 0 {
-		renderer.JSON(w, http.StatusBadRequest, ae)
-		return
+		return c.JSON(http.StatusBadRequest, ae)
 	}
 
-	renderer.JSON(w, http.StatusOK, model.Markers(hours))
+	return c.JSON(http.StatusOK, model.Markers(hours))
 }
 
 /**
@@ -94,8 +93,8 @@ func markers(c web.C, w http.ResponseWriter, r *http.Request) {
  *  }
  * ]
  */
-func locations(c web.C, w http.ResponseWriter, r *http.Request) {
-	renderer.JSON(w, http.StatusOK, model.GetLocations())
+func locations(c *echo.Context) error {
+	return c.JSON(http.StatusOK, model.GetLocations())
 }
 
 /**
@@ -117,13 +116,12 @@ func locations(c web.C, w http.ResponseWriter, r *http.Request) {
 *    "site": "nyc"
 *  }
 */
-func location(c web.C, w http.ResponseWriter, r *http.Request) {
-	loc := model.GetLocation(c.URLParams["id"])
+func location(c *echo.Context) error {
+	loc := model.GetLocation(c.Param("id"))
 	if loc.ID == 0 {
-		renderer.JSON(w, http.StatusNotFound, nil)
-		return
+		return c.JSON(http.StatusNotFound, nil)
 	}
-	renderer.JSON(w, http.StatusOK, loc)
+	return c.JSON(http.StatusOK, loc)
 }
 
 /**
@@ -134,21 +132,15 @@ func location(c web.C, w http.ResponseWriter, r *http.Request) {
  * @apiUse Location
  * @apiGroup Locations
  */
-func locationInsert(c web.C, w http.ResponseWriter, r *http.Request) {
-	err := r.ParseForm()
-	if err != nil {
-		renderer.JSON(w, http.StatusInternalServerError, nil)
-		return
-	}
-	l := model.LocationMarshal(r.Form)
-	err = model.AddLocation(l)
+func locationInsert(c *echo.Context) error {
+	l := model.LocationMarshal(c)
+	err := model.AddLocation(l)
 	if err != nil {
 		var ae apiErrors
 		ae.Errors = append(ae.Errors, apiError{Message: err.Error()})
-		renderer.JSON(w, http.StatusBadRequest, ae)
-		return
+		return c.JSON(http.StatusBadRequest, ae)
 	}
-	renderer.JSON(w, http.StatusOK, model.GetLocationByDisplay(l.Display))
+	return c.JSON(http.StatusOK, model.GetLocationByDisplay(l.Display))
 }
 
 /**
@@ -158,12 +150,11 @@ func locationInsert(c web.C, w http.ResponseWriter, r *http.Request) {
  * @apiParam {Number} id Id of the location to delete
  * @apiGroup Locations
  */
-func locationDelete(c web.C, w http.ResponseWriter, r *http.Request) {
-	if model.DeleteLocation(c.URLParams["id"]) {
-		renderer.JSON(w, http.StatusNoContent, nil)
-		return
+func locationDelete(c *echo.Context) error {
+	if model.DeleteLocation(c.Param("id")) {
+		return c.JSON(http.StatusNoContent, nil)
 	}
-	renderer.JSON(w, http.StatusInternalServerError, nil)
+	return c.JSON(http.StatusInternalServerError, nil)
 }
 
 /**
@@ -175,22 +166,33 @@ func locationDelete(c web.C, w http.ResponseWriter, r *http.Request) {
  * @apiUse Location
  * @apiGroup Locations
  */
-func locationUpdate(c web.C, w http.ResponseWriter, r *http.Request) {
-	err := r.ParseForm()
-	if err != nil {
-		renderer.JSON(w, http.StatusInternalServerError, nil)
-		return
-	}
-	l := model.LocationMarshal(r.Form)
-	l.ID, _ = strconv.Atoi(c.URLParams["id"])
-	err = model.UpdateLocation(l)
+func locationUpdate(c *echo.Context) error {
+	l := model.LocationMarshal(c)
+	l.ID, _ = strconv.Atoi(c.Param("id"))
+	err := model.UpdateLocation(l)
 	if err != nil {
 		var ae apiErrors
 		ae.Errors = append(ae.Errors, apiError{Message: err.Error()})
-		renderer.JSON(w, http.StatusBadRequest, ae)
-		return
+		return c.JSON(http.StatusBadRequest, ae)
 	}
-	renderer.JSON(w, http.StatusOK, model.GetLocation(c.URLParams["id"]))
+	return c.JSON(http.StatusOK, model.GetLocation(c.Param("id")))
+}
+
+/**
+ * @api {get} /zones Get zones
+ * @apiName GetZones
+ * @apiDescription Get zones for a site
+ * @apiVersion 1.0.0
+ * @apiParam {String} site The site to get zones for
+ * @apiGroup Locations
+ * @apiExample {GET} Example usage:
+ * 		htt://wanderinglunch.com/api/zones?site=nyc
+ * @apiSuccessExample {json} Success-Response:
+ * ["Brooklyn","Manhattan","Jersey City"]
+ */
+func zones(c *echo.Context) error {
+	z := model.Zones(c.Query("site"))
+	return c.JSON(http.StatusOK, z)
 }
 
 /**
@@ -220,9 +222,9 @@ func locationUpdate(c web.C, w http.ResponseWriter, r *http.Request) {
  *  }
  * ]
  */
-func images(c web.C, w http.ResponseWriter, r *http.Request) {
+func images(c *echo.Context) error {
 	var ae apiErrors
-	v := r.FormValue("visibility")
+	v := c.Query("visibility")
 	visibility := "public"
 	if v != "" {
 		if v == "public" || v == "private" {
@@ -233,11 +235,10 @@ func images(c web.C, w http.ResponseWriter, r *http.Request) {
 	}
 
 	if len(ae.Errors) > 0 {
-		renderer.JSON(w, http.StatusBadRequest, ae)
-		return
+		return c.JSON(http.StatusBadRequest, ae)
 	}
 
-	renderer.JSON(w, http.StatusOK, model.GetImages(visibility))
+	return c.JSON(http.StatusOK, model.GetImages(visibility))
 }
 
 /**
@@ -258,13 +259,12 @@ func images(c web.C, w http.ResponseWriter, r *http.Request) {
  *   "menu": false
  * }
  */
-func image(c web.C, w http.ResponseWriter, r *http.Request) {
-	i := model.GetImage(c.URLParams["id"])
+func image(c *echo.Context) error {
+	i := model.GetImage(c.Param("id"))
 	if i.ID == "" {
-		renderer.JSON(w, http.StatusNotFound, nil)
-		return
+		return c.JSON(http.StatusNotFound, nil)
 	}
-	renderer.JSON(w, http.StatusOK, i)
+	return c.JSON(http.StatusOK, i)
 }
 
 /**
@@ -275,17 +275,16 @@ func image(c web.C, w http.ResponseWriter, r *http.Request) {
  * @apiUse Image
  * @apiGroup Images
  */
-func imageInsert(c web.C, w http.ResponseWriter, r *http.Request) {
+func imageInsert(c *echo.Context) error {
 	var i model.Image
-	i.ID = r.FormValue("id")
-	i.Suffix = r.FormValue("suffix")
-	i.Twitname = r.FormValue("twitname")
-	i.Menu, _ = strconv.ParseBool(r.FormValue("menu"))
+	i.ID = c.Form("id")
+	i.Suffix = c.Form("suffix")
+	i.Twitname = c.Form("twitname")
+	i.Menu, _ = strconv.ParseBool(c.Form("menu"))
 	if model.AddImage(i) {
-		renderer.JSON(w, http.StatusOK, model.GetImage(i.ID))
-		return
+		return c.JSON(http.StatusOK, model.GetImage(i.ID))
 	}
-	renderer.JSON(w, http.StatusInternalServerError, nil)
+	return c.JSON(http.StatusInternalServerError, nil)
 }
 
 /**
@@ -297,18 +296,17 @@ func imageInsert(c web.C, w http.ResponseWriter, r *http.Request) {
  * @apiUse Image
  * @apiGroup Images
  */
-func imageUpdate(c web.C, w http.ResponseWriter, r *http.Request) {
+func imageUpdate(c *echo.Context) error {
 	var i model.Image
-	i.ID = c.URLParams["id"]
-	i.Visibility = r.FormValue("visibility")
-	i.Suffix = r.FormValue("suffix")
-	i.Twitname = r.FormValue("twitname")
-	i.Menu, _ = strconv.ParseBool(r.FormValue("menu"))
+	i.ID = c.Param("id")
+	i.Visibility = c.Form("visibility")
+	i.Suffix = c.Form("suffix")
+	i.Twitname = c.Form("twitname")
+	i.Menu, _ = strconv.ParseBool(c.Form("menu"))
 	if model.UpdateImage(i) {
-		renderer.JSON(w, http.StatusOK, model.GetImage(c.URLParams["id"]))
-		return
+		return c.JSON(http.StatusOK, model.GetImage(c.Param("id")))
 	}
-	renderer.JSON(w, http.StatusInternalServerError, nil)
+	return c.JSON(http.StatusInternalServerError, nil)
 }
 
 /**
@@ -318,12 +316,11 @@ func imageUpdate(c web.C, w http.ResponseWriter, r *http.Request) {
  * @apiParam {Number} id Id of the image to delete
  * @apiGroup Images
  */
-func imageDelete(c web.C, w http.ResponseWriter, r *http.Request) {
-	if model.DeleteImage(c.URLParams["id"]) {
-		renderer.JSON(w, http.StatusNoContent, nil)
-		return
+func imageDelete(c *echo.Context) error {
+	if model.DeleteImage(c.Param("id")) {
+		return c.JSON(http.StatusNoContent, nil)
 	}
-	renderer.JSON(w, http.StatusInternalServerError, nil)
+	return c.JSON(http.StatusInternalServerError, nil)
 }
 
 /**
@@ -333,15 +330,14 @@ func imageDelete(c web.C, w http.ResponseWriter, r *http.Request) {
  * @apiGroup Messages
  * @apiParam {String} message The message to store, HTML is OK
  */
-func messageSave(c web.C, w http.ResponseWriter, r *http.Request) {
+func messageSave(c *echo.Context) error {
 	var m model.Message
-	m.Message = r.FormValue("message")
+	m.Message = c.Form("message")
 	m.Date = time.Now().Unix()
 	if model.AddMessage(m) {
-		renderer.JSON(w, http.StatusOK, model.GetMessage(1))
-		return
+		return c.JSON(http.StatusOK, model.GetMessage(1))
 	}
-	renderer.JSON(w, http.StatusInternalServerError, nil)
+	return c.JSON(http.StatusInternalServerError, nil)
 }
 
 /**
@@ -360,9 +356,9 @@ func messageSave(c web.C, w http.ResponseWriter, r *http.Request) {
  *   "message": "New trucks added to site!"
  * }
  */
-func message(c web.C, w http.ResponseWriter, r *http.Request) {
+func message(c *echo.Context) error {
 	var ae apiErrors
-	a := r.FormValue("amount")
+	a := c.Query("amount")
 	amount := 1
 	if a != "" {
 		var err error
@@ -373,9 +369,8 @@ func message(c web.C, w http.ResponseWriter, r *http.Request) {
 	}
 
 	if len(ae.Errors) > 0 {
-		renderer.JSON(w, http.StatusBadRequest, ae)
-		return
+		return c.JSON(http.StatusBadRequest, ae)
 	}
 
-	renderer.JSON(w, http.StatusOK, model.GetMessage(amount))
+	return c.JSON(http.StatusOK, model.GetMessage(amount))
 }

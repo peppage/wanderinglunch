@@ -4,10 +4,10 @@ import (
 	"errors"
 	"fmt"
 	"math"
-	"net/url"
 	"strconv"
 	"time"
 
+	"github.com/labstack/echo"
 	"github.com/pmylund/go-cache"
 	"gopkg.in/guregu/null.v2"
 	"gopkg.in/guregu/null.v2/zero"
@@ -184,18 +184,18 @@ func UpdateTruck(t Truck) bool {
 	return false
 }
 
-func TruckMarshal(v url.Values) Truck {
+func TruckMarshal(c *echo.Context) Truck {
 	var t Truck
-	t.ID = v.Get("id")
-	t.Name = v.Get("name")
-	t.Twitname = v.Get("twitname")
-	t.Weburl = null.StringFrom(v.Get("weburl"))
-	t.Type = v.Get("type")
-	t.About = null.StringFrom(v.Get("about"))
-	t.Foursquare = null.StringFrom(v.Get("foursquare"))
-	t.Matcher = null.StringFrom(v.Get("matcher"))
-	t.Matchmethod = null.StringFrom(v.Get("matchmethod"))
-	t.Site = v.Get("site")
+	t.ID = c.Form("id")
+	t.Name = c.Form("name")
+	t.Twitname = c.Form("twitname")
+	t.Weburl = null.StringFrom(c.Form("weburl"))
+	t.Type = c.Form("type")
+	t.About = null.StringFrom(c.Form("about"))
+	t.Foursquare = null.StringFrom(c.Form("foursquare"))
+	t.Matcher = null.StringFrom(c.Form("matcher"))
+	t.Matchmethod = null.StringFrom(c.Form("matchmethod"))
+	t.Site = c.Form("site")
 	return t
 }
 

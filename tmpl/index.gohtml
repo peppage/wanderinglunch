@@ -1,3 +1,21 @@
+@{
+	import (
+		"wanderinglunch/tmpl/helper"
+		"wanderinglunch/tmpl/layout/base"
+	)
+	var zones []string
+}
+
+@section js {
+}
+
+@section menu {
+	@helper.Menu("index", false)
+}
+
+@section htmlTitle {
+}
+
 <div class="row noMobile">
 	<div class="col-12" style="text-align:center;">
 		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -13,15 +31,15 @@
 </div>
 <div data-bind="visible: isLoaded">
 	<div class="row" data-bind="if: trucks().length">
-		<div class="col-buttons buttons-{{ len .zones }} ">
+		<div class="col-buttons buttons-@len(zones) ">
 			<div class="button-group">
-				{{ range .zones }}
+				@for _, z := range zones {
 					<label>
-						<input type="radio" name="button-group" value="{{ . }}"
+						<input type="radio" name="button-group" value="@z"
 								checked data-bind="checked: location, click: setVisible">
-						<span class="button-group-item">{{ . }}</span>
+						<span class="button-group-item">@z</span>
 					</label>
-				{{ end }}
+				}
 			</div>
 		</div>
 	</div>

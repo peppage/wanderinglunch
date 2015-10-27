@@ -1,3 +1,27 @@
+@{
+	import (
+		"wanderinglunch/tmpl/helper"
+		"wanderinglunch/tmpl/layout/base"
+		"wanderinglunch/web"
+	)
+}
+
+@{
+	adminJs := "/static/admin.js?v=" + web.Md5File("admin.js")
+}
+
+@section js {
+	<script src="@adminJs"></script>
+}
+
+@section menu {
+	@helper.Menu("adminindex", true)
+}
+
+@section htmlTitle {
+	return "Admin"
+}
+
 <a href="/admin/truck/add">Add Truck</a>
 <a href="/admin/sub/add">Add Sub</a>
 

@@ -1,0 +1,78 @@
+@{
+	import (
+		"wanderinglunch/tmpl/helper"
+		"wanderinglunch/tmpl/layout/base"
+		"wanderinglunch/web"
+	)
+	var sites []string
+	var ID string
+}
+
+@{
+	adminJs := "/static/admin.js?v=" + web.Md5File("admin.js")
+}
+
+@section js {
+	<script src="@adminJs"></script>
+}
+
+@section menu {
+	@helper.Menu("adminnewloc", true)
+}
+
+@section htmlTitle {
+	return "Admin - Add Location "
+}
+
+<h1>Add Location</h1>
+
+<a href="http://maps.google.com">Google Maps</a><br>
+<a href="http://regex101.com">Regex101</a>
+
+<p data-bind="text: tweet">
+</p>
+
+<label>Display</label><br>
+<input id="display" type="text" data-bind="value: loc.display"><br>
+
+<label>Matcher</label><br>
+<input id="matcher" type="text" data-bind="value: loc.matcher"><br>
+
+<label>Latitude</label><br>
+<input id="lat" type="text" data-bind="value: loc.lat"><br>
+
+<label>Longitude</label><br>
+<input id="long" type="text" data-bind="value: loc.long"><br>
+
+<label>Zone</label><br>
+<input id="zone" type="text" data-bind="value: loc.zone"><br>
+
+<label>Existing Zones</label>
+<select data-bind="options: zones, value: loc.zone, valueAllowUnset: true">
+</select>
+
+<label>Site</label><br>
+<input id="site" type="text" data-bind="value: loc.site"><br>
+
+<label>Existing Sites</label>
+<select class="js-sites">
+	<option value="">Select</option>
+	@for _,s := range sites {
+		<option value="@s">@s</option>
+	}
+</select>
+<br><br>
+
+<button data-bind="click: save">Save</button>
+
+<script>
+	var adminAddLoc = new AdminAddLoc('@ID');
+	document.addEventListener('DOMContentLoaded', function() {
+		ko.applyBindings(adminAddLoc);
+
+		document.querySelector('.js-sites').addEventListener('change', function() {
+			adminAddLoc.loc.site(this.value);
+			adminAddLoc.updateZones(this.value);
+		});
+	});
+</script>

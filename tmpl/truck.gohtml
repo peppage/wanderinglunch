@@ -1,3 +1,23 @@
+@{
+	import (
+		"wanderinglunch/model"
+		"wanderinglunch/tmpl/helper"
+		"wanderinglunch/tmpl/layout/base"
+	)
+	var truck model.Truck
+}
+
+@section js {
+}
+
+@section menu {
+	@helper.Menu("truck", false)	
+}
+
+@section htmlTitle {
+	return "| " + truck.Name
+}
+
 <h1 class="name" data-bind="text: truck().name"></h1>
 <div class="type" data-bind="text: truck().type"></div>
 <div class="gallery noMobile">
@@ -39,16 +59,14 @@
 </div>
 
 <noscript>
-	{{ with .truck }}
-		<h1>{{ .Name }}</h1>
-		<h2>{{ .Type }}</h2>
-		Location: {{ .Location.String }}
-	{{ end }}
+	<h1>@truck.Name</h1>
+	<h2>@truck.Type</h2>
+	Location: @truck.Location.String
 </noscript>
 
 <script>
 	document.addEventListener('DOMContentLoaded', function() {
-		ko.applyBindings(new truckModel({{ .id }}));
+		ko.applyBindings(new truckModel('@truck.ID'));
 	});
 
 	window.onpopstate = function() {

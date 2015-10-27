@@ -1,3 +1,27 @@
+@{
+	import (
+		"wanderinglunch/tmpl/helper"
+		"wanderinglunch/tmpl/layout/base"
+		"wanderinglunch/web"
+	)
+}
+
+@{
+	adminJs := "/static/admin.js?v=" + web.Md5File("admin.js")
+}
+
+@section js {
+	<script src="@adminJs"></script>
+}
+
+@section menu {
+	@helper.Menu("adminnewsub", true)
+}
+
+@section htmlTitle {
+	return "Admin - Add Sub"
+}
+
 <h1>Add Sub</h1>
 
 <label>Regex</label><br>
