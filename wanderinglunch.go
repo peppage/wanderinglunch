@@ -97,6 +97,7 @@ func main() {
 
 	e.Static("/static/", "static")
 	e.Static("/doc/", "doc")
+	e.ServeFile("/google7edb19ba8a4a91bb.html", "./static/google7edb19ba8a4a91bb.html")
 	e.Favicon("./static/images/favicon.ico")
 
 	e.Get("/", index)
