@@ -68,6 +68,7 @@ function AdminAddLoc(tweetid) {
 		zone: ko.observable(),
 		site: ko.observable(),
 	};
+	self.zones = ko.observableArray();
 
 	$.ajax({
 		dataType: 'json',
@@ -100,6 +101,16 @@ function AdminAddLoc(tweetid) {
 			e.classList.remove('hide');
 		});
 		return true;
+	};
+
+	self.updateZones = function(site) {
+		$.ajax({
+			dataType: 'json',
+			url: API_URL + '/zones?site=' + site,
+			method: 'GET',
+		}).done(function(data) {
+			self.zones(data);
+		});
 	};
 }
 
