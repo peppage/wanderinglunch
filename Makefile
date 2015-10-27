@@ -11,7 +11,7 @@ vet:
 # https://github.com/golang/lint
 # go get github.com/golang/lint/golint
 lint:
-    golint ./src
+	golint ./src
 
 clean:
 	find ./tmpl/ -type f -name "*.go" -delete 
