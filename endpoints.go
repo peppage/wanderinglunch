@@ -179,6 +179,23 @@ func locationUpdate(c *echo.Context) error {
 }
 
 /**
+ * @api {get} /zones Get zones
+ * @apiName GetZones
+ * @apiDescription Get zones for a site
+ * @apiVersion 1.0.0
+ * @apiParam {String} site The site to get zones for
+ * @apiGroup Locations
+ * @apiExample {GET} Example usage:
+ * 		htt://wanderinglunch.com/api/zones?site=nyc
+ * @apiSuccessExample {json} Success-Response:
+ * ["Brooklyn","Manhattan","Jersey City"]
+ */
+func zones(c *echo.Context) error {
+	z := model.Zones(c.Query("site"))
+	return c.JSON(http.StatusOK, z)
+}
+
+/**
  * @api {get} /images List Images
  * @apiName GetImages
  * @apiParam {String=public,private} [visibility=public] The visibility from foursquare

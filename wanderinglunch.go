@@ -147,6 +147,7 @@ func main() {
 	a.Post("/locations", locationInsert)
 	a.Put("/locations/:id", locationUpdate)
 	a.Delete("/locations/:id", locationDelete)
+	a.Get("/zones", zones)
 	a.Get("/images", images)
 	a.Get("/images/:id", image)
 	a.Post("/images", imageInsert)
