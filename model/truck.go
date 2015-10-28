@@ -136,7 +136,7 @@ func GetTruck(id string) Truck {
 		}
 		t.Updated = t.PrettyDate()
 		t.Images = GetTruckImages(t.Twitname)
-		t.Tweets = GetTweets(t.Twitname, false, true, true)
+		t.Tweets = GetTweets(t.Twitname, false, false, true)
 		Cache.Set("truck"+id, t, cache.DefaultExpiration)
 	}
 

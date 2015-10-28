@@ -20,14 +20,19 @@ function truckModel(id) {
 					data.images = [];
 				}
 				self.truck(data);
-				self.tweets(data.tweets.slice(0, 5));
+				var shownTweets = data.tweets.slice(0, 5);
+				for(var x=0; x < shownTweets.length; x++) {
+					var d = new Date(1000 * shownTweets[x].time);
+					shownTweets[x].time = d.toLocaleString();
+				}
+				self.tweets(shownTweets);
 
 				var loopable = false;
 				if(data.images && data.images.length > 1) {
 					loopable = true;
 				} else if(!data.images) {
-          $('.gallery').addClass('hide');
-        }
+          			$('.gallery').addClass('hide');
+        		}
 
 				$('#images').owlCarousel({
 					items: 1,
