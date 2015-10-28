@@ -88,8 +88,17 @@ function indexModel() {
 
   if(localStorage.getItem('loc')) {
     self.location(localStorage.getItem('loc'));
+    var match = false;
+    $('span.button-group-item').each(function(index, value) {
+      if(value.innerText === self.location()) {
+        match = true;
+      }
+    });
+    if(!match) {
+      self.location($('span.button-group-item')[0].innerText);
+    }
   } else {
-    self.location('Manhattan');
+    self.location($('span.button-group-item')[0].innerText);
   }
 
   self.update = function() {
