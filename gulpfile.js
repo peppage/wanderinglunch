@@ -26,6 +26,8 @@ gulp.task('sass', function() {
 var jsScripts = ['javascript/site.js', 'javascript/magnific.js', 'javascript/owl.js',
                  'javascript/site.map.js', 'javascript/site.alltrucks.js', 'javascript/site.truck.js'];
 
+var adminScripts = ['javascript/admin.js', 'javascript/admin.ads.js'];
+
 gulp.task('compress', function() {
   return gulp.src(jsScripts)
     .pipe(concat('site.js'))
@@ -40,13 +42,15 @@ gulp.task('movejs', function() {
 });
 
 gulp.task('compress-admin', function() {
-  return gulp.src('javascript/admin.js')
+  return gulp.src(adminScripts)
+    .pipe(concat('admin.js'))
     .pipe(uglify())
     .pipe(gulp.dest('static'))
 });
 
 gulp.task('movejs-admin', function() {
-  return gulp.src(['javascript/admin.js'])
+  return gulp.src(adminScripts)
+    .pipe(concat('admin.js'))
     .pipe(gulp.dest('static'));
 });
 

@@ -259,3 +259,7 @@ func message(c *echo.Context) error {
 
 	return c.JSON(http.StatusOK, model.GetMessage(amount))
 }
+
+func ads(c *echo.Context) error {
+	return c.JSON(http.StatusOK, model.GetAds())
+}

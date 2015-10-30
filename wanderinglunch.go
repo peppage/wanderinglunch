@@ -124,6 +124,7 @@ func main() {
 	ad.Get("/image/:id", adminImage)
 	ad.Get("/message", adminMessage)
 	ad.Get("/foursquare/:id", adminFoursquareImages)
+	ad.Get("/ads", adminAds)
 
 	a := e.Group("/api")
 	a.Use(secureApi())
@@ -154,6 +155,7 @@ func main() {
 	a.Put("/images/:id", imageUpdate)
 	a.Delete("/images/:id", imageDelete)
 	a.Post("/messages", messageSave)
+	a.Get("/ads", ads)
 
 	e.Use(mw.Recover())
 	e.Run(":8000")

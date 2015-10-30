@@ -97,3 +97,7 @@ func adminFoursquareImages(c *echo.Context) error {
 	}
 	return c.JSON(http.StatusOK, p)
 }
+
+func adminAds(c *echo.Context) error {
+	return c.HTML(http.StatusOK, admin.Ads())
+}

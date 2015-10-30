@@ -1,0 +1,51 @@
+@{
+	import (
+		"wanderinglunch/tmpl/helper"
+		"wanderinglunch/tmpl/layout/base"
+		"wanderinglunch/web"
+	)
+}
+
+@{
+	adminJs := "/static/admin.js?v=" + web.Md5File("admin.js")
+}
+
+@section js {
+	<script src="@adminJs"></script>
+}
+
+@section menu {
+	@helper.Menu("adminads", true)
+}
+
+@section htmlTitle {
+	return "Admin - Ads"
+}
+
+<h1>Ads</h1>
+
+<input id="search" type="search" name="search" placeholder="Search..."
+	   data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off" />
+<table class="table table-minimal">
+	<thead>
+		<tr>
+			<th>Display</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody data-bind="foreach: results">
+		<td><a data-bind="attr: { href: '/admin/ad/'+id }"><span data-bind="text: name"></span></a></td>
+		<td><a data-bind="click: $parent.delete">delete</a></td>
+	</tbody>
+</table>
+<div data-bind="ifnot: query().length">
+	<button data-bind="click: prev, visible: hasPrevious">Prev</button>
+	<button data-bind="click: next, visible: hasNext">Next</button>
+</div>
+
+
+<script type="text/javascript">
+	document.addEventListener('DOMContentLoaded', function() {
+		ko.applyBindings(new AdminAds());	
+	});
+</script>
