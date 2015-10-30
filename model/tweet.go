@@ -19,7 +19,7 @@ type Tweet struct {
 func (t *Tweet) converted() {
 	subs := GetSubs()
 	for key := range subs {
-		re := regexp.MustCompile(subs[key].Regex)
+		re := regexp.MustCompile("(?i)" + subs[key].Regex)
 		t.Contents = re.ReplaceAllString(t.Contents, subs[key].Replacement)
 	}
 }
