@@ -151,7 +151,7 @@ func locationInsert(c *echo.Context) error {
  * @apiGroup Locations
  */
 func locationDelete(c *echo.Context) error {
-	if model.DeleteLocation(c.Param("id")) {
+	if model.DeleteLocation(c.Param("id")) != nil {
 		return c.JSON(http.StatusNoContent, nil)
 	}
 	return c.JSON(http.StatusInternalServerError, nil)

@@ -71,15 +71,16 @@ func AddLocation(l Location) error {
 	return errors.New("Unknown error")
 }
 
-func DeleteLocation(id string) bool {
+func DeleteLocation(id string) error {
 	result, err := db.Exec(`DELETE FROM locations WHERE id = $1`, id)
 	if err != nil {
 		fmt.Println(err)
+		return err
 	}
 	if result != nil {
-		return true
+		return nil
 	}
-	return false
+	return errors.New("Unkown error")
 }
 
 func UpdateLocation(l Location) error {
