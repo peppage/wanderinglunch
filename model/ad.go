@@ -7,7 +7,7 @@ import (
 )
 
 type Ad struct {
-	ID         string `json:"id"`
+	ID         int    `json:"id"`
 	Name       string `json:"name"`
 	Value      string `json:"value"`
 	ValidUntil int64  `json:"validUntil"`
@@ -44,7 +44,7 @@ func GetActiveAds(shape string, site string) []*Ad {
 	return ads
 }
 
-func AdsAddView(id string) error {
+func AdsAddView(id int) error {
 	_, err := db.Exec(`UPDATE ads SET views = views + 1 WHERE id = $1`, id)
 	if err != nil {
 		fmt.Println(err)
@@ -67,6 +67,15 @@ func DeleteAd(id string) error {
 
 func AddAd(a Ad) error {
 	_, err := db.NamedExec(`INSERT INTO ads (name, value, validuntil, shape, site) VALUES (:name, :value, :validuntil, :shape, :site)`, a)
+	if err != nil {
+		fmt.Println(err)
+		return err
+	}
+	return nil
+}
+
+func UpdateAd(a Ad) error {
+	_, err := db.NamedExec(`UPDATE ads SET (name, value, validuntil, site, shape) = (:name, :value, :validuntil, :site, :shape) WHERE id=:id`, a)
 	if err != nil {
 		fmt.Println(err)
 		return err

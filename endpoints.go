@@ -296,6 +296,36 @@ func adInsert(c *echo.Context) error {
 	return c.JSON(http.StatusOK, nil)
 }
 
+func adUpdate(c *echo.Context) error {
+	var a model.Ad
+	var err error
+	a.ID, err = strconv.Atoi(c.Param("id"))
+	a.Name = c.Form("name")
+	a.Value = c.Form("value")
+	va, err := strconv.Atoi(c.Form("validUntil"))
+	a.Site = c.Form("site")
+	a.Shape = c.Form("shape")
+	if err != nil {
+		fmt.Println(err)
+		return c.JSON(http.StatusInternalServerError, nil)
+	}
+	a.ValidUntil = int64(va)
+
+	err = model.UpdateAd(a)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, nil)
+	}
+	return c.JSON(http.StatusOK, model.GetAd(c.Param("id")))
+}
+
+func advert(c *echo.Context) error {
+	a := model.GetAd(c.Param("id"))
+	if a.ID == 0 {
+		return c.JSON(http.StatusNotFound, nil)
+	}
+	return c.JSON(http.StatusOK, a)
+}
+
 func upload(c *echo.Context) error {
 	req := c.Request()
 	req.ParseMultipartForm(2 << 20) //Max Memory 2Mib

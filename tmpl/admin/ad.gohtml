@@ -1,0 +1,60 @@
+@{
+	import (
+		"wanderinglunch/tmpl/helper"
+		"wanderinglunch/tmpl/layout/base"
+		"wanderinglunch/web"
+	)
+	var ID string
+}
+
+@{
+	adminJs := "/static/admin.js?v=" + web.Md5File("admin.js")
+}
+
+@section js {
+	<script src="@adminJs"></script>
+}
+
+@section menu {
+	@helper.Menu("adminimage", true)
+}
+
+@section htmlTitle {
+	return "Admin - Ad " + ID
+}
+
+<h1>Edit Ad</h1>
+
+<p>
+	<a href="http://www.epochconverter.com/">Epoch Converter</a>
+</p>
+
+<label>Id</label><br>
+<input type="text" data-bind="value: ad().id" disabled><br>
+
+<label>Name</label><br>
+<input type="text" data-bind="value: ad().name"><br>
+
+<label>Value</label><br>
+<textarea data-bind="value: ad().value"></textarea>
+
+<label>Valid Until</label><br>
+<input type="text" data-bind="value: ad().validUntil"><br>
+
+<label>Views</label><br>
+<input type="text" data-bind="value: ad().views" disabled><br>
+
+<label>Site</label><br>
+<input type="text" data-bind="value: ad().site" disabled><br>
+
+<label>Shape</label><br>
+<select data-bind="options: shapes, value: ad().shape"></select>
+
+<button data-bind="click: save">Save</button>
+<br><br>
+
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		ko.applyBindings(new AdminEditAd('@ID'));
+	});
+</script>

@@ -126,3 +126,31 @@ function AdminAddAd() {
 		return true;
 	};
 }
+
+function AdminEditAd(id) {
+	var self = this;
+	self.ad = ko.observable({});
+	self.shapes = ['banner', 'square'];
+
+	$.ajax({
+		dataType: 'json',
+		url: API_URL + '/ads/' + id,
+	}).done(function(data) {
+		self.ad(data);
+	});
+
+	self.save = function() {
+		$.ajax({
+			dataType: 'json',
+			method: 'PUT',
+			url: API_URL + '/ads/' + id,
+			data: ko.toJS(self.ad),
+		}).done(function(data) {
+			success();
+		}).fail(function(data) {
+			var json = data.responseJSON;
+			error(json.errors);
+		});
+		return true;
+	};
+}

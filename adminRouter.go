@@ -105,3 +105,7 @@ func adminAds(c *echo.Context) error {
 func adminNewAd(c *echo.Context) error {
 	return c.HTML(http.StatusOK, admin.Newad(model.Sites()))
 }
+
+func adminEditAd(c *echo.Context) error {
+	return c.HTML(http.StatusOK, admin.Ad(c.Param("id")))
+}
