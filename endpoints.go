@@ -282,11 +282,12 @@ func adInsert(c *echo.Context) error {
 	a.Shape = c.Form("shape")
 	a.Site = c.Form("site")
 
-	t, err := time.Parse("2006-02-01", c.Form("validuntil"))
+	va, err := strconv.Atoi(c.Form("validuntil"))
 	if err != nil {
 		fmt.Println(err)
+		return c.JSON(http.StatusInternalServerError, nil)
 	}
-	a.ValidUntil = t.Unix()
+	a.ValidUntil = int64(va)
 
 	err = model.AddAd(a)
 	if err != nil {
