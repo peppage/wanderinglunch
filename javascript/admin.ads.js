@@ -71,3 +71,58 @@ function AdminAds() {
 		return items.slice(first, first + self.perPage);
 	});
 }
+
+function AdminAddAd() {
+	var self = this;
+	self.shapes = ['banner', 'square'];
+	self.photoUrl = ko.observable();
+	self.ad = {
+		name: ko.observable(),
+		value: ko.observable(),
+		validuntil: ko.observable(),
+		shape: ko.observable(),
+		site: ko.observable(),
+	};
+
+	this.fileUpload = function(data, e) {
+        var file    = e.target.files[0];
+        var reader  = new FileReader();
+
+        reader.onloadend = function (onloadend_e) {
+           //var result = reader.result; // Here is your base 64 encoded file. Do with it what you want.
+           var formData = new FormData();
+		   formData.append('files', file);
+           $.ajax({
+			    url: API_URL + '/upload',
+			    data: formData,
+			    cache: false,
+			    contentType: false,
+			    processData: false,
+			    type: 'POST',
+			    success: function(data){
+			        self.photoUrl(data.path[0]);
+			    }
+			});
+        };
+
+        if(file) {
+            reader.readAsDataURL(file);
+        }
+    };
+	
+	self.save = function() {
+		$.ajax({
+			url: API_URL + '/ads',
+			method: 'POST',
+			data: ko.toJS(self.ad),
+			xhrFields: {
+      			withCredentials: true
+    		}
+		}).done(function(data) {
+			window.location.assign('/admin/ads');
+		}).fail(function(data) {
+			
+		});
+		return true;
+	};
+}
