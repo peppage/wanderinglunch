@@ -17,6 +17,11 @@ import (
 var Cache = cache.New(1440*time.Minute, 30*time.Second)
 var adLoc = 0
 
+type adUnit struct {
+	Ads []*model.Ad
+	Loc int
+}
+
 func Md5File(file string) string {
 	if object, found := Cache.Get("statics-" + file); found {
 		return object.(string)
@@ -34,22 +39,24 @@ func Md5File(file string) string {
 }
 
 func Advert(shape string) string {
-	var ads []*model.Ad
+	a := &adUnit{Loc: 0}
 	site := "nyc"
 	if object, found := Cache.Get("ads-" + shape + "-" + site); found {
-		ads = object.([]*model.Ad)
+		a = object.(*adUnit)
 	} else {
-		ads = model.GetActiveAds(shape, site)
-		Cache.Set("ads-"+shape+"-"+site, ads, time.Hour)
+		ads := model.GetActiveAds(shape, site)
+		a.Ads = ads
+		Cache.Set("ads-"+shape+"-"+site, a, time.Hour)
 	}
 
+	a.Loc = a.Loc + 1
 	// Cycle through the ads
-	adLoc = adLoc + 1
-	if adLoc > len(ads)-1 {
-		adLoc = 0
+	if a.Loc > len(a.Ads)-1 {
+		a.Loc = 0
 	}
-	if !strings.Contains(ads[adLoc].Name, "google") {
-		go model.AdsAddView(ads[adLoc].ID)
+	if !strings.Contains(a.Ads[a.Loc].Name, "google") {
+		go model.AdsAddView(a.Ads[a.Loc].ID)
 	}
-	return ads[adLoc].Value
+
+	return a.Ads[a.Loc].Value
 }
