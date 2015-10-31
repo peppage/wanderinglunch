@@ -19,7 +19,7 @@ import (
  * @apiVersion 1.0.0
  * @apiGroup Tweets
  * @apiExample {GET} Example usage:
- *     http://api.wanderinglunch.com/tweets/622058928709439488
+ *     http://wanderinglunch.com/api/tweets/622058928709439488
  * @apiSuccessExample {json} Success-Response:
  * {
  *  "contents": "Well it's Friday Mtbll Lovers! Another beauty .  The  is stopped at 50th bet 6&7 Aves. Come on by for your... http://t.co/O7T3RX1Rk1",

@@ -6,6 +6,15 @@ import (
 	"time"
 )
 
+/**
+ * @apiDefine Ad
+ * @apiParam {String} Name the name of the ad
+ * @apiParam {String} Value the html to display to put on site
+ * @apiParam {Number} ValidUntil How long the ad runs
+ * @apiParam {Number} [Views=0] Not editable how many times this ad as run
+ * @apiParam {String} Site What site this ad runs on
+ * @apiParam {String=banner,square} Shape The shape of the ad
+ */
 type Ad struct {
 	ID         int    `json:"id"`
 	Name       string `json:"name"`

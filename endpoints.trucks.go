@@ -20,7 +20,7 @@ import (
  * @apiParam {String="desc","asc"} [sort_dir=asc] The direction to sort
  * @apiParam {Number} [location_id] Only get trucks that are at this location id
  * @apiExample {GET} Example usage:
- *     http://api.wanderinglunch.com/trucks?updated_since=8&sort=lat&sort_dir=desc
+ *     http://wanderinglunch.com/api/trucks?updated_since=8&sort=lat&sort_dir=desc
  * @apiSuccessExample {json} Success-Response:
  * [
  *  {
@@ -101,7 +101,7 @@ func trucks(c *echo.Context) error {
  * @apiVersion 1.0.0
  * @apiGroup Trucks
  * @apiExample {GET} Example usage:
- *     http://api.wanderinglunch.com/truck/carpedonut
+ *     http://wanderinglunch.com/api/truck/carpedonut
  * @apiSuccessExample {json} Success-Response:
  * {
  *  "id": "carpedonut",
@@ -239,7 +239,7 @@ func failures(c *echo.Context) error {
  * @apiVersion 1.0.0
  * @apiGroup Trucks
  * @apiExample {GET} Example usage:
- *     http://api.wanderinglunch.com/trucks/mtblls/tweets?with_subs=1
+ *     http://wanderinglunch.com/api/trucks/mtblls/tweets?with_subs=1
  * @apiSuccessExample {json} Success-Response:
  * [
  *  {

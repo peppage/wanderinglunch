@@ -13,8 +13,8 @@ import (
  * @apiDefine Location
  * @apiParam {String} display What the location looks like on the site
  * @apiParam {String} matcher The regex to match inside the tweet
- * @apiParam {String} lat The latitude of the location
- * @apiParam {String} long The longitude of the location
+ * @apiParam {Float} lat The latitude of the location
+ * @apiParam {Float} long The longitude of the location
  * @apiParam {String} zone
  * @apiParam {String} site What website this location belongs to
  */
