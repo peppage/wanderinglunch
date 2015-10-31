@@ -101,3 +101,7 @@ func adminFoursquareImages(c *echo.Context) error {
 func adminAds(c *echo.Context) error {
 	return c.HTML(http.StatusOK, admin.Ads())
 }
+
+func adminNewAd(c *echo.Context) error {
+	return c.HTML(http.StatusOK, admin.Newad(model.Sites()))
+}

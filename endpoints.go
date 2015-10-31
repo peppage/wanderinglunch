@@ -1,7 +1,10 @@
 package main
 
 import (
+	"fmt"
+	"io"
 	"net/http"
+	"os"
 	"strconv"
 	"time"
 
@@ -262,4 +265,70 @@ func message(c *echo.Context) error {
 
 func ads(c *echo.Context) error {
 	return c.JSON(http.StatusOK, model.GetAds())
+}
+
+func adDelete(c *echo.Context) error {
+	err := model.DeleteAd(c.Param("id"))
+	if err == nil {
+		return c.JSON(http.StatusNoContent, nil)
+	}
+	return c.JSON(http.StatusInternalServerError, err)
+}
+
+func adInsert(c *echo.Context) error {
+	var a model.Ad
+	a.Name = c.Form("name")
+	a.Value = c.Form("value")
+	a.Shape = c.Form("shape")
+	a.Site = c.Form("site")
+
+	t, err := time.Parse("2006-02-01", c.Form("validuntil"))
+	if err != nil {
+		fmt.Println(err)
+	}
+	a.ValidUntil = t.Unix()
+
+	err = model.AddAd(a)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, nil)
+	}
+
+	return c.JSON(http.StatusOK, nil)
+}
+
+func upload(c *echo.Context) error {
+	req := c.Request()
+	req.ParseMultipartForm(2 << 20) //Max Memory 2Mib
+
+	// Read files
+	files := req.MultipartForm.File["files"]
+	var savedFiles []string
+	for _, f := range files {
+		// Source file
+		src, err := f.Open()
+		if err != nil {
+			return err
+		}
+		defer src.Close()
+
+		// Destination file
+		dst, err := os.Create("static/upload/" + f.Filename)
+		if err != nil {
+			return err
+		}
+		defer dst.Close()
+
+		if _, err = io.Copy(dst, src); err != nil {
+			return err
+		}
+		savedFiles = append(savedFiles, "/static/upload/"+f.Filename)
+	}
+
+	data := struct {
+		Path []string `json:"path"`
+	}{
+		savedFiles,
+	}
+
+	return c.JSON(http.StatusOK, data)
 }

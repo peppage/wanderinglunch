@@ -445,6 +445,14 @@ label {
   margin-bottom: 0.375em;
 }
 
+.help-text {
+  display: block;
+  margin-top: -10px;
+  margin-bottom: 10px;
+  margin-left: 2px;
+  color: #737373;
+}
+
 // Admin area
 .private {
   display: inline-block;

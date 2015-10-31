@@ -46,15 +46,15 @@ function AdminAds() {
 		}
 	};
 
-	self.delete = function(loc) {
+	self.delete = function(ad) {
 		$.ajax({
-			url: API_URL + '/locations/' + loc.id,
+			url: API_URL + '/ads/' + ad.id,
 			type: 'DELETE',
 			xhrFields: {
 				withCredentials: true
 			}
 		}).done(function(data) {
-			self.ads.remove(loc);
+			self.ads.remove(ad);
 		}).fail(function(data) {
 
 		});
