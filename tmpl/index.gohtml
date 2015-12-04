@@ -60,7 +60,11 @@
 									<td class="noMobile">@t.Updated</td>
 									<td class="noMobile">
 										@if !t.Image.IsZero() {
-											<img class="menu" src="https://irs0.4sqi.net/img/general/width30@image" alt="@t.Name menu" />
+											<a class='menu-popup' href="https://irs0.4sqi.net/img/general/width960@image">
+												<img class="menu"
+													src="https://irs0.4sqi.net/img/general/width30@image"
+													alt="@t.Name menu" />
+											</a>
 										}
 									</td>
 								</tr>
@@ -81,3 +85,8 @@
 		</div>
 	</div>
 }
+<script>
+	$('.menu-popup').magnificPopup({
+		type: 'image'
+	});
+</script>
