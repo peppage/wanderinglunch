@@ -20,7 +20,7 @@ var secret = "D3MtG1ixqlhavdbxmBclkKvjYtBqWUQexsVCsr5xNWO1af36hZnZP"
 var store = session.NewCookieStore([]byte(secret))
 
 func index(c *echo.Context) error {
-	return c.HTML(http.StatusOK, tmpl.Index(model.Zones("nyc")))
+	return c.HTML(http.StatusOK, tmpl.Index(model.Zones("nyc"), model.Trucks(8, "lat", "desc", 0)))
 }
 
 func allTrucks(c *echo.Context) error {
