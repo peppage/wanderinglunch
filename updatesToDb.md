@@ -10,6 +10,8 @@ insert into ads (name, value, validuntil, site, shape) VALUES ('google-banner', 
 insert into ads (name, value, validuntil, site, shape) VALUES ('google-square', '<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px" data-ad-client="ca-pub-4098082757736151" data-ad-slot="1938459065"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script>', 2147483647, 'all', 'square');
 
 
+create table zones(zoneid serial, zonename text not null, zoneorder int)
+
 https://twitter.com/mordisfoodtruck
 https://twitter.com/TheIncrediballs
 https://twitter.com/mecasajc
