@@ -1,14 +1,14 @@
 var trucks = {}
 trucks.controller = function() {
-    var ctrl = this
+    var ctrl = this;
 
     ctrl.list = new list.controller({
         visible: function(item) {
-            return item.name.indexOf(ctrl.filter.searchTerm()) > -1
+            return item.name.indexOf(ctrl.filter.searchTerm()) > -1;
         }
-    })
+    });
 
-    ctrl.filter = new filter.controller()
+    ctrl.filter = new filter.controller();
 }
 
 trucks.view = function(ctrl) {
@@ -19,18 +19,18 @@ trucks.view = function(ctrl) {
         m(".col-med-10", [
             list.view(ctrl.list)
         ])
-    ])
+    ]);
 }
 
 var Truck = {}
 Truck.list = function() {
-    return m.request({method: "GET", url: "/trucks?site=" + m.route.param("site")})
+    return m.request({method: "GET", url: "/trucks?site=" + m.route.param("site")});
 }
 
 var list = {}
 list.controller = function(options) {
-    this.items = Truck.list()
-    this.visible = options.visible
+    this.items = Truck.list();
+    this.visible = options.visible;
 }
 
 list.view = function(ctrl) {
@@ -46,7 +46,7 @@ list.view = function(ctrl) {
 
 var filter = {}
 filter.controller = function(options) {
-    this.searchTerm = m.prop("")
+    this.searchTerm = m.prop("");
 }
 
 filter.view = function(ctrl) {
