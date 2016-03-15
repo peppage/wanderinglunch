@@ -53,6 +53,8 @@ filter.view = function(ctrl) {
     return m("input", {oninput: m.withAttr("value", ctrl.searchTerm)})
 }
 
+m.route.mode = "pathname";
+
 m.route(document.body, "/", {
     "/:site": trucks,
 });

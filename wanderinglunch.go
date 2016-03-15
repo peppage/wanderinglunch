@@ -19,6 +19,7 @@ func main() {
 	e.Static("/static/", "static")
 
 	e.Get("/", root)
+	e.Get("/:site", root)
 	e.Get("/trucks", ept.Trucks)
 
 	log.Info("Server (version " + "null" + ") started on port " + "8000")
