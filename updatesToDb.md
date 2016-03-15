@@ -21,3 +21,37 @@ https://twitter.com/AmandaBananasNJ
 https://twitter.com/OSM_NJ
 https://twitter.com/choppingblockft
 https://twitter.com/Food_Samurai/status/638382524746629120
+
+# V3
+
+update trucks set retweeted=false where retweeted is null;
+alter table trucks alter column retweeted set default false;
+alter table trucks alter column retweeted set NOT NULL;
+
+update trucks set matcher='' where matcher is null;
+alter table trucks alter column matcher set default '';
+alter table trucks alter column matcher set NOT NULL;
+
+update trucks set matchmethod='' where matchmethod is null;
+alter table trucks alter column matchmethod set default '';
+alter table trucks alter column matchmethod set NOT NULL;
+
+update trucks set about='' where about is null;
+alter table trucks alter column about set default '';
+alter table trucks alter column about set NOT NULL;
+
+update trucks set lasttweet=0 where lasttweet is null;
+alter table trucks alter column lasttweet set default 0;
+alter table trucks alter column lasttweet set NOT NULL;
+
+update trucks set loc=0 where loc is null;
+alter table trucks alter column loc set default 0;
+alter table trucks alter column loc set NOT NULL;
+
+update trucks set type='' where type is null;
+alter table trucks alter column type set default '';
+alter table trucks alter column type set NOT NULL;
+
+update trucks set tweet='' where tweet is null;
+alter table trucks alter column tweet set default '';
+alter table trucks alter column tweet set NOT NULL;
