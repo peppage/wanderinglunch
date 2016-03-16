@@ -24,7 +24,7 @@ trucks.view = function(ctrl) {
 
 var Truck = {}
 Truck.list = function() {
-    return m.request({method: "GET", url: "/trucks?site=" + m.route.param("site")});
+    return m.request({method: "GET", url: "/api/trucks?site=" + m.route.param("site")});
 }
 
 var list = {}
