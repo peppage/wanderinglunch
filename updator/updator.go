@@ -40,6 +40,10 @@ func task() {
 		log.WithError(err).Error("Failed to get all trucks from database")
 	}
 
+	updateTweets(trucks)
+}
+
+func updateTweets(trucks []*mdl.Truck) {
 	twitnames := make(map[string]int, len(trucks))
 	for _, v := range trucks {
 		// put all the twitnames in a map
