@@ -55,3 +55,7 @@ alter table trucks alter column type set NOT NULL;
 update trucks set tweet='' where tweet is null;
 alter table trucks alter column tweet set default '';
 alter table trucks alter column tweet set NOT NULL;
+
+update trucks set lastupdate=0 where lastupdate is null;
+alter table trucks alter column lastupdate set default 0;
+alter table trucks alter column lastupdate set NOT NULL;
