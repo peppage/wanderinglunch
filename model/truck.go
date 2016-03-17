@@ -57,3 +57,11 @@ func Trucks(site string, hours int, sort string, sortDir string, loc int) []*Tru
 	//}
 	return trucks
 }
+
+func GetEveryTruck() ([]*Truck, error) {
+	trucks := []*Truck{}
+	err := db.Select(&trucks, `SELECT trucks.id AS id, trucks.name, trucks.twitname, trucks.lastupdate, coalesce(locations.display,'') AS location, 
+	        coalesce(locations.zone,'') as zone, coalesce(images.suffix,'') AS image FROM trucks LEFT JOIN locations ON (locations.id = trucks.loc) LEFT JOIN
+	        (SELECT * FROM images WHERE  menu='t') AS images ON (images.twitname = trucks.twitname)`)
+	return trucks, err
+}
