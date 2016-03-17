@@ -4,13 +4,14 @@ import (
 	"net/http"
 	ept "wanderinglunch/endpoints"
 	"wanderinglunch/tmpl"
+	"wanderinglunch/updator"
 
 	log "github.com/Sirupsen/logrus"
 	"github.com/labstack/echo"
 )
 
 func init() {
-
+	go updator.Start()
 }
 
 func main() {
