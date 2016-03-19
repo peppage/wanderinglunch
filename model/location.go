@@ -10,6 +10,7 @@ type Location struct {
 	Site    string  `json:"site"`
 }
 
+//This needs to be updated to return a map based on site
 func GetLocations() ([]*Location, error) {
 	var locs []*Location
 	err := db.Select(&locs, `SELECT * FROM locations ORDER BY id`)
