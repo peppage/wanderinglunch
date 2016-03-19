@@ -61,7 +61,7 @@ func Trucks(site string, hours int, sort string, sortDir string, loc int) []*Tru
 // GetTwitNames returns a map, key is site, with a slice of twitnames.
 func GetTwitNames() (map[string][]string, error) {
 	trucks := make(map[string][]string)
-	rows, err := db.Queryx(`SELECT twitname, site from trucks`)
+	rows, err := db.Queryx(`SELECT twitname, site FROM trucks ORDER BY twitname`)
 
 	if err != nil {
 		return nil, err
