@@ -11,6 +11,7 @@ import (
 )
 
 func init() {
+	log.SetLevel(log.DebugLevel)
 	go updator.Start()
 }
 
