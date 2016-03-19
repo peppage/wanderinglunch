@@ -98,7 +98,7 @@ func findLocations(tweets []anaconda.Tweet, locations []*mdl.Location) {
 		createdTime, _ := t.CreatedAtTime()
 		if createdTime.After(time.Now().Add(time.Hour * -8)) {
 			for _, l := range locations {
-				matched, _ := regexp.MatchString(l.Matcher, t.Text)
+				matched, _ := regexp.MatchString(l.Matcher, strings.ToLower(text))
 				if matched {
 					log.WithField("Found tweet", t.Text).Debug("Matched")
 					twitName = t.User.Name
