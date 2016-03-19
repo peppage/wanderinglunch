@@ -40,10 +40,6 @@ func task() {
 		log.WithError(err).Error("Failed to get all trucks from database")
 	}
 
-	update(twitnames)
-}
-
-func update(twitnames []string) {
 	for _, v := range twitnames {
 		uv := url.Values{}
 		uv.Set("screen_name", v)
@@ -57,7 +53,6 @@ func update(twitnames []string) {
 		}
 
 		go saveTweets(v, tweets)
-
 	}
 }
 
