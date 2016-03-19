@@ -17,3 +17,9 @@ func SaveTweet(tweet Tweet) error {
 
 	return err
 }
+
+func GetTweets(twitname string) ([]*Tweet, error) {
+	var tweets []*Tweet
+	err := db.Select(&tweets, `SELECT * FROM tweets WHERE twitname = $1`, twitname)
+	return tweets, err
+}
