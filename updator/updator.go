@@ -4,6 +4,7 @@ import (
 	"net/url"
 	"os"
 	"regexp"
+	"strings"
 	"time"
 	mdl "wanderinglunch/model"
 
@@ -81,6 +82,9 @@ func task() {
 func saveTweets(handle string, tweets []anaconda.Tweet) {
 	for _, t := range tweets {
 		time, _ := t.CreatedAtTime()
+		t.Text = strings.Replace(t.Text, "&amp;", "&", -1)
+		t.Text = strings.Replace(t.Text, "#", "", -1)
+		t.Text = strings.Replace(t.Text, "\"", "", -1)
 		err := mdl.SaveTweet(mdl.Tweet{
 			Text:      t.Text,
 			Time:      time.Unix(),
