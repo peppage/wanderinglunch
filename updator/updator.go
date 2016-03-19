@@ -48,8 +48,15 @@ func task() {
 		return
 	}
 
+	subs, err := mdl.GetSubs()
+	if err != nil {
+		log.WithError(err).Error("Failed to get all subs from database")
+		return
+	}
+
 	for site, names := range twitnames {
 		for _, v := range names {
+			log.Debug("=================== " + v + " ===================")
 			uv := url.Values{}
 			uv.Set("screen_name", v)
 			uv.Set("include_rts", "0")
@@ -64,7 +71,7 @@ func task() {
 
 			go saveTweets(v, tweets)
 
-			findLocations(tweets, locations[site])
+			go findLocations(tweets, locations[site], subs)
 		}
 	}
 
@@ -91,16 +98,27 @@ func saveTweets(handle string, tweets []anaconda.Tweet) {
 	}
 }
 
-func findLocations(tweets []anaconda.Tweet, locations []*mdl.Location) {
+func findLocations(tweets []anaconda.Tweet, locations []*mdl.Location, subs []*mdl.Sub) {
 	foundLocs := []int{}
 	twitName := ""
 	for _, t := range tweets {
 		createdTime, _ := t.CreatedAtTime()
-		if createdTime.After(time.Now().Add(time.Hour * -8)) {
+		if createdTime.After(time.Now().Add(time.Hour * -198)) {
+			text := t.Text
+			for _, s := range subs {
+				r, _ := regexp.Compile(s.Regex)
+				text = r.ReplaceAllString(text, s.Replacement)
+			}
+			if text != t.Text {
+				log.WithFields(log.Fields{
+					"text":   text,
+					"t.Text": t.Text,
+				}).Debug("Text changed!")
+			}
 			for _, l := range locations {
 				matched, _ := regexp.MatchString(l.Matcher, strings.ToLower(text))
 				if matched {
-					log.WithField("Found tweet", t.Text).Debug("Matched")
+					log.WithField("Found tweet", text).Debug("Matched")
 					twitName = t.User.Name
 					foundLocs = append(foundLocs, l.ID)
 				}
