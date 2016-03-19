@@ -63,3 +63,20 @@ func GetTwitNames() ([]string, error) {
 	err := db.Select(&trucks, `SELECT twitname from trucks`)
 	return trucks, err
 }
+
+func UpdateLocs(twitname string, locs []int) error {
+	l := convertSlice(locs)
+	_, err := db.Exec(`UPDATE trucks SET locs=ARRAY[`+l+`] WHERE twitname=$1`, twitname)
+	return err
+}
+
+func convertSlice(values []int) string {
+	s := ""
+	for k, v := range values {
+		s += strconv.Itoa(v)
+		if k != len(values)-1 {
+			s += ","
+		}
+	}
+	return s
+}
