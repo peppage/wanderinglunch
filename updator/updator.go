@@ -10,6 +10,7 @@ import (
 
 	"github.com/ChimeraCoder/anaconda"
 	log "github.com/Sirupsen/logrus"
+	"github.com/jasonlvhit/gocron"
 )
 
 var consumerKey = os.Getenv("TWIT_CON_KEY")
@@ -22,19 +23,13 @@ func Start() {
 	anaconda.SetConsumerKey(consumerKey)
 	anaconda.SetConsumerSecret(consumerSecret)
 	api = anaconda.NewTwitterApi(accessToken, accessTokenSecret)
-	task()
-	//gocron.Every(15).Minutes().Do(task)
 
-	//<-gocron.Start()
+	gocron.Every(15).Minutes().Do(task)
+
+	<-gocron.Start()
 }
 
 func task() {
-	// Get all trucks from DB
-	// Get tweets for each unique twitter handle and store them
-	// only search the last 8 hours of tweets
-	// skip tweets that are a list of days
-	// skip tweets that are for tomorrow
-	// Replacements in tweets
 	log.Debug("Task Started")
 
 	twitnames, err := mdl.GetTwitNames()
@@ -108,7 +103,7 @@ func findLocations(tweets []anaconda.Tweet, locations []*mdl.Location, subs []*m
 	var newestTime int64
 	for _, t := range tweets {
 		createdTime, _ := t.CreatedAtTime()
-		if createdTime.After(time.Now().Add(time.Hour * -198)) {
+		if createdTime.After(time.Now().Add(time.Hour * -8)) {
 			text := t.Text
 			for _, s := range subs {
 				r, _ := regexp.Compile(s.Regex)
