@@ -59,3 +59,7 @@ alter table trucks alter column tweet set NOT NULL;
 update trucks set lastupdate=0 where lastupdate is null;
 alter table trucks alter column lastupdate set default 0;
 alter table trucks alter column lastupdate set NOT NULL;
+
+delete from trucks where id='gorilla2';
+delete from trucks where id='schnitzelcart';
+delete from trucks where id='wafelMomma';

@@ -35,49 +35,48 @@ func task() {
 	// skip tweets that are for tomorrow
 	log.Debug("Task Started")
 
-	trucks, err := mdl.GetEveryTruck()
+	twitnames, err := mdl.GetTwitNames()
 	if err != nil {
 		log.WithError(err).Error("Failed to get all trucks from database")
 	}
 
-	updateTweets(trucks)
+	update(twitnames)
 }
 
-func updateTweets(trucks []*mdl.Truck) {
-	twitnames := make(map[string]int, len(trucks))
-	for _, v := range trucks {
-		// put all the twitnames in a map
-		twitnames[v.Twitname] = 0
-	}
-
-	for k := range twitnames {
+func update(twitnames []string) {
+	for _, v := range twitnames {
 		uv := url.Values{}
-		uv.Set("screen_name", k)
+		uv.Set("screen_name", v)
 		uv.Set("include_rts", "0")
 		tweets, err := api.GetUserTimeline(uv)
 		if err != nil {
 			log.WithFields(log.Fields{
 				"err":      err,
-				"twitname": k,
+				"twitname": v,
 			}).Error("Failed to get tweets")
 		}
 
-		for _, t := range tweets {
-			time, _ := t.CreatedAtTime()
-			err = mdl.SaveTweet(mdl.Tweet{
-				Contents:  t.Text,
-				Time:      strconv.FormatInt(time.Unix(), 10),
-				ID:        t.Id,
-				Retweeted: t.Retweeted,
-				Twitname:  k,
-			})
-			if err != nil {
-				log.WithFields(log.Fields{
-					"err":      err,
-					"tweetID":  t.Id,
-					"twitname": k,
-				}).Error("Failed to save tweet to database")
-			}
+		go saveTweets(v, tweets)
+
+	}
+}
+
+func saveTweets(handle string, tweets []anaconda.Tweet) {
+	for _, t := range tweets {
+		time, _ := t.CreatedAtTime()
+		err := mdl.SaveTweet(mdl.Tweet{
+			Contents:  t.Text,
+			Time:      strconv.FormatInt(time.Unix(), 10),
+			ID:        t.Id,
+			Retweeted: t.Retweeted,
+			Twitname:  handle,
+		})
+		if err != nil {
+			log.WithFields(log.Fields{
+				"err":      err,
+				"tweetID":  t.Id,
+				"twitname": handle,
+			}).Error("Failed to save tweet to database")
 		}
 	}
 }
