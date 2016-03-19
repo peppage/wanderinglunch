@@ -8,10 +8,17 @@ import (
 
 	log "github.com/Sirupsen/logrus"
 	"github.com/labstack/echo"
+	"github.com/rifflock/lfshook"
 )
 
 func init() {
 	log.SetLevel(log.DebugLevel)
+	//log.SetFormatter(&log.JSONFormatter{})
+	log.AddHook(lfshook.NewHook(
+		lfshook.PathMap{
+			log.DebugLevel: "info.log",
+			log.ErrorLevel: "error.log",
+		}))
 	go updator.Start()
 }
 
