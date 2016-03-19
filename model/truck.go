@@ -44,8 +44,8 @@ func Trucks(site string, hours int, sort string, sortDir string, loc int) []*Tru
 	}
 
 	trucks = []*Truck{}
-	err := db.Select(&trucks, `SELECT trucks.id AS id, trucks.name, trucks.twitname, trucks.lastupdate, locations.display AS location, 
-	        locations.zone as zone, coalesce(images.suffix,'') AS image FROM trucks LEFT JOIN locations ON (locations.id = trucks.loc) LEFT JOIN
+	err := db.Select(&trucks, `SELECT trucks.id AS id, trucks.name, trucks.twitname, trucks.lastupdate, coalesce(locations.display,'') AS location, 
+	        coalesce(locations.zone,'') AS zone, coalesce(images.suffix,'') AS image FROM trucks LEFT JOIN locations ON (locations.id = ANY(trucks.locs)) LEFT JOIN
 	        (SELECT * FROM images WHERE  menu='t') AS images ON (images.twitname = trucks.twitname) WHERE lastupdate > $1 `+locSql+` AND trucks.site = $2 and trucks.loc != 0 ORDER BY `+sort+` `+sortDir, t, site)
 	if err != nil {
 		fmt.Println(err)
