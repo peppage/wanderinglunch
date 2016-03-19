@@ -65,3 +65,4 @@ delete from trucks where id='schnitzelcart';
 delete from trucks where id='wafelMomma';
 
 alter table tweets rename contents to text;
+alter table trucks add locs bigint[];
