@@ -48,23 +48,26 @@ func task() {
 		return
 	}
 
-	for _, v := range twitnames {
-		uv := url.Values{}
-		uv.Set("screen_name", v)
-		uv.Set("include_rts", "0")
-		uv.Set("count", "100")
-		tweets, err := api.GetUserTimeline(uv)
-		if err != nil {
-			log.WithFields(log.Fields{
-				"err":      err,
-				"twitname": v,
-			}).Error("Failed to get tweets")
+	for site, names := range twitnames {
+		for _, v := range names {
+			uv := url.Values{}
+			uv.Set("screen_name", v)
+			uv.Set("include_rts", "0")
+			uv.Set("count", "100")
+			tweets, err := api.GetUserTimeline(uv)
+			if err != nil {
+				log.WithFields(log.Fields{
+					"err":      err,
+					"twitname": v,
+				}).Error("Failed to get tweets")
+			}
+
+			go saveTweets(v, tweets)
+
+			findLocations(tweets, locations[site])
 		}
-
-		go saveTweets(v, tweets)
-
-		findLocations(tweets, locations)
 	}
+
 	log.Debug("Task Finished")
 }
 

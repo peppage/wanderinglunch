@@ -10,9 +10,18 @@ type Location struct {
 	Site    string  `json:"site"`
 }
 
-//This needs to be updated to return a map based on site
-func GetLocations() ([]*Location, error) {
-	var locs []*Location
-	err := db.Select(&locs, `SELECT * FROM locations ORDER BY id`)
-	return locs, err
+// GetLocations returns a map, the key is the site. Holds an slice of locations
+func GetLocations() (map[string][]*Location, error) {
+	locs := make(map[string][]*Location)
+
+	rows, err := db.Queryx(`SELECT * FROM locations ORDER BY id`)
+	if err != nil {
+		return nil, err
+	}
+	for rows.Next() {
+		temp := Location{}
+		rows.StructScan(&temp)
+		locs[temp.Site] = append(locs[temp.Site], &temp)
+	}
+	return locs, nil
 }
