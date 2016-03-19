@@ -76,9 +76,9 @@ func GetTwitNames() (map[string][]string, error) {
 	return trucks, nil
 }
 
-func UpdateLocs(twitname string, locs []int) error {
+func UpdateLocs(twitname string, locs []int, lastUpdate int64) error {
 	l := convertSlice(locs)
-	_, err := db.Exec(`UPDATE trucks SET locs=ARRAY[`+l+`] WHERE twitname=$1`, twitname)
+	_, err := db.Exec(`UPDATE trucks SET locs=ARRAY[`+l+`], lastupdate=$1 WHERE twitname=$2`, lastUpdate, twitname)
 	return err
 }
 

@@ -105,6 +105,7 @@ func saveTweets(handle string, tweets []anaconda.Tweet) {
 func findLocations(tweets []anaconda.Tweet, locations []*mdl.Location, subs []*mdl.Sub) {
 	foundLocs := []int{}
 	twitName := ""
+	var newestTime int64
 	for _, t := range tweets {
 		createdTime, _ := t.CreatedAtTime()
 		if createdTime.After(time.Now().Add(time.Hour * -198)) {
@@ -124,6 +125,7 @@ func findLocations(tweets []anaconda.Tweet, locations []*mdl.Location, subs []*m
 				if matched {
 					log.WithField("Found tweet", text).Debug("Matched")
 					twitName = t.User.Name
+					newestTime = createdTime.Unix()
 					foundLocs = append(foundLocs, l.ID)
 				}
 			}
@@ -131,7 +133,7 @@ func findLocations(tweets []anaconda.Tweet, locations []*mdl.Location, subs []*m
 	}
 	log.WithField("foundlocs", foundLocs).Debug("End of find Locations")
 	if len(foundLocs) > 0 {
-		err := mdl.UpdateLocs(twitName, foundLocs)
+		err := mdl.UpdateLocs(twitName, foundLocs, newestTime)
 		if err != nil {
 			log.WithError(err).Error("Failed updated locations for trucK")
 		}
