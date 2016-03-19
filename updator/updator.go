@@ -52,7 +52,6 @@ func task() {
 
 	for site, names := range twitnames {
 		for _, v := range names {
-			log.Debug("=================== " + v + " ===================")
 			uv := url.Values{}
 			uv.Set("screen_name", v)
 			uv.Set("include_rts", "0")
@@ -109,16 +108,9 @@ func findLocations(tweets []anaconda.Tweet, locations []*mdl.Location, subs []*m
 				r, _ := regexp.Compile(s.Regex)
 				text = r.ReplaceAllString(text, s.Replacement)
 			}
-			if text != t.Text {
-				log.WithFields(log.Fields{
-					"text":   text,
-					"t.Text": t.Text,
-				}).Debug("Text changed!")
-			}
 			for _, l := range locations {
 				matched, _ := regexp.MatchString(l.Matcher, strings.ToLower(text))
 				if matched {
-					log.WithField("Found tweet", text).Debug("Matched")
 					twitName = t.User.Name
 					newestTime = createdTime.Unix()
 					foundLocs = append(foundLocs, l.ID)
@@ -126,8 +118,11 @@ func findLocations(tweets []anaconda.Tweet, locations []*mdl.Location, subs []*m
 			}
 		}
 	}
-	log.WithField("foundlocs", foundLocs).Debug("End of find Locations")
 	if len(foundLocs) > 0 {
+		log.WithFields(log.Fields{
+			"foundlocs": foundLocs,
+			"twitname":  twitName,
+		}).Debug("Locations have been found")
 		err := mdl.UpdateLocs(twitName, foundLocs, newestTime)
 		if err != nil {
 			log.WithError(err).Error("Failed updated locations for trucK")
