@@ -63,3 +63,5 @@ alter table trucks alter column lastupdate set NOT NULL;
 delete from trucks where id='gorilla2';
 delete from trucks where id='schnitzelcart';
 delete from trucks where id='wafelMomma';
+
+alter table tweets rename contents to text;
