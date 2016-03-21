@@ -111,7 +111,7 @@ func findLocations(tweets []anaconda.Tweet, locations []*mdl.Location, subs []*m
 			for _, l := range locations {
 				matched, _ := regexp.MatchString(l.Matcher, strings.ToLower(text))
 				if matched {
-					twitName = t.User.ScreenName
+					twitName = strings.ToLower(t.User.ScreenName)
 					newestTime = createdTime.Unix()
 					foundLocs = append(foundLocs, l.ID)
 				}
