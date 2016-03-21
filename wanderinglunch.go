@@ -29,9 +29,11 @@ func main() {
 
 	e.Get("/", root)
 	e.Get("/:site", root)
+	e.Get("/:site/:name", root)
 
 	api := e.Group("/api")
 	api.Get("/trucks", ept.Trucks)
+	api.Get("/trucks/:name", ept.Truck)
 
 	log.Info("Server (version " + "null" + ") started on port " + "8000")
 	e.Run(":" + "8000")

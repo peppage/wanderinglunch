@@ -61,3 +61,12 @@ func Trucks(c *echo.Context) error {
 	//}
 	return c.JSON(http.StatusOK, model.Trucks(site, hours, sort, dir, loc))
 }
+
+func Truck(c *echo.Context) error {
+	name := c.Param("name")
+	if name == "" {
+		return echo.NewHTTPError(http.StatusBadRequest, "Missing Name")
+	}
+
+	return c.JSON(http.StatusOK, model.GetTruck(name))
+}

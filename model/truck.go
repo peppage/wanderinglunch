@@ -58,6 +58,27 @@ func Trucks(site string, hours int, sort string, sortDir string, loc int) []*Tru
 	return trucks
 }
 
+func GetTruck(id string) []*Truck {
+	trucks := []*Truck{}
+	//if object, found := Cache.Get("truck" + id); found {
+	//		t = object.(Truck)
+	//} else {
+	err := db.Select(&trucks, `SELECT trucks.id AS id, trucks.loc, trucks.name, trucks.twitname, trucks.type, trucks.lastupdate, trucks.type, trucks.about,
+		trucks.foursquare, trucks.weburl, trucks.matcher, trucks.matchmethod, locations.display AS location, locations.zone AS zone, 
+        images.suffix AS image FROM trucks LEFT JOIN locations ON (locations.id = ANY(trucks.locs)) LEFT JOIN (SELECT * FROM images WHERE 
+        menu='t') AS images ON (images.twitname = trucks.twitname) WHERE trucks.id=$1 OR trucks.twitname=$1`, id)
+	if err != nil {
+		fmt.Println(err)
+	}
+	//t.Updated = t.PrettyDate()
+	//t.Images = GetTruckImages(t.Twitname)
+	//t.Tweets = GetTweets(t.Twitname, false, false, true)
+	//Cache.Set("truck"+id, t, cache.DefaultExpiration)
+	//}
+
+	return trucks
+}
+
 // GetTwitNames returns a map, key is site, with a slice of twitnames.
 func GetTwitNames() (map[string][]string, error) {
 	trucks := make(map[string][]string)
