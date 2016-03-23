@@ -22,9 +22,14 @@ index.view = function(ctrl) {
     ]);
 }
 
+index.update = function(ctrl) {
+    console.log(ctrl);
+    list.controller.items = m.request({method: "GET", url: "/api/trucks?site=" + m.route.param("site")});
+}
+
 var Truck = {}
 Truck.list = function() {
-    return m.request({method: "GET", url: "/api/trucks?site=" + m.route.param("site")});
+    return initialTrucks;
 }
 
 var list = {}
@@ -70,3 +75,5 @@ m.route.mode = "pathname";
 m.route(document.querySelector(".content"), "/", {
     "/:site": index,
 });
+
+window.setInterval(index.update, 900000);
