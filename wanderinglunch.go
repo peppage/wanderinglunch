@@ -3,6 +3,7 @@ package main
 import (
 	"net/http"
 	ept "wanderinglunch/endpoints"
+	mdl "wanderinglunch/model"
 	"wanderinglunch/tmpl"
 	"wanderinglunch/updator"
 
@@ -49,5 +50,13 @@ func root(c *echo.Context) error {
 }
 
 func truck(c *echo.Context) error {
-	return nil
+	name := c.Param("name")
+	if name != "" {
+		t := mdl.GetTruck(name)
+		log.WithField("t", t[0]).Debug("single truck")
+		if len(t) > 0 {
+			return c.HTML(http.StatusOK, tmpl.Index(t[0].Site))
+		}
+	}
+	return echo.NewHTTPError(http.StatusNotFound, "No truck")
 }
