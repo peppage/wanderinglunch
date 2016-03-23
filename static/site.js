@@ -37,7 +37,7 @@ list.view = function(ctrl) {
     return m("table", [
         ctrl.items().filter(ctrl.visible).map(function(item) {
             return m("tr", [
-                m("td", item.name),
+                m("td", m("a", {"href": "/truck/"+item.twitname}, [item.name])),
                 m("td", item.location),
                 m("td", [
                     m("img", {
