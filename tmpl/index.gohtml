@@ -2,8 +2,13 @@
 	import (
 		"wanderinglunch/tmpl/layout/base"
 	)
+    var sitename string
 }
 
 @section title {
 	return "WL"
+}
+
+@section site {
+    return sitename
 }

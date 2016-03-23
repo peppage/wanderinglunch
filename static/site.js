@@ -67,6 +67,6 @@ function makeMenuLink(suffix) {
 
 m.route.mode = "pathname";
 
-m.route(document.body, "/", {
+m.route(document.querySelector(".content"), "/", {
     "/:site": trucks,
 });

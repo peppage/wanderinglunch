@@ -29,7 +29,7 @@ func main() {
 
 	e.Get("/", root)
 	e.Get("/:site", root)
-	e.Get("/:site/:name", root)
+	e.Get("/truck/:name", truck)
 
 	api := e.Group("/api")
 	api.Get("/trucks", ept.Trucks)
@@ -41,6 +41,13 @@ func main() {
 }
 
 func root(c *echo.Context) error {
-	return c.HTML(http.StatusOK, tmpl.Index())
-	//return c.Redirect(http.StatusMovedPermanently, "/nyc")
+	site := c.Param("site")
+	if site != "" {
+		return c.HTML(http.StatusOK, tmpl.Index(site))
+	}
+	return c.Redirect(http.StatusMovedPermanently, "/nyc")
+}
+
+func truck(c *echo.Context) error {
+	return nil
 }

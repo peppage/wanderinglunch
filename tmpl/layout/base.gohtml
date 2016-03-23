@@ -1,6 +1,7 @@
 @{
 	var body string
 	var title string
+    var site string
 }
 <!DOCTYPE html>
 <html>
@@ -9,7 +10,11 @@
     <script src="/static/mithril.js"></script>
 </head>
 <body>
-	@body
+    <a href="/@site"><img src="/static/images/wl.png"></a>
+
+    <div class="content">
+	    @body
+    </div>
     <script src="/static/site.js"></script>
 </body>
 </html>
