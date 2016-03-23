@@ -64,7 +64,7 @@ func GetTruck(id string) []*Truck {
 	//		t = object.(Truck)
 	//} else {
 	err := db.Select(&trucks, `SELECT trucks.id AS id, trucks.loc, trucks.name, trucks.twitname, trucks.type, trucks.lastupdate, trucks.site, trucks.about,
-		trucks.foursquare, trucks.weburl, trucks.matcher, trucks.matchmethod, locations.display AS location, locations.zone AS zone, 
+		trucks.foursquare, trucks.weburl, trucks.matcher, trucks.matchmethod, coalesce(locations.display,'') AS location, coalesce(locations.zone,'') AS zone, 
         images.suffix AS image FROM trucks LEFT JOIN locations ON (locations.id = ANY(trucks.locs)) LEFT JOIN (SELECT * FROM images WHERE 
         menu='t') AS images ON (images.twitname = trucks.twitname) WHERE trucks.id=$1 OR trucks.twitname=$1`, id)
 	if err != nil {
