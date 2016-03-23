@@ -1,5 +1,5 @@
-var trucks = {}
-trucks.controller = function() {
+var index = {}
+index.controller = function() {
     var ctrl = this;
 
     ctrl.list = new list.controller({
@@ -11,7 +11,7 @@ trucks.controller = function() {
     ctrl.filter = new filter.controller();
 }
 
-trucks.view = function(ctrl) {
+index.view = function(ctrl) {
     return m(".row", [
         m(".col-md-2", [
             filter.view(ctrl.filter)
@@ -68,5 +68,5 @@ function makeMenuLink(suffix) {
 m.route.mode = "pathname";
 
 m.route(document.querySelector(".content"), "/", {
-    "/:site": trucks,
+    "/:site": index,
 });
