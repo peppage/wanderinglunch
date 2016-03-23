@@ -53,7 +53,6 @@ func truck(c *echo.Context) error {
 	name := c.Param("name")
 	if name != "" {
 		t := mdl.GetTruck(name)
-		log.WithField("t", t[0]).Debug("single truck")
 		if len(t) > 0 {
 			return c.HTML(http.StatusOK, tmpl.Index(t[0].Site))
 		}
