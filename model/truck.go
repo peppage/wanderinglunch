@@ -4,8 +4,6 @@ import (
 	"fmt"
 	"strconv"
 	"time"
-
-	"gopkg.in/guregu/null.v2"
 )
 
 type Truck struct {
@@ -21,7 +19,7 @@ type Truck struct {
 	About       string   `json:"about"`
 	Foursquare  string   `json:"foursquare"`
 	Location    string   `json:"location"`
-	Loc         null.Int `json:"loc"`
+	Loc         string   `json:"loc"`
 	Zone        string   `json:"zone"`
 	Image       string   `json:"image"`
 	Matcher     string   `json:"matcher"`
