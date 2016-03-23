@@ -3,6 +3,7 @@
 		"wanderinglunch/tmpl/layout/base"
 	)
     var sitename string
+    var trucks string
 }
 
 @section title {
@@ -12,3 +13,9 @@
 @section site {
     return sitename
 }
+
+<script>
+    var initialTrucks = function() {
+        return @raw(trucks)
+    }
+</script>
