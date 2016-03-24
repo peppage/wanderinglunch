@@ -45,7 +45,7 @@ func main() {
 func root(c *echo.Context) error {
 	site := c.Param("site")
 	if site != "" {
-		trucks := mdl.Trucks(site, 1000, "lat", "desc", 0)
+		trucks := mdl.Trucks(site, 500000, "lat", "desc", 0)
 		t, _ := json.Marshal(trucks)
 		return c.HTML(http.StatusOK, tmpl.Index(site, string(t)))
 	}
