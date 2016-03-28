@@ -1,18 +1,114 @@
+/*var eightHours = 28800;
+
+var trucks = {};
+trucks.list = initialTrucks;
+
+trucks.controller = function(options) {
+    
+}
+
+trucks.view = function(ctrl) {
+    return m('ul', trucks.list().map(function(truck) {
+        if(truck.lastupdate < Date.now() - eightHours) {
+            return [
+                m('li', truck.name)
+            ]
+        }
+    }));
+}
+
+trucks.update = function() {
+    m.request({
+        method: 'GET',
+        url: index.updateUrl + m.route.param('site'),
+    }).then(function(data) {
+        trucks.list = function() {
+            return data;
+        }
+        m.redraw();
+    })
+}
+
+var index = {};
+
+index.updateUrl = '/api/trucks?sort=lat&sort_dir=desc&site=';
+
+index.controller = function() {
+    this.searchTerm = m.prop('');
+    
+    this.update = function() {
+        trucks.update();
+    }
+    
+    this.list = function() {
+        return trucks.list();
+        return trucks.list().map(function(truck) {
+           if(truck.name.indexOf(this.searchTerm) > -1 ) {
+               return truck;
+           }
+        })
+    }
+}
+
+index.view = function(ctrl) {
+    console.log(ctrl.list())
+    return [
+        m('input', {oninput: m.withAttr('value', ctrl.searchTerm)}),
+        m('ul', ctrl.list().map(function(truck) {
+        if(truck.lastupdate < Date.now() - eightHours) {
+            return [
+                m('li', truck.name)
+            ]
+        }
+    })),
+        m('button', {onclick: ctrl.update }, 'UPDATE')
+    ]
+};
+
+m.route.mode = 'pathname';
+
+m.route(document.querySelector('.content'), '/', {
+    '/:site': index,
+})*/
+
+var eightHours = 28800;
+
 var index = {}
+index.updateUrl = '/api/trucks?sort=lat&sort_dir=desc&site=';
+
 index.controller = function() {
     var ctrl = this;
 
     ctrl.list = new list.controller({
         visible: function(item) {
-            return item.name.indexOf(ctrl.filter.searchTerm()) > -1;
+            if(ctrl.filter.searchTerm() !== '') {
+                return item.name.toLowerCase().indexOf(ctrl.filter.searchTerm()) > -1;
+            } else if(item.lastupdate > Math.round(new Date().getTime()/1000.0) - eightHours) {
+                return true;
+            }
         }
     });
 
     ctrl.filter = new filter.controller();
+
+    ctrl.update = function() {
+        m.request({
+            method: 'GET',
+            url: index.updateUrl + m.route.param('site'),
+        }).then(function(data) {
+            list.items = function() {
+                return data;
+            }
+        })
+    }
 }
+
 
 index.view = function(ctrl) {
     return m(".row", [
+        m(".col-md-2", [
+            m("button", {onclick: ctrl.update }, 'UPDATE')
+        ]),
         m(".col-md-2", [
             filter.view(ctrl.filter)
         ]),
@@ -22,25 +118,20 @@ index.view = function(ctrl) {
     ]);
 }
 
-index.update = function(ctrl) {
-    console.log(ctrl);
-    list.controller.items = m.request({method: "GET", url: "/api/trucks?site=" + m.route.param("site")});
-}
-
 var Truck = {}
 Truck.list = function() {
     return initialTrucks;
 }
 
 var list = {}
+list.items = Truck.list();
 list.controller = function(options) {
-    this.items = Truck.list();
     this.visible = options.visible;
 }
 
 list.view = function(ctrl) {
     return m("table", [
-        ctrl.items().filter(ctrl.visible).map(function(item) {
+        list.items().filter(ctrl.visible).map(function(item) {
             return m("tr", [
                 m("td", m("a", {"href": "/truck/"+item.twitname}, [item.name])),
                 m("td", item.location),
