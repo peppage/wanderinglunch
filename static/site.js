@@ -82,7 +82,8 @@ index.controller = function() {
     ctrl.list = new list.controller({
         visible: function(item) {
             if(ctrl.filter.searchTerm() !== '') {
-                return item.name.toLowerCase().indexOf(ctrl.filter.searchTerm()) > -1;
+                return item.name.toLowerCase().indexOf(ctrl.filter.searchTerm()) > -1 ||
+                    item.location.toLowerCase().indexOf(ctrl.filter.searchTerm()) > -1;
             } else if(item.lastupdate > Math.round(new Date().getTime()/1000.0) - eightHours) {
                 return true;
             }
