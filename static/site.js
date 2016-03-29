@@ -102,6 +102,9 @@ index.controller = function() {
             }
         })
     }
+
+    window.setInterval(ctrl.update, 900000);
+
 }
 
 
@@ -167,5 +170,3 @@ m.route.mode = "pathname";
 m.route(document.querySelector(".content"), "/", {
     "/:site": index,
 });
-
-window.setInterval(index.update, 900000);
