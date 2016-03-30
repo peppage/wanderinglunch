@@ -74,19 +74,15 @@ m.route(document.querySelector('.content'), '/', {
 var eightHours = 28800;
 
 var index = {}
-index.updateUrl = '/api/trucks?sort=lat&sort_dir=desc&site=';
+index.updateUrl = '/api/trucks?updated_since=8&sort=lat&sort_dir=desc&site=';
 
 index.controller = function() {
     var ctrl = this;
 
     ctrl.list = new list.controller({
         visible: function(item) {
-            if(ctrl.filter.searchTerm() !== '') {
-                return item.name.toLowerCase().indexOf(ctrl.filter.searchTerm()) > -1 ||
-                    item.location.toLowerCase().indexOf(ctrl.filter.searchTerm()) > -1;
-            } else if(item.lastupdate > Math.round(new Date().getTime()/1000.0) - eightHours) {
-                return true;
-            }
+            return item.name.toLowerCase().indexOf(ctrl.filter.searchTerm()) > -1 ||
+                item.location.toLowerCase().indexOf(ctrl.filter.searchTerm()) > -1;
         }
     });
 
