@@ -3,6 +3,7 @@ default: build
 
 build: vet
 	gorazor ./tmpl ./tmpl
+	sfbt
 	go build -v
 
 vet:

@@ -1,0 +1,5 @@
+[sfbt]
+cssFolder = "static/css"
+targetCssFile = "static/site.css"
+jsFolder = "static/js"
+targetJsFile = "static/site.js"

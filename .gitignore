@@ -7,3 +7,5 @@ tmpl/*.go
 tmpl/layout/*.go
 tmpl/helper/*.go
 tmpl/admin/*.go
+static/site.js
+static/site.css
