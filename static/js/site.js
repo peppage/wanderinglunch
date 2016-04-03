@@ -74,7 +74,7 @@ m.route(document.querySelector('.content'), '/', {
 var eightHours = 28800;
 
 var index = {}
-index.updateUrl = '/api/trucks?updated_since=8&sort=lat&sort_dir=desc&site=';
+index.updateUrl = "/api/trucks?updated_since=8&sort=lat&sort_dir=desc&site=";
 
 index.controller = function() {
     var ctrl = this;
@@ -90,8 +90,8 @@ index.controller = function() {
 
     ctrl.update = function() {
         m.request({
-            method: 'GET',
-            url: index.updateUrl + m.route.param('site'),
+            method: "GET",
+            url: index.updateUrl + m.route.param("site"),
         }).then(function(data) {
             list.items = function() {
                 return data;
@@ -103,16 +103,13 @@ index.controller = function() {
 
 }
 
-
 index.view = function(ctrl) {
-    return m(".row", [
-        m(".col-md-2", [
-            m("button", {onclick: ctrl.update }, 'UPDATE')
-        ]),
-        m(".col-md-2", [
+    return m(".grid-1-center", [
+         m(".col-4", [
             filter.view(ctrl.filter)
         ]),
-        m(".col-med-10", [
+        m(".col", []),
+        m(".col-6", [
             list.view(ctrl.list)
         ])
     ]);
@@ -130,11 +127,12 @@ list.controller = function(options) {
 }
 
 list.view = function(ctrl) {
-    return m("table", [
+    return m("table.table", [
         list.items().filter(ctrl.visible).map(function(item) {
             return m("tr", [
                 m("td", m("a", {"href": "/truck/"+item.twitname}, [item.name])),
                 m("td", item.location),
+                m("td", item.lastupdate),
                 m("td", [
                     m("img", {
                         "src": makeMenuLink(item.image),

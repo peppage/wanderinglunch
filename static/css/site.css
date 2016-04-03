@@ -1,0 +1,28 @@
+body {
+    font-size: 14pt;
+    color: #333;
+    font-family: sans-serif;
+}
+
+a {
+    color: #48b9a3;
+}
+
+input {
+    width: 100%;
+    line-height: 1.5;
+    padding: .375rem .75rem;
+    border: 1px solid #ccc;
+    border-radius: .25rem;
+}
+
+input:focus {
+    border-color: #48b9a3;
+    outline: 0;
+}
+
+.table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 1rem;
+}
