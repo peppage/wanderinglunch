@@ -104,11 +104,11 @@ index.controller = function() {
 
 index.view = function(ctrl) {
     return m(".grid-1-center", [
-         m(".col-4", [
+         m(".col-5", [
             filter.view(ctrl.filter)
         ]),
         m(".col", []),
-        m(".col-6", [
+        m(".col-7", [
             list.view(ctrl.list)
         ])
     ]);
@@ -163,7 +163,7 @@ filter.controller = function(options) {
 
 filter.view = function(ctrl) {
     return m("input", {
-        placeholder: "Search by name...",
+        placeholder: "Search by name or location...",
         oninput: m.withAttr("value", ctrl.searchTerm)
     })
 }
