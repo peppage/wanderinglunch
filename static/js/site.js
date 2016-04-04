@@ -100,7 +100,6 @@ index.controller = function() {
     }
 
     window.setInterval(ctrl.update, 900000);
-
 }
 
 index.view = function(ctrl) {
@@ -128,19 +127,31 @@ list.controller = function(options) {
 
 list.view = function(ctrl) {
     return m("table.table", [
+        list.thead(),
         list.items().filter(ctrl.visible).map(function(item) {
             return m("tr", [
                 m("td", m("a", {"href": "/truck/"+item.twitname}, [item.name])),
                 m("td", item.location),
-                m("td", item.lastupdate),
-                m("td", [
+                m("td.noMobile", item.lastupdate),
+                m("td.noMobile", [
                     m("img", {
                         "src": makeMenuLink(item.image),
                     })
                 ])
             ])
         })
-    ])
+    ]);
+}
+
+list.thead = function() {
+    return m("thead", [
+        m("tr", [
+            m("th", "Truck"),
+            m("th", "Location"),
+            m("th.noMobile", "Time"),
+            m("th.noMobile", "Menu")
+        ])
+    ]);
 }
 
 var filter = {}
@@ -149,7 +160,10 @@ filter.controller = function(options) {
 }
 
 filter.view = function(ctrl) {
-    return m("input", {oninput: m.withAttr("value", ctrl.searchTerm)})
+    return m("input", {
+        placeholder: "Search by name...",
+        oninput: m.withAttr("value", ctrl.searchTerm)
+    })
 }
 
 function makeMenuLink(suffix) {

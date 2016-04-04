@@ -17,7 +17,7 @@ input {
 }
 
 input:focus {
-    border-color: #48b9a3;
+    border-color: #f7972c;
     outline: 0;
 }
 
@@ -25,4 +25,10 @@ input:focus {
     width: 100%;
     max-width: 100%;
     margin-bottom: 1rem;
+}
+
+@media screen and (max-width: 750px) {
+    .noMobile {
+        display:none
+    }
 }
