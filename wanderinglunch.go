@@ -30,7 +30,7 @@ func main() {
 	e.Static("/static/", "static")
 
 	e.Get("/", root)
-	e.Get("/:site", root)
+	e.Get("/:site", root2)
 	e.Get("/truck/:name", truck)
 
 	api := e.Group("/api")
@@ -61,4 +61,13 @@ func truck(c *echo.Context) error {
 		}
 	}
 	return echo.NewHTTPError(http.StatusNotFound, "No truck")
+}
+
+func root2(c *echo.Context) error {
+	site := c.Param("site")
+	if site != "" {
+		trucks := mdl.Trucks(site, 8, "lat", "desc", 0)
+		return c.HTML(http.StatusOK, tmpl.Index2(site, mdl.Zones(site), trucks))
+	}
+	return c.Redirect(http.StatusMovedPermanently, "/nyc")
 }

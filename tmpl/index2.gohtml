@@ -1,0 +1,74 @@
+@{
+	import (
+		"wanderinglunch/tmpl/layout/base"
+        m "wanderinglunch/model"
+	)
+    var sitename string
+    var zones []string
+    var trucks []*m.Truck
+}
+
+@section title {
+	return "WL"
+}
+
+@section site {
+    return sitename
+}
+
+@if len(trucks) > 0 {
+	@for _, z := range zones {
+		@{
+			var zTrucks []*m.Truck
+			for _, t := range trucks {
+				if t.Zone == z {
+					zTrucks = append(zTrucks, t)
+				}
+			}
+		}
+		@if len(zTrucks) > 0 {
+			<h1>@z</h1>
+			<div class="grid-1-center">
+				<div class="col-7">
+					<table class="table table-minimal">
+						<thead>
+							<tr>
+								<th>Truck</th>
+								<th>Location</th>
+								<th class="noMobile">Time</th>
+								<th class="noMobile">Menu</th>
+							</tr>
+						</thead>
+						<tbody>
+							@for _, t := range zTrucks {
+								<tr>
+									<td><a href="/truck/@t.ID">@t.Name</a></td>
+									<td>@t.Location</td>
+									<td class="noMobile">@t.Updated</td>
+									<td class="noMobile">
+										@if t.Image != "" {
+											<a class='menu-popup' href="https://irs0.4sqi.net/img/general/width960@t.Image">
+												<img class="menu"
+													src="https://irs0.4sqi.net/img/general/width30@t.Image"
+													alt="@t.Name menu" />
+											</a>
+										}
+									</td>
+								</tr>
+							}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		}
+	}
+} else {
+	<div class="grid-1-center">
+		<div class="col-7">
+			<h1 class="centerText">Your hunger cannot be satisfied, no trucks are tweeting</h1>
+			<p class="centerText">If it's late, bookmark the site and come back around lunchtime! <br></p>
+			<p class="centerText">There will be a list of trucks here, <a target="_blank" href="https://twitter.com/intent/tweet?text=Wandering Lunch&url=http://wanderinglunch.com">tweet</a> at yourself so you don't forget.<br></p>
+			<p class="centerText">Check out <a href="/alltrucks">a list of all the trucks</a> on the site while you wait.</p>
+		</div>
+	</div>
+}
