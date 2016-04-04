@@ -60,7 +60,7 @@ list.view = function(ctrl) {
                 return m("tr", [
                     m("td", m("a", {"href": "/truck/"+item.twitname}, [item.name])),
                     m("td", item.location),
-                    m("td.noMobile", item.lastupdate),
+                    m("td.noMobile", item.updated),
                     m("td.noMobile", [
                         m("img", {
                             "src": makeMenuLink(item.image),

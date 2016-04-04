@@ -2,6 +2,7 @@ package model
 
 import (
 	"fmt"
+	"math"
 	"strconv"
 	"time"
 )
@@ -13,7 +14,7 @@ type Truck struct {
 	Weburl      string   `json:"weburl"`
 	Retweeted   bool     `json:"retweeted"`
 	Lasttweet   int      `json:"lasttweet"`
-	Lastupdate  int      `json:"lastupdate"`
+	Lastupdate  int64    `json:"lastupdate"`
 	Updated     string   `json:"updated"`
 	Type        string   `json:"type"`
 	About       string   `json:"about"`
@@ -27,6 +28,35 @@ type Truck struct {
 	Tweets      []*Tweet `json:"tweets"`
 	Images      []*Image `json:"images"`
 	Site        string   `json:"site"`
+}
+
+func (t *Truck) PrettyDate() string {
+	elapsed := time.Now().Sub(time.Unix(t.Lastupdate, 0))
+
+	d := math.Trunc(elapsed.Hours() / 24)
+	if d == 1 {
+		return "a day ago"
+	} else if d > 100 {
+		return ""
+	} else if d > 1 {
+		return strconv.FormatFloat(d, 'f', -1, 32) + " days ago"
+	}
+
+	h := math.Trunc(elapsed.Hours())
+	if h == 1 {
+		return "an hour ago"
+	} else if h > 1 {
+		return strconv.FormatFloat(h, 'f', -1, 32) + " hours ago"
+	}
+
+	m := math.Trunc(elapsed.Minutes())
+	if m == 1 {
+		return "a minute ago"
+	} else if m > 1 {
+		return strconv.FormatFloat(m, 'f', -1, 32) + " minutes ago"
+	}
+
+	return "seconds ago"
 }
 
 func Trucks(site string, hours int, sort string, sortDir string, loc int) []*Truck {
@@ -48,9 +78,9 @@ func Trucks(site string, hours int, sort string, sortDir string, loc int) []*Tru
 	if err != nil {
 		fmt.Println(err)
 	}
-	//for i := 0; i < len(trucks); i++ {
-	//trucks[i].Updated = trucks[i].PrettyDate()
-	//}
+	for i := 0; i < len(trucks); i++ {
+		trucks[i].Updated = trucks[i].PrettyDate()
+	}
 	//Cache.Set("trucks"+strconv.Itoa(hours)+sort+sortDir+site, trucks, cache.DefaultExpiration)
 	//}
 	return trucks
