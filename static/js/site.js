@@ -128,18 +128,20 @@ list.controller = function(options) {
 list.view = function(ctrl) {
     return m("table.table", [
         list.thead(),
-        list.items().filter(ctrl.visible).map(function(item) {
-            return m("tr", [
-                m("td", m("a", {"href": "/truck/"+item.twitname}, [item.name])),
-                m("td", item.location),
-                m("td.noMobile", item.lastupdate),
-                m("td.noMobile", [
-                    m("img", {
-                        "src": makeMenuLink(item.image),
-                    })
+        m("tbody", [
+            list.items().filter(ctrl.visible).map(function(item) {
+                return m("tr", [
+                    m("td", m("a", {"href": "/truck/"+item.twitname}, [item.name])),
+                    m("td", item.location),
+                    m("td.noMobile", item.lastupdate),
+                    m("td.noMobile", [
+                        m("img", {
+                            "src": makeMenuLink(item.image),
+                        })
+                    ])
                 ])
-            ])
-        })
+            })
+        ])
     ]);
 }
 
