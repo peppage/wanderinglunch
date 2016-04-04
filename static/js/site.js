@@ -1,5 +1,3 @@
-var eightHours = 28800;
-
 var index = {}
 index.updateUrl = "/api/trucks?updated_since=8&sort=lat&sort_dir=desc&site=";
 
