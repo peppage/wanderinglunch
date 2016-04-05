@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"net/http"
 	ept "wanderinglunch/endpoints"
 	mdl "wanderinglunch/model"
@@ -30,7 +29,7 @@ func main() {
 	e.Static("/static/", "static")
 
 	e.Get("/", root)
-	e.Get("/:site", root2)
+	e.Get("/:site", root)
 	e.Get("/truck/:name", truck)
 
 	api := e.Group("/api")
@@ -40,16 +39,6 @@ func main() {
 	log.Info("Server (version " + "null" + ") started on port " + "8000")
 	e.Run(":" + "8000")
 
-}
-
-func root(c *echo.Context) error {
-	site := c.Param("site")
-	if site != "" {
-		trucks := mdl.Trucks(site, 8, "lat", "desc", 0)
-		t, _ := json.Marshal(trucks)
-		return c.HTML(http.StatusOK, tmpl.Index(site, string(t)))
-	}
-	return c.Redirect(http.StatusMovedPermanently, "/nyc")
 }
 
 func truck(c *echo.Context) error {
@@ -63,7 +52,7 @@ func truck(c *echo.Context) error {
 	return echo.NewHTTPError(http.StatusNotFound, "No truck")
 }
 
-func root2(c *echo.Context) error {
+func root(c *echo.Context) error {
 	site := c.Param("site")
 	if site != "" {
 		trucks := mdl.Trucks(site, 8, "lat", "desc", 0)
