@@ -4,8 +4,8 @@ import (
 	"net/http"
 	ept "wanderinglunch/endpoints"
 	mdl "wanderinglunch/model"
-	"wanderinglunch/tmpl"
 	"wanderinglunch/updator"
+	"wanderinglunch/view"
 
 	log "github.com/Sirupsen/logrus"
 	"github.com/labstack/echo"
@@ -46,7 +46,7 @@ func truck(c *echo.Context) error {
 	if name != "" {
 		t := mdl.GetTruck(name)
 		if len(t) > 0 {
-			return c.HTML(http.StatusOK, tmpl.Index(t[0].Site, ""))
+			//return c.HTML(http.StatusOK, view.Index(t[0].Site, ""))
 		}
 	}
 	return echo.NewHTTPError(http.StatusNotFound, "No truck")
@@ -56,7 +56,7 @@ func root(c *echo.Context) error {
 	site := c.Param("site")
 	if site != "" {
 		trucks := mdl.Trucks(site, 8, "lat", "desc", 0)
-		return c.HTML(http.StatusOK, tmpl.Index2(site, mdl.Zones(site), trucks))
+		return c.HTML(http.StatusOK, view.Index(site, mdl.Zones(site), trucks))
 	}
 	return c.Redirect(http.StatusMovedPermanently, "/nyc")
 }

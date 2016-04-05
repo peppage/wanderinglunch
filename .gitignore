@@ -3,9 +3,9 @@ node_modules/
 static/*.map
 rev-manifest.json
 doc/
-tmpl/*.go
-tmpl/layout/*.go
-tmpl/helper/*.go
-tmpl/admin/*.go
+view/*.go
+view/layout/*.go
+view/helper/*.go
+view/admin/*.go
 static/site.js
 static/site.css
