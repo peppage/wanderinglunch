@@ -17,51 +17,47 @@
 }
 
 @if len(trucks) > 0 {
-	@for _, z := range zones {
-		@{
-			var zTrucks []*m.Truck
-			for _, t := range trucks {
-				if t.Zone == z {
-					zTrucks = append(zTrucks, t)
-				}
-			}
-		}
-		@if len(zTrucks) > 0 {
-			<h1>@z</h1>
-			<div class="grid-1-center">
-				<div class="col-7">
-					<table class="table table-minimal">
-						<thead>
-							<tr>
-								<th>Truck</th>
-								<th>Location</th>
-								<th class="noMobile">Time</th>
-								<th class="noMobile">Menu</th>
-							</tr>
-						</thead>
-						<tbody>
-							@for _, t := range zTrucks {
-								<tr>
-									<td><a href="/truck/@t.ID">@t.Name</a></td>
-									<td>@t.Location</td>
-									<td class="noMobile">@t.Updated</td>
-									<td class="noMobile">
-										@if t.Image != "" {
-											<a class='menu-popup' href="https://irs0.4sqi.net/img/general/width960@t.Image">
-												<img class="menu"
-													src="https://irs0.4sqi.net/img/general/width30@t.Image"
-													alt="@t.Name menu" />
-											</a>
-										}
-									</td>
-								</tr>
-							}
-						</tbody>
-					</table>
-				</div>
-			</div>
-		}
-	}
+    <div class="grid-1-center">
+        <div class="col-7">
+            <table class="table table-minimal">
+                @for _, z := range zones {
+                    @{
+                        var zTrucks []*m.Truck
+                        for _, t := range trucks {
+                            if t.Zone == z {
+                                zTrucks = append(zTrucks, t)
+                            }
+                        }
+                    }
+                    @if len(zTrucks) > 0 {
+                        <tr><td colspan="4"><h1>@z</h1></td></tr>
+                        <tr>
+                            <th>Truck</th>
+                            <th>Location</th>
+                            <th class="noMobile">Time</th>
+                            <th class="noMobile">Menu</th>
+                        </tr>
+                        @for _, t := range zTrucks {
+                            <tr>
+                                <td><a href="/truck/@t.ID">@t.Name</a></td>
+                                <td>@t.Location</td>
+                                <td class="noMobile">@t.Updated</td>
+                                <td class="noMobile">
+                                    @if t.Image != "" {
+                                        <a class='menu-popup' href="https://irs0.4sqi.net/img/general/width960@t.Image">
+                                            <img class="menu"
+                                                src="https://irs0.4sqi.net/img/general/width30@t.Image"
+                                                alt="@t.Name menu" />
+                                        </a>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    }
+                }
+            </table>
+        </div>
+    </div>
 } else {
 	<div class="grid-1-center">
 		<div class="col-7">

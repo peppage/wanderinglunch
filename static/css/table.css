@@ -18,6 +18,6 @@
     padding: 0.75rem 1rem;
 }
 
-.table tbody tr:first-child td {
-    border-top: 2px solid #dcd;
+th {
+    border-bottom: 2px solid #dcd;
 }
