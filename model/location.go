@@ -25,3 +25,10 @@ func GetLocations() (map[string][]*Location, error) {
 	}
 	return locs, nil
 }
+
+// Zones returns a string slice of all zones for site
+func Zones(site string) ([]string, error) {
+	var zones []string
+	err := db.Select(&zones, `SELECT zone FROM locations WHERE site=$1 GROUP BY zone`, site)
+	return zones, err
+}

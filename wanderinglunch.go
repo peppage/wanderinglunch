@@ -53,7 +53,15 @@ func root(c echo.Context) error {
 	site := c.Param("site")
 	if site != "" {
 		trucks := mdl.Trucks(site, 8, "lat", "desc", 0)
-		return c.HTML(http.StatusOK, view.Index(site, mdl.Zones(site), trucks))
+		zones, err := mdl.Zones(site)
+		if err != nil {
+			log.WithFields(log.Fields{
+				"err":  err,
+				"site": site,
+			}).Error("Failed getting zones")
+			return echo.NewHTTPError(http.StatusInternalServerError, "Error getting data")
+		}
+		return c.HTML(http.StatusOK, view.Index(site, zones, trucks))
 	}
 	return c.Redirect(http.StatusMovedPermanently, "/nyc")
 }
