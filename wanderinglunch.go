@@ -32,6 +32,7 @@ func main() {
 	e.Get("/", root)
 	e.Get("/:site", root)
 	e.Get("/truck/:name", truck)
+	e.Get("/:site/alltrucks", allTrucks)
 
 	log.Info("Server (version " + "null" + ") started on port " + "8000")
 	e.Run(fasthttp.New(":" + "8000"))
@@ -64,4 +65,16 @@ func root(c echo.Context) error {
 		return c.HTML(http.StatusOK, view.Index(site, zones, trucks))
 	}
 	return c.Redirect(http.StatusMovedPermanently, "/nyc")
+}
+
+func allTrucks(c echo.Context) error {
+	site := c.Param("site")
+	if site != "" {
+		trucks := mdl.Trucks(site, 500000, "name", "asc", 0)
+		if len(trucks) == 0 {
+			return echo.NewHTTPError(http.StatusNotFound, "")
+		}
+		return c.HTML(http.StatusOK, view.Alltrucks(site, trucks))
+	}
+	return c.Redirect(http.StatusMovedPermanently, "/nyc/alltrucks")
 }

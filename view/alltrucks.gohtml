@@ -1,0 +1,52 @@
+@{
+	import (
+		"wanderinglunch/view/layout/base"
+        m "wanderinglunch/model"
+	)
+    var sitename string
+    var trucks []*m.Truck
+}
+
+@section title {
+	return "WL - all trucks"
+}
+
+@section site {
+    return sitename
+}
+
+<div class="grid-1-center">
+    <div class="col-7">
+        <table class="table">
+            <thead>
+                <tr class="thead">
+                    <th>Truck</th>
+                    <th>Location</th>
+                    <th class="noMobile">Time</th>
+                    <th class="noMobile">Menu</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for _, t := range trucks {
+                    <tr>
+                        <td><a href="/truck/@t.ID">@t.Name</a></td>
+                        <td>@t.Location</td>
+                        <td class="noMobile">@t.Updated</td>
+                        <td class="noMobile">
+                            @if t.Image != "" {
+                                <a href="#@t.Name">
+                                    <img class="menu"
+                                        src="https://irs0.4sqi.net/img/general/width30@t.Image"
+                                        alt="@t.Name menu" />
+                                </a>
+                                <a href="#_" class="lightbox" id="@t.Name">
+                                    <img src="https://irs0.4sqi.net/img/general/width960@t.Image">
+                                </a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
