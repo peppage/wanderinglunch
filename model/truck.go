@@ -30,8 +30,9 @@ type Truck struct {
 	Site        string   `json:"site"`
 }
 
-func (t *Truck) PrettyDate() string {
-	elapsed := time.Now().Sub(time.Unix(t.Lastupdate, 0))
+// relativeTime converts unix time to a relative time string
+func relativeTime(lastUpdate int64) string {
+	elapsed := time.Now().Sub(time.Unix(lastUpdate, 0))
 
 	d := math.Trunc(elapsed.Hours() / 24)
 	if d == 1 {
@@ -79,7 +80,7 @@ func Trucks(site string, hours int, sort string, sortDir string, loc int) []*Tru
 		fmt.Println(err)
 	}
 	for i := 0; i < len(trucks); i++ {
-		trucks[i].Updated = trucks[i].PrettyDate()
+		trucks[i].Updated = relativeTime(trucks[i].Lastupdate)
 	}
 	//Cache.Set("trucks"+strconv.Itoa(hours)+sort+sortDir+site, trucks, cache.DefaultExpiration)
 	//}
@@ -98,7 +99,7 @@ func GetTruck(id string) []*Truck {
 		fmt.Println(err)
 	}
 	if len(trucks) > 0 {
-		trucks[0].Updated = trucks[0].PrettyDate()
+		trucks[0].Updated = relativeTime(trucks[0].Lastupdate)
 		images, err := GetImages(trucks[0].Twitname)
 		if err != nil {
 			fmt.Println(err)
