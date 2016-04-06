@@ -6,6 +6,7 @@ import (
 
 var (
 	HTTPPort string
+	LogLevel string
 	config   *toml.TomlTree
 )
 
@@ -25,5 +26,10 @@ func Initialize() {
 		panic("Config requires http_port setting")
 	}
 
+	if !config.Has("server.log_level") {
+		panic("Config requires log_level setting")
+	}
+
 	HTTPPort = config.Get("server.http_port").(string)
+	LogLevel = config.Get("server.log_level").(string)
 }

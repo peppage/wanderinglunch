@@ -16,7 +16,10 @@ import (
 
 func init() {
 	setting.Initialize()
-	log.SetLevel(log.DebugLevel)
+	ll, err := log.ParseLevel(setting.LogLevel)
+	if err == nil {
+		log.SetLevel(ll)
+	}
 	//log.SetFormatter(&log.JSONFormatter{})
 	log.AddHook(lfshook.NewHook(
 		lfshook.PathMap{
