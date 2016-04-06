@@ -53,6 +53,16 @@ nav ul li a:hover {
 footer {
     margin-top: 54px;
     width: 100%;
+    color: #888;
+    padding-bottom: 5px;
+}
+
+footer .footer--left {
+    float: left;
+}
+
+footer .footer--right {
+    float: right;
 }
 
 .content {
