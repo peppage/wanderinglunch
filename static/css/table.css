@@ -28,3 +28,7 @@
 .table tbody tr:first-child td, .table .thead+tr td {
     border-top: 0;
 }
+
+.table .noBorder td {
+    border: 0;
+}
