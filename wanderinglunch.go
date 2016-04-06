@@ -43,7 +43,7 @@ func truck(c echo.Context) error {
 	if name != "" {
 		t := mdl.GetTruck(name)
 		if len(t) > 0 {
-			//return c.HTML(http.StatusOK, view.Index(t[0].Site, ""))
+			return c.HTML(http.StatusOK, view.Truck(t))
 		}
 	}
 	return echo.NewHTTPError(http.StatusNotFound, "No truck")

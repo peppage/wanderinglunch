@@ -98,8 +98,14 @@ func GetTruck(id string) []*Truck {
 	if err != nil {
 		fmt.Println(err)
 	}
-	//t.Updated = t.PrettyDate()
-	//t.Images = GetTruckImages(t.Twitname)
+	if len(trucks) > 0 {
+		trucks[0].Updated = trucks[0].PrettyDate()
+		images, err := GetImages(trucks[0].Twitname)
+		if err != nil {
+			fmt.Println(err)
+		}
+		trucks[0].Images = images
+	}
 	//t.Tweets = GetTweets(t.Twitname, false, false, true)
 	//Cache.Set("truck"+id, t, cache.DefaultExpiration)
 	//}
