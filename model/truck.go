@@ -60,7 +60,7 @@ func relativeTime(lastUpdate int64) string {
 	return "seconds ago"
 }
 
-func Trucks(site string, hours int, sort string, sortDir string, loc int) []*Truck {
+func Trucks(site string, hours int, sort string, sortDir string, loc int) ([]*Truck, error) {
 	var trucks []*Truck
 	//if object, found := Cache.Get("trucks" + strconv.Itoa(hours) + sort + sortDir + site); found {
 	//		trucks = object.([]*Truck)
@@ -72,19 +72,23 @@ func Trucks(site string, hours int, sort string, sortDir string, loc int) []*Tru
 		locSql = "AND loc=" + strconv.Itoa(loc)
 	}
 
-	trucks = []*Truck{}
-	err := db.Select(&trucks, `SELECT trucks.id AS id, trucks.name, trucks.twitname, trucks.lastupdate, coalesce(locations.display,'') AS location, 
+	rows, err := db.Queryx(`SELECT trucks.id AS id, trucks.name, trucks.twitname, trucks.lastupdate, coalesce(locations.display,'') AS location, 
 	        coalesce(locations.zone,'') AS zone, coalesce(images.suffix,'') AS image FROM trucks LEFT JOIN locations ON (locations.id = ANY(trucks.locs)) LEFT JOIN
 	        (SELECT * FROM images WHERE  menu='t') AS images ON (images.twitname = trucks.twitname) WHERE lastupdate > $1 `+locSql+` AND trucks.site = $2 and trucks.locs IS NOT NULL ORDER BY `+sort+` `+sortDir, t, site)
 	if err != nil {
-		fmt.Println(err)
+		return nil, err
 	}
-	for i := 0; i < len(trucks); i++ {
-		trucks[i].Updated = relativeTime(trucks[i].Lastupdate)
+
+	trucks = []*Truck{}
+	for rows.Next() {
+		tt := Truck{}
+		rows.Scan(&tt)
+		tt.Updated = relativeTime(tt.Lastupdate)
+		trucks = append(trucks, &tt)
 	}
 	//Cache.Set("trucks"+strconv.Itoa(hours)+sort+sortDir+site, trucks, cache.DefaultExpiration)
 	//}
-	return trucks
+	return trucks, nil
 }
 
 func GetTruck(id string) []*Truck {

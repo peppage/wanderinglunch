@@ -53,7 +53,15 @@ func truck(c echo.Context) error {
 func root(c echo.Context) error {
 	site := c.Param("site")
 	if site != "" {
-		trucks := mdl.Trucks(site, 8, "lat", "desc", 0)
+		trucks, err := mdl.Trucks(site, 8, "lat", "desc", 0)
+		if err != nil {
+			log.WithFields(log.Fields{
+				"err":  err,
+				"site": site,
+			}).Error("Failed getting trucks")
+			return echo.NewHTTPError(http.StatusInternalServerError, "Error getting data")
+		}
+
 		zones, err := mdl.Zones(site)
 		if err != nil {
 			log.WithFields(log.Fields{
@@ -70,7 +78,14 @@ func root(c echo.Context) error {
 func allTrucks(c echo.Context) error {
 	site := c.Param("site")
 	if site != "" {
-		trucks := mdl.Trucks(site, 500000, "name", "asc", 0)
+		trucks, err := mdl.Trucks(site, 500000, "name", "asc", 0)
+		if err != nil {
+			log.WithFields(log.Fields{
+				"err":  err,
+				"site": site,
+			}).Error("Failed getting trucks")
+			return echo.NewHTTPError(http.StatusInternalServerError, "Error getting data")
+		}
 		if len(trucks) == 0 {
 			return echo.NewHTTPError(http.StatusNotFound, "")
 		}
