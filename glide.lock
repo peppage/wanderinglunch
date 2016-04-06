@@ -1,5 +1,5 @@
-hash: 66b7a95a5dbde366d89bc8538be122732b9a10c29015e8b8b245a7217f7d82e4
-updated: 2016-04-05T22:16:14.3132918-04:00
+hash: c953e5e7d69ef58b79c087012625d37f6e3387e77531a5f455767c29236b76f9
+updated: 2016-04-06T17:51:36.9034207-04:00
 imports:
 - name: github.com/azr/backoff
   version: 53511d3c733003985b0b76f733df1f4d0095ee6a
@@ -68,6 +68,14 @@ imports:
   version: 56b76bdf51f7708750eac80fa38b952bb9f32639
   subpackages:
   - github.com\mattn\go-isatty
+- name: github.com/pelletier/go-buffruneio
+  version: df1e16fde7fc330a0ca68167c23bf7ed6ac31d6d
+  subpackages:
+  - github.com\pelletier\go-buffruneio
+- name: github.com/pelletier/go-toml
+  version: d6a90e60edcdbd4e9abe88338d811d0cbb43d324
+  subpackages:
+  - github.com\pelletier\go-toml
 - name: github.com/rifflock/lfshook
   version: 05a24e24fa8d3a2eca8c2baf23aa2d5a2c51490c
   subpackages:

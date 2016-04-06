@@ -3,6 +3,7 @@ package main
 import (
 	"net/http"
 	mdl "wanderinglunch/model"
+	"wanderinglunch/setting"
 	"wanderinglunch/updator"
 	"wanderinglunch/view"
 
@@ -14,6 +15,7 @@ import (
 )
 
 func init() {
+	setting.Initialize()
 	log.SetLevel(log.DebugLevel)
 	//log.SetFormatter(&log.JSONFormatter{})
 	log.AddHook(lfshook.NewHook(
@@ -34,8 +36,8 @@ func main() {
 	e.Get("/truck/:name", truck)
 	e.Get("/:site/alltrucks", allTrucks)
 
-	log.Info("Server (version " + "null" + ") started on port " + "8000")
-	e.Run(fasthttp.New(":" + "8000"))
+	log.Info("Server (version " + "null" + ") started on port " + setting.HTTPPort)
+	e.Run(fasthttp.New(":" + setting.HTTPPort))
 
 }
 
