@@ -2,7 +2,6 @@ package main
 
 import (
 	"net/http"
-	ept "wanderinglunch/endpoints"
 	mdl "wanderinglunch/model"
 	"wanderinglunch/updator"
 	"wanderinglunch/view"
@@ -31,10 +30,6 @@ func main() {
 	e.Get("/", root)
 	e.Get("/:site", root)
 	e.Get("/truck/:name", truck)
-
-	api := e.Group("/api")
-	api.Get("/trucks", ept.Trucks)
-	api.Get("/trucks/:name", ept.Truck)
 
 	log.Info("Server (version " + "null" + ") started on port " + "8000")
 	e.Run(":" + "8000")
