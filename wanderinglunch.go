@@ -6,6 +6,8 @@ import (
 	"wanderinglunch/updator"
 	"wanderinglunch/view"
 
+	"github.com/labstack/echo/engine/fasthttp"
+
 	log "github.com/Sirupsen/logrus"
 	"github.com/labstack/echo"
 	"github.com/rifflock/lfshook"
@@ -32,11 +34,11 @@ func main() {
 	e.Get("/truck/:name", truck)
 
 	log.Info("Server (version " + "null" + ") started on port " + "8000")
-	e.Run(":" + "8000")
+	e.Run(fasthttp.New(":" + "8000"))
 
 }
 
-func truck(c *echo.Context) error {
+func truck(c echo.Context) error {
 	name := c.Param("name")
 	if name != "" {
 		t := mdl.GetTruck(name)
@@ -47,7 +49,7 @@ func truck(c *echo.Context) error {
 	return echo.NewHTTPError(http.StatusNotFound, "No truck")
 }
 
-func root(c *echo.Context) error {
+func root(c echo.Context) error {
 	site := c.Param("site")
 	if site != "" {
 		trucks := mdl.Trucks(site, 8, "lat", "desc", 0)

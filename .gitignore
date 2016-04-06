@@ -9,3 +9,4 @@ view/helper/*.go
 view/admin/*.go
 static/site.js
 static/site.css
+vendor/

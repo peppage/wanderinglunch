@@ -7,7 +7,7 @@ build: vet
 	go build -v
 
 vet:
-	go vet ./...
+	go vet $(go list ./... | grep -v /vendor/)
 
 # https://github.com/golang/lint
 # go get github.com/golang/lint/golint

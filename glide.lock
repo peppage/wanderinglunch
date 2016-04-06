@@ -1,0 +1,103 @@
+hash: 66b7a95a5dbde366d89bc8538be122732b9a10c29015e8b8b245a7217f7d82e4
+updated: 2016-04-05T22:16:14.3132918-04:00
+imports:
+- name: github.com/azr/backoff
+  version: 53511d3c733003985b0b76f733df1f4d0095ee6a
+  subpackages:
+  - github.com\azr\backoff
+- name: github.com/ChimeraCoder/anaconda
+  version: afffdbac178c0e78746ea42d7c1af963cb7ef28e
+  subpackages:
+  - github.com\ChimeraCoder\anaconda
+- name: github.com/ChimeraCoder/tokenbucket
+  version: c5a927568de7aad8a58127d80bcd36ca4e71e454
+  subpackages:
+  - github.com\ChimeraCoder\tokenbucket
+- name: github.com/dustin/go-jsonpointer
+  version: 2efc9fef1d9421a8d252a32e20beb10cecd2bbca
+  subpackages:
+  - github.com\dustin\go-jsonpointer
+- name: github.com/dustin/gojson
+  version: 2e71ec9dd5adce3b168cd0dbde03b5cc04951c30
+  subpackages:
+  - github.com\dustin\gojson
+- name: github.com/garyburd/go-oauth
+  version: 255d509a6f270332ffcaef6723047891319a2ffb
+  subpackages:
+  - github.com\garyburd\go-oauth\oauth
+- name: github.com/jackc/pgx
+  version: 04e9fbcc55fe2865bdef4d96f18042f214ada36f
+  subpackages:
+  - github.com\jackc\pgx\stdlib
+  - github.com\jackc\pgx
+- name: github.com/jmoiron/sqlx
+  version: 398dd5876282499cdfd4cb8ea0f31a672abe9495
+  subpackages:
+  - github.com\jmoiron\sqlx
+  - github.com\jmoiron\sqlx\reflectx
+- name: github.com/klauspost/compress
+  version: 9d711f4445beb7f6488148ce04e3b4dc6e72242d
+  subpackages:
+  - github.com\klauspost\compress\flate
+  - github.com\klauspost\compress\gzip
+  - github.com\klauspost\compress\zlib
+- name: github.com/klauspost/cpuid
+  version: 09cded8978dc9e80714c4d85b0322337b0a1e5e0
+  subpackages:
+  - github.com\klauspost\cpuid
+- name: github.com/klauspost/crc32
+  version: 19b0b332c9e4516a6370a0456e6182c3b5036720
+  subpackages:
+  - github.com\klauspost\crc32
+- name: github.com/labstack/echo
+  version: adad28012c91fd1eb90a90422ef879dc0e28686a
+  subpackages:
+  - github.com\labstack\echo
+  - github.com\labstack\echo\engine\fasthttp
+  - github.com\labstack\echo\engine
+- name: github.com/labstack/gommon
+  version: f4ba73f8bcf88df1524069c117f7878cf530ee4e
+  subpackages:
+  - github.com\labstack\gommon\log
+  - github.com\labstack\gommon\color
+- name: github.com/mattn/go-colorable
+  version: 9cbef7c35391cca05f15f8181dc0b18bc9736dbb
+  subpackages:
+  - github.com\mattn\go-colorable
+- name: github.com/mattn/go-isatty
+  version: 56b76bdf51f7708750eac80fa38b952bb9f32639
+  subpackages:
+  - github.com\mattn\go-isatty
+- name: github.com/rifflock/lfshook
+  version: 05a24e24fa8d3a2eca8c2baf23aa2d5a2c51490c
+  subpackages:
+  - github.com\rifflock\lfshook
+- name: github.com/sipin/gorazor
+  version: c9580eed5a9ba278c49dcdc7fec214a5bbbe1f0d
+  subpackages:
+  - github.com\sipin\gorazor\gorazor
+- name: github.com/Sirupsen/logrus
+  version: 4b6ea7319e214d98c938f12692336f7ca9348d6b
+  subpackages:
+  - github.com\Sirupsen\logrus
+- name: github.com/valyala/fasthttp
+  version: e9544cbb6fb446b65697099b65ff43cb7e225d7a
+  subpackages:
+  - github.com\valyala\fasthttp
+- name: github.com/valyala/fasttemplate
+  version: 3b874956e03f1636d171bda64b130f9135f42cff
+  subpackages:
+  - github.com\valyala\fasttemplate
+- name: golang.org/x/net
+  version: 318395d8b12f5dd0f1b7cd0fbb95195f49acb0f9
+  subpackages:
+  - golang.org\x\net\context
+- name: golang.org/x/sys
+  version: b323466d0bc6669362b0836480b30452d2c00db9
+  subpackages:
+  - golang.org\x\sys\unix
+- name: gopkg.in/fsnotify.v1
+  version: 875cf421b32f8f1b31bd43776297876d01542279
+  subpackages:
+  - gopkg.in\fsnotify.v1
+devImports: []
