@@ -44,10 +44,13 @@
                                 <td class="noMobile">@t.Updated</td>
                                 <td class="noMobile">
                                     @if t.Image != "" {
-                                        <a class='menu-popup' href="https://irs0.4sqi.net/img/general/width960@t.Image">
+                                        <a href="#@t.Name">
                                             <img class="menu"
                                                 src="https://irs0.4sqi.net/img/general/width30@t.Image"
                                                 alt="@t.Name menu" />
+                                        </a>
+                                        <a href="#_" class="lightbox" id="@t.Name">
+                                            <img src="https://irs0.4sqi.net/img/general/width960@t.Image">
                                         </a>
                                     }
                                 </td>
