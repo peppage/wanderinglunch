@@ -66,3 +66,6 @@ delete from trucks where id='wafelMomma';
 
 alter table tweets rename contents to text;
 alter table trucks add locs bigint[];
+
+create table sites (name TEXT, title text);
+insert into sites VALUES('nyc', 'NYC Food Truck Finder');
