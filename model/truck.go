@@ -82,7 +82,7 @@ func Trucks(site string, hours int, sort string, sortDir string, loc int) ([]*Tr
 	trucks = []*Truck{}
 	for rows.Next() {
 		tt := Truck{}
-		rows.Scan(&tt)
+		rows.StructScan(&tt)
 		tt.Updated = relativeTime(tt.Lastupdate)
 		trucks = append(trucks, &tt)
 	}
