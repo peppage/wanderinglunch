@@ -8,26 +8,23 @@ import (
 )
 
 type Truck struct {
-	ID          string   `json:"id"`
-	Name        string   `json:"name"`
-	Twitname    string   `json:"twitname"`
-	Weburl      string   `json:"weburl"`
-	Retweeted   bool     `json:"retweeted"`
-	Lasttweet   int      `json:"lasttweet"`
-	Lastupdate  int64    `json:"lastupdate"`
-	Updated     string   `json:"updated"`
-	Type        string   `json:"type"`
-	About       string   `json:"about"`
-	Foursquare  string   `json:"foursquare"`
-	Location    string   `json:"location"`
-	Loc         string   `json:"loc"`
-	Zone        string   `json:"zone"`
-	Image       string   `json:"image"`
-	Matcher     string   `json:"matcher"`
-	Matchmethod string   `json:"matchmethod"`
-	Tweets      []*Tweet `json:"tweets"`
-	Images      []*Image `json:"images"`
-	Site        string   `json:"site"`
+	ID         string   `json:"id"`
+	Name       string   `json:"name"`
+	Twitname   string   `json:"twitname"`
+	Weburl     string   `json:"weburl"`
+	Retweeted  bool     `json:"retweeted"`
+	Lasttweet  int      `json:"lasttweet"`
+	Lastupdate int64    `json:"lastupdate"`
+	Updated    string   `json:"updated"`
+	Type       string   `json:"type"`
+	About      string   `json:"about"`
+	Foursquare string   `json:"foursquare"`
+	Location   string   `json:"location"`
+	Zone       string   `json:"zone"`
+	Image      string   `json:"image"`
+	Tweets     []*Tweet `json:"tweets"`
+	Images     []*Image `json:"images"`
+	Site       string   `json:"site"`
 }
 
 // relativeTime converts unix time to a relative time string
@@ -96,8 +93,8 @@ func GetTruck(id string) []*Truck {
 	//if object, found := Cache.Get("truck" + id); found {
 	//		t = object.(Truck)
 	//} else {
-	err := db.Select(&trucks, `SELECT trucks.id AS id, trucks.loc, trucks.name, trucks.twitname, trucks.type, trucks.lastupdate, trucks.site, trucks.about,
-		trucks.foursquare, trucks.weburl, trucks.matcher, trucks.matchmethod, coalesce(locations.display,'') AS location, coalesce(locations.zone,'') AS zone 
+	err := db.Select(&trucks, `SELECT trucks.id AS id, trucks.name, trucks.twitname, trucks.type, trucks.lastupdate, trucks.site, trucks.about,
+		trucks.foursquare, trucks.weburl, coalesce(locations.display,'') AS location, coalesce(locations.zone,'') AS zone
         FROM trucks LEFT JOIN locations ON (locations.id = ANY(trucks.locs)) WHERE trucks.id=$1 OR trucks.twitname=$1`, id)
 	if err != nil {
 		fmt.Println(err)

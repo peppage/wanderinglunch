@@ -69,3 +69,7 @@ alter table trucks add locs bigint[];
 
 create table sites (name TEXT, title text);
 insert into sites VALUES('nyc', 'NYC Food Truck Finder');
+
+alter table trucks drop column loc;
+alter table trucks drop column matcher;
+alter table trucks drop column matchmethod;
