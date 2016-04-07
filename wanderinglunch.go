@@ -35,9 +35,10 @@ func main() {
 	e.Static("/static/", "static")
 
 	e.Get("/", root)
-	e.Get("/:site", root)
 	e.Get("/truck/:name", truck)
+	e.Get("/:site", root)
 	e.Get("/:site/alltrucks", allTrucks)
+	e.Get("/:site/lastupdate", lastUpdate)
 
 	log.Info("Server (version " + "null" + ") started on port " + setting.HTTPPort)
 	e.Run(fasthttp.New(":" + setting.HTTPPort))
@@ -91,7 +92,12 @@ func root(c echo.Context) error {
 			}).Error("Failed getting zones")
 			return echo.NewHTTPError(http.StatusInternalServerError, "Error getting data")
 		}
-		return c.HTML(http.StatusOK, view.Index(site, zones, trucks))
+
+		lu, err := mdl.LastUpdate(siteName)
+		if err != nil {
+			log.WithError(err).Error("Unable to retrieve last update")
+		}
+		return c.HTML(http.StatusOK, view.Index(site, zones, trucks, lu))
 	}
 	return c.Redirect(http.StatusMovedPermanently, "/nyc")
 }
@@ -121,4 +127,16 @@ func allTrucks(c echo.Context) error {
 		return c.HTML(http.StatusOK, view.Alltrucks(site, trucks))
 	}
 	return c.Redirect(http.StatusMovedPermanently, "/nyc/alltrucks")
+}
+
+func lastUpdate(c echo.Context) error {
+	siteName := c.Param("site")
+	if siteName != "" {
+		lu, err := mdl.LastUpdate(siteName)
+		if err != nil {
+			log.WithError(err).Error("Unable to retrieve last update")
+		}
+		return c.JSON(http.StatusOK, lu)
+	}
+	return echo.NewHTTPError(http.StatusBadRequest, "")
 }

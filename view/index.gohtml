@@ -6,6 +6,7 @@
     var s *m.Site
     var zones []string
     var trucks []*m.Truck
+    var lastUpdate int64
 }
 
 @section title {
@@ -71,3 +72,17 @@
 		</div>
 	</div>
 }
+
+<input class="checkbox-cb" id="checkbox-cb" type="checkbox" />
+<div class="js-notification notification hidden">
+  <span class="message">There is new truck information. <a href="#" class="js-refresh">Refresh</a>?</span>
+  <label for="checkbox-cb" class="close-cb">x</label>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        setInterval(function() {
+            checkForNewInfo('@s.Name', @lastUpdate);
+        }, sixtySeconds);
+    });
+</script>

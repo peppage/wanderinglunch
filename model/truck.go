@@ -151,3 +151,9 @@ func convertSlice(values []int) string {
 	}
 	return s
 }
+
+func LastUpdate(siteName string) (int64, error) {
+	var lastUpdate int64
+	err := db.Get(&lastUpdate, `select lastUpdate from trucks where site = $1 order by lastupdate desc limit 1`, siteName)
+	return lastUpdate, err
+}
