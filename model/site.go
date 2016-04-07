@@ -8,6 +8,6 @@ type Site struct {
 //GetSite get a site entry from db
 func GetSite(name string) (*Site, error) {
 	s := Site{}
-	err := db.Select(&s, `SELECT * FROM sites WHERE name = $1`, name)
+	err := db.Get(&s, `SELECT * FROM sites WHERE name = $1`, name)
 	return &s, err
 }
