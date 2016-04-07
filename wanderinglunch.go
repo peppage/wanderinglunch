@@ -49,29 +49,45 @@ func truck(c echo.Context) error {
 	if name != "" {
 		t := mdl.GetTruck(name)
 		if len(t) > 0 {
-			return c.HTML(http.StatusOK, view.Truck(t))
+			site, err := mdl.GetSite(t[0].Site)
+			if err != nil {
+				log.WithFields(log.Fields{
+					"truck": t,
+					"err":   err,
+				}).Error("Failed getting that site")
+				return echo.NewHTTPError(http.StatusNotFound, "")
+			}
+			return c.HTML(http.StatusOK, view.Truck(site, t))
 		}
 	}
 	return echo.NewHTTPError(http.StatusNotFound, "No truck")
 }
 
 func root(c echo.Context) error {
-	site := c.Param("site")
-	if site != "" {
-		trucks, err := mdl.Trucks(site, 8, "lat", "desc", 0)
+	siteName := c.Param("site")
+	if siteName != "" {
+		site, err := mdl.GetSite(siteName)
+		if err != nil {
+			log.WithFields(log.Fields{
+				"site": siteName,
+				"err":  err,
+			}).Error("Failed getting that site")
+			return echo.NewHTTPError(http.StatusNotFound, "")
+		}
+		trucks, err := mdl.Trucks(siteName, 8, "lat", "desc", 0)
 		if err != nil {
 			log.WithFields(log.Fields{
 				"err":  err,
-				"site": site,
+				"site": siteName,
 			}).Error("Failed getting trucks")
 			return echo.NewHTTPError(http.StatusInternalServerError, "Error getting data")
 		}
 
-		zones, err := mdl.Zones(site)
+		zones, err := mdl.Zones(siteName)
 		if err != nil {
 			log.WithFields(log.Fields{
 				"err":  err,
-				"site": site,
+				"site": siteName,
 			}).Error("Failed getting zones")
 			return echo.NewHTTPError(http.StatusInternalServerError, "Error getting data")
 		}
@@ -81,9 +97,17 @@ func root(c echo.Context) error {
 }
 
 func allTrucks(c echo.Context) error {
-	site := c.Param("site")
-	if site != "" {
-		trucks, err := mdl.Trucks(site, 500000, "name", "asc", 0)
+	siteName := c.Param("site")
+	if siteName != "" {
+		site, err := mdl.GetSite(siteName)
+		if err != nil {
+			log.WithFields(log.Fields{
+				"site": site,
+				"err":  err,
+			}).Error("Failed getting that site")
+			return echo.NewHTTPError(http.StatusNotFound, "")
+		}
+		trucks, err := mdl.Trucks(siteName, 500000, "name", "asc", 0)
 		if err != nil {
 			log.WithFields(log.Fields{
 				"err":  err,

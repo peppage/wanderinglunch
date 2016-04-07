@@ -3,17 +3,17 @@
 		"wanderinglunch/view/layout/base"
         m "wanderinglunch/model"
 	)
-    var sitename string
+    var s *m.Site
     var zones []string
     var trucks []*m.Truck
 }
 
 @section title {
-	return "WL"
+	return s.Title
 }
 
 @section site {
-    return sitename
+    return s.Name
 }
 
 @if len(trucks) > 0 {

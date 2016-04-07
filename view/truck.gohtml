@@ -3,15 +3,16 @@
 		"wanderinglunch/view/layout/base"
         m "wanderinglunch/model"
 	)
+    var s *m.Site
     var trucks []*m.Truck
 }
 
 @section title {
-	return "WL - truck"
+	return s.Title + " | " + trucks[0].Name
 }
 
 @section site {
-    return trucks[0].Site
+    return s.Name
 }
 
 <h1>@trucks[0].Name</h1>

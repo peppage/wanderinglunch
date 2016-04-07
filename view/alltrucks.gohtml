@@ -3,16 +3,16 @@
 		"wanderinglunch/view/layout/base"
         m "wanderinglunch/model"
 	)
-    var sitename string
+    var s *m.Site
     var trucks []*m.Truck
 }
 
 @section title {
-	return "WL - all trucks"
+	return s.Title + " | all trucks"
 }
 
 @section site {
-    return sitename
+    return s.Name
 }
 
 <div class="grid-1-center">
