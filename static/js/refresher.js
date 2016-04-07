@@ -13,8 +13,10 @@ function checkForNewInfo(site, lastUpdate) {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-    document.querySelector('.js-refresh').addEventListener('click', function(e) {
-        e.preventDefault();
-       location.reload();
-    });
+    if(document.querySelector('.js-refresh') != null) {
+        document.querySelector('.js-refresh').addEventListener('click', function(e) {
+            e.preventDefault();
+            location.reload();
+        });
+    }
 });
