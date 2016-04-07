@@ -18,16 +18,15 @@
 <h1>@trucks[0].Name</h1>
 <h2>@trucks[0].Type</h2>
 
-@for _, i := range trucks[0].Images {
-    <a href="#@i.ID">
-        <img class=""
-            src="https://irs0.4sqi.net/img/general/width30@i.Suffix"
-            alt="" />
-    </a>
-    <a href="#_" class="lightbox" id="@i.ID">
-        <img src="https://irs0.4sqi.net/img/general/width960@i.Suffix">
-    </a>
-}
+<div class="gallery">
+    @for _, i := range trucks[0].Images {
+        <a href="https://irs0.4sqi.net/img/general/width960@i.Suffix">
+            <img class=""
+                src="https://irs0.4sqi.net/img/general/width30@i.Suffix"
+                alt="" />
+        </a>
+    }
+</div>
 
 @if trucks[0].Weburl != "" {
     <a href="@trucks[0].Weburl">Website</a>
