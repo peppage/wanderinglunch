@@ -7,3 +7,5 @@ targetJsFile = "static/site.js"
 [server]
 http_port = "8000"
 log_level = "error"
+[app]
+run_updator = true

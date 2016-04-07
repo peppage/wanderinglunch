@@ -5,9 +5,10 @@ import (
 )
 
 var (
-	HTTPPort string
-	LogLevel string
-	config   *toml.TomlTree
+	HTTPPort   string
+	LogLevel   string
+	RunUpdator bool
+	config     *toml.TomlTree
 )
 
 const Version = "3.0-Alpha"
@@ -30,6 +31,11 @@ func Initialize() {
 		panic("Config requires log_level setting")
 	}
 
+	if !config.Has("app.run_updator") {
+		panic("Config requires updator setting")
+	}
+
 	HTTPPort = config.Get("server.http_port").(string)
 	LogLevel = config.Get("server.log_level").(string)
+	RunUpdator = config.Get("app.run_updator").(bool)
 }

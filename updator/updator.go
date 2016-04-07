@@ -7,6 +7,7 @@ import (
 	"strings"
 	"time"
 	mdl "wanderinglunch/model"
+	"wanderinglunch/setting"
 
 	"github.com/ChimeraCoder/anaconda"
 	log "github.com/Sirupsen/logrus"
@@ -24,9 +25,11 @@ func Start() {
 	anaconda.SetConsumerSecret(consumerSecret)
 	api = anaconda.NewTwitterApi(accessToken, accessTokenSecret)
 
-	gocron.Every(15).Minutes().Do(task)
+	if setting.RunUpdator {
+		gocron.Every(15).Minutes().Do(task)
 
-	<-gocron.Start()
+		<-gocron.Start()
+	}
 }
 
 func task() {
