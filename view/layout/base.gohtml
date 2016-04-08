@@ -1,6 +1,7 @@
 @{
     import (
 		"wanderinglunch/setting"
+        m "wanderinglunch/model"
 	)
 
 	var body string
@@ -28,6 +29,14 @@
                 </li>
             </ul>
         </nav>
+        <div class="grid-1-center">
+            @{
+                ad, _ := m.GetAdToShow(site)
+            }
+            @if setting.LogLevel != "debug" {
+                @raw(ad.Value)
+            }
+        </div>
     </header>
     <main class="content">
 	    @body

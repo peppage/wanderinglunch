@@ -73,3 +73,6 @@ insert into sites VALUES('nyc', 'NYC Food Truck Finder');
 alter table trucks drop column loc;
 alter table trucks drop column matcher;
 alter table trucks drop column matchmethod;
+
+alter table ads drop column shape;
+delete from ads where id=2;
