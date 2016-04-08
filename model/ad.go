@@ -14,19 +14,20 @@ type Ad struct {
 	Site       string `json:"site"`
 }
 
-var adStack util.Stack
+var adStacks map[string]*util.Stack
 
 //GetAdToShow gets the correct ad to show on the site
 func GetAdToShow(siteName string) (*Ad, error) {
-	if adStack.Len() == 0 {
+	if val, ok := adStacks[siteName]; !ok || val.Len() == 0 {
 		err := fillStack(siteName)
 		if err != nil {
 			return nil, err
 		}
 	}
-	a, _ := adStack.Pop()
+	a, _ := adStacks[siteName].Pop()
 	ad := a.(Ad)
 	return &ad, nil
+
 }
 
 func fillStack(siteName string) error {
@@ -36,10 +37,11 @@ func fillStack(siteName string) error {
 		return err
 	}
 
+	adStacks[siteName] = &util.Stack{}
 	for rows.Next() {
 		ad := Ad{}
 		rows.StructScan(&ad)
-		adStack.Push(ad)
+		adStacks[siteName].Push(ad)
 	}
 	return nil
 }

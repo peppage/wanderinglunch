@@ -1,6 +1,8 @@
 package model
 
 import (
+	"wanderinglunch/util"
+
 	log "github.com/Sirupsen/logrus"
 	_ "github.com/jackc/pgx/stdlib"
 	"github.com/jmoiron/sqlx"
@@ -14,4 +16,5 @@ func init() {
 	if err != nil {
 		log.WithError(err).Error("Failed to connect to sql")
 	}
+	adStacks = make(map[string]*util.Stack)
 }
