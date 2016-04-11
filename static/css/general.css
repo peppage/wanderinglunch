@@ -96,3 +96,7 @@ input:focus {
         display:none
     }
 }
+
+.truck--category {
+    color: #8d8d8d;
+}
