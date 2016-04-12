@@ -12,6 +12,7 @@ import (
 
 	log "github.com/Sirupsen/logrus"
 	"github.com/labstack/echo"
+	"github.com/labstack/echo/middleware"
 	"github.com/rifflock/lfshook"
 )
 
@@ -32,6 +33,7 @@ func init() {
 
 func main() {
 	e := echo.New()
+	e.Use(middleware.Recover())
 
 	e.File("./static/google7edb19ba8a4a91bb.html", "/google7edb19ba8a4a91bb.html")
 	e.File("/favicon.ico", "./static/images/favicon.ico")
