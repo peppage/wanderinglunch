@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"net/http"
 	mdl "wanderinglunch/model"
 	"wanderinglunch/setting"
@@ -39,6 +40,7 @@ func main() {
 	e.Get("/:site", root)
 	e.Get("/:site/alltrucks", allTrucks)
 	e.Get("/:site/lastupdate", lastUpdate)
+	e.Get("/:site/map", maps)
 
 	log.Info("Server (version " + "null" + ") started on port " + setting.HTTPPort)
 	e.Run(fasthttp.New(":" + setting.HTTPPort))
@@ -137,6 +139,24 @@ func lastUpdate(c echo.Context) error {
 			log.WithError(err).Error("Unable to retrieve last update")
 		}
 		return c.JSON(http.StatusOK, lu)
+	}
+	return echo.NewHTTPError(http.StatusBadRequest, "")
+}
+
+func maps(c echo.Context) error {
+	siteName := c.Param("site")
+	if siteName != "" {
+		site, err := mdl.GetSite(siteName)
+		if err != nil {
+			log.WithFields(log.Fields{
+				"site": site,
+				"err":  err,
+			}).Error("Failed getting that site")
+			return echo.NewHTTPError(http.StatusNotFound, "")
+		}
+		m := mdl.Markers(siteName, 8)
+		mj, _ := json.Marshal(m)
+		return c.HTML(http.StatusOK, view.Map(site, string(mj)))
 	}
 	return echo.NewHTTPError(http.StatusBadRequest, "")
 }
