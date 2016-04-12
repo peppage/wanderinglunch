@@ -33,6 +33,8 @@ func init() {
 func main() {
 	e := echo.New()
 
+	e.File("./static/google7edb19ba8a4a91bb.html", "/google7edb19ba8a4a91bb.html")
+	e.File("/favicon.ico", "./static/images/favicon.ico")
 	e.Static("/static/", "static")
 
 	e.Get("/", root)
