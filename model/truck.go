@@ -154,3 +154,15 @@ func LastUpdate(siteName string) (int64, error) {
 	err := db.Get(&lastUpdate, `select lastUpdate from trucks where site = $1 order by lastupdate desc limit 1`, siteName)
 	return lastUpdate, err
 }
+
+func GetFailedUpdates(siteName string) ([]*Truck, error) {
+	now := time.Now()
+	t1 := now.Add(-24 * (time.Minute * 60)).Unix()
+	t2 := time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, now.Location()).Unix() // Start of the day
+
+	var trucks []*Truck
+	err := db.Select(&trucks, `SELECT trucks.twitname FROM trucks LEFT JOIN tweets ON trucks.twitname = tweets.twitname WHERE
+        lastupdate < $1 AND time > $2 AND site = $3`, t1, t2, siteName)
+
+	return trucks, err
+}

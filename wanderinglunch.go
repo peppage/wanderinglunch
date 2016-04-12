@@ -47,6 +47,9 @@ func main() {
 	e.Get("/:site/map", maps)
 	e.Get("/:site/feedback", feedback)
 
+	ad := e.Group("/admin")
+	ad.Get("", adminRoot)
+
 	log.Info("Server (version " + "null" + ") started on port " + setting.HTTPPort)
 	e.Run(fasthttp.New(":" + setting.HTTPPort))
 

@@ -1,0 +1,48 @@
+@{
+    import (
+        "wanderinglunch/util"
+	)
+
+	var body string
+	var title string
+    var site string
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="/favicon.ico" rel="shortcut icon">
+	<title>Wandering Lunch: @title</title>
+    <link rel="stylesheet" href="/static/site.css?v=@util.Md5File("/static/site.css")">
+</head>
+<body>
+    <header>
+        <div class="grid-1-center">
+            <a href="/@site"><img src="/static/images/wl.png"></a>
+        </div>
+        <nav class="grid-1-center">
+            <ul>
+                <li>
+                    <a href="/@site/alltrucks">All Trucks</a>
+                </li>
+                <li>
+                    <a href="/@site/map">Map</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <main class="content">
+	    @body
+    </main>
+    <footer>
+        <div class="grid-1-center">
+            <div class="col-7">
+                <div class="footer--left">
+                    <a href="http://twitter.com/peppage">Twitter</a><br>
+                    <a href="/@site/feedback">Feedback</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="/static/site.js?v=@util.Md5File("/static/site.js")"></script>
+</body>
+</html>

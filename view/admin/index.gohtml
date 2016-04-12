@@ -1,0 +1,36 @@
+@{
+    import (
+        "wanderinglunch/view/layout/baseadmin"
+        m "wanderinglunch/model"
+    )
+    var trucks []*m.Truck
+}
+
+@section title {
+	return "Wandering Lunch: Admin | index"
+}
+
+@section site {
+    return "nyc"
+}
+
+<div class="grid-1-center">
+    <div class="col-7">
+        <h1>Possible missing location</h1>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for _, t := range trucks {
+                    <td>
+                        <a href="/admin/fix/@t.Twitname">@t.Twitname</a>
+                    </td>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
