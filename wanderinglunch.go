@@ -41,6 +41,7 @@ func main() {
 	e.Get("/:site/alltrucks", allTrucks)
 	e.Get("/:site/lastupdate", lastUpdate)
 	e.Get("/:site/map", maps)
+	e.Get("/:site/feedback", feedback)
 
 	log.Info("Server (version " + "null" + ") started on port " + setting.HTTPPort)
 	e.Run(fasthttp.New(":" + setting.HTTPPort))
@@ -157,6 +158,22 @@ func maps(c echo.Context) error {
 		m := mdl.Markers(siteName, 8)
 		mj, _ := json.Marshal(m)
 		return c.HTML(http.StatusOK, view.Map(site, string(mj)))
+	}
+	return echo.NewHTTPError(http.StatusBadRequest, "")
+}
+
+func feedback(c echo.Context) error {
+	siteName := c.Param("site")
+	if siteName != "" {
+		site, err := mdl.GetSite(siteName)
+		if err != nil {
+			log.WithFields(log.Fields{
+				"site": site,
+				"err":  err,
+			}).Error("Failed getting that site")
+			return echo.NewHTTPError(http.StatusNotFound, "")
+		}
+		return c.HTML(http.StatusOK, view.Feedback(site))
 	}
 	return echo.NewHTTPError(http.StatusBadRequest, "")
 }
