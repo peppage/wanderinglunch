@@ -38,8 +38,10 @@ func main() {
 	e.Get("/", root)
 	e.Get("/truck/:name", truck)
 	e.Get("/:site", root)
+	e.Get("/alltrucks", allTrucks)
 	e.Get("/:site/alltrucks", allTrucks)
 	e.Get("/:site/lastupdate", lastUpdate)
+	e.Get("/map", maps)
 	e.Get("/:site/map", maps)
 	e.Get("/:site/feedback", feedback)
 
@@ -159,7 +161,7 @@ func maps(c echo.Context) error {
 		mj, _ := json.Marshal(m)
 		return c.HTML(http.StatusOK, view.Map(site, string(mj)))
 	}
-	return echo.NewHTTPError(http.StatusBadRequest, "")
+	return c.Redirect(http.StatusMovedPermanently, "/nyc/map")
 }
 
 func feedback(c echo.Context) error {
