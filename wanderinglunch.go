@@ -62,6 +62,7 @@ func main() {
 		ad.Use(secure())
 	}
 	ad.Get("", adminRoot)
+	ad.Get("/setSite", setSite)
 
 	log.Info("Server (version " + setting.Version + ") started on port " + setting.HTTPPort)
 	e.Run(standard.New(":" + setting.HTTPPort))
@@ -80,6 +81,7 @@ func loginHandle(c echo.Context) error {
 	}
 	session := session.Default(c)
 	session.Set("user", u.Email)
+	session.Set("site", "nyc")
 	session.Save()
 	return c.Redirect(http.StatusSeeOther, "/admin")
 }

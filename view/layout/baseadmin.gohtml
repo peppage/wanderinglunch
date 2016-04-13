@@ -1,11 +1,15 @@
 @{
     import (
         "wanderinglunch/util"
+        mdl "wanderinglunch/model"
 	)
 
 	var body string
 	var title string
     var site string
+}
+@{
+    sites, _ := mdl.GetSites()
 }
 <!DOCTYPE html>
 <html>
@@ -29,6 +33,14 @@
                 </li>
             </ul>
         </nav>
+        <div class="grid-1-center">
+            <select class="js-siteSwitch">
+                <option value="">Select</option>
+                @for _, v := range sites {
+                    <option value="@v">@v</option>
+                }
+            </select>
+        </div>
     </header>
     <main class="content">
 	    @body
