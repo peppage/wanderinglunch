@@ -63,7 +63,7 @@ func main() {
 	}
 	ad.Get("", adminRoot)
 
-	log.Info("Server (version " + "null" + ") started on port " + setting.HTTPPort)
+	log.Info("Server (version " + setting.Version + ") started on port " + setting.HTTPPort)
 	e.Run(standard.New(":" + setting.HTTPPort))
 
 }
