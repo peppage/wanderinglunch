@@ -8,13 +8,18 @@ import (
 	"wanderinglunch/updator"
 	"wanderinglunch/view"
 
-	"github.com/labstack/echo/engine/fasthttp"
+	"github.com/labstack/echo/engine/standard"
+	"github.com/peppage/echo-middleware/session"
 
 	log "github.com/Sirupsen/logrus"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	"github.com/rifflock/lfshook"
 )
+
+const secret = "D3MtG1ixqlhavdbxmBclkKvjYtBqWUQexsVCsr5xNWO1af36hZnZP"
+
+var store = session.NewCookieStore([]byte(secret))
 
 func init() {
 	setting.Initialize()
@@ -33,6 +38,7 @@ func init() {
 
 func main() {
 	e := echo.New()
+	e.Use(session.Sessions("session", store))
 	e.Use(middleware.Recover())
 
 	e.File("./static/google7edb19ba8a4a91bb.html", "/google7edb19ba8a4a91bb.html")
@@ -40,6 +46,8 @@ func main() {
 	e.Static("/static/", "static")
 
 	e.Get("/", root)
+	e.Get("/login", login)
+	e.Post("/login", loginHandle)
 	e.Get("/truck/:name", truck)
 	e.Get("/:site", root)
 	e.Get("/alltrucks", allTrucks)
@@ -50,11 +58,28 @@ func main() {
 	e.Get("/:site/feedback", feedback)
 
 	ad := e.Group("/admin")
+	ad.Use(secure())
 	ad.Get("", adminRoot)
 
 	log.Info("Server (version " + "null" + ") started on port " + setting.HTTPPort)
-	e.Run(fasthttp.New(":" + setting.HTTPPort))
+	e.Run(standard.New(":" + setting.HTTPPort))
 
+}
+
+func login(c echo.Context) error {
+	return c.HTML(http.StatusOK, view.Login())
+}
+
+func loginHandle(c echo.Context) error {
+	u, err := mdl.VerifyPassword(c.FormValue("email"), c.FormValue("password"))
+	if err != nil {
+		c.Response().Header().Set("Method", "GET")
+		return echo.NewHTTPError(http.StatusUnauthorized) // The user is invalid!
+	}
+	session := session.Default(c)
+	session.Set("user", u.Email)
+	session.Save()
+	return c.Redirect(http.StatusSeeOther, "/admin")
 }
 
 func truck(c echo.Context) error {
