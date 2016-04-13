@@ -1,10 +1,14 @@
-hash: c953e5e7d69ef58b79c087012625d37f6e3387e77531a5f455767c29236b76f9
-updated: 2016-04-06T17:51:36.9034207-04:00
+hash: 3f34d4ab0620af3931efdd1b2d7058ad688fc11e95a6bfb6073f224d4f9e1486
+updated: 2016-04-13T01:39:27.7930359-04:00
 imports:
 - name: github.com/azr/backoff
   version: 53511d3c733003985b0b76f733df1f4d0095ee6a
   subpackages:
   - github.com\azr\backoff
+- name: github.com/boj/redistore
+  version: fc113767cd6b051980f260d6dbe84b2740c46ab0
+  subpackages:
+  - github.com\boj\redistore
 - name: github.com/ChimeraCoder/anaconda
   version: afffdbac178c0e78746ea42d7c1af963cb7ef28e
   subpackages:
@@ -25,35 +29,44 @@ imports:
   version: 255d509a6f270332ffcaef6723047891319a2ffb
   subpackages:
   - github.com\garyburd\go-oauth\oauth
+- name: github.com/garyburd/redigo
+  version: ce1a27ee3580899e78d08b978a07daed1bfe1773
+  subpackages:
+  - github.com\garyburd\redigo\redis
+  - github.com\garyburd\redigo\internal
+- name: github.com/gorilla/context
+  version: 1ea25387ff6f684839d82767c1733ff4d4d15d0a
+  subpackages:
+  - github.com\gorilla\context
+- name: github.com/gorilla/securecookie
+  version: 8dacca26977607e637262eb66b15b7d39f2d3009
+  subpackages:
+  - github.com\gorilla\securecookie
+- name: github.com/gorilla/sessions
+  version: a1216e0aed834aa9074063dd4085f5c3df8d1fab
+  subpackages:
+  - github.com\gorilla\sessions
 - name: github.com/jackc/pgx
   version: 04e9fbcc55fe2865bdef4d96f18042f214ada36f
   subpackages:
   - github.com\jackc\pgx\stdlib
   - github.com\jackc\pgx
+- name: github.com/jasonlvhit/gocron
+  version: 0b564bf03e9665599efbcba1c6fba3d84212c197
+  subpackages:
+  - github.com\jasonlvhit\gocron
 - name: github.com/jmoiron/sqlx
   version: 398dd5876282499cdfd4cb8ea0f31a672abe9495
   subpackages:
   - github.com\jmoiron\sqlx
   - github.com\jmoiron\sqlx\reflectx
-- name: github.com/klauspost/compress
-  version: 9d711f4445beb7f6488148ce04e3b4dc6e72242d
-  subpackages:
-  - github.com\klauspost\compress\flate
-  - github.com\klauspost\compress\gzip
-  - github.com\klauspost\compress\zlib
-- name: github.com/klauspost/cpuid
-  version: 09cded8978dc9e80714c4d85b0322337b0a1e5e0
-  subpackages:
-  - github.com\klauspost\cpuid
-- name: github.com/klauspost/crc32
-  version: 19b0b332c9e4516a6370a0456e6182c3b5036720
-  subpackages:
-  - github.com\klauspost\crc32
 - name: github.com/labstack/echo
   version: adad28012c91fd1eb90a90422ef879dc0e28686a
   subpackages:
   - github.com\labstack\echo
   - github.com\labstack\echo\engine\fasthttp
+  - github.com\labstack\echo\engine\standard
+  - github.com\labstack\echo\middleware
   - github.com\labstack\echo\engine
 - name: github.com/labstack/gommon
   version: f4ba73f8bcf88df1524069c117f7878cf530ee4e
@@ -76,6 +89,11 @@ imports:
   version: d6a90e60edcdbd4e9abe88338d811d0cbb43d324
   subpackages:
   - github.com\pelletier\go-toml
+- name: github.com/peppage/echo-middleware
+  version: 78381b0fb0ae76af337cb3b5f22ab0057c269e58
+  subpackages:
+  - session
+  - github.com\peppage\echo-middleware\session
 - name: github.com/rifflock/lfshook
   version: 05a24e24fa8d3a2eca8c2baf23aa2d5a2c51490c
   subpackages:
@@ -88,14 +106,15 @@ imports:
   version: 4b6ea7319e214d98c938f12692336f7ca9348d6b
   subpackages:
   - github.com\Sirupsen\logrus
-- name: github.com/valyala/fasthttp
-  version: e9544cbb6fb446b65697099b65ff43cb7e225d7a
-  subpackages:
-  - github.com\valyala\fasthttp
 - name: github.com/valyala/fasttemplate
   version: 3b874956e03f1636d171bda64b130f9135f42cff
   subpackages:
   - github.com\valyala\fasttemplate
+- name: golang.org/x/crypto
+  version: d68c3ecb62c850b645dc072a8d78006286bf81ca
+  subpackages:
+  - golang.org\x\crypto\bcrypt
+  - golang.org\x\crypto\blowfish
 - name: golang.org/x/net
   version: 318395d8b12f5dd0f1b7cd0fbb95195f49acb0f9
   subpackages:

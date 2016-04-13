@@ -23,3 +23,6 @@ import:
   subpackages:
   - github.com\sipin\gorazor\gorazor
 - package: github.com/pelletier/go-toml
+- package: github.com/peppage/echo-middleware
+  subpackages:
+  - session
