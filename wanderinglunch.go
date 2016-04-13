@@ -58,7 +58,9 @@ func main() {
 	e.Get("/:site/feedback", feedback)
 
 	ad := e.Group("/admin")
-	ad.Use(secure())
+	if setting.LogLevel != "debug" {
+		ad.Use(secure())
+	}
 	ad.Get("", adminRoot)
 
 	log.Info("Server (version " + "null" + ") started on port " + setting.HTTPPort)
