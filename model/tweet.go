@@ -1,6 +1,9 @@
 package model
 
-import "strconv"
+import (
+	"strconv"
+	"time"
+)
 
 type Tweet struct {
 	Text      string `json:"contents"`
@@ -22,4 +25,8 @@ func GetTweets(twitname string) ([]*Tweet, error) {
 	var tweets []*Tweet
 	err := db.Select(&tweets, `SELECT * FROM tweets WHERE twitname = $1`, twitname)
 	return tweets, err
+}
+
+func (t Tweet) CreatedAtTime() time.Time {
+	return time.Unix(t.Time, 0)
 }
