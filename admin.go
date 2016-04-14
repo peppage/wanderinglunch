@@ -3,6 +3,7 @@ package main
 import (
 	"net/http"
 	mdl "wanderinglunch/model"
+	"wanderinglunch/updator"
 	"wanderinglunch/view/admin"
 
 	log "github.com/Sirupsen/logrus"
@@ -26,4 +27,13 @@ func adminRoot(c echo.Context) error {
 	}
 
 	return c.HTML(http.StatusOK, admin.Index(trucks))
+}
+
+func debug(c echo.Context) error {
+	n := c.QueryParam("twitname")
+	if n != "" {
+		texts, _ := updator.GetReplacedStrings(n)
+		return c.HTML(http.StatusOK, admin.Debugshow(texts))
+	}
+	return c.HTML(http.StatusOK, admin.Debug())
 }

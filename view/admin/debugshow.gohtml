@@ -1,0 +1,24 @@
+@{
+    import (
+        "wanderinglunch/view/layout/baseadmin"
+    )
+    var texts []string
+}
+
+@section title {
+	return "Wandering Lunch: Admin | Location Finder"
+}
+
+@section site {
+    return "nyc"
+}
+
+<div class="grid-1-center">
+    <div class="col-7">
+        <ul>
+            @for _, t := range texts {
+                <li>@t</li>
+            }
+        </ul>
+    </div>
+</div>

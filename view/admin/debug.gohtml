@@ -1,0 +1,22 @@
+@{
+    import (
+        "wanderinglunch/view/layout/baseadmin"
+    )
+}
+
+@section title {
+	return "Wandering Lunch: Admin | Location Finder"
+}
+
+@section site {
+    return "nyc"
+}
+
+<div class="grid-1-center">
+    <div class="col-7">
+        <form method="get">
+            <label>Twitname</label>
+            <input type="text" name="twitname"><input type="submit" value="Submit">
+        </form>
+    </div>
+</div>
