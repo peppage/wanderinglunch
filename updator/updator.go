@@ -106,11 +106,7 @@ func findLocations(tweets []anaconda.Tweet, locations []*mdl.Location, subs []*m
 	for _, t := range tweets {
 		createdTime, _ := t.CreatedAtTime()
 		if createdTime.After(time.Now().Add(time.Hour * -8)) {
-			text := t.Text
-			for _, s := range subs {
-				r, _ := regexp.Compile(s.Regex)
-				text = r.ReplaceAllString(text, s.Replacement)
-			}
+			text := doReplacements(t.Text, subs)
 			for _, l := range locations {
 				matched, _ := regexp.MatchString(l.Matcher, strings.ToLower(text))
 				if matched {
@@ -131,4 +127,35 @@ func findLocations(tweets []anaconda.Tweet, locations []*mdl.Location, subs []*m
 			log.WithError(err).Error("Failed updated locations for trucK")
 		}
 	}
+}
+
+// Do all substitutions inside tweet text
+func doReplacements(text string, subs []*mdl.Sub) string {
+	for _, s := range subs {
+		r, _ := regexp.Compile(s.Regex)
+		text = r.ReplaceAllString(text, s.Replacement)
+	}
+	return text
+}
+
+//GetReplacedStrings gets subsituted text of latest tweets
+func GetReplacedStrings(twitname string) ([]string, error) {
+	replaced := []string{}
+	tweets, err := mdl.GetTweets(twitname)
+	if err != nil {
+		return nil, err
+	}
+
+	subs, err := mdl.GetSubs()
+	if err != nil {
+		return nil, err
+	}
+
+	for _, t := range tweets {
+		if t.CreatedAtTime().After(time.Now().Add(time.Hour * -8)) {
+			text := doReplacements(t.Text, subs)
+			replaced = append(replaced, text)
+		}
+	}
+	return replaced, nil
 }
