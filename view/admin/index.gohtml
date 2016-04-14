@@ -26,9 +26,11 @@
             </thead>
             <tbody>
                 @for _, t := range trucks {
-                    <td>
-                        <a href="/admin/fix/@t.Twitname">@t.Twitname</a>
-                    </td>
+                    <tr>
+                        <td>
+                            <a href="/admin/fix/@t.Twitname">@t.Twitname</a>
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>
