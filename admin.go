@@ -26,7 +26,15 @@ func adminRoot(c echo.Context) error {
 		log.WithError(err).Error("Failed getting admin trucks")
 	}
 
-	return c.HTML(http.StatusOK, admin.Index(trucks))
+	s, err := mdl.GetSite(site)
+	if err != nil {
+		log.WithFields(log.Fields{
+			"err": err,
+		}).Error("Failed getting that site")
+		return echo.NewHTTPError(http.StatusNotFound, "")
+	}
+
+	return c.HTML(http.StatusOK, admin.Index(s, trucks))
 }
 
 func debug(c echo.Context) error {

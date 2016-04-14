@@ -3,6 +3,7 @@
         "wanderinglunch/view/layout/baseadmin"
         m "wanderinglunch/model"
     )
+    var s *m.Site
     var trucks []*m.Truck
 }
 
@@ -11,7 +12,7 @@
 }
 
 @section site {
-    return "nyc"
+    return s.Name
 }
 
 <div class="grid-1-center">
@@ -28,7 +29,7 @@
                 @for _, t := range trucks {
                     <tr>
                         <td>
-                            <a href="/admin/fix/@t.Twitname">@t.Twitname</a>
+                            <a href="/admin/debug?twitname=@t.Twitname">@t.Twitname</a>
                         </td>
                     </tr>
                 }
