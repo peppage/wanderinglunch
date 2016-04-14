@@ -162,7 +162,6 @@ func GetFailedUpdates(siteName string) ([]*Truck, error) {
 
 	var trucks []*Truck
 	err := db.Select(&trucks, `SELECT trucks.twitname FROM trucks LEFT JOIN tweets ON trucks.twitname = tweets.twitname WHERE
-        lastupdate < $1 AND time > $2 AND site = $3`, t1, t2, siteName)
-
+        lastupdate < $1 AND time > $2 AND site = $3 GROUP BY trucks.twitname`, t1, t2, siteName)
 	return trucks, err
 }
