@@ -1,0 +1,65 @@
+@{
+    import (
+        "wanderinglunch/view/layout/baseadmin"
+        m "wanderinglunch/model"
+    )
+    var s *m.Site
+    var sites []string
+}
+
+@section title {
+	return "Wandering Lunch: Admin | New Truck"
+}
+
+@section site {
+    return "nyc"
+}
+
+<div class="grid-1-center">
+    <div class="col-7">
+        <h1>Add Truck</h1>
+
+        <form method="post">
+            <label>Id</label><br>
+            <input type="text"><br>
+
+            <label>Name</label><br>
+            <input type="text"><br>
+
+            <label>Twitname</label><br>
+            <input type="text"><br>
+
+            <label>Web Url</label><br>
+            <input type="text"><br>
+
+            <label>Type</label><br>
+            <input type="text"><br>
+
+            <label>About</label><br>
+            <input type="text"><br>
+
+            <label>Foursquare</label><br>
+            <input type="text"><br>
+
+            <label>Matcher</label><br>
+            <input type="text"><br>
+
+            <label>Match Method</label><br>
+            <input type="text"><br>
+
+            <label>Site</label><br>
+            <input type="text"><br>
+
+            <label>Existing Sites</label>
+            <select class="js-sites">
+                <option value="">Select</option>
+                @for _, s := range sites {
+                    <option value="@s">@s</option>
+                }
+            </select>
+            <br><br>
+
+            <button type="submit">Save</button>
+        </form>
+    </div>
+</div>

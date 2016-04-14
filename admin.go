@@ -45,3 +45,21 @@ func debug(c echo.Context) error {
 	}
 	return c.HTML(http.StatusOK, admin.Debug())
 }
+
+func truckNew(c echo.Context) error {
+	session := session.Default(c)
+	site := session.Get("site").(string)
+	s, err := mdl.GetSite(site)
+	if err != nil {
+		log.WithFields(log.Fields{
+			"err": err,
+		}).Error("Failed getting that site")
+		return echo.NewHTTPError(http.StatusNotFound, "")
+	}
+
+	sites, err := mdl.GetSites()
+	if err != nil {
+		log.WithError(err).Error("Failed gettings sites")
+	}
+	return c.HTML(http.StatusOK, admin.Trucknew(s, sites))
+}
