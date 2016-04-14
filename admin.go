@@ -13,7 +13,7 @@ import (
 
 func setSite(c echo.Context) error {
 	session := session.Default(c)
-	session.Set("site", c.Param("site"))
+	session.Set("site", c.QueryParam("site"))
 	session.Save()
 	return c.JSON(http.StatusOK, "ok")
 }
