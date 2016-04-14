@@ -76,3 +76,5 @@ alter table trucks drop column matchmethod;
 
 alter table ads drop column shape;
 delete from ads where id=2;
+
+update locations set matcher='46 ?(th|st)? (between ?)?(5th ?& ?6(th)?|5 ?& ?6|& 5~6)' where id=14
