@@ -289,3 +289,17 @@ func aAds(c echo.Context) error {
 	ads, _ := mdl.GetAds()
 	return c.HTML(http.StatusOK, admin.Ads(s, ads))
 }
+
+func aLocations(c echo.Context) error {
+	session := session.Default(c)
+	site := session.Get("site").(string)
+	s, err := mdl.GetSite(site)
+	if err != nil {
+		log.WithFields(log.Fields{
+			"err": err,
+		}).Error("Failed getting that site")
+		return echo.NewHTTPError(http.StatusNotFound, err.Error())
+	}
+	locations, _ := mdl.GetLocations()
+	return c.HTML(http.StatusOK, admin.Locs(s, locations[site]))
+}
