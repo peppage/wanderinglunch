@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"strconv"
 	mdl "wanderinglunch/model"
 	"wanderinglunch/updator"
 	"wanderinglunch/view/admin"
@@ -109,6 +110,47 @@ func subSave(c echo.Context) error {
 			"regex": c.FormValue("regex"),
 			"err":   err,
 		}).Error("Failed adding sub")
+		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
+	}
+	return c.Redirect(http.StatusSeeOther, "/admin")
+}
+
+func adNew(c echo.Context) error {
+	session := session.Default(c)
+	site := session.Get("site").(string)
+	s, err := mdl.GetSite(site)
+	if err != nil {
+		log.WithFields(log.Fields{
+			"err": err,
+		}).Error("Failed getting that site")
+		return echo.NewHTTPError(http.StatusNotFound, err.Error())
+	}
+
+	sites, err := mdl.GetSites()
+	if err != nil {
+		log.WithError(err).Error("Failed gettings sites")
+	}
+
+	return c.HTML(http.StatusOK, admin.Adnew(s, sites))
+}
+
+func adSave(c echo.Context) error {
+	i, err := strconv.ParseInt(c.FormValue("validuntil"), 10, 64)
+	if err != nil {
+		log.WithError(err).Error("Failed converting validuntil, saving ad")
+		return echo.NewHTTPError(http.StatusBadRequest, "Valid Unil NaN")
+	}
+	err = mdl.AddAd(mdl.Ad{
+		Name:       c.FormValue("name"),
+		Value:      c.FormValue("value"),
+		ValidUntil: i,
+		Site:       c.FormValue("site"),
+	})
+	if err != nil {
+		log.WithFields(log.Fields{
+			"name": c.FormValue("name"),
+			"err":  err,
+		}).Error("Failed adding ad")
 		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 	}
 	return c.Redirect(http.StatusSeeOther, "/admin")

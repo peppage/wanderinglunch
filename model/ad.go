@@ -69,11 +69,12 @@ func DeleteAd(id string) error {
 }
 
 func AddAd(a Ad) error {
-	_, err := db.NamedExec(`INSERT INTO ads (name, value, validuntil, shape, site) VALUES (:name, :value, :validuntil, :shape, :site)`, a)
+	_, err := db.NamedExec(`INSERT INTO ads (name, value, validuntil, site) VALUES (:name, :value, :validuntil, :site)`, a)
 	return err
 }
 
 func UpdateAd(a Ad) error {
-	_, err := db.NamedExec(`UPDATE ads SET (name, value, validuntil, site, shape) = (:name, :value, :validuntil, :site, :shape) WHERE id=:id`, a)
+	_, err := db.NamedExec(`UPDATE ads SET (name, value, validuntil, site) =
+		(:name, :value, :validuntil, :site) WHERE id=:id`, a)
 	return err
 }
