@@ -78,19 +78,6 @@ a:hover {
     color: #368e7d;
 }
 
-input {
-    width: 100%;
-    line-height: 1.5;
-    padding: .375rem .75rem;
-    border: 1px solid #ccc;
-    border-radius: .25rem;
-}
-
-input:focus {
-    border-color: #f7972c;
-    outline: 0;
-}
-
 @media screen and (max-width: 750px) {
     .noMobile {
         display:none
