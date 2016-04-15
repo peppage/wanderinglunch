@@ -44,3 +44,18 @@ func AddLocation(l Location) error {
 			VALUES (:display, :matcher, :lat, :long, :zone, :site)`, l)
 	return err
 }
+
+func UpdateLocation(l Location) error {
+	if l.Display == "" || l.Matcher == "" || l.Lat == 0 || l.Long == 0 || l.Zone == "" || l.Site == "" {
+		return errors.New("Display, Matcher, Lat, Long, Zone, and Site are required")
+	}
+	_, err := db.NamedExec(
+		`UPDATE locations SET (display, matcher, lat, long) = (:display, :matcher, :lat, :long) WHERE id=:id`, l)
+	return err
+}
+
+func GetLocation(id string) (Location, error) {
+	var l Location
+	err := db.Get(&l, `SELECT * FROM locations WHERE id=$1`, id)
+	return l, err
+}

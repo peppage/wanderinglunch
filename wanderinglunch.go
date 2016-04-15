@@ -85,6 +85,8 @@ func main() {
 	ad.Get("/ad/edit", adEdit)
 	ad.Post("/ad/edit", adUpdate)
 	ad.Get("/locations", aLocations)
+	ad.Get("/location/edit", locEdit)
+	ad.Post("/location/edit", locUpdate)
 	ad.Get("/sites", aSites)
 
 	log.Info("Server (version " + setting.Version + ") started on port " + setting.HTTPPort)

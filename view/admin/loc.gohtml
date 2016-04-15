@@ -6,6 +6,7 @@
     var s *m.Site
     var sites []*m.Site
     var zones []string
+    var l *m.Location
 }
 
 @section title {
@@ -26,20 +27,21 @@
         </p>
 
         <form method="post">
+            <input type="hidden" name="id" value="@l.ID">
             <label>Display</label><br>
-            <input type="text" name="display"><br>
+            <input type="text" name="display" value="@l.Display"><br>
 
             <label>Matcher</label><br>
-            <input type="text" name="matcher"><br>
+            <input type="text" name="matcher" value="@l.Matcher"><br>
 
             <label>Latitude</label><br>
-            <input type="text" name="lat"><br>
+            <input type="text" name="lat" value="@l.Lat"><br>
 
             <label>Longitude</label><br>
-            <input type="text" name="long"><br>
+            <input type="text" name="long" value="@l.Long"><br>
             
             <label>Zone</label><br>
-            <input type="text" name="zone"><br>
+            <input type="text" name="zone" value="@l.Zone"><br>
             <span class="help-text">
                 @for _, z := range zones {
                     <b>@z, </b>
@@ -49,7 +51,11 @@
 
             <label>Existing Sites</label>
             <select name="site">
-                <option value="">Select</option>
+                @if l.Site != "" {
+                    <option value="@l.Site">@l.Site</option>
+                } else {
+                    <option value="">Select</option>
+                }
                 @for _, s := range sites {
                     <option value="@s.Name">@s.Name</option>
                 }
