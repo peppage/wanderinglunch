@@ -87,3 +87,8 @@ a:hover {
 .truck--category {
     color: #8d8d8d;
 }
+
+.sub {
+    background-color: darkgray;
+    display: inline-block;
+}

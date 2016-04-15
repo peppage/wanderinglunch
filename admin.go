@@ -261,3 +261,17 @@ func truckUpdate(c echo.Context) error {
 	}
 	return c.Redirect(http.StatusSeeOther, "/admin")
 }
+
+func aSubs(c echo.Context) error {
+	session := session.Default(c)
+	site := session.Get("site").(string)
+	s, err := mdl.GetSite(site)
+	if err != nil {
+		log.WithFields(log.Fields{
+			"err": err,
+		}).Error("Failed getting that site")
+		return echo.NewHTTPError(http.StatusNotFound, err.Error())
+	}
+	subs, _ := mdl.GetSubs()
+	return c.HTML(http.StatusOK, admin.Subs(s, subs))
+}

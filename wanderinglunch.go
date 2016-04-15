@@ -76,6 +76,7 @@ func main() {
 	ad.Get("/trucks", aTrucks)
 	ad.Get("/truck/edit", truckEdit)
 	ad.Post("/truck/edit", truckUpdate)
+	ad.Get("/subs", aSubs)
 
 	log.Info("Server (version " + setting.Version + ") started on port " + setting.HTTPPort)
 	e.Run(standard.New(":" + setting.HTTPPort))
