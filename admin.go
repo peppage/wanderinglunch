@@ -275,3 +275,17 @@ func aSubs(c echo.Context) error {
 	subs, _ := mdl.GetSubs()
 	return c.HTML(http.StatusOK, admin.Subs(s, subs))
 }
+
+func aAds(c echo.Context) error {
+	session := session.Default(c)
+	site := session.Get("site").(string)
+	s, err := mdl.GetSite(site)
+	if err != nil {
+		log.WithFields(log.Fields{
+			"err": err,
+		}).Error("Failed getting that site")
+		return echo.NewHTTPError(http.StatusNotFound, err.Error())
+	}
+	ads, _ := mdl.GetAds()
+	return c.HTML(http.StatusOK, admin.Ads(s, ads))
+}
