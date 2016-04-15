@@ -69,7 +69,7 @@ func main() {
 	e.Get("/:site/feedback", feedback)
 
 	ad := e.Group("/admin")
-	if setting.Develop() {
+	if !setting.Develop() {
 		ad.Use(secure())
 	}
 	ad.Get("", adminRoot)
