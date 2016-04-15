@@ -332,3 +332,17 @@ func aLocations(c echo.Context) error {
 	locations, _ := mdl.GetLocations()
 	return c.HTML(http.StatusOK, admin.Locs(s, locations[site]))
 }
+
+func aSites(c echo.Context) error {
+	session := session.Default(c)
+	site := session.Get("site").(string)
+	s, err := mdl.GetSite(site)
+	if err != nil {
+		log.WithFields(log.Fields{
+			"err": err,
+		}).Error("Failed getting that site")
+		return echo.NewHTTPError(http.StatusNotFound, err.Error())
+	}
+	sites, _ := mdl.GetSites()
+	return c.HTML(http.StatusOK, admin.Sites(s, sites))
+}
