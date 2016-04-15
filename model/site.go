@@ -12,9 +12,9 @@ func GetSite(name string) (*Site, error) {
 	return &s, err
 }
 
-func GetSites() ([]string, error) {
-	var sites []string
-	err := db.Select(&sites, `SELECT site FROM locations GROUP BY site`)
+func GetSites() ([]*Site, error) {
+	var sites []*Site
+	err := db.Select(&sites, `SELECT * FROM sites`)
 	return sites, err
 }
 

@@ -4,7 +4,7 @@
         m "wanderinglunch/model"
     )
     var s *m.Site
-    var sites []string
+    var sites []*m.Site
 }
 
 @section title {
@@ -37,7 +37,7 @@
             <select name="site">
                 <option value="">Select</option>
                 @for _,s := range sites {
-                    <option value="@s">@s</option>
+                    <option value="@s.Name">@s.Name</option>
                 }
                 <option value="all">All</option>
             </select>
