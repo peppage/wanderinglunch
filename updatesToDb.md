@@ -79,3 +79,5 @@ delete from ads where id=2;
 
 update locations set matcher='46 ?(th|st)? (between ?)?(5th ?& ?6(th)?|5 ?& ?6|& 5~6)' where id=14
 update locations set matcher='49th between ?(6th & 7th|6 ?& ?7)' where id=21
+
+alter table trucks drop column lasttweet;

@@ -14,7 +14,6 @@ type Truck struct {
 	Twitname   string   `json:"twitname"`
 	Weburl     string   `json:"weburl"`
 	Retweeted  bool     `json:"retweeted"`
-	Lasttweet  int      `json:"lasttweet"`
 	Lastupdate int64    `json:"lastupdate"`
 	Updated    string   `json:"updated"`
 	Type       string   `json:"type"`
