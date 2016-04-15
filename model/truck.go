@@ -1,6 +1,7 @@
 package model
 
 import (
+	"errors"
 	"fmt"
 	"math"
 	"strconv"
@@ -164,4 +165,16 @@ func GetFailedUpdates(siteName string) ([]*Truck, error) {
 	err := db.Select(&trucks, `SELECT trucks.twitname FROM trucks LEFT JOIN tweets ON trucks.twitname = tweets.twitname WHERE
         lastupdate < $1 AND time > $2 AND site = $3 GROUP BY trucks.twitname`, t1, t2, siteName)
 	return trucks, err
+}
+
+// Can switch add/save to upsert after updating postgres
+
+func AddTruck(t Truck) error {
+	if t.ID == "" || t.Twitname == "" || t.Name == "" || t.Site == "" {
+		return errors.New("Id, Twitname, Name, and Site are required")
+	}
+	_, err := db.Exec(`INSERT INTO trucks (id, name, twitname, weburl, type, about, foursquare, site) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
+		t.ID, t.Name, t.Twitname, t.Weburl, t.Type, t.About, t.Foursquare, t.Site)
+	//Cache.Flush()
+	return err
 }

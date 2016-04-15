@@ -21,37 +21,28 @@
 
         <form method="post">
             <label>Id</label><br>
-            <input type="text"><br>
+            <input type="text" name="id"><br>
 
             <label>Name</label><br>
-            <input type="text"><br>
+            <input type="text" name="name"><br>
 
             <label>Twitname</label><br>
-            <input type="text"><br>
+            <input type="text" name="twitname"><br>
 
             <label>Web Url</label><br>
-            <input type="text"><br>
+            <input type="text" name="weburl"><br>
 
             <label>Type</label><br>
-            <input type="text"><br>
+            <input type="text" name="type"><br>
 
             <label>About</label><br>
-            <input type="text"><br>
+            <input type="text" name="about"><br>
 
             <label>Foursquare</label><br>
-            <input type="text"><br>
-
-            <label>Matcher</label><br>
-            <input type="text"><br>
-
-            <label>Match Method</label><br>
-            <input type="text"><br>
-
-            <label>Site</label><br>
-            <input type="text"><br>
+            <input type="text" name="foursquare"><br>
 
             <label>Existing Sites</label>
-            <select class="js-sites">
+            <select name="site">
                 <option value="">Select</option>
                 @for _, s := range sites {
                     <option value="@s">@s</option>

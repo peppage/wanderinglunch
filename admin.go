@@ -63,3 +63,24 @@ func truckNew(c echo.Context) error {
 	}
 	return c.HTML(http.StatusOK, admin.Trucknew(s, sites))
 }
+
+func truckSave(c echo.Context) error {
+	err := mdl.AddTruck(mdl.Truck{
+		ID:         c.FormValue("id"),
+		Name:       c.FormValue("name"),
+		Twitname:   c.FormValue("twitname"),
+		Weburl:     c.FormValue("weburl"),
+		Type:       c.FormValue("type"),
+		About:      c.FormValue("about"),
+		Foursquare: c.FormValue("foursquare"),
+		Site:       c.FormValue("site"),
+	})
+	if err != nil {
+		log.WithFields(log.Fields{
+			"err":  err,
+			"Name": c.FormValue("name"),
+		}).Error("Failed adding truck")
+		return c.Redirect(http.StatusSeeOther, "/admin/truck/add")
+	}
+	return c.Redirect(http.StatusSeeOther, "/admin")
+}
