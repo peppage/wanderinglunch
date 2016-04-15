@@ -72,6 +72,8 @@ func main() {
 	ad.Post("/ad/add", adSave)
 	ad.Get("/location/add", locNew)
 	ad.Post("/location/add", locSave)
+	ad.Get("/site/add", siteNew)
+	ad.Post("/site/add", siteSave)
 
 	ad.Get("/trucks", aTrucks)
 	ad.Get("/truck/edit", truckEdit)

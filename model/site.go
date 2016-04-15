@@ -17,3 +17,9 @@ func GetSites() ([]string, error) {
 	err := db.Select(&sites, `SELECT site FROM locations GROUP BY site`)
 	return sites, err
 }
+
+//AddSite adds a site to the database
+func AddSite(s Site) error {
+	_, err := db.NamedExec(`INSERT INTO sites (name, title) VALUES (:name, :title)`, s)
+	return err
+}

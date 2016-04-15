@@ -208,6 +208,35 @@ func locSave(c echo.Context) error {
 	return c.Redirect(http.StatusSeeOther, "/admin")
 }
 
+func siteNew(c echo.Context) error {
+	session := session.Default(c)
+	site := session.Get("site").(string)
+	s, err := mdl.GetSite(site)
+	if err != nil {
+		log.WithFields(log.Fields{
+			"err": err,
+		}).Error("Failed getting that site")
+		return echo.NewHTTPError(http.StatusNotFound, err.Error())
+	}
+
+	return c.HTML(http.StatusOK, admin.Site(s, &mdl.Site{}))
+}
+
+func siteSave(c echo.Context) error {
+	err := mdl.AddSite(mdl.Site{
+		Name:  c.FormValue("name"),
+		Title: c.FormValue("title"),
+	})
+	if err != nil {
+		log.WithFields(log.Fields{
+			"name": c.FormValue("name"),
+			"err":  err,
+		}).Error("Failed adding site")
+		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
+	}
+	return c.Redirect(http.StatusSeeOther, "/admin")
+}
+
 func aTrucks(c echo.Context) error {
 	session := session.Default(c)
 	site := session.Get("site").(string)

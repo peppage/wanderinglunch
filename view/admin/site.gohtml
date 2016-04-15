@@ -1,0 +1,35 @@
+@{
+    import (
+        "wanderinglunch/view/layout/baseadmin"
+        m "wanderinglunch/model"
+    )
+    var currentSite *m.Site
+    var s *m.Site
+}
+
+
+
+@section title {
+	return "Wandering Lunch: Admin | New Site"
+}
+
+@section site {
+    return currentSite.Name
+}
+
+<div class="grid-1-center">
+    <div class="col-7">
+        <h1>Add Site</h1>
+
+        <form method="post">
+            <label>Name</label><br>
+            <input type="text" name="name" value="@s.Name"><br>
+
+            <label>Title</label><br>
+            <input type="text" name="title" value="@s.Title"><br>
+            <br><br>
+
+            <button type="submit" class="button button--primary">Save</button>
+        </form>
+    </div>
+</div>
