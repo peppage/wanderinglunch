@@ -31,7 +31,7 @@ func init() {
 	if err == nil {
 		log.SetLevel(ll)
 	}
-	if setting.LogLevel == "debug" {
+	if setting.Develop() {
 		log.SetFormatter(&log.TextFormatter{})
 		log.AddHook(lfshook.NewHook(
 			lfshook.PathMap{
@@ -69,7 +69,7 @@ func main() {
 	e.Get("/:site/feedback", feedback)
 
 	ad := e.Group("/admin")
-	if setting.LogLevel != "debug" {
+	if setting.Develop() {
 		ad.Use(secure())
 	}
 	ad.Get("", adminRoot)

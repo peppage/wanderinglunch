@@ -39,3 +39,8 @@ func Initialize() {
 	LogLevel = config.Get("server.log_level").(string)
 	RunUpdator = config.Get("app.run_updator").(bool)
 }
+
+//Develop tells if the app is in develop mode
+func Develop() bool {
+	return LogLevel == "debug"
+}

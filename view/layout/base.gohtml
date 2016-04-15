@@ -35,7 +35,7 @@
             @{
                 ad, _ := m.GetAdToShow(site)
             }
-            @if setting.LogLevel != "debug" {
+            @if setting.Develop() {
                 @raw(ad.Value)
             }
         </div>
