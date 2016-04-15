@@ -106,7 +106,7 @@ func findLocations(tweets []anaconda.Tweet, locations []*mdl.Location, subs []*m
 	for _, t := range tweets {
 		createdTime, _ := t.CreatedAtTime()
 		if createdTime.After(time.Now().Add(time.Hour * -8)) {
-			text := doReplacements(t.Text, subs)
+			text := doReplacements(strings.ToLower(t.Text), subs)
 			for _, l := range locations {
 				matched, _ := regexp.MatchString(l.Matcher, strings.ToLower(text))
 				if matched {
@@ -153,7 +153,7 @@ func GetReplacedStrings(twitname string) ([]string, error) {
 
 	for _, t := range tweets {
 		if t.CreatedAtTime().After(time.Now().Add(time.Hour * -8)) {
-			text := doReplacements(t.Text, subs)
+			text := doReplacements(strings.ToLower(t.Text), subs)
 			replaced = append(replaced, text)
 		}
 	}
