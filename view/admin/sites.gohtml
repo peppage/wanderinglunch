@@ -30,7 +30,7 @@
             <tbody>
                 @for _, s := range sites {
                     <tr>
-                        <td><a href="/admin/site/edit?id=@s.Name">@s.Name</a></td>
+                        <td><a href="/admin/site/edit?name=@s.Name">@s.Name</a></td>
                         <td>@s.Title</td>
                         <td>delete</td>
                     </tr>

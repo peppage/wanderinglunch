@@ -492,3 +492,35 @@ func aSites(c echo.Context) error {
 	sites, _ := mdl.GetSites()
 	return c.HTML(http.StatusOK, admin.Sites(s, sites))
 }
+
+func siteEdit(c echo.Context) error {
+	session := session.Default(c)
+	site := session.Get("site").(string)
+	s, err := mdl.GetSite(site)
+	if err != nil {
+		log.WithFields(log.Fields{
+			"err": err,
+		}).Error("Failed getting that site")
+		return echo.NewHTTPError(http.StatusNotFound, err.Error())
+	}
+
+	thisSite, _ := mdl.GetSite(c.QueryParam("name"))
+
+	return c.HTML(http.StatusOK, admin.Site(s, thisSite))
+}
+
+func siteUpdate(c echo.Context) error {
+	err := mdl.UpdateSite(mdl.Site{
+		Name:  c.FormValue("name"),
+		Title: c.FormValue("tite"),
+	})
+
+	if err != nil {
+		log.WithFields(log.Fields{
+			"err":  err,
+			"Name": c.FormValue("name"),
+		}).Error("Failed updating site")
+		return echo.NewHTTPError(http.StatusInternalServerError, "")
+	}
+	return c.Redirect(http.StatusSeeOther, "/admin")
+}

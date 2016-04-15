@@ -23,3 +23,8 @@ func AddSite(s Site) error {
 	_, err := db.NamedExec(`INSERT INTO sites (name, title) VALUES (:name, :title)`, s)
 	return err
 }
+
+func UpdateSite(s Site) error {
+	_, err := db.NamedExec(`UPDATE sites SET title = :title WHERE name = :name`, s)
+	return err
+}
