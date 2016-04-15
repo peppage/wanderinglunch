@@ -12,18 +12,24 @@ import (
 	"github.com/ChimeraCoder/anaconda"
 	log "github.com/Sirupsen/logrus"
 	"github.com/jasonlvhit/gocron"
+	"github.com/peppage/foursquarego"
 )
 
 var consumerKey = os.Getenv("TWIT_CON_KEY")
 var consumerSecret = os.Getenv("TWIT_CON_SEC")
 var accessToken = os.Getenv("TWIT_ACCESS_TOKEN")
 var accessTokenSecret = os.Getenv("TWIT_ACCESS_SECRET")
+var clientID = os.Getenv("CLIENT_ID")
+var clientSecret = os.Getenv("CLIENT_SECRET")
 var api *anaconda.TwitterApi
+var sqAPI *foursquarego.FoursquareApi
 
 func Start() {
 	anaconda.SetConsumerKey(consumerKey)
 	anaconda.SetConsumerSecret(consumerSecret)
 	api = anaconda.NewTwitterApi(accessToken, accessTokenSecret)
+
+	sqAPI = foursquarego.NewFoursquareApi(clientID, clientSecret)
 
 	if setting.RunUpdator {
 		gocron.Every(15).Minutes().Do(task)
@@ -158,4 +164,53 @@ func GetReplacedStrings(twitname string) ([]string, error) {
 		}
 	}
 	return replaced, nil
+}
+
+func validatePhotos() {
+	uv := url.Values{}
+	uv.Set("limit", "200")
+	sites, err := mdl.GetSites()
+	if err != nil {
+		log.WithError(err).Error("Failed getting sites, validatePhotos")
+		return
+	}
+	for _, s := range sites {
+		trucks, err := mdl.AllTrucks(s.Name)
+		if err != nil {
+			log.WithError(err).Error("Failed getting trucks, validatePhotos")
+			return
+		}
+		for _, t := range trucks {
+			images, err := mdl.GetImages(t.Twitname)
+			if err != nil {
+				log.WithError(err).Error("Failed getting all images, validate photos")
+				return
+			}
+			if t.Foursquare != "" {
+				photos, err := sqAPI.GetVenuePhotos(t.Foursquare, uv)
+				if err != nil {
+					log.WithFields(log.Fields{
+						"err":          err,
+						"twitname":     t.Twitname,
+						"foursquareid": t.Foursquare,
+					}).Error("failed getting photos from 4sq")
+					return
+				}
+				for _, i := range images {
+					for _, p := range photos {
+						if p.ID == i.ID {
+							log.WithFields(log.Fields{
+								"id":        i.ID,
+								"twitname":  i.Twitname,
+								"visiblity": p.Visibility,
+							}).Debug("Updating image")
+							i.Visibility = p.Visibility
+							mdl.UpdateImage(*i)
+							break
+						}
+					}
+				}
+			}
+		}
+	}
 }

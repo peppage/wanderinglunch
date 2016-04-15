@@ -1,5 +1,5 @@
-hash: e366c7de935cfb1d5b8cb6b7f47149de2fbb1fdbcf39a4ee03fe91284f7927d2
-updated: 2016-04-15T16:24:33.5401646-04:00
+hash: d8059459a819e6253d95660bc0e3bb8627cada0fe67421a5e4cdc9a4f80f32ff
+updated: 2016-04-15T18:08:39.448693-04:00
 imports:
 - name: github.com/azr/backoff
   version: 53511d3c733003985b0b76f733df1f4d0095ee6a
@@ -94,6 +94,10 @@ imports:
   subpackages:
   - session
   - github.com\peppage\echo-middleware\session
+- name: github.com/peppage/foursquarego
+  version: 7310a0ee95dae24040efc9fd725703449c731c19
+  subpackages:
+  - github.com\peppage\foursquarego
 - name: github.com/rifflock/lfshook
   version: 05a24e24fa8d3a2eca8c2baf23aa2d5a2c51490c
   subpackages:

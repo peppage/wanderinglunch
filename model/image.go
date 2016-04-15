@@ -13,3 +13,8 @@ func GetImages(twitname string) ([]*Image, error) {
 	err := db.Select(&images, `SELECT * FROM images WHERE twitname = $1 ORDER BY menu DESC, id`, twitname)
 	return images, err
 }
+
+func UpdateImage(i Image) error {
+	_, err := db.NamedExec(`UPDATE images SET (suffix, visibility, twitname, menu) = (:suffix, :visibility, :twitname, :menu) WHERE id=:id`, i)
+	return err
+}

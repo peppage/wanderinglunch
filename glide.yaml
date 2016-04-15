@@ -28,3 +28,4 @@ import:
   - session
 - package: github.com/sebest/logrusly
 - package: github.com/segmentio/go-loggly
+- package: github.com/peppage/foursquarego

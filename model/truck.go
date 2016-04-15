@@ -89,8 +89,8 @@ func Trucks(site string, hours int, sort string, sortDir string, loc int) ([]*Tr
 }
 
 func AllTrucks(site string) ([]*Truck, error) {
-	rows, err := db.Queryx(`SELECT trucks.id AS id, trucks.name, trucks.twitname, trucks.lastupdate FROM trucks
-		WHERE trucks.site = $1 ORDER BY trucks.name`, site)
+	rows, err := db.Queryx(`SELECT trucks.id AS id, trucks.name, trucks.twitname, trucks.lastupdate, trucks.foursquare
+		FROM trucks WHERE trucks.site = $1 ORDER BY trucks.name`, site)
 
 	if err != nil {
 		return nil, err
