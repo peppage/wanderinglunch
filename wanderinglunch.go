@@ -50,6 +50,7 @@ func main() {
 	e := echo.New()
 	e.Use(session.Sessions("session", store))
 	e.Use(middleware.Recover())
+	e.SetHTTPErrorHandler(errorHandler)
 
 	e.File("./static/google7edb19ba8a4a91bb.html", "/google7edb19ba8a4a91bb.html")
 	e.File("/favicon.ico", "./static/images/favicon.ico")
@@ -102,6 +103,20 @@ func main() {
 	log.Info("Server (version " + setting.Version + ") started on port " + setting.HTTPPort)
 	e.Run(standard.New(":" + setting.HTTPPort))
 
+}
+
+func errorHandler(err error, c echo.Context) {
+	sites, err2 := mdl.GetSites()
+	if err.Error() == "Not Found" && err2 == nil {
+		c.HTML(http.StatusNotFound, view.Error404(sites))
+		return
+	}
+	if err.Error() == "Permission denied!" && err2 == nil {
+		c.HTML(http.StatusUnauthorized, view.Error401(sites))
+		return
+	}
+	c.String(http.StatusInternalServerError, "fail.")
+	return
 }
 
 func login(c echo.Context) error {

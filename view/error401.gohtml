@@ -1,0 +1,43 @@
+@{
+	import (
+        "strings"
+		"wanderinglunch/view/layout/base"
+        m "wanderinglunch/model"
+	)
+    var sites []*m.Site
+}
+
+@section title {
+	return "401 Unauthorized"
+}
+
+@section site {
+    return "~"
+}
+
+<style>
+	header {
+		display: none;
+	}
+	body {
+		background-color: #333;
+  		color: whitesmoke;
+	}
+</style>
+<div class="errorPage">
+	<div class="errorSection">
+		<h1>401 - No permissions to view this</h1>
+		<p>
+			Try <a href="/login">logging in</a>
+		</p>
+		<p>
+			Find it on one of our sites?
+			@for i, s := range sites {
+				<a href="/@s.Name">@strings.ToUpper(s.Name)</a>
+				@if i > 0 {
+					<span> ,</span>
+				}
+			}
+		</p>
+	</div>
+</div>
