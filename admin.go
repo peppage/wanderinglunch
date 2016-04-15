@@ -80,7 +80,36 @@ func truckSave(c echo.Context) error {
 			"err":  err,
 			"Name": c.FormValue("name"),
 		}).Error("Failed adding truck")
-		return c.Redirect(http.StatusSeeOther, "/admin/truck/add")
+		return echo.NewHTTPError(http.StatusInternalServerError, "")
+	}
+	return c.Redirect(http.StatusSeeOther, "/admin")
+}
+
+func subNew(c echo.Context) error {
+	session := session.Default(c)
+	site := session.Get("site").(string)
+	s, err := mdl.GetSite(site)
+	if err != nil {
+		log.WithFields(log.Fields{
+			"err": err,
+		}).Error("Failed getting that site")
+		return echo.NewHTTPError(http.StatusNotFound, err.Error())
+	}
+
+	return c.HTML(http.StatusOK, admin.Subnew(s))
+}
+
+func subSave(c echo.Context) error {
+	err := mdl.AddSub(mdl.Sub{
+		Regex:       c.FormValue("regex"),
+		Replacement: c.FormValue("replacement"),
+	})
+	if err != nil {
+		log.WithFields(log.Fields{
+			"regex": c.FormValue("regex"),
+			"err":   err,
+		}).Error("Failed adding sub")
+		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 	}
 	return c.Redirect(http.StatusSeeOther, "/admin")
 }

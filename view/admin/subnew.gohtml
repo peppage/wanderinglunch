@@ -1,0 +1,32 @@
+@{
+    import (
+        "wanderinglunch/view/layout/baseadmin"
+        m "wanderinglunch/model"
+    )
+    var s *m.Site
+}
+
+@section title {
+	return "Wandering Lunch: Admin | New Sub"
+}
+
+@section site {
+    return "nyc"
+}
+
+<div class="grid-1-center">
+    <div class="col-7">
+        <h1>Add Sub</h1>
+
+        <form method="post">
+            <label>Regex</label><br>
+            <input type="text" name="regex"><br>
+
+            <label>Replacement</label><br>
+            <input type="text" name="replacement"><br>
+            <br><br>
+
+            <button type="submit" class="button button--primary">Save</button>
+        </form>
+    </div>
+</div>

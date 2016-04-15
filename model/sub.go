@@ -11,3 +11,8 @@ func GetSubs() ([]*Sub, error) {
 	err := db.Select(&subs, `SELECT regex, replacement, id FROM subs ORDER BY id`)
 	return subs, err
 }
+
+func AddSub(s Sub) error {
+	_, err := db.NamedExec(`INSERT INTO subs (regex, replacement) VALUES (:regex, :replacement)`, s)
+	return err
+}

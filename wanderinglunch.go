@@ -66,6 +66,8 @@ func main() {
 	ad.Get("/debug", debug)
 	ad.Get("/truck/add", truckNew)
 	ad.Post("/truck/add", truckSave)
+	ad.Get("/sub/add", subNew)
+	ad.Post("/sub/add", subSave)
 
 	log.Info("Server (version " + setting.Version + ") started on port " + setting.HTTPPort)
 	e.Run(standard.New(":" + setting.HTTPPort))
