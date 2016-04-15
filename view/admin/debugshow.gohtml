@@ -2,6 +2,7 @@
     import (
         "wanderinglunch/view/layout/baseadmin"
     )
+    var twitname string
     var texts []string
 }
 
@@ -15,6 +16,10 @@
 
 <div class="grid-1-center">
     <div class="col-7">
+        <h1>Sub tweets</h1>
+        <p>
+            <a href="http://twitter.com/@twitname">Twitter</a>
+        </p>
         <ul>
             @for _, t := range texts {
                 <li>@t</li>

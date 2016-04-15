@@ -42,7 +42,7 @@ func debug(c echo.Context) error {
 	n := c.QueryParam("twitname")
 	if n != "" {
 		texts, _ := updator.GetReplacedStrings(n)
-		return c.HTML(http.StatusOK, admin.Debugshow(texts))
+		return c.HTML(http.StatusOK, admin.Debugshow(n, texts))
 	}
 	return c.HTML(http.StatusOK, admin.Debug())
 }
