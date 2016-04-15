@@ -34,7 +34,7 @@
             <input type="text" name="validuntil"><br>
 
             <label>Existing Sites</label>
-            <select class="js-sites">
+            <select name="site">
                 <option value="">Select</option>
                 @for _,s := range sites {
                     <option value="@s">@s</option>

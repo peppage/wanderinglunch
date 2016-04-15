@@ -138,7 +138,7 @@ func adSave(c echo.Context) error {
 	i, err := strconv.ParseInt(c.FormValue("validuntil"), 10, 64)
 	if err != nil {
 		log.WithError(err).Error("Failed converting validuntil, saving ad")
-		return echo.NewHTTPError(http.StatusBadRequest, "Valid Unil NaN")
+		return echo.NewHTTPError(http.StatusBadRequest, "Valid Until NaN")
 	}
 	err = mdl.AddAd(mdl.Ad{
 		Name:       c.FormValue("name"),
@@ -151,6 +151,58 @@ func adSave(c echo.Context) error {
 			"name": c.FormValue("name"),
 			"err":  err,
 		}).Error("Failed adding ad")
+		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
+	}
+	return c.Redirect(http.StatusSeeOther, "/admin")
+}
+
+func locNew(c echo.Context) error {
+	session := session.Default(c)
+	site := session.Get("site").(string)
+	s, err := mdl.GetSite(site)
+	if err != nil {
+		log.WithFields(log.Fields{
+			"err": err,
+		}).Error("Failed getting that site")
+		return echo.NewHTTPError(http.StatusNotFound, err.Error())
+	}
+
+	sites, err := mdl.GetSites()
+	if err != nil {
+		log.WithError(err).Error("Failed gettings sites")
+	}
+
+	zones, err := mdl.GetZones(site)
+	if err != nil {
+		log.WithError(err).Error("Failed gettings zones")
+	}
+
+	return c.HTML(http.StatusOK, admin.Locnew(s, sites, zones))
+}
+
+func locSave(c echo.Context) error {
+	lat, err1 := strconv.ParseFloat(c.FormValue("lat"), 32)
+	long, err2 := strconv.ParseFloat(c.FormValue("long"), 32)
+	if err1 != nil || err2 != nil {
+		log.WithFields(log.Fields{
+			"err1": err1,
+			"err2": err2,
+		}).Error("Failed converting lat or long, saving loc")
+		return echo.NewHTTPError(http.StatusBadRequest, "lat or long NaN")
+	}
+	err := mdl.AddLocation(mdl.Location{
+		Display: c.FormValue("display"),
+		Matcher: c.FormValue("matcher"),
+		Lat:     float32(lat),
+		Long:    float32(long),
+		Zone:    c.FormValue("zone"),
+		Site:    c.FormValue("site"),
+	})
+	if err != nil {
+		log.WithFields(log.Fields{
+			"display": c.FormValue("display"),
+			"err":     err,
+		}).Error("Failed adding location")
 		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 	}
 	return c.Redirect(http.StatusSeeOther, "/admin")

@@ -49,3 +49,11 @@ textarea {
     background-color: #e23c5d;
     color: #fff;
 }
+
+.help-text {
+    display: block;
+    margin-top: -10px;
+    margin-bottom: 10px;
+    margin-left: 2px;
+    color: #737373;
+}

@@ -70,6 +70,8 @@ func main() {
 	ad.Post("/sub/add", subSave)
 	ad.Get("/ad/add", adNew)
 	ad.Post("/ad/add", adSave)
+	ad.Get("/location/add", locNew)
+	ad.Post("/location/add", locSave)
 
 	log.Info("Server (version " + setting.Version + ") started on port " + setting.HTTPPort)
 	e.Run(standard.New(":" + setting.HTTPPort))
@@ -132,7 +134,7 @@ func root(c echo.Context) error {
 			return echo.NewHTTPError(http.StatusInternalServerError, "Error getting data")
 		}
 
-		zones, err := mdl.Zones(siteName)
+		zones, err := mdl.GetZones(siteName)
 		if err != nil {
 			log.WithFields(log.Fields{
 				"err":  err,

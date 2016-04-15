@@ -1,5 +1,7 @@
 package model
 
+import "errors"
+
 type Location struct {
 	ID      int     `json:"id"`
 	Display string  `json:"display"`
@@ -27,8 +29,18 @@ func GetLocations() (map[string][]*Location, error) {
 }
 
 // Zones returns a string slice of all zones for site
-func Zones(site string) ([]string, error) {
+func GetZones(site string) ([]string, error) {
 	var zones []string
 	err := db.Select(&zones, `SELECT zone FROM locations WHERE site=$1 GROUP BY zone`, site)
 	return zones, err
+}
+
+func AddLocation(l Location) error {
+	if l.Display == "" || l.Matcher == "" || l.Lat == 0 || l.Long == 0 || l.Zone == "" || l.Site == "" {
+		return errors.New("Display, Matcher, Lat, Long, Zone, and Site are required")
+	}
+	_, err := db.NamedExec(
+		`INSERT INTO locations (display, matcher, lat, long, zone, site)
+			VALUES (:display, :matcher, :lat, :long, :zone, :site)`, l)
+	return err
 }

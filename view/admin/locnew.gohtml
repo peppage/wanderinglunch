@@ -1,0 +1,62 @@
+@{
+    import (
+        "wanderinglunch/view/layout/baseadmin"
+        m "wanderinglunch/model"
+    )
+    var s *m.Site
+    var sites []string
+    var zones []string
+}
+
+@section title {
+	return "Wandering Lunch: Admin | New Truck"
+}
+
+@section site {
+    return "nyc"
+}
+
+<div class="grid-1-center">
+    <div class="col-7">
+        <h1>Add Location</h1>
+        
+        <p>
+            <a href="http://maps.google.com">Google Maps</a><br>
+            <a href="http://regex101.com">Regex101</a>
+        </p>
+
+        <form method="post">
+            <label>Display</label><br>
+            <input type="text" name="display"><br>
+
+            <label>Matcher</label><br>
+            <input type="text" name="matcher"><br>
+
+            <label>Latitude</label><br>
+            <input type="text" name="lat"><br>
+
+            <label>Longitude</label><br>
+            <input type="text" name="long"><br>
+            
+            <label>Zone</label><br>
+            <input type="text" name="zone"><br>
+            <span class="help-text">
+                @for _, z := range zones {
+                    <b>@z, </b>
+                }
+            </span>
+            <br>
+
+            <label>Existing Sites</label>
+            <select name="site">
+                <option value="">Select</option>
+                @for _, s := range sites {
+                    <option value="@s">@s</option>
+                }
+            </select>
+            <br><br>
+
+            <button type="submit" class="button button--primary">Save</button>
+        </form>
+    </div>
+</div>
