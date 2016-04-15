@@ -5,14 +5,17 @@
     )
     var s *m.Site
     var sites []string
+    var t *m.Truck
 }
+
+
 
 @section title {
 	return "Wandering Lunch: Admin | New Truck"
 }
 
 @section site {
-    return "nyc"
+    return s.Name
 }
 
 <div class="grid-1-center">
@@ -21,29 +24,33 @@
 
         <form method="post">
             <label>Id</label><br>
-            <input type="text" name="id"><br>
+            <input type="text" name="id" value="@t.ID"><br>
 
             <label>Name</label><br>
-            <input type="text" name="name"><br>
+            <input type="text" name="name" value="@t.Name"><br>
 
             <label>Twitname</label><br>
-            <input type="text" name="twitname"><br>
+            <input type="text" name="twitname" value="@t.Twitname"><br>
 
             <label>Web Url</label><br>
-            <input type="text" name="weburl"><br>
+            <input type="text" name="weburl" value="@t.Weburl"><br>
 
             <label>Type</label><br>
-            <input type="text" name="type"><br>
+            <input type="text" name="type" value="@t.Type"><br>
 
             <label>About</label><br>
-            <input type="text" name="about"><br>
+            <input type="text" name="about" value="@t.About"><br>
 
             <label>Foursquare</label><br>
-            <input type="text" name="foursquare"><br>
+            <input type="text" name="foursquare" value="@t.Foursquare"><br>
 
             <label>Existing Sites</label>
             <select name="site">
-                <option value="">Select</option>
+                @if t.Site != "" {
+                    <option value="@t.Site">@t.Site</option>
+                } else {
+                    <option value="">Select</option>
+                }
                 @for _, s := range sites {
                     <option value="@s">@s</option>
                 }

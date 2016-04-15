@@ -72,7 +72,7 @@ func Trucks(site string, hours int, sort string, sortDir string, loc int) ([]*Tr
 
 	rows, err := db.Queryx(`SELECT trucks.id AS id, trucks.name, trucks.twitname, trucks.lastupdate, coalesce(locations.display,'') AS location, 
 	        coalesce(locations.zone,'') AS zone, coalesce(images.suffix,'') AS image FROM trucks LEFT JOIN locations ON (locations.id = ANY(trucks.locs)) LEFT JOIN
-	        (SELECT * FROM images WHERE  menu='t') AS images ON (images.twitname = trucks.twitname) WHERE lastupdate > $1 `+locSql+` AND trucks.site = $2 and trucks.locs IS NOT NULL ORDER BY `+sort+` `+sortDir, t, site)
+	        (SELECT * FROM images WHERE  menu='t') AS images ON (images.twitname = trucks.twitname) WHERE lastupdate > $1 `+locSql+` AND trucks.site = $2 AND trucks.locs IS NOT NULL ORDER BY `+sort+` `+sortDir, t, site)
 	if err != nil {
 		return nil, err
 	}
@@ -86,6 +86,23 @@ func Trucks(site string, hours int, sort string, sortDir string, loc int) ([]*Tr
 	}
 	//Cache.Set("trucks"+strconv.Itoa(hours)+sort+sortDir+site, trucks, cache.DefaultExpiration)
 	//}
+	return trucks, nil
+}
+
+func AllTrucks(site string) ([]*Truck, error) {
+	rows, err := db.Queryx(`SELECT trucks.id AS id, trucks.name, trucks.twitname, trucks.lastupdate FROM trucks
+		WHERE trucks.site = $1 ORDER BY trucks.name`, site)
+
+	if err != nil {
+		return nil, err
+	}
+	trucks := []*Truck{}
+	for rows.Next() {
+		tt := Truck{}
+		rows.StructScan(&tt)
+		tt.Updated = relativeTime(tt.Lastupdate)
+		trucks = append(trucks, &tt)
+	}
 	return trucks, nil
 }
 
@@ -176,5 +193,13 @@ func AddTruck(t Truck) error {
 	_, err := db.Exec(`INSERT INTO trucks (id, name, twitname, weburl, type, about, foursquare, site) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
 		t.ID, t.Name, t.Twitname, t.Weburl, t.Type, t.About, t.Foursquare, t.Site)
 	//Cache.Flush()
+	return err
+}
+
+func UpdateTruck(t Truck) error {
+	_, err := db.Exec(`UPDATE trucks SET (name, twitname, weburl, type, about, foursquare, matcher, matchmethod)
+		= ($1, $2, $3, $4, $5, $6) WHERE id=$7`,
+		t.Name, t.Twitname, t.Weburl, t.Type, t.About, t.Foursquare, t.ID)
+	//Cache.Delete("truck" + t.ID)
 	return err
 }

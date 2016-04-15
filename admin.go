@@ -62,7 +62,7 @@ func truckNew(c echo.Context) error {
 	if err != nil {
 		log.WithError(err).Error("Failed gettings sites")
 	}
-	return c.HTML(http.StatusOK, admin.Trucknew(s, sites))
+	return c.HTML(http.StatusOK, admin.Truck(s, sites, &mdl.Truck{}))
 }
 
 func truckSave(c echo.Context) error {
@@ -204,6 +204,60 @@ func locSave(c echo.Context) error {
 			"err":     err,
 		}).Error("Failed adding location")
 		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
+	}
+	return c.Redirect(http.StatusSeeOther, "/admin")
+}
+
+func aTrucks(c echo.Context) error {
+	session := session.Default(c)
+	site := session.Get("site").(string)
+	s, err := mdl.GetSite(site)
+	if err != nil {
+		log.WithFields(log.Fields{
+			"err": err,
+		}).Error("Failed getting that site")
+		return echo.NewHTTPError(http.StatusNotFound, err.Error())
+	}
+	trucks, _ := mdl.AllTrucks(site)
+	return c.HTML(http.StatusOK, admin.Trucks(s, trucks))
+}
+
+func truckEdit(c echo.Context) error {
+	session := session.Default(c)
+	site := session.Get("site").(string)
+	s, err := mdl.GetSite(site)
+	if err != nil {
+		log.WithFields(log.Fields{
+			"err": err,
+		}).Error("Failed getting that site")
+		return echo.NewHTTPError(http.StatusNotFound, "")
+	}
+
+	sites, err := mdl.GetSites()
+	if err != nil {
+		log.WithError(err).Error("Failed gettings sites")
+	}
+	t := mdl.GetTruck(c.QueryParam("twitname"))
+	return c.HTML(http.StatusOK, admin.Truck(s, sites, t[0]))
+}
+
+func truckUpdate(c echo.Context) error {
+	err := mdl.UpdateTruck(mdl.Truck{
+		ID:         c.FormValue("id"),
+		Name:       c.FormValue("name"),
+		Twitname:   c.FormValue("twitname"),
+		Weburl:     c.FormValue("weburl"),
+		Type:       c.FormValue("type"),
+		About:      c.FormValue("about"),
+		Foursquare: c.FormValue("foursquare"),
+		Site:       c.FormValue("site"),
+	})
+	if err != nil {
+		log.WithFields(log.Fields{
+			"err":  err,
+			"Name": c.FormValue("name"),
+		}).Error("Failed updating truck")
+		return echo.NewHTTPError(http.StatusInternalServerError, "")
 	}
 	return c.Redirect(http.StatusSeeOther, "/admin")
 }
