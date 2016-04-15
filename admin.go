@@ -131,7 +131,7 @@ func adNew(c echo.Context) error {
 		log.WithError(err).Error("Failed gettings sites")
 	}
 
-	return c.HTML(http.StatusOK, admin.Adnew(s, sites))
+	return c.HTML(http.StatusOK, admin.Ad(s, sites, &mdl.Ad{}))
 }
 
 func adSave(c echo.Context) error {
@@ -352,6 +352,55 @@ func aAds(c echo.Context) error {
 	}
 	ads, _ := mdl.GetAds()
 	return c.HTML(http.StatusOK, admin.Ads(s, ads))
+}
+
+func adEdit(c echo.Context) error {
+	session := session.Default(c)
+	site := session.Get("site").(string)
+	s, err := mdl.GetSite(site)
+	if err != nil {
+		log.WithFields(log.Fields{
+			"err": err,
+		}).Error("Failed getting that site")
+		return echo.NewHTTPError(http.StatusNotFound, err.Error())
+	}
+
+	sites, err := mdl.GetSites()
+	if err != nil {
+		log.WithError(err).Error("Failed gettings sites")
+	}
+
+	ad, _ := mdl.GetAd(c.QueryParam("id"))
+	return c.HTML(http.StatusOK, admin.Ad(s, sites, ad))
+}
+
+func adUpdate(c echo.Context) error {
+	i, err := strconv.Atoi(c.FormValue("id"))
+	if err != nil {
+		log.WithError(err).Error("Failed converting id, updating ad")
+		return echo.NewHTTPError(http.StatusBadRequest, "id NaN")
+	}
+	i2, err := strconv.ParseInt(c.FormValue("validuntil"), 10, 64)
+	if err != nil {
+		log.WithError(err).Error("Failed converting validuntil, saving ad")
+		return echo.NewHTTPError(http.StatusBadRequest, "Valid Until NaN")
+	}
+
+	err = mdl.UpdateAd(mdl.Ad{
+		ID:         i,
+		Name:       c.FormValue("name"),
+		Value:      c.FormValue("value"),
+		ValidUntil: i2,
+		Site:       c.FormValue("site"),
+	})
+	if err != nil {
+		log.WithFields(log.Fields{
+			"err":   err,
+			"Regex": c.FormValue("regex"),
+		}).Error("Failed updating sub")
+		return echo.NewHTTPError(http.StatusInternalServerError, "")
+	}
+	return c.Redirect(http.StatusSeeOther, "/admin")
 }
 
 func aLocations(c echo.Context) error {
