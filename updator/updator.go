@@ -33,8 +33,10 @@ func Start() {
 
 	if setting.RunUpdator {
 		gocron.Every(15).Minutes().Do(task)
+		gocron.Every(72).Hour().Do(validatePhotos)
 
 		<-gocron.Start()
+
 	}
 }
 
