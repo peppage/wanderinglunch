@@ -26,3 +26,5 @@ import:
 - package: github.com/peppage/echo-middleware
   subpackages:
   - session
+- package: github.com/sebest/logrusly
+- package: github.com/segmentio/go-loggly

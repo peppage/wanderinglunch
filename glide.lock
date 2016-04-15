@@ -1,5 +1,5 @@
-hash: 3f34d4ab0620af3931efdd1b2d7058ad688fc11e95a6bfb6073f224d4f9e1486
-updated: 2016-04-13T01:39:27.7930359-04:00
+hash: e366c7de935cfb1d5b8cb6b7f47149de2fbb1fdbcf39a4ee03fe91284f7927d2
+updated: 2016-04-15T16:24:33.5401646-04:00
 imports:
 - name: github.com/azr/backoff
   version: 53511d3c733003985b0b76f733df1f4d0095ee6a
@@ -98,6 +98,14 @@ imports:
   version: 05a24e24fa8d3a2eca8c2baf23aa2d5a2c51490c
   subpackages:
   - github.com\rifflock\lfshook
+- name: github.com/sebest/logrusly
+  version: ae9cf6474032c95ddfc002bc48237e102bde7335
+  subpackages:
+  - github.com\sebest\logrusly
+- name: github.com/segmentio/go-loggly
+  version: e78f6971ebca5835614673e2f5f6a47ca5f13501
+  subpackages:
+  - github.com\segmentio\go-loggly
 - name: github.com/sipin/gorazor
   version: c9580eed5a9ba278c49dcdc7fec214a5bbbe1f0d
   subpackages:
@@ -110,6 +118,10 @@ imports:
   version: 3b874956e03f1636d171bda64b130f9135f42cff
   subpackages:
   - github.com\valyala\fasttemplate
+- name: github.com/visionmedia/go-debug
+  version: ff4a55a20a86994118644bbddc6a216da193cc13
+  subpackages:
+  - github.com\visionmedia\go-debug
 - name: golang.org/x/crypto
   version: d68c3ecb62c850b645dc072a8d78006286bf81ca
   subpackages:

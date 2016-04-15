@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"net/http"
+	"os"
 	mdl "wanderinglunch/model"
 	"wanderinglunch/setting"
 	"wanderinglunch/updator"
@@ -15,9 +16,12 @@ import (
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	"github.com/rifflock/lfshook"
+	"github.com/sebest/logrusly"
 )
 
 const secret = "D3MtG1ixqlhavdbxmBclkKvjYtBqWUQexsVCsr5xNWO1af36hZnZP"
+
+var logglyClientID = os.Getenv("LOGGLY")
 
 var store = session.NewCookieStore([]byte(secret))
 
@@ -27,12 +31,18 @@ func init() {
 	if err == nil {
 		log.SetLevel(ll)
 	}
-	//log.SetFormatter(&log.JSONFormatter{})
-	log.AddHook(lfshook.NewHook(
-		lfshook.PathMap{
-			log.DebugLevel: "info.log",
-			log.ErrorLevel: "error.log",
-		}))
+	if setting.LogLevel == "debug" {
+		log.SetFormatter(&log.TextFormatter{})
+		log.AddHook(lfshook.NewHook(
+			lfshook.PathMap{
+				log.DebugLevel: "info.log",
+				log.ErrorLevel: "error.log",
+			}))
+	} else {
+		log.SetFormatter(&log.JSONFormatter{})
+		log.AddHook(logrusly.NewLogglyHook(logglyClientID, "wanderinglunch.com", log.WarnLevel))
+	}
+
 	go updator.Start()
 }
 
