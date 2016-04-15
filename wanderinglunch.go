@@ -79,6 +79,8 @@ func main() {
 	ad.Get("/truck/edit", truckEdit)
 	ad.Post("/truck/edit", truckUpdate)
 	ad.Get("/subs", aSubs)
+	ad.Get("/sub/edit", subEdit)
+	ad.Post("/sub/edit", subUpdate)
 	ad.Get("/ads", aAds)
 	ad.Get("/locations", aLocations)
 	ad.Get("/sites", aSites)

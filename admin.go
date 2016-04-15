@@ -97,7 +97,7 @@ func subNew(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusNotFound, err.Error())
 	}
 
-	return c.HTML(http.StatusOK, admin.Subnew(s))
+	return c.HTML(http.StatusOK, admin.Sub(s, &mdl.Sub{}))
 }
 
 func subSave(c echo.Context) error {
@@ -303,6 +303,41 @@ func aSubs(c echo.Context) error {
 	}
 	subs, _ := mdl.GetSubs()
 	return c.HTML(http.StatusOK, admin.Subs(s, subs))
+}
+
+func subEdit(c echo.Context) error {
+	session := session.Default(c)
+	site := session.Get("site").(string)
+	s, err := mdl.GetSite(site)
+	if err != nil {
+		log.WithFields(log.Fields{
+			"err": err,
+		}).Error("Failed getting that site")
+		return echo.NewHTTPError(http.StatusNotFound, err.Error())
+	}
+	sub, _ := mdl.GetSub(c.QueryParam("id"))
+	return c.HTML(http.StatusOK, admin.Sub(s, sub))
+}
+
+func subUpdate(c echo.Context) error {
+	i, err := strconv.Atoi(c.FormValue("id"))
+	if err != nil {
+		log.WithError(err).Error("Failed converting id, updating sub")
+		return echo.NewHTTPError(http.StatusBadRequest, "id NaN")
+	}
+	err = mdl.UpdateSub(mdl.Sub{
+		ID:          i,
+		Regex:       c.FormValue("regex"),
+		Replacement: c.FormValue("replacement"),
+	})
+	if err != nil {
+		log.WithFields(log.Fields{
+			"err":   err,
+			"Regex": c.FormValue("regex"),
+		}).Error("Failed updating sub")
+		return echo.NewHTTPError(http.StatusInternalServerError, "")
+	}
+	return c.Redirect(http.StatusSeeOther, "/admin")
 }
 
 func aAds(c echo.Context) error {
