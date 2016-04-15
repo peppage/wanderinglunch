@@ -47,12 +47,14 @@
             </ul>
         </nav>
         <div class="grid-1-center">
-            <select class="js-siteSwitch">
-                <option value="">Select</option>
-                @for _, v := range sites {
-                    <option value="@v">@v</option>
-                }
-            </select>
+            <div class="col-3">
+                <select class="js-siteSwitch">
+                    <option value="">Select</option>
+                    @for _, v := range sites {
+                        <option value="@v">@v</option>
+                    }
+                </select>
+            </div>
         </div>
     </header>
     <main class="content">
