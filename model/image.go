@@ -24,3 +24,9 @@ func AddImage(i Image) error {
 		i.ID, i.Suffix, i.Twitname, i.Menu)
 	return err
 }
+
+func GetImage(id string) (Image, error) {
+	var i Image
+	err := db.Get(&i, `SELECT * FROM images WHERE id=$1`, id)
+	return i, err
+}

@@ -563,3 +563,41 @@ func imgAdd(c echo.Context) error {
 	}
 	return c.String(http.StatusOK, "ok")
 }
+
+func imgEdit(c echo.Context) error {
+	session := session.Default(c)
+	site := session.Get("site").(string)
+	s, err := mdl.GetSite(site)
+	if err != nil {
+		log.WithFields(log.Fields{
+			"err": err,
+		}).Error("Failed getting that site")
+		return echo.NewHTTPError(http.StatusNotFound, err.Error())
+	}
+
+	img, _ := mdl.GetImage(c.QueryParam("id"))
+
+	return c.HTML(http.StatusOK, admin.Image(s, &img))
+}
+
+func imgUpdate(c echo.Context) error {
+	m := false
+	if c.FormValue("menu") != "" && c.FormValue("menu") == "on" {
+		m = true
+	}
+	err := mdl.UpdateImage(mdl.Image{
+		ID:         c.FormValue("id"),
+		Suffix:     c.FormValue("suffix"),
+		Visibility: c.FormValue("visibility"),
+		Twitname:   c.FormValue("twitname"),
+		Menu:       m,
+	})
+	if err != nil {
+		log.WithFields(log.Fields{
+			"err": err,
+			"ID":  c.FormValue("id"),
+		}).Error("Failed saving image")
+		return echo.NewHTTPError(http.StatusInternalServerError, "")
+	}
+	return c.Redirect(http.StatusSeeOther, "/admin/truck/edit?twitname="+c.FormValue("twitname"))
+}

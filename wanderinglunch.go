@@ -103,6 +103,8 @@ func main() {
 	ad.Post("/site/edit", siteUpdate)
 	ad.Get("/foursquare", foursquare)
 	ad.Post("/image/add", imgAdd)
+	ad.Get("/image/edit", imgEdit)
+	ad.Post("/image/edit", imgUpdate)
 
 	log.Info("Server (version " + setting.Version + ") started on port " + setting.HTTPPort)
 	e.Run(standard.New(":" + setting.HTTPPort))
