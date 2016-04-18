@@ -2,6 +2,8 @@ package main
 
 import (
 	"net/http"
+	"net/url"
+	"os"
 	"strconv"
 	mdl "wanderinglunch/model"
 	"wanderinglunch/updator"
@@ -10,7 +12,11 @@ import (
 	log "github.com/Sirupsen/logrus"
 	"github.com/labstack/echo"
 	"github.com/peppage/echo-middleware/session"
+	"github.com/peppage/foursquarego"
 )
+
+var clientID = os.Getenv("CLIENT_ID")
+var clientSecret = os.Getenv("CLIENT_SECRET")
 
 func setSite(c echo.Context) error {
 	session := session.Default(c)
@@ -523,4 +529,37 @@ func siteUpdate(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusInternalServerError, "")
 	}
 	return c.Redirect(http.StatusSeeOther, "/admin")
+}
+
+func foursquare(c echo.Context) error {
+	api := foursquarego.NewFoursquareApi(clientID, clientSecret)
+	uv := url.Values{}
+	uv.Set("limit", "200")
+	p, err := api.GetVenuePhotos(c.QueryParam("id"), uv)
+	if err != nil {
+		log.WithFields(log.Fields{
+			"err": err,
+			"id":  c.QueryParam("id"),
+		}).Error("Failed getting foursquare images admin")
+		return echo.NewHTTPError(http.StatusInternalServerError, "")
+	}
+	return c.JSON(http.StatusOK, p)
+}
+
+func imgAdd(c echo.Context) error {
+	err := mdl.AddImage(mdl.Image{
+		ID:         c.FormValue("id"),
+		Suffix:     c.FormValue("suffix"),
+		Visibility: "public",
+		Twitname:   c.FormValue("twitname"),
+		Menu:       false,
+	})
+	if err != nil {
+		log.WithFields(log.Fields{
+			"err": err,
+			"ID":  c.FormValue("id"),
+		}).Error("Failed adding image")
+		return echo.NewHTTPError(http.StatusInternalServerError, "")
+	}
+	return c.String(http.StatusOK, "ok")
 }

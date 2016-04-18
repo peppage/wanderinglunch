@@ -18,3 +18,9 @@ func UpdateImage(i Image) error {
 	_, err := db.NamedExec(`UPDATE images SET (suffix, visibility, twitname, menu) = (:suffix, :visibility, :twitname, :menu) WHERE id=:id`, i)
 	return err
 }
+
+func AddImage(i Image) error {
+	_, err := db.Exec(`INSERT INTO images (id, suffix, twitname, menu) VALUES ($1, $2, $3, $4)`,
+		i.ID, i.Suffix, i.Twitname, i.Menu)
+	return err
+}
