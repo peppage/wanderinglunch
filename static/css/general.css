@@ -29,8 +29,6 @@ nav ul li a {
     text-transform: uppercase;
     font-weight: 400;
     color: #333;
-    -webkit-transition: color 500ms ease-out,opacity 500ms ease-out;
-    -moz-transition: color 500ms ease-out,opacity 500ms ease-out;
     transition: color 500ms ease-out,opacity 500ms ease-out;
 }
 
@@ -45,8 +43,6 @@ nav ul:hover a {
 nav ul li a:hover {
     color: #f7972c;
     opacity: 1;
-    -webkit-transition: none;
-    -moz-transition: none;
     transition: none;
 }
 
@@ -67,7 +63,7 @@ footer .footer--right {
 }
 
 .content {
-    flex: 1 0 auto;
+    flex: 1 0;
 }
 
 a {
