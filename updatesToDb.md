@@ -79,5 +79,12 @@ delete from ads where id=2;
 
 update locations set matcher='46 ?(th|st)? (between ?)?(5th ?& ?6(th)?|5 ?& ?6|& 5~6)' where id=14;
 update locations set matcher='49th between ?(6th & 7th|6 ?& ?7)' where id=21;
+update locations set matcher='(dumbolot|(water|jay) & (jay|water))' where id=54;
+delete from locations where id=57;
+update locations set matcher='(10 hanover sq|7 Hanover sq)' where id=52;
+update locations set display='Hanover sq' where id=52;
+delete from locations where id=53
+
+update trucks set name='Gorilla Cheese' where twitname='gcnyc1';
 
 alter table trucks drop column lasttweet;
