@@ -15,33 +15,29 @@
     return s.Name
 }
 
-<div class="grid-1-center">
-    <div class="col-7">
-        <h1>Edit Image</h1>
-        <form method="post">
-            <label>Id</label><br>
-            <input type="text" name="id" value="@i.ID" readonly><br>
+<h1>Image</h1>
+<form method="post">
+    <label>Id</label><br>
+    <input type="text" name="id" value="@i.ID" readonly><br>
 
-            <label>Suffix</label><br>
-            <input type="text" name="suffix" value="@i.Suffix" readonly><br>
+    <label>Suffix</label><br>
+    <input type="text" name="suffix" value="@i.Suffix" readonly><br>
 
-            <label>Visibility</label><br>
-            <input type="text" name="visibility" value="@i.Visibility"><br>
+    <label>Visibility</label><br>
+    <input type="text" name="visibility" value="@i.Visibility"><br>
 
-            <label>Twitname</label><br>
-            <input type="text" name="twitname" value="@i.Twitname" readonly><br>
+    <label>Twitname</label><br>
+    <input type="text" name="twitname" value="@i.Twitname" readonly><br>
 
-            <label>Menu
-                @if i.Menu {
-                    <input type="checkbox" name="menu" checked>
-                } else {
-                    <input type="checkbox" name="menu">
-                }
-                
-            </label>
-            <br><br>
+    <label>Menu
+        @if i.Menu {
+            <input type="checkbox" name="menu" checked>
+        } else {
+            <input type="checkbox" name="menu">
+        }
+        
+    </label>
+    <br><br>
 
-            <button type="submit" class="button button--primary">Save</button>
-        </form>
-    </div>
-</div>
+    <button type="submit" class="button button--primary">Save</button>
+</form>

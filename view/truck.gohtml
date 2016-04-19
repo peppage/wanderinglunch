@@ -15,49 +15,45 @@
     return s.Name
 }
 
-<div class="grid-1-center">
-    <div class="col-7">
-        <h1>@trucks[0].Name</h1>
-        <h2 class="truck--category">@trucks[0].Type</h2>
+<h1>@trucks[0].Name</h1>
+<h2 class="truck--category">@trucks[0].Type</h2>
 
-        <img src="/static/images/foursquare.png">
+<img src="/static/images/foursquare.png">
 
-        @for _, i := range trucks[0].Images {
-            @if i.Menu {
-                <div class="gallery">
-                    <a href="https://irs0.4sqi.net/img/general/width960@i.Suffix">
-                        <img class=""
-                            src="https://irs0.4sqi.net/img/general/500x500@i.Suffix"
-                            alt="" />
-                    </a>
-                </div>
-            }
-        }
-        <h3>@trucks[0].Name Photos</h3>
-
+@for _, i := range trucks[0].Images {
+    @if i.Menu {
         <div class="gallery">
-            @for _, i := range trucks[0].Images {
-                @if !i.Menu {
-                    <a href="https://irs0.4sqi.net/img/general/width960@i.Suffix">
-                        <img class=""
-                            src="https://irs0.4sqi.net/img/general/width100@i.Suffix"
-                            alt="" />
-                    </a>
-                }
-            }
+            <a href="https://irs0.4sqi.net/img/general/width960@i.Suffix">
+                <img class=""
+                    src="https://irs0.4sqi.net/img/general/500x500@i.Suffix"
+                    alt="" />
+            </a>
         </div>
-        <h3>@trucks[0].Name Links</h3>
-        @if trucks[0].Weburl != "" {
-            <a href="@trucks[0].Weburl">Website</a><br>
-        }
-        <a href="http://twitter.com/@trucks[0].Twitname">Twitter</a><br>
-        @if trucks[0].Foursquare != "" {
-            <a href="https://foursquare.com/v/@trucks[0].Foursquare">Foursquare</a><br>
-        }
+    }
+}
+<h3>@trucks[0].Name Photos</h3>
 
-        <h3>@trucks[0].Name Location(s) from @trucks[0].Updated</h3>
-        @for _, t := range trucks {
-            <div>@t.Location</div>
+<div class="gallery">
+    @for _, i := range trucks[0].Images {
+        @if !i.Menu {
+            <a href="https://irs0.4sqi.net/img/general/width960@i.Suffix">
+                <img class=""
+                    src="https://irs0.4sqi.net/img/general/width100@i.Suffix"
+                    alt="" />
+            </a>
         }
-    </div>
+    }
 </div>
+<h3>@trucks[0].Name Links</h3>
+@if trucks[0].Weburl != "" {
+    <a href="@trucks[0].Weburl">Website</a><br>
+}
+<a href="http://twitter.com/@trucks[0].Twitname">Twitter</a><br>
+@if trucks[0].Foursquare != "" {
+    <a href="https://foursquare.com/v/@trucks[0].Foursquare">Foursquare</a><br>
+}
+
+<h3>@trucks[0].Name Location(s) from @trucks[0].Updated</h3>
+@for _, t := range trucks {
+    <div>@t.Location</div>
+}

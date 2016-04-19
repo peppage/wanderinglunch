@@ -15,27 +15,23 @@
     return s.Name
 }
 
-<div class="grid-1-center">
-    <div class="col-7">
-        <h1>Sites</h1>
-        <input type="search" class="js-light-table-filter" data-table="order-table" placeholder="Filter">
-        <table class="table order-table">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Title</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @for _, s := range sites {
-                    <tr>
-                        <td><a href="/admin/site/edit?name=@s.Name">@s.Name</a></td>
-                        <td>@s.Title</td>
-                        <td>delete</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-</div>
+<h1>Sites</h1>
+<input type="search" class="js-light-table-filter" data-table="order-table" placeholder="Filter">
+<table class="table order-table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Title</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @for _, s := range sites {
+            <tr>
+                <td><a href="/admin/site/edit?name=@s.Name">@s.Name</a></td>
+                <td>@s.Title</td>
+                <td>delete</td>
+            </tr>
+        }
+    </tbody>
+</table>

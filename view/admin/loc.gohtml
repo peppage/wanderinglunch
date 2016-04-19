@@ -10,59 +10,55 @@
 }
 
 @section title {
-	return "Wandering Lunch: Admin | New Location"
+	return "Wandering Lunch: Admin | Location"
 }
 
 @section site {
     return s.Name
 }
 
-<div class="grid-1-center">
-    <div class="col-7">
-        <h1>Add Location</h1>
-        
-        <p>
-            <a href="http://maps.google.com">Google Maps</a><br>
-            <a href="http://regex101.com">Regex101</a>
-        </p>
+<h1>Location</h1>
 
-        <form method="post">
-            <input type="hidden" name="id" value="@l.ID">
-            <label>Display</label><br>
-            <input type="text" name="display" value="@l.Display"><br>
+<p>
+    <a href="http://maps.google.com">Google Maps</a><br>
+    <a href="http://regex101.com">Regex101</a>
+</p>
 
-            <label>Matcher</label><br>
-            <input type="text" name="matcher" value="@l.Matcher"><br>
+<form method="post">
+    <input type="hidden" name="id" value="@l.ID">
+    <label>Display</label><br>
+    <input type="text" name="display" value="@l.Display"><br>
 
-            <label>Latitude</label><br>
-            <input type="text" name="lat" value="@l.Lat"><br>
+    <label>Matcher</label><br>
+    <input type="text" name="matcher" value="@l.Matcher"><br>
 
-            <label>Longitude</label><br>
-            <input type="text" name="long" value="@l.Long"><br>
-            
-            <label>Zone</label><br>
-            <input type="text" name="zone" value="@l.Zone"><br>
-            <span class="help-text">
-                @for _, z := range zones {
-                    <b>@z, </b>
-                }
-            </span>
-            <br>
+    <label>Latitude</label><br>
+    <input type="text" name="lat" value="@l.Lat"><br>
 
-            <label>Existing Sites</label>
-            <select name="site">
-                @if l.Site != "" {
-                    <option value="@l.Site">@l.Site</option>
-                } else {
-                    <option value="">Select</option>
-                }
-                @for _, s := range sites {
-                    <option value="@s.Name">@s.Name</option>
-                }
-            </select>
-            <br><br>
+    <label>Longitude</label><br>
+    <input type="text" name="long" value="@l.Long"><br>
+    
+    <label>Zone</label><br>
+    <input type="text" name="zone" value="@l.Zone"><br>
+    <span class="help-text">
+        @for _, z := range zones {
+            <b>@z, </b>
+        }
+    </span>
+    <br>
 
-            <button type="submit" class="button button--primary">Save</button>
-        </form>
-    </div>
-</div>
+    <label>Existing Sites</label>
+    <select name="site">
+        @if l.Site != "" {
+            <option value="@l.Site">@l.Site</option>
+        } else {
+            <option value="">Select</option>
+        }
+        @for _, s := range sites {
+            <option value="@s.Name">@s.Name</option>
+        }
+    </select>
+    <br><br>
+
+    <button type="submit" class="button button--primary">Save</button>
+</form>

@@ -15,27 +15,23 @@
     return s.Name
 }
 
-<div class="grid-1-center">
-    <div class="col-7">
-        <h1>Subs</h1>
-        <input type="search" class="js-light-table-filter" data-table="order-table" placeholder="Filter">
-        <table class="table order-table">
-            <thead>
-                <tr>
-                    <th>Regex</th>
-                    <th>Replacement</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @for _, s := range subs {
-                    <tr>
-                        <td><a href="/admin/sub/edit?id=@s.ID">@s.Regex</a></td>
-                        <td><pre class="sub">@s.Replacement</pre></td>
-                        <td>delete</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-</div>
+<h1>Subs</h1>
+<input type="search" class="js-light-table-filter" data-table="order-table" placeholder="Filter">
+<table class="table order-table">
+    <thead>
+        <tr>
+            <th>Regex</th>
+            <th>Replacement</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @for _, s := range subs {
+            <tr>
+                <td><a href="/admin/sub/edit?id=@s.ID">@s.Regex</a></td>
+                <td><pre class="sub">@s.Replacement</pre></td>
+                <td>delete</td>
+            </tr>
+        }
+    </tbody>
+</table>

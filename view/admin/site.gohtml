@@ -10,26 +10,22 @@
 
 
 @section title {
-	return "Wandering Lunch: Admin | New Site"
+	return "Wandering Lunch: Admin | Site"
 }
 
 @section site {
     return currentSite.Name
 }
 
-<div class="grid-1-center">
-    <div class="col-7">
-        <h1>Add Site</h1>
+<h1>Site</h1>
 
-        <form method="post">
-            <label>Name</label><br>
-            <input type="text" name="name" value="@s.Name"><br>
+<form method="post">
+    <label>Name</label><br>
+    <input type="text" name="name" value="@s.Name"><br>
 
-            <label>Title</label><br>
-            <input type="text" name="title" value="@s.Title"><br>
-            <br><br>
+    <label>Title</label><br>
+    <input type="text" name="title" value="@s.Title"><br>
+    <br><br>
 
-            <button type="submit" class="button button--primary">Save</button>
-        </form>
-    </div>
-</div>
+    <button type="submit" class="button button--primary">Save</button>
+</form>

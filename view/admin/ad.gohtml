@@ -9,47 +9,44 @@
 }
 
 @section title {
-	return "Wandering Lunch: Admin | New Ad"
+	return "Wandering Lunch: Admin | Ad"
 }
 
 @section site {
     return s.Name
 }
 
-<div class="grid-1-center">
-    <div class="col-7">
-        <h1>Add Ad</h1>
-        
-        <p>
-	        <a href="http://www.epochconverter.com/">Epoch Converter</a>
-        </p>
 
-        <form method="post">
-            <input type="hidden" name="id" value="@a.ID">
-            <label>Name</label><br>
-            <input type="text" name="name" value="@a.Name"><br>
+<h1>Ad</h1>
 
-            <label>Value</label><br>
-            <textarea name="value">@raw(a.Value)</textarea><br>
+<p>
+    <a href="http://www.epochconverter.com/">Epoch Converter</a>
+</p>
 
-            <label>Valid Until</label><br>
-            <input type="text" name="validuntil" value="@a.ValidUntil"><br>
+<form method="post">
+    <input type="hidden" name="id" value="@a.ID">
+    <label>Name</label><br>
+    <input type="text" name="name" value="@a.Name"><br>
 
-            <label>Existing Sites</label>
-            <select name="site">
-                @if a.Site != "" {
-                    <option value="@a.Site">@a.Site</option>
-                } else {
-                    <option value="">Select</option>
-                }
-                @for _,s := range sites {
-                    <option value="@s.Name">@s.Name</option>
-                }
-                <option value="all">All</option>
-            </select>
-            <br><br>
+    <label>Value</label><br>
+    <textarea name="value">@raw(a.Value)</textarea><br>
 
-            <button type="submit" class="button button--primary">Save</button>
-        </form>
-    </div>
-</div>
+    <label>Valid Until</label><br>
+    <input type="text" name="validuntil" value="@a.ValidUntil"><br>
+
+    <label>Existing Sites</label>
+    <select name="site">
+        @if a.Site != "" {
+            <option value="@a.Site">@a.Site</option>
+        } else {
+            <option value="">Select</option>
+        }
+        @for _,s := range sites {
+            <option value="@s.Name">@s.Name</option>
+        }
+        <option value="all">All</option>
+    </select>
+    <br><br>
+
+    <button type="submit" class="button button--primary">Save</button>
+</form>

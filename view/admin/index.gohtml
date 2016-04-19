@@ -8,32 +8,28 @@
 }
 
 @section title {
-	return "Wandering Lunch: Admin | index"
+	return "Wandering Lunch: Admin | Index"
 }
 
 @section site {
     return s.Name
 }
 
-<div class="grid-1-center">
-    <div class="col-7">
-        <h1>Possible missing location</h1>
+<h1>Possible missing location</h1>
 
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                </tr>
-            </thead>
-            <tbody>
-                @for _, t := range trucks {
-                    <tr>
-                        <td>
-                            <a href="/admin/debug?twitname=@t.Twitname">@t.Twitname</a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for _, t := range trucks {
+            <tr>
+                <td>
+                    <a href="/admin/debug?twitname=@t.Twitname">@t.Twitname</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

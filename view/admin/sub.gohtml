@@ -8,27 +8,23 @@
 }
 
 @section title {
-	return "Wandering Lunch: Admin | New Sub"
+	return "Wandering Lunch: Admin | Sub"
 }
 
 @section site {
     return s.Name
 }
 
-<div class="grid-1-center">
-    <div class="col-7">
-        <h1>Add Sub</h1>
+<h1>Sub</h1>
 
-        <form method="post">
-            <input type="hidden" name="id" value="@sub.ID">
-            <label>Regex</label><br>
-            <input type="text" name="regex" value="@sub.Regex"><br>
+<form method="post">
+    <input type="hidden" name="id" value="@sub.ID">
+    <label>Regex</label><br>
+    <input type="text" name="regex" value="@sub.Regex"><br>
 
-            <label>Replacement</label><br>
-            <input type="text" name="replacement" value="@sub.Replacement"><br>
-            <br><br>
+    <label>Replacement</label><br>
+    <input type="text" name="replacement" value="@sub.Replacement"><br>
+    <br><br>
 
-            <button type="submit" class="button button--primary">Save</button>
-        </form>
-    </div>
-</div>
+    <button type="submit" class="button button--primary">Save</button>
+</form>
