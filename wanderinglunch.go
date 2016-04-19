@@ -19,7 +19,7 @@ import (
 	"github.com/sebest/logrusly"
 )
 
-const secret = os.GetEnv("WL_SECRET")
+var secret = os.Getenv("WL_SECRET")
 
 var logglyClientID = os.Getenv("LOGGLY")
 
