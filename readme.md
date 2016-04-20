@@ -7,20 +7,16 @@
 1. apt-get upgrade
 
 ### install required apps ###
-1. apt-get install nginx redis-server
+1. apt-get install nginx
 1. apt-get update
-1. curl -sL https://deb.nodesource.com/setup | sudo bash -
-1. apt-get install nodejs
-1. apt-get install build-essential
 1. apt-get install git
 1. vi /etc/apt/sources.list.d/pgdg.list
     * `deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main`
 1. wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
 1. apt-get update
 1. apt-get install postgresql-9.4
-1. apt-get install python python-pip python-dev libpq-dev
-1. pip install psycopg2 twitter foursquare
-1. install GVM https://github.com/moovweb/gvm
+1. wget latest go
+1. tar -C /usr/local -xzf go.tar.gz
 
 ### setup firewall ###
 1. ufw allow 22
@@ -55,12 +51,10 @@
 
 ### Get Repo ###
 1. git clone https://mpeppler@bitbucket.org/mpeppler/wanderinglunch.git
-1. git clone https://mpeppler@bitbucket.org/mpeppler/wlapi.git $GOPATH/bitbucket.org/peppage
 
 ### Setup site ###
+1.  Add environmental variables to .zshrc
 1.  cd wanderinglunch
-1.  npm install
-1.  go get ./...
 1.  sudo rm /etc/nginx/sites-enabled/default
 1.  sudo cp setup/wanderinglunch /etc/nginx/sites-available/
 1.  sudo ln -s /etc/nginx/sites-available/wanderinglunch /etc/nginx/sites-enabled/wanderinglunch
@@ -72,12 +66,9 @@
 1.  psql "foodtruck" < /home/mca/wanderinglunch/backup.sql
 
 ### Start site ###
-1. tmux new -s api
-1. cd $GOPATH/bitbucket.org/peppage/wlapi
-1. go build && ./wlapi
 1. tmux new -s site
 1. cd /home/mca/wanderinglunch
-1. gulp && go build && ./wanderinglunch
+1. make run
 
 ### Keep server updated ###
 1. sudo apt-get install unattended-upgrades
