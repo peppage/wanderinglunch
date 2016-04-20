@@ -53,7 +53,7 @@
 1. git clone https://mpeppler@bitbucket.org/mpeppler/wanderinglunch.git
 
 ### Setup site ###
-1.  Add environmental variables to .zshrc
+1.  Add environmental variables to .zshrc (TWIT_CON_KEY, TWIT_CON_SEC, TWIT_ACCESS_TOKEN, TWIT_ACCESS_SECRET, CLIENT_ID, CLIENT_SECRET, WL_SECRET, LOGGLY)
 1.  cd wanderinglunch
 1.  sudo rm /etc/nginx/sites-enabled/default
 1.  sudo cp setup/wanderinglunch /etc/nginx/sites-available/
