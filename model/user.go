@@ -11,13 +11,13 @@ type User struct {
 
 func GetUser(email string) (*User, error) {
 	var u User
-	err := db.QueryRowx(`SELECT * FROM users WHERE email = $1`, email).StructScan(&u)
+	err := db.Get(&u, `SELECT * FROM users WHERE email = $1`, email)
 	return &u, err
 }
 
 func VerifyPassword(email string, password string) (*User, error) {
 	var u User
-	err := db.QueryRowx(`SELECT * FROM users WHERE email = $1`, email).StructScan(&u)
+	err := db.Get(&u, `SELECT * FROM users WHERE email = $1`, email)
 	if err != nil {
 		return nil, err
 	}

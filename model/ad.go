@@ -54,7 +54,7 @@ func GetAds() ([]*Ad, error) {
 
 func GetAd(id string) (*Ad, error) {
 	var a Ad
-	err := db.QueryRowx(`SELECT * FROM ads WHERE id=$1`, id).StructScan(&a)
+	err := db.Get(&a, `SELECT * FROM ads WHERE id=$1`, id)
 	return &a, err
 }
 
