@@ -113,16 +113,23 @@ func main() {
 }
 
 func errorHandler(err error, c echo.Context) {
+	code := http.StatusInternalServerError
+	msg := http.StatusText(code)
+	if he, ok := err.(*echo.HTTPError); ok {
+		code = he.Code
+		msg = he.Message
+	}
+
 	sites, err2 := mdl.GetSites()
-	if err.Error() == "Not Found" && err2 == nil {
-		c.HTML(http.StatusNotFound, view.Error404(sites))
+	if code == http.StatusNotFound && err2 == nil {
+		c.HTML(code, view.Error404(sites))
 		return
 	}
-	if err.Error() == "Permission denied!" && err2 == nil {
-		c.HTML(http.StatusUnauthorized, view.Error401(sites))
+	if code == http.StatusUnauthorized && err2 == nil {
+		c.HTML(code, view.Error401(sites))
 		return
 	}
-	c.String(http.StatusInternalServerError, "fail.")
+	c.String(code, msg)
 	return
 }
 
