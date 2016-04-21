@@ -108,3 +108,23 @@ a:hover {
   right: 0;
   margin: auto;
 }
+
+.tweetList {
+  list-style: none;
+  width: 60%;
+}
+
+.tweetList-tweet {
+  background: #fff;
+  border-bottom: 1px solid #e1e8ed;
+  background-clip: padding-box;
+  list-style: none;
+  padding-bottom: 15px;
+  padding-top: 15px;
+}
+
+.tweetList-time {
+  font-size: 0.7em;
+  color: #8d8d8d;
+  float: right;
+}
