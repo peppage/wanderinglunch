@@ -88,3 +88,6 @@ delete from locations where id=53
 update trucks set name='Gorilla Cheese' where twitname='gcnyc1';
 
 alter table trucks drop column lasttweet;
+
+alter table sites add description text;
+update sites set description = 'Track and find food trucks around New York City. Updated everyday from twitter' where name='nyc';

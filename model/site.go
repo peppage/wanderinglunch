@@ -1,8 +1,9 @@
 package model
 
 type Site struct {
-	Name  string
-	Title string
+	Name        string
+	Title       string
+	Description string
 }
 
 //GetSite get a site entry from db

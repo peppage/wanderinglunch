@@ -230,8 +230,9 @@ func siteNew(c echo.Context) error {
 
 func siteSave(c echo.Context) error {
 	err := mdl.AddSite(mdl.Site{
-		Name:  c.FormValue("name"),
-		Title: c.FormValue("title"),
+		Name:        c.FormValue("name"),
+		Title:       c.FormValue("title"),
+		Description: c.FormValue("description"),
 	})
 	if err != nil {
 		log.WithFields(log.Fields{
@@ -517,8 +518,9 @@ func siteEdit(c echo.Context) error {
 
 func siteUpdate(c echo.Context) error {
 	err := mdl.UpdateSite(mdl.Site{
-		Name:  c.FormValue("name"),
-		Title: c.FormValue("tite"),
+		Name:        c.FormValue("name"),
+		Title:       c.FormValue("tite"),
+		Description: c.FormValue("description"),
 	})
 
 	if err != nil {

@@ -17,6 +17,10 @@
     return s.Name
 }
 
+@section description {
+    return s.Description
+}
+
 @if len(trucks) > 0 {
     <table class="table">
         @for _, z := range zones {
