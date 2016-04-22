@@ -63,7 +63,7 @@
 1.  Install glide & gorazor
 1.  Add environmental variables to .zshrc (TWIT_CON_KEY, TWIT_CON_SEC, TWIT_ACCESS_TOKEN, TWIT_ACCESS_SECRET, CLIENT_ID, CLIENT_SECRET, WL_SECRET, LOGGLY)
 1.  cd $GOPATH/src/wanderinglunch
-1.  sudo cp setup/wanderinglunch /etc/nginx/conf.d
+1.  sudo cp setup/wanderinglunch.conf /etc/nginx/conf.d
 1.  sudo nginx -s reload
 1.  https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-centos-7
 1.  sudo vi /etc/postgresql/9.4/main/pg_hba.conf
