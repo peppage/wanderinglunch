@@ -1,169 +1,281 @@
 package main
 
 import (
-	"fmt"
-	"log"
+	"encoding/json"
 	"net/http"
+	"os"
+	mdl "wanderinglunch/model"
+	"wanderinglunch/setting"
+	"wanderinglunch/updator"
+	"wanderinglunch/view"
 
-	"wanderinglunch/model"
-	"wanderinglunch/tmpl"
+	"github.com/labstack/echo/engine/standard"
+	"github.com/peppage/echo-middleware/session"
 
-	"github.com/jmoiron/sqlx"
+	log "github.com/Sirupsen/logrus"
 	"github.com/labstack/echo"
-	mw "github.com/labstack/echo/middleware"
-	_ "github.com/lib/pq"
-	"github.com/syntaqx/echo-middleware/session"
+	"github.com/labstack/echo/middleware"
+	"github.com/rifflock/lfshook"
+	"github.com/sebest/logrusly"
 )
 
-var db *sqlx.DB
-var secret = "D3MtG1ixqlhavdbxmBclkKvjYtBqWUQexsVCsr5xNWO1af36hZnZP"
+var secret = os.Getenv("WL_SECRET")
+
+var logglyClientID = os.Getenv("LOGGLY")
+
 var store = session.NewCookieStore([]byte(secret))
 
-func index(c *echo.Context) error {
-	return c.HTML(http.StatusOK, tmpl.Index(model.Zones("nyc"), model.Trucks(8, "lat", "desc", 0)))
-}
-
-func allTrucks(c *echo.Context) error {
-	return c.HTML(http.StatusOK, tmpl.Alltrucks(model.Trucks(730, "lat", "desc", 0)))
-}
-
-func truck(c *echo.Context) error {
-	var t = model.GetTruck(c.Param("id"))
-	if t.ID == "" {
-		return echo.NewHTTPError(http.StatusNotFound)
+func init() {
+	setting.Initialize()
+	ll, err := log.ParseLevel(setting.LogLevel)
+	if err == nil {
+		log.SetLevel(ll)
 	}
-	return c.HTML(http.StatusOK, tmpl.Truck(t))
+	if setting.Develop() {
+		log.SetFormatter(&log.TextFormatter{})
+		log.AddHook(lfshook.NewHook(
+			lfshook.PathMap{
+				log.DebugLevel: "info.log",
+				log.ErrorLevel: "error.log",
+			}))
+	} else {
+		log.SetFormatter(&log.JSONFormatter{})
+		log.AddHook(logrusly.NewLogglyHook(logglyClientID, "wanderinglunch.com", log.WarnLevel))
+	}
+
+	go updator.Start()
 }
 
-func maps(c *echo.Context) error {
-	return c.HTML(http.StatusOK, tmpl.Map())
+func main() {
+	e := echo.New()
+	e.Use(session.Sessions("session", store))
+	e.Use(middleware.Recover())
+	e.SetHTTPErrorHandler(errorHandler)
+
+	e.File("./static/google7edb19ba8a4a91bb.html", "/google7edb19ba8a4a91bb.html")
+	e.File("/favicon.ico", "./static/images/favicon.ico")
+	e.File("/robots.txt", "./static/robots.txt")
+	e.Static("/static/", "static")
+
+	e.Get("/", root)
+	e.Get("/login", login)
+	e.Post("/login", loginHandle)
+	e.Get("/truck/:name", truck)
+	e.Get("/:site", root)
+	e.Get("/alltrucks", allTrucks)
+	e.Get("/:site/alltrucks", allTrucks)
+	e.Get("/:site/lastupdate", lastUpdate)
+	e.Get("/map", maps)
+	e.Get("/:site/map", maps)
+	e.Get("/:site/feedback", feedback)
+
+	ad := e.Group("/admin")
+	if !setting.Develop() {
+		ad.Use(secure())
+	}
+	ad.Get("", adminRoot)
+	ad.Get("/setSite", setSite)
+	ad.Get("/debug", debug)
+	ad.Get("/truck/add", truckNew)
+	ad.Post("/truck/add", truckSave)
+	ad.Get("/sub/add", subNew)
+	ad.Post("/sub/add", subSave)
+	ad.Get("/ad/add", adNew)
+	ad.Post("/ad/add", adSave)
+	ad.Get("/location/add", locNew)
+	ad.Post("/location/add", locSave)
+	ad.Get("/site/add", siteNew)
+	ad.Post("/site/add", siteSave)
+
+	ad.Get("/trucks", aTrucks)
+	ad.Get("/truck/edit", truckEdit)
+	ad.Post("/truck/edit", truckUpdate)
+	ad.Get("/subs", aSubs)
+	ad.Get("/sub/edit", subEdit)
+	ad.Post("/sub/edit", subUpdate)
+	ad.Get("/ads", aAds)
+	ad.Get("/ad/edit", adEdit)
+	ad.Post("/ad/edit", adUpdate)
+	ad.Get("/locations", aLocations)
+	ad.Get("/location/edit", locEdit)
+	ad.Post("/location/edit", locUpdate)
+	ad.Get("/sites", aSites)
+	ad.Get("/site/edit", siteEdit)
+	ad.Post("/site/edit", siteUpdate)
+	ad.Get("/foursquare", foursquare)
+	ad.Post("/image/add", imgAdd)
+	ad.Get("/image/edit", imgEdit)
+	ad.Post("/image/edit", imgUpdate)
+
+	log.Info("Server (version " + setting.Version + ") started on port " + setting.HTTPPort)
+	e.Run(standard.New(":" + setting.HTTPPort))
+
 }
 
-func login(c *echo.Context) error {
-	return c.HTML(http.StatusOK, tmpl.Login())
+func errorHandler(err error, c echo.Context) {
+	code := http.StatusInternalServerError
+	msg := http.StatusText(code)
+	if he, ok := err.(*echo.HTTPError); ok {
+		code = he.Code
+		msg = he.Message
+	}
+
+	sites, err2 := mdl.GetSites()
+	if code == http.StatusNotFound && err2 == nil {
+		c.HTML(code, view.Error404(sites))
+		return
+	}
+	if code == http.StatusUnauthorized && err2 == nil {
+		c.HTML(code, view.Error401(sites))
+		return
+	}
+	c.String(code, msg)
+	return
 }
 
-func loginHandle(c *echo.Context) error {
-	u, err := model.VerifyPassword(c.Form("email"), c.Form("password"))
+func login(c echo.Context) error {
+	return c.HTML(http.StatusOK, view.Login())
+}
+
+func loginHandle(c echo.Context) error {
+	u, err := mdl.VerifyPassword(c.FormValue("email"), c.FormValue("password"))
 	if err != nil {
 		c.Response().Header().Set("Method", "GET")
 		return echo.NewHTTPError(http.StatusUnauthorized) // The user is invalid!
 	}
 	session := session.Default(c)
 	session.Set("user", u.Email)
+	session.Set("site", "nyc")
 	session.Save()
 	return c.Redirect(http.StatusSeeOther, "/admin")
 }
 
-func serveSingle(pattern string, filename string) {
-	http.HandleFunc(pattern, func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Add("Cache-Control", "max-age=31536000, public, must-revalidate, proxy-revalidate")
-		w.Header().Add("Vary", "Accept-Encoding")
-		http.ServeFile(w, r, filename)
-	})
-}
-
-func maxAgeHandler(seconds int, h http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Add("Cache-Control", fmt.Sprintf("max-age=%d, public, must-revalidate, proxy-revalidate", seconds))
-		w.Header().Add("Vary", "Accept-Encoding")
-		h.ServeHTTP(w, r)
-	})
-}
-
-func errorHandler(err error, c *echo.Context) {
-	if err.Error() == "Not Found" {
-		c.HTML(http.StatusNotFound, tmpl.Error404())
+func truck(c echo.Context) error {
+	name := c.Param("name")
+	if name != "" {
+		t := mdl.GetTruck(name)
+		if len(t) > 0 {
+			site, err := mdl.GetSite(t[0].Site)
+			if err != nil {
+				log.WithFields(log.Fields{
+					"truck": t,
+					"err":   err,
+				}).Error("Failed getting that site")
+				return echo.NewHTTPError(http.StatusNotFound, "")
+			}
+			return c.HTML(http.StatusOK, view.Truck(site, t))
+		}
 	}
-	if err.Error() == "Permission denied!" {
-		c.HTML(http.StatusUnauthorized, tmpl.Error401())
-	}
+	return echo.NewHTTPError(http.StatusNotFound, "No truck")
 }
 
-func init() {
-	var err error
-	db, err = sqlx.Open("postgres", "user=mca dbname=foodtruck sslmode=disable")
-	if err != nil {
-		log.Fatal(err)
+func root(c echo.Context) error {
+	siteName := c.Param("site")
+	if siteName != "" {
+		site, err := mdl.GetSite(siteName)
+		if err != nil {
+			log.WithFields(log.Fields{
+				"site": siteName,
+				"err":  err,
+			}).Error("Failed getting that site")
+			return echo.NewHTTPError(http.StatusNotFound, "")
+		}
+		trucks, err := mdl.Trucks(siteName, 8, "lat", "desc", 0)
+		if err != nil {
+			log.WithFields(log.Fields{
+				"err":  err,
+				"site": siteName,
+			}).Error("Failed getting trucks")
+			return echo.NewHTTPError(http.StatusInternalServerError, "Error getting data")
+		}
+
+		zones, err := mdl.GetZones(siteName)
+		if err != nil {
+			log.WithFields(log.Fields{
+				"err":  err,
+				"site": siteName,
+			}).Error("Failed getting zones")
+			return echo.NewHTTPError(http.StatusInternalServerError, "Error getting data")
+		}
+
+		lu, err := mdl.LastUpdate(siteName)
+		if err != nil {
+			log.WithError(err).Error("Unable to retrieve last update")
+		}
+		return c.HTML(http.StatusOK, view.Index(site, zones, trucks, lu))
 	}
+	return c.Redirect(http.StatusMovedPermanently, "/nyc")
 }
 
-func main() {
+func allTrucks(c echo.Context) error {
+	siteName := c.Param("site")
+	if siteName != "" {
+		site, err := mdl.GetSite(siteName)
+		if err != nil {
+			log.WithFields(log.Fields{
+				"site": site,
+				"err":  err,
+			}).Error("Failed getting that site")
+			return echo.NewHTTPError(http.StatusNotFound, "")
+		}
+		trucks, err := mdl.Trucks(siteName, 500000, "name", "asc", 0)
+		if err != nil {
+			log.WithFields(log.Fields{
+				"err":  err,
+				"site": site,
+			}).Error("Failed getting trucks")
+			return echo.NewHTTPError(http.StatusInternalServerError, "Error getting data")
+		}
+		if len(trucks) == 0 {
+			return echo.NewHTTPError(http.StatusNotFound, "")
+		}
+		return c.HTML(http.StatusOK, view.Alltrucks(site, trucks))
+	}
+	return c.Redirect(http.StatusMovedPermanently, "/nyc/alltrucks")
+}
 
-	e := echo.New()
-	e.Use(session.Sessions("session", store))
-	e.SetHTTPErrorHandler(errorHandler)
-	e.Use(mw.Logger())
+func lastUpdate(c echo.Context) error {
+	siteName := c.Param("site")
+	if siteName != "" {
+		lu, err := mdl.LastUpdate(siteName)
+		if err != nil {
+			log.WithError(err).Error("Unable to retrieve last update")
+		}
+		return c.JSON(http.StatusOK, lu)
+	}
+	return echo.NewHTTPError(http.StatusBadRequest, "")
+}
 
-	e.Static("/static/", "static")
-	e.Static("/doc/", "doc")
-	e.ServeFile("/google7edb19ba8a4a91bb.html", "./static/google7edb19ba8a4a91bb.html")
-	e.Favicon("./static/images/favicon.ico")
+func maps(c echo.Context) error {
+	siteName := c.Param("site")
+	if siteName != "" {
+		site, err := mdl.GetSite(siteName)
+		if err != nil {
+			log.WithFields(log.Fields{
+				"site": site,
+				"err":  err,
+			}).Error("Failed getting that site")
+			return echo.NewHTTPError(http.StatusNotFound, "")
+		}
+		m := mdl.Markers(siteName, 8)
+		mj, _ := json.Marshal(m)
+		return c.HTML(http.StatusOK, view.Map(site, string(mj)))
+	}
+	return c.Redirect(http.StatusMovedPermanently, "/nyc/map")
+}
 
-	e.Get("/", index)
-	e.Get("/alltrucks", allTrucks)
-	e.Get("/truck/:id", truck)
-	e.Get("/map", maps)
-	e.Get("/login", login)
-	e.Post("/login", loginHandle)
-
-	ad := e.Group("/admin")
-	ad.Use(secure())
-	ad.Get("", adminRoot)
-	ad.Get("/fix/:id", adminFix)
-	ad.Get("/location/new/:tweetId", adminNewLoc)
-	ad.Get("/subs", adminSubs)
-	ad.Get("/sub/add", adminNewSub)
-	ad.Get("/sub/:id", adminSub)
-	ad.Get("/locations", adminLocs)
-	ad.Get("/location/:id", adminEditLoc)
-	ad.Get("/trucks", adminTrucks)
-	ad.Get("/truck/:id", adminEditTruck)
-	ad.Get("/truck/add", adminNewTruck)
-	ad.Get("/images", adminImages)
-	ad.Get("/image/:id", adminImage)
-	ad.Get("/message", adminMessage)
-	ad.Get("/foursquare/:id", adminFoursquareImages)
-	ad.Get("/ads", adminAds)
-	ad.Get("/ad/add", adminNewAd)
-	ad.Get("/ad/:id", adminEditAd)
-
-	a := e.Group("/api")
-	a.Use(secureApi())
-	a.Get("/trucks", trucks)
-	a.Put("/trucks/:id", truckUpdate)
-	a.Delete("/trucks/:id", truckDelete)
-	a.Post("/trucks", truckInsert)
-	a.Get("/trucks/failures", failures)
-	a.Get("/messages", message)
-	a.Get("/trucks/:id", truckById)
-	a.Get("/trucks/:id/tweets", truckTweets)
-	a.Get("/markers", markers)
-	a.Get("/tweets/:id", tweetById)
-	a.Get("/subs", substitutions)
-	a.Post("/subs", subInsert)
-	a.Get("/subs/:id", subsitution)
-	a.Put("/subs/:id", subUpdate)
-	a.Delete("/subs/:id", subDelete)
-	a.Get("/locations", locations)
-	a.Get("/locations/:id", location)
-	a.Post("/locations", locationInsert)
-	a.Put("/locations/:id", locationUpdate)
-	a.Delete("/locations/:id", locationDelete)
-	a.Get("/zones", zones)
-	a.Get("/images", images)
-	a.Get("/images/:id", image)
-	a.Post("/images", imageInsert)
-	a.Put("/images/:id", imageUpdate)
-	a.Delete("/images/:id", imageDelete)
-	a.Post("/messages", messageSave)
-	a.Get("/ads", ads)
-	a.Delete("/ads/:id", adDelete)
-	a.Get("/ads/:id", advert)
-	a.Post("/ads", adInsert)
-	a.Put("/ads/:id", adUpdate)
-	a.Post("/upload", upload)
-
-	e.Use(mw.Recover())
-	e.Run(":8000")
+func feedback(c echo.Context) error {
+	siteName := c.Param("site")
+	if siteName != "" {
+		site, err := mdl.GetSite(siteName)
+		if err != nil {
+			log.WithFields(log.Fields{
+				"site": site,
+				"err":  err,
+			}).Error("Failed getting that site")
+			return echo.NewHTTPError(http.StatusNotFound, "")
+		}
+		return c.HTML(http.StatusOK, view.Feedback(site))
+	}
+	return echo.NewHTTPError(http.StatusBadRequest, "")
 }

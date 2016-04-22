@@ -1,0 +1,31 @@
+package: wanderinglunch
+import:
+- package: github.com/ChimeraCoder/anaconda
+  subpackages:
+  - github.com\ChimeraCoder\anaconda
+- package: github.com/Sirupsen/logrus
+  subpackages:
+  - github.com\Sirupsen\logrus
+- package: github.com/jackc/pgx
+  subpackages:
+  - github.com\jackc\pgx\stdlib
+- package: github.com/jmoiron/sqlx
+  subpackages:
+  - github.com\jmoiron\sqlx
+- package: github.com/labstack/echo
+  subpackages:
+  - github.com\labstack\echo
+  - github.com\labstack\echo\engine\fasthttp
+- package: github.com/rifflock/lfshook
+  subpackages:
+  - github.com\rifflock\lfshook
+- package: github.com/sipin/gorazor
+  subpackages:
+  - github.com\sipin\gorazor\gorazor
+- package: github.com/pelletier/go-toml
+- package: github.com/peppage/echo-middleware
+  subpackages:
+  - session
+- package: github.com/sebest/logrusly
+- package: github.com/segmentio/go-loggly
+- package: github.com/peppage/foursquarego

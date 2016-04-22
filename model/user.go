@@ -1,10 +1,6 @@
 package model
 
-import (
-	"fmt"
-
-	"golang.org/x/crypto/bcrypt"
-)
+import "golang.org/x/crypto/bcrypt"
 
 type User struct {
 	ID       int
@@ -13,24 +9,18 @@ type User struct {
 	Admin    string
 }
 
-func GetUser(email string) (User, error) {
+func GetUser(email string) (*User, error) {
 	var u User
-	err := db.QueryRowx(`SELECT * FROM users WHERE email = $1`, email).StructScan(&u)
-	if err != nil {
-		fmt.Println(err)
-	}
-	return u, err
+	err := db.Get(&u, `SELECT * FROM users WHERE email = $1`, email)
+	return &u, err
 }
 
-func VerifyPassword(email string, password string) (User, error) {
+func VerifyPassword(email string, password string) (*User, error) {
 	var u User
-	err := db.QueryRowx(`SELECT * FROM users WHERE email = $1`, email).StructScan(&u)
+	err := db.Get(&u, `SELECT * FROM users WHERE email = $1`, email)
 	if err != nil {
-		fmt.Println(err)
+		return nil, err
 	}
 	err = bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(password))
-	if err != nil {
-		fmt.Println(err)
-	}
-	return u, err
+	return &u, err
 }

@@ -1,0 +1,83 @@
+@{
+	import (
+		"wanderinglunch/view/layout/base"
+        m "wanderinglunch/model"
+	)
+    var s *m.Site
+    var zones []string
+    var trucks []*m.Truck
+    var lastUpdate int64
+}
+
+@section title {
+	return s.Title
+}
+
+@section site {
+    return s.Name
+}
+
+@section description {
+    return s.Description
+}
+
+@if len(trucks) > 0 {
+    <table class="table">
+        @for _, z := range zones {
+            @{
+                var zTrucks []*m.Truck
+                for _, t := range trucks {
+                    if t.Zone == z {
+                        zTrucks = append(zTrucks, t)
+                    }
+                }
+            }
+            @if len(zTrucks) > 0 {
+                <tr><td colspan="4"><h1>@z</h1></td></tr>
+                <tr class="thead">
+                    <th>Truck</th>
+                    <th>Location</th>
+                    <th class="noMobile">Time</th>
+                    <th class="noMobile">Menu</th>
+                </tr>
+                @for _, t := range zTrucks {
+                    <tr>
+                        <td><a href="/truck/@t.Twitname">@t.Name</a></td>
+                        <td>@t.Location</td>
+                        <td class="noMobile">@t.Updated</td>
+                        <td class="noMobile">
+                            @if t.Image != "" {
+                                <div class="gallery">
+                                    <a href="https://irs0.4sqi.net/img/general/width960@t.Image">
+                                        <img class="menu"
+                                            src="https://irs0.4sqi.net/img/general/width30@t.Image"
+                                            alt="@t.Name menu" />
+                                    </a>
+                                </div>
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+        }
+    </table>
+} else {
+    <h1 class="centerText">Your hunger cannot be satisfied, no trucks are tweeting</h1>
+    <p class="centerText">If it's late, bookmark the site and come back around lunchtime! <br></p>
+    <p class="centerText">There will be a list of trucks here, <a target="_blank" href="https://twitter.com/intent/tweet?text=Wandering Lunch&url=http://wanderinglunch.com">tweet</a> at yourself so you don't forget.<br></p>
+    <p class="centerText">Check out <a href="/alltrucks">a list of all the trucks</a> on the site while you wait.</p>
+}
+
+<input class="checkbox-cb" id="checkbox-cb" type="checkbox" />
+<div class="js-notification notification hidden">
+  <span class="message">There is new truck information. <a href="#" class="js-refresh">Refresh</a>?</span>
+  <label for="checkbox-cb" class="close-cb">x</label>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        setInterval(function() {
+            checkForNewInfo('@s.Name', @lastUpdate);
+        }, sixtySeconds);
+    });
+</script>

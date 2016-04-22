@@ -1,23 +1,7 @@
 package model
 
-import (
-	"errors"
-	"fmt"
-	"strconv"
+import "errors"
 
-	"github.com/labstack/echo"
-	"github.com/pmylund/go-cache"
-)
-
-/**
- * @apiDefine Location
- * @apiParam {String} display What the location looks like on the site
- * @apiParam {String} matcher The regex to match inside the tweet
- * @apiParam {Float} lat The latitude of the location
- * @apiParam {Float} long The longitude of the location
- * @apiParam {String} zone
- * @apiParam {String} site What website this location belongs to
- */
 type Location struct {
 	ID      int     `json:"id"`
 	Display string  `json:"display"`
@@ -28,122 +12,50 @@ type Location struct {
 	Site    string  `json:"site"`
 }
 
-func GetLocations() []*Location {
-	var locs []*Location
-	err := db.Select(&locs, `SELECT * FROM locations ORDER BY id`)
+// GetLocations returns a map, the key is the site. Holds an slice of locations
+func GetLocations() (map[string][]*Location, error) {
+	locs := make(map[string][]*Location)
+
+	rows, err := db.Queryx(`SELECT * FROM locations ORDER BY id`)
 	if err != nil {
-		fmt.Println(err)
+		return nil, err
 	}
-	return locs
+	for rows.Next() {
+		temp := Location{}
+		rows.StructScan(&temp)
+		locs[temp.Site] = append(locs[temp.Site], &temp)
+	}
+	return locs, nil
 }
 
-func GetLocation(id string) Location {
-	var l Location
-	err := db.QueryRowx(`SELECT * FROM locations WHERE id=$1`, id).StructScan(&l)
-	if err != nil {
-		fmt.Println(err)
-	}
-	return l
-}
-
-func GetLocationByDisplay(display string) Location {
-	var l Location
-	err := db.QueryRowx(`SELECT * FROM locations WHERE display=$1`, display).StructScan(&l)
-	if err != nil {
-		fmt.Println(err)
-	}
-	return l
+// Zones returns a string slice of all zones for site
+func GetZones(site string) ([]string, error) {
+	var zones []string
+	err := db.Select(&zones, `SELECT zone FROM locations WHERE site=$1 GROUP BY zone`, site)
+	return zones, err
 }
 
 func AddLocation(l Location) error {
 	if l.Display == "" || l.Matcher == "" || l.Lat == 0 || l.Long == 0 || l.Zone == "" || l.Site == "" {
 		return errors.New("Display, Matcher, Lat, Long, Zone, and Site are required")
 	}
-	result, err := db.NamedExec(
+	_, err := db.NamedExec(
 		`INSERT INTO locations (display, matcher, lat, long, zone, site)
 			VALUES (:display, :matcher, :lat, :long, :zone, :site)`, l)
-	if err != nil {
-		return err
-	}
-	if result != nil {
-		return nil
-	}
-	return errors.New("Unknown error")
-}
-
-func DeleteLocation(id string) error {
-	result, err := db.Exec(`DELETE FROM locations WHERE id = $1`, id)
-	if err != nil {
-		fmt.Println(err)
-		return err
-	}
-	if result != nil {
-		return nil
-	}
-	return errors.New("Unkown error")
+	return err
 }
 
 func UpdateLocation(l Location) error {
 	if l.Display == "" || l.Matcher == "" || l.Lat == 0 || l.Long == 0 || l.Zone == "" || l.Site == "" {
 		return errors.New("Display, Matcher, Lat, Long, Zone, and Site are required")
 	}
-	result, err := db.NamedExec(
+	_, err := db.NamedExec(
 		`UPDATE locations SET (display, matcher, lat, long) = (:display, :matcher, :lat, :long) WHERE id=:id`, l)
-	if err != nil {
-		return err
-	}
-	if result != nil {
-		return nil
-	}
-	return errors.New("Unknown error")
+	return err
 }
 
-func LocationMarshal(c *echo.Context) Location {
+func GetLocation(id string) (Location, error) {
 	var l Location
-	l.Display = c.Form("display")
-	l.Matcher = c.Form("matcher")
-	var lat, err = strconv.ParseFloat(c.Form("lat"), 32)
-	if err == nil {
-		l.Lat = float32(lat)
-	} else {
-		l.Lat = 0
-	}
-	var long, err2 = strconv.ParseFloat(c.Form("long"), 32)
-	if err2 == nil {
-		l.Long = float32(long)
-	} else {
-		l.Long = 0
-	}
-	l.Zone = c.Form("zone")
-	l.Site = c.Form("site")
-	return l
-}
-
-func Zones(site string) []string {
-	var zones []string
-	if object, found := Cache.Get("zones" + site); found {
-		zones = object.([]string)
-	} else {
-		err := db.Select(&zones, `SELECT zone FROM locations WHERE site=$1 GROUP BY zone`, site)
-		if err != nil {
-			fmt.Println(err)
-		}
-		Cache.Set("zones"+site, zones, cache.DefaultExpiration)
-	}
-
-	return zones
-}
-
-func Sites() []string {
-	var sites []string
-	if o, found := Cache.Get("sites"); found {
-		sites = o.([]string)
-	} else {
-		err := db.Select(&sites, `SELECT site FROM locations GROUP BY site`)
-		if err != nil {
-			fmt.Println(err)
-		}
-		Cache.Set("sites", sites, cache.DefaultExpiration)
-	}
-	return sites
+	err := db.Get(&l, `SELECT * FROM locations WHERE id=$1`, id)
+	return l, err
 }

@@ -1,0 +1,64 @@
+@{
+    import (
+        "wanderinglunch/view/layout/baseadmin"
+        m "wanderinglunch/model"
+    )
+    var s *m.Site
+    var sites []*m.Site
+    var zones []string
+    var l *m.Location
+}
+
+@section title {
+	return "Wandering Lunch: Admin | Location"
+}
+
+@section site {
+    return s.Name
+}
+
+<h1>Location</h1>
+
+<p>
+    <a href="http://maps.google.com">Google Maps</a><br>
+    <a href="http://regex101.com">Regex101</a>
+</p>
+
+<form method="post">
+    <input type="hidden" name="id" value="@l.ID">
+    <label>Display</label><br>
+    <input type="text" name="display" value="@l.Display"><br>
+
+    <label>Matcher</label><br>
+    <input type="text" name="matcher" value="@l.Matcher"><br>
+
+    <label>Latitude</label><br>
+    <input type="text" name="lat" value="@l.Lat"><br>
+
+    <label>Longitude</label><br>
+    <input type="text" name="long" value="@l.Long"><br>
+    
+    <label>Zone</label><br>
+    <input type="text" name="zone" value="@l.Zone"><br>
+    <span class="help-text">
+        @for _, z := range zones {
+            <b>@z, </b>
+        }
+    </span>
+    <br>
+
+    <label>Existing Sites</label>
+    <select name="site">
+        @if l.Site != "" {
+            <option value="@l.Site">@l.Site</option>
+        } else {
+            <option value="">Select</option>
+        }
+        @for _, s := range sites {
+            <option value="@s.Name">@s.Name</option>
+        }
+    </select>
+    <br><br>
+
+    <button type="submit" class="button button--primary">Save</button>
+</form>

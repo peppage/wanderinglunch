@@ -1,0 +1,52 @@
+@{
+    import (
+        "wanderinglunch/view/layout/baseadmin"
+        m "wanderinglunch/model"
+    )
+    var s *m.Site
+    var sites []*m.Site
+    var a *m.Ad
+}
+
+@section title {
+	return "Wandering Lunch: Admin | Ad"
+}
+
+@section site {
+    return s.Name
+}
+
+
+<h1>Ad</h1>
+
+<p>
+    <a href="http://www.epochconverter.com/">Epoch Converter</a>
+</p>
+
+<form method="post">
+    <input type="hidden" name="id" value="@a.ID">
+    <label>Name</label><br>
+    <input type="text" name="name" value="@a.Name"><br>
+
+    <label>Value</label><br>
+    <textarea name="value">@raw(a.Value)</textarea><br>
+
+    <label>Valid Until</label><br>
+    <input type="text" name="validuntil" value="@a.ValidUntil"><br>
+
+    <label>Existing Sites</label>
+    <select name="site">
+        @if a.Site != "" {
+            <option value="@a.Site">@a.Site</option>
+        } else {
+            <option value="">Select</option>
+        }
+        @for _,s := range sites {
+            <option value="@s.Name">@s.Name</option>
+        }
+        <option value="all">All</option>
+    </select>
+    <br><br>
+
+    <button type="submit" class="button button--primary">Save</button>
+</form>

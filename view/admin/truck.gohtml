@@ -1,0 +1,85 @@
+@{
+    import (
+        "wanderinglunch/view/layout/baseadmin"
+        m "wanderinglunch/model"
+    )
+    var s *m.Site
+    var sites []*m.Site
+    var t *m.Truck
+}
+
+
+
+@section title {
+	return "Wandering Lunch: Admin | Truck"
+}
+
+@section site {
+    return s.Name
+}
+
+<h1>Truck</h1>
+
+<form method="post">
+    <label>Id</label><br>
+    <input type="text" name="id" value="@t.ID"><br>
+
+    <label>Name</label><br>
+    <input type="text" name="name" value="@t.Name"><br>
+
+    <label>Twitname</label><br>
+    <input type="text" name="twitname" value="@t.Twitname"><br>
+
+    <label>Web Url</label><br>
+    <input type="text" name="weburl" value="@t.Weburl"><br>
+
+    <label>Type</label><br>
+    <input type="text" name="type" value="@t.Type"><br>
+
+    <label>About</label><br>
+    <input type="text" name="about" value="@t.About"><br>
+
+    <label>Foursquare</label><br>
+    <input type="text" name="foursquare" value="@t.Foursquare"><br>
+
+    <label>Existing Sites</label>
+    <select name="site">
+        @if t.Site != "" {
+            <option value="@t.Site">@t.Site</option>
+        } else {
+            <option value="">Select</option>
+        }
+        @for _, s := range sites {
+            <option value="@s.Name">@s.Name</option>
+        }
+    </select>
+    <br><br>
+    <button type="submit" class="button button--primary">Save</button>
+</form>
+<table class="table">
+        <thead>
+        <th>Image</th>
+        <th>Menu</th>
+        <th></th>
+    </thead>
+    <tbody>
+        @for _, i := range t.Images {
+            <tr>
+                <td>
+                    <a href="/admin/image/edit?id=@i.ID">
+                        <img src="http://irs0.4sqi.net/img/general/width60@i.Suffix"><br>
+                    </a>
+                </td>
+                <td>
+                    @i.Menu
+                </td>
+                <td>
+                    delete
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<button class="button js-getImages" data-id="@t.Foursquare" data-twitname="@t.Twitname">Get Images</button>
+<div class="js-imageHolder">
+</div>

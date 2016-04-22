@@ -1,0 +1,28 @@
+@{
+	import (
+		"wanderinglunch/view/layout/base"
+        m "wanderinglunch/model"
+	)
+    
+    var s *m.Site
+    var markers string
+}
+
+@section title {
+	return s.Title + " | Map"
+}
+
+@section site {
+    return s.Name
+}
+
+@section description {
+    return s.Description
+}
+
+<div id="map" style="height:500px"></div>
+<script>
+    var trucks = @raw(markers)
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAN8Jk0062QBOMPmXH-Totg9zi1GCw3o3w&callback=initMap&v=3.22">
+</script>

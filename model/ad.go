@@ -1,20 +1,10 @@
 package model
 
 import (
-	"errors"
-	"fmt"
 	"time"
+	"wanderinglunch/util"
 )
 
-/**
- * @apiDefine Ad
- * @apiParam {String} Name the name of the ad
- * @apiParam {String} Value the html to display to put on site
- * @apiParam {Number} ValidUntil How long the ad runs
- * @apiParam {Number} [Views=0] Not editable how many times this ad as run
- * @apiParam {String} Site What site this ad runs on
- * @apiParam {String=banner,square} Shape The shape of the ad
- */
 type Ad struct {
 	ID         int    `json:"id"`
 	Name       string `json:"name"`
@@ -22,72 +12,69 @@ type Ad struct {
 	ValidUntil int64  `json:"validUntil"`
 	Views      int    `json:"views"`
 	Site       string `json:"site"`
-	Shape      string `json:"shape"`
 }
 
-func GetAds() []*Ad {
+var adStacks map[string]*util.Stack
+
+//GetAdToShow gets the correct ad to show on the site
+func GetAdToShow(siteName string) (*Ad, error) {
+	if val, ok := adStacks[siteName]; !ok || val.Len() == 0 {
+		err := fillStack(siteName)
+		if err != nil {
+			return nil, err
+		}
+	}
+	a, _ := adStacks[siteName].Pop()
+	ad := a.(Ad)
+	return &ad, nil
+
+}
+
+func fillStack(siteName string) error {
+	now := time.Now().Unix()
+	rows, err := db.Queryx(`SELECT * FROM ads where validuntil > $1 AND (site = $2 OR site = 'all')`, now, siteName)
+	if err != nil {
+		return err
+	}
+
+	adStacks[siteName] = &util.Stack{}
+	for rows.Next() {
+		ad := Ad{}
+		rows.StructScan(&ad)
+		adStacks[siteName].Push(ad)
+	}
+	return nil
+}
+
+func GetAds() ([]*Ad, error) {
 	var ads []*Ad
 	err := db.Select(&ads, `SELECT * from ads ORDER BY id`)
-	if err != nil {
-		fmt.Println(err)
-	}
-	return ads
+	return ads, err
 }
 
-func GetAd(id string) Ad {
+func GetAd(id string) (*Ad, error) {
 	var a Ad
-	err := db.QueryRowx(`SELECT * FROM ads WHERE id=$1`, id).StructScan(&a)
-	if err != nil {
-		fmt.Println(err)
-	}
-	return a
-}
-
-func GetActiveAds(shape string, site string) []*Ad {
-	var ads []*Ad
-	now := time.Now().Unix()
-	err := db.Select(&ads, `SELECT * FROM ads where validuntil > $1 AND (site = $2 OR site = 'all') AND shape=$3`, now, site, shape)
-	if err != nil {
-		fmt.Println(err)
-	}
-	return ads
+	err := db.Get(&a, `SELECT * FROM ads WHERE id=$1`, id)
+	return &a, err
 }
 
 func AdsAddView(id int) error {
 	_, err := db.Exec(`UPDATE ads SET views = views + 1 WHERE id = $1`, id)
-	if err != nil {
-		fmt.Println(err)
-		return err
-	}
-	return nil
+	return err
 }
 
 func DeleteAd(id string) error {
-	result, err := db.Exec(`DELETE FROM ads WHERE id = $1`, id)
-	if err != nil {
-		fmt.Println(err)
-		return err
-	}
-	if result != nil {
-		return nil
-	}
-	return errors.New("Unknown error")
+	_, err := db.Exec(`DELETE FROM ads WHERE id = $1`, id)
+	return err
 }
 
 func AddAd(a Ad) error {
-	_, err := db.NamedExec(`INSERT INTO ads (name, value, validuntil, shape, site) VALUES (:name, :value, :validuntil, :shape, :site)`, a)
-	if err != nil {
-		fmt.Println(err)
-		return err
-	}
-	return nil
+	_, err := db.NamedExec(`INSERT INTO ads (name, value, validuntil, site) VALUES (:name, :value, :validuntil, :site)`, a)
+	return err
 }
 
 func UpdateAd(a Ad) error {
-	_, err := db.NamedExec(`UPDATE ads SET (name, value, validuntil, site, shape) = (:name, :value, :validuntil, :site, :shape) WHERE id=:id`, a)
-	if err != nil {
-		fmt.Println(err)
-		return err
-	}
-	return nil
+	_, err := db.NamedExec(`UPDATE ads SET (name, value, validuntil, site) =
+		(:name, :value, :validuntil, :site) WHERE id=:id`, a)
+	return err
 }

@@ -2,11 +2,12 @@
 default: build
 
 build: vet
-	gorazor ./tmpl ./tmpl
+	gorazor ./view ./view
+	sfbt
 	go build -v
 
 vet:
-	go vet ./...
+	go vet $(go list ./... | grep -v /vendor/)
 
 # https://github.com/golang/lint
 # go get github.com/golang/lint/golint
@@ -14,7 +15,7 @@ lint:
 	golint .
 
 clean:
-	find ./tmpl/ -type f -name "*.go" -delete 
+	find ./view/ -type f -name "*.go" -delete 
 	go clean
 
 run: clean build
