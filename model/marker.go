@@ -15,10 +15,6 @@ type Marker struct {
 
 func Markers(site string, hours int) []*Marker {
 	m := &[]*Marker{}
-
-	//if o, found := Cache.Get("markers" + site + strconv.Itoa(hours)); found {
-	//		m = o.(*[]*Marker)
-	//	} else {
 	t := time.Now().Add(time.Duration(-1*hours) * (time.Minute * 60)).Unix()
 	err := db.Select(m, `SELECT trucks.id AS id, trucks.name, coalesce(locations.display,'') AS display,
 			locations.lat AS lat, locations.long AS long FROM trucks LEFT JOIN locations ON (locations.id = ANY(trucks.locs))
@@ -26,7 +22,5 @@ func Markers(site string, hours int) []*Marker {
 	if err != nil {
 		fmt.Println(err)
 	}
-	//		Cache.Set("markers"+site+strconv.Itoa(hours), m, cache.DefaultExpiration)
-	//	}
 	return *m
 }

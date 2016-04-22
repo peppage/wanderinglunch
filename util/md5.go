@@ -9,9 +9,6 @@ import (
 )
 
 func Md5File(file string) string {
-	//if object, found := Cache.Get("statics-" + file); found {
-	//		return object.(string)
-	//} else {
 	wd, err := os.Getwd()
 	static, err := ioutil.ReadFile(wd + file)
 	if err != nil {
@@ -19,7 +16,5 @@ func Md5File(file string) string {
 	}
 	md5 := md5.Sum(static)
 	md5String := hex.EncodeToString(md5[:])
-	//	Cache.Set("statics-"+file, md5String, cache.DefaultExpiration)
 	return md5String
-	//}
 }

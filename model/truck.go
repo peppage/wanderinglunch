@@ -59,9 +59,6 @@ func relativeTime(lastUpdate int64) string {
 
 func Trucks(site string, hours int, sort string, sortDir string, loc int) ([]*Truck, error) {
 	var trucks []*Truck
-	//if object, found := Cache.Get("trucks" + strconv.Itoa(hours) + sort + sortDir + site); found {
-	//		trucks = object.([]*Truck)
-	//} else {
 	t := time.Now().Add(time.Duration(-1*hours) * (time.Minute * 60)).Unix()
 
 	locSql := ""
@@ -83,8 +80,7 @@ func Trucks(site string, hours int, sort string, sortDir string, loc int) ([]*Tr
 		tt.Updated = relativeTime(tt.Lastupdate)
 		trucks = append(trucks, &tt)
 	}
-	//Cache.Set("trucks"+strconv.Itoa(hours)+sort+sortDir+site, trucks, cache.DefaultExpiration)
-	//}
+
 	return trucks, nil
 }
 
@@ -107,9 +103,6 @@ func AllTrucks(site string) ([]*Truck, error) {
 
 func GetTruck(id string) []*Truck {
 	trucks := []*Truck{}
-	//if object, found := Cache.Get("truck" + id); found {
-	//		t = object.(Truck)
-	//} else {
 	err := db.Select(&trucks, `SELECT trucks.id AS id, trucks.name, trucks.twitname, trucks.type, trucks.lastupdate, trucks.site, trucks.about,
 		trucks.foursquare, trucks.weburl, coalesce(locations.display,'') AS location, coalesce(locations.zone,'') AS zone
         FROM trucks LEFT JOIN locations ON (locations.id = ANY(trucks.locs)) WHERE trucks.id=$1 OR trucks.twitname=$1`, id)
@@ -122,9 +115,6 @@ func GetTruck(id string) []*Truck {
 		images, _ := GetImages(trucks[0].Twitname)
 		trucks[0].Images = images
 	}
-
-	//Cache.Set("truck"+id, t, cache.DefaultExpiration)
-	//}
 
 	return trucks
 }
@@ -189,7 +179,6 @@ func AddTruck(t Truck) error {
 	}
 	_, err := db.Exec(`INSERT INTO trucks (id, name, twitname, weburl, type, about, foursquare, site) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
 		t.ID, t.Name, t.Twitname, t.Weburl, t.Type, t.About, t.Foursquare, t.Site)
-	//Cache.Flush()
 	return err
 }
 
@@ -197,6 +186,5 @@ func UpdateTruck(t Truck) error {
 	_, err := db.Exec(`UPDATE trucks SET (name, twitname, weburl, type, about, foursquare, matcher, matchmethod)
 		= ($1, $2, $3, $4, $5, $6) WHERE id=$7`,
 		t.Name, t.Twitname, t.Weburl, t.Type, t.About, t.Foursquare, t.ID)
-	//Cache.Delete("truck" + t.ID)
 	return err
 }
