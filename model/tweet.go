@@ -54,3 +54,8 @@ func GetTweets(twitname string) ([]*Tweet, error) {
 func (t Tweet) CreatedAtTime() time.Time {
 	return time.Unix(t.Time, 0)
 }
+
+func DeleteAllTweets() error {
+	_, err := db.Exec(`TRUNCATE tweets`)
+	return err
+}
