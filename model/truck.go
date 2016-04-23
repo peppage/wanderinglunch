@@ -183,7 +183,7 @@ func AddTruck(t Truck) error {
 }
 
 func UpdateTruck(t Truck) error {
-	_, err := db.Exec(`UPDATE trucks SET (name, twitname, weburl, type, about, foursquare, matcher, matchmethod)
+	_, err := db.Exec(`UPDATE trucks SET (name, twitname, weburl, type, about, foursquare)
 		= ($1, $2, $3, $4, $5, $6) WHERE id=$7`,
 		t.Name, t.Twitname, t.Weburl, t.Type, t.About, t.Foursquare, t.ID)
 	return err
