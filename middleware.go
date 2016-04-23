@@ -13,7 +13,7 @@ func secure() echo.MiddlewareFunc {
 			session := session.Default(c)
 			u := session.Get("user")
 			if u == nil {
-				return echo.NewHTTPError(http.StatusForbidden, "Permission denied!")
+				return echo.NewHTTPError(http.StatusUnauthorized, "Permission denied!")
 			}
 			return next(c)
 		}
