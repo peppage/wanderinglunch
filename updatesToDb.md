@@ -94,3 +94,4 @@ update sites set description = 'Track and find food trucks around New York City.
 
 #v3.1
 alter table trucks add archive bool;
+alter table trucks ADD PRIMARY KEY(twitname);
