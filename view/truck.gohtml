@@ -38,19 +38,22 @@
     }
 </div>
 
-<h3>@trucks[0].Name Photos</h3>
+@if len(trucks[0].Images) > 0 {
+    <h3>@trucks[0].Name Photos</h3>
 
-<div class="gallery">
-    @for _, i := range trucks[0].Images {
-        @if !i.Menu {
-            <a href="https://irs0.4sqi.net/img/general/width960@i.Suffix">
-                <img class=""
-                    src="https://irs0.4sqi.net/img/general/width100@i.Suffix"
-                    alt="" />
-            </a>
+    <div class="gallery">
+        @for _, i := range trucks[0].Images {
+            @if !i.Menu {
+                <a href="https://irs0.4sqi.net/img/general/width960@i.Suffix">
+                    <img class=""
+                        src="https://irs0.4sqi.net/img/general/width100@i.Suffix"
+                        alt="" />
+                </a>
+            }
         }
-    }
-</div>
+    </div>
+}
+
 <h3>@trucks[0].Name Links</h3>
 @if trucks[0].Weburl != "" {
     <a href="@trucks[0].Weburl">Website</a><br>
