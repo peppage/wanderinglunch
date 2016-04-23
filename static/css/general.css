@@ -128,3 +128,7 @@ a:hover {
   color: #8d8d8d;
   float: right;
 }
+
+.center {
+    text-align: center;
+}

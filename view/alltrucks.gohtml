@@ -33,7 +33,7 @@
             @if i != 0 && trucks[i-1].Twitname == t.Twitname {
                 <tr class="noBorder">
                     <td></td>
-                    <td>@t.Location</td>
+                    <td class="center">@t.Location</td>
                     <td class="noMobile"></td>
                     <td class="noMobile">
                     </td>
@@ -41,9 +41,9 @@
             } else {
                 <tr>
                     <td><a href="/truck/@t.Twitname">@t.Name</a></td>
-                    <td>@t.Location</td>
-                    <td class="noMobile">@t.Updated</td>
-                    <td class="noMobile">
+                    <td class="center">@t.Location</td>
+                    <td class="noMobile center">@t.Updated</td>
+                    <td class="noMobile center">
                         @if t.Image != "" {
                             <div class="gallery">
                                 <a href="https://irs0.4sqi.net/img/general/width960@t.Image">
