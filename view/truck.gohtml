@@ -22,23 +22,23 @@
 <h1>@trucks[0].Name</h1>
 <h2 class="truck--category">@trucks[0].Type</h2>
 
-<div style="text-align:center;">
-    <img src="/static/images/foursquare.png">
-
-    @for _, i := range trucks[0].Images {
-        @if i.Menu {
-            <div class="gallery">
-                <a href="https://irs0.4sqi.net/img/general/width960@i.Suffix">
-                    <img class=""
-                        src="https://irs0.4sqi.net/img/general/500x500@i.Suffix"
-                        alt="" />
-                </a>
-            </div>
-        }
-    }
-</div>
-
 @if len(trucks[0].Images) > 0 {
+    <div style="text-align:center;">
+        <img src="/static/images/foursquare.png">
+
+        @for _, i := range trucks[0].Images {
+            @if i.Menu {
+                <div class="gallery">
+                    <a href="https://irs0.4sqi.net/img/general/width960@i.Suffix">
+                        <img class=""
+                            src="https://irs0.4sqi.net/img/general/500x500@i.Suffix"
+                            alt="" />
+                    </a>
+                </div>
+            }
+        }
+    </div>
+
     <h3>@trucks[0].Name Photos</h3>
 
     <div class="gallery">
