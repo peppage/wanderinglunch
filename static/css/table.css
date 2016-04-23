@@ -25,6 +25,10 @@
     background-color: #fafafa;
 }
 
+.table tbody tr.noHover:hover>td {
+    background-color: white;
+}
+
 .table tbody tr:first-child td, .table .thead+tr td {
     border-top: 0;
 }
