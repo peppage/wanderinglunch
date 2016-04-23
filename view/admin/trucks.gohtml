@@ -23,6 +23,7 @@
             <th>Twitname</th>
             <th>Name</th>
             <th>Updated</th>
+            <th>Archive</th>
             <th></th>
         </tr>
     </thead>
@@ -32,6 +33,11 @@
                 <td><a href="/admin/truck/edit?twitname=@t.Twitname">@t.Twitname</a></td>
                 <td>@t.Name</td>
                 <td>@t.Updated</td>
+                <td>
+                    @if t.Archive {
+                        <span>Y</span>
+                    }
+                </td>
                 <td>delete</td>
             </tr>
         }

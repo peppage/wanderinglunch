@@ -91,3 +91,6 @@ alter table trucks drop column lasttweet;
 
 alter table sites add description text;
 update sites set description = 'Track and find food trucks around New York City. Updated everyday from twitter' where name='nyc';
+
+#v3.1
+alter table trucks add archive bool;

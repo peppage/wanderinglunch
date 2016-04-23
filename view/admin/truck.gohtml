@@ -42,6 +42,12 @@
     <label>Foursquare</label><br>
     <input type="text" name="foursquare" value="@t.Foursquare"><br>
 
+    @if t.Archive {
+        <label><input type="checkbox" name="archive" checked> Archive</label><br>
+    } else {
+        <label><input type="checkbox" name="archive"> Archive</label><br>
+    }
+
     <label>Existing Sites</label>
     <select name="site">
         @if t.Site != "" {

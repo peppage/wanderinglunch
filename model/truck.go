@@ -25,6 +25,7 @@ type Truck struct {
 	Tweets     []*Tweet `json:"tweets"`
 	Images     []*Image `json:"images"`
 	Site       string   `json:"site"`
+	Archive    bool     `json:"archive"`
 }
 
 // relativeTime converts unix time to a relative time string
@@ -85,7 +86,7 @@ func Trucks(site string, hours int, sort string, sortDir string, loc int) ([]*Tr
 }
 
 func AllTrucks(site string) ([]*Truck, error) {
-	rows, err := db.Queryx(`SELECT trucks.id AS id, trucks.name, trucks.twitname, trucks.lastupdate, trucks.foursquare
+	rows, err := db.Queryx(`SELECT trucks.id AS id, trucks.name, trucks.twitname, trucks.lastupdate, trucks.foursquare, trucks.archive
 		FROM trucks WHERE trucks.site = $1 ORDER BY trucks.name`, site)
 
 	if err != nil {
@@ -104,7 +105,7 @@ func AllTrucks(site string) ([]*Truck, error) {
 func GetTruck(id string) []*Truck {
 	trucks := []*Truck{}
 	err := db.Select(&trucks, `SELECT trucks.id AS id, trucks.name, trucks.twitname, trucks.type, trucks.lastupdate, trucks.site, trucks.about,
-		trucks.foursquare, trucks.weburl, coalesce(locations.display,'') AS location, coalesce(locations.zone,'') AS zone
+		trucks.foursquare, trucks.weburl, trucks.archive, coalesce(locations.display,'') AS location, coalesce(locations.zone,'') AS zone
         FROM trucks LEFT JOIN locations ON (locations.id = ANY(trucks.locs)) WHERE trucks.id=$1 OR trucks.twitname=$1`, id)
 	if err != nil {
 		fmt.Println(err)
@@ -120,9 +121,9 @@ func GetTruck(id string) []*Truck {
 }
 
 // GetTwitNames returns a map, key is site, with a slice of twitnames.
-func GetTwitNames() (map[string][]string, error) {
+func GetTwitNames(archive bool) (map[string][]string, error) {
 	trucks := make(map[string][]string)
-	rows, err := db.Queryx(`SELECT twitname, site FROM trucks ORDER BY twitname`)
+	rows, err := db.Queryx(`SELECT twitname, site FROM trucks WHERE archive = $1 ORDER BY twitname`, archive)
 
 	if err != nil {
 		return nil, err
@@ -183,8 +184,8 @@ func AddTruck(t Truck) error {
 }
 
 func UpdateTruck(t Truck) error {
-	_, err := db.Exec(`UPDATE trucks SET (name, twitname, weburl, type, about, foursquare)
-		= ($1, $2, $3, $4, $5, $6) WHERE id=$7`,
-		t.Name, t.Twitname, t.Weburl, t.Type, t.About, t.Foursquare, t.ID)
+	_, err := db.Exec(`UPDATE trucks SET (name, twitname, weburl, type, about, foursquare, archive)
+		= ($1, $2, $3, $4, $5, $6, $7) WHERE id=$8`,
+		t.Name, t.Twitname, t.Weburl, t.Type, t.About, t.Foursquare, t.Archive, t.ID)
 	return err
 }

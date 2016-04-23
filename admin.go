@@ -278,6 +278,10 @@ func truckEdit(c echo.Context) error {
 }
 
 func truckUpdate(c echo.Context) error {
+	a := false
+	if c.FormValue("archive") != "" && c.FormValue("archive") == "on" {
+		a = true
+	}
 	err := mdl.UpdateTruck(mdl.Truck{
 		ID:         c.FormValue("id"),
 		Name:       c.FormValue("name"),
@@ -286,6 +290,7 @@ func truckUpdate(c echo.Context) error {
 		Type:       c.FormValue("type"),
 		About:      c.FormValue("about"),
 		Foursquare: c.FormValue("foursquare"),
+		Archive:    a,
 		Site:       c.FormValue("site"),
 	})
 	if err != nil {

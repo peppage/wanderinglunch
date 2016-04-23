@@ -43,7 +43,7 @@ func Start() {
 func task() {
 	log.Debug("Task Started")
 
-	twitnames, err := mdl.GetTwitNames()
+	twitnames, err := mdl.GetTwitNames(false)
 	if err != nil {
 		log.WithError(err).Error("Failed to get all trucks from database")
 		return
