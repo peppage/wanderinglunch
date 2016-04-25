@@ -4,6 +4,8 @@ type Site struct {
 	Name        string
 	Title       string
 	Description string
+	Lat         float32
+	Long        float32
 }
 
 //GetSite get a site entry from db
@@ -21,11 +23,13 @@ func GetSites() ([]*Site, error) {
 
 //AddSite adds a site to the database
 func AddSite(s Site) error {
-	_, err := db.NamedExec(`INSERT INTO sites (name, title, description) VALUES (:name, :title, :description)`, s)
+	_, err := db.NamedExec(`INSERT INTO sites (name, title, description, lat, long) VALUES
+		(:name, :title, :description, :lat, :long)`, s)
 	return err
 }
 
 func UpdateSite(s Site) error {
-	_, err := db.NamedExec(`UPDATE sites SET title = :title, description = :description WHERE name = :name`, s)
+	_, err := db.NamedExec(`UPDATE sites SET title = :title, description = :description, lat = :lat, long = :long
+		WHERE name = :name`, s)
 	return err
 }

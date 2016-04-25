@@ -229,10 +229,21 @@ func siteNew(c echo.Context) error {
 }
 
 func siteSave(c echo.Context) error {
+	lat, err1 := strconv.ParseFloat(c.FormValue("lat"), 32)
+	long, err2 := strconv.ParseFloat(c.FormValue("long"), 32)
+	if err1 != nil || err2 != nil {
+		log.WithFields(log.Fields{
+			"err1": err1,
+			"err2": err2,
+		}).Error("Failed converting lat or long, saving site")
+		return echo.NewHTTPError(http.StatusBadRequest, "lat or long NaN")
+	}
 	err := mdl.AddSite(mdl.Site{
 		Name:        c.FormValue("name"),
 		Title:       c.FormValue("title"),
 		Description: c.FormValue("description"),
+		Lat:         float32(lat),
+		Long:        float32(long),
 	})
 	if err != nil {
 		log.WithFields(log.Fields{
@@ -522,10 +533,21 @@ func siteEdit(c echo.Context) error {
 }
 
 func siteUpdate(c echo.Context) error {
+	lat, err1 := strconv.ParseFloat(c.FormValue("lat"), 32)
+	long, err2 := strconv.ParseFloat(c.FormValue("long"), 32)
+	if err1 != nil || err2 != nil {
+		log.WithFields(log.Fields{
+			"err1": err1,
+			"err2": err2,
+		}).Error("Failed converting lat or long, updating site")
+		return echo.NewHTTPError(http.StatusBadRequest, "lat or long NaN")
+	}
 	err := mdl.UpdateSite(mdl.Site{
 		Name:        c.FormValue("name"),
 		Title:       c.FormValue("tite"),
 		Description: c.FormValue("description"),
+		Lat:         float32(lat),
+		Long:        float32(long),
 	})
 
 	if err != nil {

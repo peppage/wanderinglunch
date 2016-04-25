@@ -5,7 +5,7 @@ var activeMarker;
 
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
-    center: { lat: 40.755575, lng: -73.982404},
+    center: { lat: lat, lng: long},
     zoom: 12
   });
   infoWindow = new google.maps.InfoWindow({
