@@ -21,11 +21,11 @@ func GetSites() ([]*Site, error) {
 
 //AddSite adds a site to the database
 func AddSite(s Site) error {
-	_, err := db.NamedExec(`INSERT INTO sites (name, title) VALUES (:name, :title)`, s)
+	_, err := db.NamedExec(`INSERT INTO sites (name, title, description) VALUES (:name, :title, :description)`, s)
 	return err
 }
 
 func UpdateSite(s Site) error {
-	_, err := db.NamedExec(`UPDATE sites SET title = :title WHERE name = :name`, s)
+	_, err := db.NamedExec(`UPDATE sites SET title = :title, description = :description WHERE name = :name`, s)
 	return err
 }
