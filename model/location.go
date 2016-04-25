@@ -16,7 +16,8 @@ type Location struct {
 func GetLocations() (map[string][]*Location, error) {
 	locs := make(map[string][]*Location)
 
-	rows, err := db.Queryx(`SELECT * FROM locations ORDER BY id`)
+	rows, err := db.Queryx(`SELECT id, display, matcher, lat, long, zone, site
+		FROM locations ORDER BY id`)
 	if err != nil {
 		return nil, err
 	}
@@ -56,6 +57,6 @@ func UpdateLocation(l Location) error {
 
 func GetLocation(id string) (Location, error) {
 	var l Location
-	err := db.Get(&l, `SELECT * FROM locations WHERE id=$1`, id)
+	err := db.Get(&l, `SELECT id, display, matcher, lat, long, zone, site FROM locations WHERE id=$1`, id)
 	return l, err
 }

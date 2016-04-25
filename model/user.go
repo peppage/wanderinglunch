@@ -6,18 +6,18 @@ type User struct {
 	ID       int
 	Email    string
 	Password string
-	Admin    string
+	Admin    bool
 }
 
 func GetUser(email string) (*User, error) {
 	var u User
-	err := db.Get(&u, `SELECT * FROM users WHERE email = $1`, email)
+	err := db.Get(&u, `SELECT id, email, password, admin FROM users WHERE email = $1`, email)
 	return &u, err
 }
 
 func VerifyPassword(email string, password string) (*User, error) {
 	var u User
-	err := db.Get(&u, `SELECT * FROM users WHERE email = $1`, email)
+	err := db.Get(&u, `SELECT id, email, password, admin FROM users WHERE email = $1`, email)
 	if err != nil {
 		return nil, err
 	}

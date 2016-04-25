@@ -19,7 +19,7 @@ func AddSub(s Sub) error {
 
 func GetSub(id string) (*Sub, error) {
 	var s Sub
-	err := db.Get(&s, `SELECT * FROM subs WHERE id=$1`, id)
+	err := db.Get(&s, `SELECT regex, replacement, id FROM subs WHERE id=$1`, id)
 	return &s, err
 }
 

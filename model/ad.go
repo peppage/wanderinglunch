@@ -32,7 +32,8 @@ func GetAdToShow(siteName string) (*Ad, error) {
 
 func fillStack(siteName string) error {
 	now := time.Now().Unix()
-	rows, err := db.Queryx(`SELECT * FROM ads where validuntil > $1 AND (site = $2 OR site = 'all')`, now, siteName)
+	rows, err := db.Queryx(`SELECT id, name, value, validuntil, views, site
+		FROM ads where validuntil > $1 AND (site = $2 OR site = 'all')`, now, siteName)
 	if err != nil {
 		return err
 	}
@@ -48,13 +49,13 @@ func fillStack(siteName string) error {
 
 func GetAds() ([]*Ad, error) {
 	var ads []*Ad
-	err := db.Select(&ads, `SELECT * from ads ORDER BY id`)
+	err := db.Select(&ads, `SELECT id, name, value, validuntil, views, site from ads ORDER BY id`)
 	return ads, err
 }
 
 func GetAd(id string) (*Ad, error) {
 	var a Ad
-	err := db.Get(&a, `SELECT * FROM ads WHERE id=$1`, id)
+	err := db.Get(&a, `SELECT id, name, value, validuntil, views, site FROM ads WHERE id=$1`, id)
 	return &a, err
 }
 

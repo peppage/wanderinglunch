@@ -47,7 +47,8 @@ func (t *Tweet) FomattedText() string {
 
 func GetTweets(twitname string) ([]*Tweet, error) {
 	var tweets []*Tweet
-	err := db.Select(&tweets, `SELECT * FROM tweets WHERE twitname = $1 ORDER BY time DESC`, twitname)
+	err := db.Select(&tweets, `SELECT text, time, id, retweeted, twitname
+		FROM tweets WHERE twitname = $1 ORDER BY time DESC`, twitname)
 	return tweets, err
 }
 
