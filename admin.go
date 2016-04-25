@@ -544,7 +544,7 @@ func siteUpdate(c echo.Context) error {
 	}
 	err := mdl.UpdateSite(mdl.Site{
 		Name:        c.FormValue("name"),
-		Title:       c.FormValue("tite"),
+		Title:       c.FormValue("title"),
 		Description: c.FormValue("description"),
 		Lat:         float32(lat),
 		Long:        float32(long),
