@@ -1,6 +1,7 @@
 package model
 
 import (
+	"errors"
 	"time"
 	"wanderinglunch/util"
 )
@@ -70,11 +71,17 @@ func DeleteAd(id string) error {
 }
 
 func AddAd(a Ad) error {
+	if a.Name == "" || a.Value == "" || a.ValidUntil == 0 || a.Site == "" {
+		return errors.New("No fields can be empty")
+	}
 	_, err := db.NamedExec(`INSERT INTO ads (name, value, validuntil, site) VALUES (:name, :value, :validuntil, :site)`, a)
 	return err
 }
 
 func UpdateAd(a Ad) error {
+	if a.Name == "" || a.Value == "" || a.ValidUntil == 0 || a.Site == "" {
+		return errors.New("No fields can be empty")
+	}
 	_, err := db.NamedExec(`UPDATE ads SET (name, value, validuntil, site) =
 		(:name, :value, :validuntil, :site) WHERE id=:id`, a)
 	return err
