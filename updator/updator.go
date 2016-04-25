@@ -114,7 +114,7 @@ func findLocations(tweets []anaconda.Tweet, locations []*mdl.Location, subs []*m
 	var newestTime int64
 	for _, t := range tweets {
 		createdTime, _ := t.CreatedAtTime()
-		if createdTime.After(time.Now().Add(time.Hour * -8)) {
+		if createdTime.After(time.Now().Add(time.Hour*-8)) && string(t.Text[0]) != "@" {
 			text := doReplacements(strings.ToLower(t.Text), subs)
 			for _, l := range locations {
 				matched, _ := regexp.MatchString(l.Matcher, strings.ToLower(text))
