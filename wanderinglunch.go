@@ -55,6 +55,9 @@ func main() {
 	e.File("./static/google7edb19ba8a4a91bb.html", "/google7edb19ba8a4a91bb.html")
 	e.File("/favicon.ico", "./static/images/favicon.ico")
 	e.File("/robots.txt", "./static/robots.txt")
+	e.File("/touch-icon-192x192.png", "./static/images/touch-icon-192x192.png")
+	e.File("/apple-touch-icon.png", "./static/images/touch-icon-192x192.png")
+	e.File("/apple-touch-icon-precomposed.png", "./static/images/touch-icon-192x192.png")
 	e.Static("/static/", "static")
 
 	e.Get("/", root)
