@@ -52,7 +52,7 @@
         @if l.Site != "" {
             <option value="@l.Site">@l.Site</option>
         } else {
-            <option value="">Select</option>
+            <option value="@s.Name">@s.Name</option>
         }
         @for _, s := range sites {
             <option value="@s.Name">@s.Name</option>
