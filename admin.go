@@ -89,7 +89,7 @@ func truckSave(c echo.Context) error {
 		}).Error("Failed adding truck")
 		return echo.NewHTTPError(http.StatusInternalServerError, "")
 	}
-	return c.Redirect(http.StatusSeeOther, "/admin")
+	return c.Redirect(http.StatusSeeOther, "/admin/truck/add")
 }
 
 func subNew(c echo.Context) error {
