@@ -6,6 +6,9 @@
     var s *m.Site
     var trucks []*m.Truck
 }
+@{
+    hasMenu := false
+}
 
 @section title {
 	return s.Title + " | " + trucks[0].Name
@@ -28,6 +31,9 @@
 
         @for _, i := range trucks[0].Images {
             @if i.Menu {
+                @{
+                    hasMenu = true
+                }
                 <div class="gallery">
                     <a href="https://irs0.4sqi.net/img/general/width960@i.Suffix">
                         <img class=""
@@ -39,19 +45,22 @@
         }
     </div>
 
-    <h3>@trucks[0].Name Photos</h3>
+    @if len(trucks[0].Images) > 1 && !hasMenu {
 
-    <div class="gallery">
-        @for _, i := range trucks[0].Images {
-            @if !i.Menu {
-                <a href="https://irs0.4sqi.net/img/general/width960@i.Suffix">
-                    <img class=""
-                        src="https://irs0.4sqi.net/img/general/width100@i.Suffix"
-                        alt="" />
-                </a>
+        <h3>@trucks[0].Name Photos</h3>
+
+        <div class="gallery">
+            @for _, i := range trucks[0].Images {
+                @if !i.Menu {
+                    <a href="https://irs0.4sqi.net/img/general/width960@i.Suffix">
+                        <img class=""
+                            src="https://irs0.4sqi.net/img/general/width100@i.Suffix"
+                            alt="" />
+                    </a>
+                }
             }
-        }
-    </div>
+        </div>
+    }
 }
 
 <h3>@trucks[0].Name Links</h3>
