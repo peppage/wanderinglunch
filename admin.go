@@ -73,7 +73,7 @@ func truckNew(c echo.Context) error {
 
 func truckSave(c echo.Context) error {
 	err := mdl.AddTruck(mdl.Truck{
-		ID:         c.FormValue("id"),
+		ID:         c.FormValue("twitname"),
 		Name:       c.FormValue("name"),
 		Twitname:   c.FormValue("twitname"),
 		Weburl:     c.FormValue("weburl"),
@@ -294,7 +294,7 @@ func truckUpdate(c echo.Context) error {
 		a = true
 	}
 	err := mdl.UpdateTruck(mdl.Truck{
-		ID:         c.FormValue("id"),
+		ID:         c.FormValue("twitname"),
 		Name:       c.FormValue("name"),
 		Twitname:   c.FormValue("twitname"),
 		Weburl:     c.FormValue("weburl"),
