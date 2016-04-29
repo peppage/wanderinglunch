@@ -42,7 +42,7 @@ func Start() {
 }
 
 func task() {
-	log.Debug("Task Started")
+	log.Info("Task Started")
 
 	twitnames, err := mdl.GetTwitNames(false)
 	if err != nil {
@@ -82,7 +82,7 @@ func task() {
 		}
 	}
 
-	log.Debug("Task Finished")
+	log.Info("Task Finished")
 }
 
 func saveTweets(handle string, tweets []anaconda.Tweet) {
@@ -170,6 +170,7 @@ func GetReplacedStrings(twitname string) ([]string, error) {
 }
 
 func validatePhotos() {
+	log.Info("Validate Photos start")
 	uv := url.Values{}
 	uv.Set("limit", "200")
 	sites, err := mdl.GetSites()
@@ -216,8 +217,10 @@ func validatePhotos() {
 			}
 		}
 	}
+	log.Info("Validate photos end")
 }
 
 func truncateTweets() {
+	log.Info("Truncating all tweets")
 	mdl.DeleteAllTweets()
 }
