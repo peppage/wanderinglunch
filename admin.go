@@ -211,7 +211,7 @@ func locSave(c echo.Context) error {
 		}).Error("Failed adding location")
 		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 	}
-	return c.Redirect(http.StatusSeeOther, "/admin")
+	return c.Redirect(http.StatusSeeOther, "/admin/location/add")
 }
 
 func siteNew(c echo.Context) error {
