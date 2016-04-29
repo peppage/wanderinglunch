@@ -58,9 +58,9 @@
 @if trucks[0].Weburl != "" {
     <a href="@trucks[0].Weburl">Website</a><br>
 }
-<a href="http://twitter.com/@trucks[0].Twitname">Twitter</a><br>
+<a href="http://twitter.com/@trucks[0].Twitname" target="_blank">Twitter</a><br>
 @if trucks[0].Foursquare != "" {
-    <a href="https://foursquare.com/v/@trucks[0].Foursquare">Foursquare</a><br>
+    <a href="https://foursquare.com/v/@trucks[0].Foursquare?ref=P1JDYDE13QQDC11VUSA4LV3VV25OTRPHV1WAV5WP3VCE0QUP" target="_blank">Foursquare</a><br>
 }
 
 <h3>@trucks[0].Name Location(s) from @trucks[0].Updated</h3>
@@ -72,7 +72,7 @@
     @for i, tw := range trucks[0].Tweets {
         @if i < 5 {
             <li class="tweetList-tweet">
-                <a href="http://twitter.com/@trucks[0].Twitname/status/@tw.ID">
+                <a href="http://twitter.com/@trucks[0].Twitname/status/@tw.ID" target="_blank">
                     <img src="/static/images/twitter.png" style="height: 20px;">
                 </a>
                 @raw(tw.FomattedText())
