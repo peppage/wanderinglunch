@@ -52,7 +52,6 @@ func main() {
 	e.Use(middleware.Recover())
 	e.SetHTTPErrorHandler(errorHandler)
 
-	e.File("./static/google7edb19ba8a4a91bb.html", "/google7edb19ba8a4a91bb.html")
 	e.File("/favicon.ico", "./static/images/favicon.ico")
 	e.File("/robots.txt", "./static/robots.txt")
 	e.File("/touch-icon-192x192.png", "./static/images/touch-icon-192x192.png")
