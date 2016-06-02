@@ -20,7 +20,11 @@
 <h1>Location</h1>
 
 <p>
-    <a href="http://maps.google.com">Google Maps</a><br>
+    @if l.Lat != 0 {
+        <a href="http://maps.google.com/?q=@l.Lat,@l.Long">Google Maps</a><br>
+    } else {
+        <a href="http://maps.google.com">Google Maps</a><br>
+    }
     <a href="http://regex101.com">Regex101</a>
 </p>
 
