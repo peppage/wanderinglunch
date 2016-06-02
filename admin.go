@@ -5,6 +5,8 @@ import (
 	"net/url"
 	"os"
 	"strconv"
+	"strings"
+
 	mdl "wanderinglunch/model"
 	"wanderinglunch/updator"
 	"wanderinglunch/view/admin"
@@ -73,9 +75,9 @@ func truckNew(c echo.Context) error {
 
 func truckSave(c echo.Context) error {
 	err := mdl.AddTruck(mdl.Truck{
-		ID:         c.FormValue("twitname"),
+		ID:         strings.ToLower(c.FormValue("twitname")),
 		Name:       c.FormValue("name"),
-		Twitname:   c.FormValue("twitname"),
+		Twitname:   strings.ToLower(c.FormValue("twitname")),
 		Weburl:     c.FormValue("weburl"),
 		Type:       c.FormValue("type"),
 		About:      c.FormValue("about"),
@@ -294,9 +296,9 @@ func truckUpdate(c echo.Context) error {
 		a = true
 	}
 	err := mdl.UpdateTruck(mdl.Truck{
-		ID:         c.FormValue("twitname"),
+		ID:         strings.ToLower(c.FormValue("twitname")),
 		Name:       c.FormValue("name"),
-		Twitname:   c.FormValue("twitname"),
+		Twitname:   strings.ToLower(c.FormValue("twitname")),
 		Weburl:     c.FormValue("weburl"),
 		Type:       c.FormValue("type"),
 		About:      c.FormValue("about"),
@@ -580,7 +582,7 @@ func imgAdd(c echo.Context) error {
 		ID:         c.FormValue("id"),
 		Suffix:     c.FormValue("suffix"),
 		Visibility: "public",
-		Twitname:   c.FormValue("twitname"),
+		Twitname:   strings.ToLower(c.FormValue("twitname")),
 		Menu:       false,
 	})
 	if err != nil {
@@ -618,7 +620,7 @@ func imgUpdate(c echo.Context) error {
 		ID:         c.FormValue("id"),
 		Suffix:     c.FormValue("suffix"),
 		Visibility: c.FormValue("visibility"),
-		Twitname:   c.FormValue("twitname"),
+		Twitname:   strings.ToLower(c.FormValue("twitname")),
 		Menu:       m,
 	})
 	if err != nil {
