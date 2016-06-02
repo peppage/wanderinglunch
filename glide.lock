@@ -1,146 +1,112 @@
 hash: d8059459a819e6253d95660bc0e3bb8627cada0fe67421a5e4cdc9a4f80f32ff
-updated: 2016-04-15T18:08:39.448693-04:00
+updated: 2016-06-02T14:02:57.491894874-04:00
 imports:
 - name: github.com/azr/backoff
   version: 53511d3c733003985b0b76f733df1f4d0095ee6a
-  subpackages:
-  - github.com\azr\backoff
 - name: github.com/boj/redistore
   version: fc113767cd6b051980f260d6dbe84b2740c46ab0
-  subpackages:
-  - github.com\boj\redistore
 - name: github.com/ChimeraCoder/anaconda
-  version: afffdbac178c0e78746ea42d7c1af963cb7ef28e
+  version: 91bfbf5de08def2e8b5480b52cae811d2bde3af9
   subpackages:
   - github.com\ChimeraCoder\anaconda
 - name: github.com/ChimeraCoder/tokenbucket
   version: c5a927568de7aad8a58127d80bcd36ca4e71e454
-  subpackages:
-  - github.com\ChimeraCoder\tokenbucket
+- name: github.com/dgrijalva/jwt-go
+  version: 9b486c879bab3fde556ce8c27d9a2bb05d5b2c60
 - name: github.com/dustin/go-jsonpointer
   version: 2efc9fef1d9421a8d252a32e20beb10cecd2bbca
-  subpackages:
-  - github.com\dustin\go-jsonpointer
 - name: github.com/dustin/gojson
   version: 2e71ec9dd5adce3b168cd0dbde03b5cc04951c30
-  subpackages:
-  - github.com\dustin\gojson
 - name: github.com/garyburd/go-oauth
-  version: 255d509a6f270332ffcaef6723047891319a2ffb
+  version: 719b069913e1151a73ea30d2ea4f90deda3ce234
   subpackages:
-  - github.com\garyburd\go-oauth\oauth
+  - oauth
 - name: github.com/garyburd/redigo
-  version: ce1a27ee3580899e78d08b978a07daed1bfe1773
+  version: b8dc90050f24c1a73a52f107f3f575be67b21b7c
   subpackages:
-  - github.com\garyburd\redigo\redis
-  - github.com\garyburd\redigo\internal
+  - redis
+  - internal
 - name: github.com/gorilla/context
-  version: 1ea25387ff6f684839d82767c1733ff4d4d15d0a
-  subpackages:
-  - github.com\gorilla\context
+  version: aed02d124ae4a0e94fea4541c8effd05bf0c8296
 - name: github.com/gorilla/securecookie
-  version: 8dacca26977607e637262eb66b15b7d39f2d3009
-  subpackages:
-  - github.com\gorilla\securecookie
+  version: ff356348f74133a59d3e93aa24b5b4551b6fe90d
 - name: github.com/gorilla/sessions
-  version: a1216e0aed834aa9074063dd4085f5c3df8d1fab
-  subpackages:
-  - github.com\gorilla\sessions
+  version: a4e6dd28f9e9274729417506b9bd0a6c3edb91ce
 - name: github.com/jackc/pgx
-  version: 04e9fbcc55fe2865bdef4d96f18042f214ada36f
+  version: 11e1f70c3229081c7b433ad211753f0546b23ab4
   subpackages:
   - github.com\jackc\pgx\stdlib
-  - github.com\jackc\pgx
+  - stdlib
 - name: github.com/jasonlvhit/gocron
   version: 0b564bf03e9665599efbcba1c6fba3d84212c197
-  subpackages:
-  - github.com\jasonlvhit\gocron
 - name: github.com/jmoiron/sqlx
-  version: 398dd5876282499cdfd4cb8ea0f31a672abe9495
+  version: a7f971fe8ea891a1a74ddb40c623f5722e28e8a8
   subpackages:
   - github.com\jmoiron\sqlx
-  - github.com\jmoiron\sqlx\reflectx
+  - reflectx
 - name: github.com/labstack/echo
-  version: adad28012c91fd1eb90a90422ef879dc0e28686a
+  version: 0d2dac7532e61dc64c14039c629e82c7f2c1b6f6
   subpackages:
   - github.com\labstack\echo
   - github.com\labstack\echo\engine\fasthttp
-  - github.com\labstack\echo\engine\standard
-  - github.com\labstack\echo\middleware
-  - github.com\labstack\echo\engine
+  - engine/standard
+  - middleware
+  - engine
+  - log
 - name: github.com/labstack/gommon
-  version: f4ba73f8bcf88df1524069c117f7878cf530ee4e
+  version: b5f03e345acd2096591b6f738cb8d2b9b3231c50
   subpackages:
-  - github.com\labstack\gommon\log
-  - github.com\labstack\gommon\color
+  - log
+  - bytes
+  - color
 - name: github.com/mattn/go-colorable
-  version: 9cbef7c35391cca05f15f8181dc0b18bc9736dbb
-  subpackages:
-  - github.com\mattn\go-colorable
+  version: 9056b7a9f2d1f2d96498d6d146acd1f9d5ed3d59
 - name: github.com/mattn/go-isatty
   version: 56b76bdf51f7708750eac80fa38b952bb9f32639
-  subpackages:
-  - github.com\mattn\go-isatty
 - name: github.com/pelletier/go-buffruneio
   version: df1e16fde7fc330a0ca68167c23bf7ed6ac31d6d
-  subpackages:
-  - github.com\pelletier\go-buffruneio
 - name: github.com/pelletier/go-toml
-  version: d6a90e60edcdbd4e9abe88338d811d0cbb43d324
-  subpackages:
-  - github.com\pelletier\go-toml
+  version: 8e6ab94eec2ae84996ed00ec774b2e15c540d7f9
 - name: github.com/peppage/echo-middleware
   version: 78381b0fb0ae76af337cb3b5f22ab0057c269e58
   subpackages:
   - session
-  - github.com\peppage\echo-middleware\session
 - name: github.com/peppage/foursquarego
-  version: 7310a0ee95dae24040efc9fd725703449c731c19
-  subpackages:
-  - github.com\peppage\foursquarego
+  version: d241045b317aae8aeed05d47c3b2ab1e19a52987
 - name: github.com/rifflock/lfshook
   version: 05a24e24fa8d3a2eca8c2baf23aa2d5a2c51490c
   subpackages:
   - github.com\rifflock\lfshook
 - name: github.com/sebest/logrusly
-  version: ae9cf6474032c95ddfc002bc48237e102bde7335
-  subpackages:
-  - github.com\sebest\logrusly
+  version: d2415b54e6af1e6b3d9b1ab9a49c779f25599922
 - name: github.com/segmentio/go-loggly
   version: e78f6971ebca5835614673e2f5f6a47ca5f13501
-  subpackages:
-  - github.com\segmentio\go-loggly
 - name: github.com/sipin/gorazor
-  version: c9580eed5a9ba278c49dcdc7fec214a5bbbe1f0d
+  version: cfcf2db74a170747830822495a7cc059124af962
   subpackages:
   - github.com\sipin\gorazor\gorazor
+  - gorazor
 - name: github.com/Sirupsen/logrus
-  version: 4b6ea7319e214d98c938f12692336f7ca9348d6b
+  version: f3cfb454f4c209e6668c95216c4744b8fddb2356
   subpackages:
   - github.com\Sirupsen\logrus
 - name: github.com/valyala/fasttemplate
   version: 3b874956e03f1636d171bda64b130f9135f42cff
-  subpackages:
-  - github.com\valyala\fasttemplate
 - name: github.com/visionmedia/go-debug
   version: ff4a55a20a86994118644bbddc6a216da193cc13
-  subpackages:
-  - github.com\visionmedia\go-debug
 - name: golang.org/x/crypto
-  version: d68c3ecb62c850b645dc072a8d78006286bf81ca
+  version: 5bcd134fee4dd1475da17714aac19c0aa0142e2f
   subpackages:
-  - golang.org\x\crypto\bcrypt
-  - golang.org\x\crypto\blowfish
+  - bcrypt
+  - blowfish
 - name: golang.org/x/net
-  version: 318395d8b12f5dd0f1b7cd0fbb95195f49acb0f9
+  version: c4c3ea71919de159c9e246d7be66deb7f0a39a58
   subpackages:
-  - golang.org\x\net\context
+  - context
 - name: golang.org/x/sys
-  version: b323466d0bc6669362b0836480b30452d2c00db9
+  version: 076b546753157f758b316e59bcb51e6807c04057
   subpackages:
-  - golang.org\x\sys\unix
+  - unix
 - name: gopkg.in/fsnotify.v1
-  version: 875cf421b32f8f1b31bd43776297876d01542279
-  subpackages:
-  - gopkg.in\fsnotify.v1
+  version: 30411dbcefb7a1da7e84f75530ad3abe4011b4f8
 devImports: []
