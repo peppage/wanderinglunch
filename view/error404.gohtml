@@ -38,8 +38,8 @@
 			Find it on one of our sites?
 			@for i, s := range sites {
 				<a href="/@s.Name">@strings.ToUpper(s.Name)</a>
-				@if i > 0 {
-					<span> ,</span>
+				@if i != len(sites) - 1 {
+					<span>, </span>
 				}
 			}
 		</p>
