@@ -33,7 +33,7 @@ function render(display, title) {
 
 function getMarkerAt(latLng) {
   for(var j=0; j < markers.length; j++) {
-    if(latLng.lat === markers[j].position.lat && latLng.lng === markers[j].position.lng) {
+    if(latLng.lat() === markers[j].position.lat() && latLng.lng() === markers[j].position.lng()) {
       return markers[j];
     }
   }
