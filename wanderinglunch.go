@@ -62,6 +62,7 @@ func main() {
 	e.File("/apple-touch-icon-precomposed.png", "./static/images/touch-icon-192x192.png")
 	e.File("/apple-touch-icon-120x120.png", "./static/images/touch-icon-192x192.png")
 	e.File("/apple-touch-icon-120x120-precomposed.png", "./static/images/touch-icon-192x192.png")
+	e.File("/BingSiteAuth.xml", "./static/BingSiteAuth.xml")
 	e.Static("/static/", "static")
 
 	e.GET("/", root)
