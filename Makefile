@@ -14,6 +14,9 @@ vet:
 lint:
 	golint .
 
+glide:
+	glide install
+
 clean:
 	find ./view/ -type f -name "*.go" -delete 
 	go clean
