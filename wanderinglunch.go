@@ -113,6 +113,8 @@ func main() {
 	ad.POST("/image/add", imgAdd)
 	ad.GET("/image/edit", imgEdit)
 	ad.POST("/image/edit", imgUpdate)
+	ad.GET("/queue", queue)
+	ad.GET("/queue/done", queueDone)
 
 	log.Info("Server (version " + setting.Version + ") started on port " + setting.HTTPPort)
 	e.Run(standard.New(":" + setting.HTTPPort))

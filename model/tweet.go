@@ -60,3 +60,16 @@ func DeleteAllTweets() error {
 	_, err := db.Exec(`TRUNCATE tweets`)
 	return err
 }
+
+func GetSiteTweets(site string, limit int) ([]*Tweet, error) {
+	var tweets []*Tweet
+	err := db.Select(&tweets, `SELECT trucks.twitname, text, time, tweets.id, tweets.retweeted
+		FROM trucks RIGHT JOIN tweets ON trucks.twitname = tweets.twitname WHERE site=$1 AND done=$2
+		ORDER BY time desc LIMIT $3`, site, false, limit)
+	return tweets, err
+}
+
+func MarkTweetDone(id string) error {
+	_, err := db.Exec(`UPDATE tweets SET done=$1 WHERE id=$2`, true, id)
+	return err
+}

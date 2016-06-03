@@ -632,3 +632,47 @@ func imgUpdate(c echo.Context) error {
 	}
 	return c.Redirect(http.StatusSeeOther, "/admin/truck/edit?twitname="+c.FormValue("twitname"))
 }
+
+func queue(c echo.Context) error {
+	session := session.Default(c)
+	site := session.Get("site").(string)
+	s, err := mdl.GetSite(site)
+	if err != nil {
+		log.WithFields(log.Fields{
+			"err": err,
+		}).Error("Failed getting that site")
+		return echo.NewHTTPError(http.StatusNotFound, err.Error())
+	}
+	t, err := mdl.GetSiteTweets(s.Name, 20)
+	if err != nil {
+		log.WithFields(log.Fields{
+			"err": err,
+		}).Error("Failed getting site tweets")
+		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
+	}
+	l, err := mdl.GetLocations()
+	if err != nil {
+		log.WithFields(log.Fields{
+			"err": err,
+		}).Error("Failed getting locations")
+		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
+	}
+	subs, err := mdl.GetSubs()
+	if err != nil {
+		log.WithFields(log.Fields{
+			"err": err,
+		}).Error("Failed getting subs")
+		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
+	}
+	return c.HTML(http.StatusOK, admin.Queue(s, t, l[s.Name], subs))
+}
+
+func queueDone(c echo.Context) error {
+	err := mdl.MarkTweetDone(c.QueryParam("id"))
+	if err != nil {
+		log.WithFields(log.Fields{
+			"err": err,
+		}).Error("Failed marking tweet done")
+	}
+	return c.Redirect(http.StatusSeeOther, "/admin/queue")
+}
