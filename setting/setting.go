@@ -11,7 +11,7 @@ var (
 	config     *toml.TomlTree
 )
 
-const Version = "3.3.0"
+const Version = "3.3.1"
 
 func init() {
 	var err error
