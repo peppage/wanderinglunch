@@ -38,6 +38,7 @@
                     r, _ := regexp.Compile(s.Regex)
                     text = r.ReplaceAllString(text, s.Replacement)
                 }
+                text = strings.ToLower(text)
                 for _, l := range locs {
                     matched, _ := regexp.MatchString(l.Matcher, strings.ToLower(text))
                     if matched {
