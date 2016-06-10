@@ -221,6 +221,6 @@ func validatePhotos() {
 }
 
 func truncateTweets() {
-	log.Info("Truncating all tweets")
-	mdl.DeleteAllTweets()
+	log.Info("Deleting old tweets")
+	mdl.DeleteOldTweets()
 }

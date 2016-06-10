@@ -61,6 +61,12 @@ func DeleteAllTweets() error {
 	return err
 }
 
+func DeleteOldTweets() error {
+	t := time.Now().Add(time.Minute * 10080 * 2) // 2 weeks
+	_, err := db.Exec(`DELETE FROM tweets WHERE time > $1`, t.Unix())
+	return err
+}
+
 func GetSiteTweets(site string, limit int) ([]*Tweet, error) {
 	var tweets []*Tweet
 	err := db.Select(&tweets, `SELECT trucks.twitname, text, time, tweets.id, tweets.retweeted
