@@ -293,6 +293,8 @@ func feedback(c echo.Context) error {
 
 func sitemap(c echo.Context) error {
 	siteMap := "http://wanderinglunch.com/nyc\n"
+	siteMap += "http://wanderinglunch.com/nyc/map\n"
+	siteMap += "http://wanderinglunch.com/nyc/feedback\n"
 	trucks, _ := mdl.AllTrucks("nyc")
 	for _, t := range trucks {
 		siteMap += "http://wanderinglunch.com/truck/" + t.Twitname + "\n"
