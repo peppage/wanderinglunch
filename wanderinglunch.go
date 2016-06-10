@@ -76,6 +76,7 @@ func main() {
 	e.GET("/map", maps)
 	e.GET("/:site/map", maps)
 	e.GET("/:site/feedback", feedback)
+	e.GET("/sitemap.txt", sitemap)
 
 	ad := e.Group("/admin")
 	if !setting.Develop() {
@@ -288,4 +289,14 @@ func feedback(c echo.Context) error {
 		return c.HTML(http.StatusOK, view.Feedback(site))
 	}
 	return echo.NewHTTPError(http.StatusBadRequest, "")
+}
+
+func sitemap(c echo.Context) error {
+	siteMap := "http://wanderinglunch.com/nyc\n"
+	trucks, _ := mdl.AllTrucks("nyc")
+	for _, t := range trucks {
+		siteMap += "http://wanderinglunch.com/truck/" + t.Twitname + "\n"
+	}
+
+	return c.String(http.StatusOK, siteMap)
 }
