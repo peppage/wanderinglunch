@@ -47,7 +47,9 @@
                 }
             }
             <tr style="padding: 5px;border: 1px black solid;">
-                <td style="width:70%;padding: 10px;">@text<br><span class="tweetList-time">@t.PrettyDate()<span></td>
+                <td style="width:70%;padding: 10px;">@text<br>
+                <span class="tweetList-time" style="float:left;"><a href="http://twitter.com/@t.Twitname">@t.Twitname</a></span>
+                <span class="tweetList-time">@t.PrettyDate()</span></td>
                 <td>
                     @for k, v := range foundLocs {
                         <span><a href="/admin/location/edit?id=@k">@v</a></span><br>
