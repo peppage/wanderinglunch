@@ -49,7 +49,6 @@ func init() {
 func main() {
 	e := echo.New()
 	e.Pre(middleware.RemoveTrailingSlash())
-	e.Use(middleware.Secure())
 	e.Use(middleware.BodyLimit("2M"))
 	e.Use(session.Sessions("session", store))
 	e.Use(middleware.Recover())
