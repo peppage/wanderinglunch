@@ -7,7 +7,6 @@ import (
 	"strings"
 	"time"
 	mdl "wanderinglunch/model"
-	"wanderinglunch/setting"
 
 	"github.com/ChimeraCoder/anaconda"
 	log "github.com/Sirupsen/logrus"
@@ -31,14 +30,12 @@ func Start() {
 
 	sqAPI = foursquarego.NewFoursquareApi(clientID, clientSecret)
 
-	if setting.RunUpdator {
-		gocron.Every(15).Minutes().Do(task)
-		gocron.Every(72).Hours().Do(validatePhotos)
-		gocron.Every(1).Saturday().At("23:00").Do(truncateTweets)
+	gocron.Every(15).Minutes().Do(task)
+	gocron.Every(72).Hours().Do(validatePhotos)
+	gocron.Every(1).Saturday().At("23:00").Do(truncateTweets)
 
-		<-gocron.Start()
+	<-gocron.Start()
 
-	}
 }
 
 func task() {

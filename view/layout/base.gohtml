@@ -1,6 +1,5 @@
 @{
     import (
-		"wanderinglunch/setting"
         m "wanderinglunch/model"
         "wanderinglunch/util"
 	)
@@ -44,9 +43,7 @@
             @{
                 ad, _ := m.GetAdToShow(site)
             }
-            @if !setting.Develop() {
-                @raw(ad.Value)
-            }
+            @raw(ad.Value)
         </div>
     </header>
     <main class="content">

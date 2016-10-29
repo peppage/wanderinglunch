@@ -3,9 +3,10 @@ package main
 import (
 	"encoding/json"
 	"net/http"
-	"os"
+
 	mdl "wanderinglunch/model"
-	"wanderinglunch/setting"
+	"wanderinglunch/settings"
+	"wanderinglunch/settings/toml"
 	"wanderinglunch/updator"
 	"wanderinglunch/view"
 
@@ -19,19 +20,19 @@ import (
 	"github.com/sebest/logrusly"
 )
 
-var secret = os.Getenv("WL_SECRET")
-
-var logglyClientID = os.Getenv("LOGGLY")
-
-var store = session.NewCookieStore([]byte(secret))
+var store session.CookieStore
+var webSettings settings.Settings
 
 func init() {
-	setting.Initialize()
-	ll, err := log.ParseLevel(setting.LogLevel)
+
+	webSettings = toml.New("conf.toml")
+	store = session.NewCookieStore([]byte(webSettings.SessionSecret()))
+
+	ll, err := log.ParseLevel(webSettings.LogLevel())
 	if err == nil {
 		log.SetLevel(ll)
 	}
-	if setting.Develop() {
+	if webSettings.Develop() {
 		log.SetFormatter(&log.TextFormatter{})
 		log.AddHook(lfshook.NewHook(
 			lfshook.PathMap{
@@ -40,10 +41,12 @@ func init() {
 			}))
 	} else {
 		log.SetFormatter(&log.JSONFormatter{})
-		log.AddHook(logrusly.NewLogglyHook(logglyClientID, "wanderinglunch.com", log.WarnLevel))
+		log.AddHook(logrusly.NewLogglyHook(webSettings.LogglyID(), "wanderinglunch.com", log.WarnLevel))
 	}
 
-	go updator.Start()
+	if webSettings.RunUpdator() {
+		go updator.Start()
+	}
 }
 
 func main() {
@@ -78,7 +81,7 @@ func main() {
 	e.GET("/sitemap.txt", sitemap)
 
 	ad := e.Group("/admin")
-	if !setting.Develop() {
+	if !webSettings.Develop() {
 		ad.Use(secure())
 	}
 	ad.GET("", adminRoot)
@@ -117,8 +120,8 @@ func main() {
 	ad.GET("/queue", queue)
 	ad.GET("/queue/done", queueDone)
 
-	log.Info("Server (version " + setting.Version + ") started on port " + setting.HTTPPort)
-	e.Run(standard.New(":" + setting.HTTPPort))
+	log.Info("Server (version " + webSettings.Version() + ") started on port " + webSettings.HTTPPort())
+	e.Run(standard.New(":" + webSettings.HTTPPort()))
 
 }
 
