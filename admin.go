@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"strings"
 
-	mdl "wanderinglunch/model"
+	"wanderinglunch/model"
 	"wanderinglunch/updator"
 	"wanderinglunch/view/admin"
 
@@ -30,12 +30,12 @@ func setSite(c echo.Context) error {
 func adminRoot(c echo.Context) error {
 	session := session.Default(c)
 	site := session.Get("site").(string)
-	trucks, err := mdl.GetFailedUpdates(site)
+	trucks, err := model.GetFailedUpdates(site)
 	if err != nil {
 		log.WithError(err).Error("Failed getting admin trucks")
 	}
 
-	s, err := mdl.GetSite(site)
+	s, err := model.GetSite(site)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,
@@ -58,7 +58,7 @@ func debug(c echo.Context) error {
 func truckNew(c echo.Context) error {
 	session := session.Default(c)
 	site := session.Get("site").(string)
-	s, err := mdl.GetSite(site)
+	s, err := model.GetSite(site)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,
@@ -66,15 +66,15 @@ func truckNew(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusNotFound, "")
 	}
 
-	sites, err := mdl.GetSites()
+	sites, err := model.GetSites()
 	if err != nil {
 		log.WithError(err).Error("Failed gettings sites")
 	}
-	return c.HTML(http.StatusOK, admin.Truck(s, sites, &mdl.Truck{}))
+	return c.HTML(http.StatusOK, admin.Truck(s, sites, &model.Truck{}))
 }
 
 func truckSave(c echo.Context) error {
-	err := mdl.AddTruck(mdl.Truck{
+	err := model.AddTruck(model.Truck{
 		ID:         strings.ToLower(c.FormValue("twitname")),
 		Name:       c.FormValue("name"),
 		Twitname:   strings.ToLower(c.FormValue("twitname")),
@@ -97,7 +97,7 @@ func truckSave(c echo.Context) error {
 func subNew(c echo.Context) error {
 	session := session.Default(c)
 	site := session.Get("site").(string)
-	s, err := mdl.GetSite(site)
+	s, err := model.GetSite(site)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,
@@ -105,11 +105,11 @@ func subNew(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusNotFound, err.Error())
 	}
 
-	return c.HTML(http.StatusOK, admin.Sub(s, &mdl.Sub{}))
+	return c.HTML(http.StatusOK, admin.Sub(s, &model.Sub{}))
 }
 
 func subSave(c echo.Context) error {
-	err := mdl.AddSub(mdl.Sub{
+	err := model.AddSub(model.Sub{
 		Regex:       c.FormValue("regex"),
 		Replacement: c.FormValue("replacement"),
 	})
@@ -126,7 +126,7 @@ func subSave(c echo.Context) error {
 func adNew(c echo.Context) error {
 	session := session.Default(c)
 	site := session.Get("site").(string)
-	s, err := mdl.GetSite(site)
+	s, err := model.GetSite(site)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,
@@ -134,12 +134,12 @@ func adNew(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusNotFound, err.Error())
 	}
 
-	sites, err := mdl.GetSites()
+	sites, err := model.GetSites()
 	if err != nil {
 		log.WithError(err).Error("Failed gettings sites")
 	}
 
-	return c.HTML(http.StatusOK, admin.Ad(s, sites, &mdl.Ad{}))
+	return c.HTML(http.StatusOK, admin.Ad(s, sites, &model.Ad{}))
 }
 
 func adSave(c echo.Context) error {
@@ -148,7 +148,7 @@ func adSave(c echo.Context) error {
 		log.WithError(err).Error("Failed converting validuntil, saving ad")
 		return echo.NewHTTPError(http.StatusBadRequest, "Valid Until NaN")
 	}
-	err = mdl.AddAd(mdl.Ad{
+	err = data.AddAd(&model.Ad{
 		Name:       c.FormValue("name"),
 		Value:      c.FormValue("value"),
 		ValidUntil: i,
@@ -167,7 +167,7 @@ func adSave(c echo.Context) error {
 func locNew(c echo.Context) error {
 	session := session.Default(c)
 	site := session.Get("site").(string)
-	s, err := mdl.GetSite(site)
+	s, err := model.GetSite(site)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,
@@ -175,17 +175,17 @@ func locNew(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusNotFound, err.Error())
 	}
 
-	sites, err := mdl.GetSites()
+	sites, err := model.GetSites()
 	if err != nil {
 		log.WithError(err).Error("Failed gettings sites")
 	}
 
-	zones, err := mdl.GetZones(site)
+	zones, err := model.GetZones(site)
 	if err != nil {
 		log.WithError(err).Error("Failed gettings zones")
 	}
 
-	return c.HTML(http.StatusOK, admin.Loc(s, sites, zones, &mdl.Location{}))
+	return c.HTML(http.StatusOK, admin.Loc(s, sites, zones, &model.Location{}))
 }
 
 func locSave(c echo.Context) error {
@@ -198,7 +198,7 @@ func locSave(c echo.Context) error {
 		}).Error("Failed converting lat or long, saving loc")
 		return echo.NewHTTPError(http.StatusBadRequest, "lat or long NaN")
 	}
-	err := mdl.AddLocation(mdl.Location{
+	err := model.AddLocation(model.Location{
 		Display: c.FormValue("display"),
 		Matcher: c.FormValue("matcher"),
 		Lat:     float32(lat),
@@ -219,7 +219,7 @@ func locSave(c echo.Context) error {
 func siteNew(c echo.Context) error {
 	session := session.Default(c)
 	site := session.Get("site").(string)
-	s, err := mdl.GetSite(site)
+	s, err := model.GetSite(site)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,
@@ -227,7 +227,7 @@ func siteNew(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusNotFound, err.Error())
 	}
 
-	return c.HTML(http.StatusOK, admin.Site(s, &mdl.Site{}))
+	return c.HTML(http.StatusOK, admin.Site(s, &model.Site{}))
 }
 
 func siteSave(c echo.Context) error {
@@ -240,7 +240,7 @@ func siteSave(c echo.Context) error {
 		}).Error("Failed converting lat or long, saving site")
 		return echo.NewHTTPError(http.StatusBadRequest, "lat or long NaN")
 	}
-	err := mdl.AddSite(mdl.Site{
+	err := model.AddSite(model.Site{
 		Name:        c.FormValue("name"),
 		Title:       c.FormValue("title"),
 		Description: c.FormValue("description"),
@@ -260,21 +260,21 @@ func siteSave(c echo.Context) error {
 func aTrucks(c echo.Context) error {
 	session := session.Default(c)
 	site := session.Get("site").(string)
-	s, err := mdl.GetSite(site)
+	s, err := model.GetSite(site)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,
 		}).Error("Failed getting that site")
 		return echo.NewHTTPError(http.StatusNotFound, err.Error())
 	}
-	trucks, _ := mdl.AllTrucks(site)
+	trucks, _ := model.AllTrucks(site)
 	return c.HTML(http.StatusOK, admin.Trucks(s, trucks))
 }
 
 func truckEdit(c echo.Context) error {
 	session := session.Default(c)
 	site := session.Get("site").(string)
-	s, err := mdl.GetSite(site)
+	s, err := model.GetSite(site)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,
@@ -282,11 +282,11 @@ func truckEdit(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusNotFound, "")
 	}
 
-	sites, err := mdl.GetSites()
+	sites, err := model.GetSites()
 	if err != nil {
 		log.WithError(err).Error("Failed gettings sites")
 	}
-	t := mdl.GetTruck(c.QueryParam("twitname"))
+	t := model.GetTruck(c.QueryParam("twitname"))
 	return c.HTML(http.StatusOK, admin.Truck(s, sites, t[0]))
 }
 
@@ -295,7 +295,7 @@ func truckUpdate(c echo.Context) error {
 	if c.FormValue("archive") != "" && c.FormValue("archive") == "on" {
 		a = true
 	}
-	err := mdl.UpdateTruck(mdl.Truck{
+	err := model.UpdateTruck(model.Truck{
 		ID:         strings.ToLower(c.FormValue("twitname")),
 		Name:       c.FormValue("name"),
 		Twitname:   strings.ToLower(c.FormValue("twitname")),
@@ -319,28 +319,28 @@ func truckUpdate(c echo.Context) error {
 func aSubs(c echo.Context) error {
 	session := session.Default(c)
 	site := session.Get("site").(string)
-	s, err := mdl.GetSite(site)
+	s, err := model.GetSite(site)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,
 		}).Error("Failed getting that site")
 		return echo.NewHTTPError(http.StatusNotFound, err.Error())
 	}
-	subs, _ := mdl.GetSubs()
+	subs, _ := model.GetSubs()
 	return c.HTML(http.StatusOK, admin.Subs(s, subs))
 }
 
 func subEdit(c echo.Context) error {
 	session := session.Default(c)
 	site := session.Get("site").(string)
-	s, err := mdl.GetSite(site)
+	s, err := model.GetSite(site)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,
 		}).Error("Failed getting that site")
 		return echo.NewHTTPError(http.StatusNotFound, err.Error())
 	}
-	sub, _ := mdl.GetSub(c.QueryParam("id"))
+	sub, _ := model.GetSub(c.QueryParam("id"))
 	return c.HTML(http.StatusOK, admin.Sub(s, sub))
 }
 
@@ -350,7 +350,7 @@ func subUpdate(c echo.Context) error {
 		log.WithError(err).Error("Failed converting id, updating sub")
 		return echo.NewHTTPError(http.StatusBadRequest, "id NaN")
 	}
-	err = mdl.UpdateSub(mdl.Sub{
+	err = model.UpdateSub(model.Sub{
 		ID:          i,
 		Regex:       c.FormValue("regex"),
 		Replacement: c.FormValue("replacement"),
@@ -368,21 +368,21 @@ func subUpdate(c echo.Context) error {
 func aAds(c echo.Context) error {
 	session := session.Default(c)
 	site := session.Get("site").(string)
-	s, err := mdl.GetSite(site)
+	s, err := model.GetSite(site)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,
 		}).Error("Failed getting that site")
 		return echo.NewHTTPError(http.StatusNotFound, err.Error())
 	}
-	ads, _ := mdl.GetAds()
+	ads, _ := data.GetAds()
 	return c.HTML(http.StatusOK, admin.Ads(s, ads))
 }
 
 func adEdit(c echo.Context) error {
 	session := session.Default(c)
 	site := session.Get("site").(string)
-	s, err := mdl.GetSite(site)
+	s, err := model.GetSite(site)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,
@@ -390,12 +390,12 @@ func adEdit(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusNotFound, err.Error())
 	}
 
-	sites, err := mdl.GetSites()
+	sites, err := model.GetSites()
 	if err != nil {
 		log.WithError(err).Error("Failed gettings sites")
 	}
 
-	ad, _ := mdl.GetAd(c.QueryParam("id"))
+	ad, _ := data.GetAd(c.QueryParam("id"))
 	return c.HTML(http.StatusOK, admin.Ad(s, sites, ad))
 }
 
@@ -411,7 +411,7 @@ func adUpdate(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusBadRequest, "Valid Until NaN")
 	}
 
-	err = mdl.UpdateAd(mdl.Ad{
+	err = data.UpdateAd(&model.Ad{
 		ID:         i,
 		Name:       c.FormValue("name"),
 		Value:      c.FormValue("value"),
@@ -431,21 +431,21 @@ func adUpdate(c echo.Context) error {
 func aLocations(c echo.Context) error {
 	session := session.Default(c)
 	site := session.Get("site").(string)
-	s, err := mdl.GetSite(site)
+	s, err := model.GetSite(site)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,
 		}).Error("Failed getting that site")
 		return echo.NewHTTPError(http.StatusNotFound, err.Error())
 	}
-	locations, _ := mdl.GetLocations()
+	locations, _ := model.GetLocations()
 	return c.HTML(http.StatusOK, admin.Locs(s, locations[site]))
 }
 
 func locEdit(c echo.Context) error {
 	session := session.Default(c)
 	site := session.Get("site").(string)
-	s, err := mdl.GetSite(site)
+	s, err := model.GetSite(site)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,
@@ -453,17 +453,17 @@ func locEdit(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusNotFound, err.Error())
 	}
 
-	sites, err := mdl.GetSites()
+	sites, err := model.GetSites()
 	if err != nil {
 		log.WithError(err).Error("Failed gettings sites")
 	}
 
-	zones, err := mdl.GetZones(site)
+	zones, err := model.GetZones(site)
 	if err != nil {
 		log.WithError(err).Error("Failed gettings zones")
 	}
 
-	loc, _ := mdl.GetLocation(c.QueryParam("id"))
+	loc, _ := model.GetLocation(c.QueryParam("id"))
 
 	return c.HTML(http.StatusOK, admin.Loc(s, sites, zones, &loc))
 }
@@ -485,7 +485,7 @@ func locUpdate(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusBadRequest, "lat or long NaN")
 	}
 
-	err = mdl.UpdateLocation(mdl.Location{
+	err = model.UpdateLocation(model.Location{
 		ID:      i,
 		Display: c.FormValue("display"),
 		Matcher: c.FormValue("matcher"),
@@ -507,21 +507,21 @@ func locUpdate(c echo.Context) error {
 func aSites(c echo.Context) error {
 	session := session.Default(c)
 	site := session.Get("site").(string)
-	s, err := mdl.GetSite(site)
+	s, err := model.GetSite(site)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,
 		}).Error("Failed getting that site")
 		return echo.NewHTTPError(http.StatusNotFound, err.Error())
 	}
-	sites, _ := mdl.GetSites()
+	sites, _ := model.GetSites()
 	return c.HTML(http.StatusOK, admin.Sites(s, sites))
 }
 
 func siteEdit(c echo.Context) error {
 	session := session.Default(c)
 	site := session.Get("site").(string)
-	s, err := mdl.GetSite(site)
+	s, err := model.GetSite(site)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,
@@ -529,7 +529,7 @@ func siteEdit(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusNotFound, err.Error())
 	}
 
-	thisSite, _ := mdl.GetSite(c.QueryParam("name"))
+	thisSite, _ := model.GetSite(c.QueryParam("name"))
 
 	return c.HTML(http.StatusOK, admin.Site(s, thisSite))
 }
@@ -544,7 +544,7 @@ func siteUpdate(c echo.Context) error {
 		}).Error("Failed converting lat or long, updating site")
 		return echo.NewHTTPError(http.StatusBadRequest, "lat or long NaN")
 	}
-	err := mdl.UpdateSite(mdl.Site{
+	err := model.UpdateSite(model.Site{
 		Name:        c.FormValue("name"),
 		Title:       c.FormValue("title"),
 		Description: c.FormValue("description"),
@@ -578,7 +578,7 @@ func foursquare(c echo.Context) error {
 }
 
 func imgAdd(c echo.Context) error {
-	err := mdl.AddImage(mdl.Image{
+	err := model.AddImage(model.Image{
 		ID:         c.FormValue("id"),
 		Suffix:     c.FormValue("suffix"),
 		Visibility: "public",
@@ -598,7 +598,7 @@ func imgAdd(c echo.Context) error {
 func imgEdit(c echo.Context) error {
 	session := session.Default(c)
 	site := session.Get("site").(string)
-	s, err := mdl.GetSite(site)
+	s, err := model.GetSite(site)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,
@@ -606,7 +606,7 @@ func imgEdit(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusNotFound, err.Error())
 	}
 
-	img, _ := mdl.GetImage(c.QueryParam("id"))
+	img, _ := model.GetImage(c.QueryParam("id"))
 
 	return c.HTML(http.StatusOK, admin.Image(s, &img))
 }
@@ -616,7 +616,7 @@ func imgUpdate(c echo.Context) error {
 	if c.FormValue("menu") != "" && c.FormValue("menu") == "on" {
 		m = true
 	}
-	err := mdl.UpdateImage(mdl.Image{
+	err := model.UpdateImage(model.Image{
 		ID:         c.FormValue("id"),
 		Suffix:     c.FormValue("suffix"),
 		Visibility: c.FormValue("visibility"),
@@ -636,28 +636,28 @@ func imgUpdate(c echo.Context) error {
 func queue(c echo.Context) error {
 	session := session.Default(c)
 	site := session.Get("site").(string)
-	s, err := mdl.GetSite(site)
+	s, err := model.GetSite(site)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,
 		}).Error("Failed getting that site")
 		return echo.NewHTTPError(http.StatusNotFound, err.Error())
 	}
-	t, err := mdl.GetSiteTweets(s.Name, 20)
+	t, err := model.GetSiteTweets(s.Name, 20)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,
 		}).Error("Failed getting site tweets")
 		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 	}
-	l, err := mdl.GetLocations()
+	l, err := model.GetLocations()
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,
 		}).Error("Failed getting locations")
 		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 	}
-	subs, err := mdl.GetSubs()
+	subs, err := model.GetSubs()
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,
@@ -668,7 +668,7 @@ func queue(c echo.Context) error {
 }
 
 func queueDone(c echo.Context) error {
-	err := mdl.MarkTweetDone(c.QueryParam("id"))
+	err := model.MarkTweetDone(c.QueryParam("id"))
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,

@@ -7,6 +7,8 @@ import (
 	mdl "wanderinglunch/model"
 	"wanderinglunch/settings"
 	"wanderinglunch/settings/toml"
+	"wanderinglunch/store"
+	"wanderinglunch/store/datastore"
 	"wanderinglunch/updator"
 	"wanderinglunch/view"
 
@@ -20,13 +22,15 @@ import (
 	"github.com/sebest/logrusly"
 )
 
-var store session.CookieStore
+var sessionStore session.CookieStore
 var webSettings settings.Settings
+var data store.Store
 
 func init() {
 
 	webSettings = toml.New("conf.toml")
-	store = session.NewCookieStore([]byte(webSettings.SessionSecret()))
+	sessionStore = session.NewCookieStore([]byte(webSettings.SessionSecret()))
+	data = datastore.New("pgx", "postgres://mca@localhost:5432/foodtruck") //webSettings.DataSourceName())
 
 	ll, err := log.ParseLevel(webSettings.LogLevel())
 	if err == nil {
@@ -53,7 +57,7 @@ func main() {
 	e := echo.New()
 	e.Pre(middleware.RemoveTrailingSlash())
 	e.Use(middleware.BodyLimit("2M"))
-	e.Use(session.Sessions("session", store))
+	e.Use(session.Sessions("session", sessionStore))
 	e.Use(middleware.Recover())
 	e.SetHTTPErrorHandler(errorHandler)
 

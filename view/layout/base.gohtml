@@ -1,6 +1,5 @@
 @{
     import (
-        m "wanderinglunch/model"
         "wanderinglunch/util"
 	)
 
@@ -40,10 +39,7 @@
             </ul>
         </nav>
         <div class="grid-1-center">
-            @{
-                ad, _ := m.GetAdToShow(site)
-            }
-            @raw(ad.Value)
+            THIS IS WHERE AD GOES
         </div>
     </header>
     <main class="content">
