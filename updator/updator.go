@@ -51,7 +51,7 @@ func Start(u Settings) {
 func task() {
 	log.Info("Task Started")
 
-	twitnames, err := mdl.GetTwitNames(false)
+	twitnames, err := data.GetTwitNames(false)
 	if err != nil {
 		log.WithError(err).Error("Failed to get all trucks from database")
 		return
@@ -141,7 +141,7 @@ func findLocations(tweets []anaconda.Tweet, locations []*mdl.Location, subs []*m
 			"foundlocs": foundLocs,
 			"twitname":  twitName,
 		}).Debug("Locations have been found")
-		err := mdl.UpdateLocs(twitName, foundLocs, newestTime)
+		err := data.UpdateLocs(twitName, foundLocs, newestTime)
 		if err != nil {
 			log.WithError(err).Error("Failed updated locations for trucK")
 		}
@@ -189,7 +189,7 @@ func validatePhotos() {
 		return
 	}
 	for _, s := range sites {
-		trucks, err := mdl.AllTrucks(s.Name)
+		trucks, err := data.AllTrucks(s.Name)
 		if err != nil {
 			log.WithError(err).Error("Failed getting trucks, validatePhotos")
 			return

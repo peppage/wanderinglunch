@@ -33,6 +33,16 @@ type Store interface {
 	GetSub(string) (*model.Sub, error)
 	UpdateSub(*model.Sub) error
 
+	Trucks(string, int, string, string, int) ([]*model.Truck, error)
+	AllTrucks(string) ([]*model.Truck, error)
+	GetTruck(string) []*model.Truck
+	GetTwitNames(bool) (map[string][]string, error)
+	UpdateLocs(string, []int, int64) error
+	LastUpdate(string) (int64, error)
+	GetFailedUpdates(string) ([]*model.Truck, error)
+	AddTruck(*model.Truck) error
+	UpdateTruck(*model.Truck) error
+
 	SaveTweet(*model.Tweet) error
 	GetTweets(string) ([]*model.Tweet, error)
 	DeleteAllTweets() error

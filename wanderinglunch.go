@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"net/http"
 
-	mdl "wanderinglunch/model"
 	"wanderinglunch/settings"
 	"wanderinglunch/settings/toml"
 	"wanderinglunch/store"
@@ -173,7 +172,7 @@ func loginHandle(c echo.Context) error {
 func truck(c echo.Context) error {
 	name := c.Param("name")
 	if name != "" {
-		t := mdl.GetTruck(name)
+		t := data.GetTruck(name)
 		if len(t) > 0 {
 			site, err := data.GetSite(t[0].Site)
 			if err != nil {
@@ -200,7 +199,7 @@ func root(c echo.Context) error {
 			}).Error("Failed getting that site")
 			return echo.NewHTTPError(http.StatusNotFound, "")
 		}
-		trucks, err := mdl.Trucks(siteName, 8, "lat", "desc", 0)
+		trucks, err := data.Trucks(siteName, 8, "lat", "desc", 0)
 		if err != nil {
 			log.WithFields(log.Fields{
 				"err":  err,
@@ -218,7 +217,7 @@ func root(c echo.Context) error {
 			return echo.NewHTTPError(http.StatusInternalServerError, "Error getting data")
 		}
 
-		lu, err := mdl.LastUpdate(siteName)
+		lu, err := data.LastUpdate(siteName)
 		if err != nil {
 			log.WithError(err).Error("Unable to retrieve last update")
 		}
@@ -238,7 +237,7 @@ func allTrucks(c echo.Context) error {
 			}).Error("Failed getting that site")
 			return echo.NewHTTPError(http.StatusNotFound, "")
 		}
-		trucks, err := mdl.Trucks(siteName, 500000, "name", "asc", 0)
+		trucks, err := data.Trucks(siteName, 500000, "name", "asc", 0)
 		if err != nil {
 			log.WithFields(log.Fields{
 				"err":  err,
@@ -257,7 +256,7 @@ func allTrucks(c echo.Context) error {
 func lastUpdate(c echo.Context) error {
 	siteName := c.Param("site")
 	if siteName != "" {
-		lu, err := mdl.LastUpdate(siteName)
+		lu, err := data.LastUpdate(siteName)
 		if err != nil {
 			log.WithError(err).Error("Unable to retrieve last update")
 		}
@@ -304,7 +303,7 @@ func sitemap(c echo.Context) error {
 	siteMap := "http://wanderinglunch.com/nyc\n"
 	siteMap += "http://wanderinglunch.com/nyc/map\n"
 	siteMap += "http://wanderinglunch.com/nyc/feedback\n"
-	trucks, _ := mdl.AllTrucks("nyc")
+	trucks, _ := data.AllTrucks("nyc")
 	for _, t := range trucks {
 		siteMap += "http://wanderinglunch.com/truck/" + t.Twitname + "\n"
 	}

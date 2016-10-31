@@ -30,7 +30,7 @@ func setSite(c echo.Context) error {
 func adminRoot(c echo.Context) error {
 	session := session.Default(c)
 	site := session.Get("site").(string)
-	trucks, err := model.GetFailedUpdates(site)
+	trucks, err := data.GetFailedUpdates(site)
 	if err != nil {
 		log.WithError(err).Error("Failed getting admin trucks")
 	}
@@ -74,7 +74,7 @@ func truckNew(c echo.Context) error {
 }
 
 func truckSave(c echo.Context) error {
-	err := model.AddTruck(model.Truck{
+	err := data.AddTruck(&model.Truck{
 		ID:         strings.ToLower(c.FormValue("twitname")),
 		Name:       c.FormValue("name"),
 		Twitname:   strings.ToLower(c.FormValue("twitname")),
@@ -267,7 +267,7 @@ func aTrucks(c echo.Context) error {
 		}).Error("Failed getting that site")
 		return echo.NewHTTPError(http.StatusNotFound, err.Error())
 	}
-	trucks, _ := model.AllTrucks(site)
+	trucks, _ := data.AllTrucks(site)
 	return c.HTML(http.StatusOK, admin.Trucks(s, trucks))
 }
 
@@ -286,7 +286,7 @@ func truckEdit(c echo.Context) error {
 	if err != nil {
 		log.WithError(err).Error("Failed gettings sites")
 	}
-	t := model.GetTruck(c.QueryParam("twitname"))
+	t := data.GetTruck(c.QueryParam("twitname"))
 	return c.HTML(http.StatusOK, admin.Truck(s, sites, t[0]))
 }
 
@@ -295,7 +295,7 @@ func truckUpdate(c echo.Context) error {
 	if c.FormValue("archive") != "" && c.FormValue("archive") == "on" {
 		a = true
 	}
-	err := model.UpdateTruck(model.Truck{
+	err := data.UpdateTruck(&model.Truck{
 		ID:         strings.ToLower(c.FormValue("twitname")),
 		Name:       c.FormValue("name"),
 		Twitname:   strings.ToLower(c.FormValue("twitname")),
