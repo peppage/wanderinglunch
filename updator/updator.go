@@ -8,6 +8,8 @@ import (
 	"time"
 	mdl "wanderinglunch/model"
 
+	"wanderinglunch/store"
+
 	log "github.com/Sirupsen/logrus"
 	"github.com/jasonlvhit/gocron"
 	"github.com/peppage/anaconda"
@@ -23,7 +25,15 @@ var clientSecret = os.Getenv("CLIENT_SECRET")
 var api *anaconda.TwitterApi
 var sqAPI *foursquarego.FoursquareApi
 
-func Start() {
+var data store.Store
+
+type Settings struct {
+	Datastore store.Store
+}
+
+func Start(u Settings) {
+
+	data = u.Datastore
 	anaconda.SetConsumerKey(consumerKey)
 	anaconda.SetConsumerSecret(consumerSecret)
 	api = anaconda.NewTwitterApi(accessToken, accessTokenSecret)
@@ -185,7 +195,7 @@ func validatePhotos() {
 			return
 		}
 		for _, t := range trucks {
-			images, err := mdl.GetImages(t.Twitname)
+			images, err := data.GetImages(t.Twitname)
 			if err != nil {
 				log.WithError(err).Error("Failed getting all images, validate photos")
 				return
@@ -209,7 +219,7 @@ func validatePhotos() {
 								"visiblity": p.Visibility,
 							}).Debug("Updating image")
 							i.Visibility = p.Visibility
-							mdl.UpdateImage(*i)
+							data.UpdateImage(i)
 							break
 						}
 					}

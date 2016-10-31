@@ -578,7 +578,7 @@ func foursquare(c echo.Context) error {
 }
 
 func imgAdd(c echo.Context) error {
-	err := model.AddImage(model.Image{
+	err := data.AddImage(&model.Image{
 		ID:         c.FormValue("id"),
 		Suffix:     c.FormValue("suffix"),
 		Visibility: "public",
@@ -606,9 +606,9 @@ func imgEdit(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusNotFound, err.Error())
 	}
 
-	img, _ := model.GetImage(c.QueryParam("id"))
+	img, _ := data.GetImage(c.QueryParam("id"))
 
-	return c.HTML(http.StatusOK, admin.Image(s, &img))
+	return c.HTML(http.StatusOK, admin.Image(s, img))
 }
 
 func imgUpdate(c echo.Context) error {
@@ -616,7 +616,7 @@ func imgUpdate(c echo.Context) error {
 	if c.FormValue("menu") != "" && c.FormValue("menu") == "on" {
 		m = true
 	}
-	err := model.UpdateImage(model.Image{
+	err := data.UpdateImage(&model.Image{
 		ID:         c.FormValue("id"),
 		Suffix:     c.FormValue("suffix"),
 		Visibility: c.FormValue("visibility"),
