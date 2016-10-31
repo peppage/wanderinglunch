@@ -63,7 +63,7 @@ func task() {
 		return
 	}
 
-	subs, err := mdl.GetSubs()
+	subs, err := data.GetSubs()
 	if err != nil {
 		log.WithError(err).Error("Failed to get all subs from database")
 		return
@@ -165,7 +165,7 @@ func GetReplacedStrings(twitname string) ([]string, error) {
 		return nil, err
 	}
 
-	subs, err := mdl.GetSubs()
+	subs, err := data.GetSubs()
 	if err != nil {
 		return nil, err
 	}

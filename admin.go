@@ -109,7 +109,7 @@ func subNew(c echo.Context) error {
 }
 
 func subSave(c echo.Context) error {
-	err := model.AddSub(model.Sub{
+	err := data.AddSub(&model.Sub{
 		Regex:       c.FormValue("regex"),
 		Replacement: c.FormValue("replacement"),
 	})
@@ -326,7 +326,7 @@ func aSubs(c echo.Context) error {
 		}).Error("Failed getting that site")
 		return echo.NewHTTPError(http.StatusNotFound, err.Error())
 	}
-	subs, _ := model.GetSubs()
+	subs, _ := data.GetSubs()
 	return c.HTML(http.StatusOK, admin.Subs(s, subs))
 }
 
@@ -340,7 +340,7 @@ func subEdit(c echo.Context) error {
 		}).Error("Failed getting that site")
 		return echo.NewHTTPError(http.StatusNotFound, err.Error())
 	}
-	sub, _ := model.GetSub(c.QueryParam("id"))
+	sub, _ := data.GetSub(c.QueryParam("id"))
 	return c.HTML(http.StatusOK, admin.Sub(s, sub))
 }
 
@@ -350,7 +350,7 @@ func subUpdate(c echo.Context) error {
 		log.WithError(err).Error("Failed converting id, updating sub")
 		return echo.NewHTTPError(http.StatusBadRequest, "id NaN")
 	}
-	err = model.UpdateSub(model.Sub{
+	err = data.UpdateSub(&model.Sub{
 		ID:          i,
 		Regex:       c.FormValue("regex"),
 		Replacement: c.FormValue("replacement"),
@@ -657,7 +657,7 @@ func queue(c echo.Context) error {
 		}).Error("Failed getting locations")
 		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 	}
-	subs, err := model.GetSubs()
+	subs, err := data.GetSubs()
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,

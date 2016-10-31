@@ -27,4 +27,9 @@ type Store interface {
 	GetSites() ([]*model.Site, error)
 	AddSite(*model.Site) error
 	UpdateSite(*model.Site) error
+
+	GetSubs() ([]*model.Sub, error)
+	AddSub(*model.Sub) error
+	GetSub(string) (*model.Sub, error)
+	UpdateSub(*model.Sub) error
 }
