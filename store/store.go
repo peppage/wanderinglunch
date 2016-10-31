@@ -32,4 +32,11 @@ type Store interface {
 	AddSub(*model.Sub) error
 	GetSub(string) (*model.Sub, error)
 	UpdateSub(*model.Sub) error
+
+	SaveTweet(*model.Tweet) error
+	GetTweets(string) ([]*model.Tweet, error)
+	DeleteAllTweets() error
+	DeleteOldTweets() error
+	GetSiteTweets(string, int) ([]*model.Tweet, error)
+	MarkTweetDone(string) error
 }

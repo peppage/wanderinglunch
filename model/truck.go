@@ -29,6 +29,7 @@ type Truck struct {
 }
 
 // relativeTime converts unix time to a relative time string
+// This should probably be a function on truck.
 func relativeTime(lastUpdate int64) string {
 	elapsed := time.Now().Sub(time.Unix(lastUpdate, 0))
 
@@ -112,7 +113,7 @@ func GetTruck(id string) []*Truck {
 	}
 	if len(trucks) > 0 {
 		trucks[0].Updated = relativeTime(trucks[0].Lastupdate)
-		trucks[0].Tweets, err = GetTweets(trucks[0].Twitname)
+		//trucks[0].Tweets, err = GetTweets(trucks[0].Twitname)
 		// TODO IMPORTANT
 		//images, _ := GetImages(trucks[0].Twitname)
 		//trucks[0].Images = images

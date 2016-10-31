@@ -98,7 +98,7 @@ func saveTweets(handle string, tweets []anaconda.Tweet) {
 		t.Text = strings.Replace(t.Text, "&amp;", "&", -1)
 		t.Text = strings.Replace(t.Text, "#", "", -1)
 		t.Text = strings.Replace(t.Text, "\"", "", -1)
-		err := mdl.SaveTweet(mdl.Tweet{
+		err := data.SaveTweet(&mdl.Tweet{
 			Text:      t.Text,
 			Time:      time.Unix(),
 			ID:        t.Id,
@@ -160,7 +160,7 @@ func doReplacements(text string, subs []*mdl.Sub) string {
 //GetReplacedStrings gets subsituted text of latest tweets
 func GetReplacedStrings(twitname string) ([]string, error) {
 	replaced := []string{}
-	tweets, err := mdl.GetTweets(twitname)
+	tweets, err := data.GetTweets(twitname)
 	if err != nil {
 		return nil, err
 	}
@@ -232,5 +232,5 @@ func validatePhotos() {
 
 func truncateTweets() {
 	log.Info("Deleting old tweets")
-	mdl.DeleteOldTweets()
+	data.DeleteOldTweets()
 }

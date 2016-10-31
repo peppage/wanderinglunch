@@ -643,7 +643,7 @@ func queue(c echo.Context) error {
 		}).Error("Failed getting that site")
 		return echo.NewHTTPError(http.StatusNotFound, err.Error())
 	}
-	t, err := model.GetSiteTweets(s.Name, 20)
+	t, err := data.GetSiteTweets(s.Name, 20)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,
@@ -668,7 +668,7 @@ func queue(c echo.Context) error {
 }
 
 func queueDone(c echo.Context) error {
-	err := model.MarkTweetDone(c.QueryParam("id"))
+	err := data.MarkTweetDone(c.QueryParam("id"))
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,
