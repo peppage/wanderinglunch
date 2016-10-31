@@ -35,7 +35,7 @@ func adminRoot(c echo.Context) error {
 		log.WithError(err).Error("Failed getting admin trucks")
 	}
 
-	s, err := model.GetSite(site)
+	s, err := data.GetSite(site)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,
@@ -58,7 +58,7 @@ func debug(c echo.Context) error {
 func truckNew(c echo.Context) error {
 	session := session.Default(c)
 	site := session.Get("site").(string)
-	s, err := model.GetSite(site)
+	s, err := data.GetSite(site)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,
@@ -66,7 +66,7 @@ func truckNew(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusNotFound, "")
 	}
 
-	sites, err := model.GetSites()
+	sites, err := data.GetSites()
 	if err != nil {
 		log.WithError(err).Error("Failed gettings sites")
 	}
@@ -97,7 +97,7 @@ func truckSave(c echo.Context) error {
 func subNew(c echo.Context) error {
 	session := session.Default(c)
 	site := session.Get("site").(string)
-	s, err := model.GetSite(site)
+	s, err := data.GetSite(site)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,
@@ -126,7 +126,7 @@ func subSave(c echo.Context) error {
 func adNew(c echo.Context) error {
 	session := session.Default(c)
 	site := session.Get("site").(string)
-	s, err := model.GetSite(site)
+	s, err := data.GetSite(site)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,
@@ -134,7 +134,7 @@ func adNew(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusNotFound, err.Error())
 	}
 
-	sites, err := model.GetSites()
+	sites, err := data.GetSites()
 	if err != nil {
 		log.WithError(err).Error("Failed gettings sites")
 	}
@@ -167,7 +167,7 @@ func adSave(c echo.Context) error {
 func locNew(c echo.Context) error {
 	session := session.Default(c)
 	site := session.Get("site").(string)
-	s, err := model.GetSite(site)
+	s, err := data.GetSite(site)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,
@@ -175,7 +175,7 @@ func locNew(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusNotFound, err.Error())
 	}
 
-	sites, err := model.GetSites()
+	sites, err := data.GetSites()
 	if err != nil {
 		log.WithError(err).Error("Failed gettings sites")
 	}
@@ -219,7 +219,7 @@ func locSave(c echo.Context) error {
 func siteNew(c echo.Context) error {
 	session := session.Default(c)
 	site := session.Get("site").(string)
-	s, err := model.GetSite(site)
+	s, err := data.GetSite(site)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,
@@ -240,7 +240,7 @@ func siteSave(c echo.Context) error {
 		}).Error("Failed converting lat or long, saving site")
 		return echo.NewHTTPError(http.StatusBadRequest, "lat or long NaN")
 	}
-	err := model.AddSite(model.Site{
+	err := data.AddSite(&model.Site{
 		Name:        c.FormValue("name"),
 		Title:       c.FormValue("title"),
 		Description: c.FormValue("description"),
@@ -260,7 +260,7 @@ func siteSave(c echo.Context) error {
 func aTrucks(c echo.Context) error {
 	session := session.Default(c)
 	site := session.Get("site").(string)
-	s, err := model.GetSite(site)
+	s, err := data.GetSite(site)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,
@@ -274,7 +274,7 @@ func aTrucks(c echo.Context) error {
 func truckEdit(c echo.Context) error {
 	session := session.Default(c)
 	site := session.Get("site").(string)
-	s, err := model.GetSite(site)
+	s, err := data.GetSite(site)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,
@@ -282,7 +282,7 @@ func truckEdit(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusNotFound, "")
 	}
 
-	sites, err := model.GetSites()
+	sites, err := data.GetSites()
 	if err != nil {
 		log.WithError(err).Error("Failed gettings sites")
 	}
@@ -319,7 +319,7 @@ func truckUpdate(c echo.Context) error {
 func aSubs(c echo.Context) error {
 	session := session.Default(c)
 	site := session.Get("site").(string)
-	s, err := model.GetSite(site)
+	s, err := data.GetSite(site)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,
@@ -333,7 +333,7 @@ func aSubs(c echo.Context) error {
 func subEdit(c echo.Context) error {
 	session := session.Default(c)
 	site := session.Get("site").(string)
-	s, err := model.GetSite(site)
+	s, err := data.GetSite(site)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,
@@ -368,7 +368,7 @@ func subUpdate(c echo.Context) error {
 func aAds(c echo.Context) error {
 	session := session.Default(c)
 	site := session.Get("site").(string)
-	s, err := model.GetSite(site)
+	s, err := data.GetSite(site)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,
@@ -382,7 +382,7 @@ func aAds(c echo.Context) error {
 func adEdit(c echo.Context) error {
 	session := session.Default(c)
 	site := session.Get("site").(string)
-	s, err := model.GetSite(site)
+	s, err := data.GetSite(site)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,
@@ -390,7 +390,7 @@ func adEdit(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusNotFound, err.Error())
 	}
 
-	sites, err := model.GetSites()
+	sites, err := data.GetSites()
 	if err != nil {
 		log.WithError(err).Error("Failed gettings sites")
 	}
@@ -431,7 +431,7 @@ func adUpdate(c echo.Context) error {
 func aLocations(c echo.Context) error {
 	session := session.Default(c)
 	site := session.Get("site").(string)
-	s, err := model.GetSite(site)
+	s, err := data.GetSite(site)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,
@@ -445,7 +445,7 @@ func aLocations(c echo.Context) error {
 func locEdit(c echo.Context) error {
 	session := session.Default(c)
 	site := session.Get("site").(string)
-	s, err := model.GetSite(site)
+	s, err := data.GetSite(site)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,
@@ -453,7 +453,7 @@ func locEdit(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusNotFound, err.Error())
 	}
 
-	sites, err := model.GetSites()
+	sites, err := data.GetSites()
 	if err != nil {
 		log.WithError(err).Error("Failed gettings sites")
 	}
@@ -507,21 +507,21 @@ func locUpdate(c echo.Context) error {
 func aSites(c echo.Context) error {
 	session := session.Default(c)
 	site := session.Get("site").(string)
-	s, err := model.GetSite(site)
+	s, err := data.GetSite(site)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,
 		}).Error("Failed getting that site")
 		return echo.NewHTTPError(http.StatusNotFound, err.Error())
 	}
-	sites, _ := model.GetSites()
+	sites, _ := data.GetSites()
 	return c.HTML(http.StatusOK, admin.Sites(s, sites))
 }
 
 func siteEdit(c echo.Context) error {
 	session := session.Default(c)
 	site := session.Get("site").(string)
-	s, err := model.GetSite(site)
+	s, err := data.GetSite(site)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,
@@ -529,7 +529,7 @@ func siteEdit(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusNotFound, err.Error())
 	}
 
-	thisSite, _ := model.GetSite(c.QueryParam("name"))
+	thisSite, _ := data.GetSite(c.QueryParam("name"))
 
 	return c.HTML(http.StatusOK, admin.Site(s, thisSite))
 }
@@ -544,7 +544,7 @@ func siteUpdate(c echo.Context) error {
 		}).Error("Failed converting lat or long, updating site")
 		return echo.NewHTTPError(http.StatusBadRequest, "lat or long NaN")
 	}
-	err := model.UpdateSite(model.Site{
+	err := data.UpdateSite(&model.Site{
 		Name:        c.FormValue("name"),
 		Title:       c.FormValue("title"),
 		Description: c.FormValue("description"),
@@ -598,7 +598,7 @@ func imgAdd(c echo.Context) error {
 func imgEdit(c echo.Context) error {
 	session := session.Default(c)
 	site := session.Get("site").(string)
-	s, err := model.GetSite(site)
+	s, err := data.GetSite(site)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,
@@ -636,7 +636,7 @@ func imgUpdate(c echo.Context) error {
 func queue(c echo.Context) error {
 	session := session.Default(c)
 	site := session.Get("site").(string)
-	s, err := model.GetSite(site)
+	s, err := data.GetSite(site)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,

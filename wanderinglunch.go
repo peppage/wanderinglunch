@@ -140,7 +140,7 @@ func errorHandler(err error, c echo.Context) {
 		msg = he.Message
 	}
 
-	sites, err2 := mdl.GetSites()
+	sites, err2 := data.GetSites()
 	if code == http.StatusNotFound && err2 == nil {
 		c.HTML(code, view.Error404(sites))
 		return
@@ -175,7 +175,7 @@ func truck(c echo.Context) error {
 	if name != "" {
 		t := mdl.GetTruck(name)
 		if len(t) > 0 {
-			site, err := mdl.GetSite(t[0].Site)
+			site, err := data.GetSite(t[0].Site)
 			if err != nil {
 				log.WithFields(log.Fields{
 					"truck": t,
@@ -192,7 +192,7 @@ func truck(c echo.Context) error {
 func root(c echo.Context) error {
 	siteName := c.Param("site")
 	if siteName != "" {
-		site, err := mdl.GetSite(siteName)
+		site, err := data.GetSite(siteName)
 		if err != nil {
 			log.WithFields(log.Fields{
 				"site": siteName,
@@ -230,7 +230,7 @@ func root(c echo.Context) error {
 func allTrucks(c echo.Context) error {
 	siteName := c.Param("site")
 	if siteName != "" {
-		site, err := mdl.GetSite(siteName)
+		site, err := data.GetSite(siteName)
 		if err != nil {
 			log.WithFields(log.Fields{
 				"site": site,
@@ -269,7 +269,7 @@ func lastUpdate(c echo.Context) error {
 func maps(c echo.Context) error {
 	siteName := c.Param("site")
 	if siteName != "" {
-		site, err := mdl.GetSite(siteName)
+		site, err := data.GetSite(siteName)
 		if err != nil {
 			log.WithFields(log.Fields{
 				"site": site,
@@ -287,7 +287,7 @@ func maps(c echo.Context) error {
 func feedback(c echo.Context) error {
 	siteName := c.Param("site")
 	if siteName != "" {
-		site, err := mdl.GetSite(siteName)
+		site, err := data.GetSite(siteName)
 		if err != nil {
 			log.WithFields(log.Fields{
 				"site": site,

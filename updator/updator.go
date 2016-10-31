@@ -183,7 +183,7 @@ func validatePhotos() {
 	log.Info("Validate Photos start")
 	uv := url.Values{}
 	uv.Set("limit", "200")
-	sites, err := mdl.GetSites()
+	sites, err := data.GetSites()
 	if err != nil {
 		log.WithError(err).Error("Failed getting sites, validatePhotos")
 		return

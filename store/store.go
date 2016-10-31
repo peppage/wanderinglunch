@@ -22,4 +22,9 @@ type Store interface {
 	GetLocation(string) (*model.Location, error)
 
 	Markers(string, int) []*model.Marker
+
+	GetSite(string) (*model.Site, error)
+	GetSites() ([]*model.Site, error)
+	AddSite(*model.Site) error
+	UpdateSite(*model.Site) error
 }
