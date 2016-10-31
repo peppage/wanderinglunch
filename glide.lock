@@ -1,14 +1,10 @@
-hash: d8059459a819e6253d95660bc0e3bb8627cada0fe67421a5e4cdc9a4f80f32ff
-updated: 2016-06-02T14:02:57.491894874-04:00
+hash: 2150e0ac808a01fdf07e3c909f36704db024628db02231422c8dbb0b771432f5
+updated: 2016-10-31T16:10:30.7396045-04:00
 imports:
 - name: github.com/azr/backoff
   version: 53511d3c733003985b0b76f733df1f4d0095ee6a
 - name: github.com/boj/redistore
   version: fc113767cd6b051980f260d6dbe84b2740c46ab0
-- name: github.com/ChimeraCoder/anaconda
-  version: 91bfbf5de08def2e8b5480b52cae811d2bde3af9
-  subpackages:
-  - github.com\ChimeraCoder\anaconda
 - name: github.com/ChimeraCoder/tokenbucket
   version: c5a927568de7aad8a58127d80bcd36ca4e71e454
 - name: github.com/dgrijalva/jwt-go
@@ -67,6 +63,8 @@ imports:
   version: df1e16fde7fc330a0ca68167c23bf7ed6ac31d6d
 - name: github.com/pelletier/go-toml
   version: 8e6ab94eec2ae84996ed00ec774b2e15c540d7f9
+- name: github.com/peppage/anaconda
+  version: dc202af89db3ad0dcc747c84afb8eacfcc0a998e
 - name: github.com/peppage/echo-middleware
   version: 78381b0fb0ae76af337cb3b5f22ab0057c269e58
   subpackages:
@@ -109,4 +107,4 @@ imports:
   - unix
 - name: gopkg.in/fsnotify.v1
   version: 30411dbcefb7a1da7e84f75530ad3abe4011b4f8
-devImports: []
+testImports: []

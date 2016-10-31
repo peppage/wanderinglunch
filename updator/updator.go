@@ -8,9 +8,9 @@ import (
 	"time"
 	mdl "wanderinglunch/model"
 
-	"github.com/ChimeraCoder/anaconda"
 	log "github.com/Sirupsen/logrus"
 	"github.com/jasonlvhit/gocron"
+	"github.com/peppage/anaconda"
 	"github.com/peppage/foursquarego"
 )
 
