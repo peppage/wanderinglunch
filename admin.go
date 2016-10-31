@@ -180,7 +180,7 @@ func locNew(c echo.Context) error {
 		log.WithError(err).Error("Failed gettings sites")
 	}
 
-	zones, err := model.GetZones(site)
+	zones, err := data.GetZones(site)
 	if err != nil {
 		log.WithError(err).Error("Failed gettings zones")
 	}
@@ -198,7 +198,7 @@ func locSave(c echo.Context) error {
 		}).Error("Failed converting lat or long, saving loc")
 		return echo.NewHTTPError(http.StatusBadRequest, "lat or long NaN")
 	}
-	err := model.AddLocation(model.Location{
+	err := data.AddLocation(&model.Location{
 		Display: c.FormValue("display"),
 		Matcher: c.FormValue("matcher"),
 		Lat:     float32(lat),
@@ -438,7 +438,7 @@ func aLocations(c echo.Context) error {
 		}).Error("Failed getting that site")
 		return echo.NewHTTPError(http.StatusNotFound, err.Error())
 	}
-	locations, _ := model.GetLocations()
+	locations, _ := data.GetLocations()
 	return c.HTML(http.StatusOK, admin.Locs(s, locations[site]))
 }
 
@@ -458,14 +458,14 @@ func locEdit(c echo.Context) error {
 		log.WithError(err).Error("Failed gettings sites")
 	}
 
-	zones, err := model.GetZones(site)
+	zones, err := data.GetZones(site)
 	if err != nil {
 		log.WithError(err).Error("Failed gettings zones")
 	}
 
-	loc, _ := model.GetLocation(c.QueryParam("id"))
+	loc, _ := data.GetLocation(c.QueryParam("id"))
 
-	return c.HTML(http.StatusOK, admin.Loc(s, sites, zones, &loc))
+	return c.HTML(http.StatusOK, admin.Loc(s, sites, zones, loc))
 }
 
 func locUpdate(c echo.Context) error {
@@ -485,7 +485,7 @@ func locUpdate(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusBadRequest, "lat or long NaN")
 	}
 
-	err = model.UpdateLocation(model.Location{
+	err = data.UpdateLocation(&model.Location{
 		ID:      i,
 		Display: c.FormValue("display"),
 		Matcher: c.FormValue("matcher"),
@@ -650,7 +650,7 @@ func queue(c echo.Context) error {
 		}).Error("Failed getting site tweets")
 		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 	}
-	l, err := model.GetLocations()
+	l, err := data.GetLocations()
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,

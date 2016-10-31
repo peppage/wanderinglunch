@@ -57,7 +57,7 @@ func task() {
 		return
 	}
 
-	locations, err := mdl.GetLocations()
+	locations, err := data.GetLocations()
 	if err != nil {
 		log.WithError(err).Error("Failed to get all locations from database")
 		return

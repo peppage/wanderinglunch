@@ -209,7 +209,7 @@ func root(c echo.Context) error {
 			return echo.NewHTTPError(http.StatusInternalServerError, "Error getting data")
 		}
 
-		zones, err := mdl.GetZones(siteName)
+		zones, err := data.GetZones(siteName)
 		if err != nil {
 			log.WithFields(log.Fields{
 				"err":  err,
