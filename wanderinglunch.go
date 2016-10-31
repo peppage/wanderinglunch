@@ -158,7 +158,7 @@ func login(c echo.Context) error {
 }
 
 func loginHandle(c echo.Context) error {
-	u, err := mdl.VerifyPassword(c.FormValue("email"), c.FormValue("password"))
+	u, err := data.VerifyPassword(c.FormValue("email"), c.FormValue("password"))
 	if err != nil {
 		c.Response().Header().Set("Method", "GET")
 		return echo.NewHTTPError(http.StatusUnauthorized) // The user is invalid!

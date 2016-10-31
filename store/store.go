@@ -39,4 +39,7 @@ type Store interface {
 	DeleteOldTweets() error
 	GetSiteTweets(string, int) ([]*model.Tweet, error)
 	MarkTweetDone(string) error
+
+	GetUser(string) (*model.User, error)
+	VerifyPassword(string, string) (*model.User, error)
 }
