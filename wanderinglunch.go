@@ -277,7 +277,7 @@ func maps(c echo.Context) error {
 			}).Error("Failed getting that site")
 			return echo.NewHTTPError(http.StatusNotFound, "")
 		}
-		m := mdl.Markers(siteName, 8)
+		m := data.Markers(siteName, 8)
 		mj, _ := json.Marshal(m)
 		return c.HTML(http.StatusOK, view.Map(site, string(mj)))
 	}

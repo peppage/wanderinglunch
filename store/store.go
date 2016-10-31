@@ -20,4 +20,6 @@ type Store interface {
 	AddLocation(*model.Location) error
 	UpdateLocation(*model.Location) error
 	GetLocation(string) (*model.Location, error)
+
+	Markers(string, int) []*model.Marker
 }
