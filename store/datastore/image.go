@@ -26,11 +26,7 @@ func (db *datastore) GetImage(id string) (*model.Image, error) {
 }
 
 const getImagesQuery = `
-SELECT id,
-       suffix,
-       visibility,
-       twitname,
-       menu
+SELECT *
 FROM   images
 WHERE  twitname = $1
 ORDER  BY menu DESC,
@@ -57,11 +53,7 @@ VALUES      ($1,
 `
 
 const getImageQuery = `
-SELECT id,
-       suffix,
-       visibility,
-       twitname,
-       menu
+SELECT *
 FROM   images
 WHERE  id = $1 
 `

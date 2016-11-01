@@ -9,6 +9,15 @@ CREATE TABLE ads (
     site text NOT NULL
 );
 
+CREATE TABLE images (
+    id text NOT NULL,
+    suffix text NOT NULL,
+    visibility text DEFAULT 'public'::text NOT NULL,
+    twitname text NOT NULL,
+    menu boolean DEFAULT false
+);
+
 -- +migrate Down
 
 DROP TABLE ads;
+DROP TABLE images;
