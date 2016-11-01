@@ -27,3 +27,5 @@ import:
 - package: github.com/segmentio/go-loggly
 - package: github.com/peppage/foursquarego
 - package: github.com/peppage/anaconda
+- package: github.com/franela/goblin
+  version: ~0.0.1

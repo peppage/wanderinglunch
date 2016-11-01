@@ -395,7 +395,11 @@ func adEdit(c echo.Context) error {
 		log.WithError(err).Error("Failed gettings sites")
 	}
 
-	ad, _ := data.GetAd(c.QueryParam("id"))
+	id, err := strconv.ParseInt(c.QueryParam("id"), 10, 0)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+	}
+	ad, _ := data.GetAd(int(id))
 	return c.HTML(http.StatusOK, admin.Ad(s, sites, ad))
 }
 

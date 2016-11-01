@@ -12,6 +12,13 @@ func (db *datastore) GetAds() ([]*model.Ad, error) {
 	return ads, err
 }
 
+func (db *datastore) GetAd(id int) (*model.Ad, error) {
+	var a = new(model.Ad)
+	err := db.Get(a, getAdQuery, id)
+	return a, err
+}
+
+// GetAdsForSite gets all the relevant ads for a site, based on time.Now()
 func (db *datastore) GetAdsForSite(siteName string) ([]*model.Ad, error) {
 	ads := []*model.Ad{}
 	now := time.Now().Unix()
@@ -19,18 +26,12 @@ func (db *datastore) GetAdsForSite(siteName string) ([]*model.Ad, error) {
 	return ads, err
 }
 
-func (db *datastore) GetAd(id string) (*model.Ad, error) {
-	var a = new(model.Ad)
-	err := db.Get(a, getAdQuery, id)
-	return a, err
-}
-
 func (db *datastore) AdsAddView(id int) error {
 	_, err := db.Exec(adsAddViewQuery, id)
 	return err
 }
 
-func (db *datastore) DeleteAd(id string) error {
+func (db *datastore) DeleteAd(id int) error {
 	_, err := db.Exec(deleteAdQuery, id)
 	return err
 }
@@ -39,7 +40,11 @@ func (db *datastore) AddAd(a *model.Ad) error {
 	if a.Name == "" || a.Value == "" || a.ValidUntil == 0 || a.Site == "" {
 		return errors.New("No fields can be empty")
 	}
-	_, err := db.NamedExec(addAdQuery, a)
+	var lastInsertID int
+	err := db.Get(&lastInsertID, createAdQuery,
+		a.Name, a.Value, a.ValidUntil, a.Site)
+
+	a.ID = lastInsertID
 	return err
 }
 
@@ -52,38 +57,23 @@ func (db *datastore) UpdateAd(a *model.Ad) error {
 }
 
 const getAdsQuery = `
-SELECT id, 
-       NAME, 
-       value, 
-       validuntil, 
-       views, 
-       site 
+SELECT *
 FROM   ads 
 ORDER  BY id 
 `
 
+const getAdQuery = `
+SELECT *
+FROM   ads
+WHERE  id = $1 
+`
+
 const getAdsBySiteQuery = `
-SELECT id,
-       NAME,
-       value,
-       validuntil,
-       views,
-       site
+SELECT *
 FROM   ads
 WHERE  validuntil > $1
        AND ( site = $2
               OR site = 'all' ) 
-`
-
-const getAdQuery = `
-SELECT id,
-       NAME,
-       value,
-       validuntil,
-       views,
-       site
-FROM   ads
-WHERE  id = $1 
 `
 
 const adsAddViewQuery = `
@@ -97,20 +87,21 @@ DELETE FROM ads
 WHERE  id = $1 
 `
 
-const addAdQuery = `
+const createAdQuery = `
 INSERT INTO ads
-            (NAME,
+            (name,
              value,
              validuntil,
              site)
-VALUES      (:name,
-             :value,
-             :validuntil,
-             :site) 
+VALUES      ($1,
+             $2,
+             $3,
+             $4)
+RETURNING id
 `
 
 const updateAdQuery = `
 UPDATE ads
-SET    ( NAME, value, validuntil, site ) = ( :name, :value, :validuntil, :site )
+SET    ( name, value, validuntil, site ) = ( :name, :value, :validuntil, :site )
 WHERE  id = :id 
 `

@@ -1,5 +1,5 @@
-hash: 2150e0ac808a01fdf07e3c909f36704db024628db02231422c8dbb0b771432f5
-updated: 2016-10-31T16:10:30.7396045-04:00
+hash: edefd93915bf6c6f5c8117db128c0cd0c0ad4b0ea39232c3cde4646e99faa9ba
+updated: 2016-11-01T14:19:43.6878391-04:00
 imports:
 - name: github.com/azr/backoff
   version: 53511d3c733003985b0b76f733df1f4d0095ee6a
@@ -13,6 +13,8 @@ imports:
   version: 2efc9fef1d9421a8d252a32e20beb10cecd2bbca
 - name: github.com/dustin/gojson
   version: 2e71ec9dd5adce3b168cd0dbde03b5cc04951c30
+- name: github.com/franela/goblin
+  version: efa9910a3ea4ccb7ee4b977571318af2e51ba05f
 - name: github.com/garyburd/go-oauth
   version: 719b069913e1151a73ea30d2ea4f90deda3ce234
   subpackages:
