@@ -27,14 +27,22 @@ func (a *AdStack) GetAd(siteName string) (*Ad, error) {
 		return nil, errors.New("No ads on stack")
 	}
 	temp, _ := a.adStacks[siteName].Pop()
-	ad := temp.(Ad)
-	return &ad, nil
+	ad := temp.(*Ad)
+	return ad, nil
 }
 
 func (a *AdStack) Fill(ads []*Ad, siteName string) {
+	if a.adStacks == nil {
+		a.adStacks = make(map[string]*util.Stack)
+	}
+
 	a.adStacks[siteName] = &util.Stack{}
 
 	for _, ad := range ads {
 		a.adStacks[siteName].Push(ad)
 	}
+}
+
+func (a *AdStack) Len(siteName string) int {
+	return a.adStacks[siteName].Len()
 }
