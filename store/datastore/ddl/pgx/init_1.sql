@@ -17,7 +17,16 @@ CREATE TABLE images (
     menu boolean DEFAULT false
 );
 
+CREATE TABLE tweets (
+    text text NOT NULL,
+    "time" integer NOT NULL,
+    id bigint NOT NULL,
+    retweeted boolean NOT NULL,
+    twitname text NOT NULL
+);
+
 -- +migrate Down
 
 DROP TABLE ads;
 DROP TABLE images;
+DROP TABLE tweets;

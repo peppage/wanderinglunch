@@ -22,7 +22,7 @@ func (db *datastore) DeleteAllTweets() error {
 }
 
 func (db *datastore) DeleteOldTweets() error {
-	t := time.Now().Add(time.Minute * 10080 * 2) // 2 weeks
+	t := time.Now().Add(time.Minute * -10080 * 2) // 2 weeks
 	_, err := db.Exec(deleteOldTweetsQuery, t.Unix())
 	return err
 }
@@ -72,7 +72,7 @@ TRUNCATE tweets
 
 const deleteOldTweetsQuery = `
 DELETE FROM tweets
-WHERE  time > $1 
+WHERE  time < $1
 `
 
 const getSiteTweetsQuery = `
