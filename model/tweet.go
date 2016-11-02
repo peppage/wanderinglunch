@@ -17,7 +17,7 @@ type Tweet struct {
 //PrettyDate returns formatted date from epoch
 func (t *Tweet) PrettyDate() string {
 	tm := time.Unix(t.Time, 0)
-	return tm.Format("Mon Jan _2 3:04PM 2006")
+	return tm.Format("Mon Jan 2 3:04PM 2006")
 }
 
 //FomattedText returns a string with links and @s linked
