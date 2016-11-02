@@ -25,6 +25,12 @@ var sessionStore session.CookieStore
 var webSettings settings.Settings
 var data store.Store
 
+// Version is autoset from the build script
+var Version string
+
+// Build is autoset from the build script
+var Build string
+
 func init() {
 
 	webSettings = toml.New("conf.toml")
@@ -126,7 +132,7 @@ func main() {
 	ad.GET("/queue", queue)
 	ad.GET("/queue/done", queueDone)
 
-	log.Info("Server (version " + webSettings.Version() + ") started on port " + webSettings.HTTPPort())
+	log.Info("Starting up app " + Version + " " + Build + "on port " + webSettings.HTTPPort())
 	e.Run(standard.New(":" + webSettings.HTTPPort()))
 
 }

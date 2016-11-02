@@ -35,10 +35,6 @@ func (t *tomlSettings) RunUpdator() bool {
 	return t.runUpdator
 }
 
-func (t *tomlSettings) Version() string {
-	return "3.3.1"
-}
-
 func (t *tomlSettings) Develop() bool {
 	return t.develop
 }

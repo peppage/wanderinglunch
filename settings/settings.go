@@ -6,6 +6,5 @@ type Settings interface {
 	HTTPPort() string
 	LogLevel() string
 	RunUpdator() bool
-	Version() string
 	Develop() bool
 }
