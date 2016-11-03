@@ -10,6 +10,7 @@ import (
 
 	"wanderinglunch/model"
 	"wanderinglunch/updator"
+	"wanderinglunch/view"
 	"wanderinglunch/view/admin"
 
 	log "github.com/Sirupsen/logrus"
@@ -104,14 +105,22 @@ func subSave(w http.ResponseWriter, r *http.Request) {
 }
 
 func adNew(w http.ResponseWriter, r *http.Request) {
-	s := getSiteFromContext(r)
+	s := sessions.GetSite(r)
+	site, _ := data.GetSite(s)
+	basePage := getBasePageFromCtx(r)
+	basePage.Site = site
 
 	sites, err := data.GetSites()
 	if err != nil {
 		log.WithError(err).Error("Failed gettings sites")
 	}
 
-	w.Write([]byte(admin.Ad(s, sites, &model.Ad{})))
+	p := &view.Ad{
+		BasePage: basePage,
+		Sites:    sites,
+		Ad:       &model.Ad{},
+	}
+	view.WritePageTemplate(w, p)
 }
 
 func adSave(w http.ResponseWriter, r *http.Request) {
@@ -139,19 +148,28 @@ func adSave(w http.ResponseWriter, r *http.Request) {
 }
 
 func locNew(w http.ResponseWriter, r *http.Request) {
-	s := getSiteFromContext(r)
+	s := sessions.GetSite(r)
+	site, _ := data.GetSite(s)
+	basePage := getBasePageFromCtx(r)
+	basePage.Site = site
 
 	sites, err := data.GetSites()
 	if err != nil {
 		log.WithError(err).Error("Failed gettings sites")
 	}
 
-	zones, err := data.GetZones(s.Name)
+	zones, err := data.GetZones(site.Name)
 	if err != nil {
 		log.WithError(err).Error("Failed gettings zones")
 	}
 
-	w.Write([]byte(admin.Loc(s, sites, zones, &model.Location{})))
+	p := &view.Location{
+		BasePage: basePage,
+		Sites:    sites,
+		Zones:    zones,
+		Location: &model.Location{},
+	}
+	view.WritePageTemplate(w, p)
 }
 
 func locSave(w http.ResponseWriter, r *http.Request) {
@@ -299,13 +317,24 @@ func subUpdate(w http.ResponseWriter, r *http.Request) {
 }
 
 func aAds(w http.ResponseWriter, r *http.Request) {
-	s := getSiteFromContext(r)
+	s := sessions.GetSite(r)
+	site, _ := data.GetSite(s)
+	basePage := getBasePageFromCtx(r)
+	basePage.Site = site
+
 	ads, _ := data.GetAds()
-	w.Write([]byte(admin.Ads(s, ads)))
+	p := &view.Ads{
+		BasePage: basePage,
+		Ads:      ads,
+	}
+	view.WritePageTemplate(w, p)
 }
 
 func adEdit(w http.ResponseWriter, r *http.Request) {
-	s := getSiteFromContext(r)
+	s := sessions.GetSite(r)
+	site, _ := data.GetSite(s)
+	basePage := getBasePageFromCtx(r)
+	basePage.Site = site
 
 	sites, err := data.GetSites()
 	if err != nil {
@@ -318,7 +347,13 @@ func adEdit(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	ad, _ := data.GetAd(int(id))
-	w.Write([]byte(admin.Ad(s, sites, ad)))
+
+	p := &view.Ad{
+		BasePage: basePage,
+		Sites:    sites,
+		Ad:       ad,
+	}
+	view.WritePageTemplate(w, p)
 }
 
 func adUpdate(w http.ResponseWriter, r *http.Request) {
@@ -354,26 +389,46 @@ func adUpdate(w http.ResponseWriter, r *http.Request) {
 }
 
 func aLocations(w http.ResponseWriter, r *http.Request) {
-	s := getSiteFromContext(r)
+	s := sessions.GetSite(r)
+	site, _ := data.GetSite(s)
+	basePage := getBasePageFromCtx(r)
+	basePage.Site = site
+
 	locations, _ := data.GetLocations()
-	w.Write([]byte(admin.Locs(s, locations[s.Name])))
+	p := &view.Locations{
+		BasePage:  basePage,
+		Locations: locations[site.Name],
+	}
+
+	view.WritePageTemplate(w, p)
 }
 
 func locEdit(w http.ResponseWriter, r *http.Request) {
-	s := getSiteFromContext(r)
+	s := sessions.GetSite(r)
+	site, _ := data.GetSite(s)
+	basePage := getBasePageFromCtx(r)
+	basePage.Site = site
 
 	sites, err := data.GetSites()
 	if err != nil {
 		log.WithError(err).Error("Failed gettings sites")
 	}
 
-	zones, err := data.GetZones(s.Name)
+	zones, err := data.GetZones(site.Name)
 	if err != nil {
 		log.WithError(err).Error("Failed gettings zones")
 	}
 
 	loc, _ := data.GetLocation(r.FormValue("id"))
-	w.Write([]byte(admin.Loc(s, sites, zones, loc)))
+
+	p := &view.Location{
+		BasePage: basePage,
+		Sites:    sites,
+		Zones:    zones,
+		Location: loc,
+	}
+
+	view.WritePageTemplate(w, p)
 }
 
 func locUpdate(w http.ResponseWriter, r *http.Request) {

@@ -30,9 +30,9 @@ Page prints a page implementing Page interface.
     <link href="/favicon.ico" rel="shortcut icon">
 	<title>Wandering Lunch: {%= p.Title() %}</title>
     <link rel="stylesheet" href="/static/site.css?v={%= p.Ver() %}">
-    <link rel="apple-touch-icon" href="apple-touch-icon.png">
-    <link rel="apple-touch-icon-precomposed" href="apple-touch-icon-precomposed.png">
-    <link rel="icon" sizes="192x192" href="touch-icon-192x192.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="apple-touch-icon-precomposed" href="/apple-touch-icon-precomposed.png">
+    <link rel="icon" sizes="192x192" href="/touch-icon-192x192.png">
 </head>
 <body>
     {%= p.GTMBody() %}

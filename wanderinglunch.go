@@ -102,6 +102,7 @@ func main() {
 	})
 
 	r.Route("/admin", func(r chi.Router) {
+		r.Use(setBasePage)
 		r.Use(mustUser)
 		r.Use(siteContext)
 		r.Get("/", adminRoot)

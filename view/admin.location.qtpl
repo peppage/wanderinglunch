@@ -1,0 +1,98 @@
+{% import (
+    "wanderinglunch/model"
+)%}
+
+{% code
+type Location struct {
+    BasePage
+    Sites []*model.Site
+    Zones []string
+    Location *model.Location
+}
+%}
+
+{% func (p *Location) Body() %}
+    <h1>Location</h1>
+
+    <p>
+        {% if p.Location.Lat != 0 %}
+            <a href="http://maps.google.com/?q={%v p.Location.Lat %},{%v p.Location.Long %}">Google Maps</a><br>
+        {% else %}
+            <a href="http://maps.google.com">Google Maps</a><br>
+        {% endif %}
+        <a href="http://regex101.com">Regex101</a>
+    </p>
+
+    <form method="post">
+        <input type="hidden" name="id" value={%v p.Location.ID %}">
+        <label>Display</label><br>
+        <input type="text" name="display" value="{%s p.Location.Display %}"><br>
+
+        <label>Matcher</label><br>
+        <input type="text" name="matcher" value="{%s p.Location.Matcher %}"><br>
+
+        <label>Latitude</label><br>
+        <input type="text" name="lat" value="{%v p.Location.Lat %}"><br>
+
+        <label>Longitude</label><br>
+        <input type="text" name="long" value="{%v p.Location.Long %}"><br>
+        
+        <label>Zone</label><br>
+        <input type="text" name="zone" value="{%s p.Location.Zone %}"><br>
+        <span class="help-text">
+            {% for _, z := range p.Zones %}
+                <b>{%s z %}, </b>
+            {% endfor %}
+        </span>
+        <br>
+
+        <label>Existing Sites</label>
+        <select name="site">
+            {% if p.Location.Site != "" %}
+                <option value="{%s p.Location.Site %}">{%s p.Location.Site %}</option>
+            {% else %}
+                <option value="{%s p.Site.Name %}">{%s p.Site.Name %}</option>
+            {% endif %}
+            {% for _, s := range p.Sites %}
+                <option value="{%s s.Name %}">{%s s.Name %}</option>
+            {% endfor %}
+        </select>
+        <br><br>
+
+        <button type="submit" class="button button--primary">Save</button>
+    </form>
+{% endfunc %}
+
+{% func (p *Location) Title() %} | Location {%s p.Location.Display %}{% endfunc %}
+
+{% code
+type Locations struct {
+    BasePage
+    Locations []*model.Location
+}
+%}
+
+{% func (p *Locations) Body() %}
+    <h1>Locations</h1>
+    <input type="search" class="js-light-table-filter" data-table="order-table" placeholder="Filter">
+    <table class="table order-table">
+        <thead>
+            <tr>
+                <th>Display</th>
+                <th>Matcher</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for _, l := range p.Locations %}
+                <tr>
+                    <td><a href="/admin/location/edit?id={%v l.ID %}">{%s l.Display %}</a></td>
+                    <td>{%s l.Matcher %}</td>
+                    <td>delete</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endfunc %}
+
+{% func (p *Locations) Title() %} | Locations{% endfunc %}
