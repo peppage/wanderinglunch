@@ -84,7 +84,7 @@ SELECT trucks.twitname,
 FROM   trucks
        RIGHT JOIN tweets
                ON trucks.twitname = tweets.twitname
-WHERE  site =$ 1
+WHERE  site = $1
        AND done = 'f'
 ORDER  BY time DESC
 LIMIT  $2
