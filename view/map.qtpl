@@ -1,0 +1,19 @@
+{% code
+type Map struct {
+    BasePage
+    Markers []byte
+}
+%}
+
+{% func (p *Map) Body() %}
+    <div id="map" style="height:500px"></div>
+    <script>
+        var trucks = {%z p.Markers %}
+        var lat = {%v p.Site.Lat %}
+        var long = {%v p.Site.Long %}
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAN8Jk0062QBOMPmXH-Totg9zi1GCw3o3w&callback=initMap&v=3.23">
+    </script>
+{% endfunc %}
+
+{% func (p *Map) Title() %}{%s p.Site.Title %} | Map{% endfunc %}

@@ -1,5 +1,5 @@
 {% import (
-        "wanderinglunch/model"
+    "wanderinglunch/model"
 )%}
 
 This is a base page template. All the other template pages implement this interface.
@@ -93,10 +93,10 @@ overriding only certain Page methods
     }
 %}
 
-{% func (p *BasePage) Title() %}This is a base title{% endfunc %}
+{% func (p *BasePage) Title() %}{%s p.Site.Title %}{% endfunc %}
 {% func (p *BasePage) Body() %}This is a base body{% endfunc %}
-{% func (p *BasePage) BuildInfo() %} {%s p.Version %} {%s p.Build %} {% endfunc %}
-{% func (p *BasePage) Ver() %} {%s p.Version %} {% endfunc %}
-{% func (p *BasePage) AdView() %} {%s= p.Ad.Value %} {% endfunc %}
-{% func (p *BasePage) Description() %} {%s p.Site.Description %} {% endfunc %}
-{% func (p *BasePage) SiteUrlName() %} {%s p.Site.Name %} {% endfunc %}
+{% func (p *BasePage) BuildInfo() %}{%s p.Version %}{%s p.Build %} {% endfunc %}
+{% func (p *BasePage) Ver() %}{%s p.Version %}{% endfunc %}
+{% func (p *BasePage) AdView() %}{%s= p.Ad.Value %}{% endfunc %}
+{% func (p *BasePage) Description() %}{%s p.Site.Description %}{% endfunc %}
+{% func (p *BasePage) SiteUrlName() %}{%s p.Site.Name %}{% endfunc %}

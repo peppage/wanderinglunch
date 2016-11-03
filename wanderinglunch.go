@@ -327,22 +327,21 @@ func lastUpdate(w http.ResponseWriter, r *http.Request) {
 }
 
 func maps(w http.ResponseWriter, r *http.Request) {
-	siteName := chi.URLParam(r, "site")
-	if siteName != "" {
-		site, err := data.GetSite(siteName)
-		if err != nil {
-			log.WithFields(log.Fields{
-				"site": site,
-				"err":  err,
-			}).Error("Failed getting that site")
-			handleError(w, err, http.StatusNotFound)
-		}
-		m := data.Markers(siteName, 8)
-		mj, _ := json.Marshal(m)
-		w.Write([]byte(view.Map(site, string(mj))))
+	basePage := getBasePageFromCtx(r)
+	var site *model.Site
+	if site = getSite(w, r); site == nil {
 		return
 	}
-	http.Redirect(w, r, "/nyc/map", http.StatusMovedPermanently)
+	basePage.Site = site
+
+	m := data.Markers(site.Name, 8)
+	mj, _ := json.Marshal(m)
+
+	p := &view.Map{
+		BasePage: basePage,
+		Markers:  mj,
+	}
+	view.WritePageTemplate(w, p)
 }
 
 func feedback(w http.ResponseWriter, r *http.Request) {
