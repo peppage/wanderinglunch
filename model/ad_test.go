@@ -1,70 +1,64 @@
 package model
 
-import (
-	"testing"
+import "github.com/stretchr/testify/suite"
 
-	"github.com/franela/goblin"
-)
+type AdTestSuite struct {
+	suite.Suite
+}
 
-func TestAdStack(t *testing.T) {
-	g := goblin.Goblin(t)
+func (suite *AdTestSuite) TestFillStack() {
+	site := "nyc"
 
-	g.Describe("Ad Stack", func() {
-		g.It("Should fill a stack", func() {
-			site := "nyc"
+	ad1 := Ad{
+		ID:         1,
+		Name:       "Test Ad 1",
+		Value:      "Value",
+		ValidUntil: 1,
+		Site:       site,
+	}
 
-			ad1 := Ad{
-				ID:         1,
-				Name:       "Test Ad 1",
-				Value:      "Value",
-				ValidUntil: 1,
-				Site:       site,
-			}
+	ad2 := Ad{
+		ID:         1,
+		Name:       "Test Ad 2",
+		Value:      "Value",
+		ValidUntil: 1,
+		Site:       site,
+	}
 
-			ad2 := Ad{
-				ID:         1,
-				Name:       "Test Ad 2",
-				Value:      "Value",
-				ValidUntil: 1,
-				Site:       site,
-			}
+	var ads []*Ad
 
-			var ads []*Ad
+	ads = append(ads, &ad1)
+	ads = append(ads, &ad2)
 
-			ads = append(ads, &ad1)
-			ads = append(ads, &ad2)
+	adStack := AdStack{}
 
-			adStack := AdStack{}
+	adStack.Fill(ads, site)
 
-			adStack.Fill(ads, site)
+	suite.Equal(len(ads), adStack.Len(site))
+}
 
-			g.Assert(len(ads) == adStack.Len(site)).IsTrue()
-		})
+func (suite *AdTestSuite) TestGetAd() {
+	site := "nyc"
+	ad := Ad{
+		ID:         1,
+		Name:       "Test Ad",
+		Value:      "Value",
+		ValidUntil: 1,
+		Site:       site,
+	}
 
-		g.It("Should Get an ad", func() {
-			site := "nyc"
-			ad := Ad{
-				ID:         1,
-				Name:       "Test Ad",
-				Value:      "Value",
-				ValidUntil: 1,
-				Site:       site,
-			}
+	var ads []*Ad
+	ads = append(ads, &ad)
 
-			var ads []*Ad
-			ads = append(ads, &ad)
+	adStack := AdStack{}
+	adStack.Fill(ads, site)
 
-			adStack := AdStack{}
-			adStack.Fill(ads, site)
+	getAd, err := adStack.GetAd(site)
 
-			getAd, err := adStack.GetAd(site)
-
-			g.Assert(err == nil).IsTrue()
-			g.Assert(ad.ID == getAd.ID)
-			g.Assert(ad.Name == getAd.Name)
-			g.Assert(ad.Value == getAd.Value)
-			g.Assert(ad.ValidUntil == getAd.ValidUntil)
-			g.Assert(ad.Site == getAd.Site)
-		})
-	})
+	suite.Assert().NoError(err, "Get ad failed")
+	suite.Equal(ad.ID, getAd.ID)
+	suite.Equal(ad.Name, getAd.Name)
+	suite.Equal(ad.Value, getAd.Value)
+	suite.Equal(ad.ValidUntil, getAd.ValidUntil)
+	suite.Equal(ad.Site, getAd.Site)
 }

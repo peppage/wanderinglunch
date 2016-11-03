@@ -1,5 +1,5 @@
-hash: 49eb2ed5f919f30cd9c708e313782b9397b054a7e20f855a318ee29df96b79ba
-updated: 2016-11-10T18:26:44.3408481-05:00
+hash: 4e9ead9546b5fe9dc7ed010d088afc5fc20e6d3d4f8b9b48fdf1f7b4ad52d4a6
+updated: 2016-11-14T16:06:13.636504-05:00
 imports:
 - name: github.com/azr/backoff
   version: 53511d3c733003985b0b76f733df1f4d0095ee6a
@@ -9,8 +9,6 @@ imports:
   version: 2efc9fef1d9421a8d252a32e20beb10cecd2bbca
 - name: github.com/dustin/gojson
   version: 2e71ec9dd5adce3b168cd0dbde03b5cc04951c30
-- name: github.com/franela/goblin
-  version: 74c9fe110d4bfd04c222a089a309e0a97e258534
 - name: github.com/garyburd/go-oauth
   version: 719b069913e1151a73ea30d2ea4f90deda3ce234
   subpackages:
@@ -59,14 +57,16 @@ imports:
   version: e78f6971ebca5835614673e2f5f6a47ca5f13501
 - name: github.com/shawnps/sessions
   version: dc17d8cc4b7165432d37bd224ae43309f97950a9
-- name: github.com/sipin/gorazor
-  version: cfcf2db74a170747830822495a7cc059124af962
-  subpackages:
-  - github.com\sipin\gorazor\gorazor
 - name: github.com/Sirupsen/logrus
   version: f3cfb454f4c209e6668c95216c4744b8fddb2356
   subpackages:
   - github.com\Sirupsen\logrus
+- name: github.com/stretchr/testify
+  version: 69483b4bd14f5845b5a1e55bca19e954e827f1d0
+  subpackages:
+  - suite
+  - assert
+  - require
 - name: github.com/valyala/quicktemplate
   version: de41ba48f1d9953aca12983c953532f3776b4347
 - name: github.com/visionmedia/go-debug
@@ -74,15 +74,25 @@ imports:
 - name: golang.org/x/crypto
   version: 5bcd134fee4dd1475da17714aac19c0aa0142e2f
   subpackages:
-  - bcrypt
   - blowfish
+- name: golang.org/x/crypto/bcrypt
+  version: 5bcd134fee4dd1475da17714aac19c0aa0142e2f
 - name: golang.org/x/net
   version: c4c3ea71919de159c9e246d7be66deb7f0a39a58
   subpackages:
-  - webdav
   - webdav/internal/xml
+- name: golang.org/x/net/webdav
+  version: c4c3ea71919de159c9e246d7be66deb7f0a39a58
 - name: golang.org/x/sys
   version: 076b546753157f758b316e59bcb51e6807c04057
   subpackages:
   - unix
-testImports: []
+testImports:
+- name: github.com/davecgh/go-spew
+  version: 6d212800a42e8ab5c146b8ace3490ee17e5225f9
+  subpackages:
+  - spew
+- name: github.com/pmezard/go-difflib
+  version: d8ed2627bdf02c080bf22230dbb337003b7aba2d
+  subpackages:
+  - difflib

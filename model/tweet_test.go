@@ -4,45 +4,46 @@ import (
 	"testing"
 	"time"
 
-	"github.com/franela/goblin"
+	"github.com/stretchr/testify/suite"
 )
 
-func TestTweet(t *testing.T) {
-	g := goblin.Goblin(t)
+type TweetTestSuite struct {
+	suite.Suite
+}
 
-	g.Describe("Tweet model", func() {
-		g.It("Should have pretty time", func() {
-			tweet := &Tweet{
-				Time: 1478104079,
-			}
+func (suite *TweetTestSuite) TestPrettyTime() {
+	tweet := &Tweet{
+		Time: 1478104079,
+	}
 
-			pretty := tweet.PrettyDate()
-			g.Assert(pretty == "Wed Nov 2 12:27PM 2016").IsTrue()
+	pretty := tweet.PrettyDate()
+	suite.Equal(pretty, "Wed Nov 2 12:27PM 2016")
+}
 
-		})
+func (suite *TweetTestSuite) TestFormText() {
+	originalText := `Test http://t.co/f03jf0 this @username`
+	formattedText := `Test <a href="http://t.co/f03jf0">http://t.co/f03jf0</a> this <a href="http://twitter.com/@username">@username</a>`
 
-		g.It("Should format text like twitter for display", func() {
-			originalText := `Test http://t.co/f03jf0 this @username`
-			formattedText := `Test <a href="http://t.co/f03jf0">http://t.co/f03jf0</a> this <a href="http://twitter.com/@username">@username</a>`
+	tweet := &Tweet{
+		Text: originalText,
+	}
 
-			tweet := &Tweet{
-				Text: originalText,
-			}
+	suite.Equal(tweet.FomattedText(), formattedText)
+}
 
-			g.Assert(tweet.FomattedText() == formattedText).IsTrue()
-		})
+func (suite *TweetTestSuite) TestTimeConverted() {
+	now := time.Now()
 
-		g.It("Should convert the unix time to a time.time", func() {
-			now := time.Now()
+	tweet := &Tweet{
+		Time: now.Unix(),
+	}
 
-			tweet := &Tweet{
-				Time: now.Unix(),
-			}
+	created := tweet.CreatedAtTime()
+	suite.Equal(now.Hour(), created.Hour())
+	suite.Equal(now.Minute(), created.Minute())
+	suite.Equal(now.Second(), created.Second())
+}
 
-			created := tweet.CreatedAtTime()
-			g.Assert(now.Hour() == created.Hour()).IsTrue()
-			g.Assert(now.Minute() == created.Minute()).IsTrue()
-			g.Assert(now.Second() == created.Second()).IsTrue()
-		})
-	})
+func TestTweetSuite(t *testing.T) {
+	suite.Run(t, new(TweetTestSuite))
 }
