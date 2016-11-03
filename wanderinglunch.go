@@ -214,18 +214,7 @@ func handleError(w http.ResponseWriter, err error, code int) {
 }
 
 func error404(w http.ResponseWriter, r *http.Request) {
-	bp := view.BasePage{
-		Version: Version,
-		Build:   Build,
-		Ad:      &model.Ad{},
-		Site:    &model.Site{},
-	}
-	sites, _ := data.GetSites()
-	p := &view.Error404{
-		BasePage: bp,
-		Sites:    sites,
-	}
-	view.WritePageTemplate(w, p)
+	handleError(w, errors.New(http.StatusText(http.StatusNotFound)), http.StatusNotFound)
 }
 
 func login(w http.ResponseWriter, r *http.Request) {
