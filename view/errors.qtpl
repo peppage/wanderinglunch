@@ -1,0 +1,74 @@
+{% import (
+    "strings"
+    "wanderinglunch/model"
+)%}
+
+{% code
+type Error401 struct {
+    BasePage
+    Sites []*model.Site
+}
+%}
+
+{% func (p *Error401) Body() %}
+    <style>
+        header {
+            display: none;
+        }
+        body {
+            background-color: #333;
+            color: whitesmoke;
+        }
+    </style>
+    <div class="errorPage">
+        <div class="errorSection">
+            <h1>401 - No permissions to view this</h1>
+            <p>
+                Try <a href="/login">logging in</a>
+            </p>
+            <p>
+                Find it on one of our sites?
+                {% for i, s := range p.Sites %}
+                    <a href="/{%s s.Name %}">{%s strings.ToUpper(s.Name) %}</a>{% if i >= 0 && i != len(p.Sites) - 1 %}<span>, </span>{% endif %}
+                {% endfor %}
+            </p>
+        </div>
+    </div>
+{% endfunc %}
+
+{% func (p *Error401) Title() %}401 Unauthorized{% endfunc %}
+
+{% code
+type Error404 struct {
+    BasePage
+   Sites []*model.Site
+}
+%}
+
+{% func (p *Error404) Body() %}
+    <style>
+        header {
+            display: none;
+        }
+        body {
+            background-color: #333;
+            color: whitesmoke;
+        }
+    </style>
+    <div class="errorPage">
+        <div class="errorSection">
+            <h1>404 - Wandering Lunch can't find that page</h1>
+            <p>
+                The page you are trying to reach does not exist.
+            </p>
+            <p>
+                Find it on one of our sites?
+                {% for i, s := range p.Sites %}
+                    <a href="/{%s s.Name %}">{%s strings.ToUpper(s.Name) %}</a>{% if i >= 0 && i != len(p.Sites) - 1 %}<span>, </span>{% endif %}
+                {% endfor %}
+            </p>
+        </div>
+    </div>
+{% endfunc %}
+
+{% func (p *Error404) Title() %}404 Not Found{% endfunc %}

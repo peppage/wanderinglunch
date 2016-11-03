@@ -74,6 +74,7 @@ func main() {
 	r.Use(middleware.Recoverer)
 	r.Use(middleware.CloseNotify)
 	r.Use(middleware.StripSlashes)
+	r.NotFound(error404)
 
 	r.Get("/robots.txt", serveFile("robots.txt"))
 	r.Get("/favicon.ico", serveFile("images/favicon.ico"))
@@ -138,7 +139,6 @@ func main() {
 		r.Post("/image/edit", imgUpdate)
 		r.Get("/queue", queue)
 		r.Get("/queue/done", queueDone)
-
 	})
 
 	r.FileServer("/static", static.HTTP)
@@ -184,6 +184,12 @@ func handleError(w http.ResponseWriter, err error, code int) {
 		return
 	}
 
+	bp := view.BasePage{
+		Version: Version,
+		Build:   Build,
+		Ad:      &model.Ad{},
+		Site:    &model.Site{},
+	}
 	sites, _ := data.GetSites()
 
 	w.WriteHeader(code)
@@ -191,12 +197,35 @@ func handleError(w http.ResponseWriter, err error, code int) {
 	case http.StatusBadRequest:
 		w.Write([]byte("bad request"))
 	case http.StatusNotFound:
-		w.Write([]byte(view.Error404(sites)))
+		p := &view.Error404{
+			BasePage: bp,
+			Sites:    sites,
+		}
+		view.WritePageTemplate(w, p)
 	case http.StatusUnauthorized:
-		w.Write([]byte(view.Error401(sites)))
+		p := &view.Error401{
+			BasePage: bp,
+			Sites:    sites,
+		}
+		view.WritePageTemplate(w, p)
 	default:
 		w.Write([]byte("internal server error"))
 	}
+}
+
+func error404(w http.ResponseWriter, r *http.Request) {
+	bp := view.BasePage{
+		Version: Version,
+		Build:   Build,
+		Ad:      &model.Ad{},
+		Site:    &model.Site{},
+	}
+	sites, _ := data.GetSites()
+	p := &view.Error404{
+		BasePage: bp,
+		Sites:    sites,
+	}
+	view.WritePageTemplate(w, p)
 }
 
 func login(w http.ResponseWriter, r *http.Request) {
