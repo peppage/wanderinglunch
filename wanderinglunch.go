@@ -84,18 +84,21 @@ func main() {
 	r.Get("/apple-touch-icon-120x120-precomposed.png", serveFile("images/touch-icon-192x192.png"))
 	r.Get("/BingSiteAuth.xml", serveFile("BingSiteAuth.xml"))
 
-	r.Get("/", root)
-	r.Get("/:site", root)
-	r.Get("/login", login)
-	r.Post("/login", loginHandle)
-	r.Get("/truck/:name", truck)
-	r.Get("/alltrucks", allTrucks)
-	r.Get("/:site/alltrucks", allTrucks)
-	r.Get("/:site/lastupdate", lastUpdate)
-	r.Get("/map", maps)
-	r.Get("/:site/map", maps)
-	r.Get("/:site/feedback", feedback)
-	r.Get("/sitemap.txt", sitemap)
+	r.Route("/", func(r chi.Router) {
+		r.Use(setBasePage)
+		r.Get("/", root)
+		r.Get("/:site", root)
+		r.Get("/login", login)
+		r.Post("/login", loginHandle)
+		r.Get("/truck/:name", truck)
+		r.Get("/alltrucks", allTrucks)
+		r.Get("/:site/alltrucks", allTrucks)
+		r.Get("/:site/lastupdate", lastUpdate)
+		r.Get("/map", maps)
+		r.Get("/:site/map", maps)
+		r.Get("/:site/feedback", feedback)
+		r.Get("/sitemap.txt", sitemap)
+	})
 
 	r.Route("/admin", func(r chi.Router) {
 		r.Use(mustUser)
@@ -143,11 +146,36 @@ func main() {
 	http.ListenAndServe(":"+webSettings.HTTPPort(), r)
 }
 
+func getBasePageFromCtx(r *http.Request) view.BasePage {
+	ctx := r.Context()
+	return ctx.Value(basePageKey).(view.BasePage)
+}
+
 func serveFile(filename string) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		b, _ := static.ReadFile(filename)
 		w.Write(b)
 	})
+}
+
+func getSite(w http.ResponseWriter, r *http.Request) *model.Site {
+	siteName := chi.URLParam(r, "site")
+	if siteName == "" {
+		http.Redirect(w, r, "/nyc", http.StatusMovedPermanently)
+		return nil
+	}
+
+	site, err := data.GetSite(siteName)
+	if err != nil {
+		log.WithFields(log.Fields{
+			"site": siteName,
+			"err":  err,
+		}).Error("Failed getting that site")
+		handleError(w, err, http.StatusNotFound)
+		return nil
+	}
+
+	return site
 }
 
 func handleError(w http.ResponseWriter, err error, code int) {
@@ -210,46 +238,46 @@ func truck(w http.ResponseWriter, r *http.Request) {
 }
 
 func root(w http.ResponseWriter, r *http.Request) {
-	siteName := chi.URLParam(r, "site")
-	if siteName != "" {
-		site, err := data.GetSite(siteName)
-		if err != nil {
-			log.WithFields(log.Fields{
-				"site": siteName,
-				"err":  err,
-			}).Error("Failed getting that site")
-			handleError(w, err, http.StatusNotFound)
-			return
-		}
-
-		trucks, err := data.Trucks(siteName, 8, "lat", "desc", 0)
-		if err != nil {
-			log.WithFields(log.Fields{
-				"err":  err,
-				"site": siteName,
-			}).Error("Failed getting trucks")
-			handleError(w, err, http.StatusInternalServerError)
-			return
-		}
-
-		zones, err := data.GetZones(siteName)
-		if err != nil {
-			log.WithFields(log.Fields{
-				"err":  err,
-				"site": siteName,
-			}).Error("Failed getting zones")
-			handleError(w, err, http.StatusInternalServerError)
-			return
-		}
-
-		lu, err := data.LastUpdate(siteName)
-		if err != nil {
-			log.WithError(err).Error("Unable to retrieve last update")
-		}
-		w.Write([]byte(view.Index(site, zones, trucks, lu)))
+	basePage := getBasePageFromCtx(r)
+	var site *model.Site
+	if site = getSite(w, r); site == nil {
 		return
 	}
-	http.Redirect(w, r, "/nyc", http.StatusMovedPermanently)
+	basePage.Site = site
+
+	siteName := basePage.Site.Name
+
+	trucks, err := data.Trucks(siteName, 8, "lat", "desc", 0)
+	if err != nil {
+		log.WithFields(log.Fields{
+			"err":  err,
+			"site": siteName,
+		}).Error("Failed getting trucks")
+		handleError(w, err, http.StatusInternalServerError)
+		return
+	}
+
+	zones, err := data.GetZones(siteName)
+	if err != nil {
+		log.WithFields(log.Fields{
+			"err":  err,
+			"site": siteName,
+		}).Error("Failed getting zones")
+		handleError(w, err, http.StatusInternalServerError)
+		return
+	}
+
+	lu, err := data.LastUpdate(siteName)
+	if err != nil {
+		log.WithError(err).Error("Unable to retrieve last update")
+	}
+	p := &view.Root{
+		BasePage:   basePage,
+		Trucks:     trucks,
+		Zones:      zones,
+		LastUpdate: lu,
+	}
+	view.WritePageTemplate(w, p)
 }
 
 func allTrucks(w http.ResponseWriter, r *http.Request) {

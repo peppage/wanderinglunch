@@ -1,0 +1,102 @@
+{% import (
+        "wanderinglunch/model"
+)%}
+
+This is a base page template. All the other template pages implement this interface.
+{% interface
+Page {
+	Title()
+	Body()
+    BuildInfo()
+    Ver()
+    AdView()
+    Description()
+    SiteUrlName()
+}
+%}
+Page prints a page implementing Page interface.
+{% func PageTemplate(p Page) %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="/favicon.ico" rel="shortcut icon">
+	<title>Wandering Lunch: {%= p.Title() %}</title>
+    <link rel="stylesheet" href="/static/site.css?v={%= p.Ver() %}">
+    <meta name="description" content="{%= p.Description() %}" />
+    <meta property="og:title" contents="Wandering Lunch: {%= p.Title() %}" />
+    <meta property="og:type" contents="website" />
+    <meta property="og:url" contents="https://wanderinglunch.com/{%= p.SiteUrlName() %}" />
+    <meta property="og:image" contents="https://wanderinglunch.com/static/images/wl.png" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="apple-touch-icon-precomposed" href="apple-touch-icon-precomposed.png">
+    <link rel="icon" sizes="192x192" href="touch-icon-192x192.png">
+</head>
+<body>
+    <!-- {%= p.BuildInfo()%} -->
+    <header>
+        <div class="grid-1-center">
+            <a href="/{%= p.SiteUrlName() %}"><img src="/static/images/wl.png" alt="logo"></a>
+        </div>
+        <nav class="grid-1-center">
+            <ul>
+                <li>
+                    <a href="/{%= p.SiteUrlName() %}/alltrucks">All Trucks</a>
+                </li>
+                <li>
+                    <a href="/{%= p.SiteUrlName() %}/map">Map</a>
+                </li>
+            </ul>
+        </nav>
+        <div class="grid-1-center">
+            {%= p.AdView() %}
+        </div>
+    </header>
+    <main class="content">
+        <div class="grid-1-center">
+            <div class="col-9">
+	            {%= p.Body() %}
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="grid-1-center">
+            <div class="col-9">
+                <div class="footer--left">
+                    <a href="http://twitter.com/peppage">Twitter</a> | 
+                    <a href="/{%= p.SiteUrlName() %}/feedback">Feedback</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="/static/site.js?v={%= p.Ver() %}"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-39921062-3', 'auto');
+        ga('send', 'pageview');
+	</script>
+</body>
+</html>
+{% endfunc %}
+
+Base page implementation. Other pages may inherit from it if they need
+overriding only certain Page methods
+{% code 
+    type BasePage struct {
+        Site *model.Site
+        Version string
+        Build string
+        Ad *model.Ad
+    }
+%}
+
+{% func (p *BasePage) Title() %}This is a base title{% endfunc %}
+{% func (p *BasePage) Body() %}This is a base body{% endfunc %}
+{% func (p *BasePage) BuildInfo() %} {%s p.Version %} {%s p.Build %} {% endfunc %}
+{% func (p *BasePage) Ver() %} {%s p.Version %} {% endfunc %}
+{% func (p *BasePage) AdView() %} {%s= p.Ad.Value %} {% endfunc %}
+{% func (p *BasePage) Description() %} {%s p.Site.Description %} {% endfunc %}
+{% func (p *BasePage) SiteUrlName() %} {%s p.Site.Name %} {% endfunc %}

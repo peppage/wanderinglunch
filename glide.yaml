@@ -26,3 +26,5 @@ import:
   version: fc6251083a856d5093f4b96d71252c5e56d9c1b5
 - package: github.com/shawnps/sessions
   version: dc17d8cc4b7165432d37bd224ae43309f97950a9
+- package: github.com/valyala/quicktemplate
+  version: ^20160617.0.0

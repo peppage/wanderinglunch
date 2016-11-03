@@ -4,6 +4,9 @@ import (
 	"context"
 	"net/http"
 
+	"wanderinglunch/model"
+	"wanderinglunch/view"
+
 	log "github.com/Sirupsen/logrus"
 )
 
@@ -34,6 +37,25 @@ func siteContext(next http.Handler) http.Handler {
 			return
 		}
 		ctx := context.WithValue(r.Context(), siteKey, s)
+		next.ServeHTTP(w, r.WithContext(ctx))
+	})
+}
+
+const basePageKey = "_basePage"
+
+func setBasePage(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		ad := model.Ad{
+			Name:  "test ad",
+			Value: `<a href="#">Ad link</a>`,
+		}
+
+		dbp := view.BasePage{
+			Version: Version,
+			Build:   Build,
+			Ad:      &ad,
+		}
+		ctx := context.WithValue(r.Context(), basePageKey, dbp)
 		next.ServeHTTP(w, r.WithContext(ctx))
 	})
 }

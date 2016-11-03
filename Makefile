@@ -25,6 +25,7 @@ vet:
 
 templates:
 	gorazor ./view ./view
+	qtc -dir ./view
 
 assets:
 	sfbt
