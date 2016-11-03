@@ -13,7 +13,7 @@ type cookieStore struct {
 	store sessions.Store
 }
 
-const sessionName = "id"
+const sessionName = "wl_sess"
 
 func New(secret string) session.Session {
 	store := sessions.NewCookieStore([]byte(secret))
@@ -26,7 +26,7 @@ const userKey = "_user"
 const siteKey = "_site"
 
 func (store *cookieStore) SetUser(w http.ResponseWriter, r *http.Request, u *model.User) {
-	sess, _ := store.store.New(r, sessionName)
+	sess, _ := store.store.Get(r, sessionName)
 	sess.Values[userKey] = u
 	sess.Save(r, w)
 }
