@@ -31,7 +31,7 @@ type Store interface {
 
 	GetSubs() ([]*model.Sub, error)
 	AddSub(*model.Sub) error
-	GetSub(string) (*model.Sub, error)
+	GetSub(int) (*model.Sub, error)
 	UpdateSub(*model.Sub) error
 
 	Trucks(string, int, string, string, int) ([]*model.Truck, error)

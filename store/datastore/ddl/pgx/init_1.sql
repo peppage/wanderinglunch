@@ -32,8 +32,16 @@ CREATE TABLE users (
     admin boolean DEFAULT false
 );
 
+CREATE TABLE subs (
+    id serial NOT NULL,
+    regex text NOT NULL,
+    replacement text DEFAULT ''::text
+);
+
 -- +migrate Down
 
 DROP TABLE ads;
 DROP TABLE images;
 DROP TABLE tweets;
+DROP TABLE users;
+DROP TABLE subs;

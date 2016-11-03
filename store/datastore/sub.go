@@ -9,11 +9,15 @@ func (db *datastore) GetSubs() ([]*model.Sub, error) {
 }
 
 func (db *datastore) AddSub(s *model.Sub) error {
-	_, err := db.NamedExec(addSubQuery, s)
+	var lastInsertID int
+	err := db.Get(&lastInsertID, addSubQuery, s.Regex, s.Replacement)
+
+	s.ID = lastInsertID
+
 	return err
 }
 
-func (db *datastore) GetSub(id string) (*model.Sub, error) {
+func (db *datastore) GetSub(id int) (*model.Sub, error) {
 	var s = new(model.Sub)
 	err := db.Get(s, getSubQuery, id)
 	return s, err
@@ -37,8 +41,9 @@ const addSubQuery = `
 INSERT INTO subs
             (regex,
              replacement)
-VALUES      (:regex,
-             :replacement) 
+VALUES      ($1,
+             $2)
+RETURNING id
 `
 
 const getSubQuery = `

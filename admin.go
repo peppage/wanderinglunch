@@ -345,7 +345,14 @@ func subEdit(w http.ResponseWriter, r *http.Request) {
 	basePage := getBasePageFromCtx(r)
 	basePage.Site = site
 
-	sub, _ := data.GetSub(r.FormValue("id"))
+	id, err := strconv.Atoi(r.FormValue("id"))
+	if err != nil {
+		log.WithError(err).Error("Failed getting that sub")
+		http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
+		return
+	}
+
+	sub, _ := data.GetSub(id)
 
 	p := &view.Sub{
 		BasePage: basePage,
