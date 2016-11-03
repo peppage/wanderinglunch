@@ -54,6 +54,7 @@ func setBasePage(next http.Handler) http.Handler {
 			Version: Version,
 			Build:   Build,
 			Ad:      &ad,
+			Develop: webSettings.Develop(),
 		}
 		ctx := context.WithValue(r.Context(), basePageKey, dbp)
 		next.ServeHTTP(w, r.WithContext(ctx))

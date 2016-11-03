@@ -12,6 +12,8 @@ Page {
     AdView()
     Description()
     SiteUrlName()
+    GTMHead()
+    GTMBody()
 }
 %}
 Page prints a page implementing Page interface.
@@ -19,19 +21,21 @@ Page prints a page implementing Page interface.
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link href="/favicon.ico" rel="shortcut icon">
-	<title>Wandering Lunch: {%= p.Title() %}</title>
-    <link rel="stylesheet" href="/static/site.css?v={%= p.Ver() %}">
     <meta name="description" content="{%= p.Description() %}" />
     <meta property="og:title" contents="Wandering Lunch: {%= p.Title() %}" />
     <meta property="og:type" contents="website" />
     <meta property="og:url" contents="https://wanderinglunch.com/{%= p.SiteUrlName() %}" />
     <meta property="og:image" contents="https://wanderinglunch.com/static/images/wl.png" />
+    {%= p.GTMHead() %}
+    <link href="/favicon.ico" rel="shortcut icon">
+	<title>Wandering Lunch: {%= p.Title() %}</title>
+    <link rel="stylesheet" href="/static/site.css?v={%= p.Ver() %}">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <link rel="apple-touch-icon-precomposed" href="apple-touch-icon-precomposed.png">
     <link rel="icon" sizes="192x192" href="touch-icon-192x192.png">
 </head>
 <body>
+    {%= p.GTMBody() %}
     <!-- {%= p.BuildInfo()%} -->
     <header>
         <div class="grid-1-center">
@@ -69,16 +73,6 @@ Page prints a page implementing Page interface.
         </div>
     </footer>
     <script src="/static/site.js?v={%= p.Ver() %}"></script>
-    <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-        ga('create', 'UA-39921062-3', 'auto');
-        ga('send', 'pageview');
-	</script>
-</body>
 </html>
 {% endfunc %}
 
@@ -90,6 +84,7 @@ overriding only certain Page methods
         Version string
         Build string
         Ad *model.Ad
+        Develop bool
     }
 %}
 
@@ -100,3 +95,28 @@ overriding only certain Page methods
 {% func (p *BasePage) AdView() %}{%s= p.Ad.Value %}{% endfunc %}
 {% func (p *BasePage) Description() %}{%s p.Site.Description %}{% endfunc %}
 {% func (p *BasePage) SiteUrlName() %}{%s p.Site.Name %}{% endfunc %}
+
+{% stripspace %}
+{% func (p *BasePage) GTMHead() %}
+    {% if !p.Develop %}
+        <!-- Google Tag Manager -->
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-MFFBH8');</script>
+        <!-- End Google Tag Manager -->
+    {% endif %}
+{% endfunc %}
+{% endstripspace %}
+
+{% stripspace %}
+{% func (p *BasePage) GTMBody() %}
+    {% if !p.Develop %}
+        <!-- Google Tag Manager (noscript) -->
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MFFBH8"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+        <!-- End Google Tag Manager (noscript) -->
+    {% endif %}
+{% endfunc %}
+{% endstripspace %}

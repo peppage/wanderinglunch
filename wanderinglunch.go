@@ -189,6 +189,7 @@ func handleError(w http.ResponseWriter, err error, code int) {
 		Build:   Build,
 		Ad:      &model.Ad{},
 		Site:    &model.Site{},
+		Develop: webSettings.Develop(),
 	}
 	sites, _ := data.GetSites()
 
