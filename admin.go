@@ -72,14 +72,9 @@ func truckNew(w http.ResponseWriter, r *http.Request) {
 	basePage := getBasePageFromCtx(r)
 	basePage.Site = site
 
-	sites, err := data.GetSites()
-	if err != nil {
-		log.WithError(err).Error("Failed gettings sites")
-	}
-
 	p := &view.AdminTruck{
 		BasePage: basePage,
-		Sites:    sites,
+		Sites:    basePage.Sites,
 		Truck:    &model.Truck{},
 	}
 
@@ -143,14 +138,9 @@ func adNew(w http.ResponseWriter, r *http.Request) {
 	basePage := getBasePageFromCtx(r)
 	basePage.Site = site
 
-	sites, err := data.GetSites()
-	if err != nil {
-		log.WithError(err).Error("Failed gettings sites")
-	}
-
 	p := &view.Ad{
 		BasePage: basePage,
-		Sites:    sites,
+		Sites:    basePage.Sites,
 		Ad:       &model.Ad{},
 	}
 	view.WritePageTemplate(w, p)
@@ -186,11 +176,6 @@ func locNew(w http.ResponseWriter, r *http.Request) {
 	basePage := getBasePageFromCtx(r)
 	basePage.Site = site
 
-	sites, err := data.GetSites()
-	if err != nil {
-		log.WithError(err).Error("Failed gettings sites")
-	}
-
 	zones, err := data.GetZones(site.Name)
 	if err != nil {
 		log.WithError(err).Error("Failed gettings zones")
@@ -198,7 +183,7 @@ func locNew(w http.ResponseWriter, r *http.Request) {
 
 	p := &view.Location{
 		BasePage: basePage,
-		Sites:    sites,
+		Sites:    basePage.Sites,
 		Zones:    zones,
 		Location: &model.Location{},
 	}
@@ -300,16 +285,11 @@ func truckEdit(w http.ResponseWriter, r *http.Request) {
 	basePage := getBasePageFromCtx(r)
 	basePage.Site = site
 
-	sites, err := data.GetSites()
-	if err != nil {
-		log.WithError(err).Error("Failed gettings sites")
-	}
-
 	t := data.GetTruck(r.FormValue("twitname"))
 
 	p := &view.AdminTruck{
 		BasePage: basePage,
-		Sites:    sites,
+		Sites:    basePage.Sites,
 		Truck:    t[0],
 	}
 
@@ -418,11 +398,6 @@ func adEdit(w http.ResponseWriter, r *http.Request) {
 	basePage := getBasePageFromCtx(r)
 	basePage.Site = site
 
-	sites, err := data.GetSites()
-	if err != nil {
-		log.WithError(err).Error("Failed gettings sites")
-	}
-
 	id, err := strconv.ParseInt(r.FormValue("id"), 10, 0)
 	if err != nil {
 		http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
@@ -432,7 +407,7 @@ func adEdit(w http.ResponseWriter, r *http.Request) {
 
 	p := &view.Ad{
 		BasePage: basePage,
-		Sites:    sites,
+		Sites:    basePage.Sites,
 		Ad:       ad,
 	}
 	view.WritePageTemplate(w, p)
@@ -491,11 +466,6 @@ func locEdit(w http.ResponseWriter, r *http.Request) {
 	basePage := getBasePageFromCtx(r)
 	basePage.Site = site
 
-	sites, err := data.GetSites()
-	if err != nil {
-		log.WithError(err).Error("Failed gettings sites")
-	}
-
 	zones, err := data.GetZones(site.Name)
 	if err != nil {
 		log.WithError(err).Error("Failed gettings zones")
@@ -505,7 +475,7 @@ func locEdit(w http.ResponseWriter, r *http.Request) {
 
 	p := &view.Location{
 		BasePage: basePage,
-		Sites:    sites,
+		Sites:    basePage.Sites,
 		Zones:    zones,
 		Location: loc,
 	}
@@ -558,11 +528,9 @@ func aSites(w http.ResponseWriter, r *http.Request) {
 	basePage := getBasePageFromCtx(r)
 	basePage.Site = site
 
-	sites, _ := data.GetSites()
-
 	p := &view.Sites{
 		BasePage: basePage,
-		Sites:    sites,
+		Sites:    basePage.Sites,
 	}
 
 	view.WritePageTemplate(w, p)
