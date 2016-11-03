@@ -7,8 +7,6 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
-	"os"
-	"path/filepath"
 
 	"wanderinglunch/model"
 	"wanderinglunch/session"
@@ -77,20 +75,14 @@ func main() {
 	r.Use(middleware.CloseNotify)
 	r.Use(middleware.StripSlashes)
 
-	/*
-		e.File("/favicon.ico", "./static/images/favicon.ico")
-		e.File("/robots.txt", "./static/robots.txt")
-		e.File("/touch-icon-192x192.png", "./static/images/touch-icon-192x192.png")
-		e.File("/apple-touch-icon.png", "./static/images/touch-icon-192x192.png")
-		e.File("/apple-touch-icon-precomposed.png", "./static/images/touch-icon-192x192.png")
-		e.File("/apple-touch-icon-120x120.png", "./static/images/touch-icon-192x192.png")
-		e.File("/apple-touch-icon-120x120-precomposed.png", "./static/images/touch-icon-192x192.png")
-		e.File("/BingSiteAuth.xml", "./static/BingSiteAuth.xml")
-		e.Static("/static/", "static")
-
-	*/
-
-	r.Get("/robots.txt", func(w http.ResponseWriter, r *http.Request) { w.Write(static.FileStaticRobotsTxt) })
+	r.Get("/robots.txt", serveFile("robots.txt"))
+	r.Get("/favicon.ico", serveFile("images/favicon.ico"))
+	r.Get("/touch-icon-192x192.png", serveFile("images/touch-icon-192x192.png"))
+	r.Get("/apple-touch-icon.png", serveFile("images/touch-icon-192x192.png"))
+	r.Get("/apple-touch-icon-precomposed.png", serveFile("images/touch-icon-192x192.png"))
+	r.Get("/apple-touch-icon-120x120.png", serveFile("images/touch-icon-192x192.png"))
+	r.Get("/apple-touch-icon-120x120-precomposed.png", serveFile("images/touch-icon-192x192.png"))
+	r.Get("/BingSiteAuth.xml", serveFile("BingSiteAuth.xml"))
 
 	r.Get("/", root)
 	r.Get("/:site", root)
@@ -146,11 +138,16 @@ func main() {
 
 	})
 
+	r.FileServer("/static", static.HTTP)
 	log.Info("Starting up app " + Version + " " + Build + "on port " + webSettings.HTTPPort())
-	workDir, _ := os.Getwd()
-	filesDir := filepath.Join(workDir, "static")
-	r.FileServer("/static", http.Dir(filesDir))
 	http.ListenAndServe(":"+webSettings.HTTPPort(), r)
+}
+
+func serveFile(filename string) http.HandlerFunc {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		b, _ := static.ReadFile(filename)
+		w.Write(b)
+	})
 }
 
 func handleError(w http.ResponseWriter, err error, code int) {

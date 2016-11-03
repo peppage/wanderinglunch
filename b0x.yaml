@@ -52,7 +52,7 @@ compression:
 # type: bool
 # default: false
 spread: false
-
+debug: false
 
 # type: array of objects
 custom:
@@ -62,3 +62,10 @@ custom:
     - "static/site.css"
     - "static/site.js"
     - "static/robots.txt"
+    - "static/BingSiteAuth.xml"
+    - "static/images/favicon.ico"
+    - "static/images/touch-icon-192x192.png"
+    - "static/images/wl.png"
+
+    base: "static"
+    prefix: ""
