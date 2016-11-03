@@ -31,24 +31,44 @@ func setSite(w http.ResponseWriter, r *http.Request) {
 }
 
 func adminRoot(w http.ResponseWriter, r *http.Request) {
-	s := getSiteFromContext(r)
-	trucks, err := data.GetFailedUpdates(s.Name)
+	s := sessions.GetSite(r)
+	site, _ := data.GetSite(s)
+	basePage := getBasePageFromCtx(r)
+	basePage.Site = site
+
+	trucks, err := data.GetFailedUpdates(site.Name)
 	if err != nil {
 		log.WithError(err).Error("Failed getting admin trucks")
 		return
 	}
 
-	w.Write([]byte(admin.Index(s, trucks)))
+	p := &view.Admin{
+		BasePage: basePage,
+		Trucks:   trucks,
+	}
+
+	view.WritePageTemplate(w, p)
 }
 
 func debug(w http.ResponseWriter, r *http.Request) {
+	basePage := getBasePageFromCtx(r)
+	basePage.Site = &model.Site{}
+
 	n := r.FormValue("twitname")
 	if n != "" {
 		texts, _ := updator.GetReplacedStrings(n)
-		w.Write([]byte(admin.Debugshow(n, texts)))
+		p := &view.DebugShow{
+			BasePage: basePage,
+			Twitname: n,
+			Texts:    texts,
+		}
+		view.WritePageTemplate(w, p)
 		return
 	}
-	w.Write([]byte(admin.Debug()))
+	p := &view.Debug{
+		BasePage: basePage,
+	}
+	view.WritePageTemplate(w, p)
 }
 
 func truckNew(w http.ResponseWriter, r *http.Request) {
@@ -578,8 +598,12 @@ func imgUpdate(w http.ResponseWriter, r *http.Request) {
 }
 
 func queue(w http.ResponseWriter, r *http.Request) {
-	s := getSiteFromContext(r)
-	t, err := data.GetSiteTweets(s.Name, 20)
+	s := sessions.GetSite(r)
+	site, _ := data.GetSite(s)
+	basePage := getBasePageFromCtx(r)
+	basePage.Site = site
+
+	t, err := data.GetSiteTweets(site.Name, 20)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,
@@ -603,7 +627,15 @@ func queue(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 		return
 	}
-	w.Write([]byte(admin.Queue(s, t, l[s.Name], subs)))
+
+	p := &view.Queue{
+		BasePage:  basePage,
+		Tweets:    t,
+		Locations: l[site.Name],
+		Subs:      subs,
+	}
+
+	view.WritePageTemplate(w, p)
 }
 
 func queueDone(w http.ResponseWriter, r *http.Request) {

@@ -1,0 +1,127 @@
+{% import (
+    "regexp"
+    "strings"
+    "wanderinglunch/model"
+)%}
+
+{% code
+type Admin struct {
+    BasePage
+    Trucks []*model.Truck
+}
+%}
+
+{% func (p *Admin) Body() %}
+    <h1>Possible missing location</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for _, t := range p.Trucks %}
+                <tr>
+                    <td>
+                        <a href="/admin/debug?twitname={%s t.Twitname %}">{%s t.Twitname %}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endfunc %}
+
+{% func (p *Admin) Title() %}Admin Index{% endfunc %}
+
+{% code
+type Debug struct {
+    BasePage
+}
+%}
+
+{% func (p *Debug) Body() %}
+    <form method="get">
+        <label>Twitname</label>
+        <input type="text" name="twitname"><input type="submit" value="Submit">
+    </form>
+{% endfunc %}
+
+{% func (p *Debug) Title() %}Admin Debug{% endfunc %}
+
+{% code
+type DebugShow struct {
+    BasePage
+    Twitname string
+    Texts []string
+}
+%}
+
+{% func (p *DebugShow) Body() %}
+    <h1>Sub tweets</h1>
+    <p>
+        <a href="http://twitter.com/{%s p.Twitname %}">Twitter</a>
+    </p>
+    <ul>
+        {% for _, t := range p.Texts %}
+            <li>{%s t %}</li>
+        {% endfor %}
+    </ul>
+{% endfunc %}
+
+{% func (p *DebugShow) Title() %}Admin Debugger{% endfunc %}
+
+{% code
+type Queue struct {
+    BasePage
+    Tweets []*model.Tweet
+    Locations []*model.Location
+    Subs []*model.Sub
+}
+%}
+
+{% func (p *Queue) Body() %}
+    <h1>Queue</h1>
+    <table style="border-collapse: collapse;">
+        <thead>
+            <tr>
+                <th>Text</th>
+                <th>Locs</th>
+            <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for _, t := range p.Tweets %}
+                {% code
+                    text := t.Text
+                    foundLocs := make(map[int]string)
+
+                    for _, s := range p.Subs {
+                        r, _ := regexp.Compile(s.Regex)
+                        text = r.ReplaceAllString(text, s.Replacement)
+                    }
+                    text = strings.ToLower(text)
+                    for _, l := range p.Locations {
+                        matched, _ := regexp.MatchString(l.Matcher, strings.ToLower(text))
+                        if matched {
+                            foundLocs[l.ID] = l.Display
+                        }
+                    }
+                %}
+                <tr style="padding: 5px;border: 1px black solid;">
+                    <td style="width:70%;padding: 10px;">{%s text %}<br>
+                    <span class="tweetList-time" style="float:left;"><a href="http://twitter.com/{%s t.Twitname %}">{%s t.Twitname %}</a></span>
+                    <span class="tweetList-time">{%s t.PrettyDate() %}</span></td>
+                    <td>
+                        {% for k, v := range foundLocs %}
+                            <span><a href="/admin/location/edit?id={%d k %}">{%s v %}</a></span><br>
+                        {% endfor %}
+                    </td>
+                    <td><a href="/admin/queue/done?id={%v t.ID %}">done</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endfunc %}
+
+{% func (p *Queue) Title() %}Admin Queue{% endfunc %}
