@@ -1,6 +1,7 @@
 package main
 
 //go:generate fileb0x b0x.yaml
+//go:generate ffjson model/truck.go
 
 import (
 	"encoding/gob"

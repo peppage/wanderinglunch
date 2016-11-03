@@ -12,9 +12,6 @@ import:
 - package: github.com/rifflock/lfshook
   subpackages:
   - github.com\rifflock\lfshook
-- package: github.com/sipin/gorazor
-  subpackages:
-  - github.com\sipin\gorazor\gorazor
 - package: github.com/pelletier/go-toml
 - package: github.com/sebest/logrusly
 - package: github.com/segmentio/go-loggly
@@ -28,3 +25,6 @@ import:
   version: dc17d8cc4b7165432d37bd224ae43309f97950a9
 - package: github.com/valyala/quicktemplate
   version: ^20160617.0.0
+- package: github.com/pquerna/ffjson
+  subpackages:
+  - ffjson
