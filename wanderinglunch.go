@@ -217,24 +217,36 @@ func loginHandle(w http.ResponseWriter, r *http.Request) {
 }
 
 func truck(w http.ResponseWriter, r *http.Request) {
+	basePage := getBasePageFromCtx(r)
 	name := chi.URLParam(r, "name")
-	if name != "" {
-		t := data.GetTruck(name)
-		if len(t) > 0 {
-			site, err := data.GetSite(t[0].Site)
-			if err != nil {
-				log.WithFields(log.Fields{
-					"truck": t,
-					"err":   err,
-				}).Error("Failed getting that site")
-				handleError(w, err, http.StatusNotFound)
-				return
-			}
-			w.Write([]byte(view.Truck(site, t)))
-			return
-		}
+	if name == "" {
+		handleError(w, errors.New("No Truck form value name"), http.StatusNotFound)
+		return
 	}
-	handleError(w, errors.New("No Truck form value name"), http.StatusNotFound)
+
+	t := data.GetTruck(name)
+	if len(t) <= 0 {
+		handleError(w, errors.New("No trucks found from get truck"), http.StatusNotFound)
+		return
+	}
+
+	site, err := data.GetSite(t[0].Site)
+	if err != nil {
+		log.WithFields(log.Fields{
+			"truck": t,
+			"err":   err,
+		}).Error("Failed getting that site")
+		handleError(w, err, http.StatusNotFound)
+		return
+	}
+
+	basePage.Site = site
+	p := &view.Truck{
+		BasePage: basePage,
+		Trucks:   t,
+	}
+	view.WritePageTemplate(w, p)
+	return
 }
 
 func root(w http.ResponseWriter, r *http.Request) {

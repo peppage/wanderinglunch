@@ -1,0 +1,89 @@
+{% import (
+    "wanderinglunch/model"
+)%}
+
+{% code
+type Truck struct {
+    BasePage
+    Trucks []*model.Truck
+}
+%}
+
+{% func (p *Truck) Body() %}
+    {% code
+        hasMenu := false 
+    %}
+    <h1>{%s p.Trucks[0].Name %}</h1>
+
+    <h2 class="truck--category">{%s p.Trucks[0].Type %}</h2>
+
+    {% if len(p.Trucks[0].Images) > 0 %}
+        <div style="text-align:center;">
+            <img src="/static/images/foursquare.png">
+
+            {% for _, i := range p.Trucks[0].Images %}
+                {% if i.Menu %}
+                    {% code
+                        hasMenu = true
+                    %}
+                    <div class="gallery">
+                        <a href="https://irs0.4sqi.net/img/general/width960{%s i.Suffix %}">
+                            <img class=""
+                                src="https://irs0.4sqi.net/img/general/500x500{%s i.Suffix %}"
+                                alt="" />
+                        </a>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        {% if len(p.Trucks[0].Images) > 1 || !hasMenu %}
+
+            <h3>{%s p.Trucks[0].Name %} Photos</h3>
+
+            <div class="gallery">
+                {% for _, i := range p.Trucks[0].Images %}
+                    {% if !i.Menu %}
+                        <a href="https://irs0.4sqi.net/img/general/width960{%s i.Suffix %}">
+                            <img class=""
+                                src="https://irs0.4sqi.net/img/general/width100{%s i.Suffix %}"
+                                alt="" />
+                        </a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endif %}
+
+    <h3>{%s p.Trucks[0].Name %} Links</h3>
+    {% if p.Trucks[0].Weburl != "" %}
+        <a href="{%s p.Trucks[0].Weburl %}">Website</a><br>
+    {% endif %}
+    <a href="http://twitter.com/{%s p.Trucks[0].Twitname %}" target="_blank">Twitter</a><br>
+    {% if p.Trucks[0].Foursquare != "" %}
+        <a href="https://foursquare.com/v/{%s p.Trucks[0].Foursquare %}?ref=P1JDYDE13QQDC11VUSA4LV3VV25OTRPHV1WAV5WP3VCE0QUP" target="_blank">Foursquare</a><br>
+    {% endif %}
+
+    <h3>{%s p.Trucks[0].Name %} Location(s) from {%s p.Trucks[0].Updated %}</h3>
+    {% for _, t := range p.Trucks %}
+        <div>{%s t.Location %}</div>
+    {% endfor %}
+    <h3>{%s p.Trucks[0].Name %} Tweets</h3>
+    <ol class="tweetList">
+        {% for i := 0; i <= len(p.Trucks[0].Tweets) && i <= 5; i++ %}
+            {% code
+                tw := p.Trucks[0].Tweets[i]
+            %}
+            <li class="tweetList-tweet">
+                <a href="http://twitter.com/{%s p.Trucks[0].Twitname %}/status/{%v tw.ID %}" target="_blank">
+                    <img src="/static/images/twitter.png" style="height: 20px;">
+                </a>
+                {%s= tw.FomattedText() %}
+                <br>
+                <span class="tweetList-time">{%s tw.PrettyDate() %}
+            </li>
+        {% endfor %}
+    </ol>
+{% endfunc %}
+
+{% func (p *Truck) Title() %} | {%s p.Trucks[0].Name %}{% endfunc %}
