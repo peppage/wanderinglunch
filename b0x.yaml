@@ -67,6 +67,7 @@ custom:
     - "static/images/touch-icon-192x192.png"
     - "static/images/wl.png"
     - "static/images/twitter.png"
+    - "static/images/foursquare.png"
 
     base: "static"
     prefix: ""
