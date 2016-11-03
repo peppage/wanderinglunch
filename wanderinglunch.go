@@ -1,5 +1,7 @@
 package main
 
+//go:generate fileb0x b0x.yaml
+
 import (
 	"encoding/gob"
 	"encoding/json"
@@ -13,6 +15,7 @@ import (
 	"wanderinglunch/session/cookie"
 	"wanderinglunch/settings"
 	"wanderinglunch/settings/toml"
+	"wanderinglunch/static"
 	"wanderinglunch/store"
 	"wanderinglunch/store/datastore"
 	"wanderinglunch/updator"
@@ -86,6 +89,8 @@ func main() {
 		e.Static("/static/", "static")
 
 	*/
+
+	r.Get("/robots.txt", func(w http.ResponseWriter, r *http.Request) { w.Write(static.FileStaticRobotsTxt) })
 
 	r.Get("/", root)
 	r.Get("/:site", root)
