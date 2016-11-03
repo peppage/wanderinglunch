@@ -265,12 +265,19 @@ func login(w http.ResponseWriter, r *http.Request) {
 }
 
 func loginHandle(w http.ResponseWriter, r *http.Request) {
-	u, err := data.VerifyPassword(r.FormValue("email"), r.FormValue("password"))
+	u, err := data.GetUser(r.FormValue("email"))
 	if err != nil {
-		log.WithError(err).Error("failed verifying password")
+		log.WithError(err).Error("failed getting user")
 		handleError(w, err, http.StatusUnauthorized)
 		return
 	}
+
+	if u.ValidatePassword(r.FormValue("password")) {
+		log.Error("Invalid password")
+		handleError(w, err, http.StatusUnauthorized)
+		return
+	}
+
 	log.WithField("user", u).Debug("Login handle user")
 	sessions.SetUser(w, r, u)
 	sessions.SetSite(w, r, "nyc")
