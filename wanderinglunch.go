@@ -145,6 +145,12 @@ func main() {
 		r.Get("/queue/done", queueDone)
 	})
 
+	r.Route("/:site/api", func(r chi.Router) {
+		r.Use(middleware.Throttle(5))
+		r.Use(middleware.Logger)
+		r.Get("/trucks", apiTrucks)
+	})
+
 	r.FileServer("/static", static.HTTP)
 	log.Info("Starting up app " + Version + " " + Build + "on port " + webSettings.HTTPPort())
 	http.ListenAndServe(":"+webSettings.HTTPPort(), r)
