@@ -14,6 +14,7 @@ Page {
     SiteUrlName()
     GTMHead()
     GTMBody()
+    Menu()
 }
 %}
 Page prints a page implementing Page interface.
@@ -37,24 +38,7 @@ Page prints a page implementing Page interface.
 <body>
     {%= p.GTMBody() %}
     <!-- {%= p.BuildInfo()%} -->
-    <header>
-        <div class="grid-1-center">
-            <a href="/{%= p.SiteUrlName() %}"><img src="/static/images/wl.png" alt="logo"></a>
-        </div>
-        <nav class="grid-1-center">
-            <ul>
-                <li>
-                    <a href="/{%= p.SiteUrlName() %}/alltrucks">All Trucks</a>
-                </li>
-                <li>
-                    <a href="/{%= p.SiteUrlName() %}/map">Map</a>
-                </li>
-            </ul>
-        </nav>
-        <div class="grid-1-center">
-            {%= p.AdView() %}
-        </div>
-    </header>
+    {%= p.Menu() %}
     <main class="content">
         <div class="grid-1-center">
             <div class="col-9">
@@ -85,6 +69,8 @@ overriding only certain Page methods
         Build string
         Ad *model.Ad
         Develop bool
+        Admin bool
+        Sites []*model.Site
     }
 %}
 
@@ -120,3 +106,88 @@ overriding only certain Page methods
     {% endif %}
 {% endfunc %}
 {% endstripspace %}
+
+{% func (p *BasePage) Menu() %}
+    <header>
+        <div class="grid-1-center">
+            <a href="/{%s p.Site.Name %}"><img src="/static/images/wl.png" alt="logo"></a>
+        </div>
+        <nav class="grid-1-center">
+            <ul>
+                <li>
+                    <a href="/{%s p.Site.Name %}/alltrucks">All Trucks</a>
+                </li>
+                <li>
+                    <a href="/{%s p.Site.Name %}/map">Map</a>
+                </li>
+                {% if p.Admin %}
+                    <li>
+                        <a href="/admin">Admin</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+            {% if p.Admin %}
+            <nav class="grid-1-center">
+                <ul>
+                    <li>
+                        <a href="/admin/truck/add">Add Truck</a>
+                    </li>
+                    <li>
+                        <a href="/admin/sub/add">Add Sub</a>
+                    </li>
+                    <li>
+                        <a href="/admin/ad/add">Add Ad</a>
+                    </li>
+                    <li>
+                        <a href="/admin/location/add">Add Location</a>
+                    </li>
+                    <li>
+                        <a href="/admin/site/add">Add Site</a>
+                    </li>
+                </ul>
+            </nav>
+            <nav class="grid-1-center">
+                <ul>
+                    <li>
+                        <a href="/admin/trucks">Trucks</a>
+                    </li>
+                    <li>
+                        <a href="/admin/subs">Subs</a>
+                    </li>
+                    <li>
+                        <a href="/admin/ads">Ads</a>
+                    </li>
+                    <li>
+                        <a href="/admin/locations">Locations</a>
+                    </li>
+                    <li>
+                        <a href="/admin/sites">Sites</a>
+                    </li>
+                </ul>
+            </nav>
+            <nav class="grid-1-center">
+                <ul>
+                    <li>
+                        <a href="/admin/queue">Queue</a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="grid-1-center">
+                <div class="col-3">
+                    <select class="js-siteSwitch">
+                        <option value="">Select</option>
+                        {% for _, v := range p.Sites %}
+                            <option value="{%s v.Name %}">{%s v.Name %}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        {% endif %}
+        {% if !p.Admin %}
+            <div class="grid-1-center">
+                {%= p.AdView() %}
+            </div>
+        {% endif %}
+    </header>
+{% endfunc %}

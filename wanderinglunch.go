@@ -105,7 +105,10 @@ func main() {
 		r.Use(setBasePage)
 		r.Use(mustUser)
 		r.Use(siteContext)
+		r.Use(setBasePageAdmin)
+		r.Use(setSitesAdmin)
 		r.Get("/", adminRoot)
+		r.Get("/setSite", setSite)
 
 		r.Get("/debug", debug)
 		r.Get("/truck/add", truckNew)

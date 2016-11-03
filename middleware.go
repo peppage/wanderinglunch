@@ -60,3 +60,27 @@ func setBasePage(next http.Handler) http.Handler {
 		next.ServeHTTP(w, r.WithContext(ctx))
 	})
 }
+
+func setBasePageAdmin(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		bp := getBasePageFromCtx(r)
+
+		bp.Admin = true
+
+		ctx := context.WithValue(r.Context(), basePageKey, bp)
+		next.ServeHTTP(w, r.WithContext(ctx))
+	})
+}
+
+func setSitesAdmin(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		bp := getBasePageFromCtx(r)
+
+		sites, _ := data.GetSites()
+
+		bp.Sites = sites
+
+		ctx := context.WithValue(r.Context(), basePageKey, bp)
+		next.ServeHTTP(w, r.WithContext(ctx))
+	})
+}
