@@ -281,34 +281,32 @@ func root(w http.ResponseWriter, r *http.Request) {
 }
 
 func allTrucks(w http.ResponseWriter, r *http.Request) {
-	siteName := chi.URLParam(r, "site")
-	if siteName != "" {
-		site, err := data.GetSite(siteName)
-		if err != nil {
-			log.WithFields(log.Fields{
-				"site": site,
-				"err":  err,
-			}).Error("Failed getting that site")
-			handleError(w, err, http.StatusNotFound)
-			return
-		}
-		trucks, err := data.Trucks(siteName, 500000, "name", "asc", 0)
-		if err != nil {
-			log.WithFields(log.Fields{
-				"err":  err,
-				"site": site,
-			}).Error("Failed getting trucks")
-			handleError(w, err, http.StatusInternalServerError)
-			return
-		}
-		if len(trucks) == 0 {
-			handleError(w, errors.New("No trucks in list"), http.StatusNotFound)
-			return
-		}
-		w.Write([]byte(view.Alltrucks(site, trucks)))
+	basePage := getBasePageFromCtx(r)
+	var site *model.Site
+	if site = getSite(w, r); site == nil {
 		return
 	}
-	http.Redirect(w, r, "/nyc/alltrucks", http.StatusMovedPermanently)
+	basePage.Site = site
+
+	trucks, err := data.Trucks(site.Name, 500000, "name", "asc", 0)
+	if err != nil {
+		log.WithFields(log.Fields{
+			"err":  err,
+			"site": site,
+		}).Error("Failed getting trucks")
+		handleError(w, err, http.StatusInternalServerError)
+		return
+	}
+	if len(trucks) == 0 {
+		handleError(w, errors.New("No trucks in list"), http.StatusNotFound)
+		return
+	}
+
+	p := &view.AllTrucks{
+		BasePage: basePage,
+		Trucks:   trucks,
+	}
+	view.WritePageTemplate(w, p)
 }
 
 func lastUpdate(w http.ResponseWriter, r *http.Request) {

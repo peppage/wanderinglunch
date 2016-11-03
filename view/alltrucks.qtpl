@@ -1,0 +1,55 @@
+{% import (
+    "wanderinglunch/model"
+)%}
+
+{% code
+type AllTrucks struct {
+    BasePage
+    Trucks []*model.Truck
+}
+%}
+
+{% func (p *AllTrucks) Body() %}
+    <table class="table">
+        <thead>
+            <tr class="thead">
+                <th>Truck</th>
+                <th>Location</th>
+                <th class="noMobile">Time</th>
+                <th class="noMobile">Menu</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i, t := range p.Trucks %}
+                {% if i != 0 && p.Trucks[i-1].Twitname == t.Twitname %}
+                    <tr class="noBorder">
+                        <td></td>
+                        <td class="center">{%s t.Location %}</td>
+                        <td class="noMobile"></td>
+                        <td class="noMobile">
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td><a href="/truck/{%s t.Twitname %}">{%s t.Name %}</a></td>
+                        <td class="center">{%s t.Location %}</td>
+                        <td class="noMobile center">{%s t.Updated %}</td>
+                        <td class="noMobile center">
+                            {% if t.Image != "" %}
+                                <div class="gallery">
+                                    <a href="https://irs0.4sqi.net/img/general/width960{%s t.Image %}">
+                                        <img class="menu"
+                                            src="https://irs0.4sqi.net/img/general/width30{%s t.Image %}"
+                                            alt="{%s t.Name %} menu" />
+                                    </a>
+                                </div>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+{% endfunc %}
+
+{% func (p *AllTrucks) Title() %}{%s p.Site.Title %} | All Trucks{% endfunc %}
