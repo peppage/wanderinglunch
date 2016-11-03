@@ -218,7 +218,16 @@ func error404(w http.ResponseWriter, r *http.Request) {
 }
 
 func login(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte(view.Login()))
+	bp := view.BasePage{
+		Version: Version,
+		Build:   Build,
+		Ad:      &model.Ad{},
+		Site:    &model.Site{},
+	}
+	p := &view.Login{
+		BasePage: bp,
+	}
+	view.WritePageTemplate(w, p)
 }
 
 func loginHandle(w http.ResponseWriter, r *http.Request) {
@@ -373,21 +382,16 @@ func maps(w http.ResponseWriter, r *http.Request) {
 }
 
 func feedback(w http.ResponseWriter, r *http.Request) {
-	siteName := chi.URLParam(r, "site")
-	if siteName != "" {
-		site, err := data.GetSite(siteName)
-		if err != nil {
-			log.WithFields(log.Fields{
-				"site": site,
-				"err":  err,
-			}).Error("Failed getting that site")
-			handleError(w, err, http.StatusNotFound)
-			return
-		}
-		w.Write([]byte(view.Feedback(site)))
+	basePage := getBasePageFromCtx(r)
+	var site *model.Site
+	if site = getSite(w, r); site == nil {
 		return
 	}
-	handleError(w, errors.New("I have no idea."), http.StatusBadRequest)
+	basePage.Site = site
+	p := &view.Feedback{
+		BasePage: basePage,
+	}
+	view.WritePageTemplate(w, p)
 }
 
 func sitemap(w http.ResponseWriter, r *http.Request) {
