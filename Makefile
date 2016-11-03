@@ -40,7 +40,8 @@ glide:
 	glide install
 
 clean:
-	find ./view/ -type f -name "*.go" -delete 
+	find ./view/ -type f -name "*.go" -delete
+	find ./model/ -type f -name "*ffjson.go" -delete
 	go clean
 
 run: clean build
