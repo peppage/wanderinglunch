@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"net/http"
 	"net/url"
 	"os"
@@ -12,546 +13,435 @@ import (
 	"wanderinglunch/view/admin"
 
 	log "github.com/Sirupsen/logrus"
-	"github.com/labstack/echo"
-	"github.com/peppage/echo-middleware/session"
 	"github.com/peppage/foursquarego"
 )
 
 var clientID = os.Getenv("CLIENT_ID")
 var clientSecret = os.Getenv("CLIENT_SECRET")
 
-func setSite(c echo.Context) error {
-	session := session.Default(c)
-	session.Set("site", c.QueryParam("site"))
-	session.Save()
-	return c.JSON(http.StatusOK, "ok")
+func getSiteFromContext(r *http.Request) *model.Site {
+	ctx := r.Context()
+	return ctx.Value(siteKey).(*model.Site)
 }
 
-func adminRoot(c echo.Context) error {
-	session := session.Default(c)
-	site := session.Get("site").(string)
-	trucks, err := data.GetFailedUpdates(site)
+func setSite(w http.ResponseWriter, r *http.Request) {
+	sessions.SetSite(w, r, r.FormValue("site"))
+	w.Write([]byte("ok"))
+}
+
+func adminRoot(w http.ResponseWriter, r *http.Request) {
+	s := getSiteFromContext(r)
+	trucks, err := data.GetFailedUpdates(s.Name)
 	if err != nil {
 		log.WithError(err).Error("Failed getting admin trucks")
+		return
 	}
 
-	s, err := data.GetSite(site)
-	if err != nil {
-		log.WithFields(log.Fields{
-			"err": err,
-		}).Error("Failed getting that site")
-		return echo.NewHTTPError(http.StatusNotFound, "")
-	}
-
-	return c.HTML(http.StatusOK, admin.Index(s, trucks))
+	w.Write([]byte(admin.Index(s, trucks)))
 }
 
-func debug(c echo.Context) error {
-	n := c.QueryParam("twitname")
+func debug(w http.ResponseWriter, r *http.Request) {
+	n := r.FormValue("twitname")
 	if n != "" {
 		texts, _ := updator.GetReplacedStrings(n)
-		return c.HTML(http.StatusOK, admin.Debugshow(n, texts))
+		w.Write([]byte(admin.Debugshow(n, texts)))
+		return
 	}
-	return c.HTML(http.StatusOK, admin.Debug())
+	w.Write([]byte(admin.Debug()))
 }
 
-func truckNew(c echo.Context) error {
-	session := session.Default(c)
-	site := session.Get("site").(string)
-	s, err := data.GetSite(site)
-	if err != nil {
-		log.WithFields(log.Fields{
-			"err": err,
-		}).Error("Failed getting that site")
-		return echo.NewHTTPError(http.StatusNotFound, "")
-	}
+func truckNew(w http.ResponseWriter, r *http.Request) {
+	s := getSiteFromContext(r)
 
 	sites, err := data.GetSites()
 	if err != nil {
 		log.WithError(err).Error("Failed gettings sites")
 	}
-	return c.HTML(http.StatusOK, admin.Truck(s, sites, &model.Truck{}))
+	w.Write([]byte(admin.Truck(s, sites, &model.Truck{})))
 }
 
-func truckSave(c echo.Context) error {
+func truckSave(w http.ResponseWriter, r *http.Request) {
 	err := data.AddTruck(&model.Truck{
-		ID:         strings.ToLower(c.FormValue("twitname")),
-		Name:       c.FormValue("name"),
-		Twitname:   strings.ToLower(c.FormValue("twitname")),
-		Weburl:     c.FormValue("weburl"),
-		Type:       c.FormValue("type"),
-		About:      c.FormValue("about"),
-		Foursquare: c.FormValue("foursquare"),
-		Site:       c.FormValue("site"),
+		ID:         strings.ToLower(r.FormValue("twitname")),
+		Name:       r.FormValue("name"),
+		Twitname:   strings.ToLower(r.FormValue("twitname")),
+		Weburl:     r.FormValue("weburl"),
+		Type:       r.FormValue("type"),
+		About:      r.FormValue("about"),
+		Foursquare: r.FormValue("foursquare"),
+		Site:       r.FormValue("site"),
 	})
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err":  err,
-			"Name": c.FormValue("name"),
+			"Name": r.FormValue("name"),
 		}).Error("Failed adding truck")
-		return echo.NewHTTPError(http.StatusInternalServerError, "")
+		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+		return
 	}
-	return c.Redirect(http.StatusSeeOther, "/admin/truck/add")
+	http.Redirect(w, r, "/admin/truck/add", http.StatusSeeOther)
 }
 
-func subNew(c echo.Context) error {
-	session := session.Default(c)
-	site := session.Get("site").(string)
-	s, err := data.GetSite(site)
-	if err != nil {
-		log.WithFields(log.Fields{
-			"err": err,
-		}).Error("Failed getting that site")
-		return echo.NewHTTPError(http.StatusNotFound, err.Error())
-	}
+func subNew(w http.ResponseWriter, r *http.Request) {
+	s := getSiteFromContext(r)
 
-	return c.HTML(http.StatusOK, admin.Sub(s, &model.Sub{}))
+	w.Write([]byte(admin.Sub(s, &model.Sub{})))
 }
 
-func subSave(c echo.Context) error {
+func subSave(w http.ResponseWriter, r *http.Request) {
 	err := data.AddSub(&model.Sub{
-		Regex:       c.FormValue("regex"),
-		Replacement: c.FormValue("replacement"),
+		Regex:       r.FormValue("regex"),
+		Replacement: r.FormValue("replacement"),
 	})
 	if err != nil {
 		log.WithFields(log.Fields{
-			"regex": c.FormValue("regex"),
+			"regex": r.FormValue("regex"),
 			"err":   err,
 		}).Error("Failed adding sub")
-		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
+		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 	}
-	return c.Redirect(http.StatusSeeOther, "/admin")
+	http.Redirect(w, r, "/admin", http.StatusSeeOther)
 }
 
-func adNew(c echo.Context) error {
-	session := session.Default(c)
-	site := session.Get("site").(string)
-	s, err := data.GetSite(site)
-	if err != nil {
-		log.WithFields(log.Fields{
-			"err": err,
-		}).Error("Failed getting that site")
-		return echo.NewHTTPError(http.StatusNotFound, err.Error())
-	}
+func adNew(w http.ResponseWriter, r *http.Request) {
+	s := getSiteFromContext(r)
 
 	sites, err := data.GetSites()
 	if err != nil {
 		log.WithError(err).Error("Failed gettings sites")
 	}
 
-	return c.HTML(http.StatusOK, admin.Ad(s, sites, &model.Ad{}))
+	w.Write([]byte(admin.Ad(s, sites, &model.Ad{})))
 }
 
-func adSave(c echo.Context) error {
-	i, err := strconv.ParseInt(c.FormValue("validuntil"), 10, 64)
+func adSave(w http.ResponseWriter, r *http.Request) {
+	i, err := strconv.ParseInt(r.FormValue("validuntil"), 10, 64)
 	if err != nil {
 		log.WithError(err).Error("Failed converting validuntil, saving ad")
-		return echo.NewHTTPError(http.StatusBadRequest, "Valid Until NaN")
+		http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
+		return
 	}
 	err = data.AddAd(&model.Ad{
-		Name:       c.FormValue("name"),
-		Value:      c.FormValue("value"),
+		Name:       r.FormValue("name"),
+		Value:      r.FormValue("value"),
 		ValidUntil: i,
-		Site:       c.FormValue("site"),
+		Site:       r.FormValue("site"),
 	})
 	if err != nil {
 		log.WithFields(log.Fields{
-			"name": c.FormValue("name"),
+			"name": r.FormValue("name"),
 			"err":  err,
 		}).Error("Failed adding ad")
-		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
+		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+		return
 	}
-	return c.Redirect(http.StatusSeeOther, "/admin")
+	http.Redirect(w, r, "/admin", http.StatusSeeOther)
 }
 
-func locNew(c echo.Context) error {
-	session := session.Default(c)
-	site := session.Get("site").(string)
-	s, err := data.GetSite(site)
-	if err != nil {
-		log.WithFields(log.Fields{
-			"err": err,
-		}).Error("Failed getting that site")
-		return echo.NewHTTPError(http.StatusNotFound, err.Error())
-	}
+func locNew(w http.ResponseWriter, r *http.Request) {
+	s := getSiteFromContext(r)
 
 	sites, err := data.GetSites()
 	if err != nil {
 		log.WithError(err).Error("Failed gettings sites")
 	}
 
-	zones, err := data.GetZones(site)
+	zones, err := data.GetZones(s.Name)
 	if err != nil {
 		log.WithError(err).Error("Failed gettings zones")
 	}
 
-	return c.HTML(http.StatusOK, admin.Loc(s, sites, zones, &model.Location{}))
+	w.Write([]byte(admin.Loc(s, sites, zones, &model.Location{})))
 }
 
-func locSave(c echo.Context) error {
-	lat, err1 := strconv.ParseFloat(c.FormValue("lat"), 32)
-	long, err2 := strconv.ParseFloat(c.FormValue("long"), 32)
+func locSave(w http.ResponseWriter, r *http.Request) {
+	lat, err1 := strconv.ParseFloat(r.FormValue("lat"), 32)
+	long, err2 := strconv.ParseFloat(r.FormValue("long"), 32)
 	if err1 != nil || err2 != nil {
 		log.WithFields(log.Fields{
 			"err1": err1,
 			"err2": err2,
 		}).Error("Failed converting lat or long, saving loc")
-		return echo.NewHTTPError(http.StatusBadRequest, "lat or long NaN")
+		http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
+		return
 	}
 	err := data.AddLocation(&model.Location{
-		Display: c.FormValue("display"),
-		Matcher: c.FormValue("matcher"),
+		Display: r.FormValue("display"),
+		Matcher: r.FormValue("matcher"),
 		Lat:     float32(lat),
 		Long:    float32(long),
-		Zone:    c.FormValue("zone"),
-		Site:    c.FormValue("site"),
+		Zone:    r.FormValue("zone"),
+		Site:    r.FormValue("site"),
 	})
 	if err != nil {
 		log.WithFields(log.Fields{
-			"display": c.FormValue("display"),
+			"display": r.FormValue("display"),
 			"err":     err,
 		}).Error("Failed adding location")
-		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
+		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+		return
 	}
-	return c.Redirect(http.StatusSeeOther, "/admin/location/add")
+	http.Redirect(w, r, "/admin/location/add", http.StatusSeeOther)
 }
 
-func siteNew(c echo.Context) error {
-	session := session.Default(c)
-	site := session.Get("site").(string)
-	s, err := data.GetSite(site)
-	if err != nil {
-		log.WithFields(log.Fields{
-			"err": err,
-		}).Error("Failed getting that site")
-		return echo.NewHTTPError(http.StatusNotFound, err.Error())
-	}
+func siteNew(w http.ResponseWriter, r *http.Request) {
+	s := getSiteFromContext(r)
 
-	return c.HTML(http.StatusOK, admin.Site(s, &model.Site{}))
+	w.Write([]byte(admin.Site(s, &model.Site{})))
 }
 
-func siteSave(c echo.Context) error {
-	lat, err1 := strconv.ParseFloat(c.FormValue("lat"), 32)
-	long, err2 := strconv.ParseFloat(c.FormValue("long"), 32)
+func siteSave(w http.ResponseWriter, r *http.Request) {
+	lat, err1 := strconv.ParseFloat(r.FormValue("lat"), 32)
+	long, err2 := strconv.ParseFloat(r.FormValue("long"), 32)
 	if err1 != nil || err2 != nil {
 		log.WithFields(log.Fields{
 			"err1": err1,
 			"err2": err2,
 		}).Error("Failed converting lat or long, saving site")
-		return echo.NewHTTPError(http.StatusBadRequest, "lat or long NaN")
+		http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
+		return
 	}
 	err := data.AddSite(&model.Site{
-		Name:        c.FormValue("name"),
-		Title:       c.FormValue("title"),
-		Description: c.FormValue("description"),
+		Name:        r.FormValue("name"),
+		Title:       r.FormValue("title"),
+		Description: r.FormValue("description"),
 		Lat:         float32(lat),
 		Long:        float32(long),
 	})
 	if err != nil {
 		log.WithFields(log.Fields{
-			"name": c.FormValue("name"),
+			"name": r.FormValue("name"),
 			"err":  err,
 		}).Error("Failed adding site")
-		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
+		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+		return
 	}
-	return c.Redirect(http.StatusSeeOther, "/admin")
+	http.Redirect(w, r, "/admin", http.StatusSeeOther)
 }
 
-func aTrucks(c echo.Context) error {
-	session := session.Default(c)
-	site := session.Get("site").(string)
-	s, err := data.GetSite(site)
-	if err != nil {
-		log.WithFields(log.Fields{
-			"err": err,
-		}).Error("Failed getting that site")
-		return echo.NewHTTPError(http.StatusNotFound, err.Error())
-	}
-	trucks, _ := data.AllTrucks(site)
-	return c.HTML(http.StatusOK, admin.Trucks(s, trucks))
+func aTrucks(w http.ResponseWriter, r *http.Request) {
+	s := getSiteFromContext(r)
+	trucks, _ := data.AllTrucks(s.Name)
+	w.Write([]byte(admin.Trucks(s, trucks)))
 }
 
-func truckEdit(c echo.Context) error {
-	session := session.Default(c)
-	site := session.Get("site").(string)
-	s, err := data.GetSite(site)
-	if err != nil {
-		log.WithFields(log.Fields{
-			"err": err,
-		}).Error("Failed getting that site")
-		return echo.NewHTTPError(http.StatusNotFound, "")
-	}
+func truckEdit(w http.ResponseWriter, r *http.Request) {
+	s := getSiteFromContext(r)
 
 	sites, err := data.GetSites()
 	if err != nil {
 		log.WithError(err).Error("Failed gettings sites")
 	}
-	t := data.GetTruck(c.QueryParam("twitname"))
-	return c.HTML(http.StatusOK, admin.Truck(s, sites, t[0]))
+	t := data.GetTruck(r.FormValue("twitname"))
+	w.Write([]byte(admin.Truck(s, sites, t[0])))
 }
 
-func truckUpdate(c echo.Context) error {
+func truckUpdate(w http.ResponseWriter, r *http.Request) {
 	a := false
-	if c.FormValue("archive") != "" && c.FormValue("archive") == "on" {
+	if r.FormValue("archive") != "" && r.FormValue("archive") == "on" {
 		a = true
 	}
 	err := data.UpdateTruck(&model.Truck{
-		ID:         strings.ToLower(c.FormValue("twitname")),
-		Name:       c.FormValue("name"),
-		Twitname:   strings.ToLower(c.FormValue("twitname")),
-		Weburl:     c.FormValue("weburl"),
-		Type:       c.FormValue("type"),
-		About:      c.FormValue("about"),
-		Foursquare: c.FormValue("foursquare"),
+		ID:         strings.ToLower(r.FormValue("twitname")),
+		Name:       r.FormValue("name"),
+		Twitname:   strings.ToLower(r.FormValue("twitname")),
+		Weburl:     r.FormValue("weburl"),
+		Type:       r.FormValue("type"),
+		About:      r.FormValue("about"),
+		Foursquare: r.FormValue("foursquare"),
 		Archive:    a,
-		Site:       c.FormValue("site"),
+		Site:       r.FormValue("site"),
 	})
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err":  err,
-			"Name": c.FormValue("name"),
+			"Name": r.FormValue("name"),
 		}).Error("Failed updating truck")
-		return echo.NewHTTPError(http.StatusInternalServerError, "")
+		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+		return
 	}
-	return c.Redirect(http.StatusSeeOther, "/admin")
+	http.Redirect(w, r, "/admin", http.StatusSeeOther)
 }
 
-func aSubs(c echo.Context) error {
-	session := session.Default(c)
-	site := session.Get("site").(string)
-	s, err := data.GetSite(site)
-	if err != nil {
-		log.WithFields(log.Fields{
-			"err": err,
-		}).Error("Failed getting that site")
-		return echo.NewHTTPError(http.StatusNotFound, err.Error())
-	}
+func aSubs(w http.ResponseWriter, r *http.Request) {
+	s := getSiteFromContext(r)
 	subs, _ := data.GetSubs()
-	return c.HTML(http.StatusOK, admin.Subs(s, subs))
+	w.Write([]byte(admin.Subs(s, subs)))
 }
 
-func subEdit(c echo.Context) error {
-	session := session.Default(c)
-	site := session.Get("site").(string)
-	s, err := data.GetSite(site)
-	if err != nil {
-		log.WithFields(log.Fields{
-			"err": err,
-		}).Error("Failed getting that site")
-		return echo.NewHTTPError(http.StatusNotFound, err.Error())
-	}
-	sub, _ := data.GetSub(c.QueryParam("id"))
-	return c.HTML(http.StatusOK, admin.Sub(s, sub))
+func subEdit(w http.ResponseWriter, r *http.Request) {
+	s := getSiteFromContext(r)
+	sub, _ := data.GetSub(r.FormValue("id"))
+	w.Write([]byte(admin.Sub(s, sub)))
 }
 
-func subUpdate(c echo.Context) error {
-	i, err := strconv.Atoi(c.FormValue("id"))
+func subUpdate(w http.ResponseWriter, r *http.Request) {
+	i, err := strconv.Atoi(r.FormValue("id"))
 	if err != nil {
 		log.WithError(err).Error("Failed converting id, updating sub")
-		return echo.NewHTTPError(http.StatusBadRequest, "id NaN")
+		http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
+		return
 	}
 	err = data.UpdateSub(&model.Sub{
 		ID:          i,
-		Regex:       c.FormValue("regex"),
-		Replacement: c.FormValue("replacement"),
+		Regex:       r.FormValue("regex"),
+		Replacement: r.FormValue("replacement"),
 	})
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err":   err,
-			"Regex": c.FormValue("regex"),
+			"Regex": r.FormValue("regex"),
 		}).Error("Failed updating sub")
-		return echo.NewHTTPError(http.StatusInternalServerError, "")
+		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+		return
 	}
-	return c.Redirect(http.StatusSeeOther, "/admin")
+	http.Redirect(w, r, "/admin", http.StatusSeeOther)
 }
 
-func aAds(c echo.Context) error {
-	session := session.Default(c)
-	site := session.Get("site").(string)
-	s, err := data.GetSite(site)
-	if err != nil {
-		log.WithFields(log.Fields{
-			"err": err,
-		}).Error("Failed getting that site")
-		return echo.NewHTTPError(http.StatusNotFound, err.Error())
-	}
+func aAds(w http.ResponseWriter, r *http.Request) {
+	s := getSiteFromContext(r)
 	ads, _ := data.GetAds()
-	return c.HTML(http.StatusOK, admin.Ads(s, ads))
+	w.Write([]byte(admin.Ads(s, ads)))
 }
 
-func adEdit(c echo.Context) error {
-	session := session.Default(c)
-	site := session.Get("site").(string)
-	s, err := data.GetSite(site)
-	if err != nil {
-		log.WithFields(log.Fields{
-			"err": err,
-		}).Error("Failed getting that site")
-		return echo.NewHTTPError(http.StatusNotFound, err.Error())
-	}
+func adEdit(w http.ResponseWriter, r *http.Request) {
+	s := getSiteFromContext(r)
 
 	sites, err := data.GetSites()
 	if err != nil {
 		log.WithError(err).Error("Failed gettings sites")
 	}
 
-	id, err := strconv.ParseInt(c.QueryParam("id"), 10, 0)
+	id, err := strconv.ParseInt(r.FormValue("id"), 10, 0)
 	if err != nil {
-		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+		http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
+		return
 	}
 	ad, _ := data.GetAd(int(id))
-	return c.HTML(http.StatusOK, admin.Ad(s, sites, ad))
+	w.Write([]byte(admin.Ad(s, sites, ad)))
 }
 
-func adUpdate(c echo.Context) error {
-	i, err := strconv.Atoi(c.FormValue("id"))
+func adUpdate(w http.ResponseWriter, r *http.Request) {
+	i, err := strconv.Atoi(r.FormValue("id"))
 	if err != nil {
 		log.WithError(err).Error("Failed converting id, updating ad")
-		return echo.NewHTTPError(http.StatusBadRequest, "id NaN")
+		http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
+		return
 	}
-	i2, err := strconv.ParseInt(c.FormValue("validuntil"), 10, 64)
+	i2, err := strconv.ParseInt(r.FormValue("validuntil"), 10, 64)
 	if err != nil {
 		log.WithError(err).Error("Failed converting validuntil, saving ad")
-		return echo.NewHTTPError(http.StatusBadRequest, "Valid Until NaN")
+		http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
+		return
 	}
 
 	err = data.UpdateAd(&model.Ad{
 		ID:         i,
-		Name:       c.FormValue("name"),
-		Value:      c.FormValue("value"),
+		Name:       r.FormValue("name"),
+		Value:      r.FormValue("value"),
 		ValidUntil: i2,
-		Site:       c.FormValue("site"),
+		Site:       r.FormValue("site"),
 	})
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err":   err,
-			"Regex": c.FormValue("regex"),
+			"Regex": r.FormValue("regex"),
 		}).Error("Failed updating sub")
-		return echo.NewHTTPError(http.StatusInternalServerError, "")
+		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+		return
 	}
-	return c.Redirect(http.StatusSeeOther, "/admin")
+	http.Redirect(w, r, "/admin", http.StatusSeeOther)
 }
 
-func aLocations(c echo.Context) error {
-	session := session.Default(c)
-	site := session.Get("site").(string)
-	s, err := data.GetSite(site)
-	if err != nil {
-		log.WithFields(log.Fields{
-			"err": err,
-		}).Error("Failed getting that site")
-		return echo.NewHTTPError(http.StatusNotFound, err.Error())
-	}
+func aLocations(w http.ResponseWriter, r *http.Request) {
+	s := getSiteFromContext(r)
 	locations, _ := data.GetLocations()
-	return c.HTML(http.StatusOK, admin.Locs(s, locations[site]))
+	w.Write([]byte(admin.Locs(s, locations[s.Name])))
 }
 
-func locEdit(c echo.Context) error {
-	session := session.Default(c)
-	site := session.Get("site").(string)
-	s, err := data.GetSite(site)
-	if err != nil {
-		log.WithFields(log.Fields{
-			"err": err,
-		}).Error("Failed getting that site")
-		return echo.NewHTTPError(http.StatusNotFound, err.Error())
-	}
+func locEdit(w http.ResponseWriter, r *http.Request) {
+	s := getSiteFromContext(r)
 
 	sites, err := data.GetSites()
 	if err != nil {
 		log.WithError(err).Error("Failed gettings sites")
 	}
 
-	zones, err := data.GetZones(site)
+	zones, err := data.GetZones(s.Name)
 	if err != nil {
 		log.WithError(err).Error("Failed gettings zones")
 	}
 
-	loc, _ := data.GetLocation(c.QueryParam("id"))
-
-	return c.HTML(http.StatusOK, admin.Loc(s, sites, zones, loc))
+	loc, _ := data.GetLocation(r.FormValue("id"))
+	w.Write([]byte(admin.Loc(s, sites, zones, loc)))
 }
 
-func locUpdate(c echo.Context) error {
-	i, err := strconv.Atoi(c.FormValue("id"))
+func locUpdate(w http.ResponseWriter, r *http.Request) {
+	i, err := strconv.Atoi(r.FormValue("id"))
 	if err != nil {
 		log.WithError(err).Error("Failed converting id, updating loc")
-		return echo.NewHTTPError(http.StatusBadRequest, "id NaN")
+		http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
+		return
 	}
 
-	lat, err1 := strconv.ParseFloat(c.FormValue("lat"), 32)
-	long, err2 := strconv.ParseFloat(c.FormValue("long"), 32)
+	lat, err1 := strconv.ParseFloat(r.FormValue("lat"), 32)
+	long, err2 := strconv.ParseFloat(r.FormValue("long"), 32)
 	if err1 != nil || err2 != nil {
 		log.WithFields(log.Fields{
 			"err1": err1,
 			"err2": err2,
 		}).Error("Failed converting lat or long, saving loc")
-		return echo.NewHTTPError(http.StatusBadRequest, "lat or long NaN")
+		http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
+		return
 	}
 
 	err = data.UpdateLocation(&model.Location{
 		ID:      i,
-		Display: c.FormValue("display"),
-		Matcher: c.FormValue("matcher"),
+		Display: r.FormValue("display"),
+		Matcher: r.FormValue("matcher"),
 		Lat:     float32(lat),
 		Long:    float32(long),
-		Zone:    c.FormValue("zone"),
-		Site:    c.FormValue("site"),
+		Zone:    r.FormValue("zone"),
+		Site:    r.FormValue("site"),
 	})
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err":     err,
-			"Display": c.FormValue("Display"),
+			"Display": r.FormValue("Display"),
 		}).Error("Failed updating location")
-		return echo.NewHTTPError(http.StatusInternalServerError, "")
+		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+		return
 	}
-	return c.Redirect(http.StatusSeeOther, "/admin")
+	http.Redirect(w, r, "/admin", http.StatusSeeOther)
 }
 
-func aSites(c echo.Context) error {
-	session := session.Default(c)
-	site := session.Get("site").(string)
-	s, err := data.GetSite(site)
-	if err != nil {
-		log.WithFields(log.Fields{
-			"err": err,
-		}).Error("Failed getting that site")
-		return echo.NewHTTPError(http.StatusNotFound, err.Error())
-	}
+func aSites(w http.ResponseWriter, r *http.Request) {
+	s := getSiteFromContext(r)
 	sites, _ := data.GetSites()
-	return c.HTML(http.StatusOK, admin.Sites(s, sites))
+	w.Write([]byte(admin.Sites(s, sites)))
 }
 
-func siteEdit(c echo.Context) error {
-	session := session.Default(c)
-	site := session.Get("site").(string)
-	s, err := data.GetSite(site)
-	if err != nil {
-		log.WithFields(log.Fields{
-			"err": err,
-		}).Error("Failed getting that site")
-		return echo.NewHTTPError(http.StatusNotFound, err.Error())
-	}
-
-	thisSite, _ := data.GetSite(c.QueryParam("name"))
-
-	return c.HTML(http.StatusOK, admin.Site(s, thisSite))
+func siteEdit(w http.ResponseWriter, r *http.Request) {
+	s := getSiteFromContext(r)
+	thisSite, _ := data.GetSite(r.FormValue("name"))
+	w.Write([]byte(admin.Site(s, thisSite)))
 }
 
-func siteUpdate(c echo.Context) error {
-	lat, err1 := strconv.ParseFloat(c.FormValue("lat"), 32)
-	long, err2 := strconv.ParseFloat(c.FormValue("long"), 32)
+func siteUpdate(w http.ResponseWriter, r *http.Request) {
+	lat, err1 := strconv.ParseFloat(r.FormValue("lat"), 32)
+	long, err2 := strconv.ParseFloat(r.FormValue("long"), 32)
 	if err1 != nil || err2 != nil {
 		log.WithFields(log.Fields{
 			"err1": err1,
 			"err2": err2,
 		}).Error("Failed converting lat or long, updating site")
-		return echo.NewHTTPError(http.StatusBadRequest, "lat or long NaN")
+		http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
+		return
 	}
 	err := data.UpdateSite(&model.Site{
-		Name:        c.FormValue("name"),
-		Title:       c.FormValue("title"),
-		Description: c.FormValue("description"),
+		Name:        r.FormValue("name"),
+		Title:       r.FormValue("title"),
+		Description: r.FormValue("description"),
 		Lat:         float32(lat),
 		Long:        float32(long),
 	})
@@ -559,124 +449,114 @@ func siteUpdate(c echo.Context) error {
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err":  err,
-			"Name": c.FormValue("name"),
+			"Name": r.FormValue("name"),
 		}).Error("Failed updating site")
-		return echo.NewHTTPError(http.StatusInternalServerError, "")
+		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+		return
 	}
-	return c.Redirect(http.StatusSeeOther, "/admin")
+	http.Redirect(w, r, "/admin", http.StatusSeeOther)
 }
 
-func foursquare(c echo.Context) error {
+func foursquare(w http.ResponseWriter, r *http.Request) {
 	api := foursquarego.NewFoursquareApi(clientID, clientSecret)
 	uv := url.Values{}
 	uv.Set("limit", "200")
-	p, err := api.GetVenuePhotos(c.QueryParam("id"), uv)
+	p, err := api.GetVenuePhotos(r.FormValue("id"), uv)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,
-			"id":  c.QueryParam("id"),
+			"id":  r.FormValue("id"),
 		}).Error("Failed getting foursquare images admin")
-		return echo.NewHTTPError(http.StatusInternalServerError, "")
+		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+		return
 	}
-	return c.JSON(http.StatusOK, p)
+	js, _ := json.Marshal(p)
+	w.Write(js)
 }
 
-func imgAdd(c echo.Context) error {
+func imgAdd(w http.ResponseWriter, r *http.Request) {
 	err := data.AddImage(&model.Image{
-		ID:         c.FormValue("id"),
-		Suffix:     c.FormValue("suffix"),
+		ID:         r.FormValue("id"),
+		Suffix:     r.FormValue("suffix"),
 		Visibility: "public",
-		Twitname:   strings.ToLower(c.FormValue("twitname")),
+		Twitname:   strings.ToLower(r.FormValue("twitname")),
 		Menu:       false,
 	})
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,
-			"ID":  c.FormValue("id"),
+			"ID":  r.FormValue("id"),
 		}).Error("Failed adding image")
-		return echo.NewHTTPError(http.StatusInternalServerError, "")
+		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+		return
 	}
-	return c.String(http.StatusOK, "ok")
+	w.Write([]byte("ok"))
 }
 
-func imgEdit(c echo.Context) error {
-	session := session.Default(c)
-	site := session.Get("site").(string)
-	s, err := data.GetSite(site)
-	if err != nil {
-		log.WithFields(log.Fields{
-			"err": err,
-		}).Error("Failed getting that site")
-		return echo.NewHTTPError(http.StatusNotFound, err.Error())
-	}
-
-	img, _ := data.GetImage(c.QueryParam("id"))
-
-	return c.HTML(http.StatusOK, admin.Image(s, img))
+func imgEdit(w http.ResponseWriter, r *http.Request) {
+	s := getSiteFromContext(r)
+	img, _ := data.GetImage(r.FormValue("id"))
+	w.Write([]byte(admin.Image(s, img)))
 }
 
-func imgUpdate(c echo.Context) error {
+func imgUpdate(w http.ResponseWriter, r *http.Request) {
 	m := false
-	if c.FormValue("menu") != "" && c.FormValue("menu") == "on" {
+	if r.FormValue("menu") != "" && r.FormValue("menu") == "on" {
 		m = true
 	}
 	err := data.UpdateImage(&model.Image{
-		ID:         c.FormValue("id"),
-		Suffix:     c.FormValue("suffix"),
-		Visibility: c.FormValue("visibility"),
-		Twitname:   strings.ToLower(c.FormValue("twitname")),
+		ID:         r.FormValue("id"),
+		Suffix:     r.FormValue("suffix"),
+		Visibility: r.FormValue("visibility"),
+		Twitname:   strings.ToLower(r.FormValue("twitname")),
 		Menu:       m,
 	})
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,
-			"ID":  c.FormValue("id"),
+			"ID":  r.FormValue("id"),
 		}).Error("Failed saving image")
-		return echo.NewHTTPError(http.StatusInternalServerError, "")
+		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+		return
 	}
-	return c.Redirect(http.StatusSeeOther, "/admin/truck/edit?twitname="+c.FormValue("twitname"))
+	http.Redirect(w, r, "/admin/truck/edit?twitname="+r.FormValue("twitname"), http.StatusSeeOther)
 }
 
-func queue(c echo.Context) error {
-	session := session.Default(c)
-	site := session.Get("site").(string)
-	s, err := data.GetSite(site)
-	if err != nil {
-		log.WithFields(log.Fields{
-			"err": err,
-		}).Error("Failed getting that site")
-		return echo.NewHTTPError(http.StatusNotFound, err.Error())
-	}
+func queue(w http.ResponseWriter, r *http.Request) {
+	s := getSiteFromContext(r)
 	t, err := data.GetSiteTweets(s.Name, 20)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,
 		}).Error("Failed getting site tweets")
-		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
+		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+		return
 	}
 	l, err := data.GetLocations()
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,
 		}).Error("Failed getting locations")
-		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
+		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+		return
 	}
 	subs, err := data.GetSubs()
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,
 		}).Error("Failed getting subs")
-		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
+		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+		return
 	}
-	return c.HTML(http.StatusOK, admin.Queue(s, t, l[s.Name], subs))
+	w.Write([]byte(admin.Queue(s, t, l[s.Name], subs)))
 }
 
-func queueDone(c echo.Context) error {
-	err := data.MarkTweetDone(c.QueryParam("id"))
+func queueDone(w http.ResponseWriter, r *http.Request) {
+	err := data.MarkTweetDone(r.FormValue("id"))
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,
 		}).Error("Failed marking tweet done")
 	}
-	return c.Redirect(http.StatusSeeOther, "/admin/queue")
+	http.Redirect(w, r, "/admin/queue", http.StatusSeeOther)
 }

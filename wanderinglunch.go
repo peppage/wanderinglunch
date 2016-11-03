@@ -1,9 +1,16 @@
 package main
 
 import (
+	"encoding/gob"
 	"encoding/json"
+	"errors"
 	"net/http"
+	"os"
+	"path/filepath"
 
+	"wanderinglunch/model"
+	"wanderinglunch/session"
+	"wanderinglunch/session/cookie"
 	"wanderinglunch/settings"
 	"wanderinglunch/settings/toml"
 	"wanderinglunch/store"
@@ -11,17 +18,14 @@ import (
 	"wanderinglunch/updator"
 	"wanderinglunch/view"
 
-	"github.com/labstack/echo/engine/standard"
-	"github.com/peppage/echo-middleware/session"
-
 	log "github.com/Sirupsen/logrus"
-	"github.com/labstack/echo"
-	"github.com/labstack/echo/middleware"
+	"github.com/pressly/chi"
+	"github.com/pressly/chi/middleware"
 	"github.com/rifflock/lfshook"
 	"github.com/sebest/logrusly"
 )
 
-var sessionStore session.CookieStore
+var sessions session.Session
 var webSettings settings.Settings
 var data store.Store
 
@@ -32,9 +36,10 @@ var Version string
 var Build string
 
 func init() {
+	gob.Register(&model.User{})
 
 	webSettings = toml.New("conf.toml")
-	sessionStore = session.NewCookieStore([]byte(webSettings.SessionSecret()))
+	sessions = cookie.New(webSettings.SessionSecret())
 	data = datastore.New("pgx", "postgres://mca@localhost:5432/foodtruck") //webSettings.DataSourceName())
 
 	ll, err := log.ParseLevel(webSettings.LogLevel())
@@ -62,121 +67,127 @@ func init() {
 }
 
 func main() {
-	e := echo.New()
-	e.Pre(middleware.RemoveTrailingSlash())
-	e.Use(middleware.BodyLimit("2M"))
-	e.Use(session.Sessions("session", sessionStore))
-	e.Use(middleware.Recover())
-	e.SetHTTPErrorHandler(errorHandler)
+	r := chi.NewRouter()
 
-	e.File("/favicon.ico", "./static/images/favicon.ico")
-	e.File("/robots.txt", "./static/robots.txt")
-	e.File("/touch-icon-192x192.png", "./static/images/touch-icon-192x192.png")
-	e.File("/apple-touch-icon.png", "./static/images/touch-icon-192x192.png")
-	e.File("/apple-touch-icon-precomposed.png", "./static/images/touch-icon-192x192.png")
-	e.File("/apple-touch-icon-120x120.png", "./static/images/touch-icon-192x192.png")
-	e.File("/apple-touch-icon-120x120-precomposed.png", "./static/images/touch-icon-192x192.png")
-	e.File("/BingSiteAuth.xml", "./static/BingSiteAuth.xml")
-	e.Static("/static/", "static")
+	r.Use(middleware.RealIP)
+	r.Use(middleware.Recoverer)
+	r.Use(middleware.CloseNotify)
+	r.Use(middleware.StripSlashes)
 
-	e.GET("/", root)
-	e.GET("/login", login)
-	e.POST("/login", loginHandle)
-	e.GET("/truck/:name", truck)
-	e.GET("/:site", root)
-	e.GET("/alltrucks", allTrucks)
-	e.GET("/:site/alltrucks", allTrucks)
-	e.GET("/:site/lastupdate", lastUpdate)
-	e.GET("/map", maps)
-	e.GET("/:site/map", maps)
-	e.GET("/:site/feedback", feedback)
-	e.GET("/sitemap.txt", sitemap)
+	/*
+		e.File("/favicon.ico", "./static/images/favicon.ico")
+		e.File("/robots.txt", "./static/robots.txt")
+		e.File("/touch-icon-192x192.png", "./static/images/touch-icon-192x192.png")
+		e.File("/apple-touch-icon.png", "./static/images/touch-icon-192x192.png")
+		e.File("/apple-touch-icon-precomposed.png", "./static/images/touch-icon-192x192.png")
+		e.File("/apple-touch-icon-120x120.png", "./static/images/touch-icon-192x192.png")
+		e.File("/apple-touch-icon-120x120-precomposed.png", "./static/images/touch-icon-192x192.png")
+		e.File("/BingSiteAuth.xml", "./static/BingSiteAuth.xml")
+		e.Static("/static/", "static")
 
-	ad := e.Group("/admin")
-	if !webSettings.Develop() {
-		ad.Use(secure())
-	}
-	ad.GET("", adminRoot)
-	ad.GET("/setSite", setSite)
-	ad.GET("/debug", debug)
-	ad.GET("/truck/add", truckNew)
-	ad.POST("/truck/add", truckSave)
-	ad.GET("/sub/add", subNew)
-	ad.POST("/sub/add", subSave)
-	ad.GET("/ad/add", adNew)
-	ad.POST("/ad/add", adSave)
-	ad.GET("/location/add", locNew)
-	ad.POST("/location/add", locSave)
-	ad.GET("/site/add", siteNew)
-	ad.POST("/site/add", siteSave)
+	*/
 
-	ad.GET("/trucks", aTrucks)
-	ad.GET("/truck/edit", truckEdit)
-	ad.POST("/truck/edit", truckUpdate)
-	ad.GET("/subs", aSubs)
-	ad.GET("/sub/edit", subEdit)
-	ad.POST("/sub/edit", subUpdate)
-	ad.GET("/ads", aAds)
-	ad.GET("/ad/edit", adEdit)
-	ad.POST("/ad/edit", adUpdate)
-	ad.GET("/locations", aLocations)
-	ad.GET("/location/edit", locEdit)
-	ad.POST("/location/edit", locUpdate)
-	ad.GET("/sites", aSites)
-	ad.GET("/site/edit", siteEdit)
-	ad.POST("/site/edit", siteUpdate)
-	ad.GET("/foursquare", foursquare)
-	ad.POST("/image/add", imgAdd)
-	ad.GET("/image/edit", imgEdit)
-	ad.POST("/image/edit", imgUpdate)
-	ad.GET("/queue", queue)
-	ad.GET("/queue/done", queueDone)
+	r.Get("/", root)
+	r.Get("/:site", root)
+	r.Get("/login", login)
+	r.Post("/login", loginHandle)
+	r.Get("/truck/:name", truck)
+	r.Get("/alltrucks", allTrucks)
+	r.Get("/:site/alltrucks", allTrucks)
+	r.Get("/:site/lastupdate", lastUpdate)
+	r.Get("/map", maps)
+	r.Get("/:site/map", maps)
+	r.Get("/:site/feedback", feedback)
+	r.Get("/sitemap.txt", sitemap)
+
+	r.Route("/admin", func(r chi.Router) {
+		r.Use(mustUser)
+		r.Use(siteContext)
+		r.Get("/", adminRoot)
+
+		r.Get("/debug", debug)
+		r.Get("/truck/add", truckNew)
+		r.Post("/truck/add", truckSave)
+		r.Get("/sub/add", subNew)
+		r.Post("/sub/add", subSave)
+		r.Get("/ad/add", adNew)
+		r.Post("/ad/add", adSave)
+		r.Get("/location/add", locNew)
+		r.Post("/location/add", locSave)
+		r.Get("/site/add", siteNew)
+		r.Post("/site/add", siteSave)
+
+		r.Get("/trucks", aTrucks)
+		r.Get("/truck/edit", truckEdit)
+		r.Post("/truck/edit", truckUpdate)
+		r.Get("/subs", aSubs)
+		r.Get("/sub/edit", subEdit)
+		r.Post("/sub/edit", subUpdate)
+		r.Get("/ads", aAds)
+		r.Get("/ad/edit", adEdit)
+		r.Post("/ad/edit", adUpdate)
+		r.Get("/locations", aLocations)
+		r.Get("/location/edit", locEdit)
+		r.Post("/location/edit", locUpdate)
+		r.Get("/sites", aSites)
+		r.Get("/site/edit", siteEdit)
+		r.Post("/site/edit", siteUpdate)
+		r.Get("/foursquare", foursquare)
+		r.Post("/image/add", imgAdd)
+		r.Get("/image/edit", imgEdit)
+		r.Post("/image/edit", imgUpdate)
+		r.Get("/queue", queue)
+		r.Get("/queue/done", queueDone)
+
+	})
 
 	log.Info("Starting up app " + Version + " " + Build + "on port " + webSettings.HTTPPort())
-	e.Run(standard.New(":" + webSettings.HTTPPort()))
-
+	workDir, _ := os.Getwd()
+	filesDir := filepath.Join(workDir, "static")
+	r.FileServer("/static", http.Dir(filesDir))
+	http.ListenAndServe(":"+webSettings.HTTPPort(), r)
 }
 
-func errorHandler(err error, c echo.Context) {
-	code := http.StatusInternalServerError
-	msg := http.StatusText(code)
-	if he, ok := err.(*echo.HTTPError); ok {
-		code = he.Code
-		msg = he.Message
-	}
-
-	sites, err2 := data.GetSites()
-	if code == http.StatusNotFound && err2 == nil {
-		c.HTML(code, view.Error404(sites))
+func handleError(w http.ResponseWriter, err error, code int) {
+	if webSettings.Develop() {
+		http.Error(w, err.Error(), code)
 		return
 	}
-	if code == http.StatusUnauthorized && err2 == nil {
-		c.HTML(code, view.Error401(sites))
-		return
+
+	sites, _ := data.GetSites()
+
+	w.WriteHeader(code)
+	switch code {
+	case http.StatusBadRequest:
+		w.Write([]byte("bad request"))
+	case http.StatusNotFound:
+		w.Write([]byte(view.Error404(sites)))
+	case http.StatusUnauthorized:
+		w.Write([]byte(view.Error401(sites)))
+	default:
+		w.Write([]byte("internal server error"))
 	}
-	c.String(code, msg)
-	return
 }
 
-func login(c echo.Context) error {
-	return c.HTML(http.StatusOK, view.Login())
+func login(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte(view.Login()))
 }
 
-func loginHandle(c echo.Context) error {
-	u, err := data.VerifyPassword(c.FormValue("email"), c.FormValue("password"))
+func loginHandle(w http.ResponseWriter, r *http.Request) {
+	u, err := data.VerifyPassword(r.FormValue("email"), r.FormValue("password"))
 	if err != nil {
-		c.Response().Header().Set("Method", "GET")
-		return echo.NewHTTPError(http.StatusUnauthorized) // The user is invalid!
+		log.WithError(err).Error("failed verifying password")
+		handleError(w, err, http.StatusUnauthorized)
+		return
 	}
-	session := session.Default(c)
-	session.Set("user", u.Email)
-	session.Set("site", "nyc")
-	session.Save()
-	return c.Redirect(http.StatusSeeOther, "/admin")
+	log.WithField("user", u).Debug("Login handle user")
+	sessions.SetUser(w, r, u)
+	sessions.SetSite(w, r, "nyc")
+	http.Redirect(w, r, "/admin", http.StatusSeeOther)
 }
 
-func truck(c echo.Context) error {
-	name := c.Param("name")
+func truck(w http.ResponseWriter, r *http.Request) {
+	name := chi.URLParam(r, "name")
 	if name != "" {
 		t := data.GetTruck(name)
 		if len(t) > 0 {
@@ -186,16 +197,18 @@ func truck(c echo.Context) error {
 					"truck": t,
 					"err":   err,
 				}).Error("Failed getting that site")
-				return echo.NewHTTPError(http.StatusNotFound, "")
+				handleError(w, err, http.StatusNotFound)
+				return
 			}
-			return c.HTML(http.StatusOK, view.Truck(site, t))
+			w.Write([]byte(view.Truck(site, t)))
+			return
 		}
 	}
-	return echo.NewHTTPError(http.StatusNotFound, "No truck")
+	handleError(w, errors.New("No Truck form value name"), http.StatusNotFound)
 }
 
-func root(c echo.Context) error {
-	siteName := c.Param("site")
+func root(w http.ResponseWriter, r *http.Request) {
+	siteName := chi.URLParam(r, "site")
 	if siteName != "" {
 		site, err := data.GetSite(siteName)
 		if err != nil {
@@ -203,15 +216,18 @@ func root(c echo.Context) error {
 				"site": siteName,
 				"err":  err,
 			}).Error("Failed getting that site")
-			return echo.NewHTTPError(http.StatusNotFound, "")
+			handleError(w, err, http.StatusNotFound)
+			return
 		}
+
 		trucks, err := data.Trucks(siteName, 8, "lat", "desc", 0)
 		if err != nil {
 			log.WithFields(log.Fields{
 				"err":  err,
 				"site": siteName,
 			}).Error("Failed getting trucks")
-			return echo.NewHTTPError(http.StatusInternalServerError, "Error getting data")
+			handleError(w, err, http.StatusInternalServerError)
+			return
 		}
 
 		zones, err := data.GetZones(siteName)
@@ -220,20 +236,22 @@ func root(c echo.Context) error {
 				"err":  err,
 				"site": siteName,
 			}).Error("Failed getting zones")
-			return echo.NewHTTPError(http.StatusInternalServerError, "Error getting data")
+			handleError(w, err, http.StatusInternalServerError)
+			return
 		}
 
 		lu, err := data.LastUpdate(siteName)
 		if err != nil {
 			log.WithError(err).Error("Unable to retrieve last update")
 		}
-		return c.HTML(http.StatusOK, view.Index(site, zones, trucks, lu))
+		w.Write([]byte(view.Index(site, zones, trucks, lu)))
+		return
 	}
-	return c.Redirect(http.StatusMovedPermanently, "/nyc")
+	http.Redirect(w, r, "/nyc", http.StatusMovedPermanently)
 }
 
-func allTrucks(c echo.Context) error {
-	siteName := c.Param("site")
+func allTrucks(w http.ResponseWriter, r *http.Request) {
+	siteName := chi.URLParam(r, "site")
 	if siteName != "" {
 		site, err := data.GetSite(siteName)
 		if err != nil {
@@ -241,7 +259,8 @@ func allTrucks(c echo.Context) error {
 				"site": site,
 				"err":  err,
 			}).Error("Failed getting that site")
-			return echo.NewHTTPError(http.StatusNotFound, "")
+			handleError(w, err, http.StatusNotFound)
+			return
 		}
 		trucks, err := data.Trucks(siteName, 500000, "name", "asc", 0)
 		if err != nil {
@@ -249,30 +268,36 @@ func allTrucks(c echo.Context) error {
 				"err":  err,
 				"site": site,
 			}).Error("Failed getting trucks")
-			return echo.NewHTTPError(http.StatusInternalServerError, "Error getting data")
+			handleError(w, err, http.StatusInternalServerError)
+			return
 		}
 		if len(trucks) == 0 {
-			return echo.NewHTTPError(http.StatusNotFound, "")
+			handleError(w, errors.New("No trucks in list"), http.StatusNotFound)
+			return
 		}
-		return c.HTML(http.StatusOK, view.Alltrucks(site, trucks))
+		w.Write([]byte(view.Alltrucks(site, trucks)))
+		return
 	}
-	return c.Redirect(http.StatusMovedPermanently, "/nyc/alltrucks")
+	http.Redirect(w, r, "/nyc/alltrucks", http.StatusMovedPermanently)
 }
 
-func lastUpdate(c echo.Context) error {
-	siteName := c.Param("site")
+func lastUpdate(w http.ResponseWriter, r *http.Request) {
+	siteName := chi.URLParam(r, "site")
 	if siteName != "" {
 		lu, err := data.LastUpdate(siteName)
 		if err != nil {
 			log.WithError(err).Error("Unable to retrieve last update")
+			handleError(w, err, http.StatusInternalServerError)
 		}
-		return c.JSON(http.StatusOK, lu)
+		js, _ := json.Marshal(lu)
+		w.Write(js)
+		return
 	}
-	return echo.NewHTTPError(http.StatusBadRequest, "")
+	handleError(w, errors.New("no site name"), http.StatusBadRequest)
 }
 
-func maps(c echo.Context) error {
-	siteName := c.Param("site")
+func maps(w http.ResponseWriter, r *http.Request) {
+	siteName := chi.URLParam(r, "site")
 	if siteName != "" {
 		site, err := data.GetSite(siteName)
 		if err != nil {
@@ -280,17 +305,18 @@ func maps(c echo.Context) error {
 				"site": site,
 				"err":  err,
 			}).Error("Failed getting that site")
-			return echo.NewHTTPError(http.StatusNotFound, "")
+			handleError(w, err, http.StatusNotFound)
 		}
 		m := data.Markers(siteName, 8)
 		mj, _ := json.Marshal(m)
-		return c.HTML(http.StatusOK, view.Map(site, string(mj)))
+		w.Write([]byte(view.Map(site, string(mj))))
+		return
 	}
-	return c.Redirect(http.StatusMovedPermanently, "/nyc/map")
+	http.Redirect(w, r, "/nyc/map", http.StatusMovedPermanently)
 }
 
-func feedback(c echo.Context) error {
-	siteName := c.Param("site")
+func feedback(w http.ResponseWriter, r *http.Request) {
+	siteName := chi.URLParam(r, "site")
 	if siteName != "" {
 		site, err := data.GetSite(siteName)
 		if err != nil {
@@ -298,14 +324,16 @@ func feedback(c echo.Context) error {
 				"site": site,
 				"err":  err,
 			}).Error("Failed getting that site")
-			return echo.NewHTTPError(http.StatusNotFound, "")
+			handleError(w, err, http.StatusNotFound)
+			return
 		}
-		return c.HTML(http.StatusOK, view.Feedback(site))
+		w.Write([]byte(view.Feedback(site)))
+		return
 	}
-	return echo.NewHTTPError(http.StatusBadRequest, "")
+	handleError(w, errors.New("I have no idea."), http.StatusBadRequest)
 }
 
-func sitemap(c echo.Context) error {
+func sitemap(w http.ResponseWriter, r *http.Request) {
 	siteMap := "http://wanderinglunch.com/nyc\n"
 	siteMap += "http://wanderinglunch.com/nyc/map\n"
 	siteMap += "http://wanderinglunch.com/nyc/feedback\n"
@@ -314,5 +342,5 @@ func sitemap(c echo.Context) error {
 		siteMap += "http://wanderinglunch.com/truck/" + t.Twitname + "\n"
 	}
 
-	return c.String(http.StatusOK, siteMap)
+	w.Write([]byte(siteMap))
 }
