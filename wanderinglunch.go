@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
+	"time"
 
 	"wanderinglunch/model"
 	"wanderinglunch/session"
@@ -68,6 +69,7 @@ func init() {
 func main() {
 	r := chi.NewRouter()
 
+	r.Use(setStartTime)
 	r.Use(middleware.RealIP)
 	r.Use(middleware.Recoverer)
 	r.Use(middleware.CloseNotify)
@@ -146,6 +148,11 @@ func main() {
 	r.FileServer("/static", static.HTTP)
 	log.Info("Starting up app " + Version + " " + Build + "on port " + webSettings.HTTPPort())
 	http.ListenAndServe(":"+webSettings.HTTPPort(), r)
+}
+
+func getStartTimeFromtCtx(r *http.Request) *time.Time {
+	ctx := r.Context()
+	return ctx.Value(timeKey).(*time.Time)
 }
 
 func getBasePageFromCtx(r *http.Request) view.BasePage {
@@ -271,6 +278,8 @@ func truck(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	basePage.StartTime = getStartTimeFromtCtx(r)
+
 	t := data.GetTruck(name)
 	if len(t) <= 0 {
 		handleError(w, errors.New("No trucks found from get truck"), http.StatusNotFound)
@@ -304,6 +313,7 @@ func root(w http.ResponseWriter, r *http.Request) {
 	}
 	basePage.Site = site
 	basePage.Ad = getAd(site.Name)
+	basePage.StartTime = getStartTimeFromtCtx(r)
 
 	siteName := basePage.Site.Name
 
@@ -349,6 +359,7 @@ func allTrucks(w http.ResponseWriter, r *http.Request) {
 	}
 	basePage.Site = site
 	basePage.Ad = getAd(site.Name)
+	basePage.StartTime = getStartTimeFromtCtx(r)
 
 	trucks, err := data.Trucks(site.Name, 500000, "name", "asc", 0)
 	if err != nil {
@@ -390,6 +401,7 @@ func maps(w http.ResponseWriter, r *http.Request) {
 	}
 	basePage.Site = site
 	basePage.Ad = getAd(site.Name)
+	basePage.StartTime = getStartTimeFromtCtx(r)
 
 	m := data.Markers(site.Name, 8)
 	mj, _ := json.Marshal(m)

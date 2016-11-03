@@ -3,11 +3,22 @@ package main
 import (
 	"context"
 	"net/http"
+	"time"
 
 	"wanderinglunch/view"
 
 	log "github.com/Sirupsen/logrus"
 )
+
+const timeKey = "_startTime"
+
+func setStartTime(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		now := time.Now()
+		ctx := context.WithValue(r.Context(), timeKey, &now)
+		next.ServeHTTP(w, r.WithContext(ctx))
+	})
+}
 
 func mustUser(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -44,12 +55,13 @@ const basePageKey = "_basePage"
 
 func setBasePage(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		ctx := r.Context()
 		dbp := view.BasePage{
 			Version: Version,
 			Build:   Build,
 			Develop: webSettings.Develop(),
 		}
-		ctx := context.WithValue(r.Context(), basePageKey, dbp)
+		ctx = context.WithValue(ctx, basePageKey, dbp)
 		next.ServeHTTP(w, r.WithContext(ctx))
 	})
 }
