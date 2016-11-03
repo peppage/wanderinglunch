@@ -15,3 +15,13 @@ develop = false
 
 [loggly]
 client_id = ""
+
+[twitter]
+consumer_key = ""
+consumer_secret = ""
+access_token = ""
+access_token_secret = ""
+
+[foursquare]
+client_id = ""
+client_secret = ""

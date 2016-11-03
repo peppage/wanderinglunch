@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"net/http"
 	"net/url"
-	"os"
 	"strconv"
 	"strings"
 
@@ -15,9 +14,6 @@ import (
 	log "github.com/Sirupsen/logrus"
 	"github.com/peppage/foursquarego"
 )
-
-var clientID = os.Getenv("CLIENT_ID")
-var clientSecret = os.Getenv("CLIENT_SECRET")
 
 func getSiteFromContext(r *http.Request) *model.Site {
 	ctx := r.Context()
@@ -619,7 +615,7 @@ func siteUpdate(w http.ResponseWriter, r *http.Request) {
 }
 
 func foursquare(w http.ResponseWriter, r *http.Request) {
-	api := foursquarego.NewFoursquareApi(clientID, clientSecret)
+	api := foursquarego.NewFoursquareApi(webSettings.FoursquareClientID(), webSettings.FoursquareClientSecret())
 	uv := url.Values{}
 	uv.Set("limit", "200")
 	p, err := api.GetVenuePhotos(r.FormValue("id"), uv)

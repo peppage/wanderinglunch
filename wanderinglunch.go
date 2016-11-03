@@ -61,10 +61,7 @@ func init() {
 	}
 
 	if webSettings.RunUpdator() {
-		updateSettings := updator.Settings{
-			Datastore: data,
-		}
-		go updator.Start(updateSettings)
+		go updator.Start(data, webSettings)
 	}
 }
 

@@ -2,12 +2,12 @@ package updator
 
 import (
 	"net/url"
-	"os"
 	"regexp"
 	"strings"
 	"time"
 	mdl "wanderinglunch/model"
 
+	"wanderinglunch/settings"
 	"wanderinglunch/store"
 
 	log "github.com/Sirupsen/logrus"
@@ -16,29 +16,19 @@ import (
 	"github.com/peppage/foursquarego"
 )
 
-var consumerKey = os.Getenv("TWIT_CON_KEY")
-var consumerSecret = os.Getenv("TWIT_CON_SEC")
-var accessToken = os.Getenv("TWIT_ACCESS_TOKEN")
-var accessTokenSecret = os.Getenv("TWIT_ACCESS_SECRET")
-var clientID = os.Getenv("CLIENT_ID")
-var clientSecret = os.Getenv("CLIENT_SECRET")
 var api *anaconda.TwitterApi
 var sqAPI *foursquarego.FoursquareApi
 
 var data store.Store
 
-type Settings struct {
-	Datastore store.Store
-}
+func Start(d store.Store, set settings.Settings) {
 
-func Start(u Settings) {
+	data = d
+	anaconda.SetConsumerKey(set.TwitterConsumerKey())
+	anaconda.SetConsumerSecret(set.TwitterConsumerSecret())
+	api = anaconda.NewTwitterApi(set.TwitterAccessToken(), set.TwitterAccessTokenSecret())
 
-	data = u.Datastore
-	anaconda.SetConsumerKey(consumerKey)
-	anaconda.SetConsumerSecret(consumerSecret)
-	api = anaconda.NewTwitterApi(accessToken, accessTokenSecret)
-
-	sqAPI = foursquarego.NewFoursquareApi(clientID, clientSecret)
+	sqAPI = foursquarego.NewFoursquareApi(set.FoursquareClientID(), set.FoursquareClientSecret())
 
 	gocron.Every(15).Minutes().Do(task)
 	gocron.Every(72).Hours().Do(validatePhotos)
