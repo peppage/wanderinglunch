@@ -10,3 +10,4 @@ view/admin/*.go
 static/site.js
 static/site.css
 vendor/
+ab0x.go
