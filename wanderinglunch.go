@@ -29,6 +29,7 @@ import (
 var sessions session.Session
 var webSettings settings.Settings
 var data store.Store
+var adStack model.AdStack
 
 // Version is autoset from the build script
 var Version string
@@ -182,6 +183,23 @@ func getSite(w http.ResponseWriter, r *http.Request) *model.Site {
 	return site
 }
 
+func getAd(site string) *model.Ad {
+	ad, err := adStack.GetAd(site)
+	if err != nil {
+		ads, err := data.GetAdsForSite(site)
+		if err != nil {
+			return &model.Ad{}
+		}
+		adStack.Fill(ads, site)
+		ad, err := adStack.GetAd(site)
+		if err != nil {
+			return &model.Ad{}
+		}
+		return ad
+	}
+	return ad
+}
+
 func handleError(w http.ResponseWriter, err error, code int) {
 	if webSettings.Develop() {
 		http.Error(w, err.Error(), code)
@@ -288,6 +306,7 @@ func root(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	basePage.Site = site
+	basePage.Ad = getAd(site.Name)
 
 	siteName := basePage.Site.Name
 
@@ -328,9 +347,11 @@ func allTrucks(w http.ResponseWriter, r *http.Request) {
 	basePage := getBasePageFromCtx(r)
 	var site *model.Site
 	if site = getSite(w, r); site == nil {
+		handleError(w, errors.New("Not Found"), http.StatusNotFound)
 		return
 	}
 	basePage.Site = site
+	basePage.Ad = getAd(site.Name)
 
 	trucks, err := data.Trucks(site.Name, 500000, "name", "asc", 0)
 	if err != nil {
@@ -339,10 +360,6 @@ func allTrucks(w http.ResponseWriter, r *http.Request) {
 			"site": site,
 		}).Error("Failed getting trucks")
 		handleError(w, err, http.StatusInternalServerError)
-		return
-	}
-	if len(trucks) == 0 {
-		handleError(w, errors.New("No trucks in list"), http.StatusNotFound)
 		return
 	}
 
@@ -375,6 +392,7 @@ func maps(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	basePage.Site = site
+	basePage.Ad = getAd(site.Name)
 
 	m := data.Markers(site.Name, 8)
 	mj, _ := json.Marshal(m)
@@ -392,7 +410,10 @@ func feedback(w http.ResponseWriter, r *http.Request) {
 	if site = getSite(w, r); site == nil {
 		return
 	}
+
 	basePage.Site = site
+	basePage.Ad = getAd(site.Name)
+
 	p := &view.Feedback{
 		BasePage: basePage,
 	}

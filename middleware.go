@@ -4,7 +4,6 @@ import (
 	"context"
 	"net/http"
 
-	"wanderinglunch/model"
 	"wanderinglunch/view"
 
 	log "github.com/Sirupsen/logrus"
@@ -45,15 +44,9 @@ const basePageKey = "_basePage"
 
 func setBasePage(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		ad := model.Ad{
-			Name:  "test ad",
-			Value: `<a href="#">Ad link</a>`,
-		}
-
 		dbp := view.BasePage{
 			Version: Version,
 			Build:   Build,
-			Ad:      &ad,
 			Develop: webSettings.Develop(),
 		}
 		ctx := context.WithValue(r.Context(), basePageKey, dbp)

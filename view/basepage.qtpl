@@ -78,7 +78,11 @@ overriding only certain Page methods
 {% func (p *BasePage) Body() %}This is a base body{% endfunc %}
 {% func (p *BasePage) BuildInfo() %}{%s p.Version %}{%s p.Build %} {% endfunc %}
 {% func (p *BasePage) Ver() %}{%s p.Version %}{% endfunc %}
-{% func (p *BasePage) AdView() %}{%s= p.Ad.Value %}{% endfunc %}
+{% func (p *BasePage) AdView() %}
+    {% if !p.Admin && !p.Develop %}
+        {%s= p.Ad.Value %}
+    {% endif %}
+{% endfunc %}
 {% func (p *BasePage) Description() %}{%s p.Site.Description %}{% endfunc %}
 {% func (p *BasePage) SiteUrlName() %}{%s p.Site.Name %}{% endfunc %}
 
