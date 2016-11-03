@@ -11,14 +11,13 @@ LDFLAGS=-ldflags "-w -s -X main.Version=${VERSION} -X main.Build=${BUILD}"
 
 default: build
 
-build: vet templates
-	sfbt
+build: vet templates assets
 	go build -v
 
-release: clean vet templates
+release: clean vet templates assets
 	go build ${LDFLAGS} -v
 
-linux: clean vet templates
+linux: clean vet templates assets
 	GOOS=linux GOARCH=amd64 go build ${LDFLAGS} -v
 
 vet:
@@ -26,6 +25,10 @@ vet:
 
 templates:
 	gorazor ./view ./view
+
+assets:
+	sfbt
+	go generate
 
 # https://github.com/golang/lint
 # go get github.com/golang/lint/golint
