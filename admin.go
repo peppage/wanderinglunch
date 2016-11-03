@@ -11,7 +11,6 @@ import (
 	"wanderinglunch/model"
 	"wanderinglunch/updator"
 	"wanderinglunch/view"
-	"wanderinglunch/view/admin"
 
 	log "github.com/Sirupsen/logrus"
 	"github.com/peppage/foursquarego"
@@ -72,13 +71,23 @@ func debug(w http.ResponseWriter, r *http.Request) {
 }
 
 func truckNew(w http.ResponseWriter, r *http.Request) {
-	s := getSiteFromContext(r)
+	s := sessions.GetSite(r)
+	site, _ := data.GetSite(s)
+	basePage := getBasePageFromCtx(r)
+	basePage.Site = site
 
 	sites, err := data.GetSites()
 	if err != nil {
 		log.WithError(err).Error("Failed gettings sites")
 	}
-	w.Write([]byte(admin.Truck(s, sites, &model.Truck{})))
+
+	p := &view.AdminTruck{
+		BasePage: basePage,
+		Sites:    sites,
+		Truck:    &model.Truck{},
+	}
+
+	view.WritePageTemplate(w, p)
 }
 
 func truckSave(w http.ResponseWriter, r *http.Request) {
@@ -104,9 +113,17 @@ func truckSave(w http.ResponseWriter, r *http.Request) {
 }
 
 func subNew(w http.ResponseWriter, r *http.Request) {
-	s := getSiteFromContext(r)
+	s := sessions.GetSite(r)
+	site, _ := data.GetSite(s)
+	basePage := getBasePageFromCtx(r)
+	basePage.Site = site
 
-	w.Write([]byte(admin.Sub(s, &model.Sub{})))
+	p := &view.Sub{
+		BasePage: basePage,
+		Sub:      &model.Sub{},
+	}
+
+	view.WritePageTemplate(w, p)
 }
 
 func subSave(w http.ResponseWriter, r *http.Request) {
@@ -223,9 +240,17 @@ func locSave(w http.ResponseWriter, r *http.Request) {
 }
 
 func siteNew(w http.ResponseWriter, r *http.Request) {
-	s := getSiteFromContext(r)
+	s := sessions.GetSite(r)
+	site, _ := data.GetSite(s)
+	basePage := getBasePageFromCtx(r)
+	basePage.Site = site
 
-	w.Write([]byte(admin.Site(s, &model.Site{})))
+	p := &view.Site{
+		BasePage: basePage,
+		Site:     &model.Site{},
+	}
+
+	view.WritePageTemplate(w, p)
 }
 
 func siteSave(w http.ResponseWriter, r *http.Request) {
@@ -258,20 +283,41 @@ func siteSave(w http.ResponseWriter, r *http.Request) {
 }
 
 func aTrucks(w http.ResponseWriter, r *http.Request) {
-	s := getSiteFromContext(r)
-	trucks, _ := data.AllTrucks(s.Name)
-	w.Write([]byte(admin.Trucks(s, trucks)))
+	s := sessions.GetSite(r)
+	site, _ := data.GetSite(s)
+	basePage := getBasePageFromCtx(r)
+	basePage.Site = site
+
+	trucks, _ := data.AllTrucks(site.Name)
+
+	p := &view.Trucks{
+		BasePage: basePage,
+		Trucks:   trucks,
+	}
+
+	view.WritePageTemplate(w, p)
 }
 
 func truckEdit(w http.ResponseWriter, r *http.Request) {
-	s := getSiteFromContext(r)
+	s := sessions.GetSite(r)
+	site, _ := data.GetSite(s)
+	basePage := getBasePageFromCtx(r)
+	basePage.Site = site
 
 	sites, err := data.GetSites()
 	if err != nil {
 		log.WithError(err).Error("Failed gettings sites")
 	}
+
 	t := data.GetTruck(r.FormValue("twitname"))
-	w.Write([]byte(admin.Truck(s, sites, t[0])))
+
+	p := &view.AdminTruck{
+		BasePage: basePage,
+		Sites:    sites,
+		Truck:    t[0],
+	}
+
+	view.WritePageTemplate(w, p)
 }
 
 func truckUpdate(w http.ResponseWriter, r *http.Request) {
@@ -302,15 +348,35 @@ func truckUpdate(w http.ResponseWriter, r *http.Request) {
 }
 
 func aSubs(w http.ResponseWriter, r *http.Request) {
-	s := getSiteFromContext(r)
+	s := sessions.GetSite(r)
+	site, _ := data.GetSite(s)
+	basePage := getBasePageFromCtx(r)
+	basePage.Site = site
+
 	subs, _ := data.GetSubs()
-	w.Write([]byte(admin.Subs(s, subs)))
+
+	p := &view.Subs{
+		BasePage: basePage,
+		Subs:     subs,
+	}
+
+	view.WritePageTemplate(w, p)
 }
 
 func subEdit(w http.ResponseWriter, r *http.Request) {
-	s := getSiteFromContext(r)
+	s := sessions.GetSite(r)
+	site, _ := data.GetSite(s)
+	basePage := getBasePageFromCtx(r)
+	basePage.Site = site
+
 	sub, _ := data.GetSub(r.FormValue("id"))
-	w.Write([]byte(admin.Sub(s, sub)))
+
+	p := &view.Sub{
+		BasePage: basePage,
+		Sub:      sub,
+	}
+
+	view.WritePageTemplate(w, p)
 }
 
 func subUpdate(w http.ResponseWriter, r *http.Request) {
@@ -491,15 +557,35 @@ func locUpdate(w http.ResponseWriter, r *http.Request) {
 }
 
 func aSites(w http.ResponseWriter, r *http.Request) {
-	s := getSiteFromContext(r)
+	s := sessions.GetSite(r)
+	site, _ := data.GetSite(s)
+	basePage := getBasePageFromCtx(r)
+	basePage.Site = site
+
 	sites, _ := data.GetSites()
-	w.Write([]byte(admin.Sites(s, sites)))
+
+	p := &view.Sites{
+		BasePage: basePage,
+		Sites:    sites,
+	}
+
+	view.WritePageTemplate(w, p)
 }
 
 func siteEdit(w http.ResponseWriter, r *http.Request) {
-	s := getSiteFromContext(r)
+	s := sessions.GetSite(r)
+	site, _ := data.GetSite(s)
+	basePage := getBasePageFromCtx(r)
+	basePage.Site = site
+
 	thisSite, _ := data.GetSite(r.FormValue("name"))
-	w.Write([]byte(admin.Site(s, thisSite)))
+
+	p := &view.Site{
+		BasePage: basePage,
+		Site:     thisSite,
+	}
+
+	view.WritePageTemplate(w, p)
 }
 
 func siteUpdate(w http.ResponseWriter, r *http.Request) {
@@ -569,9 +655,19 @@ func imgAdd(w http.ResponseWriter, r *http.Request) {
 }
 
 func imgEdit(w http.ResponseWriter, r *http.Request) {
-	s := getSiteFromContext(r)
+	s := sessions.GetSite(r)
+	site, _ := data.GetSite(s)
+	basePage := getBasePageFromCtx(r)
+	basePage.Site = site
+
 	img, _ := data.GetImage(r.FormValue("id"))
-	w.Write([]byte(admin.Image(s, img)))
+
+	p := &view.Image{
+		BasePage: basePage,
+		Image:    img,
+	}
+
+	view.WritePageTemplate(w, p)
 }
 
 func imgUpdate(w http.ResponseWriter, r *http.Request) {

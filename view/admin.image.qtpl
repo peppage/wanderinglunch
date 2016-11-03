@@ -1,0 +1,41 @@
+{% import (
+    "wanderinglunch/model"
+)%}
+
+{% code
+type Image struct {
+    BasePage
+    Image *model.Image
+}
+%}
+
+{% func (p *Image) Body() %}
+    <h1>Image</h1>
+    <form method="post">
+        <label>Id</label><br>
+        <input type="text" name="id" value="{%s p.Image.ID %}" readonly><br>
+
+        <label>Suffix</label><br>
+        <input type="text" name="suffix" value="{%s p.Image.Suffix %}" readonly><br>
+
+        <label>Visibility</label><br>
+        <input type="text" name="visibility" value="{%s p.Image.Visibility %}"><br>
+
+        <label>Twitname</label><br>
+        <input type="text" name="twitname" value="{%s p.Image.Twitname %}" readonly><br>
+
+        <label>Menu
+            {% if p.Image.Menu %}
+                <input type="checkbox" name="menu" checked>
+            {% else %}
+                <input type="checkbox" name="menu">
+            {% endif %}
+            
+        </label>
+        <br><br>
+
+        <button type="submit" class="button button--primary">Save</button>
+    </form>
+{% endfunc %}
+
+{% func (p *Image) Title() %} | Admin Image {%s p.Image.ID %}{% endfunc %}

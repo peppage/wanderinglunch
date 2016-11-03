@@ -1,0 +1,60 @@
+{% import (
+    "wanderinglunch/model"
+)%}
+
+{% code
+type Sub struct {
+    BasePage
+    Sub *model.Sub
+}
+%}
+
+{% func (p *Sub) Body() %}
+    <h1>Sub</h1>
+
+    <form method="post">
+        <input type="hidden" name="id" value="{%v p.Sub.ID %}">
+        <label>Regex</label><br>
+        <input type="text" name="regex" value="{%s p.Sub.Regex %}"><br>
+
+        <label>Replacement</label><br>
+        <input type="text" name="replacement" value="{%s p.Sub.Replacement %}"><br>
+        <br><br>
+
+        <button type="submit" class="button button--primary">Save</button>
+    </form>
+{% endfunc %}
+
+{% func (p *Sub) Title() %} | Admin Sub {%s p.Sub.Replacement %}{% endfunc %}
+
+{% code
+type Subs struct {
+    BasePage
+    Subs []*model.Sub
+}
+%}
+
+{% func (p *Subs) Body() %}
+    <h1>Subs</h1>
+    <input type="search" class="js-light-table-filter" data-table="order-table" placeholder="Filter">
+    <table class="table order-table">
+        <thead>
+            <tr>
+                <th>Regex</th>
+                <th>Replacement</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for _, s := range p.Subs %}
+                <tr>
+                    <td><a href="/admin/sub/edit?id={%v s.ID %}">{%s s.Regex %}</a></td>
+                    <td><pre class="sub">{%s s.Replacement %}</pre></td>
+                    <td>delete</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endfunc %}
+
+{% func (p *Subs) Title() %} | Admin Subs{% endfunc %}

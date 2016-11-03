@@ -1,0 +1,128 @@
+{% import (
+    "wanderinglunch/model"
+)%}
+
+{% code
+type AdminTruck struct {
+    BasePage
+    Sites []*model.Site
+    Truck *model.Truck
+}
+%}
+
+{% func (p *AdminTruck) Body() %}
+    <h1>Truck</h1>
+
+    <p>
+        <a href="http://twitter.com/{%s p.Truck.Twitname %}">Twitter</a><br>
+        <a href="{%s p.Truck.Weburl %}">Website</a><br>
+        <a href="http://foursquare.com/v/{%s p.Truck.Foursquare %}">Foursquare</a><br>
+    </p>
+
+    <form method="post">
+        <label>Name</label><br>
+        <input type="text" name="name" value="{%s p.Truck.Name %}"><br>
+
+        <label>Twitname</label><br>
+        <input type="text" name="twitname" value="{%s p.Truck.Twitname %}"><br>
+
+        <label>Web Url</label><br>
+        <input type="text" name="weburl" value="{%s p.Truck.Weburl %}"><br>
+
+        <label>Type</label><br>
+        <input type="text" name="type" value="{%s p.Truck.Type %}"><br>
+
+        <label>About</label><br>
+        <input type="text" name="about" value="{%s p.Truck.About %}"><br>
+
+        <label>Foursquare</label><br>
+        <input type="text" name="foursquare" value="{%s p.Truck.Foursquare %}"><br>
+
+        {% if p.Truck.Archive %}
+            <label><input type="checkbox" name="archive" checked> Archive</label><br>
+        {% else %}
+            <label><input type="checkbox" name="archive"> Archive</label><br>
+        {% endif %}
+
+        <label>Existing Sites</label>
+        <select name="site">
+            {% if p.Truck.Site != "" %}
+                <option value="{%s p.Truck.Site %}">{%s p.Truck.Site %}</option>
+            {% else %}
+                <option value="{%s p.Site.Name %}">{%s p.Site.Name %}</option>
+            {% endif %}
+            {% for _, s := range p.Sites %}
+                <option value="{%s s.Name %}">{%s s.Name %}</option>
+            {% endfor %}
+        </select>
+        <br><br>
+        <button type="submit" class="button button--primary">Save</button>
+    </form>
+    <table class="table">
+            <thead>
+            <th>Image</th>
+            <th>Menu</th>
+            <th></th>
+        </thead>
+        <tbody>
+            {% for _, i := range p.Truck.Images %}
+                <tr>
+                    <td>
+                        <a href="/admin/image/edit?id={%s i.ID %}">
+                            <img src="http://irs0.4sqi.net/img/general/width60{%s i.Suffix %}"><br>
+                        </a>
+                    </td>
+                    <td>
+                        {%v i.Menu %}
+                    </td>
+                    <td>
+                        delete
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <button class="button js-getImages" data-id="{%s p.Truck.Foursquare %}" data-twitname="{%s p.Truck.Twitname %}">Get Images</button>
+    <div class="js-imageHolder">
+    </div>
+{% endfunc %}
+
+{% func (p *AdminTruck) Title() %} | Admin Truck {%s p.Truck.Name %}{% endfunc %}
+
+{% code
+type Trucks struct {
+    BasePage
+    Trucks []*model.Truck
+}
+%}
+
+{% func (p *Trucks) Body() %}
+    <h1>Trucks</h1>
+    <input type="search" class="js-light-table-filter" data-table="order-table" placeholder="Filter">
+    <table class="table order-table">
+        <thead>
+            <tr>
+                <th>Twitname</th>
+                <th>Name</th>
+                <th>Updated</th>
+                <th>Archive</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for _, t := range p.Trucks %}
+                <tr>
+                    <td><a href="/admin/truck/edit?twitname={%s t.Twitname %}">{%s t.Twitname %}</a></td>
+                    <td>{%s t.Name %}</td>
+                    <td>{%s t.Updated %}</td>
+                    <td>
+                        {% if t.Archive %}
+                            <span>Y</span>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endfunc %}
+
+{% func (p *Trucks) Title() %} | Admin Trucks{% endfunc %}
