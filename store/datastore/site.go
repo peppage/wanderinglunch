@@ -10,8 +10,12 @@ func (db *datastore) GetSite(name string) (*model.Site, error) {
 }
 
 func (db *datastore) GetSites() ([]*model.Site, error) {
+	if sites, ok := db.cache.GetSites(); ok {
+		return sites, nil
+	}
 	var sites []*model.Site
 	err := db.Select(&sites, getSitesQuery)
+	db.cache.SetSites(sites)
 	return sites, err
 }
 

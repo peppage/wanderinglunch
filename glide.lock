@@ -1,5 +1,5 @@
-hash: 4e9ead9546b5fe9dc7ed010d088afc5fc20e6d3d4f8b9b48fdf1f7b4ad52d4a6
-updated: 2016-11-14T16:06:13.636504-05:00
+hash: d0d44c120437dbad18ad18d3bb8c29bf4aaecdbc25f92676c3414c04206caf44
+updated: 2016-11-16T18:14:44.9610479-05:00
 imports:
 - name: github.com/azr/backoff
   version: 53511d3c733003985b0b76f733df1f4d0095ee6a
@@ -29,6 +29,8 @@ imports:
   subpackages:
   - github.com\jmoiron\sqlx
   - reflectx
+- name: github.com/patrickmn/go-cache
+  version: 1881a9bccb818787f68c52bfba648c6cf34c34fa
 - name: github.com/pelletier/go-buffruneio
   version: df1e16fde7fc330a0ca68167c23bf7ed6ac31d6d
 - name: github.com/pelletier/go-toml
@@ -74,15 +76,13 @@ imports:
 - name: golang.org/x/crypto
   version: 5bcd134fee4dd1475da17714aac19c0aa0142e2f
   subpackages:
+  - bcrypt
   - blowfish
-- name: golang.org/x/crypto/bcrypt
-  version: 5bcd134fee4dd1475da17714aac19c0aa0142e2f
 - name: golang.org/x/net
   version: c4c3ea71919de159c9e246d7be66deb7f0a39a58
   subpackages:
+  - webdav
   - webdav/internal/xml
-- name: golang.org/x/net/webdav
-  version: c4c3ea71919de159c9e246d7be66deb7f0a39a58
 - name: golang.org/x/sys
   version: 076b546753157f758b316e59bcb51e6807c04057
   subpackages:
