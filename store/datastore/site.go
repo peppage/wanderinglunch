@@ -4,8 +4,13 @@ import "wanderinglunch/model"
 
 //GetSite get a site entry from db
 func (db *datastore) GetSite(name string) (*model.Site, error) {
+	if site, ok := db.cache.GetSite(name); ok {
+		return site, nil
+	}
+
 	var s = new(model.Site)
 	err := db.Get(s, getSiteQuery, name)
+	db.cache.SetSite(s)
 	return s, err
 }
 

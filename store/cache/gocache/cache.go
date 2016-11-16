@@ -18,15 +18,28 @@ func New() cache.Cache {
 
 }
 
-const siteKey = "_sites"
+const sitesKey = "_sites"
 
 func (c gocache) GetSites() ([]*model.Site, bool) {
-	if x, found := c.cache.Get(siteKey); found {
+	if x, found := c.cache.Get(sitesKey); found {
 		return x.([]*model.Site), found
 	}
 	return nil, false
 }
 
 func (c gocache) SetSites(sites []*model.Site) {
-	c.cache.Set(siteKey, sites, gcache.DefaultExpiration)
+	c.cache.Set(sitesKey, sites, gcache.DefaultExpiration)
+}
+
+const siteKey = "_site_"
+
+func (c gocache) GetSite(name string) (*model.Site, bool) {
+	if x, found := c.cache.Get(siteKey + name); found {
+		return x.(*model.Site), found
+	}
+	return nil, false
+}
+
+func (c gocache) SetSite(site *model.Site) {
+	c.cache.Set(siteKey+site.Name, site, gcache.DefaultExpiration)
 }
