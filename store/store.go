@@ -5,7 +5,7 @@ import "wanderinglunch/model"
 type Store interface {
 	GetAds() ([]*model.Ad, error)
 	GetAd(int) (*model.Ad, error)
-	GetAdsForSite(string) ([]*model.Ad, error)
+	GetAdForSite(string) (*model.Ad, error)
 	AdsAddView(int) error
 	DeleteAd(int) error
 	AddAd(*model.Ad) error

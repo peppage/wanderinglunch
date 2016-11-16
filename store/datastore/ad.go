@@ -18,12 +18,12 @@ func (db *datastore) GetAd(id int) (*model.Ad, error) {
 	return a, err
 }
 
-// GetAdsForSite gets all the relevant ads for a site, based on time.Now()
-func (db *datastore) GetAdsForSite(siteName string) ([]*model.Ad, error) {
-	ads := []*model.Ad{}
+// GetAdForSite gets the relevant ad for a site, based on time.Now()
+func (db *datastore) GetAdForSite(siteName string) (*model.Ad, error) {
+	var ad = new(model.Ad)
 	now := time.Now().Unix()
-	err := db.Select(&ads, getAdsBySiteQuery, now, siteName)
-	return ads, err
+	err := db.Get(ad, getAdBySiteQuery, now, siteName)
+	return ad, err
 }
 
 func (db *datastore) AdsAddView(id int) error {
@@ -68,12 +68,14 @@ FROM   ads
 WHERE  id = $1 
 `
 
-const getAdsBySiteQuery = `
+const getAdBySiteQuery = `
 SELECT *
 FROM   ads
 WHERE  validuntil > $1
        AND ( site = $2
-              OR site = 'all' ) 
+              OR site = 'all' )
+ORDER BY validuntil
+LIMIT 1
 `
 
 const adsAddViewQuery = `

@@ -31,7 +31,6 @@ import (
 var sessions session.Session
 var webSettings settings.Settings
 var data store.Store
-var adStack model.AdStack
 
 // Version is autoset from the build script
 var Version string
@@ -195,18 +194,10 @@ func getSite(w http.ResponseWriter, r *http.Request) *model.Site {
 }
 
 func getAd(site string) *model.Ad {
-	ad, err := adStack.GetAd(site)
+	ad, err := data.GetAdForSite(site)
 	if err != nil {
-		ads, err := data.GetAdsForSite(site)
-		if err != nil {
-			return &model.Ad{}
-		}
-		adStack.Fill(ads, site)
-		ad, err := adStack.GetAd(site)
-		if err != nil {
-			return &model.Ad{}
-		}
-		return ad
+		log.WithError(err).Error("Failed to get ad")
+		return &model.Ad{}
 	}
 	return ad
 }
