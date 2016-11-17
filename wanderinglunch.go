@@ -285,8 +285,8 @@ func truck(w http.ResponseWriter, r *http.Request) {
 
 	basePage.StartTime = getStartTimeFromtCtx(r)
 
-	t := data.GetTruck(name)
-	if len(t) <= 0 {
+	t, err := data.GetTruck(name)
+	if err != nil || len(t) <= 0 {
 		handleError(w, errors.New("No trucks found from get truck"), http.StatusNotFound)
 		return
 	}

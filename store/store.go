@@ -36,7 +36,7 @@ type Store interface {
 
 	Trucks(string, int, string, string, int) ([]*model.Truck, error)
 	AllTrucks(string) ([]*model.Truck, error)
-	GetTruck(string) []*model.Truck
+	GetTruck(string) ([]*model.Truck, error)
 	GetTwitNames(bool) (map[string][]string, error)
 	UpdateLocs(string, []int, int64) error
 	LastUpdate(string) (int64, error)

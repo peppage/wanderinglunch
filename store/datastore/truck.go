@@ -2,7 +2,6 @@ package datastore
 
 import (
 	"errors"
-	"fmt"
 	"math"
 	"strconv"
 	"time"
@@ -83,11 +82,11 @@ func (db *datastore) AllTrucks(site string) ([]*model.Truck, error) {
 	return trucks, nil
 }
 
-func (db *datastore) GetTruck(id string) []*model.Truck {
+func (db *datastore) GetTruck(id string) ([]*model.Truck, error) {
 	trucks := []*model.Truck{}
 	err := db.Select(&trucks, getTruckQuery, id)
 	if err != nil {
-		fmt.Println(err)
+		return nil, err
 	}
 	if len(trucks) > 0 {
 		trucks[0].Updated = relativeTime(trucks[0].Lastupdate)
@@ -96,7 +95,7 @@ func (db *datastore) GetTruck(id string) []*model.Truck {
 		trucks[0].Images = images
 	}
 
-	return trucks
+	return trucks, nil
 }
 
 // GetTwitNames returns a map, key is site, with a slice of twitnames.

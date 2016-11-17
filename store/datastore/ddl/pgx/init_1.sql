@@ -56,6 +56,22 @@ CREATE TABLE sites (
     long double precision NOT NULL
 );
 
+CREATE TABLE trucks (
+    id text NOT NULL,
+    name text NOT NULL,
+    twitname text NOT NULL,
+    weburl text,
+    tweet text DEFAULT ''::text NOT NULL,
+    retweeted boolean DEFAULT false NOT NULL,
+    lastupdate integer DEFAULT 0 NOT NULL,
+    type text DEFAULT ''::text NOT NULL,
+    about text DEFAULT ''::text NOT NULL,
+    foursquare text,
+    site text NOT NULL,
+    locs bigint[],
+    archive boolean DEFAULT false
+);
+
 -- +migrate Down
 
 DROP TABLE ads;
@@ -65,3 +81,4 @@ DROP TABLE users;
 DROP TABLE subs;
 DROP TABLE locations;
 DROP TABLE sites;
+DROP TABLE trucks;

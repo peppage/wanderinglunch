@@ -285,7 +285,14 @@ func truckEdit(w http.ResponseWriter, r *http.Request) {
 	basePage := getBasePageFromCtx(r)
 	basePage.Site = site
 
-	t := data.GetTruck(r.FormValue("twitname"))
+	t, err := data.GetTruck(r.FormValue("twitname"))
+	if err != nil {
+		log.WithFields(log.Fields{
+			"err":      err,
+			"twitname": r.FormValue("twitname"),
+		}).Error("faield to get truck")
+		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+	}
 
 	p := &view.AdminTruck{
 		BasePage: basePage,
