@@ -38,6 +38,16 @@ CREATE TABLE subs (
     replacement text DEFAULT ''::text
 );
 
+CREATE TABLE locations (
+    id serial NOT NULL,
+    display text NOT NULL,
+    matcher text NOT NULL,
+    lat double precision NOT NULL,
+    long double precision NOT NULL,
+    zone text NOT NULL,
+    site text NOT NULL
+);
+
 -- +migrate Down
 
 DROP TABLE ads;
@@ -45,3 +55,4 @@ DROP TABLE images;
 DROP TABLE tweets;
 DROP TABLE users;
 DROP TABLE subs;
+DROP TABLE locations;

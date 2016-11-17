@@ -20,7 +20,7 @@ type Store interface {
 	GetZones(string) ([]string, error)
 	AddLocation(*model.Location) error
 	UpdateLocation(*model.Location) error
-	GetLocation(string) (*model.Location, error)
+	GetLocation(int) (*model.Location, error)
 
 	Markers(string, int) []*model.Marker
 

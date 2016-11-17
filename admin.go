@@ -478,7 +478,14 @@ func locEdit(w http.ResponseWriter, r *http.Request) {
 		log.WithError(err).Error("Failed gettings zones")
 	}
 
-	loc, _ := data.GetLocation(r.FormValue("id"))
+	id, err := strconv.Atoi(r.FormValue("id"))
+	if err != nil {
+		log.WithError(err).Error("Failed converting id, editing loc")
+		http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
+		return
+	}
+
+	loc, _ := data.GetLocation(id)
 
 	p := &view.Location{
 		BasePage: basePage,

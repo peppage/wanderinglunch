@@ -29,10 +29,16 @@ func (db *datastore) GetZones(site string) ([]string, error) {
 }
 
 func (db *datastore) AddLocation(l *model.Location) error {
+	var lastInsertID int
+
 	if l.Display == "" || l.Matcher == "" || l.Lat == 0 || l.Long == 0 || l.Zone == "" || l.Site == "" {
 		return errors.New("Display, Matcher, Lat, Long, Zone, and Site are required")
 	}
-	_, err := db.NamedExec(addLocationQuery, l)
+
+	err := db.Get(&lastInsertID, addLocationQuery, l.Display, l.Matcher, l.Lat, l.Long, l.Zone, l.Site)
+
+	l.ID = lastInsertID
+
 	return err
 }
 
@@ -44,7 +50,7 @@ func (db *datastore) UpdateLocation(l *model.Location) error {
 	return err
 }
 
-func (db *datastore) GetLocation(id string) (*model.Location, error) {
+func (db *datastore) GetLocation(id int) (*model.Location, error) {
 	var l = new(model.Location)
 	err := db.Get(l, getLocationQuery, id)
 	return l, err
@@ -77,12 +83,13 @@ INSERT INTO locations
              long,
              zone,
              site)
-VALUES      (:display,
-             :matcher,
-             :lat,
-             :long,
-             :zone,
-             :site)
+VALUES      ($1,
+             $2,
+             $3,
+             $4,
+             $5,
+             $6)
+RETURNING id
 `
 
 const updateLocationQuery = `
