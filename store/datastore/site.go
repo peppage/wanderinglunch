@@ -31,6 +31,7 @@ func (db *datastore) AddSite(s *model.Site) error {
 }
 
 func (db *datastore) UpdateSite(s *model.Site) error {
+	db.cache.DelSite(s.Name)
 	_, err := db.NamedExec(updateSitesQuery, s)
 	return err
 }

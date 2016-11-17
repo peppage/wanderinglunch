@@ -48,6 +48,14 @@ CREATE TABLE locations (
     site text NOT NULL
 );
 
+CREATE TABLE sites (
+    name text NOT NULL,
+    title text NOT NULL,
+    description text NOT NULL,
+    lat double precision NOT NULL,
+    long double precision NOT NULL
+);
+
 -- +migrate Down
 
 DROP TABLE ads;
@@ -56,3 +64,4 @@ DROP TABLE tweets;
 DROP TABLE users;
 DROP TABLE subs;
 DROP TABLE locations;
+DROP TABLE sites;

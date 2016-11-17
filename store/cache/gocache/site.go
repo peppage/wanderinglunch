@@ -31,3 +31,7 @@ func (c gocache) GetSite(name string) (*model.Site, bool) {
 func (c gocache) SetSite(site *model.Site) {
 	c.cache.Set(siteKey+site.Name, site, gcache.DefaultExpiration)
 }
+
+func (c gocache) DelSite(name string) {
+	c.cache.Delete(siteKey + name)
+}
