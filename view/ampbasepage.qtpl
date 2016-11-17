@@ -7,7 +7,6 @@ This is a base page template. All the other template pages implement this interf
 AmpPage {
 	Title()
 	Body()
-    Menu()
     OriginalLink()
     AdView()
 }
@@ -85,7 +84,6 @@ AmpPage {
     </style>
 </head>
 <body>
-    {%= p.Menu() %}
     <main class="content">
         <div class="grid-1-center">
             <div class="col-9">
@@ -114,23 +112,6 @@ AmpPage {
 {% func (p *AmpBasePage) Title() %}{%s p.Site.Title %}{% endfunc %}
 {% func (p *AmpBasePage) Body() %}This is a base body{% endfunc %}
 {% func (p *AmpBasePage) OriginalLink() %}{%s p.OriginalURL %}{% endfunc %}
-{% func (p *AmpBasePage) Menu() %}
-    <header>
-        <div class="grid-1-center">
-            <a href="/{%s p.Site.Name %}"><amp-img src="/static/images/wl.png" width="368" height="40" alt="logo" layout="fixed"></amp-img></a>
-        </div>
-        <nav class="grid-1-center">
-            <ul>
-                <li>
-                    <a href="/{%s p.Site.Name %}/alltrucks">All Trucks</a>
-                </li>
-                <li>
-                    <a href="/{%s p.Site.Name %}/map">Map</a>
-                </li>
-            </ul>
-        </nav>
-    </header>
-{% endfunc %}
 {% func (p *AmpBasePage) AdView() %}
     {%s= p.Ad.Value %}
 {% endfunc %}
