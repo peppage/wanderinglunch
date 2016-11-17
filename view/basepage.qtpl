@@ -18,6 +18,7 @@ Page {
     GTMBody()
     Menu()
     Time()
+    AmpLink()
 }
 %}
 Page prints a page implementing Page interface.
@@ -26,11 +27,12 @@ Page prints a page implementing Page interface.
 <html lang="en">
 <head>
     <meta name="description" content="{%= p.Description() %}" />
-    <meta property="og:title" contents="Wandering Lunch: {%= p.Title() %}" />
-    <meta property="og:type" contents="website" />
-    <meta property="og:url" contents="https://wanderinglunch.com/{%= p.SiteUrlName() %}" />
-    <meta property="og:image" contents="https://wanderinglunch.com/static/images/wl.png" />
+    <meta property="og:title" content="Wandering Lunch: {%= p.Title() %}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://wanderinglunch.com/{%= p.SiteUrlName() %}" />
+    <meta property="og:image" content="https://wanderinglunch.com/static/images/wl.png" />
     {%= p.GTMHead() %}
+    {%= p.AmpLink() %}
     <link href="/favicon.ico" rel="shortcut icon">
 	<title>Wandering Lunch: {%= p.Title() %}</title>
     <link rel="stylesheet" href="/static/site.css?v={%= p.Ver() %}">
@@ -79,6 +81,7 @@ overriding only certain Page methods
         Admin bool
         Sites []*model.Site
         StartTime *time.Time
+        AmpURL string
     }
 %}
 
@@ -86,6 +89,15 @@ overriding only certain Page methods
 {% func (p *BasePage) Body() %}This is a base body{% endfunc %}
 {% func (p *BasePage) BuildInfo() %}{%s p.Version %}{%s p.Build %} {% endfunc %}
 {% func (p *BasePage) Ver() %}{%s p.Version %}{% endfunc %}
+
+{% stripspace %}
+{% func (p *BasePage) AmpLink() %}
+    {% if p.AmpURL != "" %}
+        <link rel="amphtml" href="{%s p.AmpURL %}" />
+    {% endif %}
+{% endfunc %}
+{% endstripspace %}
+
 {% func (p *BasePage) AdView() %}
     {% if !p.Admin && !p.Develop %}
         {%s= p.Ad.Value %}

@@ -101,6 +101,7 @@ func main() {
 		r.Get("/sitemap.txt", sitemap)
 		r.Get("/:site/aboutapi", apiIndex)
 
+		r.Get("/:site/amp", ampIndex)
 		r.Get("/truck/:name/amp", ampTruck)
 	})
 
@@ -305,6 +306,7 @@ func truck(w http.ResponseWriter, r *http.Request) {
 	basePage.Site = site
 	basePage.Ad = getAd(site.Name)
 	basePage.StartTime = getStartTimeFromtCtx(r)
+	basePage.AmpURL = "/truck/" + t[0].Twitname + "/amp"
 
 	p := &view.Truck{
 		BasePage: basePage,
@@ -322,6 +324,7 @@ func root(w http.ResponseWriter, r *http.Request) {
 	basePage.Site = site
 	basePage.Ad = getAd(site.Name)
 	basePage.StartTime = getStartTimeFromtCtx(r)
+	basePage.AmpURL = "/" + site.Name + "/amp"
 
 	siteName := basePage.Site.Name
 
