@@ -442,11 +442,11 @@ func sitemap(w http.ResponseWriter, r *http.Request) {
 		siteMap += "http://wanderinglunch.com/" + s.Name + "\n"
 		siteMap += "http://wanderinglunch.com/" + s.Name + "/map\n"
 		siteMap += "http://wanderinglunch.com/" + s.Name + "/feedback\n"
-	}
 
-	trucks, _ := data.AllTrucks("nyc")
-	for _, t := range trucks {
-		siteMap += "http://wanderinglunch.com/truck/" + t.Twitname + "\n"
+		trucks, _ := data.AllTrucks(s.Name)
+		for _, t := range trucks {
+			siteMap += "http://wanderinglunch.com/truck/" + t.Twitname + "\n"
+		}
 	}
 
 	w.Write([]byte(siteMap))
