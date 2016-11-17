@@ -87,7 +87,7 @@ func (suite *AdTestSuite) TestGetAds() {
 	suite.Equal(len(ads), 2)
 }
 
-func (suite *AdTestSuite) TestGetSiteAds() {
+func (suite *AdTestSuite) TestGetSiteAd() {
 	ad1 := model.Ad{
 		Name:       "name1",
 		Value:      "value1",
@@ -105,9 +105,14 @@ func (suite *AdTestSuite) TestGetSiteAds() {
 	suite.data.AddAd(&ad1)
 	suite.data.AddAd(&ad2)
 
-	ads, err := suite.data.GetAdsForSite("nyc")
+	getAd, err := suite.data.GetAdForSite("nyc")
 	suite.Assert().NoError(err, "Failed getting ads for site")
-	suite.Equal(len(ads), 1)
+
+	suite.Equal(ad2.ID, getAd.ID)
+	suite.Equal(ad2.Value, getAd.Value)
+	suite.Equal(ad2.ValidUntil, getAd.ValidUntil)
+	suite.Equal(ad2.Site, getAd.Site)
+	suite.Equal(ad2.Views, getAd.Views)
 }
 
 func (suite *AdTestSuite) TestAddAView() {
