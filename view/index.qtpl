@@ -133,3 +133,18 @@ type Map struct {
 {% endfunc %}
 
 {% func (p *Map) Title() %}{%s p.Site.Title %} | Map{% endfunc %}
+
+{% code
+type ApiIndex struct {
+    BasePage
+}
+%}
+
+{% func (p *ApiIndex) Body() %}
+    <h1>Api documentation</h1>
+    <ul>
+        <li><a href="/{%s p.Site.Name %}/api/trucks"/>/api/trucks</a> - Like the homepage with a json list of trucks that have been updated and their location.
+    </ul>
+{% endfunc %}
+
+{% func (p *ApiIndex) Title() %} | About the API{% endfunc %}

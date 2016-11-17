@@ -1,12 +1,34 @@
 package main
 
 import (
+	"errors"
 	"net/http"
+
+	"wanderinglunch/model"
+	"wanderinglunch/view"
 
 	log "github.com/Sirupsen/logrus"
 	"github.com/pquerna/ffjson/ffjson"
 	"github.com/pressly/chi"
 )
+
+func apiIndex(w http.ResponseWriter, r *http.Request) {
+	basePage := getBasePageFromCtx(r)
+	var site *model.Site
+	if site = getSite(w, r); site == nil {
+		handleError(w, errors.New("Not Found"), http.StatusNotFound)
+		return
+	}
+	basePage.Site = site
+	basePage.Ad = getAd(site.Name)
+	basePage.StartTime = getStartTimeFromtCtx(r)
+
+	p := &view.ApiIndex{
+		BasePage: basePage,
+	}
+
+	view.WritePageTemplate(w, p)
+}
 
 func apiTrucks(w http.ResponseWriter, r *http.Request) {
 	siteName := chi.URLParam(r, "site")

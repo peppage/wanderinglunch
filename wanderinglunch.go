@@ -99,6 +99,7 @@ func main() {
 		r.Get("/:site/map", maps)
 		r.Get("/:site/feedback", feedback)
 		r.Get("/sitemap.txt", sitemap)
+		r.Get("/:site/aboutapi", apiIndex)
 	})
 
 	r.Route("/admin", func(r chi.Router) {
