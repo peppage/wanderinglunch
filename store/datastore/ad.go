@@ -20,9 +20,16 @@ func (db *datastore) GetAd(id int) (*model.Ad, error) {
 
 // GetAdForSite gets the relevant ad for a site, based on time.Now()
 func (db *datastore) GetAdForSite(siteName string) (*model.Ad, error) {
+	if ad, ok := db.cache.GetAd(siteName); ok {
+		return ad, nil
+	}
+
 	var ad = new(model.Ad)
 	now := time.Now().Unix()
 	err := db.Get(ad, getAdBySiteQuery, now, siteName)
+
+	db.cache.SetAd(ad)
+
 	return ad, err
 }
 

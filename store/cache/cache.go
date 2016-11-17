@@ -7,4 +7,7 @@ type Cache interface {
 	SetSites([]*model.Site)
 	GetSite(string) (*model.Site, bool)
 	SetSite(*model.Site)
+
+	GetAd(string) (*model.Ad, bool)
+	SetAd(*model.Ad)
 }
