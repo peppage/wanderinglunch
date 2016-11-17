@@ -124,7 +124,7 @@ type Map struct {
 {% func (p *Map) Body() %}
     <div id="map" style="height:500px"></div>
     <script>
-        var trucks = {%z p.Markers %}
+        var trucks = {%z= p.Markers %}
         var lat = {%v p.Site.Lat %}
         var long = {%v p.Site.Long %}
     </script>
