@@ -1,0 +1,165 @@
+{% import (
+    "wanderinglunch/model"
+)%}
+
+This is a base page template. All the other template pages implement this interface.
+{% interface
+AmpPage {
+	Title()
+	Body()
+    Menu()
+    OriginalLink()
+    AdView()
+}
+%}
+
+{% func AmpPageTemplate(p AmpPage) %}
+<!doctype html>
+<html ⚡>
+<head>
+    <meta charset="utf-8">
+    <title>Wandering Lunch: {%= p.Title() %}</title>
+    <link rel="canonical" href="{%= p.OriginalLink() %}">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+    <script async src="https://cdn.ampproject.org/v0.js"></script>
+    <script async custom-element="amp-ad" src="https://cdn.ampproject.org/v0/amp-ad-0.1.js"></script>
+    <style amp-custom>
+      body {
+            font-size: 14pt;
+            color: #333;
+            font-family: sans-serif;
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+            margin-top: 0;
+            margin-bottom: 0;
+            text-align: center;
+        }
+        nav {
+            direction: ltr;
+        }
+
+        nav ul {
+            margin: 0;
+            list-style: none;
+            overflow: hidden;
+        }
+
+        nav ul li a {
+            display: block;
+            padding: 12px 15px;
+            text-transform: uppercase;
+            font-weight: 400;
+            color: #333;
+            transition: color 500ms ease-out,opacity 500ms ease-out;
+        }
+
+        nav ul li {
+            float: left;
+        }
+
+        nav ul:hover a {
+            opacity: 0.5;
+        }
+
+        nav ul li a:hover {
+            color: #f7972c;
+            opacity: 1;
+            transition: none;
+        }
+        a {
+            color: #48b9a3;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #368e7d;
+        }
+        .content {
+            flex: 1 0 auto;
+        }
+        .truck--category {
+            color: #8d8d8d;
+        }
+    </style>
+</head>
+<body>
+    {%= p.Menu() %}
+    <main class="content">
+        <div class="grid-1-center">
+            <div class="col-9">
+            <amp-ad width="300"
+                height="250"
+                type="adsense"
+                data-ad-client="ca-pub-4098082757736151"
+                data-ad-slot="3902951461">
+            </amp-ad>
+	            {%= p.Body() %}
+            </div>
+        </div>
+    </main>
+</body>
+</html>
+{% endfunc %}
+
+{% code 
+    type AmpBasePage struct {
+        Site *model.Site
+        OriginalURL string
+        Ad *model.Ad
+    }
+%}
+
+{% func (p *AmpBasePage) Title() %}{%s p.Site.Title %}{% endfunc %}
+{% func (p *AmpBasePage) Body() %}This is a base body{% endfunc %}
+{% func (p *AmpBasePage) OriginalLink() %}{%s p.OriginalURL %}{% endfunc %}
+{% func (p *AmpBasePage) Menu() %}
+    <header>
+        <div class="grid-1-center">
+            <a href="/{%s p.Site.Name %}"><amp-img src="/static/images/wl.png" width="368" height="40" alt="logo" layout="fixed"></amp-img></a>
+        </div>
+        <nav class="grid-1-center">
+            <ul>
+                <li>
+                    <a href="/{%s p.Site.Name %}/alltrucks">All Trucks</a>
+                </li>
+                <li>
+                    <a href="/{%s p.Site.Name %}/map">Map</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+{% endfunc %}
+{% func (p *AmpBasePage) AdView() %}
+    {%s= p.Ad.Value %}
+{% endfunc %}
+
+{% code
+type AmpTruck struct {
+    AmpBasePage
+    Trucks []*model.Truck
+}
+%}
+
+{% func (p *AmpTruck) Body() %}
+    <h1>{%s p.Trucks[0].Name %}</h1>
+
+    <h2 class="truck--category">{%s p.Trucks[0].Type %}</h2>
+
+    <h3>{%s p.Trucks[0].Name %} Links</h3>
+    {% if p.Trucks[0].Weburl != "" %}
+        <a href="{%s p.Trucks[0].Weburl %}">Website</a><br>
+    {% endif %}
+    <a href="http://twitter.com/{%s p.Trucks[0].Twitname %}" target="_blank">Twitter</a><br>
+    {% if p.Trucks[0].Foursquare != "" %}
+        <a href="https://foursquare.com/v/{%s p.Trucks[0].Foursquare %}?ref=P1JDYDE13QQDC11VUSA4LV3VV25OTRPHV1WAV5WP3VCE0QUP" target="_blank">Foursquare</a><br>
+    {% endif %}
+
+    {% if p.Trucks[0].Updated != "" %}
+        <h3>{%s p.Trucks[0].Name %} Location(s) from {%s p.Trucks[0].Updated %}</h3>
+        {% for _, t := range p.Trucks %}
+            <div>{%s t.Location %}</div>
+        {% endfor %}
+    {% endif %}
+{% endfunc %}
