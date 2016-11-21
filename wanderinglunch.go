@@ -264,7 +264,7 @@ func loginHandle(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if u.ValidatePassword(r.FormValue("password")) {
+	if !u.ValidatePassword(r.FormValue("password")) {
 		log.Error("Invalid password")
 		handleError(w, err, http.StatusUnauthorized)
 		return
