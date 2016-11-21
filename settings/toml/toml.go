@@ -80,10 +80,6 @@ func New(filename string) settings.Settings {
 		panic("Config requires log_level setting")
 	}
 
-	if !config.Has("server.session_secret") {
-		panic("Config requires session_secret setting")
-	}
-
 	if !config.Has("app.run_updator") {
 		panic("Config requires updator setting")
 	}
@@ -122,7 +118,6 @@ func New(filename string) settings.Settings {
 
 	return &tomlSettings{
 		httpPort:                 config.Get("server.http_port").(string),
-		sessionSecret:            config.Get("server.session_secret").(string),
 		logLevel:                 config.Get("server.log_level").(string),
 		runUpdator:               config.Get("app.run_updator").(bool),
 		develop:                  config.Get("app.develop").(bool),
