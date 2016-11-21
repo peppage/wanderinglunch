@@ -6,6 +6,7 @@ import (
 	"wanderinglunch/model"
 	"wanderinglunch/session"
 
+	"github.com/gorilla/securecookie"
 	"github.com/shawnps/sessions"
 )
 
@@ -15,8 +16,8 @@ type cookieStore struct {
 
 const sessionName = "wl_sess"
 
-func New(secret string) session.Session {
-	store := sessions.NewCookieStore([]byte(secret))
+func New() session.Session {
+	store := sessions.NewCookieStore(securecookie.GenerateRandomKey(32), securecookie.GenerateRandomKey(32))
 	return &cookieStore{
 		store: store,
 	}

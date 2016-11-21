@@ -21,10 +21,6 @@ type tomlSettings struct {
 	foursquareClientSecret   string
 }
 
-func (t *tomlSettings) SessionSecret() string {
-	return t.sessionSecret
-}
-
 func (t *tomlSettings) LogglyID() string {
 	return t.logglyID
 }

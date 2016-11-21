@@ -42,7 +42,7 @@ func init() {
 	gob.Register(&model.User{})
 
 	webSettings = toml.New("conf.toml")
-	sessions = cookie.New(webSettings.SessionSecret())
+	sessions = cookie.New()
 	data = datastore.New("pgx", "postgres://mca@localhost:5432/foodtruck") //webSettings.DataSourceName())
 
 	ll, err := log.ParseLevel(webSettings.LogLevel())
