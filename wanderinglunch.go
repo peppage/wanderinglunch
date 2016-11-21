@@ -386,17 +386,20 @@ func allTrucks(w http.ResponseWriter, r *http.Request) {
 
 func lastUpdate(w http.ResponseWriter, r *http.Request) {
 	siteName := chi.URLParam(r, "site")
-	if siteName != "" {
-		lu, err := data.LastUpdate(siteName)
-		if err != nil {
-			log.WithError(err).Error("Unable to retrieve last update")
-			handleError(w, err, http.StatusInternalServerError)
-		}
-		js, _ := json.Marshal(lu)
-		w.Write(js)
+	if siteName == "" {
+		handleError(w, errors.New("no site name"), http.StatusBadRequest)
 		return
 	}
-	handleError(w, errors.New("no site name"), http.StatusBadRequest)
+
+	lu, err := data.LastUpdate(siteName)
+	if err != nil {
+		log.WithError(err).Error("Unable to retrieve last update")
+		handleError(w, err, http.StatusInternalServerError)
+		return
+	}
+
+	js, _ := json.Marshal(lu)
+	w.Write(js)
 }
 
 func maps(w http.ResponseWriter, r *http.Request) {
