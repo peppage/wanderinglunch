@@ -116,26 +116,30 @@ type Truck struct {
         <a href="https://foursquare.com/v/{%s p.Trucks[0].Foursquare %}?ref=P1JDYDE13QQDC11VUSA4LV3VV25OTRPHV1WAV5WP3VCE0QUP" target="_blank">Foursquare</a><br>
     {% endif %}
 
-    <h3>{%s p.Trucks[0].Name %} Location(s) from {%s p.Trucks[0].Updated %}</h3>
-    {% for _, t := range p.Trucks %}
-        <div>{%s t.Location %}</div>
-    {% endfor %}
-    <h3>{%s p.Trucks[0].Name %} Tweets</h3>
-    <ol class="tweetList">
-        {% for i := 0; i <= len(p.Trucks[0].Tweets) && i <= 5; i++ %}
-            {% code
-                tw := p.Trucks[0].Tweets[i]
-            %}
-            <li class="tweetList-tweet">
-                <a href="http://twitter.com/{%s p.Trucks[0].Twitname %}/status/{%v tw.ID %}" target="_blank">
-                    <img src="/static/images/twitter.png" style="height: 20px;">
-                </a>
-                {%s= tw.FomattedText() %}
-                <br>
-                <span class="tweetList-time">{%s tw.PrettyDate() %}
-            </li>
+    {% if p.Trucks[0].Updated != "" %}
+        <h3>{%s p.Trucks[0].Name %} Location(s) from {%s p.Trucks[0].Updated %}</h3>
+        {% for _, t := range p.Trucks %}
+            <div>{%s t.Location %}</div>
         {% endfor %}
-    </ol>
+    {% endif %}
+    {% if len(p.Trucks[0].Tweets) != 0 %}
+        <h3>{%s p.Trucks[0].Name %} Tweets</h3>
+        <ol class="tweetList">
+            {% for i := 0; i <= len(p.Trucks[0].Tweets) && i <= 5; i++ %}
+                {% code
+                    tw := p.Trucks[0].Tweets[i]
+                %}
+                <li class="tweetList-tweet">
+                    <a href="http://twitter.com/{%s p.Trucks[0].Twitname %}/status/{%v tw.ID %}" target="_blank">
+                        <img src="/static/images/twitter.png" style="height: 20px;">
+                    </a>
+                    {%s= tw.FomattedText() %}
+                    <br>
+                    <span class="tweetList-time">{%s tw.PrettyDate() %}
+                </li>
+            {% endfor %}
+        </ol>
+    {% endif %}
 {% endfunc %}
 
 {% func (p *Truck) Title() %} | {%s p.Trucks[0].Name %}{% endfunc %}
