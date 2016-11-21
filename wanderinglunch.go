@@ -308,7 +308,6 @@ func truck(w http.ResponseWriter, r *http.Request) {
 		Trucks:   t,
 	}
 	view.WritePageTemplate(w, p)
-	return
 }
 
 func root(w http.ResponseWriter, r *http.Request) {
