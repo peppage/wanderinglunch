@@ -125,7 +125,7 @@ type Truck struct {
     {% if len(p.Trucks[0].Tweets) != 0 %}
         <h3>{%s p.Trucks[0].Name %} Tweets</h3>
         <ol class="tweetList">
-            {% for i := 0; i <= len(p.Trucks[0].Tweets) && i <= 5; i++ %}
+            {% for i := 0; i < len(p.Trucks[0].Tweets) && i < 5; i++ %}
                 {% code
                     tw := p.Trucks[0].Tweets[i]
                 %}
