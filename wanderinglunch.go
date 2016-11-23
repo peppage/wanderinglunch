@@ -358,6 +358,11 @@ func root(w http.ResponseWriter, r *http.Request) {
 		Zones:      zones,
 		LastUpdate: lu,
 	}
+
+	w.Header().Add("Link", "</static/site.css?v="+Version+">; rel=preload; as=stylesheet")
+	w.Header().Add("Link", "</static/site.js?v="+Version+">; rel=preload; as=script")
+	w.Header().Add("Link", "</static/images/wl.png>; rel=preload; as=image")
+
 	view.WritePageTemplate(w, p)
 }
 
