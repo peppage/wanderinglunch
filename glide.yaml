@@ -36,3 +36,5 @@ import:
   - simpletransport
 - package: github.com/cenkalti/backoff
   version: ^1.0.0
+- package: github.com/labstack/echo
+  version: ^3.0.3

@@ -4,12 +4,14 @@ package main
 
 import (
 	"encoding/gob"
-	"encoding/json"
-	"errors"
+	"mime"
 	"net/http"
-	"time"
+	"path/filepath"
 
 	"wanderinglunch/model"
+	"wanderinglunch/server/admin"
+	"wanderinglunch/server/api"
+	"wanderinglunch/server/public"
 	"wanderinglunch/session"
 	"wanderinglunch/session/cookie"
 	"wanderinglunch/settings"
@@ -18,11 +20,9 @@ import (
 	"wanderinglunch/store"
 	"wanderinglunch/store/datastore"
 	"wanderinglunch/updator"
-	"wanderinglunch/view"
 
 	log "github.com/Sirupsen/logrus"
-	"github.com/pressly/chi"
-	"github.com/pressly/chi/middleware"
+	"github.com/labstack/echo"
 	"github.com/rifflock/lfshook"
 	"github.com/sebest/logrusly"
 )
@@ -66,401 +66,111 @@ func init() {
 }
 
 func main() {
-	r := chi.NewRouter()
+	e := echo.New()
+	e.Use(setStartTime)
+	e.Use(setBasePage)
 
-	r.Use(setStartTime)
-	r.Use(middleware.RealIP)
-	r.Use(middleware.Recoverer)
-	r.Use(middleware.CloseNotify)
-	r.Use(middleware.StripSlashes)
-	r.NotFound(error404)
+	e.GET("/robotx.txt", serveFile("robots.txt"))
+	e.GET("/favicon.ico", serveFile("images/favicon.ico"))
+	e.GET("/touch-icon-192x192.png", serveFile("images/touch-icon-192x192.png"))
+	e.GET("/apple-touch-icon.png", serveFile("images/touch-icon-192x192.png"))
+	e.GET("/apple-touch-icon-precomposed.png", serveFile("images/touch-icon-192x192.png"))
+	e.GET("/apple-touch-icon-120x120.png", serveFile("images/touch-icon-192x192.png"))
+	e.GET("/apple-touch-icon-120x120-precomposed.png", serveFile("images/touch-icon-192x192.png"))
+	e.GET("/BingSiteAuth.xml", serveFile("BingSiteAuth.xml"))
 
-	r.Get("/robots.txt", serveFile("robots.txt"))
-	r.Get("/favicon.ico", serveFile("images/favicon.ico"))
-	r.Get("/touch-icon-192x192.png", serveFile("images/touch-icon-192x192.png"))
-	r.Get("/apple-touch-icon.png", serveFile("images/touch-icon-192x192.png"))
-	r.Get("/apple-touch-icon-precomposed.png", serveFile("images/touch-icon-192x192.png"))
-	r.Get("/apple-touch-icon-120x120.png", serveFile("images/touch-icon-192x192.png"))
-	r.Get("/apple-touch-icon-120x120-precomposed.png", serveFile("images/touch-icon-192x192.png"))
-	r.Get("/BingSiteAuth.xml", serveFile("BingSiteAuth.xml"))
+	publicServer := &public.Server{
+		Data:        data,
+		BasePageKey: basePageKey,
+		TimeKey:     timeKey,
+		Version:     Version,
+		Build:       Build,
+		Sessions:    sessions,
+	}
 
-	r.Route("/", func(r chi.Router) {
-		r.Use(setBasePage)
-		r.Get("/", root)
-		r.Get("/:site", root)
-		r.Get("/login", login)
-		r.Post("/login", loginHandle)
-		r.Get("/truck/:name", truck)
-		r.Get("/alltrucks", allTrucks)
-		r.Get("/:site/alltrucks", allTrucks)
-		r.Get("/:site/lastupdate", lastUpdate)
-		r.Get("/map", maps)
-		r.Get("/:site/map", maps)
-		r.Get("/:site/feedback", feedback)
-		r.Get("/sitemap.txt", sitemap)
-		r.Get("/:site/aboutapi", apiIndex)
+	e.HTTPErrorHandler = publicServer.HTTPErrorHandler
 
-		r.Get("/:site/amp", ampIndex)
-		r.Get("/truck/:name/amp", ampTruck)
-	})
+	e.GET("/", publicServer.Index)
+	e.GET("/:site", publicServer.Index)
+	e.GET("/login", publicServer.Login)
+	e.POST("/login", publicServer.LoginHandle)
+	e.GET("/truck/:name", publicServer.Truck)
+	e.GET("/alltrucks", publicServer.AllTrucks)
+	e.GET("/:site/alltrucks", publicServer.AllTrucks)
+	e.GET("/:site/lastupdate", publicServer.LastUpdate)
+	e.GET("/map", publicServer.Maps)
+	e.GET("/:site/map", publicServer.Maps)
+	e.GET("/:site/feedback", publicServer.Feedback)
+	e.GET("/sitemap.txt", publicServer.Sitemap)
+	e.GET("/:site/amp", publicServer.AmpIndex)
+	e.GET("/truck/:name/amp", publicServer.AmpTruck)
 
-	r.Route("/admin", func(r chi.Router) {
-		r.Use(setBasePage)
-		r.Use(mustUser)
-		r.Use(siteContext)
-		r.Use(setBasePageAdmin)
-		r.Use(setSitesAdmin)
-		r.Get("/", adminRoot)
-		r.Get("/setSite", setSite)
+	apiServer := &api.Server{
+		Data:        data,
+		BasePageKey: basePageKey,
+		TimeKey:     timeKey,
+	}
 
-		r.Get("/debug", debug)
-		r.Get("/truck/add", truckNew)
-		r.Post("/truck/add", truckSave)
-		r.Get("/sub/add", subNew)
-		r.Post("/sub/add", subSave)
-		r.Get("/ad/add", adNew)
-		r.Post("/ad/add", adSave)
-		r.Get("/location/add", locNew)
-		r.Post("/location/add", locSave)
-		r.Get("/site/add", siteNew)
-		r.Post("/site/add", siteSave)
+	e.GET("/:site/aboutapi", apiServer.Index)
+	apiRouter := e.Group("/api")
+	apiRouter.GET("/trucks", apiServer.Trucks)
 
-		r.Get("/trucks", aTrucks)
-		r.Get("/truck/edit", truckEdit)
-		r.Post("/truck/edit", truckUpdate)
-		r.Get("/subs", aSubs)
-		r.Get("/sub/edit", subEdit)
-		r.Post("/sub/edit", subUpdate)
-		r.Get("/ads", aAds)
-		r.Get("/ad/edit", adEdit)
-		r.Post("/ad/edit", adUpdate)
-		r.Get("/locations", aLocations)
-		r.Get("/location/edit", locEdit)
-		r.Post("/location/edit", locUpdate)
-		r.Get("/sites", aSites)
-		r.Get("/site/edit", siteEdit)
-		r.Post("/site/edit", siteUpdate)
-		r.Get("/foursquare", foursquare)
-		r.Post("/image/add", imgAdd)
-		r.Get("/image/edit", imgEdit)
-		r.Post("/image/edit", imgUpdate)
-		r.Get("/queue", queue)
-		r.Get("/queue/done", queueDone)
-	})
+	adminServer := &admin.Server{
+		Data:                   data,
+		BasePageKey:            basePageKey,
+		FoursquareClientID:     webSettings.FoursquareClientID(),
+		FoursquareClientSecret: webSettings.FoursquareClientSecret(),
+	}
 
-	r.Route("/:site/api", func(r chi.Router) {
-		r.Use(middleware.Throttle(5))
-		r.Use(middleware.Logger)
-		r.Get("/trucks", apiTrucks)
-	})
+	adminRouter := e.Group("/admin")
+	adminRouter.Use(mustUser)
+	adminRouter.Use(siteContext)
+	adminRouter.Use(setBasePageAdmin)
+	adminRouter.Use(setSitesAdmin)
+	adminRouter.GET("/", adminServer.Index)
+	adminRouter.GET("/setSite", adminServer.SetSite)
+	adminRouter.GET("/debug", adminServer.Debug)
+	adminRouter.GET("/truck/add", adminServer.TruckNew)
+	adminRouter.POST("/truck/add", adminServer.TruckSave)
+	adminRouter.GET("/trucks", adminServer.Trucks)
+	adminRouter.GET("/truck/edit", adminServer.TruckEdit)
+	adminRouter.POST("/truck/edit", adminServer.TruckUpdate)
+	adminRouter.GET("/sub/add", adminServer.SubNew)
+	adminRouter.POST("/sub/add", adminServer.SubSave)
+	adminRouter.GET("/subs", adminServer.Subs)
+	adminRouter.GET("/sub/edit", adminServer.SubEdit)
+	adminRouter.POST("/sub/edit", adminServer.SubUpdate)
+	adminRouter.GET("/ad/add", adminServer.AdNew)
+	adminRouter.POST("/ad/add", adminServer.AdSave)
+	adminRouter.GET("/ads", adminServer.Ads)
+	adminRouter.GET("/ad/edit", adminServer.AdEdit)
+	adminRouter.POST("/ad/edit", adminServer.AdUpdate)
+	adminRouter.GET("/location/add", adminServer.LocNew)
+	adminRouter.POST("/location/add", adminServer.LocSave)
+	adminRouter.GET("/locations", adminServer.Locations)
+	adminRouter.GET("/location/edit", adminServer.LocEdit)
+	adminRouter.POST("/location/edit", adminServer.LocUpdate)
+	adminRouter.GET("/site/add", adminServer.SiteNew)
+	adminRouter.POST("/site/add", adminServer.SiteSave)
+	adminRouter.GET("/sites", adminServer.Sites)
+	adminRouter.GET("/site/edit", adminServer.SiteEdit)
+	adminRouter.POST("/site/edit", adminServer.SiteUpdate)
+	adminRouter.GET("/foursquare", adminServer.Foursquare)
+	adminRouter.POST("/image/add", adminServer.ImgAdd)
+	adminRouter.GET("/image/edit", adminServer.ImgEdit)
+	adminRouter.POST("/image/edit", adminServer.ImgUpdate)
+	adminRouter.GET("/queue", adminServer.Queue)
+	adminRouter.GET("/queue/done", adminServer.QueueDone)
 
-	r.FileServer("/static", static.HTTP)
+	e.GET("/static/*", echo.WrapHandler(static.Handler))
+
 	log.Info("Starting up app " + Version + " " + Build + "on port " + webSettings.HTTPPort())
-	http.ListenAndServe(":"+webSettings.HTTPPort(), r)
+	e.Logger.Fatal(e.Start(":" + webSettings.HTTPPort()))
 }
 
-func getStartTimeFromtCtx(r *http.Request) *time.Time {
-	ctx := r.Context()
-	return ctx.Value(timeKey).(*time.Time)
-}
-
-func getBasePageFromCtx(r *http.Request) view.BasePage {
-	ctx := r.Context()
-	return ctx.Value(basePageKey).(view.BasePage)
-}
-
-func serveFile(filename string) http.HandlerFunc {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+func serveFile(filename string) echo.HandlerFunc {
+	return echo.HandlerFunc(func(c echo.Context) error {
 		b, _ := static.ReadFile(filename)
-		w.Write(b)
+		return c.Blob(http.StatusOK, mime.TypeByExtension(filepath.Ext(filename)), b)
 	})
-}
-
-func getSite(w http.ResponseWriter, r *http.Request) *model.Site {
-	siteName := chi.URLParam(r, "site")
-	if siteName == "" {
-		http.Redirect(w, r, "/nyc", http.StatusMovedPermanently)
-		return nil
-	}
-
-	site, err := data.GetSite(siteName)
-	if err != nil {
-		log.WithFields(log.Fields{
-			"site": siteName,
-			"err":  err,
-		}).Error("Failed getting that site")
-		handleError(w, err, http.StatusNotFound)
-		return nil
-	}
-
-	return site
-}
-
-func getAd(site string) *model.Ad {
-	ad, err := data.GetAdForSite(site)
-	if err != nil {
-		log.WithError(err).Error("Failed to get ad")
-		return &model.Ad{}
-	}
-	return ad
-}
-
-func handleError(w http.ResponseWriter, err error, code int) {
-	if webSettings.Develop() {
-		http.Error(w, err.Error(), code)
-		return
-	}
-
-	bp := view.BasePage{
-		Version: Version,
-		Build:   Build,
-		Ad:      &model.Ad{},
-		Site:    &model.Site{},
-		Develop: webSettings.Develop(),
-	}
-	sites, _ := data.GetSites()
-
-	w.WriteHeader(code)
-	switch code {
-	case http.StatusBadRequest:
-		w.Write([]byte("bad request"))
-	case http.StatusNotFound:
-		p := &view.Error404{
-			BasePage: bp,
-			Sites:    sites,
-		}
-		view.WritePageTemplate(w, p)
-	case http.StatusUnauthorized:
-		p := &view.Error401{
-			BasePage: bp,
-			Sites:    sites,
-		}
-		view.WritePageTemplate(w, p)
-	default:
-		w.Write([]byte("internal server error"))
-	}
-}
-
-func error404(w http.ResponseWriter, r *http.Request) {
-	handleError(w, errors.New(http.StatusText(http.StatusNotFound)), http.StatusNotFound)
-}
-
-func login(w http.ResponseWriter, r *http.Request) {
-	bp := view.BasePage{
-		Version: Version,
-		Build:   Build,
-		Ad:      &model.Ad{},
-		Site:    &model.Site{},
-	}
-	p := &view.Login{
-		BasePage: bp,
-	}
-	view.WritePageTemplate(w, p)
-}
-
-func loginHandle(w http.ResponseWriter, r *http.Request) {
-	u, err := data.GetUser(r.FormValue("email"))
-	if err != nil {
-		log.WithError(err).Error("failed getting user")
-		handleError(w, err, http.StatusUnauthorized)
-		return
-	}
-
-	if !u.ValidatePassword(r.FormValue("password")) {
-		log.Error("Invalid password")
-		handleError(w, err, http.StatusUnauthorized)
-		return
-	}
-
-	log.WithField("user", u).Debug("Login handle user")
-	sessions.SetUser(w, r, u)
-	sessions.SetSite(w, r, "nyc")
-	http.Redirect(w, r, "/admin", http.StatusSeeOther)
-}
-
-func truck(w http.ResponseWriter, r *http.Request) {
-	basePage := getBasePageFromCtx(r)
-	name := chi.URLParam(r, "name")
-	if name == "" {
-		handleError(w, errors.New("No Truck form value name"), http.StatusNotFound)
-		return
-	}
-
-	t, err := data.GetTruck(name)
-	if err != nil || len(t) <= 0 {
-		handleError(w, errors.New("No trucks found from get truck"), http.StatusNotFound)
-		return
-	}
-
-	site, err := data.GetSite(t[0].Site)
-	if err != nil {
-		log.WithFields(log.Fields{
-			"truck": t,
-			"err":   err,
-		}).Error("Failed getting that site")
-		handleError(w, err, http.StatusNotFound)
-		return
-	}
-
-	basePage.Site = site
-	basePage.Ad = getAd(site.Name)
-	basePage.StartTime = getStartTimeFromtCtx(r)
-	basePage.AmpURL = "/truck/" + t[0].Twitname + "/amp"
-
-	p := &view.Truck{
-		BasePage: basePage,
-		Trucks:   t,
-	}
-	view.WritePageTemplate(w, p)
-}
-
-func root(w http.ResponseWriter, r *http.Request) {
-	basePage := getBasePageFromCtx(r)
-	var site *model.Site
-	if site = getSite(w, r); site == nil {
-		return
-	}
-	basePage.Site = site
-	basePage.Ad = getAd(site.Name)
-	basePage.StartTime = getStartTimeFromtCtx(r)
-	basePage.AmpURL = "/" + site.Name + "/amp"
-
-	siteName := basePage.Site.Name
-
-	trucks, err := data.Trucks(siteName, 8, "lat", "desc", 0)
-	if err != nil {
-		log.WithFields(log.Fields{
-			"err":  err,
-			"site": siteName,
-		}).Error("Failed getting trucks")
-		handleError(w, err, http.StatusInternalServerError)
-		return
-	}
-
-	zones, err := data.GetZones(siteName)
-	if err != nil {
-		log.WithFields(log.Fields{
-			"err":  err,
-			"site": siteName,
-		}).Error("Failed getting zones")
-		handleError(w, err, http.StatusInternalServerError)
-		return
-	}
-
-	lu, err := data.LastUpdate(siteName)
-	if err != nil {
-		log.WithError(err).Error("Unable to retrieve last update")
-	}
-	p := &view.Root{
-		BasePage:   basePage,
-		Trucks:     trucks,
-		Zones:      zones,
-		LastUpdate: lu,
-	}
-
-	w.Header().Add("Link", "</static/site.css?v="+Version+">; rel=preload; as=stylesheet")
-	w.Header().Add("Link", "</static/site.js?v="+Version+">; rel=preload; as=script")
-	w.Header().Add("Link", "</static/images/wl.png>; rel=preload; as=image")
-
-	view.WritePageTemplate(w, p)
-}
-
-func allTrucks(w http.ResponseWriter, r *http.Request) {
-	basePage := getBasePageFromCtx(r)
-	var site *model.Site
-	if site = getSite(w, r); site == nil {
-		handleError(w, errors.New("Not Found"), http.StatusNotFound)
-		return
-	}
-	basePage.Site = site
-	basePage.Ad = getAd(site.Name)
-	basePage.StartTime = getStartTimeFromtCtx(r)
-
-	trucks, err := data.Trucks(site.Name, 500000, "name", "asc", 0)
-	if err != nil {
-		log.WithFields(log.Fields{
-			"err":  err,
-			"site": site,
-		}).Error("Failed getting trucks")
-		handleError(w, err, http.StatusInternalServerError)
-		return
-	}
-
-	p := &view.AllTrucks{
-		BasePage: basePage,
-		Trucks:   trucks,
-	}
-	view.WritePageTemplate(w, p)
-}
-
-func lastUpdate(w http.ResponseWriter, r *http.Request) {
-	siteName := chi.URLParam(r, "site")
-	if siteName == "" {
-		handleError(w, errors.New("no site name"), http.StatusBadRequest)
-		return
-	}
-
-	lu, err := data.LastUpdate(siteName)
-	if err != nil {
-		log.WithError(err).Error("Unable to retrieve last update")
-		handleError(w, err, http.StatusInternalServerError)
-		return
-	}
-
-	js, _ := json.Marshal(lu)
-	w.Write(js)
-}
-
-func maps(w http.ResponseWriter, r *http.Request) {
-	basePage := getBasePageFromCtx(r)
-	var site *model.Site
-	if site = getSite(w, r); site == nil {
-		return
-	}
-	basePage.Site = site
-	basePage.Ad = getAd(site.Name)
-	basePage.StartTime = getStartTimeFromtCtx(r)
-
-	m := data.Markers(site.Name, 8)
-	mj, _ := json.Marshal(m)
-
-	p := &view.Map{
-		BasePage: basePage,
-		Markers:  mj,
-	}
-	view.WritePageTemplate(w, p)
-}
-
-func feedback(w http.ResponseWriter, r *http.Request) {
-	basePage := getBasePageFromCtx(r)
-	var site *model.Site
-	if site = getSite(w, r); site == nil {
-		return
-	}
-
-	basePage.Site = site
-	basePage.Ad = getAd(site.Name)
-
-	p := &view.Feedback{
-		BasePage: basePage,
-	}
-	view.WritePageTemplate(w, p)
-}
-
-func sitemap(w http.ResponseWriter, r *http.Request) {
-	siteMap := ""
-
-	sites, _ := data.GetSites()
-	for _, s := range sites {
-		siteMap += "http://wanderinglunch.com/" + s.Name + "\n"
-		siteMap += "http://wanderinglunch.com/" + s.Name + "/map\n"
-		siteMap += "http://wanderinglunch.com/" + s.Name + "/feedback\n"
-
-		trucks, _ := data.AllTrucks(s.Name)
-		for _, t := range trucks {
-			siteMap += "http://wanderinglunch.com/truck/" + t.Twitname + "\n"
-		}
-	}
-
-	w.Write([]byte(siteMap))
 }
