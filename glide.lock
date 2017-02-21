@@ -1,31 +1,31 @@
-hash: d0d44c120437dbad18ad18d3bb8c29bf4aaecdbc25f92676c3414c04206caf44
-updated: 2016-11-16T18:14:44.9610479-05:00
+hash: c48ed56af90e5a23c27dadb47d9ac834c29b63f3523a148faccc830f9ae0c49d
+updated: 2017-02-21T15:58:28.874892-05:00
 imports:
-- name: github.com/azr/backoff
-  version: 53511d3c733003985b0b76f733df1f4d0095ee6a
-- name: github.com/ChimeraCoder/tokenbucket
-  version: c5a927568de7aad8a58127d80bcd36ca4e71e454
-- name: github.com/dustin/go-jsonpointer
-  version: 2efc9fef1d9421a8d252a32e20beb10cecd2bbca
-- name: github.com/dustin/gojson
-  version: 2e71ec9dd5adce3b168cd0dbde03b5cc04951c30
-- name: github.com/garyburd/go-oauth
-  version: 719b069913e1151a73ea30d2ea4f90deda3ce234
+- name: github.com/cenkalti/backoff
+  version: 32cd0c5b3aef12c76ed64aaf678f6c79736be7dc
+- name: github.com/dghubble/go-twitter
+  version: fc93bb35701bb85903d17daa80a21a824b9c592f
   subpackages:
-  - oauth
+  - twitter
+- name: github.com/dghubble/sling
+  version: eb56e89ac5088bebb12eef3cb4b293300f43608b
+- name: github.com/google/go-querystring
+  version: 53e6ce116135b80d037921a7fdd5138cf32d7a8a
+  subpackages:
+  - query
 - name: github.com/gorilla/context
-  version: aed02d124ae4a0e94fea4541c8effd05bf0c8296
+  version: 1ea25387ff6f684839d82767c1733ff4d4d15d0a
 - name: github.com/gorilla/securecookie
-  version: ff356348f74133a59d3e93aa24b5b4551b6fe90d
+  version: 667fe4e3466a040b780561fe9b51a83a3753eefc
 - name: github.com/jackc/pgx
-  version: 11e1f70c3229081c7b433ad211753f0546b23ab4
+  version: 2508faa9ced29f4bbb3a39483e4b5ac2627a7c48
   subpackages:
   - github.com\jackc\pgx\stdlib
   - stdlib
 - name: github.com/jasonlvhit/gocron
-  version: 0b564bf03e9665599efbcba1c6fba3d84212c197
+  version: 42a5804d37aa0b9239b265e894a16b8edbf52d54
 - name: github.com/jmoiron/sqlx
-  version: a7f971fe8ea891a1a74ddb40c623f5722e28e8a8
+  version: cac998c4f0959c19c638c523e374fa8e4e0bcfe3
   subpackages:
   - github.com\jmoiron\sqlx
   - reflectx
@@ -34,57 +34,56 @@ imports:
 - name: github.com/pelletier/go-buffruneio
   version: df1e16fde7fc330a0ca68167c23bf7ed6ac31d6d
 - name: github.com/pelletier/go-toml
-  version: 8e6ab94eec2ae84996ed00ec774b2e15c540d7f9
-- name: github.com/peppage/anaconda
-  version: dc202af89db3ad0dcc747c84afb8eacfcc0a998e
+  version: d464759235b8fd59f8ab4c44807d7c36e1678add
 - name: github.com/peppage/foursquarego
-  version: d241045b317aae8aeed05d47c3b2ab1e19a52987
-- name: github.com/pquerna/ffjson
-  version: a29c662791e4de7fc53a6cf209c9af657bba96f3
+  version: bf0a1252ec5e5be3cff296be97b7118c14e2a888
+- name: github.com/peppage/simpletransport
+  version: 894b504147fac7c982110b96c1a12e6e4f533b72
   subpackages:
-  - ffjson
-  - fflib/v1
-  - fflib/v1/internal
+  - simpletransport
 - name: github.com/pressly/chi
   version: fc6251083a856d5093f4b96d71252c5e56d9c1b5
   subpackages:
   - middleware
 - name: github.com/rifflock/lfshook
-  version: 05a24e24fa8d3a2eca8c2baf23aa2d5a2c51490c
+  version: 1ae91782cf87524466b000ea12d8291ea48269be
   subpackages:
   - github.com\rifflock\lfshook
 - name: github.com/sebest/logrusly
-  version: d2415b54e6af1e6b3d9b1ab9a49c779f25599922
+  version: 11d799ee200f3849199eab513fe08bc7bd2d464e
 - name: github.com/segmentio/go-loggly
   version: e78f6971ebca5835614673e2f5f6a47ca5f13501
 - name: github.com/shawnps/sessions
   version: dc17d8cc4b7165432d37bd224ae43309f97950a9
 - name: github.com/Sirupsen/logrus
-  version: f3cfb454f4c209e6668c95216c4744b8fddb2356
+  version: 7f4b1adc791766938c29457bed0703fb9134421a
   subpackages:
   - github.com\Sirupsen\logrus
 - name: github.com/stretchr/testify
   version: 69483b4bd14f5845b5a1e55bca19e954e827f1d0
   subpackages:
-  - suite
   - assert
   - require
+  - suite
+- name: github.com/tsenart/tb
+  version: 19f4c3d79d2bd67d0911b2e310b999eeea4454c1
 - name: github.com/valyala/quicktemplate
   version: de41ba48f1d9953aca12983c953532f3776b4347
 - name: github.com/visionmedia/go-debug
   version: ff4a55a20a86994118644bbddc6a216da193cc13
 - name: golang.org/x/crypto
-  version: 5bcd134fee4dd1475da17714aac19c0aa0142e2f
+  version: 7c6cc321c680f03b9ef0764448e780704f486b51
   subpackages:
   - bcrypt
   - blowfish
 - name: golang.org/x/net
-  version: c4c3ea71919de159c9e246d7be66deb7f0a39a58
+  version: 60c41d1de8da134c05b7b40154a9a82bf5b7edb9
   subpackages:
+  - context
   - webdav
   - webdav/internal/xml
 - name: golang.org/x/sys
-  version: 076b546753157f758b316e59bcb51e6807c04057
+  version: d75a52659825e75fff6158388dddc6a5b04f9ba5
   subpackages:
   - unix
 testImports:

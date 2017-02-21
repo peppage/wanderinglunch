@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"errors"
 	"net/http"
 
@@ -8,7 +9,6 @@ import (
 	"wanderinglunch/view"
 
 	log "github.com/Sirupsen/logrus"
-	"github.com/pquerna/ffjson/ffjson"
 	"github.com/pressly/chi"
 )
 
@@ -44,7 +44,7 @@ func apiTrucks(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	js, err := ffjson.Marshal(trucks)
+	js, err := json.Marshal(trucks)
 	if err != nil {
 		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 		return

@@ -11,12 +11,14 @@ import (
 	"wanderinglunch/store"
 
 	log "github.com/Sirupsen/logrus"
+	"github.com/dghubble/go-twitter/twitter"
 	"github.com/jasonlvhit/gocron"
-	"github.com/peppage/anaconda"
 	"github.com/peppage/foursquarego"
+	"github.com/peppage/simpletransport/simpletransport"
+	"golang.org/x/oauth2"
 )
 
-var api *anaconda.TwitterApi
+var api *twitter.Client
 var sqAPI *foursquarego.FoursquareApi
 
 var data store.Store
@@ -24,12 +26,22 @@ var data store.Store
 func Start(d store.Store, set settings.Settings) {
 
 	data = d
-	anaconda.SetConsumerKey(set.TwitterConsumerKey())
-	anaconda.SetConsumerSecret(set.TwitterConsumerSecret())
-	api = anaconda.NewTwitterApi(set.TwitterAccessToken(), set.TwitterAccessTokenSecret())
+
+	t := simpletransport.NewThrottleTransport(&simpletransport.ThrottleOptions{
+		ConnectionTimeout: time.Second * 15,
+		ReadTimeout:       time.Second * 10,
+		RequestTimeout:    time.Second * 15,
+		ThrottleRate:      time.Millisecond * 100,
+	})
+
+	config := &oauth2.Config{}
+	token := &oauth2.Token{AccessToken: set.TwitterAccessToken()}
+	httpClient := config.Client(oauth2.NoContext, token)
+	httpClient.Transport = t
+
+	api = twitter.NewClient(httpClient)
 
 	sqAPI = foursquarego.NewFoursquareApi(set.FoursquareClientID(), set.FoursquareClientSecret())
-
 	gocron.Every(15).Minutes().Do(task)
 	gocron.Every(72).Hours().Do(validatePhotos)
 	gocron.Every(1).Saturday().At("23:00").Do(truncateTweets)
@@ -60,12 +72,14 @@ func task() {
 	}
 
 	for site, names := range twitnames {
+		retweets := false
 		for _, v := range names {
-			uv := url.Values{}
-			uv.Set("screen_name", v)
-			uv.Set("include_rts", "0")
-			uv.Set("count", "100")
-			tweets, err := api.GetUserTimeline(uv)
+			tweets, _, err := api.Timelines.UserTimeline(&twitter.UserTimelineParams{
+				ScreenName:      v,
+				IncludeRetweets: &retweets,
+				Count:           100,
+			})
+			//tweets, err := api.GetUserTimeline(uv)
 			if err != nil {
 				log.WithFields(log.Fields{
 					"err":      err,
@@ -82,35 +96,35 @@ func task() {
 	log.Info("Task Finished")
 }
 
-func saveTweets(handle string, tweets []anaconda.Tweet) {
+func saveTweets(handle string, tweets []twitter.Tweet) {
 	for _, t := range tweets {
-		time, _ := t.CreatedAtTime()
+		time, _ := time.Parse(time.RubyDate, t.CreatedAt)
 		t.Text = strings.Replace(t.Text, "&amp;", "&", -1)
 		t.Text = strings.Replace(t.Text, "#", "", -1)
 		t.Text = strings.Replace(t.Text, "\"", "", -1)
 		err := data.SaveTweet(&mdl.Tweet{
 			Text:      t.Text,
 			Time:      time.Unix(),
-			ID:        t.Id,
+			ID:        t.ID,
 			Retweeted: t.Retweeted,
 			Twitname:  handle,
 		})
 		if err != nil {
 			log.WithFields(log.Fields{
 				"err":      err,
-				"tweetID":  t.Id,
+				"tweetID":  t.ID,
 				"twitname": handle,
 			}).Error("Failed to save tweet to database")
 		}
 	}
 }
 
-func findLocations(tweets []anaconda.Tweet, locations []*mdl.Location, subs []*mdl.Sub) {
+func findLocations(tweets []twitter.Tweet, locations []*mdl.Location, subs []*mdl.Sub) {
 	foundLocs := []int{}
 	twitName := ""
 	var newestTime int64
 	for _, t := range tweets {
-		createdTime, _ := t.CreatedAtTime()
+		createdTime, _ := time.Parse(time.RubyDate, t.CreatedAt)
 		if createdTime.After(time.Now().Add(time.Hour*-8)) && string(t.Text[0]) != "@" {
 			text := doReplacements(strings.ToLower(t.Text), subs)
 			text = strings.ToLower(text)
