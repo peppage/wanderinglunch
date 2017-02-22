@@ -1,6 +1,7 @@
 package server
 
 import (
+	"errors"
 	"net/http"
 
 	"wanderinglunch/model"
@@ -22,7 +23,7 @@ func GetSite(c echo.Context, data store.Store) (*model.Site, error) {
 	siteName := c.Param("site")
 	if siteName == "" {
 		c.Redirect(http.StatusMovedPermanently, "/nyc")
-		return nil, nil
+		return nil, errors.New("Site moved!")
 	}
 
 	site, err := data.GetSite(siteName)

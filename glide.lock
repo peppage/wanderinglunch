@@ -1,5 +1,5 @@
-hash: f26b76ba5a7139c5a0ce7d9bbd0e68683feeebc27ee2de3762ed3bd862c09890
-updated: 2017-02-21T16:30:17.5080754-05:00
+hash: 151775abcdde633b83b879f326a49cb33e050a5d37d643bed08bf2f50e64bc9e
+updated: 2017-02-22T11:41:17.5115788-05:00
 imports:
 - name: github.com/cenkalti/backoff
   version: 32cd0c5b3aef12c76ed64aaf678f6c79736be7dc
@@ -56,10 +56,6 @@ imports:
   version: 894b504147fac7c982110b96c1a12e6e4f533b72
   subpackages:
   - simpletransport
-- name: github.com/pressly/chi
-  version: fc6251083a856d5093f4b96d71252c5e56d9c1b5
-  subpackages:
-  - middleware
 - name: github.com/rifflock/lfshook
   version: 1ae91782cf87524466b000ea12d8291ea48269be
   subpackages:
