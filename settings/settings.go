@@ -1,7 +1,6 @@
 package settings
 
 type Settings interface {
-	LogglyID() string
 	HTTPPort() string
 	LogLevel() string
 	RunUpdator() bool
@@ -12,4 +11,5 @@ type Settings interface {
 	TwitterAccessTokenSecret() string
 	FoursquareClientID() string
 	FoursquareClientSecret() string
+	RollbarToken() string
 }

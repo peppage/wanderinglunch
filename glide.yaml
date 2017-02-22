@@ -1,6 +1,7 @@
 package: wanderinglunch
 import:
 - package: github.com/Sirupsen/logrus
+  version: ^0.11.2
   subpackages:
   - github.com\Sirupsen\logrus
 - package: github.com/jackc/pgx
@@ -13,8 +14,6 @@ import:
   subpackages:
   - github.com\rifflock\lfshook
 - package: github.com/pelletier/go-toml
-- package: github.com/sebest/logrusly
-- package: github.com/segmentio/go-loggly
 - package: github.com/peppage/foursquarego
 - package: github.com/shawnps/sessions
   version: dc17d8cc4b7165432d37bd224ae43309f97950a9
@@ -38,3 +37,6 @@ import:
   version: ^3.0.3
 - package: github.com/dghubble/sling
   version: ^1.1.0
+- package: github.com/heroku/rollrus
+- package: github.com/pkg/errors
+  version: ^0.8.0

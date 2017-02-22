@@ -22,9 +22,9 @@ import (
 	"wanderinglunch/updator"
 
 	log "github.com/Sirupsen/logrus"
+	"github.com/heroku/rollrus"
 	"github.com/labstack/echo"
 	"github.com/rifflock/lfshook"
-	"github.com/sebest/logrusly"
 )
 
 var sessions session.Session
@@ -57,7 +57,7 @@ func init() {
 			}))
 	} else {
 		log.SetFormatter(&log.JSONFormatter{})
-		log.AddHook(logrusly.NewLogglyHook(webSettings.LogglyID(), "wanderinglunch.com", log.WarnLevel))
+		log.AddHook(rollrus.NewHook(webSettings.RollbarToken(), "production"))
 	}
 
 	if webSettings.RunUpdator() {

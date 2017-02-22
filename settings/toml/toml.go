@@ -8,7 +8,6 @@ import (
 
 type tomlSettings struct {
 	sessionSecret            string
-	logglyID                 string
 	httpPort                 string
 	logLevel                 string
 	runUpdator               bool
@@ -19,10 +18,7 @@ type tomlSettings struct {
 	twitterAccessTokenSecret string
 	foursquareClientID       string
 	foursquareClientSecret   string
-}
-
-func (t *tomlSettings) LogglyID() string {
-	return t.logglyID
+	rollbarToken             string
 }
 
 func (t *tomlSettings) HTTPPort() string {
@@ -65,6 +61,10 @@ func (t *tomlSettings) FoursquareClientSecret() string {
 	return t.foursquareClientSecret
 }
 
+func (t *tomlSettings) RollbarToken() string {
+	return t.rollbarToken
+}
+
 // New the settings and set them up from the toml file
 func New(filename string) settings.Settings {
 	config, err := toml.LoadFile("conf.toml")
@@ -86,10 +86,6 @@ func New(filename string) settings.Settings {
 
 	if !config.Has("app.develop") {
 		panic("Config requires develop setting")
-	}
-
-	if !config.Has("loggly.client_id") {
-		panic("Config requires loggly client_id")
 	}
 
 	if !config.Has("twitter.consumer_key") {
@@ -116,17 +112,21 @@ func New(filename string) settings.Settings {
 		panic("Config requires foursquare client secret")
 	}
 
+	if !config.Has("rollbar.token") {
+		panic("Config requires rollbar token")
+	}
+
 	return &tomlSettings{
 		httpPort:                 config.Get("server.http_port").(string),
 		logLevel:                 config.Get("server.log_level").(string),
 		runUpdator:               config.Get("app.run_updator").(bool),
 		develop:                  config.Get("app.develop").(bool),
-		logglyID:                 config.Get("loggly.client_id").(string),
 		twitterConsumerKey:       config.Get("twitter.consumer_key").(string),
 		twitterConsumerSecret:    config.Get("twitter.consumer_secret").(string),
 		twitterAccessToken:       config.Get("twitter.access_token").(string),
 		twitterAccessTokenSecret: config.Get("twitter.access_token_secret").(string),
 		foursquareClientID:       config.Get("foursquare.client_id").(string),
 		foursquareClientSecret:   config.Get("foursquare.client_secret").(string),
+		rollbarToken:             config.Get("rollbar.token").(string),
 	}
 }

@@ -1,5 +1,5 @@
-hash: 151775abcdde633b83b879f326a49cb33e050a5d37d643bed08bf2f50e64bc9e
-updated: 2017-02-22T11:41:17.5115788-05:00
+hash: 9fce8167bb3a375dedcd4ab6122c959455092dbe9ffd0d4d7c33fad07d49cacd
+updated: 2017-02-22T12:41:20.5215565-05:00
 imports:
 - name: github.com/cenkalti/backoff
   version: 32cd0c5b3aef12c76ed64aaf678f6c79736be7dc
@@ -21,6 +21,8 @@ imports:
   version: 1ea25387ff6f684839d82767c1733ff4d4d15d0a
 - name: github.com/gorilla/securecookie
   version: 667fe4e3466a040b780561fe9b51a83a3753eefc
+- name: github.com/heroku/rollrus
+  version: d20e35b8f9139110607856dfedda27df7b598c08
 - name: github.com/jackc/pgx
   version: 2508faa9ced29f4bbb3a39483e4b5ac2627a7c48
   subpackages:
@@ -56,18 +58,16 @@ imports:
   version: 894b504147fac7c982110b96c1a12e6e4f533b72
   subpackages:
   - simpletransport
+- name: github.com/pkg/errors
+  version: 645ef00459ed84a119197bfb8d8205042c6df63d
 - name: github.com/rifflock/lfshook
   version: 1ae91782cf87524466b000ea12d8291ea48269be
   subpackages:
   - github.com\rifflock\lfshook
-- name: github.com/sebest/logrusly
-  version: 11d799ee200f3849199eab513fe08bc7bd2d464e
-- name: github.com/segmentio/go-loggly
-  version: e78f6971ebca5835614673e2f5f6a47ca5f13501
 - name: github.com/shawnps/sessions
   version: dc17d8cc4b7165432d37bd224ae43309f97950a9
 - name: github.com/Sirupsen/logrus
-  version: 7f4b1adc791766938c29457bed0703fb9134421a
+  version: c078b1e43f58d563c74cebe63c85789e76ddb627
   subpackages:
   - github.com\Sirupsen\logrus
 - name: github.com/stretchr/testify
@@ -76,6 +76,8 @@ imports:
   - assert
   - require
   - suite
+- name: github.com/stvp/roll
+  version: ca202b60b2601abe3e2e6a948a12b1b856badf6c
 - name: github.com/tsenart/tb
   version: 19f4c3d79d2bd67d0911b2e310b999eeea4454c1
 - name: github.com/tylerb/graceful
@@ -84,8 +86,6 @@ imports:
   version: 3b874956e03f1636d171bda64b130f9135f42cff
 - name: github.com/valyala/quicktemplate
   version: de41ba48f1d9953aca12983c953532f3776b4347
-- name: github.com/visionmedia/go-debug
-  version: ff4a55a20a86994118644bbddc6a216da193cc13
 - name: golang.org/x/crypto
   version: 7c6cc321c680f03b9ef0764448e780704f486b51
   subpackages:
