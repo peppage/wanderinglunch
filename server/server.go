@@ -32,7 +32,7 @@ func GetSite(c echo.Context, data store.Store) (*model.Site, error) {
 			"site": siteName,
 			"err":  err,
 		}).Error("Failed getting that site")
-		return nil, err
+		return nil, echo.NewHTTPError(http.StatusNotFound)
 	}
 
 	return site, nil

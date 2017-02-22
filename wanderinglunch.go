@@ -86,6 +86,7 @@ func main() {
 		Version:     Version,
 		Build:       Build,
 		Sessions:    sessions,
+		Debug:       webSettings.Develop(),
 	}
 
 	e.HTTPErrorHandler = publicServer.HTTPErrorHandler
@@ -127,7 +128,7 @@ func main() {
 	adminRouter.Use(siteContext)
 	adminRouter.Use(setBasePageAdmin)
 	adminRouter.Use(setSitesAdmin)
-	adminRouter.GET("/", adminServer.Index)
+	adminRouter.GET("", adminServer.Index)
 	adminRouter.GET("/setSite", adminServer.SetSite)
 	adminRouter.GET("/debug", adminServer.Debug)
 	adminRouter.GET("/truck/add", adminServer.TruckNew)

@@ -11,5 +11,6 @@ type Server struct {
 	TimeKey     string
 	Version     string
 	Build       string
+	Debug       bool
 	Sessions    session.Session
 }

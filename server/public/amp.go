@@ -15,7 +15,7 @@ func (s *Server) AmpIndex(c echo.Context) error {
 	var site *model.Site
 	var err error
 	if site, err = server.GetSite(c, s.Data); err != nil {
-		return echo.NewHTTPError(http.StatusInternalServerError)
+		return err
 	}
 
 	trucks, err := s.Data.Trucks(site.Name, 8, "lat", "desc", 0)

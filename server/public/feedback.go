@@ -1,8 +1,6 @@
 package public
 
 import (
-	"net/http"
-
 	"wanderinglunch/model"
 	"wanderinglunch/server"
 	"wanderinglunch/view"
@@ -16,7 +14,7 @@ func (s *Server) Feedback(c echo.Context) error {
 	var site *model.Site
 	var err error
 	if site, err = server.GetSite(c, s.Data); err != nil {
-		return echo.NewHTTPError(http.StatusInternalServerError)
+		return err
 	}
 
 	basePage.Site = site

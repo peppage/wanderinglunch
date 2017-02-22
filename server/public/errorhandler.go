@@ -3,6 +3,7 @@ package public
 import (
 	"net/http"
 
+	"wanderinglunch/model"
 	"wanderinglunch/server"
 	"wanderinglunch/view"
 
@@ -22,10 +23,20 @@ func (s *Server) HTTPErrorHandler(err error, c echo.Context) {
 		if c.Request().Method == echo.HEAD { // Issue #608
 			c.NoContent(code)
 		} else {
+			log.WithField("code", code).Debug("Error handling")
 			switch {
 			case code == http.StatusNotFound:
+				sites, _ := s.Data.GetSites()
+				bp := view.BasePage{
+					Version: s.Version,
+					Build:   s.Build,
+					Ad:      &model.Ad{},
+					Site:    &model.Site{},
+					Develop: s.Debug,
+				}
 				p := &view.Error404{
-					BasePage: c.Get(s.BasePageKey).(view.BasePage),
+					BasePage: bp,
+					Sites:    sites,
 				}
 				server.Render(c, p)
 			default:

@@ -1,73 +1,14 @@
-# all folders and files are relative to the path 
-# where fileb0x was run at!
-
-# default: main
 pkg: static
-
-# destination
-dest: "./static/"
-
-# gofmt
-# type: bool
-# default: false
+dest: "./static"
 fmt: false
-
-# compress files
-# at the moment, only supports gzip
-#
-# type: object
 compression:
-  # activates the compression
-  #
-  # type: bool
-  # default: false
-  compress: false
-
-  # valid values are:
-  # -> "NoCompression"
-  # -> "BestSpeed"
-  # -> "BestCompression"
-  # -> "DefaultCompression" or ""
-  #
-  # type: string
-  # default: "DefaultCompression" # when: Compress == true && Method == ""
+  compress: true
   method: ""
-
-  # true = do it yourself (the file is written as gzip compressed file into the memory file system)
-  # false = decompress files at run time (while writing file into memory file system)
-  #
-  # type: bool
-  # default: false
   keep: false
-
-# [spread] means it will make a file to hold all fileb0x data
-# and each file into a separaTed .go file
-#
-# example:
-# theres 2 files in the folder assets, they're: hello.json and world.txt
-# when spread is activaTed, fileb0x will make a file: 
-# b0x.go or [output]'s data, assets_hello.json.go and assets_world.txt.go
-#
-#
-# type: bool
-# default: false
 spread: false
 debug: false
-
-# type: array of objects
 custom:
-
-  # type: array of strings
   - files: 
-    - "static/site.css"
-    - "static/site.js"
-    - "static/robots.txt"
-    - "static/BingSiteAuth.xml"
-    - "static/images/favicon.ico"
-    - "static/images/touch-icon-192x192.png"
-    - "static/images/wl.png"
-    - "static/images/twitter.png"
-    - "static/images/foursquare.png"
-
+    - "static/"
     base: "static"
-    prefix: ""
+    prefix: "static"

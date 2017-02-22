@@ -18,7 +18,7 @@ func (s *Server) Index(c echo.Context) error {
 	var site *model.Site
 	var err error
 	if site, err = server.GetSite(c, s.Data); err != nil {
-		return echo.NewHTTPError(http.StatusInternalServerError)
+		return err
 	}
 	basePage.Site = site
 	basePage.Ad = server.GetAd(site.Name, s.Data)
