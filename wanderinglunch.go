@@ -119,6 +119,7 @@ func main() {
 	adminServer := &admin.Server{
 		Data:                   data,
 		BasePageKey:            basePageKey,
+		Sessions:               sessions,
 		FoursquareClientID:     webSettings.FoursquareClientID(),
 		FoursquareClientSecret: webSettings.FoursquareClientSecret(),
 	}
