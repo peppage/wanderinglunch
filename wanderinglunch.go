@@ -113,7 +113,7 @@ func main() {
 	}
 
 	e.GET("/:site/aboutapi", apiServer.Index)
-	apiRouter := e.Group("/api")
+	apiRouter := e.Group("/:site/api")
 	apiRouter.GET("/trucks", apiServer.Trucks)
 
 	adminServer := &admin.Server{
