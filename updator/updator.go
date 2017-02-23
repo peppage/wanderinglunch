@@ -40,8 +40,8 @@ func Start(d store.Store, set settings.Settings) {
 	httpClient.Transport = t
 
 	api = twitter.NewClient(httpClient)
-
 	sqAPI = foursquarego.NewFoursquareApi(set.FoursquareClientID(), set.FoursquareClientSecret())
+
 	gocron.Every(15).Minutes().Do(task)
 	gocron.Every(72).Hours().Do(validatePhotos)
 	gocron.Every(1).Saturday().At("23:00").Do(truncateTweets)

@@ -11,7 +11,7 @@ import (
 // relativeTime converts unix time to a relative time string
 // This should probably be a function on truck.
 func relativeTime(lastUpdate int64) string {
-	elapsed := time.Now().Sub(time.Unix(lastUpdate, 0))
+	elapsed := time.Since(time.Unix(lastUpdate, 0))
 
 	d := math.Trunc(elapsed.Hours() / 24)
 	if d == 1 {
@@ -43,14 +43,14 @@ func (db *datastore) Trucks(site string, hours int, sort string, sortDir string,
 	var trucks []*model.Truck
 	t := time.Now().Add(time.Duration(-1*hours) * (time.Minute * 60)).Unix()
 
-	locSql := ""
+	locSQL := ""
 	if loc != 0 {
-		locSql = "AND loc=" + strconv.Itoa(loc)
+		locSQL = "AND loc=" + strconv.Itoa(loc)
 	}
 
 	rows, err := db.Queryx(`SELECT trucks.id AS id, trucks.name, trucks.twitname, trucks.lastupdate, coalesce(locations.display,'') AS location, 
 	        coalesce(locations.zone,'') AS zone, coalesce(images.suffix,'') AS image FROM trucks LEFT JOIN locations ON (locations.id = ANY(trucks.locs)) LEFT JOIN
-	        (SELECT * FROM images WHERE  menu='t') AS images ON (images.twitname = trucks.twitname) WHERE lastupdate > $1 `+locSql+` AND trucks.site = $2 AND trucks.locs IS NOT NULL ORDER BY `+sort+` `+sortDir, t, site)
+	        (SELECT * FROM images WHERE  menu='t') AS images ON (images.twitname = trucks.twitname) WHERE lastupdate > $1 `+locSQL+` AND trucks.site = $2 AND trucks.locs IS NOT NULL ORDER BY `+sort+` `+sortDir, t, site)
 	if err != nil {
 		return nil, err
 	}
@@ -58,7 +58,9 @@ func (db *datastore) Trucks(site string, hours int, sort string, sortDir string,
 	trucks = []*model.Truck{}
 	for rows.Next() {
 		tt := model.Truck{}
-		rows.StructScan(&tt)
+		if err := rows.StructScan(&tt); err != nil {
+			return nil, err
+		}
 		tt.Updated = relativeTime(tt.Lastupdate)
 		trucks = append(trucks, &tt)
 	}
@@ -75,7 +77,9 @@ func (db *datastore) AllTrucks(site string) ([]*model.Truck, error) {
 	trucks := []*model.Truck{}
 	for rows.Next() {
 		tt := model.Truck{}
-		rows.StructScan(&tt)
+		if err := rows.StructScan(&tt); err != nil {
+			return nil, err
+		}
 		tt.Updated = relativeTime(tt.Lastupdate)
 		trucks = append(trucks, &tt)
 	}
@@ -91,7 +95,13 @@ func (db *datastore) GetTruck(id string) ([]*model.Truck, error) {
 	if len(trucks) > 0 {
 		trucks[0].Updated = relativeTime(trucks[0].Lastupdate)
 		trucks[0].Tweets, err = db.GetTweets(trucks[0].Twitname)
-		images, _ := db.GetImages(trucks[0].Twitname)
+		if err != nil {
+			return nil, err
+		}
+		images, err := db.GetImages(trucks[0].Twitname)
+		if err != nil {
+			return nil, err
+		}
 		trucks[0].Images = images
 	}
 
@@ -102,7 +112,6 @@ func (db *datastore) GetTruck(id string) ([]*model.Truck, error) {
 func (db *datastore) GetTwitNames(archive bool) (map[string][]string, error) {
 	trucks := make(map[string][]string)
 	rows, err := db.Queryx(getTwitNamesQuery, archive)
-
 	if err != nil {
 		return nil, err
 	}
@@ -110,7 +119,9 @@ func (db *datastore) GetTwitNames(archive bool) (map[string][]string, error) {
 	for rows.Next() {
 		var twitname string
 		var site string
-		rows.Scan(&twitname, &site)
+		if err := rows.Scan(&twitname, &site); err != nil {
+			return nil, err
+		}
 		trucks[site] = append(trucks[site], twitname)
 	}
 	return trucks, nil

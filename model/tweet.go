@@ -6,6 +6,7 @@ import (
 	"time"
 )
 
+// Tweet holds all info for a Twitter tweet
 type Tweet struct {
 	Text      string `json:"contents"`
 	Time      int64  `json:"time"`
@@ -23,12 +24,12 @@ func (t *Tweet) PrettyDate() string {
 //FomattedText returns a string with links and @s linked
 func (t *Tweet) FomattedText() string {
 	text := t.Text
-	r, _ := regexp.Compile("http(s)?:\\/\\/t.co\\/[A-Z0-9a-z]+")
+	r := regexp.MustCompile(`http(s)?:\/\/t.co\/[A-Z0-9a-z]+`)
 	m := r.FindAllString(text, -1)
 	for key := range m {
 		text = strings.Replace(text, m[key], "<a href=\""+m[key]+"\">"+m[key]+"</a>", -1)
 	}
-	r2, _ := regexp.Compile("@[A-Za-z0-9_-]+")
+	r2 := regexp.MustCompile(`@[A-Za-z0-9_-]+`)
 	m2 := r2.FindAllString(text, -1)
 	for key := range m2 {
 		text = strings.Replace(text, m2[key], "<a href=\"http://twitter.com/"+m2[key]+"\">"+m2[key]+"</a>", -1)
@@ -36,6 +37,7 @@ func (t *Tweet) FomattedText() string {
 	return text
 }
 
+// CreatedAtTime is a shortcut to convert the unix time to a time.Time
 func (t *Tweet) CreatedAtTime() time.Time {
 	return time.Unix(t.Time, 0)
 }

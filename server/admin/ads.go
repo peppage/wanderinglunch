@@ -12,6 +12,7 @@ import (
 	"github.com/labstack/echo"
 )
 
+// AdNew serves the page to create a new ad
 func (s *Server) AdNew(c echo.Context) error {
 	sessionSite := s.Sessions.GetSite(c.Request())
 	site, _ := s.Data.GetSite(sessionSite)
@@ -26,6 +27,7 @@ func (s *Server) AdNew(c echo.Context) error {
 	return server.Render(c, p)
 }
 
+// AdSave handles saving AdNew
 func (s *Server) AdSave(c echo.Context) error {
 	i, err := strconv.ParseInt(c.FormValue("validuntil"), 10, 64)
 	if err != nil {
@@ -47,6 +49,8 @@ func (s *Server) AdSave(c echo.Context) error {
 	}
 	return c.Redirect(http.StatusSeeOther, "/admin")
 }
+
+// Ads serves a page with a list of all ads
 func (s *Server) Ads(c echo.Context) error {
 	sessionSite := s.Sessions.GetSite(c.Request())
 	site, _ := s.Data.GetSite(sessionSite)
@@ -61,6 +65,7 @@ func (s *Server) Ads(c echo.Context) error {
 	return server.Render(c, p)
 }
 
+// AdEdit servs a page with data about an already created ad
 func (s *Server) AdEdit(c echo.Context) error {
 	sessionSite := s.Sessions.GetSite(c.Request())
 	site, _ := s.Data.GetSite(sessionSite)
@@ -81,6 +86,7 @@ func (s *Server) AdEdit(c echo.Context) error {
 	return server.Render(c, p)
 }
 
+// AdUpdate handles saving AdEdit
 func (s *Server) AdUpdate(c echo.Context) error {
 	i, err := strconv.Atoi(c.FormValue("id"))
 	if err != nil {

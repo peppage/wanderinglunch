@@ -12,6 +12,7 @@ import (
 	"github.com/labstack/echo"
 )
 
+// ImgAdd handles adding a new image from foursquare
 func (s *Server) ImgAdd(c echo.Context) error {
 	err := s.Data.AddImage(&model.Image{
 		ID:         c.FormValue("id"),
@@ -30,6 +31,7 @@ func (s *Server) ImgAdd(c echo.Context) error {
 	return c.String(http.StatusOK, "ok")
 }
 
+// ImgEdit serves a page that shows the values of an image
 func (s *Server) ImgEdit(c echo.Context) error {
 	sessionSite := s.Sessions.GetSite(c.Request())
 	site, _ := s.Data.GetSite(sessionSite)
@@ -46,6 +48,7 @@ func (s *Server) ImgEdit(c echo.Context) error {
 	return server.Render(c, p)
 }
 
+// ImgUpdate handles updating an image back to the db
 func (s *Server) ImgUpdate(c echo.Context) error {
 	m := false
 	if c.FormValue("menu") != "" && c.FormValue("menu") == "on" {

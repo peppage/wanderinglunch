@@ -9,6 +9,7 @@ import (
 	"github.com/peppage/foursquarego"
 )
 
+// Foursquare sends JSON of all foursquare photos for a venue
 func (s *Server) Foursquare(c echo.Context) error {
 	api := foursquarego.NewFoursquareApi(s.FoursquareClientID, s.FoursquareClientSecret)
 	uv := url.Values{}
