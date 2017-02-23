@@ -34,7 +34,7 @@ assets:
 # https://github.com/golang/lint
 # go get github.com/golang/lint/golint
 lint:
-	golint .
+	gometalinter ./... --config=lint.config
 
 glide:
 	glide install
