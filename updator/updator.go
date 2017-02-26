@@ -1,14 +1,18 @@
 package updator
 
 import (
+	"net/http"
 	"net/url"
 	"regexp"
 	"strings"
 	"time"
+
 	mdl "wanderinglunch/model"
 
 	"wanderinglunch/settings"
 	"wanderinglunch/store"
+
+	"context"
 
 	log "github.com/Sirupsen/logrus"
 	"github.com/dghubble/go-twitter/twitter"
@@ -16,10 +20,12 @@ import (
 	"github.com/peppage/foursquarego"
 	"github.com/peppage/simpletransport/simpletransport"
 	"golang.org/x/oauth2"
+	"golang.org/x/oauth2/clientcredentials"
 )
 
 var api *twitter.Client
 var sqAPI *foursquarego.FoursquareApi
+var transport *simpletransport.ThrottleTransport
 
 var data store.Store
 
@@ -27,21 +33,29 @@ func Start(d store.Store, set settings.Settings) {
 
 	data = d
 
-	t := simpletransport.NewThrottleTransport(&simpletransport.ThrottleOptions{
+	transport = simpletransport.NewThrottleTransport(&simpletransport.ThrottleOptions{
 		ConnectionTimeout: time.Second * 15,
 		ReadTimeout:       time.Second * 10,
 		RequestTimeout:    time.Second * 15,
-		ThrottleRate:      time.Millisecond * 100,
+		ThrottleRate:      time.Second,
+		TotalTokens:       5,
 	})
 
-	config := &oauth2.Config{}
-	token := &oauth2.Token{AccessToken: set.TwitterAccessToken()}
-	httpClient := config.Client(oauth2.NoContext, token)
-	httpClient.Transport = t
+	httpThrottleClient := &http.Client{
+		Transport: transport,
+	}
+
+	config := &clientcredentials.Config{
+		ClientID:     set.TwitterConsumerKey(),
+		ClientSecret: set.TwitterConsumerSecret(),
+		TokenURL:     "https://api.twitter.com/oauth2/token",
+	}
+
+	ctx := context.WithValue(context.Background(), oauth2.HTTPClient, httpThrottleClient)
+	httpClient := config.Client(ctx)
 
 	api = twitter.NewClient(httpClient)
 	sqAPI = foursquarego.NewFoursquareApi(set.FoursquareClientID(), set.FoursquareClientSecret())
-
 	gocron.Every(15).Minutes().Do(task)
 	gocron.Every(72).Hours().Do(validatePhotos)
 	gocron.Every(1).Saturday().At("23:00").Do(truncateTweets)
@@ -52,6 +66,7 @@ func Start(d store.Store, set settings.Settings) {
 
 func task() {
 	log.Info("Task Started")
+	defer transport.Close()
 
 	twitnames, err := data.GetTwitNames(false)
 	if err != nil {
@@ -79,6 +94,7 @@ func task() {
 				IncludeRetweets: &retweets,
 				Count:           100,
 			})
+			log.Debug("Got tweets for " + v)
 			//tweets, err := api.GetUserTimeline(uv)
 			if err != nil {
 				log.WithFields(log.Fields{
