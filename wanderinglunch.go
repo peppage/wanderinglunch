@@ -70,7 +70,7 @@ func main() {
 	e.Use(setStartTime)
 	e.Use(setBasePage)
 
-	e.GET("/robotx.txt", serveFile("robots.txt"))
+	e.GET("/robots.txt", serveFile("robots.txt"))
 	e.GET("/favicon.ico", serveFile("images/favicon.ico"))
 	e.GET("/touch-icon-192x192.png", serveFile("images/touch-icon-192x192.png"))
 	e.GET("/apple-touch-icon.png", serveFile("images/touch-icon-192x192.png"))
