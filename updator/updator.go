@@ -66,7 +66,6 @@ func Start(d store.Store, set settings.Settings) {
 
 func task() {
 	log.Info("Task Started")
-	defer transport.Close()
 
 	twitnames, err := data.GetTwitNames(false)
 	if err != nil {
