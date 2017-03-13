@@ -56,6 +56,7 @@ func setBasePage(next echo.HandlerFunc) echo.HandlerFunc {
 		dbp := view.BasePage{
 			Version: Version,
 			Build:   Build,
+			Develop: webSettings.Develop(),
 		}
 		c.Set(basePageKey, dbp)
 		return next(c)
