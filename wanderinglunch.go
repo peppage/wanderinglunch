@@ -70,14 +70,14 @@ func main() {
 	e.Use(setStartTime)
 	e.Use(setBasePage)
 
-	e.GET("/robots.txt", serveFile("robots.txt"))
-	e.GET("/favicon.ico", serveFile("images/favicon.ico"))
-	e.GET("/touch-icon-192x192.png", serveFile("images/touch-icon-192x192.png"))
-	e.GET("/apple-touch-icon.png", serveFile("images/touch-icon-192x192.png"))
-	e.GET("/apple-touch-icon-precomposed.png", serveFile("images/touch-icon-192x192.png"))
-	e.GET("/apple-touch-icon-120x120.png", serveFile("images/touch-icon-192x192.png"))
-	e.GET("/apple-touch-icon-120x120-precomposed.png", serveFile("images/touch-icon-192x192.png"))
-	e.GET("/BingSiteAuth.xml", serveFile("BingSiteAuth.xml"))
+	e.GET("/robots.txt", serveFile("static/robots.txt"))
+	e.GET("/favicon.ico", serveFile("static/images/favicon.ico"))
+	e.GET("/touch-icon-192x192.png", serveFile("static/images/touch-icon-192x192.png"))
+	e.GET("/apple-touch-icon.png", serveFile("static/images/touch-icon-192x192.png"))
+	e.GET("/apple-touch-icon-precomposed.png", serveFile("static/images/touch-icon-192x192.png"))
+	e.GET("/apple-touch-icon-120x120.png", serveFile("static/images/touch-icon-192x192.png"))
+	e.GET("/apple-touch-icon-120x120-precomposed.png", serveFile("static/images/touch-icon-192x192.png"))
+	e.GET("/BingSiteAuth.xml", serveFile("static/BingSiteAuth.xml"))
 
 	publicServer := &public.Server{
 		Data:        data,
