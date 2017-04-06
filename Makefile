@@ -24,7 +24,6 @@ vet:
 	go vet $(go list ./... | grep -v /vendor/)
 
 templates:
-	gorazor ./view ./view
 	qtc -dir ./view
 
 assets:
