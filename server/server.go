@@ -28,10 +28,6 @@ func GetSite(c echo.Context, data store.Store) (*model.Site, error) {
 
 	site, err := data.GetSite(siteName)
 	if err != nil {
-		log.WithFields(log.Fields{
-			"site": siteName,
-			"err":  err,
-		}).Error("Failed getting that site")
 		return nil, echo.NewHTTPError(http.StatusNotFound)
 	}
 
