@@ -125,7 +125,9 @@ func main() {
 	}
 
 	adminRouter := e.Group("/admin")
-	adminRouter.Use(mustUser)
+	if !webSettings.Develop() {
+		adminRouter.Use(mustUser)
+	}
 	adminRouter.Use(siteContext)
 	adminRouter.Use(setBasePageAdmin)
 	adminRouter.Use(setSitesAdmin)
