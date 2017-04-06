@@ -97,12 +97,12 @@ type Queue struct {
                     foundLocs := make(map[int]string)
 
                     for _, s := range p.Subs {
-                        r, _ := regexp.Compile(s.Regex)
+                        r, _ := regexp.Compile("(?i)" + s.Regex)
                         text = r.ReplaceAllString(text, s.Replacement)
                     }
                     text = strings.ToLower(text)
                     for _, l := range p.Locations {
-                        matched, _ := regexp.MatchString(l.Matcher, strings.ToLower(text))
+                        matched, _ := regexp.MatchString("(?i)" + l.Matcher, strings.ToLower(text))
                         if matched {
                             foundLocs[l.ID] = l.Display
                         }

@@ -145,7 +145,7 @@ func findLocations(tweets []twitter.Tweet, locations []*mdl.Location, subs []*md
 			text = strings.ToLower(text)
 			if !strings.Contains(text, "tomorrow") && !strings.Contains(text, "schedule") && !strings.Contains(text, "cancelled") {
 				for _, l := range locations {
-					matched, _ := regexp.MatchString(l.Matcher, text)
+					matched, _ := regexp.MatchString("(?i)"+l.Matcher, text)
 					if matched {
 						twitName = strings.ToLower(t.User.ScreenName)
 						newestTime = createdTime.Unix()
@@ -170,7 +170,7 @@ func findLocations(tweets []twitter.Tweet, locations []*mdl.Location, subs []*md
 // Do all substitutions inside tweet text
 func doReplacements(text string, subs []*mdl.Sub) string {
 	for _, s := range subs {
-		r, _ := regexp.Compile(s.Regex)
+		r, _ := regexp.Compile("(?i)" + s.Regex)
 		text = r.ReplaceAllString(text, s.Replacement)
 	}
 	return text
