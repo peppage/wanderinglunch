@@ -24,7 +24,7 @@ type Location struct {
     </p>
 
     <form method="post">
-        <input type="hidden" name="id" value={%v p.Location.ID %}">
+        <input type="hidden" name="id" value="{%v p.Location.ID %}">
         <label>Display</label><br>
         <input type="text" name="display" value="{%s p.Location.Display %}"><br>
 
