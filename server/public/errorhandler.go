@@ -40,7 +40,10 @@ func (s *Server) HTTPErrorHandler(err error, c echo.Context) {
 				}
 				server.Render(c, p)
 			default:
-				log.WithError(err).Error("Unhandled web error")
+				log.WithFields(log.Fields{
+					"Error": err,
+					"Path":  c.Request().URL.Path,
+				}).Error("Unhandled web error")
 				c.String(code, "Unhandled Error")
 			}
 		}
