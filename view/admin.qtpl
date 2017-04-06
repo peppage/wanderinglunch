@@ -108,7 +108,7 @@ type Queue struct {
                         }
                     }
                 %}
-                <tr style="padding: 5px;border: 1px black solid;">
+                <tr style="padding: 5px;border: 1px black solid;" data-id="{%v t.ID %}">
                     <td style="width:70%;padding: 10px;">{%s text %}<br>
                     <span class="tweetList-time" style="float:left;"><a href="http://twitter.com/{%s t.Twitname %}">{%s t.Twitname %}</a></span>
                     <span class="tweetList-time">{%s t.PrettyDate() %}</span></td>
@@ -117,7 +117,7 @@ type Queue struct {
                             <span><a href="/admin/location/edit?id={%d k %}">{%s v %}</a></span><br>
                         {% endfor %}
                     </td>
-                    <td><a href="/admin/queue/done?id={%v t.ID %}">done</td>
+                    <td><a class="js-queueDone" data-id="{%v t.ID %}" href="#">done</td>
                 </tr>
             {% endfor %}
         </tbody>

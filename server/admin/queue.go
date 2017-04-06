@@ -55,5 +55,9 @@ func (s *Server) QueueDone(c echo.Context) error {
 			"err": err,
 		}).Error("Failed marking tweet done")
 	}
-	return c.Redirect(http.StatusSeeOther, "/admin/queue")
+	return c.JSON(http.StatusOK, struct {
+		OK bool `json:"ok"`
+	}{
+		OK: true,
+	})
 }

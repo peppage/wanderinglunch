@@ -50,6 +50,28 @@ document.addEventListener("DOMContentLoaded", function() {
 			r.send(null);
 		});
 	}
+
+	var queueDoneButtons = document.querySelectorAll('.js-queueDone');
+	if(queueDoneButtons != null) {
+		for(var x = 0; x < queueDoneButtons.length; x++) {
+			queueDoneButtons[x].addEventListener('click', function markTweetDone(e) {
+				e.preventDefault()
+				var tweetId = e.srcElement.getAttribute('data-id');
+				var r = new XMLHttpRequest();
+				r.open('GET', '/admin/queue/done?id='+tweetId);
+				r.onreadystatechange = function respHandler(data) {
+					if(r.readyState != 4 || r.status != 200) return;
+					var tableRows = document.querySelectorAll('tr');
+					for(var y = 0; y < tableRows.length; y++) {
+						if(tableRows[y].getAttribute('data-id') == tweetId) {
+							tableRows[y].classList.add('hidden');
+						}
+					}
+				}
+				r.send(null);
+			});
+		}
+	}
 });
 
 //http://codepen.io/chriscoyier/pen/tIuBL
