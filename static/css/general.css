@@ -41,7 +41,7 @@ nav ul:hover a {
 }
 
 nav ul li a:hover {
-    color: #f7972c;
+    color: #F39C12;
     opacity: 1;
     transition: none;
 }
@@ -67,12 +67,18 @@ footer .footer--right {
 }
 
 a {
-    color: #48b9a3;
-    text-decoration: none;
+    color: #1E824C;
+    text-decoration: underline;
+    text-decoration-skip: ink;
+    -webkit-text-decoration-skip: skip;
+}
+
+a:focus{
+    outline: solid #1E824C;
 }
 
 a:hover {
-    color: #368e7d;
+    color: #1E824C;
 }
 
 @media screen and (max-width: 750px) {

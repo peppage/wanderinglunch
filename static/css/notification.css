@@ -7,8 +7,8 @@
     height: 30px;
     text-align: center;
     line-height: 30px;
-    background: -webkit-linear-gradient(#e23c5d, #e23c5d);
-    background: linear-gradient(#e23c5d, #e23c5d);
+    background: -webkit-linear-gradient(#D91E18, #D91E18);
+    background: linear-gradient(#D91E18, #D91E18);
     color: white;
     font-size: 14px;
     font-weight: 100;
@@ -19,9 +19,18 @@
     -webkit-animation-delay: .8s;
     animation-delay: .8s;
 }
+
+.notification a {
+    color: white;
+}
+
+.notification a:hover {
+    color: white;
+}
+
 .notification .message {
     white-space: nowrap;
-    text-shadow: 0 1px 0 #e23c5d;
+    text-shadow: 0 1px 0 #D91E18;
 }
 @media (max-width: 767px) {
     .notification .message {
@@ -51,7 +60,7 @@
 .close-cb {
     border: none;
     color: white;
-    background: #a41934;
+    background: #96281B;
     position: absolute;
     display: inline-block;
     right: 10px;
@@ -66,7 +75,7 @@
     font-weight: bold;
 }
 .close-cb:hover {
-    background: #e96d85;
+    background: #96281B;
 }
 .checkbox-cb {
     display: none;
