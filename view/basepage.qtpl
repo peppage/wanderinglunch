@@ -31,7 +31,7 @@ Page prints a page implementing Page interface.
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://wanderinglunch.com/{%= p.SiteUrlName() %}" />
     <meta property="og:image" content="https://wanderinglunch.com/static/images/wl.png" />
-    <meta name="theme-color" content="#48b9a3" />
+    <meta name="theme-color" content="#1E824C" />
     <meta name=viewport content="width=device-width, initial-scale=1">
     {%= p.GTMHead() %}
     {%= p.AmpLink() %}
