@@ -1,0 +1,8 @@
+[psql]
+  dbname  = "foodtruck"
+  host    = "localhost"
+  port    = 5432
+  user    = "mca"
+  pass    = "a"
+  sslmode = "disable"
+  schema  = "public"
