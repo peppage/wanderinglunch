@@ -170,7 +170,7 @@ func findLocations(text string) []*models.Location {
 func saveSpots(tweet twitter.Tweet, locations []*models.Location) {
 	for _, location := range locations {
 		spot := models.Spot{
-			Twitname:   strings.ToLower(tweet.User.ScreenName),
+			TruckID:    strings.ToLower(tweet.User.ScreenName),
 			LocationID: location.ID,
 			TweetID:    tweet.ID,
 		}

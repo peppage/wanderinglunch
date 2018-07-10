@@ -11,8 +11,8 @@ alter table tweets alter column time set data type bigint;
 alter table subs alter column replacement set not null;
 
 create table spots (
-    twitname text references trucks(twitname),
-    location_id bigint references locations(id),
-    tweet_id bigint references tweets(id),
-    primary key (location_id, tweet_id)
+truck_id text references trucks(twitname) NOT NULl,
+location_id bigint references locations(id) NOT NULL,
+tweet_id bigint references tweets(id) NOT NULL,
+primary key (location_id, tweet_id)
 );

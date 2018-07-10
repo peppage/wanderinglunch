@@ -74,7 +74,7 @@ var TruckColumns = struct {
 
 // truckR is where relationships are stored.
 type truckR struct {
-	TwitnameSpots SpotSlice
+	Spots SpotSlice
 }
 
 // NewStruct creates a new relationship struct
@@ -327,15 +327,15 @@ func (q truckQuery) Exists(ctx context.Context, exec boil.ContextExecutor) (bool
 	return count > 0, nil
 }
 
-// TwitnameSpots retrieves all the spot's Spots with an executor via twitname column.
-func (o *Truck) TwitnameSpots(mods ...qm.QueryMod) spotQuery {
+// Spots retrieves all the spot's Spots with an executor.
+func (o *Truck) Spots(mods ...qm.QueryMod) spotQuery {
 	var queryMods []qm.QueryMod
 	if len(mods) != 0 {
 		queryMods = append(queryMods, mods...)
 	}
 
 	queryMods = append(queryMods,
-		qm.Where("\"spots\".\"twitname\"=?", o.Twitname),
+		qm.Where("\"spots\".\"truck_id\"=?", o.Twitname),
 	)
 
 	query := Spots(queryMods...)
@@ -348,9 +348,9 @@ func (o *Truck) TwitnameSpots(mods ...qm.QueryMod) spotQuery {
 	return query
 }
 
-// LoadTwitnameSpots allows an eager lookup of values, cached into the
+// LoadSpots allows an eager lookup of values, cached into the
 // loaded structs of the objects. This is for a 1-M or N-M relationship.
-func (truckL) LoadTwitnameSpots(ctx context.Context, e boil.ContextExecutor, singular bool, maybeTruck interface{}, mods queries.Applicator) error {
+func (truckL) LoadSpots(ctx context.Context, e boil.ContextExecutor, singular bool, maybeTruck interface{}, mods queries.Applicator) error {
 	var slice []*Truck
 	var object *Truck
 
@@ -383,7 +383,7 @@ func (truckL) LoadTwitnameSpots(ctx context.Context, e boil.ContextExecutor, sin
 		}
 	}
 
-	query := NewQuery(qm.From(`spots`), qm.WhereIn(`twitname in ?`, args...))
+	query := NewQuery(qm.From(`spots`), qm.WhereIn(`truck_id in ?`, args...))
 	if mods != nil {
 		mods.Apply(query)
 	}
@@ -413,24 +413,24 @@ func (truckL) LoadTwitnameSpots(ctx context.Context, e boil.ContextExecutor, sin
 		}
 	}
 	if singular {
-		object.R.TwitnameSpots = resultSlice
+		object.R.Spots = resultSlice
 		for _, foreign := range resultSlice {
 			if foreign.R == nil {
 				foreign.R = &spotR{}
 			}
-			foreign.R.Twitname = object
+			foreign.R.Truck = object
 		}
 		return nil
 	}
 
 	for _, foreign := range resultSlice {
 		for _, local := range slice {
-			if local.Twitname == foreign.Twitname {
-				local.R.TwitnameSpots = append(local.R.TwitnameSpots, foreign)
+			if local.Twitname == foreign.TruckID {
+				local.R.Spots = append(local.R.Spots, foreign)
 				if foreign.R == nil {
 					foreign.R = &spotR{}
 				}
-				foreign.R.Twitname = local
+				foreign.R.Truck = local
 				break
 			}
 		}
@@ -439,22 +439,22 @@ func (truckL) LoadTwitnameSpots(ctx context.Context, e boil.ContextExecutor, sin
 	return nil
 }
 
-// AddTwitnameSpots adds the given related objects to the existing relationships
+// AddSpots adds the given related objects to the existing relationships
 // of the truck, optionally inserting them as new records.
-// Appends related to o.R.TwitnameSpots.
-// Sets related.R.Twitname appropriately.
-func (o *Truck) AddTwitnameSpots(ctx context.Context, exec boil.ContextExecutor, insert bool, related ...*Spot) error {
+// Appends related to o.R.Spots.
+// Sets related.R.Truck appropriately.
+func (o *Truck) AddSpots(ctx context.Context, exec boil.ContextExecutor, insert bool, related ...*Spot) error {
 	var err error
 	for _, rel := range related {
 		if insert {
-			rel.Twitname = o.Twitname
+			rel.TruckID = o.Twitname
 			if err = rel.Insert(ctx, exec, boil.Infer()); err != nil {
 				return errors.Wrap(err, "failed to insert into foreign table")
 			}
 		} else {
 			updateQuery := fmt.Sprintf(
 				"UPDATE \"spots\" SET %s WHERE %s",
-				strmangle.SetParamNames("\"", "\"", 1, []string{"twitname"}),
+				strmangle.SetParamNames("\"", "\"", 1, []string{"truck_id"}),
 				strmangle.WhereClause("\"", "\"", 2, spotPrimaryKeyColumns),
 			)
 			values := []interface{}{o.Twitname, rel.LocationID, rel.TweetID}
@@ -468,25 +468,25 @@ func (o *Truck) AddTwitnameSpots(ctx context.Context, exec boil.ContextExecutor,
 				return errors.Wrap(err, "failed to update foreign table")
 			}
 
-			rel.Twitname = o.Twitname
+			rel.TruckID = o.Twitname
 		}
 	}
 
 	if o.R == nil {
 		o.R = &truckR{
-			TwitnameSpots: related,
+			Spots: related,
 		}
 	} else {
-		o.R.TwitnameSpots = append(o.R.TwitnameSpots, related...)
+		o.R.Spots = append(o.R.Spots, related...)
 	}
 
 	for _, rel := range related {
 		if rel.R == nil {
 			rel.R = &spotR{
-				Twitname: o,
+				Truck: o,
 			}
 		} else {
-			rel.R.Twitname = o
+			rel.R.Truck = o
 		}
 	}
 	return nil

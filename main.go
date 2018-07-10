@@ -3,14 +3,17 @@ package main
 //go:generate sqlboiler --wipe psql
 
 import (
+	"context"
 	"database/sql"
 	"log"
 	"net/http"
 
+	"wanderinglunch/models"
 	"wanderinglunch/updator"
 
 	"github.com/go-chi/chi"
 	_ "github.com/lib/pq"
+	"github.com/volatiletech/sqlboiler/queries/qm"
 )
 
 var db *sql.DB
@@ -23,7 +26,7 @@ func init() {
 		ConsumerSecret: "",
 	})
 
-	updator.Start(db)
+	//updator.Start(db)
 }
 
 func setupDB() {
@@ -54,5 +57,13 @@ func routes() *chi.Mux {
 }
 
 func index(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("hey"))
+	spots, err := models.Spots(qm.Load("Location"), qm.Load("Truck")).All(context.Background(), db)
+	if err != nil {
+		w.Write([]byte(err.Error()))
+	}
+
+	for _, spot := range spots {
+		log.Printf("spots: %v, %v, %v", spot, spot.R.Truck, spot.R.Location)
+	}
+
 }

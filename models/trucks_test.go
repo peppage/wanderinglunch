@@ -494,7 +494,7 @@ func testTrucksInsertWhitelist(t *testing.T) {
 	}
 }
 
-func testTruckToManyTwitnameSpots(t *testing.T) {
+func testTruckToManySpots(t *testing.T) {
 	var err error
 	ctx := context.Background()
 	tx := MustTx(boil.BeginTx(ctx, nil))
@@ -519,8 +519,8 @@ func testTruckToManyTwitnameSpots(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	b.Twitname = a.Twitname
-	c.Twitname = a.Twitname
+	b.TruckID = a.Twitname
+	c.TruckID = a.Twitname
 
 	if err = b.Insert(ctx, tx, boil.Infer()); err != nil {
 		t.Fatal(err)
@@ -529,17 +529,17 @@ func testTruckToManyTwitnameSpots(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	spot, err := a.TwitnameSpots().All(ctx, tx)
+	spot, err := a.Spots().All(ctx, tx)
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	bFound, cFound := false, false
 	for _, v := range spot {
-		if v.Twitname == b.Twitname {
+		if v.TruckID == b.TruckID {
 			bFound = true
 		}
-		if v.Twitname == c.Twitname {
+		if v.TruckID == c.TruckID {
 			cFound = true
 		}
 	}
@@ -552,18 +552,18 @@ func testTruckToManyTwitnameSpots(t *testing.T) {
 	}
 
 	slice := TruckSlice{&a}
-	if err = a.L.LoadTwitnameSpots(ctx, tx, false, (*[]*Truck)(&slice), nil); err != nil {
+	if err = a.L.LoadSpots(ctx, tx, false, (*[]*Truck)(&slice), nil); err != nil {
 		t.Fatal(err)
 	}
-	if got := len(a.R.TwitnameSpots); got != 2 {
+	if got := len(a.R.Spots); got != 2 {
 		t.Error("number of eager loaded records wrong, got:", got)
 	}
 
-	a.R.TwitnameSpots = nil
-	if err = a.L.LoadTwitnameSpots(ctx, tx, true, &a, nil); err != nil {
+	a.R.Spots = nil
+	if err = a.L.LoadSpots(ctx, tx, true, &a, nil); err != nil {
 		t.Fatal(err)
 	}
-	if got := len(a.R.TwitnameSpots); got != 2 {
+	if got := len(a.R.Spots); got != 2 {
 		t.Error("number of eager loaded records wrong, got:", got)
 	}
 
@@ -572,7 +572,7 @@ func testTruckToManyTwitnameSpots(t *testing.T) {
 	}
 }
 
-func testTruckToManyAddOpTwitnameSpots(t *testing.T) {
+func testTruckToManyAddOpSpots(t *testing.T) {
 	var err error
 
 	ctx := context.Background()
@@ -609,7 +609,7 @@ func testTruckToManyAddOpTwitnameSpots(t *testing.T) {
 	}
 
 	for i, x := range foreignersSplitByInsertion {
-		err = a.AddTwitnameSpots(ctx, tx, i != 0, x...)
+		err = a.AddSpots(ctx, tx, i != 0, x...)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -617,28 +617,28 @@ func testTruckToManyAddOpTwitnameSpots(t *testing.T) {
 		first := x[0]
 		second := x[1]
 
-		if a.Twitname != first.Twitname {
-			t.Error("foreign key was wrong value", a.Twitname, first.Twitname)
+		if a.Twitname != first.TruckID {
+			t.Error("foreign key was wrong value", a.Twitname, first.TruckID)
 		}
-		if a.Twitname != second.Twitname {
-			t.Error("foreign key was wrong value", a.Twitname, second.Twitname)
+		if a.Twitname != second.TruckID {
+			t.Error("foreign key was wrong value", a.Twitname, second.TruckID)
 		}
 
-		if first.R.Twitname != &a {
+		if first.R.Truck != &a {
 			t.Error("relationship was not added properly to the foreign slice")
 		}
-		if second.R.Twitname != &a {
+		if second.R.Truck != &a {
 			t.Error("relationship was not added properly to the foreign slice")
 		}
 
-		if a.R.TwitnameSpots[i*2] != first {
+		if a.R.Spots[i*2] != first {
 			t.Error("relationship struct slice not set to correct value")
 		}
-		if a.R.TwitnameSpots[i*2+1] != second {
+		if a.R.Spots[i*2+1] != second {
 			t.Error("relationship struct slice not set to correct value")
 		}
 
-		count, err := a.TwitnameSpots().Count(ctx, tx)
+		count, err := a.Spots().Count(ctx, tx)
 		if err != nil {
 			t.Fatal(err)
 		}

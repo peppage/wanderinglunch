@@ -494,6 +494,160 @@ func testTweetsInsertWhitelist(t *testing.T) {
 	}
 }
 
+func testTweetToManySpots(t *testing.T) {
+	var err error
+	ctx := context.Background()
+	tx := MustTx(boil.BeginTx(ctx, nil))
+	defer func() { _ = tx.Rollback() }()
+
+	var a Tweet
+	var b, c Spot
+
+	seed := randomize.NewSeed()
+	if err = randomize.Struct(seed, &a, tweetDBTypes, true, tweetColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Tweet struct: %s", err)
+	}
+
+	if err := a.Insert(ctx, tx, boil.Infer()); err != nil {
+		t.Fatal(err)
+	}
+
+	if err = randomize.Struct(seed, &b, spotDBTypes, false, spotColumnsWithDefault...); err != nil {
+		t.Fatal(err)
+	}
+	if err = randomize.Struct(seed, &c, spotDBTypes, false, spotColumnsWithDefault...); err != nil {
+		t.Fatal(err)
+	}
+
+	b.TweetID = a.ID
+	c.TweetID = a.ID
+
+	if err = b.Insert(ctx, tx, boil.Infer()); err != nil {
+		t.Fatal(err)
+	}
+	if err = c.Insert(ctx, tx, boil.Infer()); err != nil {
+		t.Fatal(err)
+	}
+
+	spot, err := a.Spots().All(ctx, tx)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	bFound, cFound := false, false
+	for _, v := range spot {
+		if v.TweetID == b.TweetID {
+			bFound = true
+		}
+		if v.TweetID == c.TweetID {
+			cFound = true
+		}
+	}
+
+	if !bFound {
+		t.Error("expected to find b")
+	}
+	if !cFound {
+		t.Error("expected to find c")
+	}
+
+	slice := TweetSlice{&a}
+	if err = a.L.LoadSpots(ctx, tx, false, (*[]*Tweet)(&slice), nil); err != nil {
+		t.Fatal(err)
+	}
+	if got := len(a.R.Spots); got != 2 {
+		t.Error("number of eager loaded records wrong, got:", got)
+	}
+
+	a.R.Spots = nil
+	if err = a.L.LoadSpots(ctx, tx, true, &a, nil); err != nil {
+		t.Fatal(err)
+	}
+	if got := len(a.R.Spots); got != 2 {
+		t.Error("number of eager loaded records wrong, got:", got)
+	}
+
+	if t.Failed() {
+		t.Logf("%#v", spot)
+	}
+}
+
+func testTweetToManyAddOpSpots(t *testing.T) {
+	var err error
+
+	ctx := context.Background()
+	tx := MustTx(boil.BeginTx(ctx, nil))
+	defer func() { _ = tx.Rollback() }()
+
+	var a Tweet
+	var b, c, d, e Spot
+
+	seed := randomize.NewSeed()
+	if err = randomize.Struct(seed, &a, tweetDBTypes, false, strmangle.SetComplement(tweetPrimaryKeyColumns, tweetColumnsWithoutDefault)...); err != nil {
+		t.Fatal(err)
+	}
+	foreigners := []*Spot{&b, &c, &d, &e}
+	for _, x := range foreigners {
+		if err = randomize.Struct(seed, x, spotDBTypes, false, strmangle.SetComplement(spotPrimaryKeyColumns, spotColumnsWithoutDefault)...); err != nil {
+			t.Fatal(err)
+		}
+	}
+
+	if err := a.Insert(ctx, tx, boil.Infer()); err != nil {
+		t.Fatal(err)
+	}
+	if err = b.Insert(ctx, tx, boil.Infer()); err != nil {
+		t.Fatal(err)
+	}
+	if err = c.Insert(ctx, tx, boil.Infer()); err != nil {
+		t.Fatal(err)
+	}
+
+	foreignersSplitByInsertion := [][]*Spot{
+		{&b, &c},
+		{&d, &e},
+	}
+
+	for i, x := range foreignersSplitByInsertion {
+		err = a.AddSpots(ctx, tx, i != 0, x...)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		first := x[0]
+		second := x[1]
+
+		if a.ID != first.TweetID {
+			t.Error("foreign key was wrong value", a.ID, first.TweetID)
+		}
+		if a.ID != second.TweetID {
+			t.Error("foreign key was wrong value", a.ID, second.TweetID)
+		}
+
+		if first.R.Tweet != &a {
+			t.Error("relationship was not added properly to the foreign slice")
+		}
+		if second.R.Tweet != &a {
+			t.Error("relationship was not added properly to the foreign slice")
+		}
+
+		if a.R.Spots[i*2] != first {
+			t.Error("relationship struct slice not set to correct value")
+		}
+		if a.R.Spots[i*2+1] != second {
+			t.Error("relationship struct slice not set to correct value")
+		}
+
+		count, err := a.Spots().Count(ctx, tx)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if want := int64((i + 1) * 2); count != want {
+			t.Error("want", want, "got", count)
+		}
+	}
+}
+
 func testTweetsReload(t *testing.T) {
 	t.Parallel()
 
@@ -568,7 +722,7 @@ func testTweetsSelect(t *testing.T) {
 }
 
 var (
-	tweetDBTypes = map[string]string{`Done`: `boolean`, `ID`: `text`, `Retweeted`: `boolean`, `Text`: `text`, `Time`: `integer`, `Twitname`: `text`}
+	tweetDBTypes = map[string]string{`Done`: `boolean`, `ID`: `bigint`, `Retweeted`: `boolean`, `Text`: `text`, `Time`: `bigint`, `Twitname`: `text`}
 	_            = bytes.MinRead
 )
 

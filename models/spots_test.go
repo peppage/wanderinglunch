@@ -494,7 +494,7 @@ func testSpotsInsertWhitelist(t *testing.T) {
 	}
 }
 
-func testSpotToOneTruckUsingTwitname(t *testing.T) {
+func testSpotToOneTruckUsingTruck(t *testing.T) {
 	ctx := context.Background()
 	tx := MustTx(boil.BeginTx(ctx, nil))
 	defer func() { _ = tx.Rollback() }()
@@ -514,12 +514,12 @@ func testSpotToOneTruckUsingTwitname(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	local.Twitname = foreign.Twitname
+	local.TruckID = foreign.Twitname
 	if err := local.Insert(ctx, tx, boil.Infer()); err != nil {
 		t.Fatal(err)
 	}
 
-	check, err := local.Twitname().One(ctx, tx)
+	check, err := local.Truck().One(ctx, tx)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -529,18 +529,18 @@ func testSpotToOneTruckUsingTwitname(t *testing.T) {
 	}
 
 	slice := SpotSlice{&local}
-	if err = local.L.LoadTwitname(ctx, tx, false, (*[]*Spot)(&slice), nil); err != nil {
+	if err = local.L.LoadTruck(ctx, tx, false, (*[]*Spot)(&slice), nil); err != nil {
 		t.Fatal(err)
 	}
-	if local.R.Twitname == nil {
+	if local.R.Truck == nil {
 		t.Error("struct should have been eager loaded")
 	}
 
-	local.R.Twitname = nil
-	if err = local.L.LoadTwitname(ctx, tx, true, &local, nil); err != nil {
+	local.R.Truck = nil
+	if err = local.L.LoadTruck(ctx, tx, true, &local, nil); err != nil {
 		t.Fatal(err)
 	}
-	if local.R.Twitname == nil {
+	if local.R.Truck == nil {
 		t.Error("struct should have been eager loaded")
 	}
 }
@@ -647,7 +647,7 @@ func testSpotToOneTweetUsingTweet(t *testing.T) {
 	}
 }
 
-func testSpotToOneSetOpTruckUsingTwitname(t *testing.T) {
+func testSpotToOneSetOpTruckUsingTruck(t *testing.T) {
 	var err error
 
 	ctx := context.Background()
@@ -676,31 +676,31 @@ func testSpotToOneSetOpTruckUsingTwitname(t *testing.T) {
 	}
 
 	for i, x := range []*Truck{&b, &c} {
-		err = a.SetTwitname(ctx, tx, i != 0, x)
+		err = a.SetTruck(ctx, tx, i != 0, x)
 		if err != nil {
 			t.Fatal(err)
 		}
 
-		if a.R.Twitname != x {
+		if a.R.Truck != x {
 			t.Error("relationship struct not set to correct value")
 		}
 
-		if x.R.TwitnameSpots[0] != &a {
+		if x.R.Spots[0] != &a {
 			t.Error("failed to append to foreign relationship struct")
 		}
-		if a.Twitname != x.Twitname {
-			t.Error("foreign key was wrong value", a.Twitname)
+		if a.TruckID != x.Twitname {
+			t.Error("foreign key was wrong value", a.TruckID)
 		}
 
-		zero := reflect.Zero(reflect.TypeOf(a.Twitname))
-		reflect.Indirect(reflect.ValueOf(&a.Twitname)).Set(zero)
+		zero := reflect.Zero(reflect.TypeOf(a.TruckID))
+		reflect.Indirect(reflect.ValueOf(&a.TruckID)).Set(zero)
 
 		if err = a.Reload(ctx, tx); err != nil {
 			t.Fatal("failed to reload", err)
 		}
 
-		if a.Twitname != x.Twitname {
-			t.Error("foreign key was wrong value", a.Twitname, x.Twitname)
+		if a.TruckID != x.Twitname {
+			t.Error("foreign key was wrong value", a.TruckID, x.Twitname)
 		}
 	}
 }
@@ -885,7 +885,7 @@ func testSpotsSelect(t *testing.T) {
 }
 
 var (
-	spotDBTypes = map[string]string{`LocationID`: `bigint`, `TweetID`: `bigint`, `Twitname`: `text`}
+	spotDBTypes = map[string]string{`LocationID`: `bigint`, `TruckID`: `text`, `TweetID`: `bigint`}
 	_           = bytes.MinRead
 )
 

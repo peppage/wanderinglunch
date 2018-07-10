@@ -22,7 +22,7 @@ import (
 
 // Spot is an object representing the database table.
 type Spot struct {
-	Twitname   string `boil:"twitname" json:"twitname" toml:"twitname" yaml:"twitname"`
+	TruckID    string `boil:"truck_id" json:"truck_id" toml:"truck_id" yaml:"truck_id"`
 	LocationID int64  `boil:"location_id" json:"location_id" toml:"location_id" yaml:"location_id"`
 	TweetID    int64  `boil:"tweet_id" json:"tweet_id" toml:"tweet_id" yaml:"tweet_id"`
 
@@ -31,18 +31,18 @@ type Spot struct {
 }
 
 var SpotColumns = struct {
-	Twitname   string
+	TruckID    string
 	LocationID string
 	TweetID    string
 }{
-	Twitname:   "twitname",
+	TruckID:    "truck_id",
 	LocationID: "location_id",
 	TweetID:    "tweet_id",
 }
 
 // spotR is where relationships are stored.
 type spotR struct {
-	Twitname *Truck
+	Truck    *Truck
 	Location *Location
 	Tweet    *Tweet
 }
@@ -56,8 +56,8 @@ func (*spotR) NewStruct() *spotR {
 type spotL struct{}
 
 var (
-	spotColumns               = []string{"twitname", "location_id", "tweet_id"}
-	spotColumnsWithoutDefault = []string{"twitname", "location_id", "tweet_id"}
+	spotColumns               = []string{"truck_id", "location_id", "tweet_id"}
+	spotColumnsWithoutDefault = []string{"truck_id", "location_id", "tweet_id"}
 	spotColumnsWithDefault    = []string{}
 	spotPrimaryKeyColumns     = []string{"location_id", "tweet_id"}
 )
@@ -300,7 +300,7 @@ func (q spotQuery) Exists(ctx context.Context, exec boil.ContextExecutor) (bool,
 // Truck pointed to by the foreign key.
 func (o *Spot) Truck(mods ...qm.QueryMod) truckQuery {
 	queryMods := []qm.QueryMod{
-		qm.Where("twitname=?", o.Twitname),
+		qm.Where("twitname=?", o.TruckID),
 	}
 
 	queryMods = append(queryMods, mods...)
@@ -339,9 +339,9 @@ func (o *Spot) Tweet(mods ...qm.QueryMod) tweetQuery {
 	return query
 }
 
-// LoadTwitname allows an eager lookup of values, cached into the
+// LoadTruck allows an eager lookup of values, cached into the
 // loaded structs of the objects. This is for an N-1 relationship.
-func (spotL) LoadTwitname(ctx context.Context, e boil.ContextExecutor, singular bool, maybeSpot interface{}, mods queries.Applicator) error {
+func (spotL) LoadTruck(ctx context.Context, e boil.ContextExecutor, singular bool, maybeSpot interface{}, mods queries.Applicator) error {
 	var slice []*Spot
 	var object *Spot
 
@@ -356,7 +356,7 @@ func (spotL) LoadTwitname(ctx context.Context, e boil.ContextExecutor, singular 
 		if object.R == nil {
 			object.R = &spotR{}
 		}
-		args = append(args, object.Twitname)
+		args = append(args, object.TruckID)
 	} else {
 	Outer:
 		for _, obj := range slice {
@@ -365,12 +365,12 @@ func (spotL) LoadTwitname(ctx context.Context, e boil.ContextExecutor, singular 
 			}
 
 			for _, a := range args {
-				if a == obj.Twitname {
+				if a == obj.TruckID {
 					continue Outer
 				}
 			}
 
-			args = append(args, obj.Twitname)
+			args = append(args, obj.TruckID)
 		}
 	}
 
@@ -410,22 +410,22 @@ func (spotL) LoadTwitname(ctx context.Context, e boil.ContextExecutor, singular 
 
 	if singular {
 		foreign := resultSlice[0]
-		object.R.Twitname = foreign
+		object.R.Truck = foreign
 		if foreign.R == nil {
 			foreign.R = &truckR{}
 		}
-		foreign.R.TwitnameSpots = append(foreign.R.TwitnameSpots, object)
+		foreign.R.Spots = append(foreign.R.Spots, object)
 		return nil
 	}
 
 	for _, local := range slice {
 		for _, foreign := range resultSlice {
-			if local.Twitname == foreign.Twitname {
-				local.R.Twitname = foreign
+			if local.TruckID == foreign.Twitname {
+				local.R.Truck = foreign
 				if foreign.R == nil {
 					foreign.R = &truckR{}
 				}
-				foreign.R.TwitnameSpots = append(foreign.R.TwitnameSpots, local)
+				foreign.R.Spots = append(foreign.R.Spots, local)
 				break
 			}
 		}
@@ -624,10 +624,10 @@ func (spotL) LoadTweet(ctx context.Context, e boil.ContextExecutor, singular boo
 	return nil
 }
 
-// SetTwitname of the spot to the related item.
-// Sets o.R.Twitname to related.
-// Adds o to related.R.TwitnameSpots.
-func (o *Spot) SetTwitname(ctx context.Context, exec boil.ContextExecutor, insert bool, related *Truck) error {
+// SetTruck of the spot to the related item.
+// Sets o.R.Truck to related.
+// Adds o to related.R.Spots.
+func (o *Spot) SetTruck(ctx context.Context, exec boil.ContextExecutor, insert bool, related *Truck) error {
 	var err error
 	if insert {
 		if err = related.Insert(ctx, exec, boil.Infer()); err != nil {
@@ -637,7 +637,7 @@ func (o *Spot) SetTwitname(ctx context.Context, exec boil.ContextExecutor, inser
 
 	updateQuery := fmt.Sprintf(
 		"UPDATE \"spots\" SET %s WHERE %s",
-		strmangle.SetParamNames("\"", "\"", 1, []string{"twitname"}),
+		strmangle.SetParamNames("\"", "\"", 1, []string{"truck_id"}),
 		strmangle.WhereClause("\"", "\"", 2, spotPrimaryKeyColumns),
 	)
 	values := []interface{}{related.Twitname, o.LocationID, o.TweetID}
@@ -651,21 +651,21 @@ func (o *Spot) SetTwitname(ctx context.Context, exec boil.ContextExecutor, inser
 		return errors.Wrap(err, "failed to update local table")
 	}
 
-	o.Twitname = related.Twitname
+	o.TruckID = related.Twitname
 	if o.R == nil {
 		o.R = &spotR{
-			Twitname: related,
+			Truck: related,
 		}
 	} else {
-		o.R.Twitname = related
+		o.R.Truck = related
 	}
 
 	if related.R == nil {
 		related.R = &truckR{
-			TwitnameSpots: SpotSlice{o},
+			Spots: SpotSlice{o},
 		}
 	} else {
-		related.R.TwitnameSpots = append(related.R.TwitnameSpots, o)
+		related.R.Spots = append(related.R.Spots, o)
 	}
 
 	return nil
