@@ -67,7 +67,7 @@ func InitializeTwitter(creds TwitterCreds) {
 func findLocationsTask() {
 	log.Printf("Finding Locations")
 
-	trucks, err := models.Trucks().All(context.Background(), db)
+	trucks, err := models.Trucks(qm.Where("archive = ?", false)).All(context.Background(), db)
 	if err != nil {
 		log.Printf("Failed getting trucks, %v", err)
 	}
