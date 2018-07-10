@@ -12,6 +12,7 @@ import (
 	"wanderinglunch/updator"
 
 	"github.com/go-chi/chi"
+	"github.com/go-chi/render"
 	_ "github.com/lib/pq"
 	"github.com/volatiletech/sqlboiler/queries/qm"
 )
@@ -63,7 +64,8 @@ func index(w http.ResponseWriter, r *http.Request) {
 	}
 
 	for _, spot := range spots {
-		log.Printf("spots: %v, %v, %v", spot, spot.R.Truck, spot.R.Location)
+		render.JSON(w, r, spot)
+		return
 	}
 
 }
