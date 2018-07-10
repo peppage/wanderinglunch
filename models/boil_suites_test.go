@@ -14,8 +14,8 @@ import "testing"
 func TestParent(t *testing.T) {
 	t.Run("Images", testImages)
 	t.Run("Locations", testLocations)
-	t.Run("Messages", testMessages)
 	t.Run("Sites", testSites)
+	t.Run("Spots", testSpots)
 	t.Run("Subs", testSubs)
 	t.Run("Trucks", testTrucks)
 	t.Run("Tweets", testTweets)
@@ -25,8 +25,8 @@ func TestParent(t *testing.T) {
 func TestDelete(t *testing.T) {
 	t.Run("Images", testImagesDelete)
 	t.Run("Locations", testLocationsDelete)
-	t.Run("Messages", testMessagesDelete)
 	t.Run("Sites", testSitesDelete)
+	t.Run("Spots", testSpotsDelete)
 	t.Run("Subs", testSubsDelete)
 	t.Run("Trucks", testTrucksDelete)
 	t.Run("Tweets", testTweetsDelete)
@@ -36,8 +36,8 @@ func TestDelete(t *testing.T) {
 func TestQueryDeleteAll(t *testing.T) {
 	t.Run("Images", testImagesQueryDeleteAll)
 	t.Run("Locations", testLocationsQueryDeleteAll)
-	t.Run("Messages", testMessagesQueryDeleteAll)
 	t.Run("Sites", testSitesQueryDeleteAll)
+	t.Run("Spots", testSpotsQueryDeleteAll)
 	t.Run("Subs", testSubsQueryDeleteAll)
 	t.Run("Trucks", testTrucksQueryDeleteAll)
 	t.Run("Tweets", testTweetsQueryDeleteAll)
@@ -47,8 +47,8 @@ func TestQueryDeleteAll(t *testing.T) {
 func TestSliceDeleteAll(t *testing.T) {
 	t.Run("Images", testImagesSliceDeleteAll)
 	t.Run("Locations", testLocationsSliceDeleteAll)
-	t.Run("Messages", testMessagesSliceDeleteAll)
 	t.Run("Sites", testSitesSliceDeleteAll)
+	t.Run("Spots", testSpotsSliceDeleteAll)
 	t.Run("Subs", testSubsSliceDeleteAll)
 	t.Run("Trucks", testTrucksSliceDeleteAll)
 	t.Run("Tweets", testTweetsSliceDeleteAll)
@@ -58,8 +58,8 @@ func TestSliceDeleteAll(t *testing.T) {
 func TestExists(t *testing.T) {
 	t.Run("Images", testImagesExists)
 	t.Run("Locations", testLocationsExists)
-	t.Run("Messages", testMessagesExists)
 	t.Run("Sites", testSitesExists)
+	t.Run("Spots", testSpotsExists)
 	t.Run("Subs", testSubsExists)
 	t.Run("Trucks", testTrucksExists)
 	t.Run("Tweets", testTweetsExists)
@@ -69,8 +69,8 @@ func TestExists(t *testing.T) {
 func TestFind(t *testing.T) {
 	t.Run("Images", testImagesFind)
 	t.Run("Locations", testLocationsFind)
-	t.Run("Messages", testMessagesFind)
 	t.Run("Sites", testSitesFind)
+	t.Run("Spots", testSpotsFind)
 	t.Run("Subs", testSubsFind)
 	t.Run("Trucks", testTrucksFind)
 	t.Run("Tweets", testTweetsFind)
@@ -80,8 +80,8 @@ func TestFind(t *testing.T) {
 func TestBind(t *testing.T) {
 	t.Run("Images", testImagesBind)
 	t.Run("Locations", testLocationsBind)
-	t.Run("Messages", testMessagesBind)
 	t.Run("Sites", testSitesBind)
+	t.Run("Spots", testSpotsBind)
 	t.Run("Subs", testSubsBind)
 	t.Run("Trucks", testTrucksBind)
 	t.Run("Tweets", testTweetsBind)
@@ -91,8 +91,8 @@ func TestBind(t *testing.T) {
 func TestOne(t *testing.T) {
 	t.Run("Images", testImagesOne)
 	t.Run("Locations", testLocationsOne)
-	t.Run("Messages", testMessagesOne)
 	t.Run("Sites", testSitesOne)
+	t.Run("Spots", testSpotsOne)
 	t.Run("Subs", testSubsOne)
 	t.Run("Trucks", testTrucksOne)
 	t.Run("Tweets", testTweetsOne)
@@ -102,8 +102,8 @@ func TestOne(t *testing.T) {
 func TestAll(t *testing.T) {
 	t.Run("Images", testImagesAll)
 	t.Run("Locations", testLocationsAll)
-	t.Run("Messages", testMessagesAll)
 	t.Run("Sites", testSitesAll)
+	t.Run("Spots", testSpotsAll)
 	t.Run("Subs", testSubsAll)
 	t.Run("Trucks", testTrucksAll)
 	t.Run("Tweets", testTweetsAll)
@@ -113,8 +113,8 @@ func TestAll(t *testing.T) {
 func TestCount(t *testing.T) {
 	t.Run("Images", testImagesCount)
 	t.Run("Locations", testLocationsCount)
-	t.Run("Messages", testMessagesCount)
 	t.Run("Sites", testSitesCount)
+	t.Run("Spots", testSpotsCount)
 	t.Run("Subs", testSubsCount)
 	t.Run("Trucks", testTrucksCount)
 	t.Run("Tweets", testTweetsCount)
@@ -124,8 +124,8 @@ func TestCount(t *testing.T) {
 func TestHooks(t *testing.T) {
 	t.Run("Images", testImagesHooks)
 	t.Run("Locations", testLocationsHooks)
-	t.Run("Messages", testMessagesHooks)
 	t.Run("Sites", testSitesHooks)
+	t.Run("Spots", testSpotsHooks)
 	t.Run("Subs", testSubsHooks)
 	t.Run("Trucks", testTrucksHooks)
 	t.Run("Tweets", testTweetsHooks)
@@ -137,10 +137,10 @@ func TestInsert(t *testing.T) {
 	t.Run("Images", testImagesInsertWhitelist)
 	t.Run("Locations", testLocationsInsert)
 	t.Run("Locations", testLocationsInsertWhitelist)
-	t.Run("Messages", testMessagesInsert)
-	t.Run("Messages", testMessagesInsertWhitelist)
 	t.Run("Sites", testSitesInsert)
 	t.Run("Sites", testSitesInsertWhitelist)
+	t.Run("Spots", testSpotsInsert)
+	t.Run("Spots", testSpotsInsertWhitelist)
 	t.Run("Subs", testSubsInsert)
 	t.Run("Subs", testSubsInsertWhitelist)
 	t.Run("Trucks", testTrucksInsert)
@@ -153,7 +153,11 @@ func TestInsert(t *testing.T) {
 
 // TestToOne tests cannot be run in parallel
 // or deadlocks can occur.
-func TestToOne(t *testing.T) {}
+func TestToOne(t *testing.T) {
+	t.Run("SpotToTruckUsingTwitname", testSpotToOneTruckUsingTwitname)
+	t.Run("SpotToLocationUsingLocation", testSpotToOneLocationUsingLocation)
+	t.Run("SpotToTweetUsingTweet", testSpotToOneTweetUsingTweet)
+}
 
 // TestOneToOne tests cannot be run in parallel
 // or deadlocks can occur.
@@ -161,11 +165,19 @@ func TestOneToOne(t *testing.T) {}
 
 // TestToMany tests cannot be run in parallel
 // or deadlocks can occur.
-func TestToMany(t *testing.T) {}
+func TestToMany(t *testing.T) {
+	t.Run("LocationToSpots", testLocationToManySpots)
+	t.Run("TruckToTwitnameSpots", testTruckToManyTwitnameSpots)
+	t.Run("TweetToSpots", testTweetToManySpots)
+}
 
 // TestToOneSet tests cannot be run in parallel
 // or deadlocks can occur.
-func TestToOneSet(t *testing.T) {}
+func TestToOneSet(t *testing.T) {
+	t.Run("SpotToTruckUsingTwitnameSpots", testSpotToOneSetOpTruckUsingTwitname)
+	t.Run("SpotToLocationUsingSpots", testSpotToOneSetOpLocationUsingLocation)
+	t.Run("SpotToTweetUsingSpots", testSpotToOneSetOpTweetUsingTweet)
+}
 
 // TestToOneRemove tests cannot be run in parallel
 // or deadlocks can occur.
@@ -181,7 +193,11 @@ func TestOneToOneRemove(t *testing.T) {}
 
 // TestToManyAdd tests cannot be run in parallel
 // or deadlocks can occur.
-func TestToManyAdd(t *testing.T) {}
+func TestToManyAdd(t *testing.T) {
+	t.Run("LocationToSpots", testLocationToManyAddOpSpots)
+	t.Run("TruckToTwitnameSpots", testTruckToManyAddOpTwitnameSpots)
+	t.Run("TweetToSpots", testTweetToManyAddOpSpots)
+}
 
 // TestToManySet tests cannot be run in parallel
 // or deadlocks can occur.
@@ -194,8 +210,8 @@ func TestToManyRemove(t *testing.T) {}
 func TestReload(t *testing.T) {
 	t.Run("Images", testImagesReload)
 	t.Run("Locations", testLocationsReload)
-	t.Run("Messages", testMessagesReload)
 	t.Run("Sites", testSitesReload)
+	t.Run("Spots", testSpotsReload)
 	t.Run("Subs", testSubsReload)
 	t.Run("Trucks", testTrucksReload)
 	t.Run("Tweets", testTweetsReload)
@@ -205,8 +221,8 @@ func TestReload(t *testing.T) {
 func TestReloadAll(t *testing.T) {
 	t.Run("Images", testImagesReloadAll)
 	t.Run("Locations", testLocationsReloadAll)
-	t.Run("Messages", testMessagesReloadAll)
 	t.Run("Sites", testSitesReloadAll)
+	t.Run("Spots", testSpotsReloadAll)
 	t.Run("Subs", testSubsReloadAll)
 	t.Run("Trucks", testTrucksReloadAll)
 	t.Run("Tweets", testTweetsReloadAll)
@@ -216,8 +232,8 @@ func TestReloadAll(t *testing.T) {
 func TestSelect(t *testing.T) {
 	t.Run("Images", testImagesSelect)
 	t.Run("Locations", testLocationsSelect)
-	t.Run("Messages", testMessagesSelect)
 	t.Run("Sites", testSitesSelect)
+	t.Run("Spots", testSpotsSelect)
 	t.Run("Subs", testSubsSelect)
 	t.Run("Trucks", testTrucksSelect)
 	t.Run("Tweets", testTweetsSelect)
@@ -227,8 +243,8 @@ func TestSelect(t *testing.T) {
 func TestUpdate(t *testing.T) {
 	t.Run("Images", testImagesUpdate)
 	t.Run("Locations", testLocationsUpdate)
-	t.Run("Messages", testMessagesUpdate)
 	t.Run("Sites", testSitesUpdate)
+	t.Run("Spots", testSpotsUpdate)
 	t.Run("Subs", testSubsUpdate)
 	t.Run("Trucks", testTrucksUpdate)
 	t.Run("Tweets", testTweetsUpdate)
@@ -238,8 +254,8 @@ func TestUpdate(t *testing.T) {
 func TestSliceUpdateAll(t *testing.T) {
 	t.Run("Images", testImagesSliceUpdateAll)
 	t.Run("Locations", testLocationsSliceUpdateAll)
-	t.Run("Messages", testMessagesSliceUpdateAll)
 	t.Run("Sites", testSitesSliceUpdateAll)
+	t.Run("Spots", testSpotsSliceUpdateAll)
 	t.Run("Subs", testSubsSliceUpdateAll)
 	t.Run("Trucks", testTrucksSliceUpdateAll)
 	t.Run("Tweets", testTweetsSliceUpdateAll)

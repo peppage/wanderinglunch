@@ -494,6 +494,160 @@ func testTrucksInsertWhitelist(t *testing.T) {
 	}
 }
 
+func testTruckToManyTwitnameSpots(t *testing.T) {
+	var err error
+	ctx := context.Background()
+	tx := MustTx(boil.BeginTx(ctx, nil))
+	defer func() { _ = tx.Rollback() }()
+
+	var a Truck
+	var b, c Spot
+
+	seed := randomize.NewSeed()
+	if err = randomize.Struct(seed, &a, truckDBTypes, true, truckColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Truck struct: %s", err)
+	}
+
+	if err := a.Insert(ctx, tx, boil.Infer()); err != nil {
+		t.Fatal(err)
+	}
+
+	if err = randomize.Struct(seed, &b, spotDBTypes, false, spotColumnsWithDefault...); err != nil {
+		t.Fatal(err)
+	}
+	if err = randomize.Struct(seed, &c, spotDBTypes, false, spotColumnsWithDefault...); err != nil {
+		t.Fatal(err)
+	}
+
+	b.Twitname = a.Twitname
+	c.Twitname = a.Twitname
+
+	if err = b.Insert(ctx, tx, boil.Infer()); err != nil {
+		t.Fatal(err)
+	}
+	if err = c.Insert(ctx, tx, boil.Infer()); err != nil {
+		t.Fatal(err)
+	}
+
+	spot, err := a.TwitnameSpots().All(ctx, tx)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	bFound, cFound := false, false
+	for _, v := range spot {
+		if v.Twitname == b.Twitname {
+			bFound = true
+		}
+		if v.Twitname == c.Twitname {
+			cFound = true
+		}
+	}
+
+	if !bFound {
+		t.Error("expected to find b")
+	}
+	if !cFound {
+		t.Error("expected to find c")
+	}
+
+	slice := TruckSlice{&a}
+	if err = a.L.LoadTwitnameSpots(ctx, tx, false, (*[]*Truck)(&slice), nil); err != nil {
+		t.Fatal(err)
+	}
+	if got := len(a.R.TwitnameSpots); got != 2 {
+		t.Error("number of eager loaded records wrong, got:", got)
+	}
+
+	a.R.TwitnameSpots = nil
+	if err = a.L.LoadTwitnameSpots(ctx, tx, true, &a, nil); err != nil {
+		t.Fatal(err)
+	}
+	if got := len(a.R.TwitnameSpots); got != 2 {
+		t.Error("number of eager loaded records wrong, got:", got)
+	}
+
+	if t.Failed() {
+		t.Logf("%#v", spot)
+	}
+}
+
+func testTruckToManyAddOpTwitnameSpots(t *testing.T) {
+	var err error
+
+	ctx := context.Background()
+	tx := MustTx(boil.BeginTx(ctx, nil))
+	defer func() { _ = tx.Rollback() }()
+
+	var a Truck
+	var b, c, d, e Spot
+
+	seed := randomize.NewSeed()
+	if err = randomize.Struct(seed, &a, truckDBTypes, false, strmangle.SetComplement(truckPrimaryKeyColumns, truckColumnsWithoutDefault)...); err != nil {
+		t.Fatal(err)
+	}
+	foreigners := []*Spot{&b, &c, &d, &e}
+	for _, x := range foreigners {
+		if err = randomize.Struct(seed, x, spotDBTypes, false, strmangle.SetComplement(spotPrimaryKeyColumns, spotColumnsWithoutDefault)...); err != nil {
+			t.Fatal(err)
+		}
+	}
+
+	if err := a.Insert(ctx, tx, boil.Infer()); err != nil {
+		t.Fatal(err)
+	}
+	if err = b.Insert(ctx, tx, boil.Infer()); err != nil {
+		t.Fatal(err)
+	}
+	if err = c.Insert(ctx, tx, boil.Infer()); err != nil {
+		t.Fatal(err)
+	}
+
+	foreignersSplitByInsertion := [][]*Spot{
+		{&b, &c},
+		{&d, &e},
+	}
+
+	for i, x := range foreignersSplitByInsertion {
+		err = a.AddTwitnameSpots(ctx, tx, i != 0, x...)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		first := x[0]
+		second := x[1]
+
+		if a.Twitname != first.Twitname {
+			t.Error("foreign key was wrong value", a.Twitname, first.Twitname)
+		}
+		if a.Twitname != second.Twitname {
+			t.Error("foreign key was wrong value", a.Twitname, second.Twitname)
+		}
+
+		if first.R.Twitname != &a {
+			t.Error("relationship was not added properly to the foreign slice")
+		}
+		if second.R.Twitname != &a {
+			t.Error("relationship was not added properly to the foreign slice")
+		}
+
+		if a.R.TwitnameSpots[i*2] != first {
+			t.Error("relationship struct slice not set to correct value")
+		}
+		if a.R.TwitnameSpots[i*2+1] != second {
+			t.Error("relationship struct slice not set to correct value")
+		}
+
+		count, err := a.TwitnameSpots().Count(ctx, tx)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if want := int64((i + 1) * 2); count != want {
+			t.Error("want", want, "got", count)
+		}
+	}
+}
+
 func testTrucksReload(t *testing.T) {
 	t.Parallel()
 

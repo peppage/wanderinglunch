@@ -10,9 +10,9 @@ func TestUpsert(t *testing.T) {
 
 	t.Run("Locations", testLocationsUpsert)
 
-	t.Run("Messages", testMessagesUpsert)
-
 	t.Run("Sites", testSitesUpsert)
+
+	t.Run("Spots", testSpotsUpsert)
 
 	t.Run("Subs", testSubsUpsert)
 

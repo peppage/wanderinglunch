@@ -2,6 +2,24 @@
 
 
 [[projects]]
+  name = "github.com/cenkalti/backoff"
+  packages = ["."]
+  revision = "2ea60e5f094469f9e65adb9cd103795b73ae743e"
+  version = "v2.0.0"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/dghubble/go-twitter"
+  packages = ["twitter"]
+  revision = "b77318be397b2373226c0d80337213103b853637"
+
+[[projects]]
+  name = "github.com/dghubble/sling"
+  packages = ["."]
+  revision = "eb56e89ac5088bebb12eef3cb4b293300f43608b"
+  version = "v1.1.0"
+
+[[projects]]
   name = "github.com/ericlagergren/decimal"
   packages = [
     ".",
@@ -23,6 +41,18 @@
   packages = ["."]
   revision = "e83ac2304db3c50cf03d96a2fcd39009d458bc35"
   version = "v3.3.2"
+
+[[projects]]
+  name = "github.com/golang/protobuf"
+  packages = ["proto"]
+  revision = "b4deda0973fb4c70b50d226b1af49f3da59f5265"
+  version = "v1.1.0"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/google/go-querystring"
+  packages = ["query"]
+  revision = "53e6ce116135b80d037921a7fdd5138cf32d7a8a"
 
 [[projects]]
   branch = "master"
@@ -75,6 +105,12 @@
   version = "v1.2.0"
 
 [[projects]]
+  name = "github.com/peppage/simpletransport"
+  packages = ["simpletransport"]
+  revision = "426abdb72d71868645bbcde0070b72fa4f33be38"
+  version = "v1.1.0"
+
+[[projects]]
   name = "github.com/pkg/errors"
   packages = ["."]
   revision = "645ef00459ed84a119197bfb8d8205042c6df63d"
@@ -121,6 +157,12 @@
 
 [[projects]]
   branch = "master"
+  name = "github.com/tsenart/tb"
+  packages = ["."]
+  revision = "19f4c3d79d2bd67d0911b2e310b999eeea4454c1"
+
+[[projects]]
+  branch = "master"
   name = "github.com/volatiletech/inflect"
   packages = ["."]
   revision = "e7201282ae8da26cd97aed2e516f75c0bd91bb93"
@@ -152,6 +194,25 @@
 
 [[projects]]
   branch = "master"
+  name = "golang.org/x/net"
+  packages = [
+    "context",
+    "context/ctxhttp"
+  ]
+  revision = "6a8eb5e2b1816b30aa88d7e3ecf9eb7c4559d9e6"
+
+[[projects]]
+  branch = "master"
+  name = "golang.org/x/oauth2"
+  packages = [
+    ".",
+    "clientcredentials",
+    "internal"
+  ]
+  revision = "ef147856a6ddbb60760db74283d2424e98c87bff"
+
+[[projects]]
+  branch = "master"
   name = "golang.org/x/sys"
   packages = ["unix"]
   revision = "1b2967e3c290b7c545b3db0deeda16e9be4f98a2"
@@ -170,6 +231,20 @@
   version = "v0.3.0"
 
 [[projects]]
+  name = "google.golang.org/appengine"
+  packages = [
+    "internal",
+    "internal/base",
+    "internal/datastore",
+    "internal/log",
+    "internal/remote_api",
+    "internal/urlfetch",
+    "urlfetch"
+  ]
+  revision = "b1f26356af11148e710935ed1ac8a7f5702c7612"
+  version = "v1.1.0"
+
+[[projects]]
   name = "gopkg.in/yaml.v2"
   packages = ["."]
   revision = "5420a8b6744d3b0345ab293f6fcba19c978f1183"
@@ -178,6 +253,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "537230094f29b050f9ab50c2b01e3ebcf6f25149407c2b87b9bd6f71a8feac7a"
+  inputs-digest = "2c9fcb91b6554fe828931891fd61516c3cefb6634488aae67d00f7f5290aa1e7"
   solver-name = "gps-cdcl"
   solver-version = 1

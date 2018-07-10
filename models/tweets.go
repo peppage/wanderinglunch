@@ -14,6 +14,7 @@ import (
 	"time"
 
 	"github.com/pkg/errors"
+	"github.com/volatiletech/null"
 	"github.com/volatiletech/sqlboiler/boil"
 	"github.com/volatiletech/sqlboiler/queries"
 	"github.com/volatiletech/sqlboiler/queries/qm"
@@ -22,12 +23,12 @@ import (
 
 // Tweet is an object representing the database table.
 type Tweet struct {
-	Text      string `boil:"text" json:"text" toml:"text" yaml:"text"`
-	Time      int    `boil:"time" json:"time" toml:"time" yaml:"time"`
-	ID        string `boil:"id" json:"id" toml:"id" yaml:"id"`
-	Retweeted bool   `boil:"retweeted" json:"retweeted" toml:"retweeted" yaml:"retweeted"`
-	Twitname  string `boil:"twitname" json:"twitname" toml:"twitname" yaml:"twitname"`
-	Done      bool   `boil:"done" json:"done" toml:"done" yaml:"done"`
+	Text      string    `boil:"text" json:"text" toml:"text" yaml:"text"`
+	Time      int64     `boil:"time" json:"time" toml:"time" yaml:"time"`
+	ID        int64     `boil:"id" json:"id" toml:"id" yaml:"id"`
+	Retweeted bool      `boil:"retweeted" json:"retweeted" toml:"retweeted" yaml:"retweeted"`
+	Twitname  string    `boil:"twitname" json:"twitname" toml:"twitname" yaml:"twitname"`
+	Done      null.Bool `boil:"done" json:"done,omitempty" toml:"done" yaml:"done,omitempty"`
 
 	R *tweetR `boil:"-" json:"-" toml:"-" yaml:"-"`
 	L tweetL  `boil:"-" json:"-" toml:"-" yaml:"-"`
@@ -51,6 +52,7 @@ var TweetColumns = struct {
 
 // tweetR is where relationships are stored.
 type tweetR struct {
+	Spots SpotSlice
 }
 
 // NewStruct creates a new relationship struct
@@ -303,6 +305,171 @@ func (q tweetQuery) Exists(ctx context.Context, exec boil.ContextExecutor) (bool
 	return count > 0, nil
 }
 
+// Spots retrieves all the spot's Spots with an executor.
+func (o *Tweet) Spots(mods ...qm.QueryMod) spotQuery {
+	var queryMods []qm.QueryMod
+	if len(mods) != 0 {
+		queryMods = append(queryMods, mods...)
+	}
+
+	queryMods = append(queryMods,
+		qm.Where("\"spots\".\"tweet_id\"=?", o.ID),
+	)
+
+	query := Spots(queryMods...)
+	queries.SetFrom(query.Query, "\"spots\"")
+
+	if len(queries.GetSelect(query.Query)) == 0 {
+		queries.SetSelect(query.Query, []string{"\"spots\".*"})
+	}
+
+	return query
+}
+
+// LoadSpots allows an eager lookup of values, cached into the
+// loaded structs of the objects. This is for a 1-M or N-M relationship.
+func (tweetL) LoadSpots(ctx context.Context, e boil.ContextExecutor, singular bool, maybeTweet interface{}, mods queries.Applicator) error {
+	var slice []*Tweet
+	var object *Tweet
+
+	if singular {
+		object = maybeTweet.(*Tweet)
+	} else {
+		slice = *maybeTweet.(*[]*Tweet)
+	}
+
+	args := make([]interface{}, 0, 1)
+	if singular {
+		if object.R == nil {
+			object.R = &tweetR{}
+		}
+		args = append(args, object.ID)
+	} else {
+	Outer:
+		for _, obj := range slice {
+			if obj.R == nil {
+				obj.R = &tweetR{}
+			}
+
+			for _, a := range args {
+				if a == obj.ID {
+					continue Outer
+				}
+			}
+
+			args = append(args, obj.ID)
+		}
+	}
+
+	query := NewQuery(qm.From(`spots`), qm.WhereIn(`tweet_id in ?`, args...))
+	if mods != nil {
+		mods.Apply(query)
+	}
+
+	results, err := query.QueryContext(ctx, e)
+	if err != nil {
+		return errors.Wrap(err, "failed to eager load spots")
+	}
+
+	var resultSlice []*Spot
+	if err = queries.Bind(results, &resultSlice); err != nil {
+		return errors.Wrap(err, "failed to bind eager loaded slice spots")
+	}
+
+	if err = results.Close(); err != nil {
+		return errors.Wrap(err, "failed to close results in eager load on spots")
+	}
+	if err = results.Err(); err != nil {
+		return errors.Wrap(err, "error occurred during iteration of eager loaded relations for spots")
+	}
+
+	if len(spotAfterSelectHooks) != 0 {
+		for _, obj := range resultSlice {
+			if err := obj.doAfterSelectHooks(ctx, e); err != nil {
+				return err
+			}
+		}
+	}
+	if singular {
+		object.R.Spots = resultSlice
+		for _, foreign := range resultSlice {
+			if foreign.R == nil {
+				foreign.R = &spotR{}
+			}
+			foreign.R.Tweet = object
+		}
+		return nil
+	}
+
+	for _, foreign := range resultSlice {
+		for _, local := range slice {
+			if local.ID == foreign.TweetID {
+				local.R.Spots = append(local.R.Spots, foreign)
+				if foreign.R == nil {
+					foreign.R = &spotR{}
+				}
+				foreign.R.Tweet = local
+				break
+			}
+		}
+	}
+
+	return nil
+}
+
+// AddSpots adds the given related objects to the existing relationships
+// of the tweet, optionally inserting them as new records.
+// Appends related to o.R.Spots.
+// Sets related.R.Tweet appropriately.
+func (o *Tweet) AddSpots(ctx context.Context, exec boil.ContextExecutor, insert bool, related ...*Spot) error {
+	var err error
+	for _, rel := range related {
+		if insert {
+			rel.TweetID = o.ID
+			if err = rel.Insert(ctx, exec, boil.Infer()); err != nil {
+				return errors.Wrap(err, "failed to insert into foreign table")
+			}
+		} else {
+			updateQuery := fmt.Sprintf(
+				"UPDATE \"spots\" SET %s WHERE %s",
+				strmangle.SetParamNames("\"", "\"", 1, []string{"tweet_id"}),
+				strmangle.WhereClause("\"", "\"", 2, spotPrimaryKeyColumns),
+			)
+			values := []interface{}{o.ID, rel.LocationID, rel.TweetID}
+
+			if boil.DebugMode {
+				fmt.Fprintln(boil.DebugWriter, updateQuery)
+				fmt.Fprintln(boil.DebugWriter, values)
+			}
+
+			if _, err = exec.ExecContext(ctx, updateQuery, values...); err != nil {
+				return errors.Wrap(err, "failed to update foreign table")
+			}
+
+			rel.TweetID = o.ID
+		}
+	}
+
+	if o.R == nil {
+		o.R = &tweetR{
+			Spots: related,
+		}
+	} else {
+		o.R.Spots = append(o.R.Spots, related...)
+	}
+
+	for _, rel := range related {
+		if rel.R == nil {
+			rel.R = &spotR{
+				Tweet: o,
+			}
+		} else {
+			rel.R.Tweet = o
+		}
+	}
+	return nil
+}
+
 // Tweets retrieves all the records using an executor.
 func Tweets(mods ...qm.QueryMod) tweetQuery {
 	mods = append(mods, qm.From("\"tweets\""))
@@ -311,7 +478,7 @@ func Tweets(mods ...qm.QueryMod) tweetQuery {
 
 // FindTweet retrieves a single record by ID with an executor.
 // If selectCols is empty Find will return all columns.
-func FindTweet(ctx context.Context, exec boil.ContextExecutor, iD string, selectCols ...string) (*Tweet, error) {
+func FindTweet(ctx context.Context, exec boil.ContextExecutor, iD int64, selectCols ...string) (*Tweet, error) {
 	tweetObj := &Tweet{}
 
 	sel := "*"
@@ -808,7 +975,7 @@ func (o *TweetSlice) ReloadAll(ctx context.Context, exec boil.ContextExecutor) e
 }
 
 // TweetExists checks if the Tweet row exists.
-func TweetExists(ctx context.Context, exec boil.ContextExecutor, iD string) (bool, error) {
+func TweetExists(ctx context.Context, exec boil.ContextExecutor, iD int64) (bool, error) {
 	var exists bool
 	sql := "select exists(select 1 from \"tweets\" where \"id\"=$1 limit 1)"
 

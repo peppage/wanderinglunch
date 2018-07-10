@@ -6,8 +6,8 @@ package models
 var TableNames = struct {
 	Images    string
 	Locations string
-	Messages  string
 	Sites     string
+	Spots     string
 	Subs      string
 	Trucks    string
 	Tweets    string
@@ -15,8 +15,8 @@ var TableNames = struct {
 }{
 	Images:    "images",
 	Locations: "locations",
-	Messages:  "messages",
 	Sites:     "sites",
+	Spots:     "spots",
 	Subs:      "subs",
 	Trucks:    "trucks",
 	Tweets:    "tweets",

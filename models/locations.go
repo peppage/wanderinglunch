@@ -54,6 +54,7 @@ var LocationColumns = struct {
 
 // locationR is where relationships are stored.
 type locationR struct {
+	Spots SpotSlice
 }
 
 // NewStruct creates a new relationship struct
@@ -304,6 +305,171 @@ func (q locationQuery) Exists(ctx context.Context, exec boil.ContextExecutor) (b
 	}
 
 	return count > 0, nil
+}
+
+// Spots retrieves all the spot's Spots with an executor.
+func (o *Location) Spots(mods ...qm.QueryMod) spotQuery {
+	var queryMods []qm.QueryMod
+	if len(mods) != 0 {
+		queryMods = append(queryMods, mods...)
+	}
+
+	queryMods = append(queryMods,
+		qm.Where("\"spots\".\"location_id\"=?", o.ID),
+	)
+
+	query := Spots(queryMods...)
+	queries.SetFrom(query.Query, "\"spots\"")
+
+	if len(queries.GetSelect(query.Query)) == 0 {
+		queries.SetSelect(query.Query, []string{"\"spots\".*"})
+	}
+
+	return query
+}
+
+// LoadSpots allows an eager lookup of values, cached into the
+// loaded structs of the objects. This is for a 1-M or N-M relationship.
+func (locationL) LoadSpots(ctx context.Context, e boil.ContextExecutor, singular bool, maybeLocation interface{}, mods queries.Applicator) error {
+	var slice []*Location
+	var object *Location
+
+	if singular {
+		object = maybeLocation.(*Location)
+	} else {
+		slice = *maybeLocation.(*[]*Location)
+	}
+
+	args := make([]interface{}, 0, 1)
+	if singular {
+		if object.R == nil {
+			object.R = &locationR{}
+		}
+		args = append(args, object.ID)
+	} else {
+	Outer:
+		for _, obj := range slice {
+			if obj.R == nil {
+				obj.R = &locationR{}
+			}
+
+			for _, a := range args {
+				if a == obj.ID {
+					continue Outer
+				}
+			}
+
+			args = append(args, obj.ID)
+		}
+	}
+
+	query := NewQuery(qm.From(`spots`), qm.WhereIn(`location_id in ?`, args...))
+	if mods != nil {
+		mods.Apply(query)
+	}
+
+	results, err := query.QueryContext(ctx, e)
+	if err != nil {
+		return errors.Wrap(err, "failed to eager load spots")
+	}
+
+	var resultSlice []*Spot
+	if err = queries.Bind(results, &resultSlice); err != nil {
+		return errors.Wrap(err, "failed to bind eager loaded slice spots")
+	}
+
+	if err = results.Close(); err != nil {
+		return errors.Wrap(err, "failed to close results in eager load on spots")
+	}
+	if err = results.Err(); err != nil {
+		return errors.Wrap(err, "error occurred during iteration of eager loaded relations for spots")
+	}
+
+	if len(spotAfterSelectHooks) != 0 {
+		for _, obj := range resultSlice {
+			if err := obj.doAfterSelectHooks(ctx, e); err != nil {
+				return err
+			}
+		}
+	}
+	if singular {
+		object.R.Spots = resultSlice
+		for _, foreign := range resultSlice {
+			if foreign.R == nil {
+				foreign.R = &spotR{}
+			}
+			foreign.R.Location = object
+		}
+		return nil
+	}
+
+	for _, foreign := range resultSlice {
+		for _, local := range slice {
+			if local.ID == foreign.LocationID {
+				local.R.Spots = append(local.R.Spots, foreign)
+				if foreign.R == nil {
+					foreign.R = &spotR{}
+				}
+				foreign.R.Location = local
+				break
+			}
+		}
+	}
+
+	return nil
+}
+
+// AddSpots adds the given related objects to the existing relationships
+// of the location, optionally inserting them as new records.
+// Appends related to o.R.Spots.
+// Sets related.R.Location appropriately.
+func (o *Location) AddSpots(ctx context.Context, exec boil.ContextExecutor, insert bool, related ...*Spot) error {
+	var err error
+	for _, rel := range related {
+		if insert {
+			rel.LocationID = o.ID
+			if err = rel.Insert(ctx, exec, boil.Infer()); err != nil {
+				return errors.Wrap(err, "failed to insert into foreign table")
+			}
+		} else {
+			updateQuery := fmt.Sprintf(
+				"UPDATE \"spots\" SET %s WHERE %s",
+				strmangle.SetParamNames("\"", "\"", 1, []string{"location_id"}),
+				strmangle.WhereClause("\"", "\"", 2, spotPrimaryKeyColumns),
+			)
+			values := []interface{}{o.ID, rel.LocationID, rel.TweetID}
+
+			if boil.DebugMode {
+				fmt.Fprintln(boil.DebugWriter, updateQuery)
+				fmt.Fprintln(boil.DebugWriter, values)
+			}
+
+			if _, err = exec.ExecContext(ctx, updateQuery, values...); err != nil {
+				return errors.Wrap(err, "failed to update foreign table")
+			}
+
+			rel.LocationID = o.ID
+		}
+	}
+
+	if o.R == nil {
+		o.R = &locationR{
+			Spots: related,
+		}
+	} else {
+		o.R.Spots = append(o.R.Spots, related...)
+	}
+
+	for _, rel := range related {
+		if rel.R == nil {
+			rel.R = &spotR{
+				Location: o,
+			}
+		} else {
+			rel.R.Location = o
+		}
+	}
+	return nil
 }
 
 // Locations retrieves all the records using an executor.
