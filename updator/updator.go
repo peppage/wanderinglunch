@@ -12,6 +12,7 @@ import (
 	"wanderinglunch/models"
 
 	"github.com/dghubble/go-twitter/twitter"
+	"github.com/jasonlvhit/gocron"
 	"github.com/peppage/simpletransport/simpletransport"
 	"github.com/volatiletech/sqlboiler/boil"
 	"github.com/volatiletech/sqlboiler/queries/qm"
@@ -32,7 +33,9 @@ type TwitterCreds struct {
 func Start(data *sql.DB) {
 	db = data
 
-	findLocationsTask()
+	gocron.Every(15).Minutes().Do(findLocationsTask)
+	gocron.Every(1).Saturday().At("23:00").Do(truncateTweets)
+	<-gocron.Start()
 }
 
 func InitializeTwitter(creds TwitterCreds) {
