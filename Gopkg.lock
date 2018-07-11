@@ -2,6 +2,18 @@
 
 
 [[projects]]
+  branch = "master"
+  name = "github.com/CloudyKit/fastprinter"
+  packages = ["."]
+  revision = "74b38d55f37af5d6c05ca11147d616b613a3420e"
+
+[[projects]]
+  name = "github.com/CloudyKit/jet"
+  packages = ["."]
+  revision = "2b064536b25ab0e9c54245f9e2cc5bd4766033fe"
+  version = "v2.1.2"
+
+[[projects]]
   name = "github.com/cenkalti/backoff"
   packages = ["."]
   revision = "2ea60e5f094469f9e65adb9cd103795b73ae743e"
@@ -265,6 +277,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "956de572d43ebb088fca37cf6ce57176878d2fc093c0dbab0fab19b685338646"
+  inputs-digest = "0dca85a46aeccedbd672fdb76c301e7a6ce24d585dd70afabff53306c84f7474"
   solver-name = "gps-cdcl"
   solver-version = 1
