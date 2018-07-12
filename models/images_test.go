@@ -494,6 +494,115 @@ func testImagesInsertWhitelist(t *testing.T) {
 	}
 }
 
+func testImageToOneTruckUsingTruck(t *testing.T) {
+	ctx := context.Background()
+	tx := MustTx(boil.BeginTx(ctx, nil))
+	defer func() { _ = tx.Rollback() }()
+
+	var local Image
+	var foreign Truck
+
+	seed := randomize.NewSeed()
+	if err := randomize.Struct(seed, &local, imageDBTypes, false, imageColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Image struct: %s", err)
+	}
+	if err := randomize.Struct(seed, &foreign, truckDBTypes, false, truckColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Truck struct: %s", err)
+	}
+
+	if err := foreign.Insert(ctx, tx, boil.Infer()); err != nil {
+		t.Fatal(err)
+	}
+
+	local.TruckID = foreign.Twitname
+	if err := local.Insert(ctx, tx, boil.Infer()); err != nil {
+		t.Fatal(err)
+	}
+
+	check, err := local.Truck().One(ctx, tx)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if check.Twitname != foreign.Twitname {
+		t.Errorf("want: %v, got %v", foreign.Twitname, check.Twitname)
+	}
+
+	slice := ImageSlice{&local}
+	if err = local.L.LoadTruck(ctx, tx, false, (*[]*Image)(&slice), nil); err != nil {
+		t.Fatal(err)
+	}
+	if local.R.Truck == nil {
+		t.Error("struct should have been eager loaded")
+	}
+
+	local.R.Truck = nil
+	if err = local.L.LoadTruck(ctx, tx, true, &local, nil); err != nil {
+		t.Fatal(err)
+	}
+	if local.R.Truck == nil {
+		t.Error("struct should have been eager loaded")
+	}
+}
+
+func testImageToOneSetOpTruckUsingTruck(t *testing.T) {
+	var err error
+
+	ctx := context.Background()
+	tx := MustTx(boil.BeginTx(ctx, nil))
+	defer func() { _ = tx.Rollback() }()
+
+	var a Image
+	var b, c Truck
+
+	seed := randomize.NewSeed()
+	if err = randomize.Struct(seed, &a, imageDBTypes, false, strmangle.SetComplement(imagePrimaryKeyColumns, imageColumnsWithoutDefault)...); err != nil {
+		t.Fatal(err)
+	}
+	if err = randomize.Struct(seed, &b, truckDBTypes, false, strmangle.SetComplement(truckPrimaryKeyColumns, truckColumnsWithoutDefault)...); err != nil {
+		t.Fatal(err)
+	}
+	if err = randomize.Struct(seed, &c, truckDBTypes, false, strmangle.SetComplement(truckPrimaryKeyColumns, truckColumnsWithoutDefault)...); err != nil {
+		t.Fatal(err)
+	}
+
+	if err := a.Insert(ctx, tx, boil.Infer()); err != nil {
+		t.Fatal(err)
+	}
+	if err = b.Insert(ctx, tx, boil.Infer()); err != nil {
+		t.Fatal(err)
+	}
+
+	for i, x := range []*Truck{&b, &c} {
+		err = a.SetTruck(ctx, tx, i != 0, x)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if a.R.Truck != x {
+			t.Error("relationship struct not set to correct value")
+		}
+
+		if x.R.Images[0] != &a {
+			t.Error("failed to append to foreign relationship struct")
+		}
+		if a.TruckID != x.Twitname {
+			t.Error("foreign key was wrong value", a.TruckID)
+		}
+
+		zero := reflect.Zero(reflect.TypeOf(a.TruckID))
+		reflect.Indirect(reflect.ValueOf(&a.TruckID)).Set(zero)
+
+		if err = a.Reload(ctx, tx); err != nil {
+			t.Fatal("failed to reload", err)
+		}
+
+		if a.TruckID != x.Twitname {
+			t.Error("foreign key was wrong value", a.TruckID, x.Twitname)
+		}
+	}
+}
+
 func testImagesReload(t *testing.T) {
 	t.Parallel()
 
@@ -568,7 +677,7 @@ func testImagesSelect(t *testing.T) {
 }
 
 var (
-	imageDBTypes = map[string]string{`ID`: `text`, `Menu`: `boolean`, `Suffix`: `text`, `Twitname`: `text`, `Visibility`: `text`}
+	imageDBTypes = map[string]string{`ID`: `text`, `Menu`: `boolean`, `Suffix`: `text`, `TruckID`: `text`, `Visibility`: `text`}
 	_            = bytes.MinRead
 )
 

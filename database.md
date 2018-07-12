@@ -16,3 +16,22 @@ location_id bigint references locations(id) NOT NULL,
 tweet_id bigint references tweets(id) NOT NULL,
 primary key (location_id, tweet_id)
 );
+
+alter table images rename column twitname to truck_id;
+update images set truck_id='shukanyc' where truck_id='shuka';
+delete from images where truck_id = 'burgersandbites';
+delete from images where truck_id = 'itizyicecream';
+update images set truck_id='snowdaytruck' where truck_id='snowday';
+delete from images where truck_id = 'steaksncrepes';
+delete from images where truck_id = 'mooshugrill';
+delete from images where truck_id = 'rickshawtruck';
+delete from images where truck_id = 'tacobite';
+delete from images where truck_id = 'goburger';
+delete from images where truck_id = 'wingnitnyc';
+delete from images where truck_id = 'morristruck';
+delete from images where truck_id = 'ritoloco';
+
+ALTER TABLE images
+ADD CONSTRAINT images_truck_id_fkey
+FOREIGN KEY (truck_id)
+REFERENCES trucks(twitname);

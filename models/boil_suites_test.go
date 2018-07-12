@@ -154,6 +154,7 @@ func TestInsert(t *testing.T) {
 // TestToOne tests cannot be run in parallel
 // or deadlocks can occur.
 func TestToOne(t *testing.T) {
+	t.Run("ImageToTruckUsingTruck", testImageToOneTruckUsingTruck)
 	t.Run("SpotToTruckUsingTruck", testSpotToOneTruckUsingTruck)
 	t.Run("SpotToLocationUsingLocation", testSpotToOneLocationUsingLocation)
 	t.Run("SpotToTweetUsingTweet", testSpotToOneTweetUsingTweet)
@@ -167,6 +168,7 @@ func TestOneToOne(t *testing.T) {}
 // or deadlocks can occur.
 func TestToMany(t *testing.T) {
 	t.Run("LocationToSpots", testLocationToManySpots)
+	t.Run("TruckToImages", testTruckToManyImages)
 	t.Run("TruckToSpots", testTruckToManySpots)
 	t.Run("TweetToSpots", testTweetToManySpots)
 }
@@ -174,6 +176,7 @@ func TestToMany(t *testing.T) {
 // TestToOneSet tests cannot be run in parallel
 // or deadlocks can occur.
 func TestToOneSet(t *testing.T) {
+	t.Run("ImageToTruckUsingImages", testImageToOneSetOpTruckUsingTruck)
 	t.Run("SpotToTruckUsingSpots", testSpotToOneSetOpTruckUsingTruck)
 	t.Run("SpotToLocationUsingSpots", testSpotToOneSetOpLocationUsingLocation)
 	t.Run("SpotToTweetUsingSpots", testSpotToOneSetOpTweetUsingTweet)
@@ -195,6 +198,7 @@ func TestOneToOneRemove(t *testing.T) {}
 // or deadlocks can occur.
 func TestToManyAdd(t *testing.T) {
 	t.Run("LocationToSpots", testLocationToManyAddOpSpots)
+	t.Run("TruckToImages", testTruckToManyAddOpImages)
 	t.Run("TruckToSpots", testTruckToManyAddOpSpots)
 	t.Run("TweetToSpots", testTweetToManyAddOpSpots)
 }

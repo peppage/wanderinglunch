@@ -74,7 +74,8 @@ var TruckColumns = struct {
 
 // truckR is where relationships are stored.
 type truckR struct {
-	Spots SpotSlice
+	Images ImageSlice
+	Spots  SpotSlice
 }
 
 // NewStruct creates a new relationship struct
@@ -327,6 +328,27 @@ func (q truckQuery) Exists(ctx context.Context, exec boil.ContextExecutor) (bool
 	return count > 0, nil
 }
 
+// Images retrieves all the image's Images with an executor.
+func (o *Truck) Images(mods ...qm.QueryMod) imageQuery {
+	var queryMods []qm.QueryMod
+	if len(mods) != 0 {
+		queryMods = append(queryMods, mods...)
+	}
+
+	queryMods = append(queryMods,
+		qm.Where("\"images\".\"truck_id\"=?", o.Twitname),
+	)
+
+	query := Images(queryMods...)
+	queries.SetFrom(query.Query, "\"images\"")
+
+	if len(queries.GetSelect(query.Query)) == 0 {
+		queries.SetSelect(query.Query, []string{"\"images\".*"})
+	}
+
+	return query
+}
+
 // Spots retrieves all the spot's Spots with an executor.
 func (o *Truck) Spots(mods ...qm.QueryMod) spotQuery {
 	var queryMods []qm.QueryMod
@@ -346,6 +368,97 @@ func (o *Truck) Spots(mods ...qm.QueryMod) spotQuery {
 	}
 
 	return query
+}
+
+// LoadImages allows an eager lookup of values, cached into the
+// loaded structs of the objects. This is for a 1-M or N-M relationship.
+func (truckL) LoadImages(ctx context.Context, e boil.ContextExecutor, singular bool, maybeTruck interface{}, mods queries.Applicator) error {
+	var slice []*Truck
+	var object *Truck
+
+	if singular {
+		object = maybeTruck.(*Truck)
+	} else {
+		slice = *maybeTruck.(*[]*Truck)
+	}
+
+	args := make([]interface{}, 0, 1)
+	if singular {
+		if object.R == nil {
+			object.R = &truckR{}
+		}
+		args = append(args, object.Twitname)
+	} else {
+	Outer:
+		for _, obj := range slice {
+			if obj.R == nil {
+				obj.R = &truckR{}
+			}
+
+			for _, a := range args {
+				if a == obj.Twitname {
+					continue Outer
+				}
+			}
+
+			args = append(args, obj.Twitname)
+		}
+	}
+
+	query := NewQuery(qm.From(`images`), qm.WhereIn(`truck_id in ?`, args...))
+	if mods != nil {
+		mods.Apply(query)
+	}
+
+	results, err := query.QueryContext(ctx, e)
+	if err != nil {
+		return errors.Wrap(err, "failed to eager load images")
+	}
+
+	var resultSlice []*Image
+	if err = queries.Bind(results, &resultSlice); err != nil {
+		return errors.Wrap(err, "failed to bind eager loaded slice images")
+	}
+
+	if err = results.Close(); err != nil {
+		return errors.Wrap(err, "failed to close results in eager load on images")
+	}
+	if err = results.Err(); err != nil {
+		return errors.Wrap(err, "error occurred during iteration of eager loaded relations for images")
+	}
+
+	if len(imageAfterSelectHooks) != 0 {
+		for _, obj := range resultSlice {
+			if err := obj.doAfterSelectHooks(ctx, e); err != nil {
+				return err
+			}
+		}
+	}
+	if singular {
+		object.R.Images = resultSlice
+		for _, foreign := range resultSlice {
+			if foreign.R == nil {
+				foreign.R = &imageR{}
+			}
+			foreign.R.Truck = object
+		}
+		return nil
+	}
+
+	for _, foreign := range resultSlice {
+		for _, local := range slice {
+			if local.Twitname == foreign.TruckID {
+				local.R.Images = append(local.R.Images, foreign)
+				if foreign.R == nil {
+					foreign.R = &imageR{}
+				}
+				foreign.R.Truck = local
+				break
+			}
+		}
+	}
+
+	return nil
 }
 
 // LoadSpots allows an eager lookup of values, cached into the
@@ -436,6 +549,59 @@ func (truckL) LoadSpots(ctx context.Context, e boil.ContextExecutor, singular bo
 		}
 	}
 
+	return nil
+}
+
+// AddImages adds the given related objects to the existing relationships
+// of the truck, optionally inserting them as new records.
+// Appends related to o.R.Images.
+// Sets related.R.Truck appropriately.
+func (o *Truck) AddImages(ctx context.Context, exec boil.ContextExecutor, insert bool, related ...*Image) error {
+	var err error
+	for _, rel := range related {
+		if insert {
+			rel.TruckID = o.Twitname
+			if err = rel.Insert(ctx, exec, boil.Infer()); err != nil {
+				return errors.Wrap(err, "failed to insert into foreign table")
+			}
+		} else {
+			updateQuery := fmt.Sprintf(
+				"UPDATE \"images\" SET %s WHERE %s",
+				strmangle.SetParamNames("\"", "\"", 1, []string{"truck_id"}),
+				strmangle.WhereClause("\"", "\"", 2, imagePrimaryKeyColumns),
+			)
+			values := []interface{}{o.Twitname, rel.ID}
+
+			if boil.DebugMode {
+				fmt.Fprintln(boil.DebugWriter, updateQuery)
+				fmt.Fprintln(boil.DebugWriter, values)
+			}
+
+			if _, err = exec.ExecContext(ctx, updateQuery, values...); err != nil {
+				return errors.Wrap(err, "failed to update foreign table")
+			}
+
+			rel.TruckID = o.Twitname
+		}
+	}
+
+	if o.R == nil {
+		o.R = &truckR{
+			Images: related,
+		}
+	} else {
+		o.R.Images = append(o.R.Images, related...)
+	}
+
+	for _, rel := range related {
+		if rel.R == nil {
+			rel.R = &imageR{
+				Truck: o,
+			}
+		} else {
+			rel.R.Truck = o
+		}
+	}
 	return nil
 }
 
