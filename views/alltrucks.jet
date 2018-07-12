@@ -1,0 +1,11 @@
+{{extends "layouts/base.jet"}}
+{{block body()}}
+  <main>
+    {{range k, v := spots}}
+        <h1>{{k}}</h1>
+        {{range spot := v}}
+            {{spot.R.Truck.Name}} {{spot.R.Location.Display}}
+        {{end}}
+    {{end}}
+  </main>
+{{end}}
