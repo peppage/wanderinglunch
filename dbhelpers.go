@@ -13,6 +13,7 @@ func getSpots(site string, hours int) (map[string][]*models.Spot, error) {
 	spots, err := models.Spots(
 		qm.Load("Location"),
 		qm.Load("Truck"),
+		qm.Load("Truck.Images", qm.Where("images.menu = ?", true)),
 		qm.InnerJoin("locations on location_id = locations.id"),
 		qm.InnerJoin("tweets on tweet_id = tweets.id"),
 		qm.InnerJoin("trucks on truck_id = trucks.twitname"),

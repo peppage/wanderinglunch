@@ -5,6 +5,10 @@
         <h1>{{k}}</h1>
         {{range spot := v}}
             {{spot.R.Truck.Name}} {{spot.R.Location.Display}}
+            {{if len(spot.R.Truck.R.Images) > 0}}
+              {{spot.R.Truck.R.Images[0].Suffix}}
+            {{end}}
+            <br>
         {{end}}
     {{end}}
   </main>
