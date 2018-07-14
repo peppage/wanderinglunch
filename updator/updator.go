@@ -98,16 +98,16 @@ func getTweets(truck *models.Truck) ([]twitter.Tweet, error) {
 }
 
 func saveTweets(twitname string, tweets []twitter.Tweet) {
-	for _, tweet := range tweets {
-		tweet.Text = strings.Replace(tweet.Text, "&amp;", "&", -1)
-		tweet.Text = strings.Replace(tweet.Text, "#", "", -1)
-		tweet.Text = strings.Replace(tweet.Text, "\"", "", -1)
+	for i := range tweets {
+		tweets[i].Text = strings.Replace(tweets[i].Text, "&amp;", "&", -1)
+		tweets[i].Text = strings.Replace(tweets[i].Text, "#", "", -1)
+		tweets[i].Text = strings.Replace(tweets[i].Text, "\"", "", -1)
 
 		t := models.Tweet{
-			Text:      tweet.Text,
-			Time:      parseCreatedAt(tweet.CreatedAt).Unix(),
-			ID:        tweet.ID,
-			Retweeted: tweet.Retweeted,
+			Text:      tweets[i].Text,
+			Time:      parseCreatedAt(tweets[i].CreatedAt).Unix(),
+			ID:        tweets[i].ID,
+			Retweeted: tweets[i].Retweeted,
 			Twitname:  twitname,
 		}
 
@@ -119,14 +119,14 @@ func saveTweets(twitname string, tweets []twitter.Tweet) {
 }
 
 func searchTweets(tweets []twitter.Tweet) {
-	for _, tweet := range tweets {
-		if isYoung(tweet) && !isResponse(tweet) {
-			text := substitutions(strings.ToLower(tweet.Text))
+	for i := range tweets {
+		if isYoung(tweets[i]) && !isResponse(tweets[i]) {
+			text := substitutions(strings.ToLower(tweets[i].Text))
 			if !hasSkipWord(text) {
 				locs := findLocations(text)
 				if len(locs) > 0 {
 					log.Printf("Locations found")
-					saveSpots(tweet, locs)
+					saveSpots(tweets[i], locs)
 				}
 			}
 		}
