@@ -2,6 +2,7 @@
 <html>
   <head></head>
   <link rel="stylesheet" type="text/css" href="/static/site.css" />
+  <link rel="preconnect" href="https://irs0.4sqi.net">
   <body>
     {{yield body()}}
   </body>
