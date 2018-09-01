@@ -15,9 +15,7 @@ body {
 }
 
 main {
-	-webkit-box-flex: 1;
-	-ms-flex: 1 0 auto;
-	flex: 1 0 auto;
+	width: 65%;
 	margin: 0 auto;
 }
 
@@ -58,12 +56,18 @@ a:hover {
 	flex-direction: row;
 }
 
+.truck .truck__image {
+	text-align: center;
+	flex: .25;
+}
+
 .truck:not(:first-child) {
 	border-top: 1px sold black;
 }
 
 .truck > div {
 	padding: 1rem;
+	flex: 1;
 }
 
 .header {

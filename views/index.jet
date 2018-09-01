@@ -1,4 +1,5 @@
 {{extends "layouts/base.jet"}}
+
 {{block body()}}
   <main>
     {{range zone, trucks := spots}}
@@ -7,21 +8,7 @@
             <h1>{{zone}}</h1>
           </div>
           {{range spot := trucks}}
-              <div class="truck">
-                <div class="truck__name">
-                  <a href="/truck/{{spot.R.Truck.Twitname}}">
-                    {{spot.R.Truck.Name}}
-                  </a>
-                </div>
-                <div class="truck__location">
-                  {{spot.R.Location.Display}}
-                </div>
-                {{if len(spot.R.Truck.R.Images) > 0}}
-                  <div class="truck__image">
-                    <img src="https://irs0.4sqi.net/img/general/width30{{spot.R.Truck.R.Images[0].Suffix}}" alt="{{spot.R.Truck.Name}} Menu">
-                  </div>
-                {{end}}
-              </div>
+              {{include "partials/_truck.jet" spot}}
           {{end}}
         </div>
     {{end}}
