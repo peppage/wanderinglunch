@@ -9,11 +9,19 @@ import (
 	"github.com/go-chi/chi"
 )
 
+type pageContext struct {
+	Site string
+}
+
 func index(w http.ResponseWriter, r *http.Request) {
 	site := chi.URLParam(r, "site")
 	spots, err := getSpots(site, 2000)
 	if err != nil {
 		w.Write([]byte(err.Error()))
+	}
+
+	c := pageContext{
+		Site: site,
 	}
 
 	template, _ := View.GetTemplate("index.jet")
@@ -23,7 +31,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 
 	vars := make(jet.VarMap)
 	vars.Set("spots", spots)
-	if err := template.Execute(w, vars, nil); err != nil {
+	if err := template.Execute(w, vars, c); err != nil {
 		panic(err)
 	}
 
@@ -38,11 +46,15 @@ func allTrucks(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte(err.Error()))
 	}
 
+	c := pageContext{
+		Site: site,
+	}
+
 	template, _ := View.GetTemplate("alltrucks.jet")
 
 	vars := make(jet.VarMap)
 	vars.Set("spots", spots)
-	if err := template.Execute(w, vars, nil); err != nil {
+	if err := template.Execute(w, vars, c); err != nil {
 		panic(err)
 	}
 
@@ -57,11 +69,15 @@ func mapPage(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte(err.Error()))
 	}
 
+	c := pageContext{
+		Site: site,
+	}
+
 	template, _ := View.GetTemplate("alltrucks.jet")
 
 	vars := make(jet.VarMap)
 	vars.Set("spots", spots)
-	if err := template.Execute(w, vars, nil); err != nil {
+	if err := template.Execute(w, vars, c); err != nil {
 		panic(err)
 	}
 

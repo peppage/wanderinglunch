@@ -65,3 +65,22 @@ a:hover {
 .truck > div {
 	padding: 1rem;
 }
+
+.header {
+	padding-top: 1rem;
+}
+
+.header .header__logo {
+	text-align: center;
+}
+
+.header .header__nav ul {
+	list-style: none;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;
+}
+
+.header .header__nav ul li {
+	padding-left: 1.5rem;
+}
