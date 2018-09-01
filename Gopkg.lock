@@ -2,6 +2,12 @@
 
 
 [[projects]]
+  name = "github.com/BurntSushi/toml"
+  packages = ["."]
+  revision = "b26d9c308763d68093482582cea63d69be07a0f0"
+  version = "v0.3.0"
+
+[[projects]]
   branch = "master"
   name = "github.com/CloudyKit/fastprinter"
   packages = ["."]
@@ -55,12 +61,6 @@
   version = "v3.3.2"
 
 [[projects]]
-  name = "github.com/go-chi/render"
-  packages = ["."]
-  revision = "3215478343fbc559bd3fc08f7031bb134d6bdad5"
-  version = "v1.0.1"
-
-[[projects]]
   name = "github.com/golang/protobuf"
   packages = ["proto"]
   revision = "b4deda0973fb4c70b50d226b1af49f3da59f5265"
@@ -71,6 +71,15 @@
   name = "github.com/google/go-querystring"
   packages = ["query"]
   revision = "53e6ce116135b80d037921a7fdd5138cf32d7a8a"
+
+[[projects]]
+  name = "github.com/gookit/config"
+  packages = [
+    ".",
+    "toml"
+  ]
+  revision = "ced7ea773ea08b7201472e0901c6b605a7bfa106"
+  version = "v1.0.8"
 
 [[projects]]
   branch = "master"
@@ -88,6 +97,12 @@
     "json/token"
   ]
   revision = "ef8a98b0bbce4a65b5aa4c368430a80ddc533168"
+
+[[projects]]
+  name = "github.com/imdario/mergo"
+  packages = ["."]
+  revision = "9f23e2d6bd2a77f959b2bf6acdbefd708a83a4a4"
+  version = "v0.3.6"
 
 [[projects]]
   branch = "master"
@@ -141,10 +156,10 @@
   version = "v0.8.0"
 
 [[projects]]
-  name = "github.com/satori/go.uuid"
+  name = "github.com/gofrs/uuid"
   packages = ["."]
-  revision = "f58768cc1a7a7e77a3bd49e98cdd21419399b6a3"
-  version = "v1.2.0"
+  revision = "370558f003bfe29580cd0f698d8640daccdcc45c"
+  version = "v3.1.1"
 
 [[projects]]
   name = "github.com/spf13/afero"
@@ -213,8 +228,8 @@
     "strmangle",
     "types"
   ]
-  revision = "b6e3e5aa27d8d32e5024470da26775c693739dd8"
-  version = "v3.0.0-rc9"
+  revision = "1340e5544bc5880f10808da79ebb3ee80cf8abb1"
+  version = "v3.0.1"
 
 [[projects]]
   branch = "master"
@@ -277,6 +292,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "0dca85a46aeccedbd672fdb76c301e7a6ce24d585dd70afabff53306c84f7474"
+  inputs-digest = "6bb198173bb8ac298ceaed42b939a189d18d74b464ba5a1a2d0af3fd51d4c7f9"
   solver-name = "gps-cdcl"
   solver-version = 1

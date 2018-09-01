@@ -19,23 +19,25 @@ import (
 
 var db *sql.DB
 var View = jet.NewHTMLSet("./views")
+var conf *appConfig
 
 type H map[string]interface{}
 
 func init() {
-	setupDB()
+	conf = loadConfig()
+	setupDB(conf.DbConnection)
 
 	updator.InitializeTwitter(updator.TwitterCreds{
-		ConsumerKey:    "",
-		ConsumerSecret: "",
+		ConsumerKey:    conf.TwitterConsumerKey,
+		ConsumerSecret: conf.TwitterConsumerSecret,
 	})
 
 	//updator.Start(db)
 }
 
-func setupDB() {
+func setupDB(dbConn string) {
 	var err error
-	db, err = sql.Open("postgres", "postgres://mca@localhost:5432/foodtruck?sslmode=disable")
+	db, err = sql.Open("postgres", dbConn)
 	if err != nil {
 		log.Fatalf("Failed opening DB: %v", err)
 	}
