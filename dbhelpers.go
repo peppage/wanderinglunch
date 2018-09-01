@@ -8,8 +8,12 @@ import (
 	"github.com/volatiletech/sqlboiler/queries/qm"
 )
 
+func convertHoursAgoToEpochTime(hours int) int64 {
+	return time.Now().Add(time.Duration(-1*hours) * (time.Minute * 60)).Unix()
+}
+
 func getSpots(site string, hours int) (map[string][]*models.Spot, error) {
-	eightHoursAgo := time.Now().Add(time.Duration(-1*hours) * (time.Minute * 60)).Unix()
+	hoursAgo := convertHoursAgoToEpochTime(hours)
 	spots, err := models.Spots(
 		qm.Load("Location"),
 		qm.Load("Truck"),
@@ -18,7 +22,7 @@ func getSpots(site string, hours int) (map[string][]*models.Spot, error) {
 		qm.InnerJoin("tweets on tweet_id = tweets.id"),
 		qm.InnerJoin("trucks on truck_id = trucks.twitname"),
 		qm.Where("trucks.site = ?", site),
-		qm.Where("tweets.time > ?", eightHoursAgo),
+		qm.Where("tweets.time > ?", hoursAgo),
 		qm.OrderBy("lat DESC")).All(context.Background(), db)
 	if err != nil {
 		return nil, err
