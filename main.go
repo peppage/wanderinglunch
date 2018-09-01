@@ -26,6 +26,7 @@ type H map[string]interface{}
 func init() {
 	conf = loadConfig()
 	setupDB(conf.DbConnection)
+	loadFastFunctions()
 
 	updator.InitializeTwitter(updator.TwitterCreds{
 		ConsumerKey:    conf.TwitterConsumerKey,
