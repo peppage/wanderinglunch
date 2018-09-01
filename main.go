@@ -51,7 +51,7 @@ func setupDB(dbConn string) {
 func main() {
 	router := routes()
 
-	log.Fatal(http.ListenAndServe(":8000", router))
+	log.Fatal(http.ListenAndServe(":"+conf.Port, router))
 }
 
 func routes() *chi.Mux {
