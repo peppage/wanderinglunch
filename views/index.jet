@@ -7,9 +7,11 @@
           <div class="zone__header">
             <h1>{{zone}}</h1>
           </div>
-          {{range spot := trucks}}
-              {{include "partials/_truck.jet" spot}}
-          {{end}}
+          <div class="zone__trucks">
+            {{range spot := trucks}}
+                {{include "partials/_spot.jet" spot}}
+            {{end}}
+          </div>
         </div>
     {{end}}
   </main>

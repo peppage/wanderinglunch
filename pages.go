@@ -41,7 +41,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 
 func allTrucks(w http.ResponseWriter, r *http.Request) {
 	site := chi.URLParam(r, "site")
-	spots, err := getSpots(site, 2000)
+	trucks, err := getTrucks(site, 2000)
 	if err != nil {
 		w.Write([]byte(err.Error()))
 	}
@@ -53,7 +53,7 @@ func allTrucks(w http.ResponseWriter, r *http.Request) {
 	template, _ := View.GetTemplate("alltrucks.jet")
 
 	vars := make(jet.VarMap)
-	vars.Set("spots", spots)
+	vars.Set("trucks", trucks)
 	if err := template.Execute(w, vars, c); err != nil {
 		panic(err)
 	}

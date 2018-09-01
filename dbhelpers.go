@@ -39,3 +39,10 @@ func getSpots(site string, hours int) (map[string][]*models.Spot, error) {
 
 	return zones, nil
 }
+
+func getTrucks(site string, hours int) ([]*models.Truck, error) {
+	return models.Trucks(
+		qm.Load("Images", qm.Where("images.menu = ?", true)),
+		qm.Where("trucks.site = ?", site),
+		qm.OrderBy("name DESC")).All(context.Background(), db)
+}

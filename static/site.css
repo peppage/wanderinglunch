@@ -54,6 +54,7 @@ a:hover {
 	-webkit-box-direction: normal;
 	-ms-flex-direction: row;
 	flex-direction: row;
+	align-items: center;
 }
 
 .truck .truck__image {
@@ -62,7 +63,7 @@ a:hover {
 }
 
 .truck:not(:first-child) {
-	border-top: 1px sold black;
+	border-top: 1px #666 dashed;
 }
 
 .truck > div {
