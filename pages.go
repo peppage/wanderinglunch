@@ -5,6 +5,8 @@ import (
 	"io/ioutil"
 	"net/http"
 
+	"wanderinglunch/models"
+
 	"github.com/CloudyKit/jet"
 	"github.com/go-chi/chi"
 )
@@ -83,4 +85,42 @@ func mapPage(w http.ResponseWriter, r *http.Request) {
 
 	io.Copy(ioutil.Discard, r.Body)
 	defer r.Body.Close()
+}
+
+func truckPage(w http.ResponseWriter, r *http.Request) {
+	id := chi.URLParam(r, "id")
+	truck, err := getTruck(id)
+	if err != nil {
+		w.Write([]byte(err.Error()))
+	}
+
+	c := pageContext{
+		Site: truck.Site,
+	}
+
+	template, _ := View.GetTemplate("truck.jet")
+	vars := make(jet.VarMap)
+	vars.Set("truck", truck)
+	vars.Set("img", getPhotoStack(truck.R.Images))
+	if err := template.Execute(w, vars, c); err != nil {
+		panic(err)
+	}
+
+	io.Copy(ioutil.Discard, r.Body)
+	defer r.Body.Close()
+}
+
+// Stack of photos to display as the gallery hover over
+func getPhotoStack(images []*models.Image) []*models.Image {
+	img := []*models.Image{}
+	l := len(images)
+	if l > 2 {
+		l = 2
+	}
+
+	for i := l; i >= 0; i-- {
+		img = append(img, images[i])
+	}
+
+	return img
 }

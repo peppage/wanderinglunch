@@ -1,0 +1,44 @@
+{{extends "layouts/base.jet"}}
+
+{{block body()}}
+<main>
+    <h1>
+        {{ truck.Name }}
+    </h1>
+    <h2>
+        {{ truck.Type }}
+    </h2>
+
+    {{ if len(truck.R.Images) > 0 }}
+        <div class="foursquareImage">
+            <img src="/static/images/foursquare.png" >
+        </div>
+        <div class="gallery">
+            <div class="gallery__wrapper">
+                {{ range image := img }}
+                    <figure class="gallery__item">
+                        <img alt=""
+                            sizes=""
+                            src="https://irs0.4sqi.net/img/general/500x500{{ image.Suffix }}"
+                            srcset="">
+                    </figure>
+                {{ end }}
+                <span class="gallery__text">
+                    View {{ len(truck.R.Images) }} Photos
+                </span>
+            </div>
+        </div>
+    {{ end }}
+
+    <h3>{{ truck.Name }} Links</h3>
+    {{ if truck.Weburl != "" }}
+        <a href="{{ truck.Weburl }}" target="_blank">Website</a><br>
+    {{ end }}
+    <a href="https://twitter.com/{{ truck.Twitname }}" target="_blank">Twitter</a><br>
+    {{ if truck.Foursquare != "" }}
+        <a href="https://foursquare.com/v/{{ truck.Foursquare }}?ref=P1JDYDE13QQDC11VUSA4LV3VV25OTRPHV1WAV5WP3VCE0QUP"
+            target="_blank">Foursquare</a><br>
+    {{ end }}
+    
+</main>
+{{end}}

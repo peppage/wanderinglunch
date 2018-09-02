@@ -46,3 +46,10 @@ func getTrucks(site string, hours int) ([]*models.Truck, error) {
 		qm.Where("trucks.site = ?", site),
 		qm.OrderBy("name ASC")).All(context.Background(), db)
 }
+
+func getTruck(id string) (*models.Truck, error) {
+	return models.Trucks(
+		qm.Load("Images", qm.OrderBy("images.menu DESC")),
+		qm.Where("trucks.twitname = ?", id),
+	).One(context.Background(), db)
+}
