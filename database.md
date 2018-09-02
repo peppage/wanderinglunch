@@ -35,3 +35,8 @@ ALTER TABLE images
 ADD CONSTRAINT images_truck_id_fkey
 FOREIGN KEY (truck_id)
 REFERENCES trucks(twitname);
+
+alter table trucks alter weburl SET NOT NULL;
+alter table trucks alter weburl SET default '';
+alter table trucks alter foursquare SET NOT NULL;
+alter table trucks alter foursquare SET default '';

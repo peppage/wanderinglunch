@@ -27,13 +27,13 @@ type Truck struct {
 	ID         string           `boil:"id" json:"id" toml:"id" yaml:"id"`
 	Name       string           `boil:"name" json:"name" toml:"name" yaml:"name"`
 	Twitname   string           `boil:"twitname" json:"twitname" toml:"twitname" yaml:"twitname"`
-	Weburl     null.String      `boil:"weburl" json:"weburl,omitempty" toml:"weburl" yaml:"weburl,omitempty"`
+	Weburl     string           `boil:"weburl" json:"weburl" toml:"weburl" yaml:"weburl"`
 	Tweet      string           `boil:"tweet" json:"tweet" toml:"tweet" yaml:"tweet"`
 	Retweeted  bool             `boil:"retweeted" json:"retweeted" toml:"retweeted" yaml:"retweeted"`
 	Lastupdate int              `boil:"lastupdate" json:"lastupdate" toml:"lastupdate" yaml:"lastupdate"`
 	Type       string           `boil:"type" json:"type" toml:"type" yaml:"type"`
 	About      string           `boil:"about" json:"about" toml:"about" yaml:"about"`
-	Foursquare null.String      `boil:"foursquare" json:"foursquare,omitempty" toml:"foursquare" yaml:"foursquare,omitempty"`
+	Foursquare string           `boil:"foursquare" json:"foursquare" toml:"foursquare" yaml:"foursquare"`
 	Site       string           `boil:"site" json:"site" toml:"site" yaml:"site"`
 	Locs       types.Int64Array `boil:"locs" json:"locs,omitempty" toml:"locs" yaml:"locs,omitempty"`
 	Archive    null.Bool        `boil:"archive" json:"archive,omitempty" toml:"archive" yaml:"archive,omitempty"`
@@ -88,8 +88,8 @@ type truckL struct{}
 
 var (
 	truckColumns               = []string{"id", "name", "twitname", "weburl", "tweet", "retweeted", "lastupdate", "type", "about", "foursquare", "site", "locs", "archive"}
-	truckColumnsWithoutDefault = []string{"id", "name", "twitname", "weburl", "foursquare", "site", "locs"}
-	truckColumnsWithDefault    = []string{"tweet", "retweeted", "lastupdate", "type", "about", "archive"}
+	truckColumnsWithoutDefault = []string{"id", "name", "twitname", "site", "locs"}
+	truckColumnsWithDefault    = []string{"weburl", "tweet", "retweeted", "lastupdate", "type", "about", "foursquare", "archive"}
 	truckPrimaryKeyColumns     = []string{"twitname"}
 )
 
