@@ -27,7 +27,7 @@ type Tweet struct {
 	Time      int64     `boil:"time" json:"time" toml:"time" yaml:"time"`
 	ID        int64     `boil:"id" json:"id" toml:"id" yaml:"id"`
 	Retweeted bool      `boil:"retweeted" json:"retweeted" toml:"retweeted" yaml:"retweeted"`
-	Twitname  string    `boil:"twitname" json:"twitname" toml:"twitname" yaml:"twitname"`
+	TruckID   string    `boil:"truck_id" json:"truck_id" toml:"truck_id" yaml:"truck_id"`
 	Done      null.Bool `boil:"done" json:"done,omitempty" toml:"done" yaml:"done,omitempty"`
 
 	R *tweetR `boil:"-" json:"-" toml:"-" yaml:"-"`
@@ -39,19 +39,20 @@ var TweetColumns = struct {
 	Time      string
 	ID        string
 	Retweeted string
-	Twitname  string
+	TruckID   string
 	Done      string
 }{
 	Text:      "text",
 	Time:      "time",
 	ID:        "id",
 	Retweeted: "retweeted",
-	Twitname:  "twitname",
+	TruckID:   "truck_id",
 	Done:      "done",
 }
 
 // tweetR is where relationships are stored.
 type tweetR struct {
+	Truck *Truck
 	Spots SpotSlice
 }
 
@@ -64,8 +65,8 @@ func (*tweetR) NewStruct() *tweetR {
 type tweetL struct{}
 
 var (
-	tweetColumns               = []string{"text", "time", "id", "retweeted", "twitname", "done"}
-	tweetColumnsWithoutDefault = []string{"text", "time", "id", "retweeted", "twitname"}
+	tweetColumns               = []string{"text", "time", "id", "retweeted", "truck_id", "done"}
+	tweetColumnsWithoutDefault = []string{"text", "time", "id", "retweeted", "truck_id"}
 	tweetColumnsWithDefault    = []string{"done"}
 	tweetPrimaryKeyColumns     = []string{"id"}
 )
@@ -305,6 +306,20 @@ func (q tweetQuery) Exists(ctx context.Context, exec boil.ContextExecutor) (bool
 	return count > 0, nil
 }
 
+// Truck pointed to by the foreign key.
+func (o *Tweet) Truck(mods ...qm.QueryMod) truckQuery {
+	queryMods := []qm.QueryMod{
+		qm.Where("twitname=?", o.TruckID),
+	}
+
+	queryMods = append(queryMods, mods...)
+
+	query := Trucks(queryMods...)
+	queries.SetFrom(query.Query, "\"trucks\"")
+
+	return query
+}
+
 // Spots retrieves all the spot's Spots with an executor.
 func (o *Tweet) Spots(mods ...qm.QueryMod) spotQuery {
 	var queryMods []qm.QueryMod
@@ -324,6 +339,101 @@ func (o *Tweet) Spots(mods ...qm.QueryMod) spotQuery {
 	}
 
 	return query
+}
+
+// LoadTruck allows an eager lookup of values, cached into the
+// loaded structs of the objects. This is for an N-1 relationship.
+func (tweetL) LoadTruck(ctx context.Context, e boil.ContextExecutor, singular bool, maybeTweet interface{}, mods queries.Applicator) error {
+	var slice []*Tweet
+	var object *Tweet
+
+	if singular {
+		object = maybeTweet.(*Tweet)
+	} else {
+		slice = *maybeTweet.(*[]*Tweet)
+	}
+
+	args := make([]interface{}, 0, 1)
+	if singular {
+		if object.R == nil {
+			object.R = &tweetR{}
+		}
+		args = append(args, object.TruckID)
+	} else {
+	Outer:
+		for _, obj := range slice {
+			if obj.R == nil {
+				obj.R = &tweetR{}
+			}
+
+			for _, a := range args {
+				if a == obj.TruckID {
+					continue Outer
+				}
+			}
+
+			args = append(args, obj.TruckID)
+		}
+	}
+
+	query := NewQuery(qm.From(`trucks`), qm.WhereIn(`twitname in ?`, args...))
+	if mods != nil {
+		mods.Apply(query)
+	}
+
+	results, err := query.QueryContext(ctx, e)
+	if err != nil {
+		return errors.Wrap(err, "failed to eager load Truck")
+	}
+
+	var resultSlice []*Truck
+	if err = queries.Bind(results, &resultSlice); err != nil {
+		return errors.Wrap(err, "failed to bind eager loaded slice Truck")
+	}
+
+	if err = results.Close(); err != nil {
+		return errors.Wrap(err, "failed to close results of eager load for trucks")
+	}
+	if err = results.Err(); err != nil {
+		return errors.Wrap(err, "error occurred during iteration of eager loaded relations for trucks")
+	}
+
+	if len(tweetAfterSelectHooks) != 0 {
+		for _, obj := range resultSlice {
+			if err := obj.doAfterSelectHooks(ctx, e); err != nil {
+				return err
+			}
+		}
+	}
+
+	if len(resultSlice) == 0 {
+		return nil
+	}
+
+	if singular {
+		foreign := resultSlice[0]
+		object.R.Truck = foreign
+		if foreign.R == nil {
+			foreign.R = &truckR{}
+		}
+		foreign.R.Tweets = append(foreign.R.Tweets, object)
+		return nil
+	}
+
+	for _, local := range slice {
+		for _, foreign := range resultSlice {
+			if local.TruckID == foreign.Twitname {
+				local.R.Truck = foreign
+				if foreign.R == nil {
+					foreign.R = &truckR{}
+				}
+				foreign.R.Tweets = append(foreign.R.Tweets, local)
+				break
+			}
+		}
+	}
+
+	return nil
 }
 
 // LoadSpots allows an eager lookup of values, cached into the
@@ -412,6 +522,53 @@ func (tweetL) LoadSpots(ctx context.Context, e boil.ContextExecutor, singular bo
 				break
 			}
 		}
+	}
+
+	return nil
+}
+
+// SetTruck of the tweet to the related item.
+// Sets o.R.Truck to related.
+// Adds o to related.R.Tweets.
+func (o *Tweet) SetTruck(ctx context.Context, exec boil.ContextExecutor, insert bool, related *Truck) error {
+	var err error
+	if insert {
+		if err = related.Insert(ctx, exec, boil.Infer()); err != nil {
+			return errors.Wrap(err, "failed to insert into foreign table")
+		}
+	}
+
+	updateQuery := fmt.Sprintf(
+		"UPDATE \"tweets\" SET %s WHERE %s",
+		strmangle.SetParamNames("\"", "\"", 1, []string{"truck_id"}),
+		strmangle.WhereClause("\"", "\"", 2, tweetPrimaryKeyColumns),
+	)
+	values := []interface{}{related.Twitname, o.ID}
+
+	if boil.DebugMode {
+		fmt.Fprintln(boil.DebugWriter, updateQuery)
+		fmt.Fprintln(boil.DebugWriter, values)
+	}
+
+	if _, err = exec.ExecContext(ctx, updateQuery, values...); err != nil {
+		return errors.Wrap(err, "failed to update local table")
+	}
+
+	o.TruckID = related.Twitname
+	if o.R == nil {
+		o.R = &tweetR{
+			Truck: related,
+		}
+	} else {
+		o.R.Truck = related
+	}
+
+	if related.R == nil {
+		related.R = &truckR{
+			Tweets: TweetSlice{o},
+		}
+	} else {
+		related.R.Tweets = append(related.R.Tweets, o)
 	}
 
 	return nil

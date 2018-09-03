@@ -108,7 +108,7 @@ func saveTweets(twitname string, tweets []twitter.Tweet) {
 			Time:      parseCreatedAt(tweets[i].CreatedAt).Unix(),
 			ID:        tweets[i].ID,
 			Retweeted: tweets[i].Retweeted,
-			Twitname:  twitname,
+			TruckID:   twitname,
 		}
 
 		err := t.Upsert(context.Background(), db, false, []string{"id"}, boil.Infer(), boil.Infer())

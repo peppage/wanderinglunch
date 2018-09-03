@@ -40,3 +40,10 @@ alter table trucks alter weburl SET NOT NULL;
 alter table trucks alter weburl SET default '';
 alter table trucks alter foursquare SET NOT NULL;
 alter table trucks alter foursquare SET default '';
+
+ALTER TABLE tweets rename column twitname to truck_id;
+
+ALTER TABLE tweets
+ADD CONSTRAINT tweets_truck_id_fkey
+FOREIGN KEY (handle)
+REFERENCES trucks(twitname);

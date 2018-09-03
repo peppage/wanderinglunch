@@ -158,6 +158,7 @@ func TestToOne(t *testing.T) {
 	t.Run("SpotToTruckUsingTruck", testSpotToOneTruckUsingTruck)
 	t.Run("SpotToLocationUsingLocation", testSpotToOneLocationUsingLocation)
 	t.Run("SpotToTweetUsingTweet", testSpotToOneTweetUsingTweet)
+	t.Run("TweetToTruckUsingTruck", testTweetToOneTruckUsingTruck)
 }
 
 // TestOneToOne tests cannot be run in parallel
@@ -170,6 +171,7 @@ func TestToMany(t *testing.T) {
 	t.Run("LocationToSpots", testLocationToManySpots)
 	t.Run("TruckToImages", testTruckToManyImages)
 	t.Run("TruckToSpots", testTruckToManySpots)
+	t.Run("TruckToTweets", testTruckToManyTweets)
 	t.Run("TweetToSpots", testTweetToManySpots)
 }
 
@@ -180,6 +182,7 @@ func TestToOneSet(t *testing.T) {
 	t.Run("SpotToTruckUsingSpots", testSpotToOneSetOpTruckUsingTruck)
 	t.Run("SpotToLocationUsingSpots", testSpotToOneSetOpLocationUsingLocation)
 	t.Run("SpotToTweetUsingSpots", testSpotToOneSetOpTweetUsingTweet)
+	t.Run("TweetToTruckUsingTweets", testTweetToOneSetOpTruckUsingTruck)
 }
 
 // TestToOneRemove tests cannot be run in parallel
@@ -200,6 +203,7 @@ func TestToManyAdd(t *testing.T) {
 	t.Run("LocationToSpots", testLocationToManyAddOpSpots)
 	t.Run("TruckToImages", testTruckToManyAddOpImages)
 	t.Run("TruckToSpots", testTruckToManyAddOpSpots)
+	t.Run("TruckToTweets", testTruckToManyAddOpTweets)
 	t.Run("TweetToSpots", testTweetToManyAddOpSpots)
 }
 

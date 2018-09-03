@@ -647,6 +647,114 @@ func testTweetToManyAddOpSpots(t *testing.T) {
 		}
 	}
 }
+func testTweetToOneTruckUsingTruck(t *testing.T) {
+	ctx := context.Background()
+	tx := MustTx(boil.BeginTx(ctx, nil))
+	defer func() { _ = tx.Rollback() }()
+
+	var local Tweet
+	var foreign Truck
+
+	seed := randomize.NewSeed()
+	if err := randomize.Struct(seed, &local, tweetDBTypes, false, tweetColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Tweet struct: %s", err)
+	}
+	if err := randomize.Struct(seed, &foreign, truckDBTypes, false, truckColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Truck struct: %s", err)
+	}
+
+	if err := foreign.Insert(ctx, tx, boil.Infer()); err != nil {
+		t.Fatal(err)
+	}
+
+	local.TruckID = foreign.Twitname
+	if err := local.Insert(ctx, tx, boil.Infer()); err != nil {
+		t.Fatal(err)
+	}
+
+	check, err := local.Truck().One(ctx, tx)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if check.Twitname != foreign.Twitname {
+		t.Errorf("want: %v, got %v", foreign.Twitname, check.Twitname)
+	}
+
+	slice := TweetSlice{&local}
+	if err = local.L.LoadTruck(ctx, tx, false, (*[]*Tweet)(&slice), nil); err != nil {
+		t.Fatal(err)
+	}
+	if local.R.Truck == nil {
+		t.Error("struct should have been eager loaded")
+	}
+
+	local.R.Truck = nil
+	if err = local.L.LoadTruck(ctx, tx, true, &local, nil); err != nil {
+		t.Fatal(err)
+	}
+	if local.R.Truck == nil {
+		t.Error("struct should have been eager loaded")
+	}
+}
+
+func testTweetToOneSetOpTruckUsingTruck(t *testing.T) {
+	var err error
+
+	ctx := context.Background()
+	tx := MustTx(boil.BeginTx(ctx, nil))
+	defer func() { _ = tx.Rollback() }()
+
+	var a Tweet
+	var b, c Truck
+
+	seed := randomize.NewSeed()
+	if err = randomize.Struct(seed, &a, tweetDBTypes, false, strmangle.SetComplement(tweetPrimaryKeyColumns, tweetColumnsWithoutDefault)...); err != nil {
+		t.Fatal(err)
+	}
+	if err = randomize.Struct(seed, &b, truckDBTypes, false, strmangle.SetComplement(truckPrimaryKeyColumns, truckColumnsWithoutDefault)...); err != nil {
+		t.Fatal(err)
+	}
+	if err = randomize.Struct(seed, &c, truckDBTypes, false, strmangle.SetComplement(truckPrimaryKeyColumns, truckColumnsWithoutDefault)...); err != nil {
+		t.Fatal(err)
+	}
+
+	if err := a.Insert(ctx, tx, boil.Infer()); err != nil {
+		t.Fatal(err)
+	}
+	if err = b.Insert(ctx, tx, boil.Infer()); err != nil {
+		t.Fatal(err)
+	}
+
+	for i, x := range []*Truck{&b, &c} {
+		err = a.SetTruck(ctx, tx, i != 0, x)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if a.R.Truck != x {
+			t.Error("relationship struct not set to correct value")
+		}
+
+		if x.R.Tweets[0] != &a {
+			t.Error("failed to append to foreign relationship struct")
+		}
+		if a.TruckID != x.Twitname {
+			t.Error("foreign key was wrong value", a.TruckID)
+		}
+
+		zero := reflect.Zero(reflect.TypeOf(a.TruckID))
+		reflect.Indirect(reflect.ValueOf(&a.TruckID)).Set(zero)
+
+		if err = a.Reload(ctx, tx); err != nil {
+			t.Fatal("failed to reload", err)
+		}
+
+		if a.TruckID != x.Twitname {
+			t.Error("foreign key was wrong value", a.TruckID, x.Twitname)
+		}
+	}
+}
 
 func testTweetsReload(t *testing.T) {
 	t.Parallel()
@@ -722,7 +830,7 @@ func testTweetsSelect(t *testing.T) {
 }
 
 var (
-	tweetDBTypes = map[string]string{`Done`: `boolean`, `ID`: `bigint`, `Retweeted`: `boolean`, `Text`: `text`, `Time`: `bigint`, `Twitname`: `text`}
+	tweetDBTypes = map[string]string{`Done`: `boolean`, `ID`: `bigint`, `Retweeted`: `boolean`, `Text`: `text`, `Time`: `bigint`, `TruckID`: `text`}
 	_            = bytes.MinRead
 )
 
