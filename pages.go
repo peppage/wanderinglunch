@@ -12,7 +12,8 @@ import (
 )
 
 type pageContext struct {
-	Site string
+	Site    string
+	Version string
 }
 
 func index(w http.ResponseWriter, r *http.Request) {
@@ -23,7 +24,8 @@ func index(w http.ResponseWriter, r *http.Request) {
 	}
 
 	c := pageContext{
-		Site: site,
+		Site:    site,
+		Version: Version,
 	}
 
 	template, _ := View.GetTemplate("index.jet")
@@ -49,7 +51,8 @@ func allTrucks(w http.ResponseWriter, r *http.Request) {
 	}
 
 	c := pageContext{
-		Site: site,
+		Site:    site,
+		Version: Version,
 	}
 
 	template, _ := View.GetTemplate("alltrucks.jet")
@@ -72,7 +75,8 @@ func mapPage(w http.ResponseWriter, r *http.Request) {
 	}
 
 	c := pageContext{
-		Site: site,
+		Site:    site,
+		Version: Version,
 	}
 
 	template, _ := View.GetTemplate("alltrucks.jet")
@@ -95,7 +99,8 @@ func truckPage(w http.ResponseWriter, r *http.Request) {
 	}
 
 	c := pageContext{
-		Site: truck.Site,
+		Site:    truck.Site,
+		Version: Version,
 	}
 
 	template, _ := View.GetTemplate("truck.jet")

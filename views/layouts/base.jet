@@ -20,5 +20,14 @@
         </nav>
     </header>
     {{yield body()}}
+    <footer>
+        <div>
+            <a href="http://twitter.com/peppage">Twitter</a> | 
+            <a href="/{{ .Site }}/feedback">Feedback</a>
+        </div>
+        <div>
+            {{ .Version }}
+        </div>
+    </footer>
   </body>
 </html>

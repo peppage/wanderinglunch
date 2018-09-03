@@ -21,6 +21,12 @@ var db *sql.DB
 var View = jet.NewHTMLSet("./views")
 var conf *appConfig
 
+// Version is autoset from the build script
+var Version string
+
+// Build is autoset from the build script
+var Build string
+
 type H map[string]interface{}
 
 func init() {
