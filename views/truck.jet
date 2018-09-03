@@ -39,6 +39,23 @@
         <a href="https://foursquare.com/v/{{ truck.Foursquare }}?ref=P1JDYDE13QQDC11VUSA4LV3VV25OTRPHV1WAV5WP3VCE0QUP"
             target="_blank">Foursquare</a><br>
     {{ end }}
+
+    {{if len(truck.R.Tweets) > 0 }}
+        <h3>{{ truck.Name }} Tweets</h3>
+        <ol class="tweetList">
+            {{ range tweet := truck.R.Tweets }}
+                <li class="tweetList__tweet">
+                    <p>
+                        <a href="http://twitter.com/{%s truck.Twitname %}/status/{%v tweet.ID %}" target="_blank">
+                            <img src="/static/images/twitter.png" style="height: 20px;">
+                        </a>
+                        {{ tweet.Text|formatTweet|raw }}
+                    </p>
+                    <span class="tweet__time">{{tweet.Time|prettyDate}}
+                </li>
+            {{ end }}
+        </ol>
+    {{ end }}
     
 </main>
 {{end}}

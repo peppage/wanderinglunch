@@ -19,8 +19,8 @@ func getSpots(site string, hours int) (map[string][]*models.Spot, error) {
 		qm.Load("Truck"),
 		qm.Load("Truck.Images", qm.Where("images.menu = ?", true)),
 		qm.InnerJoin("locations on location_id = locations.id"),
-		qm.InnerJoin("tweets on tweet_id = tweets.id"),
-		qm.InnerJoin("trucks on truck_id = trucks.twitname"),
+		qm.InnerJoin("tweets on spots.tweet_id = tweets.id"),
+		qm.InnerJoin("trucks on spots.truck_id = trucks.twitname"),
 		qm.Where("trucks.site = ?", site),
 		qm.Where("tweets.time > ?", hoursAgo),
 		qm.OrderBy("lat DESC")).All(context.Background(), db)
@@ -50,6 +50,7 @@ func getTrucks(site string, hours int) ([]*models.Truck, error) {
 func getTruck(id string) (*models.Truck, error) {
 	return models.Trucks(
 		qm.Load("Images", qm.OrderBy("images.menu DESC")),
+		qm.Load("Tweets", qm.OrderBy("time DESC"), qm.Limit(5)),
 		qm.Where("trucks.twitname = ?", id),
 	).One(context.Background(), db)
 }

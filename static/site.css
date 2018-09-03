@@ -158,3 +158,20 @@ a:hover {
 .gallery__wrapper:hover .gallery__text {
 	transform: translate(-20px, -35px);
 }
+
+.tweetList {
+	list-style: none;
+	width: 60%;
+}
+
+.tweetList .tweetList__tweet {
+	border-bottom: 1px #666 dashed;
+	padding-bottom: 1rem;
+	padding-top: 1rem;
+}
+
+.tweetList .tweetList__tweet .tweet__time {
+	font-size: .7em;
+	color: #5d5d5d;
+	float: right;
+}
