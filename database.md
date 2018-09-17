@@ -47,3 +47,6 @@ ALTER TABLE tweets
 ADD CONSTRAINT tweets_truck_id_fkey
 FOREIGN KEY (handle)
 REFERENCES trucks(twitname);
+
+alter table sites alter lat SET NOT NULL;
+alter table sites alter long SET NOT NULL;

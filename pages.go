@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -16,7 +17,7 @@ type pageContext struct {
 
 func index(w http.ResponseWriter, r *http.Request) {
 	site := chi.URLParam(r, "site")
-	spots, err := getSpots(site, 2000)
+	spots, err := getSpots(site, 8)
 	if err != nil {
 		w.Write([]byte(err.Error()))
 	}
@@ -66,21 +67,32 @@ func allTrucks(w http.ResponseWriter, r *http.Request) {
 }
 
 func mapPage(w http.ResponseWriter, r *http.Request) {
-	site := chi.URLParam(r, "site")
-	spots, err := getSpots(site, 2000)
+	siteName := chi.URLParam(r, "site")
+	spots, err := getMarkers(siteName, 2000)
+	if err != nil {
+		w.Write([]byte(err.Error()))
+	}
+
+	bytes, err := json.Marshal(spots)
+	if err != nil {
+		panic(err)
+	}
+
+	site, err := getSite(siteName)
 	if err != nil {
 		w.Write([]byte(err.Error()))
 	}
 
 	c := pageContext{
-		Site:    site,
+		Site:    siteName,
 		Version: Version,
 	}
 
-	template, _ := View.GetTemplate("alltrucks.jet")
+	template, _ := View.GetTemplate("map.jet")
 
 	vars := make(jet.VarMap)
-	vars.Set("spots", spots)
+	vars.Set("trucks", bytes)
+	vars.Set("site", site)
 	if err := template.Execute(w, vars, c); err != nil {
 		panic(err)
 	}

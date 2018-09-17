@@ -23,11 +23,11 @@ import (
 
 // Site is an object representing the database table.
 type Site struct {
-	Name        string       `boil:"name" json:"name" toml:"name" yaml:"name"`
-	Title       null.String  `boil:"title" json:"title,omitempty" toml:"title" yaml:"title,omitempty"`
-	Description null.String  `boil:"description" json:"description,omitempty" toml:"description" yaml:"description,omitempty"`
-	Lat         null.Float64 `boil:"lat" json:"lat,omitempty" toml:"lat" yaml:"lat,omitempty"`
-	Long        null.Float64 `boil:"long" json:"long,omitempty" toml:"long" yaml:"long,omitempty"`
+	Name        string      `boil:"name" json:"name" toml:"name" yaml:"name"`
+	Title       null.String `boil:"title" json:"title,omitempty" toml:"title" yaml:"title,omitempty"`
+	Description null.String `boil:"description" json:"description,omitempty" toml:"description" yaml:"description,omitempty"`
+	Lat         float64     `boil:"lat" json:"lat" toml:"lat" yaml:"lat"`
+	Long        float64     `boil:"long" json:"long" toml:"long" yaml:"long"`
 
 	R *siteR `boil:"-" json:"-" toml:"-" yaml:"-"`
 	L siteL  `boil:"-" json:"-" toml:"-" yaml:"-"`
