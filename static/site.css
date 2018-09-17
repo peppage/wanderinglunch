@@ -98,71 +98,6 @@ a:hover {
 	text-align: center;
 }
 
-.gallery {
-	display: flex;
-}
-
-.gallery__wrapper {
-	cursor: pointer;
-	position: relative;
-	display: inline-block;
-}
-
-.gallery__item {
-	transition: transform .4s ease-in-out;
-}
-
-.gallery__item{
-	bottom: 0;
-	right: 0;
-	top: 0;
-	left: 0;
-	filter: blur(0);
-	position: absolute;
-	width: 100%;
-	height: 100%;
-}
-
-.gallery__item:nth-of-type(3) {
-	position: relative;
-}
-
-.gallery__wrapper:hover .gallery__item:first-of-type {
-	transform: translate(10px, 10px);
-}
-
-.gallery__wrapper:hover .gallery__item:nth-of-type(2) {
-	transform: translate(0);
-}
-
-.gallery__wrapper:hover .gallery__item:nth-of-type(3) {
-	transform: translate(-10px, -10px);
-}
-
-.gallery__item img {
-	display: block;
-	max-height: 85vh;
-	margin: auto;
-	padding-right: 20px;
-	height: auto;
-	border-style: none;
-}
-
-.gallery__text {
-	bottom: 0;
-	right: 20px;
-	transition: transform .35s linear;
-	transform: translate(1px, 1px);
-	padding: 20px 40px;
-	display: block;
-	position: absolute;
-	background: #fff;
-}
-
-.gallery__wrapper:hover .gallery__text {
-	transform: translate(-20px, -35px);
-}
-
 .tweetList {
 	list-style: none;
 	width: 60%;
@@ -178,4 +113,16 @@ a:hover {
 	font-size: .7em;
 	color: #5d5d5d;
 	float: right;
+}
+
+.gallery {
+	text-align: center;
+	margin: auto;
+	max-width: 1000px;
+}
+
+.gallery figure {
+	display: inline-block;
+	padding: 1rem;
+	margin: 0;
 }

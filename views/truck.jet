@@ -13,20 +13,14 @@
         <div class="foursquareImage">
             <img src="/static/images/foursquare.png" >
         </div>
-        <div class="gallery">
-            <div class="gallery__wrapper">
-                {{ range image := img }}
-                    <figure class="gallery__item">
-                        <img alt=""
-                            sizes=""
-                            src="https://irs0.4sqi.net/img/general/500x500{{ image.Suffix }}"
-                            srcset="">
-                    </figure>
-                {{ end }}
-                <span class="gallery__text">
-                    View {{ len(truck.R.Images) }} Photos
-                </span>
-            </div>
+        <div class="gallery" itemscope itemtype="http://schema.org/ImageGallery">
+            {{ range image := truck.R.Images }}
+                <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                    <a href="https://irs0.4sqi.net/img/general/900x900{{ image.Suffix }}" itemprop="contentUrl" data-size="900x900">
+                        <img src="https://irs0.4sqi.net/img/general/200x200{{ image.Suffix }}" itemprop="thumbnail" alt="Image description" />
+                    </a>
+                </figure>
+            {{ end }}
         </div>
     {{ end }}
 
@@ -56,6 +50,6 @@
             {{ end }}
         </ol>
     {{ end }}
-    
 </main>
+{{include "partials/_photoswipe.jet"}}
 {{end}}
