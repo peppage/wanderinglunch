@@ -78,7 +78,7 @@ func routes() *chi.Mux {
 		r.Get("/map", mapPage)
 	})
 
-	router.Get("/truck/{id:[a-z-]+}", truckPage)
+	router.Get("/truck/{id:[a-z-0-9]+}", truckPage)
 
 	return router
 }
