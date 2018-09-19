@@ -12,6 +12,7 @@ body {
 	flex-direction: column;
 	margin-top: 0;
 	margin-bottom: 0;
+	justify-content: space-between;
 }
 
 main {
@@ -63,7 +64,7 @@ a:hover {
 
 .truck .truck__image {
 	text-align: center;
-	flex: .25;
+	flex: 0.25;
 }
 
 .truck:not(:first-child) {
@@ -110,7 +111,7 @@ a:hover {
 }
 
 .tweetList .tweetList__tweet .tweet__time {
-	font-size: .7em;
+	font-size: 0.7em;
 	color: #5d5d5d;
 	float: right;
 }
