@@ -6,7 +6,9 @@ body {
 	display: -ms-flexbox;
 	display: flex;
 	min-height: 100vh;
+	box-orient: vertical;
 	-webkit-box-orient: vertical;
+	box-direction: normal;
 	-webkit-box-direction: normal;
 	-ms-flex-direction: column;
 	flex-direction: column;
@@ -55,7 +57,9 @@ a:hover {
 	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
+	box-orient: horizonal;
 	-webkit-box-orient: horizontal;
+	box-direction: normal;
 	-webkit-box-direction: normal;
 	-ms-flex-direction: row;
 	flex-direction: row;
@@ -126,4 +130,38 @@ a:hover {
 	display: inline-block;
 	padding: 1rem;
 	margin: 0;
+}
+
+form {
+	padding: 1rem;
+}
+
+input[type='text'],
+input[type='password'],
+textarea,
+select {
+	border-radius: 3px;
+	border: 1px solid #ddd;
+	width: 100%;
+	padding: 0.5rem;
+	margin-bottom: 0.75rem;
+	font-size: 1em;
+	color: #333;
+}
+
+button {
+	padding-left: 1rem;
+	padding-right: 1rem;
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+	font-size: 1.5rem;
+	background-color: #1e824c;
+	color: #fff;
+	border-color: transparent;
+	cursor: pointer;
+	text-align: center;
+}
+
+form .form-buttons {
+	text-align: right;
 }

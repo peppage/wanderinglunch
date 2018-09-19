@@ -10,6 +10,7 @@ type appConfig struct {
 	TwitterConsumerSecret string
 	DbConnection          string
 	Port                  string
+	SessionKey            string
 }
 
 func loadConfig() *appConfig {
@@ -24,11 +25,13 @@ func loadConfig() *appConfig {
 	consumerSecret, _ := config.String("twitter.consumer_secret")
 	dbConn, _ := config.String("app.db_connection")
 	port, _ := config.String("server.http_port")
+	sessKey, _ := config.String("app.session_key")
 
 	return &appConfig{
 		TwitterConsumerKey:    consumerKey,
 		TwitterConsumerSecret: consumerSecret,
 		DbConnection:          dbConn,
 		Port:                  port,
+		SessionKey:            sessKey,
 	}
 }

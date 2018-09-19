@@ -123,3 +123,37 @@ func truckPage(w http.ResponseWriter, r *http.Request) {
 	io.Copy(ioutil.Discard, r.Body)
 	defer r.Body.Close()
 }
+
+func login(w http.ResponseWriter, r *http.Request) {
+
+	c := pageContext{
+		Version: Version,
+	}
+
+	template, _ := View.GetTemplate("login.jet")
+	if err := template.Execute(w, nil, c); err != nil {
+		panic(err)
+	}
+
+	io.Copy(ioutil.Discard, r.Body)
+	defer r.Body.Close()
+}
+
+func loginHandler(w http.ResponseWriter, r *http.Request) {
+	req, err := parseLoginRequest(r)
+	if err != nil {
+		panic(err)
+	}
+
+	user, err := getValidUser(req.Username, req.Password)
+	if err != nil {
+		panic(err)
+	}
+
+	storeUser(w, r, user)
+
+	http.Redirect(w, r, "/admin", http.StatusSeeOther)
+
+	io.Copy(ioutil.Discard, r.Body)
+	defer r.Body.Close()
+}

@@ -61,6 +61,12 @@
   version = "v3.3.2"
 
 [[projects]]
+  name = "github.com/gofrs/uuid"
+  packages = ["."]
+  revision = "370558f003bfe29580cd0f698d8640daccdcc45c"
+  version = "v3.1.1"
+
+[[projects]]
   name = "github.com/golang/protobuf"
   packages = ["proto"]
   revision = "b4deda0973fb4c70b50d226b1af49f3da59f5265"
@@ -80,6 +86,30 @@
   ]
   revision = "ced7ea773ea08b7201472e0901c6b605a7bfa106"
   version = "v1.0.8"
+
+[[projects]]
+  name = "github.com/gorilla/context"
+  packages = ["."]
+  revision = "08b5f424b9271eedf6f9f0ce86cb9396ed337a42"
+  version = "v1.1.1"
+
+[[projects]]
+  name = "github.com/gorilla/schema"
+  packages = ["."]
+  revision = "d0e4c24cff97ae983e9847e0ed5a02dc10013d41"
+  version = "v1.0.2"
+
+[[projects]]
+  name = "github.com/gorilla/securecookie"
+  packages = ["."]
+  revision = "e59506cc896acb7f7bf732d4fdf5e25f7ccd8983"
+  version = "v1.1.1"
+
+[[projects]]
+  name = "github.com/gorilla/sessions"
+  packages = ["."]
+  revision = "81547393f870a35be888759a606ba7bf71dbe5c7"
+  version = "v1.1.2"
 
 [[projects]]
   branch = "master"
@@ -156,12 +186,6 @@
   version = "v0.8.0"
 
 [[projects]]
-  name = "github.com/gofrs/uuid"
-  packages = ["."]
-  revision = "370558f003bfe29580cd0f698d8640daccdcc45c"
-  version = "v3.1.1"
-
-[[projects]]
   name = "github.com/spf13/afero"
   packages = [
     ".",
@@ -233,6 +257,15 @@
 
 [[projects]]
   branch = "master"
+  name = "golang.org/x/crypto"
+  packages = [
+    "bcrypt",
+    "blowfish"
+  ]
+  revision = "0e37d006457bf46f9e6692014ba72ef82c33022c"
+
+[[projects]]
+  branch = "master"
   name = "golang.org/x/net"
   packages = [
     "context",
@@ -292,6 +325,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "6bb198173bb8ac298ceaed42b939a189d18d74b464ba5a1a2d0af3fd51d4c7f9"
+  inputs-digest = "5de521f78de61f6d884da602de41855c9d4654c4b6482956f9481680807d54f9"
   solver-name = "gps-cdcl"
   solver-version = 1

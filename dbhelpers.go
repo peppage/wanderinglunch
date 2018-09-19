@@ -2,8 +2,11 @@ package main
 
 import (
 	"context"
+	"errors"
 	"time"
 	"wanderinglunch/models"
+
+	"golang.org/x/crypto/bcrypt"
 
 	"github.com/volatiletech/sqlboiler/queries/qm"
 )
@@ -93,4 +96,26 @@ func getMarkers(site string, hours int) ([]Marker, error) {
 	}
 
 	return markers, nil
+}
+
+func getValidUser(username, password string) (*models.User, error) {
+	user, err := models.Users(
+		qm.Where("email = ?", username),
+	).One(context.Background(), db)
+
+	if err != nil {
+		return nil, err
+	}
+
+	if ok := validatePassword(user.Password, password); ok {
+		return user, nil
+	}
+
+	return nil, errors.New("Invalid credentials")
+}
+
+// validatePassword returns true of the current user's password matches what is sent in
+func validatePassword(dbpassword, password string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(dbpassword), []byte(password))
+	return err == nil
 }

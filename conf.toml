@@ -6,6 +6,7 @@ log_level = "error"
 run_updator = true
 develop = false
 db_connection = ""
+session_key = ""
 
 [loggly]
 client_id = ""

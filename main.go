@@ -4,22 +4,27 @@ package main
 
 import (
 	"database/sql"
+	"encoding/gob"
 	"log"
 	"net/http"
 	"os"
 	"path/filepath"
 	"strings"
 
+	"wanderinglunch/models"
 	"wanderinglunch/updator"
 
 	"github.com/CloudyKit/jet"
 	"github.com/go-chi/chi"
+	"github.com/gorilla/context"
+	"github.com/gorilla/sessions"
 	_ "github.com/lib/pq"
 )
 
 var db *sql.DB
 var View = jet.NewHTMLSet("./views")
 var conf *appConfig
+var store *sessions.CookieStore
 
 // Version is autoset from the build script
 var Version string
@@ -32,6 +37,8 @@ type H map[string]interface{}
 func init() {
 	conf = loadConfig()
 	setupDB(conf.DbConnection)
+	store = sessions.NewCookieStore([]byte(conf.SessionKey))
+	gob.Register(&models.User{})
 	loadFastFunctions()
 
 	updator.InitializeTwitter(updator.TwitterCreds{
@@ -58,7 +65,7 @@ func setupDB(dbConn string) {
 func main() {
 	router := routes()
 
-	log.Fatal(http.ListenAndServe(":"+conf.Port, router))
+	log.Fatal(http.ListenAndServe(":"+conf.Port, context.ClearHandler(router)))
 }
 
 func routes() *chi.Mux {
@@ -79,6 +86,14 @@ func routes() *chi.Mux {
 	})
 
 	router.Get("/truck/{id:[a-z-0-9]+}", truckPage)
+
+	router.Route("/admin", func(r chi.Router) {
+		r.Use(mustUser)
+		r.Get("/", adminIndex)
+	})
+
+	router.Get("/login", login)
+	router.Post("/login", loginHandler)
 
 	return router
 }
