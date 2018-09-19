@@ -1,4 +1,5 @@
 {{extends "layouts/base.jet"}}
+{{block header()}}{{end}}
 
 {{block body()}}
     <div id="map" style="height:500px"></div>

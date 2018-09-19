@@ -1,4 +1,6 @@
 {{extends "layouts/base.jet"}}
+{{block header()}}{{end}}
+
 {{block body()}}
   <main>
       {{range truck := trucks}}

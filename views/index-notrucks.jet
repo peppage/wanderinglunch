@@ -1,4 +1,6 @@
 {{extends "layouts/base.jet"}}
+{{block header()}}{{end}}
+
 {{block body()}}
   <main>
     <h1>Your hunger cannot be satisfied, no trucks are tweeting</h1>
