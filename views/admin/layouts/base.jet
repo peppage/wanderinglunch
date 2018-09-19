@@ -1,0 +1,9 @@
+{{extends "layouts/base.jet"}}
+
+{{block header()}}
+    {{include "admin/partials/_menu.jet"}}
+{{end}}
+
+{{block body()}}
+    {{yield adminBody()}}
+{{end}}

@@ -1,0 +1,7 @@
+<nav class="header__nav">
+    <ul>
+        <li>
+            <a href="/admin/truck/add">Add Truck</a>
+        </li>
+    </ul>
+</nav>

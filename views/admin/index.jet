@@ -1,0 +1,5 @@
+{{extends "admin/layouts/base.jet"}}
+
+{{block adminBody()}}
+    
+{{end}}

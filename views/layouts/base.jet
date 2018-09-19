@@ -18,6 +18,7 @@
                 </li>
             </ul>
         </nav>
+        {{yield header() }}
     </header>
     {{yield body()}}
     <footer>
