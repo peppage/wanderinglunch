@@ -88,7 +88,9 @@ func routes() *chi.Mux {
 	router.Get("/truck/{id:[a-z-0-9]+}", truckPage)
 
 	router.Route("/admin", func(r chi.Router) {
-		r.Use(mustUser)
+		if !conf.Develop {
+			r.Use(mustUser)
+		}
 		r.Get("/", adminIndex)
 	})
 

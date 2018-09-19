@@ -11,6 +11,7 @@ type appConfig struct {
 	DbConnection          string
 	Port                  string
 	SessionKey            string
+	Develop               bool
 }
 
 func loadConfig() *appConfig {
@@ -26,6 +27,7 @@ func loadConfig() *appConfig {
 	dbConn, _ := config.String("app.db_connection")
 	port, _ := config.String("server.http_port")
 	sessKey, _ := config.String("app.session_key")
+	d, _ := config.Bool("app.develop")
 
 	return &appConfig{
 		TwitterConsumerKey:    consumerKey,
@@ -33,5 +35,6 @@ func loadConfig() *appConfig {
 		DbConnection:          dbConn,
 		Port:                  port,
 		SessionKey:            sessKey,
+		Develop:               d,
 	}
 }
