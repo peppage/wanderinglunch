@@ -45,7 +45,7 @@ ALTER TABLE tweets rename column twitname to truck_id;
 
 ALTER TABLE tweets
 ADD CONSTRAINT tweets_truck_id_fkey
-FOREIGN KEY (handle)
+FOREIGN KEY (truck_id)
 REFERENCES trucks(twitname);
 
 alter table sites alter lat SET NOT NULL;
