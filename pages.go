@@ -15,6 +15,12 @@ type pageContext struct {
 	Version string
 }
 
+type contextKey struct {
+	name string
+}
+
+var statusKey = &contextKey{"status"}
+
 func index(w http.ResponseWriter, r *http.Request) {
 	site := chi.URLParam(r, "site")
 	spots, err := getSpots(site, 8)

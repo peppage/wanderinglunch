@@ -8,6 +8,7 @@ import (
 
 	"golang.org/x/crypto/bcrypt"
 
+	"github.com/volatiletech/sqlboiler/boil"
 	"github.com/volatiletech/sqlboiler/queries/qm"
 )
 
@@ -118,4 +119,20 @@ func getValidUser(username, password string) (*models.User, error) {
 func validatePassword(dbpassword, password string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(dbpassword), []byte(password))
 	return err == nil
+}
+
+func saveTruck(req *TruckRequest) error {
+	t := models.Truck{
+		ID:         req.Twitter,
+		Name:       req.Name,
+		Twitname:   req.Twitter,
+		Weburl:     req.URL,
+		Type:       req.Type,
+		About:      req.About,
+		Foursquare: req.Foursquare,
+		Site:       req.Site,
+		Archive:    req.Archive,
+	}
+
+	return t.Insert(context.Background(), db, boil.Infer())
 }

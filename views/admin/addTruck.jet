@@ -1,0 +1,43 @@
+{{extends "admin/layouts/base.jet"}}
+
+{{block adminBody()}}
+    <main>
+        <form method="post">
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" id="name" name="name">
+            </div>
+            <div class="form-group">
+                <label>Twitter</label>
+                <input type="text" id="twitter" name="twitter">
+            </div>
+            <div class="form-group">
+                <label>Url</label>
+                <input type="text" id="url" name="url">
+            </div>
+            <div class="form-group">
+                <label>Type</label>
+                <input type="text" id="type" name="type">
+            </div>
+            <div class="form-group">
+                <label>About</label>
+                <input type="text" id="about" name="about">
+            </div>
+            <div class="form-group">
+                <label>Foursquare</label>
+                <input type="text" id="foursquare" name="foursquare">
+            </div>
+            <div class="form-group">
+                <label>Site</label>
+                <input type="text" id="site" name="site">
+            </div>
+            <div class="form-group">
+                <input type="checkbox" id="archive" name="archive">
+                <label for="archive">Archive</label>
+            </div>
+            <div class="button-group">
+                <button type="submit">Save</button>
+            </div>
+        </form>
+    </main>
+{{end}}
