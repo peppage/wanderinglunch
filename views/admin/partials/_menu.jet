@@ -3,5 +3,8 @@
         <li>
             <a href="/admin/truck/add">Add Truck</a>
         </li>
+        <li>
+            <a href="/admin/sub/add">Add Sub</a>
+        </li>
     </ul>
 </nav>

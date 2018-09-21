@@ -45,3 +45,19 @@ func parseTruckRequest(r *http.Request) (*TruckRequest, error) {
 	err := decoder.Decode(&request, r.PostForm)
 	return &request, err
 }
+
+type SubRequest struct {
+	Regex       string
+	Replacement string
+}
+
+func parseSubRequest(r *http.Request) (*SubRequest, error) {
+	if err := r.ParseForm(); err != nil {
+		return nil, err
+	}
+
+	var request SubRequest
+
+	err := decoder.Decode(&request, r.PostForm)
+	return &request, err
+}

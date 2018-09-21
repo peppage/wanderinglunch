@@ -1,0 +1,19 @@
+{{extends "admin/layouts/base.jet"}}
+
+{{block adminBody()}}
+    <main>
+        <form method="post">
+            <div class="form-group">
+                <label>Regex</label>
+                <input type="text" id="regex" name="regex">
+            </div>
+            <div class="form-group">
+                <label>Replacement</label>
+                <input type="text" id="replacement" name="replacement">
+            </div>
+            <div class="button-group">
+                <button type="submit">Save</button>
+            </div>
+        </form>
+    </main>
+{{end}}

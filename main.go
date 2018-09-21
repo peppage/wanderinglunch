@@ -94,6 +94,9 @@ func routes() *chi.Mux {
 		r.Get("/", adminIndex)
 		r.Get("/truck/add", adminAddTruck)
 		r.Post("/truck/add", adminAddTruckHandle)
+
+		r.Get("/sub/add", adminAddSub)
+		r.Post("/sub/add", adminAddSubHandle)
 	})
 
 	router.Get("/login", login)

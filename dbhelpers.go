@@ -136,3 +136,13 @@ func saveTruck(req *TruckRequest) error {
 
 	return t.Insert(context.Background(), db, boil.Infer())
 }
+
+func saveSub(req *SubRequest) (models.Sub, error) {
+	s := models.Sub{
+		Regex:       req.Regex,
+		Replacement: req.Replacement,
+	}
+
+	err := s.Insert(context.Background(), db, boil.Infer())
+	return s, err
+}
