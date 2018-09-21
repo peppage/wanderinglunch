@@ -54,8 +54,8 @@ type subL struct{}
 
 var (
 	subColumns               = []string{"id", "regex", "replacement"}
-	subColumnsWithoutDefault = []string{"id", "regex"}
-	subColumnsWithDefault    = []string{"replacement"}
+	subColumnsWithoutDefault = []string{"regex"}
+	subColumnsWithDefault    = []string{"id", "replacement"}
 	subPrimaryKeyColumns     = []string{"id"}
 )
 

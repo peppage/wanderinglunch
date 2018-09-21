@@ -52,3 +52,11 @@ alter table sites alter lat SET NOT NULL;
 alter table sites alter long SET NOT NULL;
 
 alter table trucks alter archive SET NOT NULL;
+
+CREATE SEQUENCE subs_id_seq;
+ALTER TABLE subs ALTER COLUMN id SET DEFAULT nextval('subs_id_seq');
+ALTER TABLE subs ALTER COLUMN id SET NOT NULL;
+ALTER SEQUENCE subs_id_seq OWNED BY subs.id;
+
+SELECT MAX(id) FROM subs;
+SELECT setval('subs_id_seq', 25);
