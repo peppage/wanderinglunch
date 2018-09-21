@@ -2,8 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"io"
-	"io/ioutil"
 	"net/http"
 
 	"github.com/CloudyKit/jet"
@@ -43,9 +41,6 @@ func index(w http.ResponseWriter, r *http.Request) {
 	if err := template.Execute(w, vars, c); err != nil {
 		panic(err)
 	}
-
-	io.Copy(ioutil.Discard, r.Body)
-	defer r.Body.Close()
 }
 
 func allTrucks(w http.ResponseWriter, r *http.Request) {
@@ -67,9 +62,6 @@ func allTrucks(w http.ResponseWriter, r *http.Request) {
 	if err := template.Execute(w, vars, c); err != nil {
 		panic(err)
 	}
-
-	io.Copy(ioutil.Discard, r.Body)
-	defer r.Body.Close()
 }
 
 func mapPage(w http.ResponseWriter, r *http.Request) {
@@ -102,9 +94,6 @@ func mapPage(w http.ResponseWriter, r *http.Request) {
 	if err := template.Execute(w, vars, c); err != nil {
 		panic(err)
 	}
-
-	io.Copy(ioutil.Discard, r.Body)
-	defer r.Body.Close()
 }
 
 func truckPage(w http.ResponseWriter, r *http.Request) {
@@ -125,9 +114,6 @@ func truckPage(w http.ResponseWriter, r *http.Request) {
 	if err := template.Execute(w, vars, c); err != nil {
 		panic(err)
 	}
-
-	io.Copy(ioutil.Discard, r.Body)
-	defer r.Body.Close()
 }
 
 func login(w http.ResponseWriter, r *http.Request) {
@@ -140,9 +126,6 @@ func login(w http.ResponseWriter, r *http.Request) {
 	if err := template.Execute(w, nil, c); err != nil {
 		panic(err)
 	}
-
-	io.Copy(ioutil.Discard, r.Body)
-	defer r.Body.Close()
 }
 
 func loginHandler(w http.ResponseWriter, r *http.Request) {
@@ -159,7 +142,4 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 	storeUser(w, r, user)
 
 	http.Redirect(w, r, "/admin", http.StatusSeeOther)
-
-	io.Copy(ioutil.Discard, r.Body)
-	defer r.Body.Close()
 }
