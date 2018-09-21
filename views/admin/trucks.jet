@@ -1,0 +1,60 @@
+{{extends "admin/layouts/base.jet"}}
+
+{{block adminBody()}}
+    <main>
+        <div id="trucks">
+            <input v-model="query" type="text">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Archive</th>
+                    </tr>
+                </thead>
+                <tr v-for="truck in filteredItems">
+                    <td>
+                        <a :href="'/admin/truck/'+truck.twitname" v-html="truck.name"></a>
+                    </td>
+                    <td>
+                        <span v-if="truck.archive">Y</span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </main>
+
+    <script>
+        var app = new Vue({
+            el: "#trucks",
+            data: {
+                trucks: [],
+                start: 0,
+                limit: 10,
+                query: "",
+            },
+            created: function () {
+                var self = this;
+
+                fetch("/admin/api/trucks")
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(json) {
+                    self.trucks = json;
+                });
+            },
+            computed: {
+                filteredItems() {
+                    return this.trucks.filter(truck => {
+                        return truck.name.toLowerCase().indexOf(this.query.toLowerCase()) > -1
+                    })
+                },
+                limitedItems() {
+                    return this.filteredItems.slice(this.start, this.limit)
+                },
+            },
+            methods: {
+            }
+        });
+    </script>
+{{end}}

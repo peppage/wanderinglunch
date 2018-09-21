@@ -6,5 +6,13 @@
         <li>
             <a href="/admin/sub/add">Add Sub</a>
         </li>
+        <li>
+            <a href="/admin/location/add">Add Location</a>
+        </li>
+    </ul>
+    <ul>
+        <li>
+            <a href="/admin/trucks">Trucks</a>
+        </li>
     </ul>
 </nav>

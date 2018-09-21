@@ -146,3 +146,24 @@ func saveSub(req *SubRequest) (models.Sub, error) {
 	err := s.Insert(context.Background(), db, boil.Infer())
 	return s, err
 }
+
+func saveLocation(req *LocationRequest) (models.Location, error) {
+	l := models.Location{
+		Display: req.Display,
+		Matcher: req.Matcher,
+		Lat:     req.Lat,
+		Long:    req.Long,
+		Zone:    req.Zone,
+		Site:    req.Site,
+	}
+
+	err := l.Insert(context.Background(), db, boil.Infer())
+	return l, err
+}
+
+func getAllTrucksForSite(site string) (models.TruckSlice, error) {
+	return models.Trucks(
+		qm.Where("site = ?", site),
+	).All(context.Background(), db)
+
+}

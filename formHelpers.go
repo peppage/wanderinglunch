@@ -61,3 +61,23 @@ func parseSubRequest(r *http.Request) (*SubRequest, error) {
 	err := decoder.Decode(&request, r.PostForm)
 	return &request, err
 }
+
+type LocationRequest struct {
+	Display string
+	Matcher string
+	Lat     float64
+	Long    float64
+	Zone    string
+	Site    string
+}
+
+func parseLocationRequest(r *http.Request) (*LocationRequest, error) {
+	if err := r.ParseForm(); err != nil {
+		return nil, err
+	}
+
+	var request LocationRequest
+
+	err := decoder.Decode(&request, r.PostForm)
+	return &request, err
+}

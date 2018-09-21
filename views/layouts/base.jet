@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
-  <head></head>
-  <link rel="stylesheet" type="text/css" href="/static/site.css" />
-  <link rel="preconnect" href="https://irs0.4sqi.net">
+  <head>
+    <link rel="stylesheet" type="text/css" href="/static/site.css?v={{ .Version}}" />
+    <link rel="preconnect" href="https://irs0.4sqi.net">
+  </head>
   <body>
     <header class="header">
         <div class="header__logo">

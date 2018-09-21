@@ -61,6 +61,12 @@
   version = "v3.3.2"
 
 [[projects]]
+  name = "github.com/go-chi/render"
+  packages = ["."]
+  revision = "3215478343fbc559bd3fc08f7031bb134d6bdad5"
+  version = "v1.0.1"
+
+[[projects]]
   name = "github.com/gofrs/uuid"
   packages = ["."]
   revision = "370558f003bfe29580cd0f698d8640daccdcc45c"
@@ -325,6 +331,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "5de521f78de61f6d884da602de41855c9d4654c4b6482956f9481680807d54f9"
+  inputs-digest = "8f447af3e77d6d4f22fee5af7447840dd5b500a8b22a1e875d00506aab42d24a"
   solver-name = "gps-cdcl"
   solver-version = 1
