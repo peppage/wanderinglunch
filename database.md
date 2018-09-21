@@ -50,3 +50,5 @@ REFERENCES trucks(twitname);
 
 alter table sites alter lat SET NOT NULL;
 alter table sites alter long SET NOT NULL;
+
+alter table trucks alter archive SET NOT NULL;

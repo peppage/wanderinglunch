@@ -14,7 +14,6 @@ import (
 	"time"
 
 	"github.com/pkg/errors"
-	"github.com/volatiletech/null"
 	"github.com/volatiletech/sqlboiler/boil"
 	"github.com/volatiletech/sqlboiler/queries"
 	"github.com/volatiletech/sqlboiler/queries/qm"
@@ -36,7 +35,7 @@ type Truck struct {
 	Foursquare string           `boil:"foursquare" json:"foursquare" toml:"foursquare" yaml:"foursquare"`
 	Site       string           `boil:"site" json:"site" toml:"site" yaml:"site"`
 	Locs       types.Int64Array `boil:"locs" json:"locs,omitempty" toml:"locs" yaml:"locs,omitempty"`
-	Archive    null.Bool        `boil:"archive" json:"archive,omitempty" toml:"archive" yaml:"archive,omitempty"`
+	Archive    bool             `boil:"archive" json:"archive" toml:"archive" yaml:"archive"`
 
 	R *truckR `boil:"-" json:"-" toml:"-" yaml:"-"`
 	L truckL  `boil:"-" json:"-" toml:"-" yaml:"-"`
