@@ -26,7 +26,7 @@ func adminAddTruck(w http.ResponseWriter, r *http.Request) {
 		Version: Version,
 	}
 
-	template, _ := View.GetTemplate("admin/addTruck.jet")
+	template, _ := View.GetTemplate("admin/truck.jet")
 	if err := template.Execute(w, nil, c); err != nil {
 		panic(err)
 	}
