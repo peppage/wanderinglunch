@@ -23,7 +23,7 @@ func (e *ErrResponse) Render(w http.ResponseWriter, r *http.Request) error {
 func ErrSqlError(err error) render.Renderer {
 	return &ErrResponse{
 		Err:            err,
-		HTTPStatusCode: 500,
+		HTTPStatusCode: http.StatusInternalServerError,
 		StatusText:     "Sql Error",
 		ErrorText:      err.Error(),
 	}
@@ -32,8 +32,17 @@ func ErrSqlError(err error) render.Renderer {
 func ErrViewError(err error) render.Renderer {
 	return &ErrResponse{
 		Err:            err,
-		HTTPStatusCode: 500,
+		HTTPStatusCode: http.StatusInternalServerError,
 		StatusText:     "View Error",
+		ErrorText:      err.Error(),
+	}
+}
+
+func ErrBadRequest(err error) render.Renderer {
+	return &ErrResponse{
+		Err:            err,
+		HTTPStatusCode: http.StatusBadRequest,
+		StatusText:     "Bad request/form parse",
 		ErrorText:      err.Error(),
 	}
 }

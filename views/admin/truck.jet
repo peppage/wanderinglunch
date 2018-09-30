@@ -2,37 +2,48 @@
 
 {{block adminBody()}}
     <main>
+        {{if truck.Name != ""}}
+            <p>
+                <a href="https://twitter.com/{{truck.Twitname}}">Twitter</a><br>
+                <a href="{{truck.Weburl}}">Website</a><br>
+                <a href="https://foursquare.com/v/{{truck.Foursquare}}">Foursquare</a>
+            </p>
+        {{end}}
         <form method="post">
             <div class="form-group">
                 <label>Name</label>
-                <input type="text" id="name" name="name">
+                <input type="text" id="name" name="name" value="{{truck.Name}}">
             </div>
             <div class="form-group">
                 <label>Twitter</label>
-                <input type="text" id="twitter" name="twitter">
+                <input type="text" id="twitter" name="twitter" value="{{truck.Twitname}}">
             </div>
             <div class="form-group">
                 <label>Url</label>
-                <input type="text" id="url" name="url">
+                <input type="text" id="url" name="url" value="{{truck.Weburl}}">
             </div>
             <div class="form-group">
                 <label>Type</label>
-                <input type="text" id="type" name="type">
+                <input type="text" id="type" name="type" value="{{truck.Type}}">
             </div>
             <div class="form-group">
                 <label>About</label>
-                <input type="text" id="about" name="about">
+                <input type="text" id="about" name="about" value="{{truck.About}}">
             </div>
             <div class="form-group">
                 <label>Foursquare</label>
-                <input type="text" id="foursquare" name="foursquare">
+                <input type="text" id="foursquare" name="foursquare" value="{{truck.Foursquare}}">
             </div>
             <div class="form-group">
                 <label>Site</label>
-                <input type="text" id="site" name="site">
+                <input type="text" id="site" name="site" value="{{truck.Site}}">
             </div>
             <div class="form-group">
-                <input type="checkbox" id="archive" name="archive">
+                {{if truck.Archive}}
+                    <input type="checkbox" id="archive" name="archive" checked>
+                {{else}}
+                    <input type="checkbox" id="archive" name="archive">
+                {{end}}
                 <label for="archive">Archive</label>
             </div>
             <div class="button-group">

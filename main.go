@@ -85,7 +85,7 @@ func routes() *chi.Mux {
 		r.Get("/map", mapPage)
 	})
 
-	router.Get("/truck/{id:[a-z-0-9]+}", truckPage)
+	router.Get("/truck/{id:[a-z-0-9_]+}", truckPage)
 
 	router.Route("/admin", func(r chi.Router) {
 		if !conf.Develop {
@@ -94,6 +94,8 @@ func routes() *chi.Mux {
 		r.Get("/", adminIndex)
 		r.Get("/truck/add", adminAddTruck)
 		r.Post("/truck/add", adminAddTruckHandle)
+		r.Get("/truck/{id:[a-z-0-9_]+}", adminEditTruck)
+		r.Post("/truck/{id:[a-z-0-9_]+}", adminEditTruckHandle)
 
 		r.Get("/sub/add", adminAddSub)
 		r.Post("/sub/add", adminAddSubHandle)

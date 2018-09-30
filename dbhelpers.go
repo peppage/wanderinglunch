@@ -137,6 +137,26 @@ func saveTruck(req *TruckRequest) error {
 	return t.Insert(context.Background(), db, boil.Infer())
 }
 
+func updateTruck(req *TruckRequest) error {
+	t, err := models.Trucks(
+		qm.Where("twitname = ?", req.Twitter),
+	).One(context.Background(), db)
+	if err != nil {
+		return err
+	}
+
+	t.Name = req.Name
+	t.Weburl = req.URL
+	t.Type = req.Type
+	t.About = req.About
+	t.Foursquare = req.Foursquare
+	t.Site = req.Site
+	t.Archive = req.Archive
+
+	_, err = t.Update(context.Background(), db, boil.Infer())
+	return err
+}
+
 func saveSub(req *SubRequest) (models.Sub, error) {
 	s := models.Sub{
 		Regex:       req.Regex,

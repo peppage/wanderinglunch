@@ -20,6 +20,7 @@ body {
 main {
 	width: 65%;
 	margin: 0 auto;
+	flex: 1;
 }
 
 footer {
@@ -164,4 +165,16 @@ button {
 
 form .form-buttons {
 	text-align: right;
+}
+
+.button-group {
+	padding-top: 2rem;
+}
+
+tr td {
+	padding: 1rem;
+}
+
+tr:nth-child(even){
+	background-color:#eee;
 }
