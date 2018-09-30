@@ -14,5 +14,8 @@
         <li>
             <a href="/admin/trucks">Trucks</a>
         </li>
+        <li>
+            <a href="/admin/subs">Subs</a>
+        </li>
     </ul>
 </nav>
