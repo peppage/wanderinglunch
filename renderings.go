@@ -49,6 +49,7 @@ func ErrBadRequest(err error) render.Renderer {
 
 type TruckResponse struct {
 	*models.Truck
+	UpdatedText string `json:"updatetext"`
 }
 
 func NewTruckResponse(truck *models.Truck) *TruckResponse {
@@ -57,6 +58,7 @@ func NewTruckResponse(truck *models.Truck) *TruckResponse {
 }
 
 func (rd *TruckResponse) Render(w http.ResponseWriter, r *http.Request) error {
+	rd.UpdatedText = relativeTime(rd.Lastupdate)
 	return nil
 }
 
