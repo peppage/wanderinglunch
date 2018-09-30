@@ -178,3 +178,7 @@ tr td {
 tr:nth-child(even){
 	background-color:#eee;
 }
+
+.replacement { 
+	background: #a9a9;
+}

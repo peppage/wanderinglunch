@@ -53,7 +53,6 @@ type TruckResponse struct {
 
 func NewTruckResponse(truck *models.Truck) *TruckResponse {
 	resp := &TruckResponse{Truck: truck}
-
 	return resp
 }
 
@@ -69,5 +68,28 @@ func NewTruckListResponse(trucks []*models.Truck) []render.Renderer {
 		list = append(list, NewTruckResponse(truck))
 	}
 
+	return list
+}
+
+type SubResponse struct {
+	*models.Sub
+}
+
+func NewSubResponse(sub *models.Sub) *SubResponse {
+	resp := &SubResponse{Sub: sub}
+	return resp
+}
+
+func (rd *SubResponse) Render(w http.ResponseWriter, r *http.Request) error {
+	return nil
+}
+
+type SubListResponse []*SubResponse
+
+func NewSubListResponse(subs []*models.Sub) []render.Renderer {
+	list := []render.Renderer{}
+	for _, sub := range subs {
+		list = append(list, NewSubResponse(sub))
+	}
 	return list
 }

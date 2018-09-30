@@ -96,17 +96,20 @@ func routes() *chi.Mux {
 		r.Post("/truck/add", adminAddTruckHandle)
 		r.Get("/truck/{id:[a-z-0-9_]+}", adminEditTruck)
 		r.Post("/truck/{id:[a-z-0-9_]+}", adminEditTruckHandle)
+		r.Get("/trucks", adminTrucks)
 
 		r.Get("/sub/add", adminAddSub)
 		r.Post("/sub/add", adminAddSubHandle)
+		r.Get("/sub/{id:[0-9]+}", adminEditSub)
+		r.Post("/sub/{id:[0-9]+}", adminEditSubHandle)
+		r.Get("/subs", adminSubs)
 
 		r.Get("/location/add", adminAddLocation)
 		r.Post("/location/add", adminAddLocationHandle)
 
-		r.Get("/trucks", adminTrucks)
-
 		r.Route("/api", func(a chi.Router) {
 			a.Get("/trucks", adminAPITrucks)
+			a.Get("/subs", adminAPISubs)
 		})
 	})
 

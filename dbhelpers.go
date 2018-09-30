@@ -187,3 +187,26 @@ func getAllTrucksForSite(site string) (models.TruckSlice, error) {
 	).All(context.Background(), db)
 
 }
+
+func getAllSubs() (models.SubSlice, error) {
+	return models.Subs(qm.OrderBy("id")).All(context.Background(), db)
+}
+
+func getSub(id string) (*models.Sub, error) {
+	return models.Subs(
+		qm.Where("id = ?", id),
+	).One(context.Background(), db)
+}
+
+func updateSub(id string, req *SubRequest) error {
+	sub, err := getSub(id)
+	if err != nil {
+		return err
+	}
+
+	sub.Regex = req.Regex
+	sub.Replacement = req.Replacement
+
+	_, err = sub.Update(context.Background(), db, boil.Infer())
+	return err
+}
