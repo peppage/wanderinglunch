@@ -17,5 +17,8 @@
         <li>
             <a href="/admin/subs">Subs</a>
         </li>
+        <li>
+            <a href="/admin/locations">Locations</a>
+        </li>
     </ul>
 </nav>

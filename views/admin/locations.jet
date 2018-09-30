@@ -1,0 +1,60 @@
+{{extends "admin/layouts/base.jet"}}
+
+{{block adminBody()}}
+    <main>
+        <div id="locations">
+            <input v-model="query" type="text">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Display</th>
+                        <th>Zone</th>
+                    </tr>
+                </thead>
+                <tr v-for="loc in filteredItems">
+                    <td>
+                        <a :href="'/admin/location/'+loc.id" v-html="loc.display"></a>
+                    </td>
+                    <td>
+                        <span v-html="loc.zone"></span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </main>
+
+    <script>
+        var app = new Vue({
+            el: "#locations",
+            data: {
+                locations: [],
+                start: 0,
+                limit: 10,
+                query: "",
+            },
+            created: function () {
+                var self = this;
+
+                fetch("/admin/api/locations")
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(json) {
+                    self.locations = json;
+                });
+            },
+            computed: {
+                filteredItems() {
+                    return this.locations.filter(loc => {
+                        return loc.display.toLowerCase().indexOf(this.query.toLowerCase()) > -1
+                    })
+                },
+                limitedItems() {
+                    return this.filteredItems.slice(this.start, this.limit)
+                },
+            },
+            methods: {
+            }
+        });
+    </script>
+{{end}}

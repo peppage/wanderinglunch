@@ -93,3 +93,25 @@ func NewSubListResponse(subs []*models.Sub) []render.Renderer {
 	}
 	return list
 }
+
+type LocationResponse struct {
+	*models.Location
+}
+
+func NewLocationResponse(loc *models.Location) *LocationResponse {
+	resp := &LocationResponse{Location: loc}
+	return resp
+}
+
+func (rd *LocationResponse) Render(w http.ResponseWriter, r *http.Request) error {
+	return nil
+}
+
+func NewLocationListResponse(locs []*models.Location) []render.Renderer {
+	list := []render.Renderer{}
+	for _, loc := range locs {
+		list = append(list, NewLocationResponse(loc))
+	}
+
+	return list
+}

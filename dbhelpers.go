@@ -210,3 +210,32 @@ func updateSub(id string, req *SubRequest) error {
 	_, err = sub.Update(context.Background(), db, boil.Infer())
 	return err
 }
+
+func getAllLocations(site string) (models.LocationSlice, error) {
+	return models.Locations(
+		qm.Where("site = ?", site),
+	).All(context.Background(), db)
+}
+
+func getLocation(id string) (*models.Location, error) {
+	return models.Locations(
+		qm.Where("id = ?", id),
+	).One(context.Background(), db)
+}
+
+func updateLocation(id string, req *LocationRequest) error {
+	loc, err := getLocation(id)
+	if err != nil {
+		return err
+	}
+
+	loc.Display = req.Display
+	loc.Matcher = req.Matcher
+	loc.Lat = req.Lat
+	loc.Long = req.Long
+	loc.Zone = req.Zone
+	loc.Site = req.Site
+
+	_, err = loc.Update(context.Background(), db, boil.Infer())
+	return err
+}
