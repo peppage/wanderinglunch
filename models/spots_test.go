@@ -885,7 +885,7 @@ func testSpotsSelect(t *testing.T) {
 }
 
 var (
-	spotDBTypes = map[string]string{`LocationID`: `bigint`, `TruckID`: `text`, `TweetID`: `bigint`}
+	spotDBTypes = map[string]string{`LocationID`: `bigint`, `TruckID`: `text`, `TweetID`: `text`}
 	_           = bytes.MinRead
 )
 

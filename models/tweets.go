@@ -14,7 +14,6 @@ import (
 	"time"
 
 	"github.com/pkg/errors"
-	"github.com/volatiletech/null"
 	"github.com/volatiletech/sqlboiler/boil"
 	"github.com/volatiletech/sqlboiler/queries"
 	"github.com/volatiletech/sqlboiler/queries/qm"
@@ -23,12 +22,12 @@ import (
 
 // Tweet is an object representing the database table.
 type Tweet struct {
-	Text      string    `boil:"text" json:"text" toml:"text" yaml:"text"`
-	Time      int64     `boil:"time" json:"time" toml:"time" yaml:"time"`
-	ID        int64     `boil:"id" json:"id" toml:"id" yaml:"id"`
-	Retweeted bool      `boil:"retweeted" json:"retweeted" toml:"retweeted" yaml:"retweeted"`
-	TruckID   string    `boil:"truck_id" json:"truck_id" toml:"truck_id" yaml:"truck_id"`
-	Done      null.Bool `boil:"done" json:"done,omitempty" toml:"done" yaml:"done,omitempty"`
+	Text      string `boil:"text" json:"text" toml:"text" yaml:"text"`
+	Time      int64  `boil:"time" json:"time" toml:"time" yaml:"time"`
+	ID        string `boil:"id" json:"id" toml:"id" yaml:"id"`
+	Retweeted bool   `boil:"retweeted" json:"retweeted" toml:"retweeted" yaml:"retweeted"`
+	TruckID   string `boil:"truck_id" json:"truck_id" toml:"truck_id" yaml:"truck_id"`
+	Done      bool   `boil:"done" json:"done" toml:"done" yaml:"done"`
 
 	R *tweetR `boil:"-" json:"-" toml:"-" yaml:"-"`
 	L tweetL  `boil:"-" json:"-" toml:"-" yaml:"-"`
@@ -635,7 +634,7 @@ func Tweets(mods ...qm.QueryMod) tweetQuery {
 
 // FindTweet retrieves a single record by ID with an executor.
 // If selectCols is empty Find will return all columns.
-func FindTweet(ctx context.Context, exec boil.ContextExecutor, iD int64, selectCols ...string) (*Tweet, error) {
+func FindTweet(ctx context.Context, exec boil.ContextExecutor, iD string, selectCols ...string) (*Tweet, error) {
 	tweetObj := &Tweet{}
 
 	sel := "*"
@@ -1132,7 +1131,7 @@ func (o *TweetSlice) ReloadAll(ctx context.Context, exec boil.ContextExecutor) e
 }
 
 // TweetExists checks if the Tweet row exists.
-func TweetExists(ctx context.Context, exec boil.ContextExecutor, iD int64) (bool, error) {
+func TweetExists(ctx context.Context, exec boil.ContextExecutor, iD string) (bool, error) {
 	var exists bool
 	sql := "select exists(select 1 from \"tweets\" where \"id\"=$1 limit 1)"
 

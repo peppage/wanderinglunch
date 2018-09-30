@@ -10,10 +10,12 @@ alter table users add primary key (id);
 alter table tweets alter column time set data type bigint;
 alter table subs alter column replacement set not null;
 
+alter table tweets alter column id type text using id::text;
+
 create table spots (
 truck_id text references trucks(twitname) NOT NULl,
 location_id bigint references locations(id) NOT NULL,
-tweet_id bigint references tweets(id) NOT NULL,
+tweet_id text references tweets(id) NOT NULL,
 primary key (location_id, tweet_id)
 );
 
@@ -62,3 +64,6 @@ SELECT MAX(id) FROM subs;
 SELECT setval('subs_id_seq', 25);
 
 alter table trucks alter column lastupdate type bigint using lastupdate::bigint;
+
+alter table tweets alter done SET NOT NULL;
+alter table tweets alter done SET DEFAULT 'f';

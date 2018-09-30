@@ -830,7 +830,7 @@ func testTweetsSelect(t *testing.T) {
 }
 
 var (
-	tweetDBTypes = map[string]string{`Done`: `boolean`, `ID`: `bigint`, `Retweeted`: `boolean`, `Text`: `text`, `Time`: `bigint`, `TruckID`: `text`}
+	tweetDBTypes = map[string]string{`Done`: `boolean`, `ID`: `text`, `Retweeted`: `boolean`, `Text`: `text`, `Time`: `bigint`, `TruckID`: `text`}
 	_            = bytes.MinRead
 )
 

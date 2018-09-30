@@ -24,7 +24,7 @@ import (
 type Spot struct {
 	TruckID    string `boil:"truck_id" json:"truck_id" toml:"truck_id" yaml:"truck_id"`
 	LocationID int64  `boil:"location_id" json:"location_id" toml:"location_id" yaml:"location_id"`
-	TweetID    int64  `boil:"tweet_id" json:"tweet_id" toml:"tweet_id" yaml:"tweet_id"`
+	TweetID    string `boil:"tweet_id" json:"tweet_id" toml:"tweet_id" yaml:"tweet_id"`
 
 	R *spotR `boil:"-" json:"-" toml:"-" yaml:"-"`
 	L spotL  `boil:"-" json:"-" toml:"-" yaml:"-"`
@@ -773,7 +773,7 @@ func Spots(mods ...qm.QueryMod) spotQuery {
 
 // FindSpot retrieves a single record by ID with an executor.
 // If selectCols is empty Find will return all columns.
-func FindSpot(ctx context.Context, exec boil.ContextExecutor, locationID int64, tweetID int64, selectCols ...string) (*Spot, error) {
+func FindSpot(ctx context.Context, exec boil.ContextExecutor, locationID int64, tweetID string, selectCols ...string) (*Spot, error) {
 	spotObj := &Spot{}
 
 	sel := "*"
@@ -1270,7 +1270,7 @@ func (o *SpotSlice) ReloadAll(ctx context.Context, exec boil.ContextExecutor) er
 }
 
 // SpotExists checks if the Spot row exists.
-func SpotExists(ctx context.Context, exec boil.ContextExecutor, locationID int64, tweetID int64) (bool, error) {
+func SpotExists(ctx context.Context, exec boil.ContextExecutor, locationID int64, tweetID string) (bool, error) {
 	var exists bool
 	sql := "select exists(select 1 from \"spots\" where \"location_id\"=$1 AND \"tweet_id\"=$2 limit 1)"
 
