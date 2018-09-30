@@ -15,9 +15,9 @@ func loadFastFunctions() {
 	View.AddGlobalFunc("relativeTime", func(a jet.Arguments) reflect.Value {
 		a.RequireNumOfArguments("relativeTime", 1, 1)
 
-		i := a.Get(0).Interface().(int)
+		i := a.Get(0).Interface().(int64)
 
-		return reflect.ValueOf(relativeTime(int64(i)))
+		return reflect.ValueOf(relativeTime(i))
 	})
 
 	View.AddGlobalFunc("prettyDate", func(a jet.Arguments) reflect.Value {
