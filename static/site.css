@@ -137,6 +137,10 @@ form {
 	padding: 1rem;
 }
 
+label {
+	font-weight: 700;
+}
+
 input[type='text'],
 input[type='password'],
 textarea,
@@ -145,7 +149,8 @@ select {
 	border: 1px solid #ddd;
 	width: 100%;
 	padding: 0.5rem;
-	margin-bottom: 0.75rem;
+	margin-top: .375rem;
+	margin-bottom: 1rem;
 	font-size: 1em;
 	color: #333;
 }
