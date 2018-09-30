@@ -45,8 +45,6 @@ func relativeTime(lastUpdate int64) string {
 	d := math.Trunc(elapsed.Hours() / 24)
 	if d == 1 {
 		return "a day ago"
-	} else if d > 100 {
-		return ""
 	} else if d > 1 {
 		return strconv.FormatFloat(d, 'f', -1, 32) + " days ago"
 	}
