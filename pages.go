@@ -17,6 +17,8 @@ type contextKey struct {
 	name string
 }
 
+const sixMonths = 4383
+
 var statusKey = &contextKey{"status"}
 
 func index(w http.ResponseWriter, r *http.Request) {
@@ -45,7 +47,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 
 func allTrucks(w http.ResponseWriter, r *http.Request) {
 	site := chi.URLParam(r, "site")
-	trucks, err := getTrucks(site, 2000)
+	trucks, err := getTrucks(site, sixMonths)
 	if err != nil {
 		w.Write([]byte(err.Error()))
 	}
@@ -66,7 +68,7 @@ func allTrucks(w http.ResponseWriter, r *http.Request) {
 
 func mapPage(w http.ResponseWriter, r *http.Request) {
 	siteName := chi.URLParam(r, "site")
-	spots, err := getMarkers(siteName, 2000)
+	spots, err := getMarkers(siteName, 8)
 	if err != nil {
 		w.Write([]byte(err.Error()))
 	}
