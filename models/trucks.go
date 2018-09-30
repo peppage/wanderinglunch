@@ -29,7 +29,7 @@ type Truck struct {
 	Weburl     string           `boil:"weburl" json:"weburl" toml:"weburl" yaml:"weburl"`
 	Tweet      string           `boil:"tweet" json:"tweet" toml:"tweet" yaml:"tweet"`
 	Retweeted  bool             `boil:"retweeted" json:"retweeted" toml:"retweeted" yaml:"retweeted"`
-	Lastupdate int              `boil:"lastupdate" json:"lastupdate" toml:"lastupdate" yaml:"lastupdate"`
+	Lastupdate int64            `boil:"lastupdate" json:"lastupdate" toml:"lastupdate" yaml:"lastupdate"`
 	Type       string           `boil:"type" json:"type" toml:"type" yaml:"type"`
 	About      string           `boil:"about" json:"about" toml:"about" yaml:"about"`
 	Foursquare string           `boil:"foursquare" json:"foursquare" toml:"foursquare" yaml:"foursquare"`

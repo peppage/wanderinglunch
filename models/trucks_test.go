@@ -1028,7 +1028,7 @@ func testTrucksSelect(t *testing.T) {
 }
 
 var (
-	truckDBTypes = map[string]string{`About`: `text`, `Archive`: `boolean`, `Foursquare`: `text`, `ID`: `text`, `Lastupdate`: `integer`, `Locs`: `ARRAYbigint`, `Name`: `text`, `Retweeted`: `boolean`, `Site`: `text`, `Tweet`: `text`, `Twitname`: `text`, `Type`: `text`, `Weburl`: `text`}
+	truckDBTypes = map[string]string{`About`: `text`, `Archive`: `boolean`, `Foursquare`: `text`, `ID`: `text`, `Lastupdate`: `bigint`, `Locs`: `ARRAYbigint`, `Name`: `text`, `Retweeted`: `boolean`, `Site`: `text`, `Tweet`: `text`, `Twitname`: `text`, `Type`: `text`, `Weburl`: `text`}
 	_            = bytes.MinRead
 )
 

@@ -60,3 +60,5 @@ ALTER SEQUENCE subs_id_seq OWNED BY subs.id;
 
 SELECT MAX(id) FROM subs;
 SELECT setval('subs_id_seq', 25);
+
+alter table trucks alter column lastupdate type bigint using lastupdate::bigint;
