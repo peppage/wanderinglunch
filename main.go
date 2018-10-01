@@ -31,8 +31,6 @@ var Version string
 // Build is autoset from the build script
 var Build string
 
-type H map[string]interface{}
-
 func init() {
 	conf = loadConfig()
 	setupDB(conf.DbConnection)
@@ -82,6 +80,7 @@ func routes() *chi.Mux {
 		r.Get("/", index)
 		r.Get("/alltrucks", allTrucks)
 		r.Get("/map", mapPage)
+		r.Get("/feedback", feedback)
 	})
 
 	router.Get("/truck/{id:[a-z-0-9_]+}", truckPage)

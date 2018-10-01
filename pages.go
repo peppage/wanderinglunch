@@ -6,6 +6,7 @@ import (
 
 	"github.com/CloudyKit/jet"
 	"github.com/go-chi/chi"
+	"github.com/go-chi/render"
 )
 
 type pageContext struct {
@@ -19,13 +20,12 @@ type contextKey struct {
 
 const sixMonths = 4383
 
-var statusKey = &contextKey{"status"}
-
 func index(w http.ResponseWriter, r *http.Request) {
 	site := chi.URLParam(r, "site")
 	spots, err := getSpots(site, 8)
 	if err != nil {
-		w.Write([]byte(err.Error()))
+		render.Render(w, r, ErrSqlError(err))
+		return
 	}
 
 	c := pageContext{
@@ -41,7 +41,8 @@ func index(w http.ResponseWriter, r *http.Request) {
 	vars := make(jet.VarMap)
 	vars.Set("spots", spots)
 	if err := template.Execute(w, vars, c); err != nil {
-		panic(err)
+		render.Render(w, r, ErrViewError(err))
+		return
 	}
 }
 
@@ -49,7 +50,8 @@ func allTrucks(w http.ResponseWriter, r *http.Request) {
 	site := chi.URLParam(r, "site")
 	trucks, err := getTrucks(site, sixMonths)
 	if err != nil {
-		w.Write([]byte(err.Error()))
+		render.Render(w, r, ErrSqlError(err))
+		return
 	}
 
 	c := pageContext{
@@ -62,7 +64,8 @@ func allTrucks(w http.ResponseWriter, r *http.Request) {
 	vars := make(jet.VarMap)
 	vars.Set("trucks", trucks)
 	if err := template.Execute(w, vars, c); err != nil {
-		panic(err)
+		render.Render(w, r, ErrViewError(err))
+		return
 	}
 }
 
@@ -70,7 +73,8 @@ func mapPage(w http.ResponseWriter, r *http.Request) {
 	siteName := chi.URLParam(r, "site")
 	spots, err := getMarkers(siteName, 8)
 	if err != nil {
-		w.Write([]byte(err.Error()))
+		render.Render(w, r, ErrSqlError(err))
+		return
 	}
 
 	bytes, err := json.Marshal(spots)
@@ -80,7 +84,8 @@ func mapPage(w http.ResponseWriter, r *http.Request) {
 
 	site, err := getSite(siteName)
 	if err != nil {
-		w.Write([]byte(err.Error()))
+		render.Render(w, r, ErrSqlError(err))
+		return
 	}
 
 	c := pageContext{
@@ -94,7 +99,8 @@ func mapPage(w http.ResponseWriter, r *http.Request) {
 	vars.Set("trucks", bytes)
 	vars.Set("site", site)
 	if err := template.Execute(w, vars, c); err != nil {
-		panic(err)
+		render.Render(w, r, ErrViewError(err))
+		return
 	}
 }
 
@@ -102,7 +108,8 @@ func truckPage(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 	truck, err := getTruck(id)
 	if err != nil {
-		w.Write([]byte(err.Error()))
+		render.Render(w, r, ErrSqlError(err))
+		return
 	}
 
 	c := pageContext{
@@ -114,7 +121,8 @@ func truckPage(w http.ResponseWriter, r *http.Request) {
 	vars := make(jet.VarMap)
 	vars.Set("truck", truck)
 	if err := template.Execute(w, vars, c); err != nil {
-		panic(err)
+		render.Render(w, r, ErrViewError(err))
+		return
 	}
 }
 
@@ -126,7 +134,8 @@ func login(w http.ResponseWriter, r *http.Request) {
 
 	template, _ := View.GetTemplate("login.jet")
 	if err := template.Execute(w, nil, c); err != nil {
-		panic(err)
+		render.Render(w, r, ErrViewError(err))
+		return
 	}
 }
 
@@ -144,4 +153,19 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 	storeUser(w, r, user)
 
 	http.Redirect(w, r, "/admin", http.StatusSeeOther)
+}
+
+func feedback(w http.ResponseWriter, r *http.Request) {
+	site := chi.URLParam(r, "site")
+
+	c := pageContext{
+		Site:    site,
+		Version: Version,
+	}
+
+	template, _ := View.GetTemplate("feedback.jet")
+	if err := template.Execute(w, nil, c); err != nil {
+		render.Render(w, r, ErrViewError(err))
+		return
+	}
 }

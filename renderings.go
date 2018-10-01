@@ -49,6 +49,8 @@ func ErrBadRequest(err error) render.Renderer {
 	}
 }
 
+var ErrNotFound = &ErrResponse{HTTPStatusCode: http.StatusNotFound, StatusText: "Resource not found."}
+
 type TruckResponse struct {
 	*models.Truck
 	UpdatedText string `json:"updatetext"`
