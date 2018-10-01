@@ -243,3 +243,34 @@ func updateLocation(id string, req *LocationRequest) error {
 	_, err = loc.Update(context.Background(), db, boil.Infer())
 	return err
 }
+
+func getTweetsBySite(site string, limit int) (models.TweetSlice, error) {
+	return models.Tweets(
+		qm.SQL(getSiteTweetsQuery, site, limit),
+	).All(context.Background(), db)
+}
+
+const getSiteTweetsQuery = `
+SELECT tweets.*
+FROM   tweets
+       RIGHT JOIN trucks
+               ON trucks.twitname = tweets.truck_id
+WHERE  site = $1
+       AND done = 'f'
+ORDER  BY time DESC
+LIMIT $2
+`
+
+func markTweetDone(id string) error {
+	tweet, err := models.Tweets(
+		qm.Where("id = ?", id),
+	).One(context.Background(), db)
+	if err != nil {
+		return err
+	}
+
+	tweet.Done = true
+
+	_, err = tweet.Update(context.Background(), db, boil.Infer())
+	return err
+}

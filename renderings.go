@@ -2,6 +2,8 @@ package main
 
 import (
 	"net/http"
+	"strings"
+
 	"wanderinglunch/models"
 
 	"github.com/go-chi/render"
@@ -115,5 +117,30 @@ func NewLocationListResponse(locs []*models.Location) []render.Renderer {
 		list = append(list, NewLocationResponse(loc))
 	}
 
+	return list
+}
+
+type QueueResponse struct {
+	*models.Tweet
+	SubbedText string             `json:"subbedtext"`
+	Locations  []*models.Location `json:"locations"`
+}
+
+func NewQueueResponse(tweet *models.Tweet) *QueueResponse {
+	resp := &QueueResponse{Tweet: tweet}
+	return resp
+}
+
+func (rd *QueueResponse) Render(w http.ResponseWriter, r *http.Request) error {
+	rd.SubbedText = substitutions(strings.ToLower(rd.Text))
+	rd.Locations = findLocations(rd.SubbedText)
+	return nil
+}
+
+func NewQueueListResponse(tweets []*models.Tweet) []render.Renderer {
+	list := []render.Renderer{}
+	for _, tweet := range tweets {
+		list = append(list, NewQueueResponse(tweet))
+	}
 	return list
 }

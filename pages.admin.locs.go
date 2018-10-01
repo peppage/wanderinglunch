@@ -44,13 +44,13 @@ func adminAddLocationHandle(w http.ResponseWriter, r *http.Request) {
 }
 
 func adminAPILocations(w http.ResponseWriter, r *http.Request) {
-	subs, err := getAllLocations("nyc")
+	locs, err := getAllLocations("nyc")
 	if err != nil {
 		render.Render(w, r, ErrSqlError(err))
 		return
 	}
 
-	render.RenderList(w, r, NewLocationListResponse(subs))
+	render.RenderList(w, r, NewLocationListResponse(locs))
 }
 
 func adminLocations(w http.ResponseWriter, r *http.Request) {

@@ -113,6 +113,8 @@ func routes() *chi.Mux {
 			a.Get("/trucks", adminAPITrucks)
 			a.Get("/subs", adminAPISubs)
 			a.Get("/locations", adminAPILocations)
+			a.Get("/queue", adminAPIQueue)
+			a.Post("/queue/done", adminAPIQueueDone)
 		})
 	})
 
