@@ -12,7 +12,6 @@ import (
 	"strings"
 
 	"wanderinglunch/models"
-	"wanderinglunch/updator"
 
 	"github.com/CloudyKit/jet"
 	"github.com/go-chi/chi"
@@ -41,12 +40,12 @@ func init() {
 	gob.Register(&models.User{})
 	loadFastFunctions()
 
-	updator.InitializeTwitter(updator.TwitterCreds{
+	InitializeTwitter(TwitterCreds{
 		ConsumerKey:    conf.TwitterConsumerKey,
 		ConsumerSecret: conf.TwitterConsumerSecret,
 	})
 
-	//updator.Start(db)
+	//Start()
 }
 
 func setupDB(dbConn string) {

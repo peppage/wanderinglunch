@@ -1,11 +1,11 @@
-package updator
+package main
 
 import (
 	"context"
-	"database/sql"
 	"log"
 	"net/http"
 	"regexp"
+	"strconv"
 	"strings"
 	"time"
 
@@ -21,7 +21,6 @@ import (
 )
 
 var twitAPI *twitter.Client
-var db *sql.DB
 
 const twoWeeks = time.Minute * -10080 * 2
 
@@ -30,8 +29,8 @@ type TwitterCreds struct {
 	ConsumerSecret string
 }
 
-func Start(data *sql.DB) {
-	db = data
+func Start() {
+	findLocationsTask()
 
 	gocron.Every(15).Minutes().Do(findLocationsTask)
 	gocron.Every(1).Saturday().At("23:00").Do(truncateTweets)
@@ -106,7 +105,7 @@ func saveTweets(twitname string, tweets []twitter.Tweet) {
 		t := models.Tweet{
 			Text:      tweets[i].Text,
 			Time:      parseCreatedAt(tweets[i].CreatedAt).Unix(),
-			ID:        tweets[i].ID,
+			ID:        strconv.FormatInt(tweets[i].ID, 10),
 			Retweeted: tweets[i].Retweeted,
 			TruckID:   twitname,
 		}
@@ -172,7 +171,7 @@ func saveSpots(tweet twitter.Tweet, locations []*models.Location) {
 		spot := models.Spot{
 			TruckID:    strings.ToLower(tweet.User.ScreenName),
 			LocationID: location.ID,
-			TweetID:    tweet.ID,
+			TweetID:    strconv.FormatInt(tweet.ID, 10),
 		}
 		spot.Insert(context.Background(), db, boil.Infer())
 	}
