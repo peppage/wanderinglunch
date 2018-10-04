@@ -1,6 +1,7 @@
 package main
 
 import (
+	"database/sql"
 	"encoding/json"
 	"net/http"
 
@@ -108,6 +109,10 @@ func truckPage(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 	truck, err := getTruck(id)
 	if err != nil {
+		if err == sql.ErrNoRows {
+			render.Render(w, r, ErrNotFound)
+			return
+		}
 		render.Render(w, r, ErrSqlError(err))
 		return
 	}

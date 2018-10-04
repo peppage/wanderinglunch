@@ -1,0 +1,33 @@
+<html>
+<head>
+    <title>Internal Server Error</title>
+    <link rel="stylesheet" type="text/css" href="/static/site.css?v={{ .Version}}" />
+</head>
+<body>
+    <header class="header">
+        <div class="header__logo">
+            <img src="/static/images/wl.png" alt="logo">
+        </div>
+    </header>
+    <main>
+        <h1>Internal Server Error</h1>
+        <p>Sorry</p>
+        <p>Go back to your location's homepage?
+            <ul>
+                <li><a href="/nyc">NYC</a></li>
+                <li><a href="/dc">DC</a></li>
+                <li><a href="/buffalo">Buffalo</a></li>
+            </ul>
+        </p>
+    </main>
+    <footer>
+        <div>
+            <a href="http://twitter.com/peppage">Twitter</a> | 
+            <a href="/{{ .Site }}/feedback">Feedback</a>
+        </div>
+        <div>
+            {{ .Version }}
+        </div>
+    </footer>
+</body>
+</html>

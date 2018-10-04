@@ -22,6 +22,10 @@ func (e *ErrResponse) Render(w http.ResponseWriter, r *http.Request) error {
 	return nil
 }
 
+func (e *ErrResponse) Error() string {
+	return e.ErrorText
+}
+
 func ErrSqlError(err error) render.Renderer {
 	return &ErrResponse{
 		Err:            err,

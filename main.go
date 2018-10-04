@@ -5,6 +5,7 @@ package main
 import (
 	"database/sql"
 	"encoding/gob"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -15,6 +16,7 @@ import (
 
 	"github.com/CloudyKit/jet"
 	"github.com/go-chi/chi"
+	"github.com/go-chi/render"
 	"github.com/gorilla/context"
 	"github.com/gorilla/sessions"
 	_ "github.com/lib/pq"
@@ -44,6 +46,30 @@ func init() {
 	})
 
 	//Start()
+
+	render.Respond = func(w http.ResponseWriter, r *http.Request, v interface{}) {
+		if err, ok := v.(*ErrResponse); ok && !conf.Develop {
+			fmt.Printf("Err: %s:%s\n", err.ErrorText, err.StatusText)
+
+			c := pageContext{
+				Version: Version,
+			}
+			w.WriteHeader(err.HTTPStatusCode)
+			switch err.HTTPStatusCode {
+			case http.StatusNotFound:
+				template, _ := View.GetTemplate("error404.jet")
+				template.Execute(w, nil, c)
+			default:
+				template, _ := View.GetTemplate("error.jet")
+				template.Execute(w, nil, c)
+				// Send error to rollbar
+			}
+
+			return
+		} else {
+			render.DefaultResponder(w, r, v)
+		}
+	}
 }
 
 func setupDB(dbConn string) {
