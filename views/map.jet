@@ -12,11 +12,5 @@
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAN8Jk0062QBOMPmXH-Totg9zi1GCw3o3w&callback=initMap&v=3.26">
     </script>
     <script src="/static/map.js"></script>
-    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-    <script>
-        (adsbygoogle = window.adsbygoogle || []).push({
-            google_ad_client: "ca-pub-4098082757736151",
-            enable_page_level_ads: true
-        });
-    </script>
+    {{include "partials/_ad.jet"}}
 {{ end }}

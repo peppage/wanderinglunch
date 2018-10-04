@@ -8,11 +8,5 @@
     <p>There will be a list of trucks here, <a target="_blank" href="https://twitter.com/intent/tweet?text=Wandering Lunch&url=http://wanderinglunch.comnyc">tweet</a> at yourself so you don't forget.<br></p>
     <p>Check out <a href="nyc/alltrucks">a list of all the trucks</a> on the site while you wait.</p>
   </main>
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <script>
-      (adsbygoogle = window.adsbygoogle || []).push({
-            google_ad_client: "ca-pub-4098082757736151",
-            enable_page_level_ads: true
-      });
-  </script>
+  {{include "partials/_ad.jet"}}
 {{end}}
