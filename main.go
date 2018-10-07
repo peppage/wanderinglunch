@@ -45,7 +45,7 @@ func init() {
 		ConsumerSecret: conf.TwitterConsumerSecret,
 	})
 
-	//Start()
+	go Start()
 
 	render.Respond = func(w http.ResponseWriter, r *http.Request, v interface{}) {
 		if err, ok := v.(*ErrResponse); ok && !conf.Develop {
