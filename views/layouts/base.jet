@@ -7,7 +7,13 @@
   <body>
     <header class="header">
         <div class="header__logo">
-            <a href="/{{ .Site }}"><img src="/static/images/wl.png" alt="logo"></a>
+            <a href="/{{ .Site }}">
+                <img srcset="/static/images/wl-sm.png 95w,
+                            /static/images/wl.png 368w"
+                    sizes="(max-width: 450px) 95px,
+                            368px"
+                    src="/static/images/wl.png" alt="Wandering Lunch Logo">
+            </a>
         </div>
         <nav class="header__nav">
             <ul>

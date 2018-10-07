@@ -12,8 +12,7 @@ body {
 	-webkit-box-direction: normal;
 	-ms-flex-direction: column;
 	flex-direction: column;
-	margin-top: 0;
-	margin-bottom: 0;
+	margin: 0;
 	justify-content: space-between;
 }
 
@@ -89,11 +88,16 @@ a:hover {
 	text-align: center;
 }
 
+.header .header__nav {
+	margin-top: 1.5rem;
+}
+
 .header .header__nav ul {
 	list-style: none;
 	display: flex;
 	flex-flow: row nowrap;
 	justify-content: center;
+	padding: 0;
 }
 
 .header .header__nav ul li {
@@ -186,4 +190,19 @@ tr:nth-child(even){
 
 .replacement { 
 	background: #a9a9;
+}
+
+@media only screen and (max-device-width: 450px) {
+	main {
+		width: 100%;
+		padding-left: 1rem;
+		padding-right: 1rem;
+		margin: 0;
+	}
+	
+	footer {
+		margin: 0;
+		padding-left: 1rem;
+		width: 90%;
+	}
 }
