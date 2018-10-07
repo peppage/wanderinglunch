@@ -1,6 +1,19 @@
 package main
 
-import "net/http"
+import (
+	"context"
+	"net/http"
+	"wanderinglunch/models"
+
+	"github.com/go-chi/chi"
+	"github.com/go-chi/render"
+)
+
+type ctxKey int
+
+const (
+	truckCtxkey ctxKey = iota
+)
 
 func mustUser(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -10,5 +23,24 @@ func mustUser(next http.Handler) http.Handler {
 		}
 
 		next.ServeHTTP(w, r)
+	})
+}
+
+func truckCtx(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		var truck *models.Truck
+		var err error
+
+		if id := chi.URLParam(r, "id"); id != "" {
+			truck, err = getTruck(id)
+		}
+
+		if err != nil {
+			render.Render(w, r, ErrNotFound)
+			return
+		}
+
+		ctx := context.WithValue(r.Context(), truckCtxkey, truck)
+		next.ServeHTTP(w, r.WithContext(ctx))
 	})
 }

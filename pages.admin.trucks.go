@@ -6,7 +6,6 @@ import (
 	"wanderinglunch/models"
 
 	"github.com/CloudyKit/jet"
-	"github.com/go-chi/chi"
 	"github.com/go-chi/render"
 )
 
@@ -67,12 +66,7 @@ func adminEditTruck(w http.ResponseWriter, r *http.Request) {
 		Version: Version,
 	}
 
-	id := chi.URLParam(r, "id")
-	truck, err := getTruck(id)
-	if err != nil {
-		render.Render(w, r, ErrSqlError(err))
-		return
-	}
+	truck := r.Context().Value(truckCtx).(*models.Truck)
 
 	template, _ := View.GetTemplate("admin/truck.jet")
 	vars := make(jet.VarMap)

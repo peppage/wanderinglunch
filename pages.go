@@ -1,9 +1,9 @@
 package main
 
 import (
-	"database/sql"
 	"encoding/json"
 	"net/http"
+	"wanderinglunch/models"
 
 	"github.com/CloudyKit/jet"
 	"github.com/go-chi/chi"
@@ -13,10 +13,6 @@ import (
 type pageContext struct {
 	Site    string
 	Version string
-}
-
-type contextKey struct {
-	name string
 }
 
 const sixMonths = 4383
@@ -106,16 +102,7 @@ func mapPage(w http.ResponseWriter, r *http.Request) {
 }
 
 func truckPage(w http.ResponseWriter, r *http.Request) {
-	id := chi.URLParam(r, "id")
-	truck, err := getTruck(id)
-	if err != nil {
-		if err == sql.ErrNoRows {
-			render.Render(w, r, ErrNotFound)
-			return
-		}
-		render.Render(w, r, ErrSqlError(err))
-		return
-	}
+	truck := r.Context().Value(truckCtxkey).(*models.Truck)
 
 	c := pageContext{
 		Site:    truck.Site,
