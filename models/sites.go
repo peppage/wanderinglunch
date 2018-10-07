@@ -14,7 +14,6 @@ import (
 	"time"
 
 	"github.com/pkg/errors"
-	"github.com/volatiletech/null"
 	"github.com/volatiletech/sqlboiler/boil"
 	"github.com/volatiletech/sqlboiler/queries"
 	"github.com/volatiletech/sqlboiler/queries/qm"
@@ -23,11 +22,11 @@ import (
 
 // Site is an object representing the database table.
 type Site struct {
-	Name        string      `boil:"name" json:"name" toml:"name" yaml:"name"`
-	Title       null.String `boil:"title" json:"title,omitempty" toml:"title" yaml:"title,omitempty"`
-	Description null.String `boil:"description" json:"description,omitempty" toml:"description" yaml:"description,omitempty"`
-	Lat         float64     `boil:"lat" json:"lat" toml:"lat" yaml:"lat"`
-	Long        float64     `boil:"long" json:"long" toml:"long" yaml:"long"`
+	Name        string  `boil:"name" json:"name" toml:"name" yaml:"name"`
+	Title       string  `boil:"title" json:"title" toml:"title" yaml:"title"`
+	Description string  `boil:"description" json:"description" toml:"description" yaml:"description"`
+	Lat         float64 `boil:"lat" json:"lat" toml:"lat" yaml:"lat"`
+	Long        float64 `boil:"long" json:"long" toml:"long" yaml:"long"`
 
 	R *siteR `boil:"-" json:"-" toml:"-" yaml:"-"`
 	L siteL  `boil:"-" json:"-" toml:"-" yaml:"-"`
@@ -61,8 +60,8 @@ type siteL struct{}
 
 var (
 	siteColumns               = []string{"name", "title", "description", "lat", "long"}
-	siteColumnsWithoutDefault = []string{"name", "title", "description", "lat", "long"}
-	siteColumnsWithDefault    = []string{}
+	siteColumnsWithoutDefault = []string{"name", "lat", "long"}
+	siteColumnsWithDefault    = []string{"title", "description"}
 	sitePrimaryKeyColumns     = []string{"name"}
 )
 

@@ -67,3 +67,8 @@ alter table trucks alter column lastupdate type bigint using lastupdate::bigint;
 
 alter table tweets alter done SET NOT NULL;
 alter table tweets alter done SET DEFAULT 'f';
+
+alter table sites alter title SET default '';
+alter table sites alter title SET NOT NULL;
+alter table sites alter description SET default '';
+alter table sites alter description SET NOT NULL;
