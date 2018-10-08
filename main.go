@@ -20,6 +20,7 @@ import (
 	"github.com/gorilla/context"
 	"github.com/gorilla/sessions"
 	_ "github.com/lib/pq"
+	"github.com/rollbar/rollbar-go"
 )
 
 var db *sql.DB
@@ -46,6 +47,8 @@ func init() {
 	})
 
 	go Start()
+	initializeRollbar()
+
 
 	render.Respond = func(w http.ResponseWriter, r *http.Request, v interface{}) {
 		if err, ok := v.(*ErrResponse); ok && !conf.Develop {
@@ -70,6 +73,14 @@ func init() {
 			render.DefaultResponder(w, r, v)
 		}
 	}
+}
+
+func initializeRollbar() {
+	rollbar.SetToken(conf.RollbarToken)
+	if !conf.Develop {
+		rollbar.SetEnvironment("production")
+	}
+	rollbar.SetCodeVersion(Version)
 }
 
 func setupDB(dbConn string) {

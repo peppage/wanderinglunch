@@ -14,6 +14,7 @@ import (
 	"github.com/dghubble/go-twitter/twitter"
 	"github.com/jasonlvhit/gocron"
 	"github.com/peppage/simpletransport/simpletransport"
+	"github.com/rollbar/rollbar-go"
 	"github.com/volatiletech/sqlboiler/boil"
 	"github.com/volatiletech/sqlboiler/queries/qm"
 	"golang.org/x/oauth2"
@@ -68,6 +69,7 @@ func findLocationsTask() {
 
 	trucks, err := models.Trucks(qm.Where("archive = ?", false)).All(context.Background(), db)
 	if err != nil {
+		rollbar.Error(err)
 		log.Printf("Failed getting trucks, %v", err)
 	}
 
@@ -75,6 +77,7 @@ func findLocationsTask() {
 		log.Printf("getting %v tweets", truck.Twitname)
 		tweets, err := getTweets(truck)
 		if err != nil {
+			rollbar.Error(err)
 			log.Printf("Failed getting tweets for %v: %v", truck.Twitname, err)
 			continue
 		}
@@ -112,6 +115,7 @@ func saveTweets(twitname string, tweets []twitter.Tweet) {
 
 		err := t.Upsert(context.Background(), db, false, []string{"id"}, boil.Infer(), boil.Infer())
 		if err != nil {
+			rollbar.Error(err)
 			log.Printf("Failed tweet upsert %v", err)
 		}
 	}
@@ -135,6 +139,7 @@ func searchTweets(tweets []twitter.Tweet) {
 func substitutions(text string) string {
 	subs, err := models.Subs().All(context.Background(), db)
 	if err != nil {
+		rollbar.Error(err)
 		log.Printf("Failed getting subs %v", err)
 		return ""
 	}
@@ -152,6 +157,7 @@ func findLocations(text string) []*models.Location {
 
 	locations, err := models.Locations().All(context.Background(), db)
 	if err != nil {
+		rollbar.Error(err)
 		log.Printf("Failed getting locations %v", err)
 		return foundLocs
 	}

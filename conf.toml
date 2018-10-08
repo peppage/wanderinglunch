@@ -8,8 +8,6 @@ develop = false
 db_connection = ""
 session_key = ""
 
-[loggly]
-client_id = ""
 
 [twitter]
 consumer_key = ""
@@ -20,3 +18,6 @@ access_token_secret = ""
 [foursquare]
 client_id = ""
 client_secret = ""
+
+[rollbar]
+token = ""
