@@ -13,6 +13,7 @@ type ctxKey int
 
 const (
 	truckCtxkey ctxKey = iota
+	siteCtxKey
 )
 
 func mustUser(next http.Handler) http.Handler {
@@ -41,6 +42,25 @@ func truckCtx(next http.Handler) http.Handler {
 		}
 
 		ctx := context.WithValue(r.Context(), truckCtxkey, truck)
+		next.ServeHTTP(w, r.WithContext(ctx))
+	})
+}
+
+func siteCtx(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		var site *models.Site
+		var err error
+
+		if name := chi.URLParam(r, "name"); name != "" {
+			site, err = getSite(name)
+		}
+
+		if err != nil {
+			render.Render(w, r, ErrNotFound)
+			return
+		}
+
+		ctx := context.WithValue(r.Context(), siteCtxKey, site)
 		next.ServeHTTP(w, r.WithContext(ctx))
 	})
 }

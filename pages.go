@@ -6,20 +6,19 @@ import (
 	"wanderinglunch/models"
 
 	"github.com/CloudyKit/jet"
-	"github.com/go-chi/chi"
 	"github.com/go-chi/render"
 )
 
 type pageContext struct {
-	Site    string
+	Site    *models.Site
 	Version string
 }
 
 const sixMonths = 4383
 
 func index(w http.ResponseWriter, r *http.Request) {
-	site := chi.URLParam(r, "site")
-	spots, err := getSpots(site, 8)
+	site := r.Context().Value(siteCtxKey).(*models.Site)
+	spots, err := getSpots(site.Name, 8)
 	if err != nil {
 		render.Render(w, r, ErrSqlError(err))
 		return
@@ -44,8 +43,8 @@ func index(w http.ResponseWriter, r *http.Request) {
 }
 
 func allTrucks(w http.ResponseWriter, r *http.Request) {
-	site := chi.URLParam(r, "site")
-	trucks, err := getTrucks(site, sixMonths)
+	site := r.Context().Value(siteCtxKey).(*models.Site)
+	trucks, err := getTrucks(site.Name, sixMonths)
 	if err != nil {
 		render.Render(w, r, ErrSqlError(err))
 		return
@@ -67,8 +66,8 @@ func allTrucks(w http.ResponseWriter, r *http.Request) {
 }
 
 func mapPage(w http.ResponseWriter, r *http.Request) {
-	siteName := chi.URLParam(r, "site")
-	spots, err := getMarkers(siteName, 8)
+	site := r.Context().Value(siteCtxKey).(*models.Site)
+	spots, err := getMarkers(site.Name, 8)
 	if err != nil {
 		render.Render(w, r, ErrSqlError(err))
 		return
@@ -79,14 +78,8 @@ func mapPage(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 
-	site, err := getSite(siteName)
-	if err != nil {
-		render.Render(w, r, ErrSqlError(err))
-		return
-	}
-
 	c := pageContext{
-		Site:    siteName,
+		Site:    site,
 		Version: Version,
 	}
 
@@ -104,8 +97,10 @@ func mapPage(w http.ResponseWriter, r *http.Request) {
 func truckPage(w http.ResponseWriter, r *http.Request) {
 	truck := r.Context().Value(truckCtxkey).(*models.Truck)
 
+	site, _ := getSite(truck.Site)
+
 	c := pageContext{
-		Site:    truck.Site,
+		Site:    site,
 		Version: Version,
 	}
 
@@ -121,6 +116,7 @@ func truckPage(w http.ResponseWriter, r *http.Request) {
 func login(w http.ResponseWriter, r *http.Request) {
 
 	c := pageContext{
+		Site:    &models.Site{},
 		Version: Version,
 	}
 
@@ -148,7 +144,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func feedback(w http.ResponseWriter, r *http.Request) {
-	site := chi.URLParam(r, "site")
+	site := r.Context().Value(siteCtxKey).(*models.Site)
 
 	c := pageContext{
 		Site:    site,

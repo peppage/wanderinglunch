@@ -13,6 +13,7 @@ import (
 
 func adminAddLocation(w http.ResponseWriter, r *http.Request) {
 	c := pageContext{
+		Site:    &models.Site{},
 		Version: Version,
 	}
 
@@ -55,6 +56,7 @@ func adminAPILocations(w http.ResponseWriter, r *http.Request) {
 
 func adminLocations(w http.ResponseWriter, r *http.Request) {
 	c := pageContext{
+		Site:    &models.Site{},
 		Version: Version,
 	}
 
@@ -67,6 +69,7 @@ func adminLocations(w http.ResponseWriter, r *http.Request) {
 
 func adminEditLocation(w http.ResponseWriter, r *http.Request) {
 	c := pageContext{
+		Site:    &models.Site{},
 		Version: Version,
 	}
 

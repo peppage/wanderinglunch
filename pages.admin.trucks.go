@@ -11,6 +11,7 @@ import (
 
 func adminAddTruck(w http.ResponseWriter, r *http.Request) {
 	c := pageContext{
+		Site:    &models.Site{},
 		Version: Version,
 	}
 
@@ -41,6 +42,7 @@ func adminAddTruckHandle(w http.ResponseWriter, r *http.Request) {
 
 func adminTrucks(w http.ResponseWriter, r *http.Request) {
 	c := pageContext{
+		Site:    &models.Site{},
 		Version: Version,
 	}
 
@@ -63,6 +65,7 @@ func adminAPITrucks(w http.ResponseWriter, r *http.Request) {
 
 func adminEditTruck(w http.ResponseWriter, r *http.Request) {
 	c := pageContext{
+		Site:    &models.Site{},
 		Version: Version,
 	}
 

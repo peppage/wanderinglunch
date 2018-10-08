@@ -3,12 +3,14 @@ package main
 import (
 	"errors"
 	"net/http"
+	"wanderinglunch/models"
 
 	"github.com/go-chi/render"
 )
 
 func adminIndex(w http.ResponseWriter, r *http.Request) {
 	c := pageContext{
+		Site:    &models.Site{},
 		Version: Version,
 	}
 

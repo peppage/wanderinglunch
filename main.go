@@ -102,7 +102,7 @@ func routes() *chi.Mux {
 		http.Redirect(w, r, "/nyc", http.StatusPermanentRedirect)
 	})
 
-	router.Route("/{site:[a-z-]+}", func(r chi.Router) {
+	router.With(siteCtx).Route("/{name:[a-z-]+}", func(r chi.Router) {
 		r.Get("/", index)
 		r.Get("/alltrucks", allTrucks)
 		r.Get("/map", mapPage)

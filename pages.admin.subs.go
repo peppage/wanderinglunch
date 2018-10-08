@@ -12,6 +12,7 @@ import (
 
 func adminAddSub(w http.ResponseWriter, r *http.Request) {
 	c := pageContext{
+		Site:    &models.Site{},
 		Version: Version,
 	}
 
@@ -54,6 +55,7 @@ func adminAPISubs(w http.ResponseWriter, r *http.Request) {
 
 func adminSubs(w http.ResponseWriter, r *http.Request) {
 	c := pageContext{
+		Site:    &models.Site{},
 		Version: Version,
 	}
 
@@ -66,6 +68,7 @@ func adminSubs(w http.ResponseWriter, r *http.Request) {
 
 func adminEditSub(w http.ResponseWriter, r *http.Request) {
 	c := pageContext{
+		Site:    &models.Site{},
 		Version: Version,
 	}
 
