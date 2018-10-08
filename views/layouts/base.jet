@@ -40,7 +40,8 @@
     <footer>
         <div>
             <a href="http://twitter.com/peppage">Twitter</a> | 
-            <a href="/{{ .Site.Name }}/feedback">Feedback</a>
+            <a href="/{{ .Site.Name }}/feedback">Feedback</a> |
+            <a href="https://github.com/peppage/wanderinglunch">Github</a>
         </div>
         <div>
             {{ .Version }}
