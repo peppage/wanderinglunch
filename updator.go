@@ -84,7 +84,12 @@ func findLocationsTask() {
 
 		saveTweets(truck.Twitname, tweets)
 
-		searchTweets(tweets)
+		if searchTweets(tweets) && len(tweets) > 0 {
+			// This is a bit hacky of a way to say the truck was updated and now
+			// I'm saving the date in two places.
+			truck.Lastupdate = parseCreatedAt(tweets[0].CreatedAt).Unix()
+			truck.Update(context.Background(), db, boil.Infer())
+		}
 
 	}
 }
@@ -121,7 +126,8 @@ func saveTweets(twitname string, tweets []twitter.Tweet) {
 	}
 }
 
-func searchTweets(tweets []twitter.Tweet) {
+func searchTweets(tweets []twitter.Tweet) bool {
+	found := false
 	for i := range tweets {
 		if isYoung(tweets[i]) && !isResponse(tweets[i]) {
 			text := substitutions(strings.ToLower(tweets[i].Text))
@@ -129,11 +135,14 @@ func searchTweets(tweets []twitter.Tweet) {
 				locs := findLocations(text)
 				if len(locs) > 0 {
 					log.Printf("Locations found")
+					found = true
 					saveSpots(tweets[i], locs)
 				}
 			}
 		}
 	}
+
+	return found
 }
 
 func substitutions(text string) string {
