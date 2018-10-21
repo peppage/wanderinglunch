@@ -69,7 +69,7 @@ func adminEditTruck(w http.ResponseWriter, r *http.Request) {
 		Version: Version,
 	}
 
-	truck := r.Context().Value(truckCtx).(*models.Truck)
+	truck := r.Context().Value(truckCtxkey).(*models.Truck)
 
 	template, _ := View.GetTemplate("admin/truck.jet")
 	vars := make(jet.VarMap)
