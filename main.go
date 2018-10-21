@@ -46,9 +46,10 @@ func init() {
 		ConsumerSecret: conf.TwitterConsumerSecret,
 	})
 
-	go Start()
+	if conf.RunUpdator {
+		go Start()
+	}
 	initializeRollbar()
-
 
 	render.Respond = func(w http.ResponseWriter, r *http.Request, v interface{}) {
 		if err, ok := v.(*ErrResponse); ok && !conf.Develop {

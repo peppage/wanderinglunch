@@ -12,6 +12,7 @@ type appConfig struct {
 	Port                  string
 	SessionKey            string
 	Develop               bool
+	RunUpdator            bool
 	RollbarToken          string
 }
 
@@ -30,6 +31,7 @@ func loadConfig() *appConfig {
 	sessKey, _ := config.String("app.session_key")
 	d, _ := config.Bool("app.develop")
 	rbs, _ := config.String("rollbar.token")
+	ru, _ := config.Bool("app.run_updator")
 
 	return &appConfig{
 		TwitterConsumerKey:    consumerKey,
@@ -38,6 +40,7 @@ func loadConfig() *appConfig {
 		Port:                  port,
 		SessionKey:            sessKey,
 		Develop:               d,
+		RunUpdator:            ru,
 		RollbarToken:          rbs,
 	}
 }
