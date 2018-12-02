@@ -77,7 +77,7 @@ func findLocationsTask() {
 		log.Printf("getting %v tweets", truck.Twitname)
 		tweets, err := getTweets(truck)
 		if err != nil {
-			rollbar.Error(err, map[string]interface{}{
+			rollbar.ErrorWithExtras(rollbar.ERR, err, map[string]interface{}{
 				"Twitter id": truck.Twitname,
 			})
 			log.Printf("Failed getting tweets for %v: %v", truck.Twitname, err)
