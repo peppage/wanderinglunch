@@ -8,7 +8,7 @@
   <br>
 </div>
 
-Welcome to the [Wanderinglunch](https://wanderinglunch.com) codebase. It's a website that tracks foodtrucks around NYC basd on their tweets!
+Welcome to the [Wanderinglunch](https://wanderinglunch.com) codebase. It's a website that tracks foodtrucks around NYC based on their tweets!
 
 # Lazy Server Setup
 You can pretty much follow [this guide](https://plusbryan.com/my-first-5-minutes-on-a-server-or-essential-security-for-linux-servers) to setup the server.
