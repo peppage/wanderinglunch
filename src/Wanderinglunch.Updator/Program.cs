@@ -1,8 +1,12 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
+using Serilog;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Wanderinglunch.Data;
+using Wanderinglunch.Updator.Services;
 
 namespace Wanderinglunch.Updator
 {
@@ -10,10 +14,19 @@ namespace Wanderinglunch.Updator
     {
         public static IConfigurationRoot configuration;
 
-        static void Main(string[] args)
+        public static void Main(string[] args)
+        {
+            MainAsync().GetAwaiter().GetResult();
+        }
+
+        private static async Task MainAsync()
         {
             var serviceCollection = new ServiceCollection();
             ConfigureServices(serviceCollection);
+
+            var serviceProvider = serviceCollection.BuildServiceProvider();
+
+            await serviceProvider.GetService<App>().Run();
         }
 
         public static void ConfigureServices(IServiceCollection serviceCollection)
@@ -24,6 +37,27 @@ namespace Wanderinglunch.Updator
                 .Build();
 
             serviceCollection.AddSingleton<ILunchContext>(new LunchContext(configuration.GetConnectionString("Storage")));
+            serviceCollection.AddSingleton<IUpdateService, UpdateService>();
+
+            serviceCollection.AddSingleton(new LoggerFactory()
+                .AddConsole()
+                .AddSerilog()
+                .AddDebug());
+            serviceCollection.AddLogging();
+
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.Console(Serilog.Events.LogEventLevel.Debug)
+                .MinimumLevel.Debug()
+                .Enrich.FromLogContext()
+                .CreateLogger();
+
+            serviceCollection.AddLogging(configure =>
+            {
+                configure.SetMinimumLevel(LogLevel.Debug);
+                configure.AddConsole();
+            }).AddSingleton<UpdateService>();
+
+            serviceCollection.AddTransient<App>();
         }
     }
 }
