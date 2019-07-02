@@ -38,6 +38,8 @@ namespace Wanderinglunch.Updator
 
             serviceCollection.AddSingleton<ILunchContext>(new LunchContext(configuration.GetConnectionString("Storage")));
             serviceCollection.AddSingleton<IUpdateService, UpdateService>();
+            serviceCollection.AddSingleton<ITwitterService, TwitterService>();
+            serviceCollection.AddSingleton<IConfigurationRoot>(configuration);
 
             serviceCollection.AddSingleton(new LoggerFactory()
                 .AddConsole()
@@ -55,7 +57,7 @@ namespace Wanderinglunch.Updator
             {
                 configure.SetMinimumLevel(LogLevel.Debug);
                 configure.AddConsole();
-            }).AddSingleton<UpdateService>();
+            }).AddSingleton<App>();
 
             serviceCollection.AddTransient<App>();
         }

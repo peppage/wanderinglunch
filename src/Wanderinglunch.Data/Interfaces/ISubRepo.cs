@@ -1,10 +1,11 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Wanderinglunch.Data.Models;
 
 namespace Wanderinglunch.Data.Interfaces
 {
-    public interface ILocationRepo
+    public interface ISubRepo
     {
-        List<Location> All();
+        List<Sub> All();
     }
 }

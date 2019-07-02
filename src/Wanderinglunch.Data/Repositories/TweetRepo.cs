@@ -6,20 +6,18 @@ using Wanderinglunch.Data.Models;
 
 namespace Wanderinglunch.Data.Repositories
 {
-    public class TruckRepo : ITruckRepo
+    public class TweetRepo : ITweetRepo
     {
         private readonly IDatabase db;
 
-        public TruckRepo(IDatabase db)
+        public TweetRepo(IDatabase db)
         {
             this.db = db;
         }
 
-        public Task<List<Truck>> AllAsync(bool archived = false)
+        public Task<object> CreateAsync(Tweet tweet)
         {
-            return db.FetchAsync<Truck>("WHERE archive = @0", archived);
+            return db.InsertAsync(tweet);
         }
-
-        public Task<int> UpdateAsync(Truck truck) => db.UpdateAsync(truck);
     }
 }

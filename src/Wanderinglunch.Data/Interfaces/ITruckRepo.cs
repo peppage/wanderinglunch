@@ -6,6 +6,7 @@ namespace Wanderinglunch.Data.Interfaces
 {
     public interface ITruckRepo
     {
-        Task<List<Truck>> All(bool archived = false);
+        Task<List<Truck>> AllAsync(bool archived = false);
+        Task<int> UpdateAsync(Truck truck);
     }
 }

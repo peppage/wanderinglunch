@@ -1,10 +1,11 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Wanderinglunch.Data.Models;
 
 namespace Wanderinglunch.Data.Interfaces
 {
-    public interface ILocationRepo
+    public interface ISpotRepo
     {
-        List<Location> All();
+        Task<object> CreateAsync(Spot spot);
     }
 }

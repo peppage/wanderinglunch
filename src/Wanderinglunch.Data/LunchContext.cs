@@ -13,6 +13,14 @@ namespace Wanderinglunch.Data
 
         public ITruckRepo TruckRepo { get; private set; }
 
+        public ITweetRepo TweetRepo { get; private set; }
+
+        public ISubRepo SubRepo { get; private set; }
+
+        public ILocationRepo LocationRepo { get; private set; }
+
+        public ISpotRepo SpotRepo { get; private set; }
+
         public LunchContext(string connectionString)
         {
             db = DatabaseConfiguration.Build()
@@ -26,6 +34,10 @@ namespace Wanderinglunch.Data
 
             UserRepo = new UserRepo(db);
             TruckRepo = new TruckRepo(db);
+            TweetRepo = new TweetRepo(db);
+            SubRepo = new SubRepo(db);
+            LocationRepo = new LocationRepo(db);
+            SpotRepo = new SpotRepo(db);
         }
 
     }
