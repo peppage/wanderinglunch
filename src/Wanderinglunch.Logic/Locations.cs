@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Wanderinglunch.Data.Models;
 
 namespace Wanderinglunch.Logic
@@ -21,7 +21,7 @@ namespace Wanderinglunch.Logic
             foreach (var location in locs.Where(l => l.Site == site))
             {
                 var regex = new Regex(location.Matcher);
-                var match = regex.Match(text);
+                var match = regex.Match(text.ToLower());
                 if (match.Success)
                 {
                     found.Add(location);
