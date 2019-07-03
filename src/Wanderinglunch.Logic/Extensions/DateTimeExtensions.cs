@@ -1,6 +1,6 @@
 using System;
 
-namespace Wanderinglunch.Updator.Extensions
+namespace Wanderinglunch.Logic.Extensions
 {
     public static class DateTimeExtensions
     {

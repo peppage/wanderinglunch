@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Wanderinglunch.Data\Wanderinglunch.Data.csproj" />
+    <ProjectReference Include="..\Wanderinglunch.Logic\Wanderinglunch.Logic.csproj" />
   </ItemGroup>
 
   <ItemGroup>

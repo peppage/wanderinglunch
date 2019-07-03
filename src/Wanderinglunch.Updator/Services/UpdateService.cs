@@ -7,7 +7,8 @@ using Microsoft.Extensions.Logging;
 using Tweetinvi.Models;
 using Wanderinglunch.Data;
 using Wanderinglunch.Data.Models;
-using Wanderinglunch.Updator.Extensions;
+using Wanderinglunch.Logic.Extensions;
+using Wanderinglunch.Logic;
 using Location = Wanderinglunch.Data.Models.Location;
 
 namespace Wanderinglunch.Updator.Services
@@ -81,29 +82,6 @@ namespace Wanderinglunch.Updator.Services
         }
 
         /// <summary>
-        /// Find all locations in a tweet. This is after substitutions.
-        /// </summary>
-        /// <param name="site">The site where the truck is.</param>
-        /// <param name="text">The tweet text to search</param>
-        /// <returns>A list of found locations</returns>
-        private List<Location> FindLocations(string site, string text)
-        {
-            var found = new List<Location>();
-
-            foreach (var location in locations.Where(l => l.Site == site))
-            {
-                var regex = new Regex(location.Matcher);
-                var match = regex.Match(text);
-                if (match.Success)
-                {
-                    found.Add(location);
-                }
-            }
-
-            return found;
-        }
-
-        /// <summary>
         /// Search the tweets for find and save locations
         /// </summary>
         /// <param name="tweets"></param>
@@ -117,23 +95,29 @@ namespace Wanderinglunch.Updator.Services
             {
                 if (tweet.IsEightHoursOld() && !tweet.ToUser())
                 {
-                    var text = MakeSubstitutions(tweet.FullText);
+                    var text = Substitions.DoSubstitions(substitions, tweet.FullText);
                     if (!HasSkipWords(text))
                     {
-                        var locations = FindLocations(truck.Site, text);
-                        if (locations.Any())
+                        var locs = Locations.FindLocations(locations, truck.Site, text);
+                        if (locs.Any())
                         {
                             logger.LogDebug($"Locations found {truck.TwitName}");
-                            await Task.WhenAll(locations.Select(l =>
+                            foreach (var l in locs)
                             {
-                                return lunchContext.SpotRepo.CreateAsync(new Spot
+                                // Ignore key duplicate problems
+                                try
                                 {
-                                    TruckId = truck.TwitName,
-                                    LocationId = l.Id,
-                                    TweetId = tweet.IdStr
-                                });
-                            }));
-
+                                    await lunchContext.SpotRepo.CreateAsync(new Spot
+                                    {
+                                        TruckId = truck.TwitName,
+                                        LocationId = l.Id,
+                                        TweetId = tweet.IdStr
+                                    });
+                                }
+                                catch
+                                {
+                                }
+                            }
                         }
                     }
                 }
