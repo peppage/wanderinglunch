@@ -1,14 +1,12 @@
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
 using Tweetinvi.Models;
 using Wanderinglunch.Data;
 using Wanderinglunch.Data.Models;
-using Wanderinglunch.Logic.Extensions;
 using Wanderinglunch.Logic;
+using Wanderinglunch.Logic.Extensions;
 using Location = Wanderinglunch.Data.Models.Location;
 
 namespace Wanderinglunch.Updator.Services
@@ -26,8 +24,8 @@ namespace Wanderinglunch.Updator.Services
             this.lunchContext = lunchContext;
             this.twitterService = twitterService;
             this.logger = logger;
-            this.substitions = lunchContext.SubRepo.All();
-            this.locations = lunchContext.LocationRepo.All();
+            substitions = lunchContext.SubRepo.All();
+            locations = lunchContext.LocationRepo.All();
         }
 
         public async Task Run()
@@ -99,9 +97,11 @@ namespace Wanderinglunch.Updator.Services
                     if (!HasSkipWords(text))
                     {
                         var locs = Locations.FindLocations(locations, truck.Site, text);
-                        if (locs.Any())
+                        if (locs.Count > 0)
                         {
                             logger.LogDebug($"Locations found {truck.TwitName}");
+                            foundLocations = true;
+
                             foreach (var l in locs)
                             {
                                 // Ignore key duplicate problems
@@ -126,17 +126,6 @@ namespace Wanderinglunch.Updator.Services
             return foundLocations;
         }
 
-        private bool HasSkipWords(string text) => text.Contains("tomorrow") || text.Contains("schedule") || text.Contains("cancelled");
-
-        private string MakeSubstitutions(string text)
-        {
-            foreach (var sub in substitions)
-            {
-                var regex = new Regex(sub.Regex);
-                text = regex.Replace(text, sub.Replacement);
-            }
-
-            return text;
-        }
+        private static bool HasSkipWords(string text) => text.Contains("tomorrow") || text.Contains("schedule") || text.Contains("cancelled");
     }
 }

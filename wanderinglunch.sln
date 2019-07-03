@@ -5,11 +5,13 @@ VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B0CA7AF7-342E-4BAB-92E0-0157E0E7FEB8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wanderinglunch.Data", "src\Wanderinglunch.Data\Wanderinglunch.Data.csproj", "{607C591B-D677-495A-A6F9-DB4D7C0F0AA7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wanderinglunch.Data", "src\Wanderinglunch.Data\Wanderinglunch.Data.csproj", "{607C591B-D677-495A-A6F9-DB4D7C0F0AA7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wanderinglunch.Updator", "src\Wanderinglunch.Updator\Wanderinglunch.Updator.csproj", "{3E866755-CC2B-4D68-8CE6-24330BA308CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wanderinglunch.Updator", "src\Wanderinglunch.Updator\Wanderinglunch.Updator.csproj", "{3E866755-CC2B-4D68-8CE6-24330BA308CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wanderinglunch.Logic", "src\Wanderinglunch.Logic\Wanderinglunch.Logic.csproj", "{64B36FA7-A1BA-4325-9174-B2A9A308F39A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wanderinglunch.Logic", "src\Wanderinglunch.Logic\Wanderinglunch.Logic.csproj", "{64B36FA7-A1BA-4325-9174-B2A9A308F39A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "tests", "tests\tests.csproj", "{D24802E0-33CF-4EC1-86CF-63C996072774}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,9 +21,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{607C591B-D677-495A-A6F9-DB4D7C0F0AA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -60,10 +59,28 @@ Global
 		{64B36FA7-A1BA-4325-9174-B2A9A308F39A}.Release|x64.Build.0 = Release|Any CPU
 		{64B36FA7-A1BA-4325-9174-B2A9A308F39A}.Release|x86.ActiveCfg = Release|Any CPU
 		{64B36FA7-A1BA-4325-9174-B2A9A308F39A}.Release|x86.Build.0 = Release|Any CPU
+		{D24802E0-33CF-4EC1-86CF-63C996072774}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D24802E0-33CF-4EC1-86CF-63C996072774}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D24802E0-33CF-4EC1-86CF-63C996072774}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D24802E0-33CF-4EC1-86CF-63C996072774}.Debug|x64.Build.0 = Debug|Any CPU
+		{D24802E0-33CF-4EC1-86CF-63C996072774}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D24802E0-33CF-4EC1-86CF-63C996072774}.Debug|x86.Build.0 = Debug|Any CPU
+		{D24802E0-33CF-4EC1-86CF-63C996072774}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D24802E0-33CF-4EC1-86CF-63C996072774}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D24802E0-33CF-4EC1-86CF-63C996072774}.Release|x64.ActiveCfg = Release|Any CPU
+		{D24802E0-33CF-4EC1-86CF-63C996072774}.Release|x64.Build.0 = Release|Any CPU
+		{D24802E0-33CF-4EC1-86CF-63C996072774}.Release|x86.ActiveCfg = Release|Any CPU
+		{D24802E0-33CF-4EC1-86CF-63C996072774}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{607C591B-D677-495A-A6F9-DB4D7C0F0AA7} = {B0CA7AF7-342E-4BAB-92E0-0157E0E7FEB8}
 		{3E866755-CC2B-4D68-8CE6-24330BA308CD} = {B0CA7AF7-342E-4BAB-92E0-0157E0E7FEB8}
 		{64B36FA7-A1BA-4325-9174-B2A9A308F39A} = {B0CA7AF7-342E-4BAB-92E0-0157E0E7FEB8}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D4DD27F9-D799-4F3D-8A10-406737478BFA}
 	EndGlobalSection
 EndGlobal
