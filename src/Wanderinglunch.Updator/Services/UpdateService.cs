@@ -37,15 +37,13 @@ namespace Wanderinglunch.Updator.Services
             {
                 var tweets = twitterService.GetTweets(truck.TwitName);
 
-                var saveTweetsTask = SaveTweets(truck.TwitName, tweets);
+                SaveTweets(truck, tweets);
 
-                if (await SearchTweets(tweets))
+                if (await SearchTweets(truck, tweets))
                 {
                     truck.LastUpdate = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
                     await lunchContext.TruckRepo.UpdateAsync(truck);
                 }
-
-                await saveTweetsTask;
             }
         }
 
@@ -53,9 +51,9 @@ namespace Wanderinglunch.Updator.Services
         /// Save tweets to the database
         /// </summary>
         /// <returns></returns>
-        private Task SaveTweets(string id, IEnumerable<ITweet> tweets)
+        private void SaveTweets(Truck truck, IEnumerable<ITweet> tweets)
         {
-            return Task.WhenAll(tweets.Select(tweet =>
+            foreach (var tweet in tweets)
             {
                 // Ignore failed inserts they're duplicates
                 try
@@ -66,27 +64,33 @@ namespace Wanderinglunch.Updator.Services
                     text = text.Replace("#", "", StringComparison.InvariantCultureIgnoreCase);
                     text = text.Replace("\"", "", StringComparison.InvariantCultureIgnoreCase);
 
-                    return lunchContext.TweetRepo.CreateAsync(new Tweet
+                    lunchContext.TweetRepo.Create(new Tweet
                     {
                         Text = text,
                         Time = tweet.CreatedAt.GetEpochSeconds(),
                         Id = tweet.IdStr,
-                        TruckId = id,
+                        TruckId = truck.TwitName,
                     });
                 }
                 catch
                 {
                 }
+            }
 
-                return null;
-            }));
+            logger.LogDebug($"Finished saving {truck.TwitName} tweets");
         }
 
-        private List<Location> FindLocations(string text)
+        /// <summary>
+        /// Find all locations in a tweet. This is after substitutions.
+        /// </summary>
+        /// <param name="site">The site where the truck is.</param>
+        /// <param name="text">The tweet text to search</param>
+        /// <returns>A list of found locations</returns>
+        private List<Location> FindLocations(string site, string text)
         {
             var found = new List<Location>();
 
-            foreach (var location in locations)
+            foreach (var location in locations.Where(l => l.Site == site))
             {
                 var regex = new Regex(location.Matcher);
                 var match = regex.Match(text);
@@ -104,8 +108,9 @@ namespace Wanderinglunch.Updator.Services
         /// </summary>
         /// <param name="tweets"></param>
         /// <returns></returns>
-        private async Task<bool> SearchTweets(IEnumerable<ITweet> tweets)
+        private async Task<bool> SearchTweets(Truck truck, IEnumerable<ITweet> tweets)
         {
+            logger.LogDebug($"Searching for locations for {truck.TwitName}");
             var foundLocations = false;
 
             foreach (var tweet in tweets)
@@ -115,15 +120,15 @@ namespace Wanderinglunch.Updator.Services
                     var text = MakeSubstitutions(tweet.FullText);
                     if (!HasSkipWords(text))
                     {
-                        var locations = FindLocations(text);
+                        var locations = FindLocations(truck.Site, text);
                         if (locations.Any())
                         {
-                            logger.LogDebug($"Locations found {tweets.FirstOrDefault().CreatedBy.ScreenName}");
+                            logger.LogDebug($"Locations found {truck.TwitName}");
                             await Task.WhenAll(locations.Select(l =>
                             {
                                 return lunchContext.SpotRepo.CreateAsync(new Spot
                                 {
-                                    TruckId = tweets.FirstOrDefault().CreatedBy.ScreenName.ToLower(),
+                                    TruckId = truck.TwitName,
                                     LocationId = l.Id,
                                     TweetId = tweet.IdStr
                                 });

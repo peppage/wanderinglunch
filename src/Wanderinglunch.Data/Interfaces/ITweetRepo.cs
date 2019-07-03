@@ -7,5 +7,6 @@ namespace Wanderinglunch.Data.Interfaces
     public interface ITweetRepo
     {
         Task<object> CreateAsync(Tweet tweet);
+        object Create(Tweet tweet);
     }
 }
