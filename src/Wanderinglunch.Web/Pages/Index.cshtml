@@ -1,0 +1,21 @@
+﻿@page "{site}"
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+    ViewData["Site"] = Model.Site;
+}
+
+@foreach (var zone in Model.Zones)
+{
+    <div class="zone">
+        <div class="zone__header">
+            <h1>@zone</h1>
+        </div>
+    </div>
+    <div class="zone__trucks">
+        @foreach (var truck in Model.GetTrucks(zone))
+        {
+            @Html.Partial("_SpotLinePartial", truck)
+        }
+    </div>
+}

@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/src/Wanderinglunch.Updator/Wanderinglunch.Updator.csproj"
+                "${workspaceFolder}/src/Wanderinglunch.Web/Wanderinglunch.Web.csproj"
             ],
             "problemMatcher": "$tsc"
         },
@@ -17,7 +17,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/src/Wanderinglunch.Updator/Wanderinglunch.Updator.csproj"
+                "${workspaceFolder}/src/Wanderinglunch.Web/Wanderinglunch.Web.csproj"
             ],
             "problemMatcher": "$tsc"
         },
@@ -28,7 +28,7 @@
             "args": [
                 "watch",
                 "run",
-                "${workspaceFolder}/src/Wanderinglunch.Updator/Wanderinglunch.Updator.csproj"
+                "${workspaceFolder}/src/Wanderinglunch.Web/Wanderinglunch.Web.csproj"
             ],
             "problemMatcher": "$tsc"
         }
