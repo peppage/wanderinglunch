@@ -32,7 +32,13 @@ namespace Wanderinglunch.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc()
+                .AddRazorPagesOptions(options =>
+                {
+                    options.Conventions.AddPageRoute("/alltrucks", "/{site}/alltrucks");
+
+                })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddSingleton<ILunchContext>(new LunchContext(Configuration.GetValue<string>("ConnectionString")));
         }
 

@@ -20,6 +20,11 @@ namespace Wanderinglunch.Data.Repositories
             return db.FetchAsync<Truck>("WHERE archive = @0", archived);
         }
 
+        public Task<List<Truck>> AllAsync(string site, bool archived = false)
+        {
+            return db.FetchAsync<Truck>("WHERE archive = @0 and site = @1", archived, site);
+        }
+
         public Task<int> UpdateAsync(Truck truck) => db.UpdateAsync(truck);
     }
 }

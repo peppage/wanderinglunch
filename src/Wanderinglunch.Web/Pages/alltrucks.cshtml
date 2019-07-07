@@ -1,0 +1,17 @@
+﻿@page "{site}"
+@model AllTrucksModel
+@{
+    ViewData["Title"] = "Home page";
+    ViewData["Site"] = Model.Site;
+}
+
+@foreach (var truck in Model.Trucks)
+{
+    <div class="truck">
+        <div class="truck__name">
+            <a href="/truck/@truck.TwitName">
+            @truck.Name
+            </a>
+        </div>
+    </div>
+}
