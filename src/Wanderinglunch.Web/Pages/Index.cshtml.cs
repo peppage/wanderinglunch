@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Wanderinglunch.Data;
 using Wanderinglunch.Data.Models;
@@ -19,11 +20,17 @@ namespace Wanderinglunch.Web.Pages
             this.lunchContext = lunchContext;
         }
 
-        public void OnGet(string site)
+        public IActionResult OnGet(string site)
         {
+            if (string.IsNullOrEmpty(site))
+            {
+                return Redirect("/nyc");
+            }
+
             Site = site;
             Trucks = lunchContext.SpotRepo.Get(site);
             Zones = Trucks.Select(t => t.Location.Zone).Distinct();
+            return Page();
         }
 
         public IOrderedEnumerable<FullSpot> GetTrucks(string zone)

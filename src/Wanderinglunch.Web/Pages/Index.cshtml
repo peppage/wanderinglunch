@@ -1,4 +1,4 @@
-﻿@page "{site}"
+﻿@page "{site?}"
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
@@ -10,7 +10,9 @@
     <p>If it's late, bookmark the site and come back around lunchtime! <br></p>
     <p>There will be a list of trucks here, <a target="_blank" href="https://twitter.com/intent/tweet?text=Wandering Lunch&url=http://wanderinglunch.comnyc">tweet</a> at yourself so you don't forget.<br></p>
     <p>Check out <a href="nyc/alltrucks">a list of all the trucks</a> on the site while you wait.</p>
-} else {
+}
+else
+{
     @foreach (var zone in Model.Zones)
     {
         <div class="zone">
