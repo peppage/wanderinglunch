@@ -11,7 +11,7 @@ namespace Wanderinglunch.Web.Pages
     {
         public string Site { get; set; }
         private readonly ILunchContext lunchContext;
-        public List<Truck> Trucks { get; set; }
+        public IEnumerable<Truck> Trucks { get; set; }
 
         public AllTrucksModel(ILunchContext lunchContext)
         {
@@ -22,6 +22,7 @@ namespace Wanderinglunch.Web.Pages
         {
             Site = site;
             Trucks = await lunchContext.TruckRepo.AllAsync(site, false);
+            Trucks = Trucks.OrderBy(t => t.Name);
         }
     }
 }
