@@ -14,7 +14,7 @@
 @if(Model.Images.Count() > 0)
 {
     <div class="foursquareImage">
-            <img src="/static/images/foursquare.png" >
+            <img src="/images/foursquare.png" >
         </div>
         <div class="gallery" itemscope itemtype="http://schema.org/ImageGallery">
             @foreach(var image in Model.Images)
@@ -49,7 +49,7 @@
             <li class="tweetList__tweet">
                 <p>
                     <a href="http://twitter.com/@Model.Truck.Name/status/@tweet.Id" target="_blank">
-                        <img src="/static/images/twitter.png" style="height: 20px;">
+                        <img src="/images/twitter.png" style="height: 20px;">
                     </a>
                     @tweet.Text
                 </p>
