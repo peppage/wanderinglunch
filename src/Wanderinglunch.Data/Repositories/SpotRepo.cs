@@ -28,7 +28,7 @@ namespace Wanderinglunch.Data.Repositories
             // Well I made a mistake my add this extension to logic and now I can't
             // use it here.
             var time = DateTime.UtcNow.AddHours(hours * -1) - new DateTime(1970, 1, 1);
-            return db.Fetch<FullSpot, Truck, Tweet, Location, Image>(SpotQueries.NewSpots, (int)time.TotalSeconds, site);
+            return db.Fetch<FullSpot, Truck, Location, Tweet, Image>(SpotQueries.NewSpots, (int)time.TotalSeconds, site);
         }
     }
 }

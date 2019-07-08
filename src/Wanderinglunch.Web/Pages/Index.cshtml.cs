@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -33,10 +34,25 @@ namespace Wanderinglunch.Web.Pages
             return Page();
         }
 
-        public IOrderedEnumerable<FullSpot> GetTrucks(string zone)
+        public IEnumerable<FullSpot> GetTrucks(string zone)
         {
-            var trucks = Trucks.Where(t => t.Location.Zone == zone);
+            var trucks = Trucks.Where(t => t.Location.Zone == zone).Distinct(new SpotComparer());
             return trucks.OrderByDescending(t => t.Location.Lat);
+        }
+    }
+
+    class SpotComparer : IEqualityComparer<FullSpot>
+    {
+        public bool Equals(FullSpot x, FullSpot y)
+        {
+            return x.Truck.TwitName == y.Truck.TwitName
+            && x.Location.Id == y.Location.Id;
+        }
+
+        public int GetHashCode(FullSpot obj)
+        {
+            return obj.Truck.TwitName.GetHashCode() ^
+                obj.Location.Id.GetHashCode();
         }
     }
 }
