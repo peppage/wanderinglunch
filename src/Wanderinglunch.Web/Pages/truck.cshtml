@@ -1,0 +1,60 @@
+﻿@page "{id}"
+@model TruckModel
+@{
+    ViewData["Title"] = Model.Truck.Name;
+    ViewData["Site"] = Model.Truck.Site;
+}
+
+<h1>
+    @Model.Truck.Name
+</h1>
+<h2>
+    @Model.Truck.Type
+</h2>
+@if(Model.Images.Count() > 0)
+{
+    <div class="foursquareImage">
+            <img src="/static/images/foursquare.png" >
+        </div>
+        <div class="gallery" itemscope itemtype="http://schema.org/ImageGallery">
+            @foreach(var image in Model.Images)
+            {
+                <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                    <a href="@($"https://irs0.4sqi.net/img/general/900x900{image.Suffix}")" itemprop="contentUrl" data-size="900x900">
+                        <img src="@($"https://irs0.4sqi.net/img/general/200x200{image.Suffix}")" itemprop="thumbnail" />
+                    </a>
+                </figure>
+            }
+        </div>
+}
+
+<h3>@Model.Truck.Name Links</h3>
+@if(!string.IsNullOrEmpty(Model.Truck.WebURL))
+{
+    <a href="@Model.Truck.WebURL" target="_blank">Website</a><br>
+}
+<a href="https://twitter.com/@Model.Truck.TwitName" target="_blank">Twitter</a><br>
+@if(!string.IsNullOrEmpty(Model.Truck.Foursquare))
+{
+    <a href="https://foursquare.com/v/@Model.Truck.Foursquare?ref=P1JDYDE13QQDC11VUSA4LV3VV25OTRPHV1WAV5WP3VCE0QUP"
+        target="_blank">Foursquare</a><br>
+}
+
+@if(Model.Tweets.Count() > 0)
+{
+    <h3>@Model.Truck.Name Tweets</h3>
+    <ol class="tweetList">
+        @foreach(var tweet in Model.Tweets.Take(5))
+        {
+            <li class="tweetList__tweet">
+                <p>
+                    <a href="http://twitter.com/@Model.Truck.Name/status/@tweet.Id" target="_blank">
+                        <img src="/static/images/twitter.png" style="height: 20px;">
+                    </a>
+                    @tweet.Text
+                </p>
+                <span class="tweet__time">@tweet.Time
+            </li>
+        }
+    </ol>
+}

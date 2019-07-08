@@ -8,5 +8,6 @@ namespace Wanderinglunch.Data.Interfaces
     {
         Task<object> CreateAsync(Tweet tweet);
         object Create(Tweet tweet);
+        Task<List<Tweet>> GetByIdAsync(string id);
     }
 }

@@ -15,14 +15,10 @@ namespace Wanderinglunch.Data.Repositories
             this.db = db;
         }
 
-        public object Create(Tweet tweet)
-        {
-            return db.Insert(tweet);
-        }
+        public object Create(Tweet tweet) => db.Insert(tweet);
 
-        public Task<object> CreateAsync(Tweet tweet)
-        {
-            return db.InsertAsync(tweet);
-        }
+        public Task<object> CreateAsync(Tweet tweet) => db.InsertAsync(tweet);
+
+        public Task<List<Tweet>> GetByIdAsync(string id) => db.FetchAsync<Tweet>("WHERE truck_id = @0", id);
     }
 }

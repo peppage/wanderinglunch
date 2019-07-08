@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Site"] Food Truck Finder | @ViewData["Title"]</title>
+    <title>@(((string) ViewData["Site"]).ToUpper()) Food Truck Finder | @ViewData["Title"]</title>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
 </head>
 <body>

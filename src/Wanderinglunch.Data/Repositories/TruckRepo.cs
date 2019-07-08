@@ -1,8 +1,10 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using PetaPoco;
 using Wanderinglunch.Data.Interfaces;
 using Wanderinglunch.Data.Models;
+using Wanderinglunch.Data.Queries;
 
 namespace Wanderinglunch.Data.Repositories
 {
@@ -24,6 +26,8 @@ namespace Wanderinglunch.Data.Repositories
         {
             return db.FetchAsync<Truck>("WHERE archive = @0 and site = @1", archived, site);
         }
+
+        public Task<Truck> GetByIdAsync(string id) => db.SingleOrDefaultAsync<Truck>("WHERE twit_name = @0", id);
 
         public Task<int> UpdateAsync(Truck truck) => db.UpdateAsync(truck);
     }

@@ -9,5 +9,6 @@ namespace Wanderinglunch.Data.Interfaces
         Task<List<Truck>> AllAsync(bool archived = false);
         Task<List<Truck>> AllAsync(string site, bool archived = false);
         Task<int> UpdateAsync(Truck truck);
+        Task<Truck> GetByIdAsync(string id);
     }
 }

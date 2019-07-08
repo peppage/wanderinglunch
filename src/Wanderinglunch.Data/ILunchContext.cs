@@ -10,5 +10,6 @@ namespace Wanderinglunch.Data
         ISubRepo SubRepo { get; }
         ILocationRepo LocationRepo { get; }
         ISpotRepo SpotRepo { get; }
+        IImageRepo ImageRepo { get; }
     }
 }
