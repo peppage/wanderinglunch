@@ -11,7 +11,7 @@
         @Model.Truck.LastUpdate
     </div>
     <div class="truck__image">
-        @if(Model.Image != null)
+        @if(Model.Image != null && !string.IsNullOrEmpty(Model.Image.Suffix))
         {
             <img src="@($"https://irs0.4sqi.net/img/general/width30{Model.Image.Suffix}")" alt="@Model.Truck.Name Menu">
         }
