@@ -23,7 +23,25 @@ else
         <div class="zone__trucks">
             @foreach (var truck in Model.GetTrucks(zone))
             {
-                @Html.Partial("_SpotLinePartial", truck)
+                <div class="truck">
+                    <div class="truck__name">
+                        <a href="/truck/@truck.Truck.TwitName">
+                        @truck.Truck.Name
+                        </a>
+                    </div>
+                    <div class="truck__location">
+                        @truck.Location.Display
+                    </div>
+                    <div>
+                        @Model.RelativeTime(truck.Truck.LastUpdate)
+                    </div>
+                    <div class="truck__image">
+                        @if(truck.Image != null && !string.IsNullOrEmpty(truck.Image.Suffix))
+                        {
+                            <img src="@($"https://irs0.4sqi.net/img/general/width30{truck.Image.Suffix}")" alt="@truck.Truck.Name Menu">
+                        }
+                    </div>
+                </div>
             }
         </div>
     }
