@@ -1,0 +1,32 @@
+﻿@page
+@model AdminIndexModel
+@{
+    ViewData["Title"] = "Admin Queue";
+    ViewData["Site"] = "";
+}
+
+
+    <table>
+        <thead>
+            <tr>
+                <th>Text</th>
+                <th>Locations</th>
+                <th></th>
+            </tr>
+        </thead>
+        @foreach (var tweet in Model.Tweets)
+        {
+            <tr>
+                <td>
+                    @tweet.Text
+                </td>
+                <td>
+                    @foreach(var loc in Model.FindLocations(tweet.Text))
+                    {
+                        @loc.Display
+                        <br>
+                    }
+                </td>
+            </tr>
+        }
+    </table>

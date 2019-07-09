@@ -7,5 +7,6 @@ namespace Wanderinglunch.Data.Interfaces
     public interface ISubRepo
     {
         List<Sub> All();
+        Task<List<Sub>> AllAsync();
     }
 }

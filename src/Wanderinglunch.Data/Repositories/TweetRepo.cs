@@ -20,5 +20,7 @@ namespace Wanderinglunch.Data.Repositories
         public Task<object> CreateAsync(Tweet tweet) => db.InsertAsync(tweet);
 
         public Task<List<Tweet>> GetByIdAsync(string id) => db.FetchAsync<Tweet>("WHERE truck_id = @0 ORDER BY time DESC", id);
+
+        public Task<List<Tweet>> GetRecentAsync(int amount = 35) => db.FetchAsync<Tweet>("ORDER BY time DESC LIMIT @0", amount);
     }
 }

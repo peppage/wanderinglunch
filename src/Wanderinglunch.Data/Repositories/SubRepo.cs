@@ -15,9 +15,8 @@ namespace Wanderinglunch.Data.Repositories
             this.db = db;
         }
 
-        public List<Sub> All()
-        {
-            return db.Fetch<Sub>();
-        }
+        public List<Sub> All() => db.Fetch<Sub>();
+
+        public Task<List<Sub>> AllAsync() => db.FetchAsync<Sub>();
     }
 }
