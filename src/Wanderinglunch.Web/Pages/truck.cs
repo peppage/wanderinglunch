@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -25,6 +26,12 @@ namespace Wanderinglunch.Web.Pages
             Tweets = await lunchContext.TweetRepo.GetByIdAsync(id);
             Images = await lunchContext.ImageRepo.ByTruckIdAsync(id);
             return Page();
+        }
+
+        public string FormatTime(long epoch)
+        {
+            var dto = DateTimeOffset.FromUnixTimeSeconds(epoch).ToLocalTime();
+            return dto.ToString("ddd MMM d, yyyy hh:mm tt");
         }
     }
 }

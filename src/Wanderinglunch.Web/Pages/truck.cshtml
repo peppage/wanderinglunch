@@ -52,7 +52,9 @@
                         <img src="/images/twitter.png" style="height: 20px;"></a>
                     @tweet.Text
                 </p>
-                <span class="tweet__time">@tweet.Time
+                <span class="tweet__time">
+                    @Model.FormatTime(tweet.Time)
+                </span>
             </li>
         }
     </ol>
