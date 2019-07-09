@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -37,8 +38,17 @@ namespace Wanderinglunch.Web
                 {
                     options.Conventions.AddPageRoute("/alltrucks", "/{site}/alltrucks");
                     options.Conventions.AddPageRoute("/map", "/{site}/map");
+
+                    options.Conventions.AuthorizeFolder("/admin");
                 })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie(options =>
+            {
+                options.LoginPath = new PathString("/login");
+            });
+
             services.AddSingleton<ILunchContext>(new LunchContext(Configuration.GetValue<string>("ConnectionString")));
         }
 
@@ -59,6 +69,7 @@ namespace Wanderinglunch.Web
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseAuthentication();
 
             app.UseMvc();
         }

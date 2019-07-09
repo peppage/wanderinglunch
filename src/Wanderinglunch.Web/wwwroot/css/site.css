@@ -145,8 +145,7 @@ label {
 	font-weight: 700;
 }
 
-input[type='text'],
-input[type='password'],
+input,
 textarea,
 select {
 	border-radius: 3px;
