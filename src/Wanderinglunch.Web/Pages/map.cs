@@ -8,13 +8,16 @@ using Wanderinglunch.Data.Models;
 
 namespace Wanderinglunch.Web.Pages
 {
-    public class AllTrucksModel : PageModel
+    public class MapModel : PageModel
     {
         public string Site { get; set; }
-        private readonly ILunchContext lunchContext;
-        public IEnumerable<Truck> Trucks { get; set; }
+        public float Lat { get; set; }
+        public float Long { get; set; }
+        public IEnumerable<FullSpot> Trucks { get; set; }
 
-        public AllTrucksModel(ILunchContext lunchContext)
+        private readonly ILunchContext lunchContext;
+
+        public MapModel(ILunchContext lunchContext)
         {
             this.lunchContext = lunchContext;
         }
@@ -22,8 +25,13 @@ namespace Wanderinglunch.Web.Pages
         public async Task<IActionResult> OnGetAsync(string site)
         {
             Site = site;
-            Trucks = await lunchContext.TruckRepo.AllAsync(site, false);
-            Trucks = Trucks.OrderBy(t => t.Name);
+
+            var fullSite = await lunchContext.SiteRepo.GetByNameAsync(Site);
+            Lat = fullSite.Lat;
+            Long = fullSite.Long;
+
+            Trucks = lunchContext.SpotRepo.Get(site).Distinct(new SpotComparer());
+
             return Page();
         }
     }

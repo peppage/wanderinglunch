@@ -23,6 +23,8 @@ namespace Wanderinglunch.Data
 
         public IImageRepo ImageRepo { get; private set; }
 
+        public ISiteRepo SiteRepo { get; private set; }
+
         public LunchContext(string connectionString)
         {
             db = DatabaseConfiguration.Build()
@@ -41,6 +43,7 @@ namespace Wanderinglunch.Data
             LocationRepo = new LocationRepo(db);
             SpotRepo = new SpotRepo(db);
             ImageRepo = new ImageRepo(db);
+            SiteRepo = new SiteRepo(db);
         }
 
     }

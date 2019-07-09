@@ -36,6 +36,7 @@ namespace Wanderinglunch.Web
                 .AddRazorPagesOptions(options =>
                 {
                     options.Conventions.AddPageRoute("/alltrucks", "/{site}/alltrucks");
+                    options.Conventions.AddPageRoute("/map", "/{site}/map");
                 })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddSingleton<ILunchContext>(new LunchContext(Configuration.GetValue<string>("ConnectionString")));
