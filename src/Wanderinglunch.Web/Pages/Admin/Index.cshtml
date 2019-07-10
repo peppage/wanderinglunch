@@ -4,29 +4,35 @@
     ViewData["Title"] = "Admin Queue";
     ViewData["Site"] = "";
 }
+<h1>Admin Queue</h1>
 
-
-    <table>
-        <thead>
-            <tr>
-                <th>Text</th>
-                <th>Locations</th>
-                <th></th>
-            </tr>
-        </thead>
-        @foreach (var tweet in Model.Tweets)
-        {
-            <tr>
-                <td>
-                    @tweet.Text
-                </td>
-                <td>
-                    @foreach(var loc in Model.FindLocations(tweet.Text))
-                    {
-                        @loc.Display
-                        <br>
-                    }
-                </td>
-            </tr>
-        }
-    </table>
+<table>
+    <thead>
+        <tr>
+            <th>Text</th>
+            <th>Locations</th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var tweet in Model.Tweets)
+    {
+        <tr>
+            <td>
+                @tweet.Text
+                <br>
+                <a href="@($"https://twitter.com/{tweet.TruckId}")">@tweet.TruckId</a>
+                <a href="@($"https://twitter.com/{tweet.TruckId}/status/{tweet.Id}")">@Model.FormatTime(tweet.Time)</a>
+            </td>
+            <td>
+                @foreach(var loc in Model.FindLocations(tweet.Text))
+                {
+                    @loc.Display
+                    <br>
+                }
+            </td>
+            <td>
+                <button>Done</button>
+            </td>
+        </tr>
+    }
+</table>

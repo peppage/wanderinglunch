@@ -21,6 +21,21 @@ namespace Wanderinglunch.Data.Repositories
 
         public Task<List<Tweet>> GetByIdAsync(string id) => db.FetchAsync<Tweet>("WHERE truck_id = @0 ORDER BY time DESC", id);
 
-        public Task<List<Tweet>> GetRecentAsync(int amount = 35) => db.FetchAsync<Tweet>("ORDER BY time DESC LIMIT @0", amount);
+        public Task<List<Tweet>> GetRecentAsync(string site, bool includeNotDone = false, int amount = 35)
+        {
+            var sql = PetaPoco.Sql.Builder
+                .Append("SELECT * FROM tweets")
+                .Append("LEFT JOIN trucks ON tweets.truck_id = trucks.twit_name")
+                .Append("WHERE site = @0", site);
+
+            if (!includeNotDone)
+            {
+                sql.Append("AND done = @0", false);
+            }
+
+            sql.Append("ORDER BY time DESC LIMIT @0", amount);
+
+            return db.FetchAsync<Tweet>(sql);
+        }
     }
 }

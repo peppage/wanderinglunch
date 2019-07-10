@@ -23,7 +23,7 @@ namespace Wanderinglunch.Web.Pages
         }
         public async Task OnGetAsync()
         {
-            Tweets = await lunchContext.TweetRepo.GetRecentAsync();
+            Tweets = await lunchContext.TweetRepo.GetRecentAsync("nyc");
             var subs = await lunchContext.SubRepo.AllAsync();
 
             foreach (var tweet in Tweets)
@@ -37,6 +37,12 @@ namespace Wanderinglunch.Web.Pages
         public List<Location> FindLocations(string text)
         {
             return Locations.FindLocations(LocationList, "nyc", text);
+        }
+
+        public string FormatTime(long epoch)
+        {
+            var dto = DateTimeOffset.FromUnixTimeSeconds(epoch).ToLocalTime();
+            return dto.ToString("M/d/yy hh:mm tt");
         }
     }
 }
