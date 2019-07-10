@@ -10,8 +10,25 @@
     <div class="truck">
         <div class="truck__name">
             <a href="/truck/@truck.TwitName">
-            @truck.Name
+                @truck.Name
             </a>
+        </div>
+        <div>
+            @if(truck.Archive)
+            {
+                <span>Archived</span>
+            }
+            else
+            {
+                @Model.RelativeTime(truck.LastUpdate)
+            }
+        </div>
+        <div class="truck__image">
+            @if(Model.Menus.Where(m => m.TruckId == truck.TwitName).Count() > 0)
+            {
+                <img src="@($"https://irs0.4sqi.net/img/general/width30{Model.Menus.Single(m => m.TruckId == truck.TwitName).Suffix}")"\
+                    alt="@truck.Name Menu">
+            }
         </div>
     </div>
 }

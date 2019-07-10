@@ -15,9 +15,8 @@ namespace Wanderinglunch.Data.Repositories
             this.db = db;
         }
 
-        public Task<List<Image>> ByTruckIdAsync(string truckId)
-        {
-            return db.FetchAsync<Image>("WHERE truck_id = @0", truckId);
-        }
+        public Task<List<Image>> ByTruckIdAsync(string truckId) => db.FetchAsync<Image>("WHERE truck_id = @0", truckId);
+
+        public Task<List<Image>> GetMenusAsync() => db.FetchAsync<Image>("WHERE menu = @0", true);
     }
 }

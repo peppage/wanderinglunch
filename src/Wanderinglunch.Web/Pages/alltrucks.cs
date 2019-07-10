@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Wanderinglunch.Data;
 using Wanderinglunch.Data.Models;
+using Wanderinglunch.Logic;
 
 namespace Wanderinglunch.Web.Pages
 {
@@ -13,6 +14,7 @@ namespace Wanderinglunch.Web.Pages
         public string Site { get; set; }
         private readonly ILunchContext lunchContext;
         public IEnumerable<Truck> Trucks { get; set; }
+        public IEnumerable<Image> Menus { get; set; }
 
         public AllTrucksModel(ILunchContext lunchContext)
         {
@@ -24,7 +26,15 @@ namespace Wanderinglunch.Web.Pages
             Site = site;
             Trucks = await lunchContext.TruckRepo.AllAsync(site, false);
             Trucks = Trucks.OrderBy(t => t.Name);
+
+            Menus = await lunchContext.ImageRepo.GetMenusAsync();
+
             return Page();
+        }
+
+        public string RelativeTime(long epoch)
+        {
+            return Time.RelativeTime(epoch);
         }
     }
 }

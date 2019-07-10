@@ -6,5 +6,6 @@ namespace Wanderinglunch.Data.Models
         public string Suffix { get; set; }
         public string Visibility { get; set; }
         public bool Menu { get; set; }
+        public string TruckId { get; set; }
     }
 }
