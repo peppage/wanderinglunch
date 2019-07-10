@@ -15,11 +15,13 @@ namespace Wanderinglunch.Data.Repositories
             this.db = db;
         }
 
-        public object Create(Tweet tweet) => db.Insert(tweet);
+        public void Create(Tweet tweet) => db.Save(tweet);
 
-        public Task<object> CreateAsync(Tweet tweet) => db.InsertAsync(tweet);
+        public Task SaveAsync(Tweet tweet) => db.SaveAsync(tweet);
 
-        public Task<List<Tweet>> GetByIdAsync(string id) => db.FetchAsync<Tweet>("WHERE truck_id = @0 ORDER BY time DESC", id);
+        public Task<Tweet> GetById(string id) => db.SingleOrDefaultAsync<Tweet>("WHERE id = @0", id);
+
+        public Task<List<Tweet>> GetByTruckIdAsync(string id) => db.FetchAsync<Tweet>("WHERE truck_id = @0 ORDER BY time DESC", id);
 
         public Task<List<Tweet>> GetRecentAsync(string site, bool includeNotDone = false, int amount = 35)
         {

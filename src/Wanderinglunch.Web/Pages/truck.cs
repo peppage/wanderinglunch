@@ -23,7 +23,7 @@ namespace Wanderinglunch.Web.Pages
         public async Task<IActionResult> OnGetAsync(string id)
         {
             Truck = await lunchContext.TruckRepo.GetByIdAsync(id);
-            Tweets = await lunchContext.TweetRepo.GetByIdAsync(id);
+            Tweets = await lunchContext.TweetRepo.GetByTruckIdAsync(id);
             Images = await lunchContext.ImageRepo.ByTruckIdAsync(id);
             return Page();
         }

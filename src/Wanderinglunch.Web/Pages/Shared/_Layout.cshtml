@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@(((string) ViewData["Site"]).ToUpper()) Food Truck Finder | @ViewData["Title"]</title>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/bundle.css" asp-append-version="true"/>
     <link rel="icon" type="image/x-icon" href="@Url.Content("~/images/favicon.ico")" />
 </head>
 <body>
@@ -72,6 +73,7 @@
         </script>
     </environment>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/bundle.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>
