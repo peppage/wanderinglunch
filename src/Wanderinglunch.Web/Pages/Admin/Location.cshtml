@@ -1,0 +1,49 @@
+﻿@page "{id?}"
+@model LocationModel
+@{
+    ViewData["Title"] = $"Location {Model.Location?.Display ?? ""}";
+}
+
+<p>
+    <a href="https://regex101.com">Regex101</a><br>
+    @if(Model.Location == null || Model.Location.Lat == 0)
+    {
+        <a href="https://maps.google.com/">Google Maps</a>
+    }
+    else
+    {
+        <a href="https://maps.google.com/?q=@Model.Location.Lat,@Model.Location.Long">Show coords</a>
+    }
+</p>
+
+<form method="post">
+    <input asp-for="Location.Id" type="hidden" />
+    <div class="form-field">
+        <label asp-for="Location.Display"></label>
+        <input asp-for="Location.Display" />
+    </div>
+    <div class="form-field">
+        <label asp-for="Location.Matcher"></label>
+        <input asp-for="Location.Matcher" />
+    </div>
+    <div class="form-field">
+        <label asp-for="Location.Lat"></label>
+        <input asp-for="Location.Lat" />
+    </div>
+    <div class="form-field">
+        <label asp-for="Location.Long"></label>
+        <input asp-for="Location.Long" />
+    </div>
+    <div class="form-field">
+        <label asp-for="Location.Zone"></label>
+        <input asp-for="Location.Zone" />
+    </div>
+    <div class="form-field">
+        <label asp-for="Location.Site"></label>
+        <input asp-for="Location.Site" />
+    </div>
+
+    <div class="form-buttons">
+        <button type="submit">Save</button>
+    </div>
+</form>

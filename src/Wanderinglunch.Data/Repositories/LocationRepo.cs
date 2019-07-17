@@ -15,14 +15,14 @@ namespace Wanderinglunch.Data.Repositories
             this.db = db;
         }
 
-        public List<Location> All()
-        {
-            return db.Fetch<Location>();
-        }
+        public List<Location> All() => db.Fetch<Location>();
 
-        public Task<List<Location>> AllAsync(string site)
-        {
-            return db.FetchAsync<Location>("WHERE site = @0", site);
-        }
+        public Task<List<Location>> AllAsync(string site) => db.FetchAsync<Location>("WHERE site = @0", site);
+
+        public Task<object> CreateLocationAsync(Location location) => db.InsertAsync(location);
+
+        public Task<Location> GetById(int id) => db.SingleOrDefaultAsync<Location>("WHERE id = @0", id);
+
+        public Task<int> SaveLocationAsync(Location location) => db.UpdateAsync(location);
     }
 }
