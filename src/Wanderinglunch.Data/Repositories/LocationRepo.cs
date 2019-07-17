@@ -19,5 +19,10 @@ namespace Wanderinglunch.Data.Repositories
         {
             return db.Fetch<Location>();
         }
+
+        public Task<List<Location>> AllAsync(string site)
+        {
+            return db.FetchAsync<Location>("WHERE site = @0", site);
+        }
     }
 }
