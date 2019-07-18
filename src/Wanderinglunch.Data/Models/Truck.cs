@@ -1,5 +1,8 @@
+using PetaPoco;
+
 namespace Wanderinglunch.Data.Models
 {
+    [PrimaryKey("twit_name")]
     public class Truck
     {
         public string Name { get; set; }

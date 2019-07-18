@@ -24,7 +24,7 @@ namespace Wanderinglunch.Web.Pages
         public async Task<IActionResult> OnGetAsync(string site)
         {
             Site = site;
-            Trucks = await lunchContext.TruckRepo.AllAsync(site, false);
+            Trucks = await lunchContext.TruckRepo.AllAsync(site, true);
             Trucks = Trucks.OrderBy(t => t.Name);
 
             Menus = await lunchContext.ImageRepo.GetMenusAsync();

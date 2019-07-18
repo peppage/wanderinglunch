@@ -158,6 +158,10 @@ select {
 	color: #333;
 }
 
+input[type='checkbox'] {
+	width: 0;
+}
+
 button {
 	padding-left: 1rem;
 	padding-right: 1rem;

@@ -22,10 +22,21 @@ namespace Wanderinglunch.Data.Repositories
             return db.FetchAsync<Truck>("WHERE archive = @0", archived);
         }
 
-        public Task<List<Truck>> AllAsync(string site, bool archived = false)
+        public Task<List<Truck>> AllAsync(string site, bool onlyUnarchived = true)
         {
-            return db.FetchAsync<Truck>("WHERE archive = @0 and site = @1", archived, site);
+            var sql = PetaPoco.Sql.Builder
+                .Append("SELECT * FROM trucks")
+                .Append("WHERE site = @0", site);
+
+            if (!onlyUnarchived)
+            {
+                sql.Append("AND archive = @0", false);
+            }
+
+            return db.FetchAsync<Truck>(sql);
         }
+
+        public Task<object> CreateAsync(Truck truck) => db.InsertAsync(truck);
 
         public Task<Truck> GetByIdAsync(string id) => db.SingleOrDefaultAsync<Truck>("WHERE twit_name = @0", id);
 
