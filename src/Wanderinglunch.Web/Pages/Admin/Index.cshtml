@@ -1,0 +1,10 @@
+﻿@page "{handler?}"
+@model AdminIndexModel
+@{
+    ViewData["Title"] = "Queue";
+}
+<h1>Admin Queue</h1>
+
+@Html.AntiForgeryToken()
+
+<div id="adminQueue"></div>

@@ -1,0 +1,18 @@
+﻿@page "{site}"
+@model MapModel
+
+@{
+    ViewData["Title"] = "Map of trucks";
+    ViewData["Site"] = Model.Site;
+}
+
+<div id="map" style="height:500px"></div>
+
+<script>
+    var trucks = @Json.Serialize(Model.Trucks);
+    var lat = @Model.Lat;
+    var long = @Model.Long;
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAN8Jk0062QBOMPmXH-Totg9zi1GCw3o3w&callback=initMap&v=3.26">
+</script>
+<script src="/js/map.js"></script>

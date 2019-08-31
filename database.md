@@ -72,3 +72,13 @@ alter table sites alter title SET default '';
 alter table sites alter title SET NOT NULL;
 alter table sites alter description SET default '';
 alter table sites alter description SET NOT NULL;
+
+# 6.0.0
+
+alter table trucks rename column twitname to twit_name;
+alter table trucks rename column weburl to web_url;
+alter table trucks rename column lastupdate to last_update;
+alter table tweets drop column retweeted;
+alter table trucks drop column locs;
+alter table trucks drop column tweet;
+alter table trucks drop column id;
