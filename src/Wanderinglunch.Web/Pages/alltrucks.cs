@@ -30,7 +30,7 @@ namespace Wanderinglunch.Web.Pages
             }
 
             Trucks = await lunchContext.TruckRepo.AllAsync(site, true);
-            Trucks = Trucks.OrderBy(t => t.Name);
+            Trucks = Trucks.OrderBy(t => t.Archive).ThenBy(t => t.Name);
 
             Menus = await lunchContext.ImageRepo.GetMenusAsync();
 
