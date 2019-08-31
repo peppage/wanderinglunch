@@ -25,6 +25,12 @@ namespace Wanderinglunch.Web.Pages
             Truck = await lunchContext.TruckRepo.GetByIdAsync(id);
             Tweets = await lunchContext.TweetRepo.GetByTruckIdAsync(id);
             Images = await lunchContext.ImageRepo.ByTruckIdAsync(id);
+
+            if (Truck == null)
+            {
+                return NotFound();
+            }
+
             return Page();
         }
 
