@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Rollbar;
 using Tweetinvi;
 using Tweetinvi.Models;
 using Tweetinvi.Parameters;
@@ -9,9 +11,7 @@ namespace Wanderinglunch.Updator.Services
 {
     public class TwitterService : ITwitterService
     {
-        private readonly ILogger logger;
-
-        public TwitterService(IConfigurationRoot config, ILogger<App> logger)
+        public TwitterService(IConfigurationRoot config)
         {
             var twitterConfig = config.GetSection("twitter");
             var consumerKey = twitterConfig.GetValue<string>("ConsumerKey");
@@ -22,11 +22,26 @@ namespace Wanderinglunch.Updator.Services
 
         public IEnumerable<ITweet> GetTweets(string id)
         {
-            var user = User.GetUserFromScreenName(id);
-            return user.GetUserTimeline(new UserTimelineParameters
+            try
             {
-                IncludeRTS = false,
-            });
+                var user = User.GetUserFromScreenName(id);
+                if (user == null)
+                {
+                    throw new KeyNotFoundException("404 twitter handle");
+                }
+
+                return user.GetUserTimeline(new UserTimelineParameters
+                {
+                    IncludeRTS = false,
+                });
+            }
+            catch (Exception e)
+            {
+                RollbarLocator.RollbarInstance.Error(e, new Dictionary<string, object>{
+                    {"truck id", id},
+                });
+                return new List<ITweet>();
+            }
         }
     }
 }
