@@ -36,12 +36,15 @@ namespace Wanderinglunch.Updator.Services
             {
                 var tweets = twitterService.GetTweets(truck.TwitName);
 
-                SaveTweets(truck, tweets);
-
-                if (await SearchTweets(truck, tweets))
+                if (tweets != null)
                 {
-                    truck.LastUpdate = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-                    await lunchContext.TruckRepo.UpdateAsync(truck);
+                    SaveTweets(truck, tweets);
+
+                    if (await SearchTweets(truck, tweets))
+                    {
+                        truck.LastUpdate = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+                        await lunchContext.TruckRepo.UpdateAsync(truck);
+                    }
                 }
             }
         }
