@@ -79,7 +79,7 @@ namespace Wanderinglunch.Web
             app.UseRollbarMiddleware();
             app.UseStatusCodePages();
             app.UseStatusCodePagesWithReExecute("/Status{0}");
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseAuthentication();
