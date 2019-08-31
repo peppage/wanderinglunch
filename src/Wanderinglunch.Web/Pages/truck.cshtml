@@ -19,11 +19,9 @@
         <div class="gallery" itemscope itemtype="http://schema.org/ImageGallery">
             @foreach(var image in Model.Images)
             {
-                <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-                    <a href="@($"https://irs0.4sqi.net/img/general/900x900{image.Suffix}")" itemprop="contentUrl" data-size="900x900">
-                        <img src="@($"https://irs0.4sqi.net/img/general/200x200{image.Suffix}")" itemprop="thumbnail" />
-                    </a>
-                </figure>
+                <a href="@($"https://irs0.4sqi.net/img/general/900x900{image.Suffix}")" class="lightbox">
+                    <img src="@($"https://irs0.4sqi.net/img/general/200x200{image.Suffix}")" />
+                </a>
             }
         </div>
 }
@@ -58,4 +56,13 @@
             </li>
         }
     </ol>
+}
+
+@section Scripts {
+    <script>
+        var tobi = new Tobi({
+            captions: false,
+            zoom: false,
+        })
+    </script>
 }

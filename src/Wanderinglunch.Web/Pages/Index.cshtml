@@ -5,7 +5,8 @@
     ViewData["Site"] = Model.Site;
 }
 
-@if(Model.Zones.Count()== 0) {
+@if(Model.Zones.Count()== 0)
+{
     <h1>Your hunger cannot be satisfied, no trucks are tweeting</h1>
     <p>If it's late, bookmark the site and come back around lunchtime! <br></p>
     <p>There will be a list of trucks here, <a target="_blank" href="https://twitter.com/intent/tweet?text=Wandering Lunch&url=http://wanderinglunch.comnyc">tweet</a> at yourself so you don't forget.<br></p>
@@ -38,11 +39,22 @@ else
                     <div class="truck__image">
                         @if(truck.Image != null && !string.IsNullOrEmpty(truck.Image.Suffix))
                         {
-                            <img src="@($"https://irs0.4sqi.net/img/general/width30{truck.Image.Suffix}")" alt="@truck.Truck.Name Menu">
+                            <a href="@($"https://irs0.4sqi.net/img/general/width900{truck.Image.Suffix}")" class="lightbox">
+                                <img src="@($"https://irs0.4sqi.net/img/general/width30{truck.Image.Suffix}")" alt="@truck.Truck.Name Menu">
+                            </a>
                         }
                     </div>
                 </div>
             }
         </div>
     }
+}
+
+@section Scripts {
+    <script>
+        var tobi = new Tobi({
+            captions: false,
+            zoom: false,
+        })
+    </script>
 }
