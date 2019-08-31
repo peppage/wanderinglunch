@@ -10,6 +10,9 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Rollbar;
+using Rollbar.NetCore.AspNet;
 using Wanderinglunch.Data;
 
 namespace Wanderinglunch.Web
@@ -26,6 +29,12 @@ namespace Wanderinglunch.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            ConfigureRollbarSingleton();
+            services.AddRollbarLogger(loggerOptions =>
+            {
+                loggerOptions.Filter = (loggerName, loglevel) => loglevel >= LogLevel.Trace;
+            });
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -49,6 +58,7 @@ namespace Wanderinglunch.Web
                 options.LoginPath = new PathString("/login");
             });
 
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<ILunchContext>(new LunchContext(Configuration.GetValue<string>("ConnectionString")));
         }
 
@@ -66,6 +76,7 @@ namespace Wanderinglunch.Web
                 app.UseHsts();
             }
 
+            app.UseRollbarMiddleware();
             app.UseStatusCodePages();
             app.UseStatusCodePagesWithReExecute("/Status{0}");
             app.UseHttpsRedirection();
@@ -74,6 +85,16 @@ namespace Wanderinglunch.Web
             app.UseAuthentication();
 
             app.UseMvc();
+        }
+
+        private void ConfigureRollbarSingleton()
+        {
+            var rollbarConfig = Configuration.GetSection("Rollbar");
+            var rollbarAccessToken = rollbarConfig.GetValue<string>("AccessToken");
+            var rollbarEnv = rollbarConfig.GetValue<string>("Environment");
+
+            RollbarLocator.RollbarInstance
+              .Configure(new RollbarConfig(rollbarAccessToken) { Environment = rollbarEnv });
         }
     }
 }
