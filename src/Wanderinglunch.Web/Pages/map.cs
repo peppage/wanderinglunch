@@ -25,6 +25,10 @@ namespace Wanderinglunch.Web.Pages
         public async Task<IActionResult> OnGetAsync(string site)
         {
             Site = site;
+            if (!ValidSite(Site))
+            {
+                return NotFound();
+            }
 
             var fullSite = await lunchContext.SiteRepo.GetByNameAsync(Site);
             Lat = fullSite.Lat;
@@ -33,6 +37,12 @@ namespace Wanderinglunch.Web.Pages
             Trucks = lunchContext.SpotRepo.Get(site).Distinct(new SpotComparer());
 
             return Page();
+        }
+
+        private bool ValidSite(string site)
+        {
+            var s = lunchContext.SiteRepo.GetByName(site);
+            return s != null;
         }
     }
 }

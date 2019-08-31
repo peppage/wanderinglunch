@@ -66,6 +66,8 @@ namespace Wanderinglunch.Web
                 app.UseHsts();
             }
 
+            app.UseStatusCodePages();
+            app.UseStatusCodePagesWithReExecute("/Status{0}");
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();

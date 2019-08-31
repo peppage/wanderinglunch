@@ -30,6 +30,11 @@ namespace Wanderinglunch.Web.Pages
             }
 
             Site = site;
+            if (!ValidSite(Site))
+            {
+                return NotFound();
+            }
+
             Trucks = lunchContext.SpotRepo.Get(site);
             Zones = Trucks.Select(t => t.Location.Zone).Distinct();
             return Page();
@@ -44,6 +49,12 @@ namespace Wanderinglunch.Web.Pages
         public string RelativeTime(long epoch)
         {
             return Time.RelativeTime(epoch);
+        }
+
+        private bool ValidSite(string site)
+        {
+            var s = lunchContext.SiteRepo.GetByName(site);
+            return s != null;
         }
     }
 

@@ -24,6 +24,11 @@ namespace Wanderinglunch.Web.Pages
         public async Task<IActionResult> OnGetAsync(string site)
         {
             Site = site;
+            if (!ValidSite(Site))
+            {
+                return NotFound();
+            }
+
             Trucks = await lunchContext.TruckRepo.AllAsync(site, true);
             Trucks = Trucks.OrderBy(t => t.Name);
 
@@ -35,6 +40,12 @@ namespace Wanderinglunch.Web.Pages
         public string RelativeTime(long epoch)
         {
             return Time.RelativeTime(epoch);
+        }
+
+        private bool ValidSite(string site)
+        {
+            var s = lunchContext.SiteRepo.GetByName(site);
+            return s != null;
         }
     }
 }
