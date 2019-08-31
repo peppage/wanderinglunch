@@ -21,7 +21,7 @@ namespace Wanderinglunch.Data.Repositories
 
         public Task<object> CreateLocationAsync(Location location) => db.InsertAsync(location);
 
-        public Task<Location> GetById(int id) => db.SingleOrDefaultAsync<Location>("WHERE id = @0", id);
+        public Task<Location> GetByIdAsync(int id) => db.SingleOrDefaultAsync<Location>("WHERE id = @0", id);
 
         public Task<int> SaveLocationAsync(Location location) => db.UpdateAsync(location);
     }

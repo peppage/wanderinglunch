@@ -18,5 +18,11 @@ namespace Wanderinglunch.Data.Repositories
         public List<Sub> All() => db.Fetch<Sub>();
 
         public Task<List<Sub>> AllAsync() => db.FetchAsync<Sub>();
+
+        public Task<object> CreateAsync(Sub sub) => db.InsertAsync(sub);
+
+        public Task<Sub> GetByIdAsync(int id) => db.SingleOrDefaultAsync<Sub>("WHERE id = @0", id);
+
+        public Task<int> SaveAsync(Sub sub) => db.UpdateAsync(sub);
     }
 }

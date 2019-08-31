@@ -6,14 +6,14 @@ using Wanderinglunch.Data.Models;
 
 namespace Wanderinglunch.Web.Pages
 {
-    public class LocationModel : PageModel
+    public class SubModel : PageModel
     {
         private readonly ILunchContext lunchContext;
 
         [BindProperty]
-        public Location Location { get; set; }
+        public Sub Sub { get; set; }
 
-        public LocationModel(ILunchContext lunchContext)
+        public SubModel(ILunchContext lunchContext)
         {
             this.lunchContext = lunchContext;
         }
@@ -22,11 +22,11 @@ namespace Wanderinglunch.Web.Pages
         {
             if (id == 0)
             {
-                Location = new Location();
+                Sub = new Sub();
             }
             else
             {
-                Location = await lunchContext.LocationRepo.GetByIdAsync(id);
+                Sub = await lunchContext.SubRepo.GetByIdAsync(id);
             }
             return Page();
         }
@@ -38,17 +38,17 @@ namespace Wanderinglunch.Web.Pages
                 return Page();
             }
 
-            if (Location.Id == 0)
+            if (Sub.Id == 0)
             {
-                var id = await lunchContext.LocationRepo.CreateLocationAsync(Location);
-                Location.Id = (long)id;
+                var id = await lunchContext.SubRepo.CreateAsync(Sub);
+                Sub.Id = (long)id;
             }
             else
             {
-                await lunchContext.LocationRepo.SaveLocationAsync(Location);
+                await lunchContext.SubRepo.SaveAsync(Sub);
             }
 
-            return LocalRedirect($"/admin/location/{Location.Id}");
+            return LocalRedirect($"/admin/sub/{Sub.Id}");
         }
     }
 }
