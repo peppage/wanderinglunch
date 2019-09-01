@@ -47,18 +47,21 @@
     {#each data as dat}
       <tr>
         <td>
-           {dat.tweet.text}
+          {dat.tweet.text}
           <br />
           <a href="https://twitter.com/{dat.tweet.truckId}">
-             {dat.tweet.truckId}
+            {dat.tweet.truckId}
           </a>
           <a
             href="https://twitter.com/{dat.tweet.truckId}/status/{dat.tweet.id}">
-             {dat.time}
+            {dat.time}
           </a>
         </td>
         <td>
-          {#each dat.locations as loc}{loc.display}{/each}
+          {#each dat.locations as loc}
+            {loc.display}
+            <br />
+          {/each}
         </td>
         <td>
           <button on:click={() => markDone(dat)}>Done</button>
