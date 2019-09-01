@@ -42,7 +42,7 @@
 {
     <h3>@Model.Truck.Name Tweets</h3>
     <ol class="tweetList">
-        @foreach(var tweet in Model.Tweets.Take(5))
+        @foreach(var tweet in Model.Tweets.OrderByDescending(t => t.Time).Take(5))
         {
             <li class="tweetList__tweet">
                 <p>
