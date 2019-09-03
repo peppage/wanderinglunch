@@ -1,5 +1,3 @@
-[![Trello](https://img.shields.io/badge/trello-outdated-red.svg)](https://trello.com/b/Cf8c0Z8e/wandering-lunch)
-
 <div align="center">
     <br>
   <img
