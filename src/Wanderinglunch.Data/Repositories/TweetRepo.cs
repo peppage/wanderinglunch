@@ -15,7 +15,7 @@ namespace Wanderinglunch.Data.Repositories
             this.db = db;
         }
 
-        public void Create(Tweet tweet) => db.Save(tweet);
+        public void Create(Tweet tweet) => db.Insert(tweet);
 
         public Task SaveAsync(Tweet tweet) => db.SaveAsync(tweet);
 
