@@ -5,7 +5,7 @@
     ViewData["Site"] = Model.Site;
 }
 
-@if(Model.Zones.Count()== 0)
+@if (Model.Zones.Count() == 0)
 {
     <h1>Your hunger cannot be satisfied, no trucks are tweeting</h1>
     <p>If it's late, bookmark the site and come back around lunchtime! <br></p>
@@ -27,17 +27,17 @@ else
                 <div class="truck">
                     <div class="truck__name">
                         <a href="/truck/@truck.Truck.TwitName">
-                        @truck.Truck.Name
+                            @truck.Truck.Name
                         </a>
                     </div>
                     <div class="truck__location">
                         @truck.Location.Display
                     </div>
                     <div>
-                        @Model.RelativeTime(truck.Truck.LastUpdate)
+                        @Model.RelativeTime(truck.Tweet.Time)
                     </div>
                     <div class="truck__image">
-                        @if(truck.Image != null && !string.IsNullOrEmpty(truck.Image.Suffix))
+                        @if (truck.Image != null && !string.IsNullOrEmpty(truck.Image.Suffix))
                         {
                             <a href="@($"https://irs0.4sqi.net/img/general/width900{truck.Image.Suffix}")" class="lightbox">
                                 <img src="@($"https://irs0.4sqi.net/img/general/width30{truck.Image.Suffix}")" alt="@truck.Truck.Name Menu">
