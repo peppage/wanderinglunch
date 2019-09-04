@@ -27,6 +27,7 @@
 <table>
   <thead>
     <tr>
+      <th>Id</th>
       <th>Replacement</th>
       <th>Regex</th>
     </tr>
@@ -34,8 +35,9 @@
   {#each filtered as sub}
     <tr>
       <td>
-        <a href="/admin/sub/{sub.id}">{sub.replacement}</a>
+        <a href="/admin/sub/{sub.id}">{sub.id}</a>
       </td>
+      <td>{sub.replacement}</td>
       <td>{sub.regex}</td>
     </tr>
   {/each}
