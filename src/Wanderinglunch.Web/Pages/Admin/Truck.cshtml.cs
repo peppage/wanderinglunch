@@ -43,11 +43,6 @@ namespace Wanderinglunch.Web.Pages
                 return Page();
             }
 
-            if (string.IsNullOrEmpty(Truck.About))
-            {
-                Truck.About = "";
-            }
-
             if (string.IsNullOrEmpty(OriginalTwitName))
             {
                 var id = await lunchContext.TruckRepo.CreateAsync(Truck);
