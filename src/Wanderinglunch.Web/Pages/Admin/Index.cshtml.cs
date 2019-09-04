@@ -54,7 +54,7 @@ namespace Wanderinglunch.Web.Pages
 
         public async Task<IActionResult> OnPostMarkDoneAsync([FromBody] DoneRequest req)
         {
-            var tweet = await lunchContext.TweetRepo.GetById(req.Id);
+            var tweet = await lunchContext.TweetRepo.GetByIdAsync(req.Id);
             tweet.Done = true;
             await lunchContext.TweetRepo.SaveAsync(tweet);
             return null;

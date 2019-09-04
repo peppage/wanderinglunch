@@ -19,7 +19,7 @@ namespace Wanderinglunch.Data.Repositories
 
         public Task SaveAsync(Tweet tweet) => db.SaveAsync(tweet);
 
-        public Task<Tweet> GetById(string id) => db.SingleOrDefaultAsync<Tweet>("WHERE id = @0", id);
+        public Task<Tweet> GetByIdAsync(string id) => db.SingleOrDefaultAsync<Tweet>("WHERE id = @0", id);
 
         public Task<List<Tweet>> GetByTruckIdAsync(string id) => db.FetchAsync<Tweet>("WHERE truck_id = @0 ORDER BY time DESC", id);
 
