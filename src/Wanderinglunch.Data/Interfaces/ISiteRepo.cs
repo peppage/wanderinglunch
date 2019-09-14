@@ -8,5 +8,6 @@ namespace Wanderinglunch.Data.Interfaces
     {
         Task<Site> GetByNameAsync(string name);
         Site GetByName(string name);
+        Task<List<Site>> GetAllAsync();
     }
 }

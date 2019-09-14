@@ -15,6 +15,8 @@ namespace Wanderinglunch.Data.Repositories
             this.db = db;
         }
 
+        public Task<List<Site>> GetAllAsync() => db.FetchAsync<Site>();
+
         public Site GetByName(string name) => db.SingleOrDefault<Site>("WHERE name = @0", name);
 
         public Task<Site> GetByNameAsync(string name) => db.SingleOrDefaultAsync<Site>("WHERE name = @0", name);
