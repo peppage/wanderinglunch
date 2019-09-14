@@ -22,14 +22,20 @@ namespace Wanderinglunch.Web.Pages
 
         public async Task<IActionResult> OnGetAsync(string id)
         {
+            if (string.IsNullOrEmpty(id))
+            {
+                return NotFound();
+            }
+
             Truck = await lunchContext.TruckRepo.GetByIdAsync(id);
-            Tweets = await lunchContext.TweetRepo.GetByTruckIdAsync(id);
-            Images = await lunchContext.ImageRepo.ByTruckIdAsync(id);
 
             if (Truck == null)
             {
                 return NotFound();
             }
+
+            Tweets = await lunchContext.TweetRepo.GetByTruckIdAsync(id);
+            Images = await lunchContext.ImageRepo.ByTruckIdAsync(id);
 
             return Page();
         }
