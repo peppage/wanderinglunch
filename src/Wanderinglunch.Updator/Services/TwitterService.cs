@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Rollbar;
 using Tweetinvi;
+using Tweetinvi.Exceptions;
 using Tweetinvi.Models;
 using Tweetinvi.Parameters;
 
@@ -16,6 +17,7 @@ namespace Wanderinglunch.Updator.Services
             var twitterConfig = config.GetSection("twitter");
             var consumerKey = twitterConfig.GetValue<string>("ConsumerKey");
             var consumerSecret = twitterConfig.GetValue<string>("ConsumerSecret");
+            ExceptionHandler.SwallowWebExceptions = false;
 
             Auth.SetApplicationOnlyCredentials(consumerKey, consumerSecret, true);
         }
@@ -25,23 +27,27 @@ namespace Wanderinglunch.Updator.Services
             try
             {
                 var user = User.GetUserFromScreenName(id);
-                if (user == null)
-                {
-                    throw new KeyNotFoundException("404 twitter handle");
-                }
-
                 return user.GetUserTimeline(new UserTimelineParameters
                 {
                     IncludeRTS = false,
                 });
             }
-            catch (Exception e)
+            catch (ArgumentException ex)
             {
-                RollbarLocator.RollbarInstance.Error(e, new Dictionary<string, object>{
+                RollbarLocator.RollbarInstance.Error(ex, new Dictionary<string, object>{
                     {"truck id", id},
                 });
-                return new List<ITweet>();
             }
+            catch (TwitterException ex)
+            {
+                RollbarLocator.RollbarInstance.Error(ex, new Dictionary<string, object>{
+                    {"truck id", id},
+                    {"status code", ex.StatusCode},
+                    {"twitter", ex.TwitterExceptionInfos.ToString()},
+                });
+            }
+
+            return new List<ITweet>();
         }
     }
 }
