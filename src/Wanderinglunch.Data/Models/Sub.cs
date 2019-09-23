@@ -4,6 +4,22 @@ namespace Wanderinglunch.Data.Models
     {
         public long Id { get; set; }
         public string Regex { get; set; }
-        public string Replacement { get; set; }
+
+        private string _replacement;
+        public string Replacement
+        {
+            get => _replacement;
+            set
+            {
+                if (value == null)
+                {
+                    _replacement = "";
+                }
+                else
+                {
+                    _replacement = value;
+                }
+            }
+        }
     }
 }
