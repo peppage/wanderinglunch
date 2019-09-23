@@ -57,15 +57,16 @@ namespace Wanderinglunch.Updator.Services
         {
             foreach (var tweet in tweets)
             {
-                // Ignore failed inserts they're duplicates
-                try
-                {
-                    var text = tweet.FullText;
-                    // These substitutions are for displaying the tweet a website
-                    text = text.Replace("&amp", "&", StringComparison.InvariantCultureIgnoreCase);
-                    text = text.Replace("#", "", StringComparison.InvariantCultureIgnoreCase);
-                    text = text.Replace("\"", "", StringComparison.InvariantCultureIgnoreCase);
+                var text = tweet.FullText;
+                // These substitutions are for displaying the tweet a website
+                text = text.Replace("&amp", "&", StringComparison.InvariantCultureIgnoreCase);
+                text = text.Replace("#", "", StringComparison.InvariantCultureIgnoreCase);
+                text = text.Replace("\"", "", StringComparison.InvariantCultureIgnoreCase);
 
+                var oldTweet = lunchContext.TweetRepo.GetById(tweet.IdStr);
+
+                if (oldTweet == null)
+                {
                     lunchContext.TweetRepo.Create(new Tweet
                     {
                         Text = text,
@@ -73,9 +74,6 @@ namespace Wanderinglunch.Updator.Services
                         Id = tweet.IdStr,
                         TruckId = truck.TwitName,
                     });
-                }
-                catch
-                {
                 }
             }
 

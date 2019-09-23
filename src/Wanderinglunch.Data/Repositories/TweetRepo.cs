@@ -39,5 +39,7 @@ namespace Wanderinglunch.Data.Repositories
 
             return db.FetchAsync<Tweet>(sql);
         }
+
+        public Tweet GetById(string id) => db.SingleOrDefault<Tweet>("WHERE id = @0", id);
     }
 }
