@@ -4,6 +4,13 @@
     ViewData["Title"] = $"Location {Model.Location?.Display ?? ""}";
 }
 
+@if(!string.IsNullOrEmpty(Model.Message))
+{
+    <div class="admin-message">
+        @Model.Message
+    </div>
+}
+
 <p>
     <a href="https://regex101.com">Regex101</a><br>
     @if(Model.Location == null || Model.Location.Lat == 0)

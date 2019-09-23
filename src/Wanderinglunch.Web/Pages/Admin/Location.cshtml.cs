@@ -13,6 +13,9 @@ namespace Wanderinglunch.Web.Pages
         [BindProperty]
         public Location Location { get; set; }
 
+        [TempData]
+        public string Message { get; set; }
+
         public LocationModel(ILunchContext lunchContext)
         {
             this.lunchContext = lunchContext;
@@ -38,14 +41,24 @@ namespace Wanderinglunch.Web.Pages
                 return Page();
             }
 
-            if (Location.Id == 0)
+            try
             {
-                var id = await lunchContext.LocationRepo.CreateLocationAsync(Location);
-                Location.Id = (long)id;
+
+                if (Location.Id == 0)
+                {
+                    var id = await lunchContext.LocationRepo.CreateLocationAsync(Location);
+                    Location.Id = (long)id;
+                    Message = "Location created";
+                }
+                else
+                {
+                    await lunchContext.LocationRepo.SaveLocationAsync(Location);
+                    Message = "Location saved";
+                }
             }
-            else
+            catch
             {
-                await lunchContext.LocationRepo.SaveLocationAsync(Location);
+                Message = "Failed!";
             }
 
             return LocalRedirect($"/admin/location/{Location.Id}");

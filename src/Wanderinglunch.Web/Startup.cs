@@ -42,6 +42,11 @@ namespace Wanderinglunch.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.Configure<CookieTempDataProviderOptions>(options =>
+            {
+                options.Cookie.IsEssential = true;
+            });
+
             services.AddMvc()
                 .AddRazorPagesOptions(options =>
                 {

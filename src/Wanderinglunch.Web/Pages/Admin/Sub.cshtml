@@ -4,6 +4,13 @@
     ViewData["Title"] = $"Location {Model.Sub?.Replacement ?? ""}";
 }
 
+@if(!string.IsNullOrEmpty(Model.Message))
+{
+    <div class="admin-message">
+        @Model.Message
+    </div>
+}
+
 <form method="post">
     <input asp-for="Sub.Id" type="hidden" />
     <div class="form-field">

@@ -13,6 +13,9 @@ namespace Wanderinglunch.Web.Pages
         [BindProperty]
         public Sub Sub { get; set; }
 
+        [TempData]
+        public string Message { get; set; }
+
         public SubModel(ILunchContext lunchContext)
         {
             this.lunchContext = lunchContext;
@@ -38,14 +41,23 @@ namespace Wanderinglunch.Web.Pages
                 return Page();
             }
 
-            if (Sub.Id == 0)
+            try
             {
-                var id = await lunchContext.SubRepo.CreateAsync(Sub);
-                Sub.Id = (long)id;
+                if (Sub.Id == 0)
+                {
+                    var id = await lunchContext.SubRepo.CreateAsync(Sub);
+                    Sub.Id = (long)id;
+                    Message = "Sub Created";
+                }
+                else
+                {
+                    await lunchContext.SubRepo.SaveAsync(Sub);
+                    Message = "Sub Updated";
+                }
             }
-            else
+            catch
             {
-                await lunchContext.SubRepo.SaveAsync(Sub);
+                Message = "Error!";
             }
 
             return LocalRedirect($"/admin/sub/{Sub.Id}");

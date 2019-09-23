@@ -4,6 +4,13 @@
     ViewData["Title"] = $"Truck {Model.Truck?.Name ?? ""}";
 }
 
+@if(!string.IsNullOrEmpty(Model.Message))
+{
+    <div class="admin-message">
+        @Model.Message
+    </div>
+}
+
 <p>
     
     @if(Model.Truck != null || !string.IsNullOrEmpty(Model.Truck.TwitName))
