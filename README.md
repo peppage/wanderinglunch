@@ -31,7 +31,7 @@ You can pretty much follow [this guide](https://plusbryan.com/my-first-5-minutes
 
 - All Secrets are stored in a appsettings.json files next to the exe for ease and that's how dotnet does it.
 - I cross compile the site on windows and drop the exe onto the server
-  `dotnet publish --self-contained -r linux-x64 -c Release`
+  `dotnet publish -r linux-x64 -c Release`
 
 ## License
 

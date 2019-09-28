@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29319.158
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B0CA7AF7-342E-4BAB-92E0-0157E0E7FEB8}"
 EndProject
@@ -13,7 +13,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wanderinglunch.Logic", "src
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "tests", "tests\tests.csproj", "{D24802E0-33CF-4EC1-86CF-63C996072774}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wanderinglunch.Web", "src\Wanderinglunch.Web\Wanderinglunch.Web.csproj", "{2350817F-AE38-47F3-B2C9-4591A6EE1586}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wanderinglunch.Web", "src\Wanderinglunch.Web\Wanderinglunch.Web.csproj", "{2350817F-AE38-47F3-B2C9-4591A6EE1586}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5C6AEBA4-23F8-4AC9-84E1-E6E5409BC404}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
