@@ -86,6 +86,7 @@ namespace Wanderinglunch.Web
 
             app.UseCookiePolicy();
             app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
