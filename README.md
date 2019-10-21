@@ -2,7 +2,7 @@
     <br>
   <img
     alt="Wanderinglunch Logo"
-    src="https://wanderinglunch.com/static/images/wl.png"
+    src="https://wanderinglunch.com/images/wl.png"
   />
   <br>
 </div>
