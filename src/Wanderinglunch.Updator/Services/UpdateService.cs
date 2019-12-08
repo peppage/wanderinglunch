@@ -1,4 +1,4 @@
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -105,18 +105,16 @@ namespace Wanderinglunch.Updator.Services
 
                             foreach (var l in locs)
                             {
-                                // Ignore key duplicate problems
-                                try
+                                var oldSpot = lunchContext.SpotRepo.GetByTweetAndLocation(tweet.IdStr, l.Id);
+
+                                if (oldSpot == null)
                                 {
                                     await lunchContext.SpotRepo.CreateAsync(new Spot
                                     {
                                         TruckId = truck.TwitName,
                                         LocationId = l.Id,
                                         TweetId = tweet.IdStr
-                                    });
-                                }
-                                catch
-                                {
+                                    }).ConfigureAwait(false);
                                 }
                             }
                         }

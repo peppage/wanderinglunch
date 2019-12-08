@@ -1,11 +1,10 @@
+﻿using PetaPoco;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using PetaPoco;
 using Wanderinglunch.Data.Interfaces;
 using Wanderinglunch.Data.Models;
 using Wanderinglunch.Data.Queries;
-using System.Linq;
 
 namespace Wanderinglunch.Data.Repositories
 {
@@ -30,5 +29,7 @@ namespace Wanderinglunch.Data.Repositories
             var time = DateTime.UtcNow.AddHours(hours * -1) - new DateTime(1970, 1, 1);
             return db.Fetch<FullSpot, Truck, Location, Tweet, Image>(SpotQueries.NewSpots, (int)time.TotalSeconds, site);
         }
+
+        public Spot GetByTweetAndLocation(string tweetId, long locationId) => db.SingleOrDefault<Spot>("WHERE tweet_id = @0 and location_id = @1", tweetId, locationId);
     }
 }
