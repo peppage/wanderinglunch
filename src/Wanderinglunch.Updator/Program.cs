@@ -1,23 +1,27 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Rollbar;
+using Serilog;
+using System;
 using System.IO;
 using System.Threading.Tasks;
-using Serilog;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Wanderinglunch.Data;
 using Wanderinglunch.Updator.Services;
-using Rollbar;
 
 namespace Wanderinglunch.Updator
 {
     class Program
     {
-        public static IConfigurationRoot configuration;
-
         public static void Main(string[] args)
         {
-            MainAsync().GetAwaiter().GetResult();
+            try
+            {
+                MainAsync().GetAwaiter().GetResult();
+            }
+            finally
+            {
+                Log.CloseAndFlush();
+            }
         }
 
         private static async Task MainAsync()
@@ -32,7 +36,7 @@ namespace Wanderinglunch.Updator
 
         public static void ConfigureServices(IServiceCollection serviceCollection)
         {
-            configuration = new ConfigurationBuilder()
+            var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetParent(AppContext.BaseDirectory).FullName)
                 .AddJsonFile("appsettings.json", false)
                 .Build();
@@ -46,29 +50,19 @@ namespace Wanderinglunch.Updator
                 Environment = rollbarEnv
             });
 
+            Log.Logger = new LoggerConfiguration()
+            .ReadFrom.Configuration(configuration)
+            .CreateLogger();
+
+            serviceCollection.AddLogging(builder =>
+            {
+                builder.AddSerilog(dispose: true);
+            });
+
             serviceCollection.AddSingleton<ILunchContext>(new LunchContext(configuration.GetConnectionString("Storage")));
             serviceCollection.AddSingleton<IUpdateService, UpdateService>();
             serviceCollection.AddSingleton<ITwitterService, TwitterService>();
             serviceCollection.AddSingleton<IConfigurationRoot>(configuration);
-
-            serviceCollection.AddSingleton(new LoggerFactory()
-                .AddConsole()
-                .AddSerilog()
-                .AddDebug());
-            serviceCollection.AddLogging();
-
-            Log.Logger = new LoggerConfiguration()
-                .WriteTo.Console(Serilog.Events.LogEventLevel.Debug)
-                .MinimumLevel.Debug()
-                .Enrich.FromLogContext()
-                .CreateLogger();
-
-            serviceCollection.AddLogging(configure =>
-            {
-                configure.SetMinimumLevel(LogLevel.Debug);
-                configure.AddConsole();
-            }).AddSingleton<App>();
-
             serviceCollection.AddTransient<App>();
         }
     }

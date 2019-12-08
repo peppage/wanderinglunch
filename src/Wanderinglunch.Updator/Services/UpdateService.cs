@@ -19,7 +19,7 @@ namespace Wanderinglunch.Updator.Services
         private readonly List<Sub> substitions;
         private readonly List<Location> locations;
 
-        public UpdateService(ILunchContext lunchContext, ILogger<App> logger, ITwitterService twitterService)
+        public UpdateService(ILunchContext lunchContext, ILogger<UpdateService> logger, ITwitterService twitterService)
         {
             this.lunchContext = lunchContext;
             this.twitterService = twitterService;
@@ -30,8 +30,9 @@ namespace Wanderinglunch.Updator.Services
 
         public async Task Run()
         {
-            var trucks = await lunchContext.TruckRepo.AllAsync();
+            var trucks = await lunchContext.TruckRepo.AllAsync().ConfigureAwait(false);
             logger.LogDebug($"Total trucks {trucks.Count}");
+
             foreach (var truck in trucks)
             {
                 var tweets = twitterService.GetTweets(truck.TwitName);
@@ -43,7 +44,7 @@ namespace Wanderinglunch.Updator.Services
                     if (await SearchTweets(truck, tweets))
                     {
                         truck.LastUpdate = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-                        await lunchContext.TruckRepo.UpdateAsync(truck);
+                        await lunchContext.TruckRepo.UpdateAsync(truck).ConfigureAwait(false);
                     }
                 }
             }
