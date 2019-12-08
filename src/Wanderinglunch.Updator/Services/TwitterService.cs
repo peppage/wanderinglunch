@@ -1,8 +1,8 @@
+﻿using Microsoft.Extensions.Configuration;
+using Rollbar;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using Rollbar;
+using System.Linq;
 using Tweetinvi;
 using Tweetinvi.Exceptions;
 using Tweetinvi.Models;
@@ -38,12 +38,16 @@ namespace Wanderinglunch.Updator.Services
                     {"truck id", id},
                 });
             }
+            catch (TwitterTimeoutException)
+            {
+                //This one happens and we should ignore.
+            }
             catch (TwitterException ex)
             {
                 RollbarLocator.RollbarInstance.Error(ex, new Dictionary<string, object>{
                     {"truck id", id},
                     {"status code", ex.StatusCode},
-                    {"twitter", ex.TwitterExceptionInfos.ToString()},
+                    {"twitter", ex.TwitterExceptionInfos.First().Message},
                 });
             }
 
