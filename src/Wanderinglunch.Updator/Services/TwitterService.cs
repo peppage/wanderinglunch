@@ -44,14 +44,19 @@ namespace Wanderinglunch.Updator.Services
             }
             catch (TwitterException ex)
             {
-                RollbarLocator.RollbarInstance.Error(ex, new Dictionary<string, object>{
-                    {"truck id", id},
-                    {"status code", ex.StatusCode},
-                    {"twitter", ex.TwitterExceptionInfos.First().Message},
-                });
+                if (ShouldSendErrorNotification(ex))
+                {
+                    RollbarLocator.RollbarInstance.Error(ex, new Dictionary<string, object>{
+                        {"truck id", id},
+                        {"status code", ex.StatusCode},
+                        {"twitter", ex.TwitterExceptionInfos.First().Message},
+                    });
+                }
             }
 
             return new List<ITweet>();
         }
+
+        private bool ShouldSendErrorNotification(TwitterException ex) => ex.StatusCode != 503;
     }
 }
