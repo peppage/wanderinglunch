@@ -3,6 +3,30 @@
 @{
     ViewData["Title"] = "Trucks";
 }
-<h1>@ViewData["Title"]</h1>
 
-<div id="truckList"></div>
+<h1>
+    @ViewData["Title"]
+<span class="htmx-indicator">
+    Searching...
+</span>
+</h1>
+
+<input class="form-control" type="text"
+       name="search" placeholder="Begin Typing To Search Trucks..."
+       hx-post="/admin/trucks/search"
+       hx-trigger="keyup changed delay:500ms"
+       hx-target="#search-results"
+       hx-indicator=".htmx-indicator">
+
+<table class="table" style="width:100%;">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Last Updated</th>
+            <th>Archive</th>
+        </tr>
+    </thead>
+    <tbody id="search-results">
+        @await Html.PartialAsync("_truckList", Model.Trucks)
+    </tbody>
+</table>

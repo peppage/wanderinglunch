@@ -4,8 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Wandering Lunch Admin | @ViewData["Title"]</title>
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
-    <link rel="stylesheet" href="~/css/bundle.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="icon" type="image/x-icon" href="@Url.Content("~/images/favicon.ico")" />
 </head>
 <body>
@@ -14,9 +13,9 @@
             <a href="/admin">
                 <img srcset="/images/wl-sm.png 95w,
                             /images/wl.png 368w"
-                    sizes="(max-width: 450px) 95px,
+                     sizes="(max-width: 450px) 95px,
                             368px"
-                    src="/images/wl.png" alt="Wandering Lunch Logo">
+                     src="/images/wl.png" alt="Wandering Lunch Logo">
             </a>
         </div>
         <nav class="header__nav">
@@ -55,7 +54,7 @@
             @System.Reflection.Assembly.GetEntryAssembly().GetName().Version
         </div>
     </footer>
-    <script src="~/js/bundle.js" asp-append-version="true"></script>
+    <script src="//unpkg.com/htmx.org@0.0.3" integrity="sha384-MpcR/HjrXWKvUcLWl4NFGDyE79lcbU00V+mxeXAoWORvnFPTyXqBwM/HRZsFZRjY" crossorigin="anonymous"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

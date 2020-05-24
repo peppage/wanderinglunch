@@ -1,0 +1,20 @@
+﻿@using Wanderinglunch.Logic
+@model IEnumerable<Wanderinglunch.Data.Models.Truck>
+
+@foreach (var t in Model)
+{
+    <tr>
+        <td>
+            <a href="/admin/truck/@t.TwitName">@t.Name</a>
+        </td>
+        <td>
+            @Time.RelativeTime(t.LastUpdate)
+        </td>
+        <td>
+            @if (t.Archive)
+            {
+                <span>Y</span>
+            }
+        </td>
+    </tr>
+}

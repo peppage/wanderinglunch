@@ -5,4 +5,21 @@
 }
 <h1>@ViewData["Title"]</h1>
 
-<div id="locationList"></div>
+<input class="form-control" type="text"
+       name="search" placeholder="Begin Typing To Search Locations..."
+       hx-post="/admin/locations/search"
+       hx-trigger="keyup changed delay:500ms"
+       hx-target="#search-results"
+       hx-indicator=".htmx-indicator">
+
+<table class="table" style="width:100%;">
+    <thead>
+        <tr>
+            <th>Display</th>
+            <th>Zone</th>
+        </tr>
+    </thead>
+    <tbody id="search-results">
+        @await Html.PartialAsync("_locationList", Model.Locations)
+    </tbody>
+</table>

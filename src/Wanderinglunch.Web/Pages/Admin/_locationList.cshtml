@@ -1,0 +1,11 @@
+﻿@model IEnumerable<Wanderinglunch.Data.Models.Location>
+
+@foreach (var l in Model)
+{
+    <tr>
+        <td>
+            <a href="/admin/location/@l.Id">@l.Display</a>
+        </td>
+        <td>@l.Zone</td>
+    </tr>
+}

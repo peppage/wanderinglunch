@@ -1,0 +1,12 @@
+﻿@model IEnumerable<Wanderinglunch.Data.Models.Sub>
+
+@foreach (var s in Model)
+{
+    <tr>
+        <td>
+            <a href="/admin/sub/@s.Id">@s.Id</a>
+        </td>
+        <td>@s.Replacement</td>
+        <td>@s.Regex</td>
+    </tr>
+}

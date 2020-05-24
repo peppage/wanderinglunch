@@ -5,33 +5,24 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Wanderinglunch.Data;
 using Wanderinglunch.Logic;
+using Wanderinglunch.Web.ViewModels;
 
 namespace Wanderinglunch.Web.Pages
 {
+    [IgnoreAntiforgeryToken(Order = 1001)]
     public class AdminIndexModel : PageModel
     {
         private readonly ILunchContext lunchContext;
+
+        public List<TweetWithLocations> Tweets { get; set; } = new List<TweetWithLocations>();
 
         public AdminIndexModel(ILunchContext lunchContext)
         {
             this.lunchContext = lunchContext;
         }
 
-        public class DoneRequest
+        public async Task<IActionResult> OnGetAsync()
         {
-            public string Id { get; set; }
-        }
-
-        public string FormatTime(long epoch)
-        {
-            var dto = DateTimeOffset.FromUnixTimeSeconds(epoch).ToLocalTime();
-            return dto.ToString("M/d/yy hh:mm tt");
-        }
-
-        public async Task<JsonResult> OnGetTweetsAsync()
-        {
-            var tweetsWithLocations = new List<object>();
-
             var tweets = await lunchContext.TweetRepo.GetRecentAsync("nyc");
             var subs = await lunchContext.SubRepo.AllAsync();
 
@@ -41,23 +32,29 @@ namespace Wanderinglunch.Web.Pages
             {
                 tweet.Text = Substitions.DoSubstitions(subs, tweet.Text);
 
-                tweetsWithLocations.Add(new
+                Tweets.Add(new TweetWithLocations
                 {
-                    tweet = tweet,
-                    locations = Locations.FindLocations(locations, "nyc", tweet.Text),
-                    time = FormatTime(tweet.Time),
+                    Tweet = tweet,
+                    Locations = Locations.FindLocations(locations, "nyc", tweet.Text),
+                    Time = FormatTime(tweet.Time),
                 });
             }
 
-            return new JsonResult(tweetsWithLocations);
+            return Page();
         }
 
-        public async Task<IActionResult> OnPostMarkDoneAsync([FromBody] DoneRequest req)
+        private static string FormatTime(long epoch)
         {
-            var tweet = await lunchContext.TweetRepo.GetByIdAsync(req.Id);
+            var dto = DateTimeOffset.FromUnixTimeSeconds(epoch).ToLocalTime();
+            return dto.ToString("M/d/yy hh:mm tt");
+        }
+
+        public async Task<IActionResult> OnPostMarkDoneAsync([FromQuery] string id)
+        {
+            var tweet = await lunchContext.TweetRepo.GetByIdAsync(id);
             tweet.Done = true;
             await lunchContext.TweetRepo.SaveAsync(tweet);
-            return null;
+            return new ContentResult();
         }
     }
 }

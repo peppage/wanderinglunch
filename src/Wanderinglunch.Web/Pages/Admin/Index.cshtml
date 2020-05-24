@@ -5,6 +5,15 @@
 }
 <h1>Admin Queue</h1>
 
-@Html.AntiForgeryToken()
-
-<div id="adminQueue"></div>
+<table class="table" style="width:100%;" hx-target="closest tr" hx-swap="outerHTML swap:.2s">
+    <thead>
+        <tr>
+            <th>Text</th>
+            <th>Locations</th>
+            <th />
+        </tr>
+    </thead>
+    <tbody id="search-results">
+        @await Html.PartialAsync("_adminQueue", Model.Tweets)
+    </tbody>
+</table>

@@ -14,7 +14,7 @@
             </a>
         </div>
         <div>
-            @if(truck.Archive)
+            @if (truck.Archive)
             {
                 <span>Archived</span>
             }
@@ -24,12 +24,12 @@
             }
         </div>
         <div class="truck__image">
-            @if(Model.Menus.Where(m => m.TruckId == truck.TwitName).Count() > 0)
+            @if (Model.Menus.Where(m => m.TruckId == truck.TwitName).Count() > 0)
             {
                 var suffix = Model.Menus.Single(m => m.TruckId == truck.TwitName).Suffix;
                 <a href="@($"https://irs0.4sqi.net/img/general/width900{suffix}")" class="lightbox">
-                    <img src="@($"https://irs0.4sqi.net/img/general/width30{suffix}")"\
-                        alt="@truck.Name Menu">
+                    <img src="@($"https://irs0.4sqi.net/img/general/width30{suffix}")" \
+                         alt="@truck.Name Menu">
                 </a>
             }
         </div>

@@ -5,4 +5,22 @@
 }
 <h1>@ViewData["Title"]</h1>
 
-<div id="subList"></div>
+<input class="form-control" type="text"
+       name="search" placeholder="Begin Typing To Search Subs..."
+       hx-post="/admin/subs/search"
+       hx-trigger="keyup changed delay:500ms"
+       hx-target="#search-results"
+       hx-indicator=".htmx-indicator">
+
+<table class="table" style="width:100%;">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Replacement</th>
+            <th>Regex</th>
+        </tr>
+    </thead>
+    <tbody id="search-results">
+        @await Html.PartialAsync("_subList", Model.Subs)
+    </tbody>
+</table>
