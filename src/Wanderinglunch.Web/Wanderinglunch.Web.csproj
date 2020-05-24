@@ -1,23 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-	<OutputType>Exe</OutputType>
+    <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <TieredCompilation>true</TieredCompilation>
     <PublishTrimmed>true</PublishTrimmed>
-    <PublishReadyToRun>false</PublishReadyToRun> <!-- must set to false, not supported to target linux -->
+    <PublishReadyToRun>false</PublishReadyToRun>
+    <!-- must set to false, not supported to target linux -->
     <PublishSingleFile>true</PublishSingleFile>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
-    <SvelteRoot>svelte\</SvelteRoot>
-    <DefaultItemExcludes>$(DefaultItemExcludes);$(SvelteRoot)node_modules\**</DefaultItemExcludes>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Content Remove="$(SvelteRoot)**" />
-    <None Remove="$(SvelteRoot)**" />
-    <None Include="$(SvelteRoot)**" Exclude="$(SvelteRoot)node_modules\**" />
-  </ItemGroup>
 
   <ItemGroup>
     <Folder Include="wwwroot\js\" />
@@ -39,19 +32,4 @@
     <ProjectReference Include="..\Wanderinglunch.Data\Wanderinglunch.Data.csproj" />
     <ProjectReference Include="..\Wanderinglunch.Logic\Wanderinglunch.Logic.csproj" />
   </ItemGroup>
-
-  <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SvelteRoot)node_modules') ">
-    <!-- Ensure Node.js is installed -->
-    <Exec Command="node --version" ContinueOnError="true">
-      <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
-    </Exec>
-    <Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
-    <Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
-    <Exec WorkingDirectory="$(SvelteRoot)" Command="npm install" EnvironmentVariables="NO_UPDATE_NOTIFIER=1" />
-  </Target>
-
-  <Target Name="BuildSvelte" BeforeTargets="Build">
-    <Exec WorkingDirectory="$(SvelteRoot)" Command="npm run build" ContinueOnError="false" EnvironmentVariables="NO_UPDATE_NOTIFIER=1" />
-  </Target>
-
 </Project>
