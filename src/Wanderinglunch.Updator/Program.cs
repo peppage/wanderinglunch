@@ -1,7 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Rollbar;
+using Sentry;
 using Serilog;
+using Serilog.Events;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ using Wanderinglunch.Updator.Services;
 
 namespace Wanderinglunch.Updator
 {
-    class Program
+    internal class Program
     {
         public static void Main(string[] args)
         {
@@ -41,18 +42,21 @@ namespace Wanderinglunch.Updator
                 .AddJsonFile("appsettings.json", false)
                 .Build();
 
-            var rollbarConfig = configuration.GetSection("Rollbar");
-            var rollbarAccessToken = rollbarConfig.GetValue<string>("AccessToken");
-            var rollbarEnv = rollbarConfig.GetValue<string>("Environment");
-
-            RollbarLocator.RollbarInstance.Configure(new RollbarConfig(rollbarAccessToken)
-            {
-                Environment = rollbarEnv
-            });
+            var sentryConfig = configuration.GetSection("Sentry");
+            var dsn = sentryConfig.GetValue<string>("Dsn");
 
             Log.Logger = new LoggerConfiguration()
-            .ReadFrom.Configuration(configuration)
-            .CreateLogger();
+                .Enrich.FromLogContext()
+                .MinimumLevel.Debug()
+                .WriteTo.Console()
+                .WriteTo.Sentry(o =>
+                {
+                    o.MinimumBreadcrumbLevel = LogEventLevel.Debug;
+                    o.MinimumEventLevel = LogEventLevel.Error;
+                    o.Dsn = new Dsn(dsn);
+                    o.AttachStacktrace = true;
+                })
+                .CreateLogger();
 
             serviceCollection.AddLogging(builder =>
             {

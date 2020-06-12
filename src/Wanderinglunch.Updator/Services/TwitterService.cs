@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
-using Rollbar;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,12 +12,16 @@ namespace Wanderinglunch.Updator.Services
 {
     public class TwitterService : ITwitterService
     {
-        public TwitterService(IConfigurationRoot config)
+        private readonly ILogger logger;
+
+        public TwitterService(IConfigurationRoot config, ILogger<TwitterService> logger)
         {
             var twitterConfig = config.GetSection("twitter");
             var consumerKey = twitterConfig.GetValue<string>("ConsumerKey");
             var consumerSecret = twitterConfig.GetValue<string>("ConsumerSecret");
             ExceptionHandler.SwallowWebExceptions = false;
+
+            this.logger = logger;
 
             Auth.SetApplicationOnlyCredentials(consumerKey, consumerSecret, true);
         }
@@ -34,8 +38,9 @@ namespace Wanderinglunch.Updator.Services
             }
             catch (ArgumentException ex)
             {
-                RollbarLocator.RollbarInstance.Error(ex, new Dictionary<string, object>{
-                    {"truck id", id},
+                logger.LogError(ex, "Argument", new
+                {
+                    TruckId = id,
                 });
             }
             catch (TwitterTimeoutException)
@@ -46,10 +51,11 @@ namespace Wanderinglunch.Updator.Services
             {
                 if (ShouldSendErrorNotification(ex))
                 {
-                    RollbarLocator.RollbarInstance.Error(ex, new Dictionary<string, object>{
-                        {"truck id", id},
-                        {"status code", ex.StatusCode},
-                        {"twitter", ex.TwitterExceptionInfos.First().Message},
+                    logger.LogError(ex, "Twitter", new
+                    {
+                        TruckId = id,
+                        StatusCode = ex.StatusCode,
+                        Twitter = ex.TwitterExceptionInfos.First().Message,
                     });
                 }
             }
