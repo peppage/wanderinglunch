@@ -42,8 +42,7 @@ namespace Wanderinglunch.Updator
                 .AddJsonFile("appsettings.json", false)
                 .Build();
 
-            var sentryConfig = configuration.GetSection("Sentry");
-            var dsn = sentryConfig.GetValue<string>("Dsn");
+            var dsn = configuration.GetSection("Sentry").GetValue<string>("Dsn");
 
             Log.Logger = new LoggerConfiguration()
                 .Enrich.FromLogContext()
