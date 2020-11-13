@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wanderinglunch.Updator", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wanderinglunch.Logic", "src\Wanderinglunch.Logic\Wanderinglunch.Logic.csproj", "{64B36FA7-A1BA-4325-9174-B2A9A308F39A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "tests", "tests\tests.csproj", "{D24802E0-33CF-4EC1-86CF-63C996072774}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wanderinglunch.Web", "src\Wanderinglunch.Web\Wanderinglunch.Web.csproj", "{2350817F-AE38-47F3-B2C9-4591A6EE1586}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5C6AEBA4-23F8-4AC9-84E1-E6E5409BC404}"
@@ -67,18 +65,6 @@ Global
 		{64B36FA7-A1BA-4325-9174-B2A9A308F39A}.Release|x64.Build.0 = Release|Any CPU
 		{64B36FA7-A1BA-4325-9174-B2A9A308F39A}.Release|x86.ActiveCfg = Release|Any CPU
 		{64B36FA7-A1BA-4325-9174-B2A9A308F39A}.Release|x86.Build.0 = Release|Any CPU
-		{D24802E0-33CF-4EC1-86CF-63C996072774}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D24802E0-33CF-4EC1-86CF-63C996072774}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D24802E0-33CF-4EC1-86CF-63C996072774}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{D24802E0-33CF-4EC1-86CF-63C996072774}.Debug|x64.Build.0 = Debug|Any CPU
-		{D24802E0-33CF-4EC1-86CF-63C996072774}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{D24802E0-33CF-4EC1-86CF-63C996072774}.Debug|x86.Build.0 = Debug|Any CPU
-		{D24802E0-33CF-4EC1-86CF-63C996072774}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D24802E0-33CF-4EC1-86CF-63C996072774}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D24802E0-33CF-4EC1-86CF-63C996072774}.Release|x64.ActiveCfg = Release|Any CPU
-		{D24802E0-33CF-4EC1-86CF-63C996072774}.Release|x64.Build.0 = Release|Any CPU
-		{D24802E0-33CF-4EC1-86CF-63C996072774}.Release|x86.ActiveCfg = Release|Any CPU
-		{D24802E0-33CF-4EC1-86CF-63C996072774}.Release|x86.Build.0 = Release|Any CPU
 		{2350817F-AE38-47F3-B2C9-4591A6EE1586}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2350817F-AE38-47F3-B2C9-4591A6EE1586}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2350817F-AE38-47F3-B2C9-4591A6EE1586}.Debug|x64.ActiveCfg = Debug|Any CPU

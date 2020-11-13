@@ -28,9 +28,7 @@ namespace Wanderinglunch.Web
             var dsn = Configuration.GetSection("Sentry").GetValue<string>("Dsn");
 
             Log.Logger = new LoggerConfiguration()
-                .Enrich.FromLogContext()
-                .MinimumLevel.Debug()
-                .WriteTo.Console()
+                .ReadFrom.Configuration(Configuration)
                 .WriteTo.Sentry(o =>
                 {
                     o.MinimumBreadcrumbLevel = LogEventLevel.Debug;
