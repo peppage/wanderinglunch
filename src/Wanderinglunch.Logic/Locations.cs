@@ -14,7 +14,7 @@ namespace Wanderinglunch.Logic
         /// <param name="site">The site where the truck is.</param>
         /// <param name="text">The text to search</param>
         /// <returns>A list of found locations</returns>
-        public static List<Location> FindLocations(IEnumerable<Location> locs, string site, string text)
+        public static List<Location> FindLocations(List<Location> locs, string site, string text)
         {
             var found = new List<Location>();
 

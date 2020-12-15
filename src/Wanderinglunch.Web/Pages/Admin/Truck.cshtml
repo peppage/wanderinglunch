@@ -4,7 +4,7 @@
     ViewData["Title"] = $"Truck {Model.Truck?.Name ?? ""}";
 }
 
-@if (!string.IsNullOrEmpty(Model.Message))
+@if(!string.IsNullOrEmpty(Model.Message))
 {
     <div class="admin-message">
         @Model.Message
@@ -12,17 +12,17 @@
 }
 
 <p>
-
-    @if (Model.Truck != null || !string.IsNullOrEmpty(Model.Truck.Id))
+    
+    @if(Model.Truck != null || !string.IsNullOrEmpty(Model.Truck.TwitName))
     {
-        <a href="https://twitter.com/@Model.Truck.Id">Twitter</a><br>
-        <a href="@Model.Truck.WebUrl">Website</a><br>
+        <a href="https://twitter.com/@Model.Truck.TwitName">Twitter</a><br>
+        <a href="@Model.Truck.WebURL">Website</a><br>
         <a href="https://foursquare.com/v/@Model.Truck.Foursquare">Foursquare</a>
     }
 </p>
 
 <form method="post">
-    <input asp-for="OriginalId" type="hidden" />
+    <input asp-for="OriginalTwitName" type="hidden" />
     <input asp-for="Truck.LastUpdate" type="hidden" />
 
     <div class="form-group">
@@ -30,12 +30,12 @@
         <input asp-for="Truck.Name" />
     </div>
     <div class="form-group">
-        <label asp-for="Truck.Id">Twitter</label>
-        <input asp-for="Truck.Id" />
+        <label asp-for="Truck.TwitName">Twitter</label>
+        <input asp-for="Truck.TwitName" />
     </div>
     <div class="form-group">
-        <label asp-for="Truck.WebUrl">Website</label>
-        <input asp-for="Truck.WebUrl" />
+        <label asp-for="Truck.WebURL">Website</label>
+        <input asp-for="Truck.WebURL" />
     </div>
     <div class="form-group">
         <label asp-for="Truck.Type"></label>
@@ -57,6 +57,7 @@
         <input asp-for="Truck.Archive" />
         <label asp-for="Truck.Archive"></label>
     </div>
+
 
     <div class="form-buttons">
         <button type="submit">Save</button>

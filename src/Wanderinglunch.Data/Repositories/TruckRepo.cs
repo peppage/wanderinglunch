@@ -1,50 +1,45 @@
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
-using Dapper.Contrib.Extensions;
+using PetaPoco;
 using Wanderinglunch.Data.Interfaces;
 using Wanderinglunch.Data.Models;
-using Dapper;
-using Wanderinglunch.Data.Schema;
+using Wanderinglunch.Data.Queries;
 
 namespace Wanderinglunch.Data.Repositories
 {
     public class TruckRepo : ITruckRepo
     {
-        private readonly IDbConnection db;
+        private readonly IDatabase db;
 
-        public TruckRepo(IDbConnection db)
+        public TruckRepo(IDatabase db)
         {
             this.db = db;
         }
 
-        public Task<IEnumerable<Truck>> AllAsync(bool archived = false)
+        public Task<List<Truck>> AllAsync(bool archived = false)
         {
-            var sql = $@"SELECT * FROM {TruckSchema.Table} WHERE {TruckSchema.Columns.Archive} = @archive";
-            return db.QueryAsync<Truck>(sql, new { archive = archived });
+            return db.FetchAsync<Truck>("WHERE archive = @0", archived);
         }
 
-        public Task<IEnumerable<Truck>> AllAsync(string site, bool onlyUnarchived = true)
+        public Task<List<Truck>> AllAsync(string site, bool onlyUnarchived = true)
         {
-            var dynamicParams = new DynamicParameters();
-
-            var sql = $@"SELECT * FROM {TruckSchema.Table} WHERE {TruckSchema.Columns.Site} = @site";
-            dynamicParams.Add("site", site);
+            var sql = PetaPoco.Sql.Builder
+                .Append("SELECT * FROM trucks")
+                .Append("WHERE site = @0", site);
 
             if (!onlyUnarchived)
             {
-                sql += $@"AND {TruckSchema.Columns.Archive} = @archive";
-                dynamicParams.Add("archive", false);
+                sql.Append("AND archive = @0", false);
             }
 
-            return db.QueryAsync<Truck>(sql, dynamicParams);
+            return db.FetchAsync<Truck>(sql);
         }
 
-        public Task<int> CreateAsync(Truck truck) => db.InsertAsync(truck);
+        public Task<object> CreateAsync(Truck truck) => db.InsertAsync(truck);
 
-        public Task<Truck> GetByIdAsync(string id) => db.GetAsync<Truck>(id);
+        public Task<Truck> GetByIdAsync(string id) => db.SingleOrDefaultAsync<Truck>("WHERE twit_name = @0", id);
 
-        public Task<bool> UpdateAsync(Truck truck) => db.UpdateAsync(truck);
+        public Task<int> UpdateAsync(Truck truck) => db.UpdateAsync(truck);
     }
 }

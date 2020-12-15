@@ -21,15 +21,15 @@ namespace Wanderinglunch.Web.Pages
             this.lunchContext = lunchContext;
         }
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
-            Subs = lunchContext.SubRepo.All();
+            Subs = await lunchContext.SubRepo.AllAsync();
             return Page();
         }
 
-        public IActionResult OnPostSearch([FromForm] string search)
+        public async Task<IActionResult> OnPostSearchAsync([FromForm] string search)
         {
-            var subs = lunchContext.SubRepo.All();
+            var subs = await lunchContext.SubRepo.AllAsync();
             if (string.IsNullOrEmpty(search))
             {
                 return Partial("_subList", subs);

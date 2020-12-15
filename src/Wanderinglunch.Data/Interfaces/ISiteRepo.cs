@@ -7,9 +7,7 @@ namespace Wanderinglunch.Data.Interfaces
     public interface ISiteRepo
     {
         Task<Site> GetByNameAsync(string name);
-
         Site GetByName(string name);
-
-        Task<IEnumerable<Site>> GetAllAsync();
+        Task<List<Site>> GetAllAsync();
     }
 }

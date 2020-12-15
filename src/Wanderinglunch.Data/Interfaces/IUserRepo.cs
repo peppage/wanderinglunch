@@ -5,8 +5,7 @@ namespace Wanderinglunch.Data.Interfaces
 {
     public interface IUserRepo
     {
-        User GetByEmail(string email);
-
-        Task<int> CreateUserAsync(User user);
+        Task<User> GetByEmailAsync(string email);
+        Task<object> CreateUserAsync(User user);
     }
 }

@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Tweetinvi.Models;
 using Wanderinglunch.Data;
@@ -17,8 +16,8 @@ namespace Wanderinglunch.Updator.Services
         private readonly ILunchContext lunchContext;
         private readonly ITwitterService twitterService;
         private readonly ILogger logger;
-        private readonly IEnumerable<Sub> substitions;
-        private readonly IEnumerable<Location> locations;
+        private readonly List<Sub> substitions;
+        private readonly List<Location> locations;
 
         public UpdateService(ILunchContext lunchContext, ILogger<UpdateService> logger, ITwitterService twitterService)
         {
@@ -32,11 +31,11 @@ namespace Wanderinglunch.Updator.Services
         public async Task Run()
         {
             var trucks = await lunchContext.TruckRepo.AllAsync().ConfigureAwait(false);
-            logger.LogDebug($"Total trucks {trucks.Count()}");
+            logger.LogDebug($"Total trucks {trucks.Count}");
 
             foreach (var truck in trucks)
             {
-                var tweets = twitterService.GetTweets(truck.Id);
+                var tweets = twitterService.GetTweets(truck.TwitName);
 
                 if (tweets != null)
                 {
@@ -44,8 +43,6 @@ namespace Wanderinglunch.Updator.Services
 
                     if (await SearchTweets(truck, tweets))
                     {
-                        // Because it's set using now it's cause #30. The update time doesn't
-                        // match the last tweet time.
                         truck.LastUpdate = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
                         await lunchContext.TruckRepo.UpdateAsync(truck).ConfigureAwait(false);
                     }
@@ -76,12 +73,12 @@ namespace Wanderinglunch.Updator.Services
                         Text = text,
                         Time = tweet.CreatedAt.GetEpochSeconds(),
                         Id = tweet.IdStr,
-                        TruckId = truck.Id,
+                        TruckId = truck.TwitName,
                     });
                 }
             }
 
-            logger.LogDebug($"Finished saving {truck.Id} tweets");
+            logger.LogDebug($"Finished saving {truck.TwitName} tweets");
         }
 
         /// <summary>
@@ -91,7 +88,7 @@ namespace Wanderinglunch.Updator.Services
         /// <returns></returns>
         private async Task<bool> SearchTweets(Truck truck, IEnumerable<ITweet> tweets)
         {
-            logger.LogDebug($"Searching for locations for {truck.Id}");
+            logger.LogDebug($"Searching for locations for {truck.TwitName}");
             var foundLocations = false;
 
             foreach (var tweet in tweets)
@@ -104,7 +101,7 @@ namespace Wanderinglunch.Updator.Services
                         var locs = Locations.FindLocations(locations, truck.Site, text);
                         if (locs.Count > 0)
                         {
-                            logger.LogDebug($"Locations found {truck.Id}");
+                            logger.LogDebug($"Locations found {truck.TwitName}");
                             foundLocations = true;
 
                             foreach (var l in locs)
@@ -115,7 +112,7 @@ namespace Wanderinglunch.Updator.Services
                                 {
                                     await lunchContext.SpotRepo.CreateAsync(new Spot
                                     {
-                                        TruckId = truck.Id,
+                                        TruckId = truck.TwitName,
                                         LocationId = l.Id,
                                         TweetId = tweet.IdStr
                                     }).ConfigureAwait(false);

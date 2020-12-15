@@ -1,35 +1,28 @@
 using System.Collections.Generic;
-using System.Data;
 using System.Threading.Tasks;
-using Dapper;
-using Dapper.Contrib.Extensions;
+using PetaPoco;
 using Wanderinglunch.Data.Interfaces;
 using Wanderinglunch.Data.Models;
-using Wanderinglunch.Data.Schema;
 
 namespace Wanderinglunch.Data.Repositories
 {
     public class LocationRepo : ILocationRepo
     {
-        private readonly IDbConnection db;
+        private readonly IDatabase db;
 
-        public LocationRepo(IDbConnection db)
+        public LocationRepo(IDatabase db)
         {
             this.db = db;
         }
 
-        public IEnumerable<Location> All() => db.GetAll<Location>();
+        public List<Location> All() => db.Fetch<Location>();
 
-        public Task<IEnumerable<Location>> AllAsync(string site)
-        {
-            var sql = $@"SELECT * FROM {LocationSchema.Table} WHERE {LocationSchema.Columns.Site} = @site";
-            return db.QueryAsync<Location>(sql, new { site });
-        }
+        public Task<List<Location>> AllAsync(string site) => db.FetchAsync<Location>("WHERE site = @0", site);
 
-        public Task<int> CreateLocationAsync(Location location) => db.InsertAsync(location);
+        public Task<object> CreateLocationAsync(Location location) => db.InsertAsync(location);
 
-        public Task<Location> GetByIdAsync(int id) => db.GetAsync<Location>(id);
+        public Task<Location> GetByIdAsync(int id) => db.SingleOrDefaultAsync<Location>("WHERE id = @0", id);
 
-        public Task<bool> SaveLocationAsync(Location location) => db.UpdateAsync(location);
+        public Task<int> SaveLocationAsync(Location location) => db.UpdateAsync(location);
     }
 }

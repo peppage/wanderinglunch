@@ -13,7 +13,7 @@ namespace Wanderinglunch.Logic
         /// <param name="subs"></param>
         /// <param name="text"></param>
         /// <returns>The string after all the substitions</returns>
-        public static string DoSubstitions(IEnumerable<Sub> subs, string text)
+        public static string DoSubstitions(List<Sub> subs, string text)
         {
             foreach (var sub in subs)
             {

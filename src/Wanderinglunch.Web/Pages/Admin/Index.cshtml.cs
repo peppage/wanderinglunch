@@ -24,7 +24,7 @@ namespace Wanderinglunch.Web.Pages
         public async Task<IActionResult> OnGetAsync()
         {
             var tweets = await lunchContext.TweetRepo.GetRecentAsync("nyc");
-            var subs = lunchContext.SubRepo.All();
+            var subs = await lunchContext.SubRepo.AllAsync();
 
             var locations = lunchContext.LocationRepo.All();
 
@@ -51,7 +51,7 @@ namespace Wanderinglunch.Web.Pages
 
         public async Task<IActionResult> OnPostMarkDoneAsync([FromQuery] string id)
         {
-            var tweet = lunchContext.TweetRepo.GetById(id);
+            var tweet = await lunchContext.TweetRepo.GetByIdAsync(id);
             tweet.Done = true;
             await lunchContext.TweetRepo.SaveAsync(tweet);
             return new ContentResult();

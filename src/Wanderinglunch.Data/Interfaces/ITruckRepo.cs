@@ -6,14 +6,10 @@ namespace Wanderinglunch.Data.Interfaces
 {
     public interface ITruckRepo
     {
-        Task<IEnumerable<Truck>> AllAsync(bool archived = false);
-
-        Task<IEnumerable<Truck>> AllAsync(string site, bool onlyUnarchived = false);
-
-        Task<bool> UpdateAsync(Truck truck);
-
+        Task<List<Truck>> AllAsync(bool archived = false);
+        Task<List<Truck>> AllAsync(string site, bool onlyUnarchived = false);
+        Task<int> UpdateAsync(Truck truck);
         Task<Truck> GetByIdAsync(string id);
-
-        Task<int> CreateAsync(Truck truck);
+        Task<object> CreateAsync(Truck truck);
     }
 }

@@ -1,5 +1,5 @@
-using Microsoft.Data.Sqlite;
-using System.Data;
+using PetaPoco;
+using PetaPoco.Providers;
 using Wanderinglunch.Data.Interfaces;
 using Wanderinglunch.Data.Repositories;
 
@@ -7,7 +7,7 @@ namespace Wanderinglunch.Data
 {
     public class LunchContext : ILunchContext
     {
-        private readonly IDbConnection db;
+        private readonly IDatabase db;
 
         public IUserRepo UserRepo { get; private set; }
 
@@ -27,8 +27,14 @@ namespace Wanderinglunch.Data
 
         public LunchContext(string connectionString)
         {
-            db = new SqliteConnection(connectionString);
-            Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
+            db = DatabaseConfiguration.Build()
+                .UsingConnectionString(connectionString)
+                .UsingProvider<PostgreSQLDatabaseProvider>()
+                .UsingDefaultMapper<ConventionMapper>(m =>
+                {
+                    m.InflectTableName = (inflector, TableNameAttribute) => inflector.Pluralise(inflector.Underscore(TableNameAttribute));
+                    m.InflectColumnName = (inflector, s) => inflector.Underscore(s);
+                }).Create();
 
             UserRepo = new UserRepo(db);
             TruckRepo = new TruckRepo(db);
@@ -39,5 +45,6 @@ namespace Wanderinglunch.Data
             ImageRepo = new ImageRepo(db);
             SiteRepo = new SiteRepo(db);
         }
+
     }
 }

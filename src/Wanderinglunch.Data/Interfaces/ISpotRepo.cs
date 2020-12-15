@@ -6,10 +6,8 @@ namespace Wanderinglunch.Data.Interfaces
 {
     public interface ISpotRepo
     {
-        Task<int> CreateAsync(Spot spot);
-
-        IEnumerable<FullSpot> Get(string site, int hours = 8);
-
+        Task<object> CreateAsync(Spot spot);
+        List<FullSpot> Get(string site, int hours = 8);
         Spot GetByTweetAndLocation(string tweetId, long locationId);
     }
 }

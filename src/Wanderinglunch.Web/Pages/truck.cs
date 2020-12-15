@@ -12,8 +12,8 @@ namespace Wanderinglunch.Web.Pages
     {
         private readonly ILunchContext lunchContext;
         public Truck Truck { get; set; }
-        public IEnumerable<Tweet> Tweets { get; set; }
-        public IEnumerable<Image> Images { get; set; }
+        public List<Tweet> Tweets { get; set; }
+        public List<Image> Images { get; set; }
 
         public TruckModel(ILunchContext lunchContext)
         {

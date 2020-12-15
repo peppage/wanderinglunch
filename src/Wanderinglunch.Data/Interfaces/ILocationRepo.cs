@@ -6,14 +6,10 @@ namespace Wanderinglunch.Data.Interfaces
 {
     public interface ILocationRepo
     {
-        IEnumerable<Location> All();
-
-        Task<IEnumerable<Location>> AllAsync(string site);
-
+        List<Location> All();
+        Task<List<Location>> AllAsync(string site);
         Task<Location> GetByIdAsync(int id);
-
-        Task<int> CreateLocationAsync(Location location);
-
-        Task<bool> SaveLocationAsync(Location loction);
+        Task<object> CreateLocationAsync(Location location);
+        Task<int> SaveLocationAsync(Location loction);
     }
 }
