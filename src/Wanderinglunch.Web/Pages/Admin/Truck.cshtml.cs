@@ -14,7 +14,7 @@ namespace Wanderinglunch.Web.Pages
         public Truck Truck { get; set; }
 
         [BindProperty]
-        public string OriginalTwitName { get; set; }
+        public string OriginalId { get; set; }
 
         [TempData]
         public string Message { get; set; }
@@ -32,7 +32,7 @@ namespace Wanderinglunch.Web.Pages
             }
             else
             {
-                OriginalTwitName = id;
+                OriginalId = id;
                 Truck = await lunchContext.TruckRepo.GetByIdAsync(id);
             }
 
@@ -48,8 +48,7 @@ namespace Wanderinglunch.Web.Pages
 
             try
             {
-
-                if (string.IsNullOrEmpty(OriginalTwitName))
+                if (string.IsNullOrEmpty(OriginalId))
                 {
                     var id = await lunchContext.TruckRepo.CreateAsync(Truck);
                     Message = "Truck created";
@@ -65,7 +64,7 @@ namespace Wanderinglunch.Web.Pages
                 Message = "Failed!";
             }
 
-            return LocalRedirect($"/admin/truck/{Truck.TwitName}");
+            return LocalRedirect($"/admin/truck/{Truck.Id}");
         }
     }
 }

@@ -61,13 +61,13 @@ namespace Wanderinglunch.Web.Pages
     {
         public bool Equals(FullSpot x, FullSpot y)
         {
-            return x.Truck.TwitName == y.Truck.TwitName
+            return x.Truck.Id == y.Truck.Id
             && x.Location.Id == y.Location.Id;
         }
 
         public int GetHashCode(FullSpot obj)
         {
-            return obj.Truck.TwitName.GetHashCode() ^
+            return obj.Truck.Id.GetHashCode() ^
                 obj.Location.Id.GetHashCode();
         }
     }

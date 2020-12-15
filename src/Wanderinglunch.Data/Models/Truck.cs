@@ -1,26 +1,29 @@
-using PetaPoco;
+using Dapper.Contrib.Extensions;
 
 namespace Wanderinglunch.Data.Models
 {
-    [PrimaryKey("twit_name")]
+    [Table("trucks")]
     public class Truck
     {
         public string Name { get; set; }
-        public string TwitName { get; set; }
 
-        private string _webURL;
-        public string WebURL
+        [ExplicitKey]
+        public string Id { get; set; }
+
+        private string _webUrl;
+
+        public string WebUrl
         {
-            get => _webURL;
+            get => _webUrl;
             set
             {
                 if (value == null)
                 {
-                    _webURL = "";
+                    _webUrl = "";
                 }
                 else
                 {
-                    _webURL = value;
+                    _webUrl = value;
                 }
             }
         }
@@ -29,6 +32,7 @@ namespace Wanderinglunch.Data.Models
         public string Type { get; set; }
 
         private string _about;
+
         public string About
         {
             get => _about;
@@ -44,6 +48,7 @@ namespace Wanderinglunch.Data.Models
                 }
             }
         }
+
         public string Foursquare { get; set; }
         public string Site { get; set; }
         public bool Archive { get; set; }

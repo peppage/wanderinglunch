@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using System.Data;
 using System.Threading.Tasks;
-using PetaPoco;
+using Dapper.Contrib.Extensions;
 using Wanderinglunch.Data.Interfaces;
 using Wanderinglunch.Data.Models;
 
@@ -8,21 +9,19 @@ namespace Wanderinglunch.Data.Repositories
 {
     public class SubRepo : ISubRepo
     {
-        private readonly IDatabase db;
+        private readonly IDbConnection db;
 
-        public SubRepo(IDatabase db)
+        public SubRepo(IDbConnection db)
         {
             this.db = db;
         }
 
-        public List<Sub> All() => db.Fetch<Sub>();
+        public IEnumerable<Sub> All() => db.GetAll<Sub>();
 
-        public Task<List<Sub>> AllAsync() => db.FetchAsync<Sub>();
+        public Task<int> CreateAsync(Sub sub) => db.InsertAsync(sub);
 
-        public Task<object> CreateAsync(Sub sub) => db.InsertAsync(sub);
+        public Sub GetById(int id) => db.Get<Sub>(id);
 
-        public Task<Sub> GetByIdAsync(int id) => db.SingleOrDefaultAsync<Sub>("WHERE id = @0", id);
-
-        public Task<int> SaveAsync(Sub sub) => db.UpdateAsync(sub);
+        public Task<bool> SaveAsync(Sub sub) => db.UpdateAsync(sub);
     }
 }

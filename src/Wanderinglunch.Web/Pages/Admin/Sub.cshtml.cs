@@ -21,7 +21,7 @@ namespace Wanderinglunch.Web.Pages
             this.lunchContext = lunchContext;
         }
 
-        public async Task<IActionResult> OnGetAsync(int id)
+        public IActionResult OnGet(int id)
         {
             if (id == 0)
             {
@@ -29,7 +29,7 @@ namespace Wanderinglunch.Web.Pages
             }
             else
             {
-                Sub = await lunchContext.SubRepo.GetByIdAsync(id);
+                Sub = lunchContext.SubRepo.GetById(id);
             }
             return Page();
         }

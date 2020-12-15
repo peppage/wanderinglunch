@@ -88,7 +88,6 @@ namespace Wanderinglunch.Web
                 // app.UseHsts();
             }
 
-            //app.UseRollbarMiddleware();
             app.UseStatusCodePages();
             app.UseStatusCodePagesWithReExecute("/Status{0}");
             //app.UseHttpsRedirection();

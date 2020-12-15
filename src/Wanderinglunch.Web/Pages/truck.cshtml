@@ -27,12 +27,12 @@
 }
 
 <h3>@Model.Truck.Name Links</h3>
-@if (!string.IsNullOrEmpty(Model.Truck.WebURL))
+@if (!string.IsNullOrEmpty(Model.Truck.WebUrl))
 {
-    <a href="@Model.Truck.WebURL" target="_blank">Website</a>
+    <a href="@Model.Truck.WebUrl" target="_blank">Website</a>
     <br>
 }
-<a href="https://twitter.com/@Model.Truck.TwitName" target="_blank">Twitter</a>
+<a href="https://twitter.com/@Model.Truck.Id" target="_blank">Twitter</a>
 <br>
 @if (!string.IsNullOrEmpty(Model.Truck.Foursquare))
 {
@@ -49,7 +49,7 @@
         {
             <li class="tweetList__tweet">
                 <p>
-                    <a href="http://twitter.com/@Model.Truck.TwitName/status/@tweet.Id" target="_blank">
+                    <a href="http://twitter.com/@Model.Truck.Id/status/@tweet.Id" target="_blank">
                         <img src="/images/twitter.png" style="height: 20px;">
                     </a>
                     @tweet.Text

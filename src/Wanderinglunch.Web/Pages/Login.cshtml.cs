@@ -54,7 +54,7 @@ namespace Wanderinglunch.Web.Pages
                 return Page();
             }
 
-            var user = await lunchContext.UserRepo.GetByEmailAsync(Input.Email);
+            var user = lunchContext.UserRepo.GetByEmail(Input.Email);
 
             if (user != null && BCrypt.Net.BCrypt.Verify(Input.Password, user.Password))
             {

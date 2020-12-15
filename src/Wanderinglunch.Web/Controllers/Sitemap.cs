@@ -26,7 +26,7 @@ namespace Wanderinglunch.Web.Controllers
 
                 foreach (var truck in await lunchContext.TruckRepo.AllAsync(site.Name))
                 {
-                    map += $"http://wanderinglunch.com/truck/{truck.TwitName}\n";
+                    map += $"http://wanderinglunch.com/truck/{truck.Id}\n";
                 }
             }
 

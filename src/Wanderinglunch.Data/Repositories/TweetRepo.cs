@@ -1,45 +1,54 @@
 using System.Collections.Generic;
+using System.Data;
 using System.Threading.Tasks;
-using PetaPoco;
+using Dapper;
+using Dapper.Contrib.Extensions;
 using Wanderinglunch.Data.Interfaces;
 using Wanderinglunch.Data.Models;
+using Wanderinglunch.Data.Schema;
 
 namespace Wanderinglunch.Data.Repositories
 {
     public class TweetRepo : ITweetRepo
     {
-        private readonly IDatabase db;
+        private readonly IDbConnection db;
 
-        public TweetRepo(IDatabase db)
+        public TweetRepo(IDbConnection db)
         {
             this.db = db;
         }
 
         public void Create(Tweet tweet) => db.Insert(tweet);
 
-        public Task SaveAsync(Tweet tweet) => db.SaveAsync(tweet);
+        public Task SaveAsync(Tweet tweet) => db.UpdateAsync(tweet);
 
-        public Task<Tweet> GetByIdAsync(string id) => db.SingleOrDefaultAsync<Tweet>("WHERE id = @0", id);
-
-        public Task<List<Tweet>> GetByTruckIdAsync(string id) => db.FetchAsync<Tweet>("WHERE truck_id = @0 ORDER BY time DESC", id);
-
-        public Task<List<Tweet>> GetRecentAsync(string site, bool includeNotDone = false, int amount = 35)
+        public Task<IEnumerable<Tweet>> GetByTruckIdAsync(string id)
         {
-            var sql = PetaPoco.Sql.Builder
-                .Append("SELECT * FROM tweets")
-                .Append("LEFT JOIN trucks ON tweets.truck_id = trucks.twit_name")
-                .Append("WHERE site = @0", site);
+            var sql = $@"SELECT * FROM {TweetSchema.Table} WHERE {TweetSchema.Columns.TruckId} = @id ORDER BY {TweetSchema.Columns.Time} DESC";
+            return db.QueryAsync<Tweet>(sql, new { id });
+        }
+
+        public Task<IEnumerable<Tweet>> GetRecentAsync(string site, bool includeNotDone = false, int amount = 35)
+        {
+            var dynamicParams = new DynamicParameters();
+
+            var sql = $@"SELECT * FROM {TweetSchema.Table} LEFT JOIN {TruckSchema.Table}
+                        ON {TweetSchema.Columns.TruckId} = {TruckSchema.Columns.Id}
+                        WHERE {TruckSchema.Columns.Site} = @site ";
+            dynamicParams.Add("site", site);
 
             if (!includeNotDone)
             {
-                sql.Append("AND done = @0", false);
+                sql += $@"AND {TweetSchema.Columns.Done} = @done ";
+                dynamicParams.Add("done", false);
             }
 
-            sql.Append("ORDER BY time DESC LIMIT @0", amount);
+            sql += $@"ORDER BY {TweetSchema.Columns.Time} DESC LIMIT @limit";
+            dynamicParams.Add("limit", amount);
 
-            return db.FetchAsync<Tweet>(sql);
+            return db.QueryAsync<Tweet>(sql, dynamicParams);
         }
 
-        public Tweet GetById(string id) => db.SingleOrDefault<Tweet>("WHERE id = @0", id);
+        public Tweet GetById(string id) => db.Get<Tweet>(id);
     }
 }

@@ -16,21 +16,8 @@ You can pretty much follow [this guide](https://plusbryan.com/my-first-5-minutes
 
 ---
 
-- The site needs a Postgres database to run.
-- Feel free to add local trust to psql if you're lazy
-
-1.  sudo vi /etc/postgresql/9.4/main/pg_hba.conf
-    - `host all all 127.0.0.1/32 trust`
-
-## Add user to databse
-
-1. su postgres
-1. createuser USERNAME
-
----
-
 - All Secrets are stored in a appsettings.json files next to the exe for ease and that's how dotnet does it.
-- I cross compile the site on windows and drop the exe onto the server
+- I cross compile the site on windows and drop the exe onto the server OR use the included publish profiles
   `dotnet publish -r linux-x64 -c Release`
   
 ## Other version
