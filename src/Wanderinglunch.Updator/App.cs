@@ -12,9 +12,9 @@ namespace Wanderinglunch.Updator
             this.updateService = updateService;
         }
 
-        public async Task Run()
+        public void Run()
         {
-            await updateService.Run();
+            updateService.Run();
         }
     }
 }

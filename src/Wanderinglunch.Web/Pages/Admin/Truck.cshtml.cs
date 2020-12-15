@@ -48,7 +48,6 @@ namespace Wanderinglunch.Web.Pages
 
             try
             {
-
                 if (string.IsNullOrEmpty(OriginalTwitName))
                 {
                     var id = await lunchContext.TruckRepo.CreateAsync(Truck);
@@ -56,7 +55,7 @@ namespace Wanderinglunch.Web.Pages
                 }
                 else
                 {
-                    await lunchContext.TruckRepo.UpdateAsync(Truck);
+                    lunchContext.TruckRepo.Update(Truck);
                     Message = "Updated truck";
                 }
             }

@@ -17,10 +17,7 @@ namespace Wanderinglunch.Data.Repositories
             this.db = db;
         }
 
-        public Task<object> CreateAsync(Spot spot)
-        {
-            return db.InsertAsync(spot);
-        }
+        public object Create(Spot spot) => db.Insert(spot);
 
         public List<FullSpot> Get(string site, int hours = 8)
         {

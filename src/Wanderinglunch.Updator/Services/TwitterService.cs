@@ -63,6 +63,6 @@ namespace Wanderinglunch.Updator.Services
             return new List<ITweet>();
         }
 
-        private bool ShouldSendErrorNotification(TwitterException ex) => ex.StatusCode != 503;
+        private static bool ShouldSendErrorNotification(TwitterException ex) => ex.StatusCode != 503;
     }
 }

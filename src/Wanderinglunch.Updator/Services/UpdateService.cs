@@ -28,9 +28,9 @@ namespace Wanderinglunch.Updator.Services
             locations = lunchContext.LocationRepo.All();
         }
 
-        public async Task Run()
+        public void Run()
         {
-            var trucks = await lunchContext.TruckRepo.AllAsync().ConfigureAwait(false);
+            var trucks = lunchContext.TruckRepo.All();
             logger.LogDebug($"Total trucks {trucks.Count}");
 
             foreach (var truck in trucks)
@@ -41,10 +41,10 @@ namespace Wanderinglunch.Updator.Services
                 {
                     SaveTweets(truck, tweets);
 
-                    if (await SearchTweets(truck, tweets))
+                    if (SearchTweets(truck, tweets))
                     {
                         truck.LastUpdate = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-                        await lunchContext.TruckRepo.UpdateAsync(truck).ConfigureAwait(false);
+                        lunchContext.TruckRepo.Update(truck);
                     }
                 }
             }
@@ -86,7 +86,7 @@ namespace Wanderinglunch.Updator.Services
         /// </summary>
         /// <param name="tweets"></param>
         /// <returns></returns>
-        private async Task<bool> SearchTweets(Truck truck, IEnumerable<ITweet> tweets)
+        private bool SearchTweets(Truck truck, IEnumerable<ITweet> tweets)
         {
             logger.LogDebug($"Searching for locations for {truck.TwitName}");
             var foundLocations = false;
@@ -110,12 +110,12 @@ namespace Wanderinglunch.Updator.Services
 
                                 if (oldSpot == null)
                                 {
-                                    await lunchContext.SpotRepo.CreateAsync(new Spot
+                                    lunchContext.SpotRepo.Create(new Spot
                                     {
                                         TruckId = truck.TwitName,
                                         LocationId = l.Id,
                                         TweetId = tweet.IdStr
-                                    }).ConfigureAwait(false);
+                                    });
                                 }
                             }
                         }

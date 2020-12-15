@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.6.9
--- Dumped by pg_dump version 9.6.9
+-- Dumped from database version 12.5 (Ubuntu 12.5-0ubuntu0.20.04.1)
+-- Dumped by pg_dump version 12.5 (Ubuntu 12.5-0ubuntu0.20.04.1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -12,26 +12,13 @@ SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
+SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
---
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
---
-
-CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
-
-
---
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
---
-
-COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
-
-
 SET default_tablespace = '';
 
-SET default_with_oids = false;
+SET default_table_access_method = heap;
 
 --
 -- Name: images; Type: TABLE; Schema: public; Owner: mca
@@ -92,8 +79,8 @@ ALTER SEQUENCE public.locations_id_seq OWNED BY public.locations.id;
 
 CREATE TABLE public.sites (
     name text NOT NULL,
-    title text,
-    description text,
+    title text DEFAULT ''::text NOT NULL,
+    description text DEFAULT ''::text NOT NULL,
     lat double precision NOT NULL,
     long double precision NOT NULL
 );
@@ -153,18 +140,15 @@ ALTER SEQUENCE public.subs_id_seq OWNED BY public.subs.id;
 --
 
 CREATE TABLE public.trucks (
-    id text NOT NULL,
     name text NOT NULL,
-    twitname text NOT NULL,
-    weburl text DEFAULT ''::text NOT NULL,
-    tweet text DEFAULT ''::text NOT NULL,
+    twit_name text NOT NULL,
+    web_url text DEFAULT ''::text NOT NULL,
     retweeted boolean DEFAULT false NOT NULL,
-    lastupdate bigint DEFAULT 0 NOT NULL,
+    last_update bigint DEFAULT 0 NOT NULL,
     type text DEFAULT ''::text NOT NULL,
     about text DEFAULT ''::text NOT NULL,
     foursquare text DEFAULT ''::text NOT NULL,
     site text NOT NULL,
-    locs bigint[],
     archive boolean DEFAULT false NOT NULL
 );
 
@@ -179,7 +163,6 @@ CREATE TABLE public.tweets (
     text text NOT NULL,
     "time" bigint NOT NULL,
     id text NOT NULL,
-    retweeted boolean NOT NULL,
     truck_id text NOT NULL,
     done boolean DEFAULT false NOT NULL
 );
@@ -272,19 +255,11 @@ ALTER TABLE ONLY public.subs
 
 
 --
--- Name: trucks trucks_id_key; Type: CONSTRAINT; Schema: public; Owner: mca
---
-
-ALTER TABLE ONLY public.trucks
-    ADD CONSTRAINT trucks_id_key UNIQUE (id);
-
-
---
 -- Name: trucks trucks_pkey; Type: CONSTRAINT; Schema: public; Owner: mca
 --
 
 ALTER TABLE ONLY public.trucks
-    ADD CONSTRAINT trucks_pkey PRIMARY KEY (twitname);
+    ADD CONSTRAINT trucks_pkey PRIMARY KEY (twit_name);
 
 
 --
@@ -316,7 +291,7 @@ ALTER TABLE ONLY public.users
 --
 
 ALTER TABLE ONLY public.images
-    ADD CONSTRAINT images_truck_id_fkey FOREIGN KEY (truck_id) REFERENCES public.trucks(twitname);
+    ADD CONSTRAINT images_truck_id_fkey FOREIGN KEY (truck_id) REFERENCES public.trucks(twit_name);
 
 
 --
@@ -332,7 +307,7 @@ ALTER TABLE ONLY public.spots
 --
 
 ALTER TABLE ONLY public.spots
-    ADD CONSTRAINT spots_truck_id_fkey FOREIGN KEY (truck_id) REFERENCES public.trucks(twitname);
+    ADD CONSTRAINT spots_truck_id_fkey FOREIGN KEY (truck_id) REFERENCES public.trucks(twit_name);
 
 
 --
@@ -348,7 +323,7 @@ ALTER TABLE ONLY public.spots
 --
 
 ALTER TABLE ONLY public.tweets
-    ADD CONSTRAINT tweets_truck_id_fkey FOREIGN KEY (truck_id) REFERENCES public.trucks(twitname);
+    ADD CONSTRAINT tweets_truck_id_fkey FOREIGN KEY (truck_id) REFERENCES public.trucks(twit_name);
 
 
 --

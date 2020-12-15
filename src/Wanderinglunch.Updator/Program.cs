@@ -17,22 +17,17 @@ namespace Wanderinglunch.Updator
         {
             try
             {
-                MainAsync().GetAwaiter().GetResult();
+                var serviceCollection = new ServiceCollection();
+                ConfigureServices(serviceCollection);
+
+                var serviceProvider = serviceCollection.BuildServiceProvider();
+
+                serviceProvider.GetService<App>().Run();
             }
             finally
             {
                 Log.CloseAndFlush();
             }
-        }
-
-        private static async Task MainAsync()
-        {
-            var serviceCollection = new ServiceCollection();
-            ConfigureServices(serviceCollection);
-
-            var serviceProvider = serviceCollection.BuildServiceProvider();
-
-            await serviceProvider.GetService<App>().Run();
         }
 
         public static void ConfigureServices(IServiceCollection serviceCollection)
