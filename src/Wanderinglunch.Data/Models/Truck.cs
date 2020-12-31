@@ -9,6 +9,7 @@ namespace Wanderinglunch.Data.Models
         public string TwitName { get; set; }
 
         private string _webURL;
+
         public string WebURL
         {
             get => _webURL;
@@ -29,6 +30,7 @@ namespace Wanderinglunch.Data.Models
         public string Type { get; set; }
 
         private string _about;
+
         public string About
         {
             get => _about;
@@ -44,7 +46,25 @@ namespace Wanderinglunch.Data.Models
                 }
             }
         }
-        public string Foursquare { get; set; }
+
+        private string _foursquare;
+
+        public string Foursquare
+        {
+            get => _foursquare;
+            set
+            {
+                if (value == null)
+                {
+                    _foursquare = "";
+                }
+                else
+                {
+                    _foursquare = value;
+                }
+            }
+        }
+
         public string Site { get; set; }
         public bool Archive { get; set; }
     }
