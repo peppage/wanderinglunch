@@ -51,11 +51,11 @@ namespace Wanderinglunch.Updator.Services
             {
                 if (ShouldSendErrorNotification(ex))
                 {
-                    logger.LogError(ex, "Twitter", new
+                    logger.LogError(ex, $"{ex.TwitterExceptionInfos.FirstOrDefault()?.Message} - {id}", new
                     {
                         TruckId = id,
                         StatusCode = ex.StatusCode,
-                        Twitter = ex.TwitterExceptionInfos.First().Message,
+                        Twitter = ex.TwitterExceptionInfos.FirstOrDefault()?.Message,
                     });
                 }
             }
