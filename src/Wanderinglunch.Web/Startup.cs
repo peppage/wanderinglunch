@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Sentry;
 using Serilog;
 using Serilog.Events;
 using Wanderinglunch.Data;
@@ -33,7 +32,7 @@ namespace Wanderinglunch.Web
                 {
                     o.MinimumBreadcrumbLevel = LogEventLevel.Debug;
                     o.MinimumEventLevel = LogEventLevel.Error;
-                    o.Dsn = new Dsn(dsn);
+                    o.Dsn = dsn;
                     o.AttachStacktrace = true;
                 })
                 .CreateLogger();

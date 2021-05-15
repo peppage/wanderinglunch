@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Sentry;
 using Serilog;
 using Serilog.Events;
 using System;
@@ -52,7 +51,7 @@ namespace Wanderinglunch.Updator
                 {
                     o.MinimumBreadcrumbLevel = LogEventLevel.Debug;
                     o.MinimumEventLevel = LogEventLevel.Error;
-                    o.Dsn = new Dsn(dsn);
+                    o.Dsn = dsn;
                     o.AttachStacktrace = true;
                 })
                 .CreateLogger();
