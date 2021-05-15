@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Tweetinvi.Models;
 using Wanderinglunch.Data;
 using Wanderinglunch.Data.Models;
@@ -28,14 +29,14 @@ namespace Wanderinglunch.Updator.Services
             locations = lunchContext.LocationRepo.All();
         }
 
-        public void Run()
+        public async Task RunAsync()
         {
             var trucks = lunchContext.TruckRepo.All();
             logger.LogDebug($"Total trucks {trucks.Count()}");
 
             foreach (var truck in trucks)
             {
-                var tweets = twitterService.GetTweets(truck.Id);
+                var tweets = await twitterService.GetTweetsAsync(truck.Id);
 
                 if (tweets != null)
                 {
@@ -71,7 +72,7 @@ namespace Wanderinglunch.Updator.Services
                     lunchContext.TweetRepo.Create(new Tweet
                     {
                         Text = text,
-                        Time = tweet.CreatedAt.GetEpochSeconds(),
+                        Time = tweet.CreatedAt.ToUnixTimeSeconds(),
                         Id = tweet.IdStr,
                         TruckId = truck.Id,
                     });

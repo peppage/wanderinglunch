@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Tweetinvi;
 using Tweetinvi.Exceptions;
 using Tweetinvi.Models;
@@ -13,28 +14,50 @@ namespace Wanderinglunch.Updator.Services
     public class TwitterService : ITwitterService
     {
         private readonly ILogger logger;
+        private TwitterClient twitterClient;
+        private readonly ConsumerOnlyCredentials consumerOnlyCredentials;
 
         public TwitterService(IConfigurationRoot config, ILogger<TwitterService> logger)
         {
             var twitterConfig = config.GetSection("twitter");
             var consumerKey = twitterConfig.GetValue<string>("ConsumerKey");
             var consumerSecret = twitterConfig.GetValue<string>("ConsumerSecret");
-            ExceptionHandler.SwallowWebExceptions = false;
 
             this.logger = logger;
 
-            Auth.SetApplicationOnlyCredentials(consumerKey, consumerSecret, true);
+            consumerOnlyCredentials = new ConsumerOnlyCredentials(consumerKey, consumerSecret);
         }
 
-        public IEnumerable<ITweet> GetTweets(string id)
+        private async Task SetupTwitterClientAsync()
+        {
+            if (twitterClient == null)
+            {
+                var tempClient = new TwitterClient(consumerOnlyCredentials);
+                var bearerToken = await tempClient.Auth.CreateBearerTokenAsync();
+
+                var appCredentials = new ConsumerOnlyCredentials(consumerOnlyCredentials.ConsumerKey, consumerOnlyCredentials.ConsumerSecret)
+                {
+                    BearerToken = bearerToken
+                };
+
+                twitterClient = new TwitterClient(appCredentials);
+                logger.LogDebug("Setting up twitter client");
+            }
+        }
+
+        public async Task<IEnumerable<ITweet>> GetTweetsAsync(string id)
         {
             try
             {
-                var user = User.GetUserFromScreenName(id);
-                return user.GetUserTimeline(new UserTimelineParameters
+                await SetupTwitterClientAsync();
+
+                var parameters = new GetUserTimelineParameters(id)
                 {
-                    IncludeRTS = false,
-                });
+                    IncludeRetweets = false,
+                    ExcludeReplies = true
+                };
+
+                return await twitterClient.Timelines.GetUserTimelineAsync(parameters);
             }
             catch (ArgumentException ex)
             {

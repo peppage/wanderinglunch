@@ -15,6 +15,11 @@ namespace Wanderinglunch.Updator
     {
         public static void Main(string[] args)
         {
+            MainAsync().GetAwaiter().GetResult();
+        }
+
+        private static async Task MainAsync()
+        {
             try
             {
                 var serviceCollection = new ServiceCollection();
@@ -22,7 +27,7 @@ namespace Wanderinglunch.Updator
 
                 var serviceProvider = serviceCollection.BuildServiceProvider();
 
-                serviceProvider.GetService<App>().Run();
+                await serviceProvider.GetService<App>().RunAsync();
             }
             finally
             {

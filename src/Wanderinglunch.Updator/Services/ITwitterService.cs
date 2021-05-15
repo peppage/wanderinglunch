@@ -1,10 +1,11 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Tweetinvi.Models;
 
 namespace Wanderinglunch.Updator.Services
 {
     public interface ITwitterService
     {
-        IEnumerable<ITweet> GetTweets(string id);
+        Task<IEnumerable<ITweet>> GetTweetsAsync(string id);
     }
 }

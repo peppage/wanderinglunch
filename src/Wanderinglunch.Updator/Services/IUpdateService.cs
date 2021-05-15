@@ -4,6 +4,6 @@ namespace Wanderinglunch.Updator.Services
 {
     public interface IUpdateService
     {
-        void Run();
+        Task RunAsync();
     }
 }
