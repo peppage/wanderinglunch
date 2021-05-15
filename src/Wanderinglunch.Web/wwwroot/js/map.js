@@ -41,7 +41,7 @@ function setMarkers(map, locations) {
 		var existingMarker = getMarkerAt(myLatLng)
 
 		if (existingMarker != null) {
-			existingMarker.infoWindowContent += '<a href="/truck/' + loc.truck.twitname + '" />' + loc.truck.name + '</a><br>'
+			existingMarker.infoWindowContent += '<a href="/truck/' + loc.truck.id + '" />' + loc.truck.name + '</a><br>'
 		} else {
 			var marker = new google.maps.Marker({
 				position: myLatLng,
@@ -49,9 +49,9 @@ function setMarkers(map, locations) {
 				zIndex: 1,
 				infoWindowContent: render(
 					loc.location.display,
-					'<a href="/truck/' + loc.truck.twitname + '" />' + loc.truck.name + '</a><br>'
+					'<a href="/truck/' + loc.truck.id + '" />' + loc.truck.name + '</a><br>'
 				),
-				id: loc.truck.twitname
+				id: loc.truck.id
 			})
 
 			markers.push(marker)

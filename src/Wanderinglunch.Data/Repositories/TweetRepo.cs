@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using PetaPoco;
+using Dapper;
+using Npgsql;
 using Wanderinglunch.Data.Interfaces;
 using Wanderinglunch.Data.Models;
 
@@ -8,38 +9,75 @@ namespace Wanderinglunch.Data.Repositories
 {
     public class TweetRepo : ITweetRepo
     {
-        private readonly IDatabase db;
+        private readonly string connString;
 
-        public TweetRepo(IDatabase db)
+        public TweetRepo(string connString)
         {
-            this.db = db;
+            this.connString = connString;
         }
 
-        public void Create(Tweet tweet) => db.Insert(tweet);
-
-        public Task SaveAsync(Tweet tweet) => db.SaveAsync(tweet);
-
-        public Task<Tweet> GetByIdAsync(string id) => db.SingleOrDefaultAsync<Tweet>("WHERE id = @0", id);
-
-        public Task<List<Tweet>> GetByTruckIdAsync(string id) => db.FetchAsync<Tweet>("WHERE truck_id = @0 ORDER BY time DESC", id);
-
-        public Task<List<Tweet>> GetRecentAsync(string site, bool includeNotDone = false, int amount = 35)
+        public void Create(Tweet tweet)
         {
-            var sql = PetaPoco.Sql.Builder
-                .Append("SELECT * FROM tweets")
-                .Append("LEFT JOIN trucks ON tweets.truck_id = trucks.twit_name")
-                .Append("WHERE site = @0", site);
+            using var conn = new NpgsqlConnection(connString);
+            conn.Open();
+            const string sql = @"INSERT INTO tweets
+                        (text, time, id, truck_id, done)
+                        VALUES
+                        (@Text, @Time, @Id, @TruckId, @Done)";
+            conn.Execute(sql, tweet);
+        }
+
+        public async Task SaveAsync(Tweet tweet)
+        {
+            await using var conn = new NpgsqlConnection(connString);
+            await conn.OpenAsync();
+            const string sql = @"UPDATE tweets SET
+                        (text, time, id, truck_id, done) = (@Text, @Time, @Id, @TruckId, @Done)
+                        WHERE
+                        id = @Id";
+            await conn.ExecuteAsync(sql, tweet);
+        }
+
+        public async Task<Tweet> GetByIdAsync(string id)
+        {
+            await using var conn = new NpgsqlConnection(connString);
+            await conn.OpenAsync();
+            return await conn.QueryFirstAsync<Tweet>("SELECT * FROM tweets WHERE id=@id", new { id });
+        }
+
+        public async Task<IEnumerable<Tweet>> GetByTruckIdAsync(string id)
+        {
+            await using var conn = new NpgsqlConnection(connString);
+            await conn.OpenAsync();
+            return await conn.QueryAsync<Tweet>("SELECT * FROM tweets WHERE truck_id=@id ORDER BY time DESC", new { id });
+        }
+
+        public async Task<IEnumerable<Tweet>> GetRecentAsync(string site, bool includeNotDone = false, int amount = 35)
+        {
+            await using var conn = new NpgsqlConnection(connString);
+            await conn.OpenAsync();
+
+            var sql = "SELECT * FROM tweets LEFT JOIN trucks ON tweets.truck_id = trucks.id WHERE site = @site ";
+            var dynamicParams = new DynamicParameters();
+            dynamicParams.Add("site", site);
 
             if (!includeNotDone)
             {
-                sql.Append("AND done = @0", false);
+                sql += "AND done = @done ";
+                dynamicParams.Add("done", false);
             }
 
-            sql.Append("ORDER BY time DESC LIMIT @0", amount);
+            sql += "ORDER BY time DESC LIMIT @limit";
+            dynamicParams.Add("limit", amount);
 
-            return db.FetchAsync<Tweet>(sql);
+            return await conn.QueryAsync<Tweet>(sql, dynamicParams);
         }
 
-        public Tweet GetById(string id) => db.SingleOrDefault<Tweet>("WHERE id = @0", id);
+        public Tweet GetById(string id)
+        {
+            using var conn = new NpgsqlConnection(connString);
+            conn.Open();
+            return conn.QueryFirstOrDefault<Tweet>("SELECT * FROM tweets WHERE id=@id", new { id });
+        }
     }
 }

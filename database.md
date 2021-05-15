@@ -82,3 +82,7 @@ alter table tweets drop column retweeted;
 alter table trucks drop column locs;
 alter table trucks drop column tweet;
 alter table trucks drop column id;
+
+# 7.0.0
+
+alter table trucks rename column twitname to id;

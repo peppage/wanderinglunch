@@ -141,7 +141,7 @@ ALTER SEQUENCE public.subs_id_seq OWNED BY public.subs.id;
 
 CREATE TABLE public.trucks (
     name text NOT NULL,
-    twit_name text NOT NULL,
+    id text NOT NULL,
     web_url text DEFAULT ''::text NOT NULL,
     retweeted boolean DEFAULT false NOT NULL,
     last_update bigint DEFAULT 0 NOT NULL,
@@ -259,7 +259,7 @@ ALTER TABLE ONLY public.subs
 --
 
 ALTER TABLE ONLY public.trucks
-    ADD CONSTRAINT trucks_pkey PRIMARY KEY (twit_name);
+    ADD CONSTRAINT trucks_pkey PRIMARY KEY (id);
 
 
 --
@@ -291,7 +291,7 @@ ALTER TABLE ONLY public.users
 --
 
 ALTER TABLE ONLY public.images
-    ADD CONSTRAINT images_truck_id_fkey FOREIGN KEY (truck_id) REFERENCES public.trucks(twit_name);
+    ADD CONSTRAINT images_truck_id_fkey FOREIGN KEY (truck_id) REFERENCES public.trucks(id);
 
 
 --
@@ -307,7 +307,7 @@ ALTER TABLE ONLY public.spots
 --
 
 ALTER TABLE ONLY public.spots
-    ADD CONSTRAINT spots_truck_id_fkey FOREIGN KEY (truck_id) REFERENCES public.trucks(twit_name);
+    ADD CONSTRAINT spots_truck_id_fkey FOREIGN KEY (truck_id) REFERENCES public.trucks(id);
 
 
 --
@@ -323,7 +323,7 @@ ALTER TABLE ONLY public.spots
 --
 
 ALTER TABLE ONLY public.tweets
-    ADD CONSTRAINT tweets_truck_id_fkey FOREIGN KEY (truck_id) REFERENCES public.trucks(twit_name);
+    ADD CONSTRAINT tweets_truck_id_fkey FOREIGN KEY (truck_id) REFERENCES public.trucks(id);
 
 
 --

@@ -6,10 +6,14 @@ namespace Wanderinglunch.Data.Interfaces
 {
     public interface ISubRepo
     {
-        List<Sub> All();
-        Task<List<Sub>> AllAsync();
+        IEnumerable<Sub> All();
+
+        Task<IEnumerable<Sub>> AllAsync();
+
         Task<Sub> GetByIdAsync(int id);
-        Task<object> CreateAsync(Sub sub);
-        Task<int> SaveAsync(Sub sub);
+
+        Task<int> CreateAsync(Sub sub);
+
+        Task<bool> SaveAsync(Sub sub);
     }
 }

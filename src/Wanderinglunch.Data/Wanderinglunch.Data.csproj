@@ -5,8 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.0.90" />
     <PackageReference Include="Npgsql" Version="5.0.1.1" />
-    <PackageReference Include="PetaPoco.Compiled" Version="6.0.459" />
   </ItemGroup>
-
 </Project>

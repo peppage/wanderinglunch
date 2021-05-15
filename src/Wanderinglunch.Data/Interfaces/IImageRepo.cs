@@ -6,7 +6,8 @@ namespace Wanderinglunch.Data.Interfaces
 {
     public interface IImageRepo
     {
-        Task<List<Image>> ByTruckIdAsync(string truckId);
-        Task<List<Image>> GetMenusAsync();
+        Task<IEnumerable<Image>> ByTruckIdAsync(string truckId);
+
+        Task<IEnumerable<Image>> GetMenusAsync();
     }
 }

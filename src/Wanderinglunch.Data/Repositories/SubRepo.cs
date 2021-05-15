@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using PetaPoco;
+using Dapper;
+using Npgsql;
 using Wanderinglunch.Data.Interfaces;
 using Wanderinglunch.Data.Models;
 
@@ -8,21 +9,53 @@ namespace Wanderinglunch.Data.Repositories
 {
     public class SubRepo : ISubRepo
     {
-        private readonly IDatabase db;
+        private readonly string connString;
 
-        public SubRepo(IDatabase db)
+        public SubRepo(string connString)
         {
-            this.db = db;
+            this.connString = connString;
         }
 
-        public List<Sub> All() => db.Fetch<Sub>();
+        public IEnumerable<Sub> All()
+        {
+            using var conn = new NpgsqlConnection(connString);
+            conn.Open();
+            return conn.Query<Sub>("SELECT * FROM subs");
+        }
 
-        public Task<List<Sub>> AllAsync() => db.FetchAsync<Sub>();
+        public async Task<IEnumerable<Sub>> AllAsync()
+        {
+            await using var conn = new NpgsqlConnection(connString);
+            await conn.OpenAsync();
+            return await conn.QueryAsync<Sub>("SELECT * from subs");
+        }
 
-        public Task<object> CreateAsync(Sub sub) => db.InsertAsync(sub);
+        public async Task<int> CreateAsync(Sub sub)
+        {
+            await using var conn = new NpgsqlConnection(connString);
+            await conn.OpenAsync();
+            const string sql = @"INSERT INTO subs
+                        (regex, replacement)
+                        VALUES
+                        (@Regex, @Replacement) returning id;";
+            return await conn.QuerySingleAsync<int>(sql, sub);
+        }
 
-        public Task<Sub> GetByIdAsync(int id) => db.SingleOrDefaultAsync<Sub>("WHERE id = @0", id);
+        public async Task<Sub> GetByIdAsync(int id)
+        {
+            await using var conn = new NpgsqlConnection(connString);
+            await conn.OpenAsync();
+            return await conn.QueryFirstAsync<Sub>("SELECT * FROM subs WHERE id = @id", new { id });
+        }
 
-        public Task<int> SaveAsync(Sub sub) => db.UpdateAsync(sub);
+        public async Task<bool> SaveAsync(Sub sub)
+        {
+            await using var conn = new NpgsqlConnection(connString);
+            await conn.OpenAsync();
+            const string sql = @"UPDATE subs SET
+                        (regex, replacement) = (@Regex, @Replacement)
+                        WHERE id = @Id";
+            return await conn.ExecuteAsync(sql, sub) == 1;
+        }
     }
 }

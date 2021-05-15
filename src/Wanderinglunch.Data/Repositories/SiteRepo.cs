@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using PetaPoco;
+using Dapper;
+using Npgsql;
 using Wanderinglunch.Data.Interfaces;
 using Wanderinglunch.Data.Models;
 
@@ -8,17 +9,32 @@ namespace Wanderinglunch.Data.Repositories
 {
     public class SiteRepo : ISiteRepo
     {
-        private readonly IDatabase db;
+        private readonly string connString;
 
-        public SiteRepo(IDatabase db)
+        public SiteRepo(string connString)
         {
-            this.db = db;
+            this.connString = connString;
         }
 
-        public Task<List<Site>> GetAllAsync() => db.FetchAsync<Site>();
+        public async Task<IEnumerable<Site>> GetAllAsync()
+        {
+            await using var conn = new NpgsqlConnection(connString);
+            await conn.OpenAsync();
+            return await conn.QueryAsync<Site>("SELECT * FROM sites");
+        }
 
-        public Site GetByName(string name) => db.SingleOrDefault<Site>("WHERE name = @0", name);
+        public Site GetByName(string name)
+        {
+            using var conn = new NpgsqlConnection(connString);
+            conn.Open();
+            return conn.QueryFirst<Site>("SELECT * FROM sites WHERE name = @name", new { name });
+        }
 
-        public Task<Site> GetByNameAsync(string name) => db.SingleOrDefaultAsync<Site>("WHERE name = @0", name);
+        public async Task<Site> GetByNameAsync(string name)
+        {
+            await using var conn = new NpgsqlConnection(connString);
+            await conn.OpenAsync();
+            return await conn.QueryFirstAsync<Site>("SELECT * FROM sites WHERE name = @name", new { name });
+        }
     }
 }

@@ -1,42 +1,75 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using PetaPoco;
+using Dapper;
+using Npgsql;
 using Wanderinglunch.Data.Interfaces;
 using Wanderinglunch.Data.Models;
-using Wanderinglunch.Data.Queries;
 
 namespace Wanderinglunch.Data.Repositories
 {
     public class TruckRepo : ITruckRepo
     {
-        private readonly IDatabase db;
+        private readonly string connString;
 
-        public TruckRepo(IDatabase db)
+        public TruckRepo(string connString)
         {
-            this.db = db;
+            this.connString = connString;
         }
 
-        public List<Truck> All(bool archived = false) => db.Fetch<Truck>("WHERE archive = @0", archived);
-
-        public Task<List<Truck>> AllAsync(string site, bool onlyUnarchived = true)
+        public IEnumerable<Truck> All(bool archived = false)
         {
-            var sql = Sql.Builder
-                .Append("SELECT * FROM trucks")
-                .Append("WHERE site = @0", site);
+            using var conn = new NpgsqlConnection(connString);
+            conn.Open();
+            return conn.Query<Truck>("SELECT * FROM trucks WHERE archive = @archived", new { archived });
+        }
+
+        public async Task<IEnumerable<Truck>> AllAsync(string site, bool onlyUnarchived = true)
+        {
+            await using var conn = new NpgsqlConnection(connString);
+            await conn.OpenAsync();
+
+            var sql = "SELECT * FROM trucks WHERE site = @site";
+
+            var dynamicParams = new DynamicParameters();
+            dynamicParams.Add("site", site);
 
             if (!onlyUnarchived)
             {
-                sql.Append("AND archive = @0", false);
+                sql += "AND archived = @archived";
+                dynamicParams.Add("archive", false);
             }
 
-            return db.FetchAsync<Truck>(sql);
+            return await conn.QueryAsync<Truck>(sql, dynamicParams);
         }
 
-        public Task<object> CreateAsync(Truck truck) => db.InsertAsync(truck);
+        public async Task<bool> CreateAsync(Truck truck)
+        {
+            await using var conn = new NpgsqlConnection(connString);
+            await conn.OpenAsync();
+            const string sql = @"INSERT INTO trucks
+                        (name, id, web_url, last_update, type, about, foursquare, site, archive)
+                        VALUES
+                        (@Name, @Id, @WebURL, @LastUpdate, @Type, @About, @Foursquare, @Site, @Archive)";
+            return await conn.ExecuteAsync(sql, truck) == 1;
+        }
 
-        public Task<Truck> GetByIdAsync(string id) => db.SingleOrDefaultAsync<Truck>("WHERE twit_name = @0", id);
+        public async Task<Truck> GetByIdAsync(string id)
+        {
+            await using var conn = new NpgsqlConnection(connString);
+            await conn.OpenAsync();
+            const string query = "SELECT * FROM trucks WHERE id = @id";
+            return await conn.QueryFirstOrDefaultAsync<Truck>(query, new { id });
+        }
 
-        public int Update(Truck truck) => db.Update(truck);
+        public bool Update(Truck truck)
+        {
+            using var conn = new NpgsqlConnection(connString);
+            conn.Open();
+            const string sql = @"UPDATE trucks SET
+                        (name, web_url, last_update, type, about, foursquare, site, archive) = (@Name, @WebURL, @LastUpdate, @Type, @About, @Foursquare, @Site, @Archive)
+                        WHERE
+                        id = @Id";
+            return conn.Execute(sql, truck) == 1;
+        }
     }
 }

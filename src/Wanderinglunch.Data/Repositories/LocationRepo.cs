@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using PetaPoco;
+using Dapper;
+using Npgsql;
 using Wanderinglunch.Data.Interfaces;
 using Wanderinglunch.Data.Models;
 
@@ -8,21 +9,54 @@ namespace Wanderinglunch.Data.Repositories
 {
     public class LocationRepo : ILocationRepo
     {
-        private readonly IDatabase db;
+        private readonly string connString;
 
-        public LocationRepo(IDatabase db)
+        public LocationRepo(string connString)
         {
-            this.db = db;
+            this.connString = connString;
         }
 
-        public List<Location> All() => db.Fetch<Location>();
+        public IEnumerable<Location> All()
+        {
+            using var conn = new NpgsqlConnection(connString);
+            conn.Open();
+            return conn.Query<Location>("SELECT * FROM locations");
+        }
 
-        public Task<List<Location>> AllAsync(string site) => db.FetchAsync<Location>("WHERE site = @0", site);
+        public async Task<IEnumerable<Location>> AllAsync(string site)
+        {
+            await using var conn = new NpgsqlConnection(connString);
+            await conn.OpenAsync();
+            return await conn.QueryAsync<Location>("SELECT * FROM locations WHERE site = @site", new { site });
+        }
 
-        public Task<object> CreateLocationAsync(Location location) => db.InsertAsync(location);
+        public async Task<int> CreateLocationAsync(Location location)
+        {
+            await using var conn = new NpgsqlConnection(connString);
+            await conn.OpenAsync();
+            const string sql = @"INSERT INTO locations
+                        (display, matcher, lat, long, zone, site)
+                        VALUES
+                        (@Display, @Matcher, @Lat, @Long, @Zone, @Site) returning id;";
+            return await conn.QuerySingleAsync<int>(sql, location);
+        }
 
-        public Task<Location> GetByIdAsync(int id) => db.SingleOrDefaultAsync<Location>("WHERE id = @0", id);
+        public async Task<Location> GetByIdAsync(int id)
+        {
+            await using var conn = new NpgsqlConnection(connString);
+            await conn.OpenAsync();
+            return await conn.QueryFirstAsync<Location>("SELECT * FROM locations WHERE id = @id", new { id });
+        }
 
-        public Task<int> SaveLocationAsync(Location location) => db.UpdateAsync(location);
+        public async Task<bool> SaveLocationAsync(Location location)
+        {
+            await using var conn = new NpgsqlConnection(connString);
+            await conn.OpenAsync();
+            const string sql = @"UPDATE locations SET
+                        (display, matcher, lat, long, zone, site) = (@Display, @Matcher, @Lat, @Long, @Zone, @Site)
+                        WHERE
+                        id = @Id";
+            return await conn.ExecuteAsync(sql, location) == 1;
+        }
     }
 }

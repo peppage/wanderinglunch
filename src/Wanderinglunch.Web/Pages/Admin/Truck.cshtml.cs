@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -64,7 +65,7 @@ namespace Wanderinglunch.Web.Pages
                 Message = "Failed!";
             }
 
-            return LocalRedirect($"/admin/truck/{Truck.TwitName}");
+            return LocalRedirect($"/admin/truck/{Truck.Id}");
         }
     }
 }

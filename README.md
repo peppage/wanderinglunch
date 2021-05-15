@@ -22,7 +22,7 @@ You can pretty much follow [this guide](https://plusbryan.com/my-first-5-minutes
 1.  sudo vi /etc/postgresql/9.4/main/pg_hba.conf
     - `host all all 127.0.0.1/32 trust`
 
-## Add user to databse
+## Add user to database
 
 1. su postgres
 1. createuser USERNAME

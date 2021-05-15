@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
-using PetaPoco;
+using Dapper;
+using Npgsql;
 using Wanderinglunch.Data.Interfaces;
 using Wanderinglunch.Data.Models;
 
@@ -7,15 +8,30 @@ namespace Wanderinglunch.Data.Repositories
 {
     public class UserRepo : IUserRepo
     {
-        private readonly IDatabase db;
+        private readonly string connString;
 
-        public UserRepo(IDatabase db)
+        public UserRepo(string connString)
         {
-            this.db = db;
+            this.connString = connString;
         }
 
-        public Task<object> CreateUserAsync(User user) => db.InsertAsync(user);
+        public async Task<int> CreateUserAsync(User user)
+        {
+            await using var conn = new NpgsqlConnection(connString);
+            await conn.OpenAsync();
+            const string sql = @"INSERT INTO users
+                        (email, password, admin)
+                        VALUES
+                        (@Email, @Password, @Admin) returning id;";
+            return await conn.QuerySingleAsync<int>(sql, user);
+        }
 
-        public Task<User> GetByEmailAsync(string email) => db.SingleOrDefaultAsync<User>("WHERE email = @0", email);
+        public async Task<User> GetByEmailAsync(string email)
+        {
+            await using var conn = new NpgsqlConnection(connString);
+            await conn.OpenAsync();
+            const string query = "SELECT * FROM users WHERE email = @email";
+            return await conn.QueryFirstOrDefaultAsync<User>(query, new { email });
+        }
     }
 }
