@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Wanderinglunch.Updator.Services
+namespace Wanderinglunch.Updater.Services
 {
     public interface IUpdateService
     {

@@ -7,10 +7,10 @@ using Tweetinvi.Models;
 using Wanderinglunch.Core.Entities;
 using Wanderinglunch.Data;
 using Wanderinglunch.Logic;
-using Wanderinglunch.Updator.Extensions;
+using Wanderinglunch.Updater.Extensions;
 using Location = Wanderinglunch.Core.Entities.Location;
 
-namespace Wanderinglunch.Updator.Services
+namespace Wanderinglunch.Updater.Services
 {
     public class UpdateService : IUpdateService
     {

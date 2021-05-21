@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
-using Wanderinglunch.Updator.Services;
+using Wanderinglunch.Updater.Services;
 
-namespace Wanderinglunch.Updator
+namespace Wanderinglunch.Updater
 {
     public class App
     {

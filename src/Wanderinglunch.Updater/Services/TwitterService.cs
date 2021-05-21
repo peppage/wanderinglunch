@@ -9,7 +9,7 @@ using Tweetinvi.Exceptions;
 using Tweetinvi.Models;
 using Tweetinvi.Parameters;
 
-namespace Wanderinglunch.Updator.Services
+namespace Wanderinglunch.Updater.Services
 {
     public class TwitterService : ITwitterService
     {

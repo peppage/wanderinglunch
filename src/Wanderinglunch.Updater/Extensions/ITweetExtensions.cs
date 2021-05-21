@@ -1,7 +1,7 @@
 using System;
 using Tweetinvi.Models;
 
-namespace Wanderinglunch.Updator.Extensions
+namespace Wanderinglunch.Updater.Extensions
 {
     public static class ITweetExtensions
     {

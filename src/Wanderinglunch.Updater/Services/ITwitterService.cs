@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Tweetinvi.Models;
 
-namespace Wanderinglunch.Updator.Services
+namespace Wanderinglunch.Updater.Services
 {
     public interface ITwitterService
     {

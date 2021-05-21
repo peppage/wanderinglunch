@@ -6,9 +6,9 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using Wanderinglunch.Data;
-using Wanderinglunch.Updator.Services;
+using Wanderinglunch.Updater.Services;
 
-namespace Wanderinglunch.Updator
+namespace Wanderinglunch.Updater
 {
     internal class Program
     {

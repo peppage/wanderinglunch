@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B0CA7AF7-342
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wanderinglunch.Data", "src\Wanderinglunch.Data\Wanderinglunch.Data.csproj", "{607C591B-D677-495A-A6F9-DB4D7C0F0AA7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wanderinglunch.Updator", "src\Wanderinglunch.Updator\Wanderinglunch.Updator.csproj", "{3E866755-CC2B-4D68-8CE6-24330BA308CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wanderinglunch.Updater", "src\Wanderinglunch.Updator\Wanderinglunch.Updater.csproj", "{3E866755-CC2B-4D68-8CE6-24330BA308CD}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wanderinglunch.Logic", "src\Wanderinglunch.Logic\Wanderinglunch.Logic.csproj", "{64B36FA7-A1BA-4325-9174-B2A9A308F39A}"
 EndProject
@@ -19,7 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wanderinglunch.Core", "src\Wanderinglunch.Core\Wanderinglunch.Core.csproj", "{12FF75E4-6705-4E60-96DB-8AD88D577D51}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wanderinglunch.Core", "src\Wanderinglunch.Core\Wanderinglunch.Core.csproj", "{12FF75E4-6705-4E60-96DB-8AD88D577D51}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
