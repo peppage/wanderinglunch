@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 12.5 (Ubuntu 12.5-0ubuntu0.20.04.1)
--- Dumped by pg_dump version 12.5 (Ubuntu 12.5-0ubuntu0.20.04.1)
+-- Dumped from database version 12.6 (Ubuntu 12.6-0ubuntu0.20.04.1)
+-- Dumped by pg_dump version 12.6 (Ubuntu 12.6-0ubuntu0.20.04.1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -140,8 +140,8 @@ ALTER SEQUENCE public.subs_id_seq OWNED BY public.subs.id;
 --
 
 CREATE TABLE public.trucks (
-    name text NOT NULL,
     id text NOT NULL,
+    name text NOT NULL,
     web_url text DEFAULT ''::text NOT NULL,
     retweeted boolean DEFAULT false NOT NULL,
     last_update bigint DEFAULT 0 NOT NULL,
@@ -160,9 +160,9 @@ ALTER TABLE public.trucks OWNER TO mca;
 --
 
 CREATE TABLE public.tweets (
+    id text NOT NULL,
     text text NOT NULL,
     "time" bigint NOT NULL,
-    id text NOT NULL,
     truck_id text NOT NULL,
     done boolean DEFAULT false NOT NULL
 );
