@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Wanderinglunch.Data.Models;
+using Wanderinglunch.Core.Entities;
 
 namespace Wanderinglunch.Logic
 {

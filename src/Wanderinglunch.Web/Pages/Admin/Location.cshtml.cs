@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Wanderinglunch.Data;
-using Wanderinglunch.Data.Models;
+using Wanderinglunch.Core.Entities;
 
 namespace Wanderinglunch.Web.Pages
 {
@@ -43,7 +43,6 @@ namespace Wanderinglunch.Web.Pages
 
             try
             {
-
                 if (Location.Id == 0)
                 {
                     var id = await lunchContext.LocationRepo.CreateLocationAsync(Location);

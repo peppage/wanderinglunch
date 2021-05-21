@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Tweetinvi.Models;
+using Wanderinglunch.Core.Entities;
 using Wanderinglunch.Data;
-using Wanderinglunch.Data.Models;
 using Wanderinglunch.Logic;
 using Wanderinglunch.Logic.Extensions;
-using Location = Wanderinglunch.Data.Models.Location;
+using Location = Wanderinglunch.Core.Entities.Location;
 
 namespace Wanderinglunch.Updator.Services
 {

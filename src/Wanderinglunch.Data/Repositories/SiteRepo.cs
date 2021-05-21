@@ -2,8 +2,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Dapper;
 using Npgsql;
-using Wanderinglunch.Data.Interfaces;
-using Wanderinglunch.Data.Models;
+using Wanderinglunch.Core.Interfaces;
+using Wanderinglunch.Core.Entities;
 
 namespace Wanderinglunch.Data.Repositories
 {
@@ -27,7 +27,7 @@ namespace Wanderinglunch.Data.Repositories
         {
             using var conn = new NpgsqlConnection(connString);
             conn.Open();
-            return conn.QueryFirst<Site>("SELECT * FROM sites WHERE name = @name", new { name });
+            return conn.QueryFirstOrDefault<Site>("SELECT * FROM sites WHERE name = @name", new { name });
         }
 
         public async Task<Site> GetByNameAsync(string name)

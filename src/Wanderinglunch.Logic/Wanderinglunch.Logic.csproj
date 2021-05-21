@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Wanderinglunch.Core\Wanderinglunch.Core.csproj" />
     <ProjectReference Include="..\Wanderinglunch.Data\Wanderinglunch.Data.csproj" />
   </ItemGroup>
 

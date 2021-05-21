@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Wanderinglunch.Data.Models;
+using Wanderinglunch.Core.Entities;
 
 namespace Wanderinglunch.Web.ViewModels
 {

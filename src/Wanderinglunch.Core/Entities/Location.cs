@@ -1,4 +1,4 @@
-namespace Wanderinglunch.Data.Models
+namespace Wanderinglunch.Core.Entities
 {
     public class Location
     {

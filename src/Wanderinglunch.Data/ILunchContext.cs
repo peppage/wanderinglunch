@@ -1,4 +1,4 @@
-using Wanderinglunch.Data.Interfaces;
+using Wanderinglunch.Core.Interfaces;
 
 namespace Wanderinglunch.Data
 {

@@ -1,4 +1,4 @@
-namespace Wanderinglunch.Data.Models
+namespace Wanderinglunch.Core.Entities
 {
     public class Sub
     {
@@ -6,6 +6,7 @@ namespace Wanderinglunch.Data.Models
         public string Regex { get; set; }
 
         private string _replacement;
+
         public string Replacement
         {
             get => _replacement;

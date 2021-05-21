@@ -1,9 +1,9 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Dapper;
 using Npgsql;
-using Wanderinglunch.Data.Interfaces;
-using Wanderinglunch.Data.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Wanderinglunch.Core.Entities;
+using Wanderinglunch.Core.Interfaces;
 
 namespace Wanderinglunch.Data.Repositories
 {

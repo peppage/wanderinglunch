@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Wanderinglunch.Data.Models;
+using Wanderinglunch.Core.Entities;
 
-namespace Wanderinglunch.Data.Interfaces
+namespace Wanderinglunch.Core.Interfaces
 {
     public interface ISubRepo
     {

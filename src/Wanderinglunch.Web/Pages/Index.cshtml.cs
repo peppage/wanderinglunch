@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
 using System.Linq;
 using Wanderinglunch.Data;
-using Wanderinglunch.Data.Models;
+using Wanderinglunch.Core.Entities;
 using Wanderinglunch.Logic;
 
 namespace Wanderinglunch.Web.Pages
@@ -57,7 +57,7 @@ namespace Wanderinglunch.Web.Pages
         }
     }
 
-    class SpotComparer : IEqualityComparer<FullSpot>
+    internal class SpotComparer : IEqualityComparer<FullSpot>
     {
         public bool Equals(FullSpot x, FullSpot y)
         {

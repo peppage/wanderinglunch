@@ -85,4 +85,4 @@ alter table trucks drop column id;
 
 # 7.0.0
 
-alter table trucks rename column twitname to id;
+alter table trucks rename column twit_name to id;
