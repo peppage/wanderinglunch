@@ -46,7 +46,7 @@ namespace Wanderinglunch.Data.Repositories
             conn.Open();
 
             const string sql = "SELECT * FROM spots WHERE tweet_id = @tweetId AND location_id = @locationId";
-            return conn.QueryFirst<Spot>(sql, new { tweetId, locationId });
+            return conn.QueryFirstOrDefault<Spot>(sql, new { tweetId, locationId });
         }
     }
 }
