@@ -57,7 +57,7 @@ namespace Wanderinglunch.Data.Repositories
             await using var conn = new NpgsqlConnection(connString);
             await conn.OpenAsync();
 
-            var sql = "SELECT * FROM tweets LEFT JOIN trucks ON tweets.truck_id = trucks.id WHERE site = @site ";
+            var sql = "SELECT tweets.* FROM tweets LEFT JOIN trucks ON tweets.truck_id = trucks.id WHERE site = @site ";
             var dynamicParams = new DynamicParameters();
             dynamicParams.Add("site", site);
 
