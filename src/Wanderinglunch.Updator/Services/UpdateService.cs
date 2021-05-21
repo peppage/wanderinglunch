@@ -7,7 +7,7 @@ using Tweetinvi.Models;
 using Wanderinglunch.Core.Entities;
 using Wanderinglunch.Data;
 using Wanderinglunch.Logic;
-using Wanderinglunch.Logic.Extensions;
+using Wanderinglunch.Updator.Extensions;
 using Location = Wanderinglunch.Core.Entities.Location;
 
 namespace Wanderinglunch.Updator.Services
