@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using Wanderinglunch.Core.Entities;
 
 namespace Wanderinglunch.Core.Interfaces

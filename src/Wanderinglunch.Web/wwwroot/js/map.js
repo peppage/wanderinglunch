@@ -4,83 +4,83 @@ var infoWindow
 var activeMarker
 
 function initMap() {
-	map = new google.maps.Map(document.getElementById('map'), {
-		center: { lat: lat, lng: long },
-		zoom: 12
-	})
-	infoWindow = new google.maps.InfoWindow({
-		content: ''
-	})
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: { lat: lat, lng: long },
+        zoom: 12
+    })
+    infoWindow = new google.maps.InfoWindow({
+        content: ''
+    })
 
-	setMarkers(map, trucks)
-	google.maps.event.addListener(map, 'click', function() {})
-	google.maps.event.addListener(map, 'mouseover', function() {})
-	google.maps.event.addListener(map, 'mouseout', function() {})
-	google.maps.event.addListener(infoWindow, 'closeclick', function() {
-		activeMarker = null
-	})
+    setMarkers(map, trucks)
+    google.maps.event.addListener(map, 'click', function () { })
+    google.maps.event.addListener(map, 'mouseover', function () { })
+    google.maps.event.addListener(map, 'mouseout', function () { })
+    google.maps.event.addListener(infoWindow, 'closeclick', function () {
+        activeMarker = null
+    })
 }
 
 function render(display, title) {
-	return '<h3>' + display + '</h3>' + title
+    return '<h3>' + display + '</h3>' + title
 }
 
 function getMarkerAt(latLng) {
-	for (var j = 0; j < markers.length; j++) {
-		if (latLng.lat() === markers[j].position.lat() && latLng.lng() === markers[j].position.lng()) {
-			return markers[j]
-		}
-	}
+    for (var j = 0; j < markers.length; j++) {
+        if (latLng.lat() === markers[j].position.lat() && latLng.lng() === markers[j].position.lng()) {
+            return markers[j]
+        }
+    }
 }
 
 function setMarkers(map, locations) {
-	for (var i = 0; i < locations.length; i++) {
-		var loc = locations[i]
-		var myLatLng = new google.maps.LatLng(loc.location.lat, loc.location.long)
+    for (var i = 0; i < locations.length; i++) {
+        var loc = locations[i]
+        var myLatLng = new google.maps.LatLng(loc.location.lat, loc.location.long)
 
-		var existingMarker = getMarkerAt(myLatLng)
+        var existingMarker = getMarkerAt(myLatLng)
 
-		if (existingMarker != null) {
-			existingMarker.infoWindowContent += '<a href="/truck/' + loc.truck.id + '" />' + loc.truck.name + '</a><br>'
-		} else {
-			var marker = new google.maps.Marker({
-				position: myLatLng,
-				map: map,
-				zIndex: 1,
-				infoWindowContent: render(
-					loc.location.display,
-					'<a href="/truck/' + loc.truck.id + '" />' + loc.truck.name + '</a><br>'
-				),
-				id: loc.truck.id
-			})
+        if (existingMarker != null) {
+            existingMarker.infoWindowContent += '<a href="/truck/' + loc.truck.id + '" />' + loc.truck.name + '</a><br>'
+        } else {
+            var marker = new google.maps.Marker({
+                position: myLatLng,
+                map: map,
+                zIndex: 1,
+                infoWindowContent: render(
+                    loc.location.display,
+                    '<a href="/truck/' + loc.truck.id + '" />' + loc.truck.name + '</a><br>'
+                ),
+                id: loc.truck.id
+            })
 
-			markers.push(marker)
+            markers.push(marker)
 
-			google.maps.event.addListener(marker, 'click', function() {
-				if (infoWindow.getContent() != '') {
-					infoWindow.setContent('')
-					infoWindow.close()
-					activeMarker = null
-				}
+            google.maps.event.addListener(marker, 'click', function () {
+                if (infoWindow.getContent() != '') {
+                    infoWindow.setContent('')
+                    infoWindow.close()
+                    activeMarker = null
+                }
 
-				infoWindow.setContent(this.infoWindowContent)
-				infoWindow.open(map, this)
-				activeMarker = this
-			})
+                infoWindow.setContent(this.infoWindowContent)
+                infoWindow.open(map, this)
+                activeMarker = this
+            })
 
-			google.maps.event.addListener(marker, 'mouseover', function() {
-				if (activeMarker == undefined) {
-					infoWindow.setContent(this.infoWindowContent)
-					infoWindow.open(map, this)
-				}
-			})
+            google.maps.event.addListener(marker, 'mouseover', function () {
+                if (activeMarker == undefined) {
+                    infoWindow.setContent(this.infoWindowContent)
+                    infoWindow.open(map, this)
+                }
+            })
 
-			google.maps.event.addListener(marker, 'mouseout', function() {
-				if (infoWindow.getContent() === this.infoWindowContent && activeMarker != this) {
-					infoWindow.setContent('')
-					infoWindow.close()
-				}
-			})
-		}
-	}
+            google.maps.event.addListener(marker, 'mouseout', function () {
+                if (infoWindow.getContent() === this.infoWindowContent && activeMarker != this) {
+                    infoWindow.setContent('')
+                    infoWindow.close()
+                }
+            })
+        }
+    }
 }

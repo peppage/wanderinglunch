@@ -4,7 +4,7 @@
     ViewData["Title"] = $"Location {Model.Location?.Display ?? ""}";
 }
 
-@if(!string.IsNullOrEmpty(Model.Message))
+@if (!string.IsNullOrEmpty(Model.Message))
 {
     <div class="admin-message">
         @Model.Message
@@ -13,7 +13,7 @@
 
 <p>
     <a href="https://regex101.com">Regex101</a><br>
-    @if(Model.Location == null || Model.Location.Lat == 0)
+    @if (Model.Location == null || Model.Location.Lat == 0)
     {
         <a href="https://maps.google.com/">Google Maps</a>
     }

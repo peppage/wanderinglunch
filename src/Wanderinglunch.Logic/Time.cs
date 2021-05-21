@@ -40,7 +40,6 @@ namespace Wanderinglunch.Logic
             {
                 return $"{ts.Hours} hours ago";
             }
-
             else return $"{ts.Days} days ago";
         }
     }

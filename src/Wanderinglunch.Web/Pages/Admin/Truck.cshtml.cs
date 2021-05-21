@@ -1,9 +1,8 @@
-using System;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Wanderinglunch.Data;
+using System.Threading.Tasks;
 using Wanderinglunch.Core.Entities;
+using Wanderinglunch.Data;
 
 namespace Wanderinglunch.Web.Pages
 {

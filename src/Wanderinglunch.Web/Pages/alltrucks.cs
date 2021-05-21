@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Wanderinglunch.Data;
 using Wanderinglunch.Core.Entities;
+using Wanderinglunch.Data;
 using Wanderinglunch.Logic;
 
 namespace Wanderinglunch.Web.Pages

@@ -1,5 +1,5 @@
 ﻿@{
-    var title = $"{((string) ViewData["Site"]).ToUpper()} Food Truck Finder";
+    var title = $"{((string)ViewData["Site"]).ToUpper()} Food Truck Finder";
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -17,8 +17,8 @@
     <title>
         @title | @ViewData["Title"]
     </title>
-    <link rel="stylesheet" href="~/css/tobi.min.css" asp-append-version="true"/>
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/tobi.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="icon" type="image/x-icon" href="@Url.Content("~/images/favicon.ico")" />
     <link rel="icon" sizes="192x192" href="/touch-icon-192x192.png">
 </head>
@@ -28,9 +28,9 @@
             <a href="/@ViewData["Site"]">
                 <img srcset="/images/wl-sm.png 95w,
                             /images/wl.png 368w"
-                    sizes="(max-width: 450px) 95px,
+                     sizes="(max-width: 450px) 95px,
                             368px"
-                    src="/images/wl.png" alt="Wandering Lunch Logo">
+                     src="/images/wl.png" alt="Wandering Lunch Logo">
             </a>
         </div>
         <nav class="header__nav">
@@ -50,7 +50,7 @@
 
     <footer>
         <div>
-            <a href="http://twitter.com/peppage">Twitter</a> | 
+            <a href="http://twitter.com/peppage">Twitter</a> |
             <a href="https://github.com/peppage/wanderinglunch">Github</a>
         </div>
         <div>

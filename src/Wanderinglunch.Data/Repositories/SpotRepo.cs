@@ -2,8 +2,8 @@
 using Npgsql;
 using System;
 using System.Collections.Generic;
-using Wanderinglunch.Core.Interfaces;
 using Wanderinglunch.Core.Entities;
+using Wanderinglunch.Core.Interfaces;
 using Wanderinglunch.Data.Queries;
 
 namespace Wanderinglunch.Data.Repositories

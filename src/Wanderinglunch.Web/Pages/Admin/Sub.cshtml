@@ -4,7 +4,7 @@
     ViewData["Title"] = $"Location {Model.Sub?.Replacement ?? ""}";
 }
 
-@if(!string.IsNullOrEmpty(Model.Message))
+@if (!string.IsNullOrEmpty(Model.Message))
 {
     <div class="admin-message">
         @Model.Message

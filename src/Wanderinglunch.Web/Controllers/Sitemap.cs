@@ -1,5 +1,5 @@
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 using Wanderinglunch.Data;
 
 namespace Wanderinglunch.Web.Controllers
