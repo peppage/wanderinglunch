@@ -21,7 +21,7 @@ namespace Wanderinglunch.Data.Repositories
         {
             using var conn = new NpgsqlConnection(connString);
             conn.Open();
-            const string sql = @"INSERT INTO trucks
+            const string sql = @"INSERT INTO spots
                         (truck_id, location_id, tweet_id)
                         VALUES
                         (@TruckId, @LocationId, @TweetId)";
