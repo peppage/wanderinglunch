@@ -6,9 +6,9 @@ namespace Wanderinglunch.Web.Controllers
 {
     public class SitemapController : Controller
     {
-        private readonly ILunchContext lunchContext;
+        private readonly IDbContext lunchContext;
 
-        public SitemapController(ILunchContext lunchContext)
+        public SitemapController(IDbContext lunchContext)
         {
             this.lunchContext = lunchContext;
         }

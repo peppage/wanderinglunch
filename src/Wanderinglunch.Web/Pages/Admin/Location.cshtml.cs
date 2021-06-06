@@ -8,7 +8,7 @@ namespace Wanderinglunch.Web.Pages
 {
     public class LocationModel : PageModel
     {
-        private readonly ILunchContext lunchContext;
+        private readonly IDbContext lunchContext;
 
         [BindProperty]
         public Location Location { get; set; }
@@ -16,7 +16,7 @@ namespace Wanderinglunch.Web.Pages
         [TempData]
         public string Message { get; set; }
 
-        public LocationModel(ILunchContext lunchContext)
+        public LocationModel(IDbContext lunchContext)
         {
             this.lunchContext = lunchContext;
         }

@@ -2,7 +2,7 @@ using Wanderinglunch.Core.Interfaces;
 
 namespace Wanderinglunch.Data
 {
-    public interface ILunchContext
+    public interface IDbContext
     {
         IUserRepo UserRepo { get; }
         ITruckRepo TruckRepo { get; }

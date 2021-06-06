@@ -8,7 +8,7 @@ namespace Wanderinglunch.Web.Pages
 {
     public class AdminTruckModel : PageModel
     {
-        private readonly ILunchContext lunchContext;
+        private readonly IDbContext lunchContext;
 
         [BindProperty]
         public Truck Truck { get; set; }
@@ -19,7 +19,7 @@ namespace Wanderinglunch.Web.Pages
         [TempData]
         public string Message { get; set; }
 
-        public AdminTruckModel(ILunchContext lunchContext)
+        public AdminTruckModel(IDbContext lunchContext)
         {
             this.lunchContext = lunchContext;
         }

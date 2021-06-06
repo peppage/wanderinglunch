@@ -12,11 +12,11 @@ namespace Wanderinglunch.Web.Pages
     public class AllTrucksModel : PageModel
     {
         public string Site { get; set; }
-        private readonly ILunchContext lunchContext;
+        private readonly IDbContext lunchContext;
         public IEnumerable<Truck> Trucks { get; set; }
         public IEnumerable<Image> Menus { get; set; }
 
-        public AllTrucksModel(ILunchContext lunchContext)
+        public AllTrucksModel(IDbContext lunchContext)
         {
             this.lunchContext = lunchContext;
         }

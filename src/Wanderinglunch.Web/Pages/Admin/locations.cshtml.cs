@@ -12,11 +12,11 @@ namespace Wanderinglunch.Web.Pages
     [IgnoreAntiforgeryToken(Order = 1001)]
     public class LocationsModel : PageModel
     {
-        private readonly ILunchContext lunchContext;
+        private readonly IDbContext lunchContext;
 
         public IEnumerable<Location> Locations { get; set; }
 
-        public LocationsModel(ILunchContext lunchContext)
+        public LocationsModel(IDbContext lunchContext)
         {
             this.lunchContext = lunchContext;
         }

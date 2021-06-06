@@ -14,13 +14,13 @@ namespace Wanderinglunch.Updater.Services
 {
     public class UpdateService : IUpdateService
     {
-        private readonly ILunchContext lunchContext;
+        private readonly IDbContext lunchContext;
         private readonly ITwitterService twitterService;
         private readonly ILogger logger;
         private readonly IEnumerable<Sub> substitions;
         private readonly IEnumerable<Location> locations;
 
-        public UpdateService(ILunchContext lunchContext, ILogger<UpdateService> logger, ITwitterService twitterService)
+        public UpdateService(IDbContext lunchContext, ILogger<UpdateService> logger, ITwitterService twitterService)
         {
             this.lunchContext = lunchContext;
             this.twitterService = twitterService;

@@ -14,9 +14,9 @@ namespace Wanderinglunch.Web.Pages
         public IEnumerable<FullSpot> Trucks { get; set; }
         public IEnumerable<string> Zones { get; set; }
 
-        private readonly ILunchContext lunchContext;
+        private readonly IDbContext lunchContext;
 
-        public IndexModel(ILunchContext lunchContext)
+        public IndexModel(IDbContext lunchContext)
         {
             this.lunchContext = lunchContext;
         }

@@ -12,11 +12,11 @@ namespace Wanderinglunch.Web.Pages
     [IgnoreAntiforgeryToken(Order = 1001)]
     public class AdminIndexModel : PageModel
     {
-        private readonly ILunchContext lunchContext;
+        private readonly IDbContext lunchContext;
 
         public List<TweetWithLocations> Tweets { get; set; } = new List<TweetWithLocations>();
 
-        public AdminIndexModel(ILunchContext lunchContext)
+        public AdminIndexModel(IDbContext lunchContext)
         {
             this.lunchContext = lunchContext;
         }

@@ -70,7 +70,7 @@ namespace Wanderinglunch.Web
             });
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddSingleton<ILunchContext>(new LunchContext(Configuration.GetValue<string>("ConnectionString")));
+            services.AddSingleton<IDbContext>(new DbContext(Configuration.GetValue<string>("ConnectionString")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

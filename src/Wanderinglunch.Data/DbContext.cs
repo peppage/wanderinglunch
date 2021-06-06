@@ -3,7 +3,7 @@ using Wanderinglunch.Data.Repositories;
 
 namespace Wanderinglunch.Data
 {
-    public class LunchContext : ILunchContext
+    public class DbContext : IDbContext
     {
         public IUserRepo UserRepo { get; }
 
@@ -21,7 +21,7 @@ namespace Wanderinglunch.Data
 
         public ISiteRepo SiteRepo { get; }
 
-        public LunchContext(string connectionString)
+        public DbContext(string connectionString)
         {
             Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
 

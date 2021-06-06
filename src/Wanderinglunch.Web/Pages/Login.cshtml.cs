@@ -19,9 +19,9 @@ namespace Wanderinglunch.Web.Pages
         [TempData]
         public string ErrorMessage { get; set; }
 
-        private readonly ILunchContext lunchContext;
+        private readonly IDbContext lunchContext;
 
-        public LoginModel(ILunchContext lunchContext)
+        public LoginModel(IDbContext lunchContext)
         {
             this.lunchContext = lunchContext;
         }

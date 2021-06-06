@@ -12,7 +12,7 @@ namespace Wanderinglunch.Web.Pages
     [IgnoreAntiforgeryToken(Order = 1001)]
     public class TrucksModel : PageModel
     {
-        private readonly ILunchContext lunchContext;
+        private readonly IDbContext lunchContext;
 
         public IEnumerable<Truck> Trucks { get; set; }
 
@@ -21,7 +21,7 @@ namespace Wanderinglunch.Web.Pages
             public string Search { get; set; }
         }
 
-        public TrucksModel(ILunchContext lunchContext)
+        public TrucksModel(IDbContext lunchContext)
         {
             this.lunchContext = lunchContext;
         }

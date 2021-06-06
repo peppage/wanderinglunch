@@ -61,7 +61,7 @@ namespace Wanderinglunch.Updater
                 builder.AddSerilog(dispose: true);
             });
 
-            serviceCollection.AddSingleton<ILunchContext>(new LunchContext(configuration.GetConnectionString("Storage")));
+            serviceCollection.AddSingleton<IDbContext>(new DbContext(configuration.GetConnectionString("Storage")));
             serviceCollection.AddSingleton<IUpdateService, UpdateService>();
             serviceCollection.AddSingleton<ITwitterService, TwitterService>();
             serviceCollection.AddSingleton<IConfigurationRoot>(configuration);

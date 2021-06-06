@@ -8,7 +8,7 @@ namespace Wanderinglunch.Web.Pages
 {
     public class SubModel : PageModel
     {
-        private readonly ILunchContext lunchContext;
+        private readonly IDbContext lunchContext;
 
         [BindProperty]
         public Sub Sub { get; set; }
@@ -16,7 +16,7 @@ namespace Wanderinglunch.Web.Pages
         [TempData]
         public string Message { get; set; }
 
-        public SubModel(ILunchContext lunchContext)
+        public SubModel(IDbContext lunchContext)
         {
             this.lunchContext = lunchContext;
         }
