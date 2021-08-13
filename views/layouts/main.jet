@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Track and find food trucks around New York City. Updated everyday from twitter" />
+
+    <meta property="og:title" content="NYC Food Truck Finder | {{ pageTitle }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://wanderinglunch.com/" />
+    <meta property="og:image" content="https://wanderinglunch.com/images/wl.png" />
+    <meta name="theme-color" content="#48b9a3" />
+
+    <title>NYC Food Truck Finder | {{ pageTitle }}</title>
+    <link rel="stylesheet" href="/css/tobii.min.css" />
+    <link rel="stylesheet" href="/css/site.css" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" sizes="192x192" href="/touch-icon-192x192.png" />
+</head>
+    <body>
+       {{ embed() }}
+    </body>
+</html>

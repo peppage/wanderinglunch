@@ -1,0 +1,20 @@
+{{include "partials/header"}}
+
+<main>
+    <h1>
+        Subs
+    </h1>
+
+    <table class="table" style="width:100%;">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Regex</th>
+                <th>Replacement</th>
+            </tr>
+        </thead>
+        <tbody id="search-results">
+            {{include "partials/subList"}}
+        </tbody>
+    </table>
+</main>

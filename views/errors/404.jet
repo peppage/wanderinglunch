@@ -1,0 +1,7 @@
+{{include "../partials/header"}}
+
+<main>
+    <h1>404 page not found</h1>
+</main>
+
+{{include "../partials/footer"}}

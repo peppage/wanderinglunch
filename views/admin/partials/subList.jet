@@ -1,0 +1,13 @@
+{{ range sub := subs }}
+    <tr>
+        <td>
+            <a href="/admin/sub/{{.ID}}">{{.ID}}</a>
+        </td>
+        <td>
+           {{.Regex}}
+        </td>
+        <td>
+           {{.Replacement}}
+        </td>
+    </tr>
+{{end}}

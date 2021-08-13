@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NYC Food Truck Finder | Admin</title>
+    <link rel="stylesheet" href="/css/site.css" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" sizes="192x192" href="/touch-icon-192x192.png" />
+</head>
+    <body>
+       {{ embed() }}
+       <script src="/js/htmx.min.js"></script>
+    </body>
+</html>

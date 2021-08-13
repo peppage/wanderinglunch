@@ -1,0 +1,24 @@
+<header class="header">
+    <div class="header__logo">
+        <a href="/">
+            <img srcset="/images/wl-sm.png 95w,
+                        /images/wl.png 368w"
+                sizes="(max-width: 450px) 95px,
+                        368px"
+                src="/images/wl.png" alt="Wandering Lunch Logo">
+        </a>
+    </div>
+    <nav class="header__nav">
+        <ul>
+            <li>
+                <a href="/admin/trucks">Trucks</a>
+            </li>
+            <li>
+                <a href="/admin/locations">Locations</a>
+            </li>
+            <li>
+                <a href="/admin/subs">Subs</a>
+            </li>
+        </ul>
+    </nav>
+</header>

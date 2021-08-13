@@ -1,0 +1,15 @@
+{{ range truck := trucks }}
+    <tr>
+        <td>
+            <a href="/admin/truck/{{.ID}}">{{.Name}}</a>
+        </td>
+        <td>
+            {{ .LastUpdate|relativeTime }}
+        </td>
+        <td>
+            {{if .Archive}}
+                <span>Y</span>
+            {{end}}
+        </td>
+    </tr>
+{{end}}

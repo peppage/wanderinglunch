@@ -1,0 +1,52 @@
+{{include "partials/header"}}
+
+<main>
+{{ if len(spots) == 0 }}
+    <h1>Your hunger cannot be satisfied, no trucks are tweeting</h1>
+    <p>If it's late, bookmark the site and come back around lunchtime! <br></p>
+    <p>There will be a list of trucks here, <a target="_blank" href="https://twitter.com/intent/tweet?text=Wandering Lunch&url=http://wanderinglunch.com">tweet</a> at yourself so you don't forget.<br></p>
+    <p>Check out <a href="/alltrucks">a list of all the trucks</a> on the site while you wait.</p>
+{{ else }}
+    {{range zone, trucks := spots}}
+    <div class="zone">
+        <div class="zone__header">
+            <h1>{{zone}}</h1>
+        </div>
+        <div class="zone__trucks">
+            {{range spot := trucks}}
+            <div class="truck">
+                <div class="truck__name">
+                    <a href="/truck/{{ .ID}}">
+                        {{ .Name}}
+                    </a>
+                </div>
+                <div class="truck__location">
+                    {{ .LocationDisplay}}
+                </div>
+                <div>
+                    {{ .Time|relativeTime }}
+                </div>
+                <div class="truck__image">
+                    {{if .ImageSuffix }}
+                    <a href="https://irs0.4sqi.net/img/general/width900{{ .ImageSuffix}}" class="lightbox">
+                        <img src="https://irs0.4sqi.net/img/general/width30{{ .ImageSuffix}}" alt="{{ .Name}} Menu">
+                    </a>
+                    {{end}}
+                </div>
+            </div>
+            {{end}}
+        </div>
+    </div>
+    {{end}}
+{{ end }}
+
+</main>
+
+{{include "partials/footer"}}
+
+<script>
+    var tobii = new Tobii({
+        captions: false,
+        zoom: false,
+    })
+</script>

@@ -1,0 +1,10 @@
+{{ range loc := locations }}
+    <tr>
+        <td>
+            <a href="/admin/location/{{.ID}}">{{.Display}}</a>
+        </td>
+        <td>
+           {{.Zone}}
+        </td>
+    </tr>
+{{end}}

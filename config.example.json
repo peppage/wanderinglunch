@@ -1,0 +1,19 @@
+{
+    "type": "json",
+    "twitter": {
+        "consumerKey": "",
+        "consumerSecret": ""
+    },
+    "sentry": {
+        "dsn": ""
+    },
+    "database": {
+        "name": ""
+    },
+    "port": {
+        "value": "3000"
+    },
+    "debug": {
+        "on": true
+    }
+}

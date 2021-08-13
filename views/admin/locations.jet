@@ -1,0 +1,29 @@
+{{include "partials/header"}}
+
+<main>
+    <h1>
+        Locations
+        <span class="htmx-indicator">
+            Searching...
+        </span>
+    </h1>
+
+    <input class="form-control" type="text"
+        name="search" placeholder="Begin Typing To Search Locations..."
+        hx-post="/admin/locations/search"
+        hx-trigger="keyup changed delay:500ms"
+        hx-target="#search-results"
+        hx-indicator=".htmx-indicator">
+
+    <table class="table" style="width:100%;">
+        <thead>
+            <tr>
+                <th>Display</th>
+                <th>Zone</th>
+            </tr>
+        </thead>
+        <tbody id="search-results">
+            {{include "partials/locationList"}}
+        </tbody>
+    </table>
+</main>

@@ -1,0 +1,23 @@
+{{include "partials/header"}}
+
+<main>
+    {{ if error != nil}}
+        {{ error }}
+    {{ end }}
+    <form method="post">
+        <div class="form-field">
+            <label for="email"></label>
+            <input name="email" type="email" />
+        </div>
+        <div class="form-field">
+            <label for="password"></label>
+            <input name="password" type="password" />
+        </div>
+
+        <div class="form-buttons">
+            <button type="submit">Login</button>
+        </div>
+    </form>
+</main>
+
+{{include "partials/footer"}}

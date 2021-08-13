@@ -1,0 +1,30 @@
+{{include "partials/header"}}
+
+<main>
+    <h1>
+        Trucks
+        <span class="htmx-indicator">
+            Searching...
+        </span>
+    </h1>
+
+    <input class="form-control" type="text"
+        name="search" placeholder="Begin Typing To Search Trucks..."
+        hx-post="/admin/trucks/search"
+        hx-trigger="keyup changed delay:500ms"
+        hx-target="#search-results"
+        hx-indicator=".htmx-indicator">
+
+    <table class="table" style="width:100%;">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Last Updated</th>
+                <th>Archive</th>
+            </tr>
+        </thead>
+        <tbody id="search-results">
+            {{include "partials/truckList"}}
+        </tbody>
+    </table>
+</main>

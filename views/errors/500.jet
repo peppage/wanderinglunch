@@ -1,0 +1,7 @@
+{{include "../partials/header"}}
+
+<main>
+    <h1>Internal Server error!</h1>
+</main>
+
+{{include "../partials/footer"}}

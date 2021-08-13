@@ -1,0 +1,52 @@
+{{include "partials/header"}}
+
+<main>
+    <h1>{{ truck.Name }}</h1>
+
+    {{ if error != "" }}
+        <div class="admin-message">
+            {{ error }}
+        </div>
+    {{ end }} 
+
+    <form method="post">
+        <input name="originalId" type="hidden" value="{{ truck.ID }}" />
+        <input name="LastUpdate" type="hidden" value="{{ truck.LastUpdate}}" />
+
+        <div class="form-group">
+            <label for="Name">Name</label>
+            <input name="Name" value="{{truck.Name}}"/>
+        </div>
+        <div class="form-group">
+            <label for="ID">Twitter</label>
+            <input name="ID" value="{{truck.ID}}" readonly="readonly"/>
+        </div>
+        <div class="form-group">
+            <label for="WebURL">Website</label>
+            <input name="WebURL" value="{{truck.WebURL}}"/>
+        </div>
+        <div class="form-group">
+            <label for="Type">Type</label>
+            <input name="Type" value="{{truck.Type}}"/>
+        </div>
+        <div class="form-group">
+            <label for="About">About</label>
+            <input name="About" value="{{truck.About}}"/>
+        </div>
+        <div class="form-group">
+            <label for="Foursquare">Foursquare</label>
+            <input name="Foursquare" value="{{truck.Foursquare}}"/>
+        </div>
+         <div class="form-group">
+            {{if truck.Archive}}
+                <input type="checkbox" id="archive" name="archive" checked>
+            {{else}}
+                <input type="checkbox" id="archive" name="archive">
+            {{end}}
+            <label for="archive">Archive</label>
+        </div>
+        <div class="form-buttons">
+            <button type="submit">Update</button>
+        </div>
+    </form>
+</main>

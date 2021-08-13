@@ -1,0 +1,48 @@
+{{include "partials/header"}}
+
+<main>
+    <h1>
+        {{ truck.Name }}
+    </h1>
+    <h2>
+        {{ truck.Type }}
+    </h2>
+    {{ if truck.Archive }}
+    <div>
+        This truck is archived. The twitter is no longer being updated or the truck has closed. If this changes please
+        let me know!
+    </div>
+    {{ end }}
+
+    {{ if len(truck.Images) > 0 }}
+        <div class="foursquareImage">
+            <img src="/images/foursquare.png" >
+        </div>
+        <div class="gallery" itemscope itemtype="http://schema.org/ImageGallery">
+            {{ range image := truck.Images }}
+                <a href="https://irs0.4sqi.net/img/general/900x900{{ .Suffix }}" class="lightbox" itemscope itemtype="http://schema.org/ImageObject">
+                    <img src="https://irs0.4sqi.net/img/general/200x200{{ .Suffix }}" itemprop="thumbnail"/>
+                </a>
+            {{ end }}
+        </div>
+    {{ end }}
+
+    <h3>{{ truck.Name }} Links</h3>
+    {{ if truck.WebURL != "" }}
+        <a href="{{ truck.WebURL }}" target="_blank">Website</a><br>
+    {{ end }}
+    <a href="https://twitter.com/{{ truck.ID }}" target="_blank">Twitter</a><br>
+    {{ if truck.Foursquare != "" }}
+        <a href="https://foursquare.com/v/{{ truck.Foursquare }}?ref=P1JDYDE13QQDC11VUSA4LV3VV25OTRPHV1WAV5WP3VCE0QUP"
+            target="_blank">Foursquare</a><br>
+    {{ end }}
+</main>
+
+{{include "partials/footer"}}
+
+<script>
+    var tobii = new Tobii({
+        captions: false,
+        zoom: false,
+    })
+</script>

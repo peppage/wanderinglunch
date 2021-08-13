@@ -7,6 +7,7 @@
   <br>
 </div>
 
+[![Go Report Card](https://goreportcard.com/badge/github.com/peppage/wanderinglunch)](https://goreportcard.com/report/github.com/peppage/wanderinglunch)
 
 Welcome to the [Wanderinglunch](https://wanderinglunch.com) code base. It's a website that tracks food trucks around NYC based on their tweets!
 
@@ -16,29 +17,16 @@ You can pretty much follow [this guide](https://plusbryan.com/my-first-5-minutes
 
 ---
 
-- The site needs a Postgres database to run.
-- Feel free to add local trust to psql if you're lazy
-
-1.  sudo vi /etc/postgresql/9.4/main/pg_hba.conf
-    - `host all all 127.0.0.1/32 trust`
-
-## Add user to database
-
-1. su postgres
-1. createuser USERNAME
-
----
-
-- All Secrets are stored in a appsettings.json files next to the exe for ease and that's how dotnet does it.
-- I cross compile the site on windows and drop the exe onto the server
-  `dotnet publish -r linux-x64 -c Release`
+- All Secrets are stored in a config.json file next to the exe for ease. Please see config.example.json for all the settings.
+- I compile the site on WSL and drop the exe onto the server
+  `GOOS=linux GOARCH=amd64 CGO_ENABLED=1 go build`
   
 ## Other version
 
 I've written the site in a few different languages.
 
-* [Go](https://github.com/peppage/wanderinglunch/tree/v5.0.3)
 * [Node](https://github.com/peppage/wanderinglunch/tree/v1)
+* [Go](https://github.com/peppage/wanderinglunch/tree/v5.0.3)
 * [Dotnet](https://github.com/peppage/wanderinglunch/tree/v7.1.0)
 
 ## License

@@ -1,0 +1,35 @@
+{{include "partials/header"}}
+
+<main>
+      {{range truck := trucks}}
+          <div class="truck">
+                <div class="truck__name">
+                    <a href="/truck/{{ .ID}}">
+                    {{ .Name}}
+                    </a>
+                </div>
+                <div>
+                    {{ if .Archive }}
+                        Archived
+                    {{ else }}
+                        {{ .LastUpdate|relativeTime }}
+                    {{ end }}
+                </div>
+                <div class="truck__image">
+                    {{if len( .Images) > 0 && .Images[0].Menu }}
+                    <a href="https://irs0.4sqi.net/img/general/width900{{ .Images[0].Suffix }}" class="lightbox">
+                        <img src="https://irs0.4sqi.net/img/general/width30{{ .Images[0].Suffix }}" alt="{{ .Name}} Menu">
+                    </a>
+                    {{end}}
+                </div>
+            </div>
+      {{end}}
+  </main>
+
+{{include "partials/footer"}}
+<script>
+    var tobii = new Tobii({
+        captions: false,
+        zoom: false,
+    })
+</script>

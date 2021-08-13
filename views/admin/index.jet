@@ -1,0 +1,41 @@
+{{include "partials/header"}}
+
+<main>
+    <h1>Admin Queue</h1>
+
+    <table class="table" style="width:100%;" hx-target="closest tr" hx-swap="outerHTML swap:.2s">
+        <thead>
+            <tr>
+                <th>Text</th>
+                <th>Locations</th>
+                <th />
+            </tr>
+        </thead>
+        <tbody id="search-results">
+            {{ range item := items }}
+                <tr>
+                    <td>
+                        {{ .Text }}
+                        <br />
+
+                        <a href="https://twitter.com/{{ .Tweet.TruckID }}">
+                            {{ .Tweet.TruckID }}
+                        </a>
+                        &nbsp;
+                        <a href="https://twitter.com/{{ .Tweet.TruckID }}/status/{{ .Tweet.ID }}">
+                            {{ .Tweet.Time|prettyTime }}
+                        </a>
+                    </td>
+                    <td>
+                    {{ range loc := .Locations }}
+                            <div>{{ .Display }}</div>
+                    {{ end }}
+                    </td>
+                    <td>
+                        <button hx-delete="/admin/markdone?id={{ .Tweet.ID }}">Done</button>
+                    </td>
+                </tr>
+            {{ end }}
+        </tbody>
+    </table>
+</main>
