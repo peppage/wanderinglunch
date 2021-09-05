@@ -1,9 +1,15 @@
 {{include "partials/header"}}
 
 <main>
-    <h1>
-        Subs
-    </h1>
+    <div class="flex justify-between">
+        <h1>
+            Subs
+        </h1>
+
+        <div>
+            <a href="/admin/subs/new" class="button">Add new</a>
+        </div>
+    </div>
 
     <table class="table" style="width:100%;">
         <thead>

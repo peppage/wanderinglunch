@@ -354,6 +354,20 @@ func (context *dbContext) UpdateSub(sub *Sub) error {
 	return err
 }
 
+func (context *dbContext) InsertSub(sub *Sub) (int64, error) {
+	const query = `INSERT INTO subs
+			(regex, replacement)
+			VALUES
+			(?, ?)`
+
+	result, err := context.db.Exec(query, &sub.Regex, &sub.Replacement)
+	if err != nil {
+		return 0, err
+	}
+
+	return result.LastInsertId()
+}
+
 /****************************************************
 *                    Locations                      *
 ****************************************************/

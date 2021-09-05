@@ -105,6 +105,8 @@ func main() {
 	admin.Get("/location/:id", ar.location)
 	admin.Post("/location/:id", ar.locationSave)
 	admin.Get("/subs", ar.subs)
+	admin.Get("/subs/new", ar.addSub)
+	admin.Post("/subs/new", ar.addSubSave)
 	admin.Get("/sub/:id", ar.sub)
 	admin.Post("/sub/:id", ar.subSave)
 

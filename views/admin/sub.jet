@@ -1,7 +1,11 @@
 {{include "partials/header"}}
 
 <main>
-    <h1>{{ sub.ID }}</h1>
+    {{if sub.ID == 0 }}
+        <h1>Add new Sub</h1>
+    {{ else }}
+        <h1>{{ sub.ID }}</h1>
+    {{ end }}
 
     {{ if error != "" }}
         <div class="admin-message">
@@ -21,7 +25,7 @@
             <input name="Replacement" value="{{sub.Replacement}}"/>
         </div>
         <div class="form-buttons">
-            <button type="submit">Update</button>
+            <button type="submit">Save</button>
         </div>
     </form>
 </main>

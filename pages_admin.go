@@ -248,6 +248,46 @@ func (r adminRouter) subs(c *fiber.Ctx) error {
 	}, "layouts/admin")
 }
 
+func (r adminRouter) addSub(c *fiber.Ctx) error {
+	sess, err := store.Get(c)
+	if err != nil {
+		log.Err(err).Send()
+		return err
+	}
+
+	return c.Render("admin/sub", fiber.Map{
+		"sub":   new(Sub),
+		"error": getErrorMessage(sess),
+	}, "layouts/admin")
+}
+
+func (r adminRouter) addSubSave(c *fiber.Ctx) error {
+	vm := new(Sub)
+
+	sess, err := store.Get(c)
+	if err != nil {
+		log.Err(err).Send()
+		return err
+	}
+
+	if err := c.BodyParser(vm); err != nil {
+		log.Err(err).Send()
+		saveErrorMessage(sess, "Invalid Sub")
+		return err
+	}
+
+	id, err := r.db.InsertSub(vm)
+	if err != nil {
+		saveErrorMessage(sess, "Save failed")
+		log.Err(err).Send()
+		if vm.ID == 0 {
+			return c.Redirect("/admin/subs/new", fiber.StatusSeeOther)
+		}
+	}
+
+	return c.Redirect("/admin/sub/"+strconv.FormatInt(id, 10), fiber.StatusSeeOther)
+}
+
 func (r adminRouter) sub(c *fiber.Ctx) error {
 	sess, err := store.Get(c)
 	if err != nil {
@@ -280,14 +320,15 @@ func (r adminRouter) sub(c *fiber.Ctx) error {
 func (r adminRouter) subSave(c *fiber.Ctx) error {
 	vm := new(Sub)
 
-	if err := c.BodyParser(vm); err != nil {
+	sess, err := store.Get(c)
+	if err != nil {
 		log.Err(err).Send()
 		return err
 	}
 
-	sess, err := store.Get(c)
-	if err != nil {
+	if err := c.BodyParser(vm); err != nil {
 		log.Err(err).Send()
+		saveErrorMessage(sess, "Invalid Sub")
 		return err
 	}
 
