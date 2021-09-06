@@ -97,6 +97,8 @@ func main() {
 	admin.Get("/", ar.index)
 	admin.Delete("/markdone", ar.tweetDone)
 	admin.Get("/trucks", ar.trucks)
+	admin.Get("/trucks/new", ar.addTruck)
+	admin.Post("/trucks/new", ar.addTruckSave)
 	admin.Post("/trucks/search", ar.trucksSearch)
 	admin.Get("/truck/:id", ar.truck)
 	admin.Post("/truck/:id", ar.truckSave)

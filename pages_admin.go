@@ -101,6 +101,44 @@ func (r adminRouter) trucksSearch(c *fiber.Ctx) error {
 	})
 }
 
+func (r adminRouter) addTruck(c *fiber.Ctx) error {
+	sess, err := store.Get(c)
+	if err != nil {
+		log.Err(err).Send()
+		return err
+	}
+
+	return c.Render("admin/truck", fiber.Map{
+		"truck": new(Truck),
+		"error": getErrorMessage(sess),
+	}, "layouts/admin")
+}
+
+func (r adminRouter) addTruckSave(c *fiber.Ctx) error {
+	vm := new(Truck)
+
+	sess, err := store.Get(c)
+	if err != nil {
+		log.Err(err).Send()
+		return err
+	}
+
+	if err := c.BodyParser(vm); err != nil {
+		log.Err(err).Send()
+		saveErrorMessage(sess, "Invalid Truck")
+		return c.Redirect("/admin/trucks/new", fiber.StatusSeeOther)
+	}
+
+	err = r.db.InsertTruck(vm)
+	if err != nil {
+		saveErrorMessage(sess, "Save failed")
+		log.Err(err).Send()
+		return c.Redirect("/admin/trucks/new", fiber.StatusSeeOther)
+	}
+
+	return c.Redirect("/admin/truck/"+vm.ID, fiber.StatusSeeOther)
+}
+
 func (r adminRouter) truck(c *fiber.Ctx) error {
 	sess, err := store.Get(c)
 	if err != nil {

@@ -187,6 +187,7 @@ func (context *dbContext) InsertTruck(truck *Truck) error {
 
 	_, err := context.db.Exec(query, &truck.Name, &truck.ID, &truck.WebURL, &truck.LastUpdate,
 		&truck.Type, &truck.About, &truck.Foursquare, &truck.Archive)
+
 	return err
 }
 

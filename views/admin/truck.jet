@@ -19,7 +19,11 @@
         </div>
         <div class="form-group">
             <label for="ID">Twitter</label>
-            <input name="ID" value="{{truck.ID}}" readonly="readonly"/>
+            {{ if truck.ID == "" }}
+                <input name="ID" value="{{truck.ID}}" />
+            {{ else }}
+                <input name="ID" value="{{truck.ID}}" readonly="readonly"/>
+            {{ end }}
         </div>
         <div class="form-group">
             <label for="WebURL">Website</label>
@@ -46,7 +50,7 @@
             <label for="archive">Archive</label>
         </div>
         <div class="form-buttons">
-            <button type="submit">Update</button>
+            <button type="submit">Save</button>
         </div>
     </form>
 </main>
