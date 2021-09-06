@@ -1,12 +1,18 @@
 {{include "partials/header"}}
 
 <main>
-    <h1>
-        Locations
-        <span class="htmx-indicator">
-            Searching...
-        </span>
-    </h1>
+    <div class="flex justify-between">
+        <h1>
+            Locations
+            <span class="htmx-indicator">
+                Searching...
+            </span>
+        </h1>
+
+        <div>
+            <a href="/admin/locations/new" class="button">Add new</a>
+        </div>
+    </div>
 
     <input class="form-control" type="text"
         name="search" placeholder="Begin Typing To Search Locations..."

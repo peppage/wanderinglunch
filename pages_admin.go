@@ -202,6 +202,44 @@ func (r adminRouter) locations(c *fiber.Ctx) error {
 	}, "layouts/admin")
 }
 
+func (r adminRouter) addLocation(c *fiber.Ctx) error {
+	sess, err := store.Get(c)
+	if err != nil {
+		log.Err(err).Send()
+		return err
+	}
+
+	return c.Render("admin/location", fiber.Map{
+		"location": new(Location),
+		"error":    getErrorMessage(sess),
+	}, "layouts/admin")
+}
+
+func (r adminRouter) addLocationSave(c *fiber.Ctx) error {
+	vm := new(Location)
+
+	sess, err := store.Get(c)
+	if err != nil {
+		log.Err(err).Send()
+		return err
+	}
+
+	if err := c.BodyParser(vm); err != nil {
+		log.Err(err).Send()
+		saveErrorMessage(sess, "Invalid Location")
+		return c.Redirect("/admin/locations/new", fiber.StatusSeeOther)
+	}
+
+	id, err := r.db.InsertLocation(vm)
+	if err != nil {
+		saveErrorMessage(sess, "Save failed")
+		log.Err(err).Send()
+		return c.Redirect("/admin/locations/new", fiber.StatusSeeOther)
+	}
+
+	return c.Redirect("/admin/location/"+strconv.FormatInt(id, 10), fiber.StatusSeeOther)
+}
+
 func (r adminRouter) locationSearch(c *fiber.Ctx) error {
 	search := c.FormValue("search")
 	locs, err := r.db.GetLocations(search)
@@ -247,14 +285,15 @@ func (r adminRouter) location(c *fiber.Ctx) error {
 func (r adminRouter) locationSave(c *fiber.Ctx) error {
 	vm := new(Location)
 
-	if err := c.BodyParser(vm); err != nil {
+	sess, err := store.Get(c)
+	if err != nil {
 		log.Err(err).Send()
 		return err
 	}
 
-	sess, err := store.Get(c)
-	if err != nil {
+	if err := c.BodyParser(vm); err != nil {
 		log.Err(err).Send()
+		saveErrorMessage(sess, "Invalid Location")
 		return err
 	}
 
@@ -311,16 +350,14 @@ func (r adminRouter) addSubSave(c *fiber.Ctx) error {
 	if err := c.BodyParser(vm); err != nil {
 		log.Err(err).Send()
 		saveErrorMessage(sess, "Invalid Sub")
-		return err
+		return c.Redirect("/admin/subs/new", fiber.StatusSeeOther)
 	}
 
 	id, err := r.db.InsertSub(vm)
 	if err != nil {
 		saveErrorMessage(sess, "Save failed")
 		log.Err(err).Send()
-		if vm.ID == 0 {
-			return c.Redirect("/admin/subs/new", fiber.StatusSeeOther)
-		}
+		return c.Redirect("/admin/subs/new", fiber.StatusSeeOther)
 	}
 
 	return c.Redirect("/admin/sub/"+strconv.FormatInt(id, 10), fiber.StatusSeeOther)
@@ -367,7 +404,7 @@ func (r adminRouter) subSave(c *fiber.Ctx) error {
 	if err := c.BodyParser(vm); err != nil {
 		log.Err(err).Send()
 		saveErrorMessage(sess, "Invalid Sub")
-		return err
+		c.Redirect("/admin/sub/"+strconv.Itoa(vm.ID), fiber.StatusSeeOther)
 	}
 
 	err = r.db.UpdateSub(vm)

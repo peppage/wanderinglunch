@@ -103,6 +103,8 @@ func main() {
 	admin.Get("/truck/:id", ar.truck)
 	admin.Post("/truck/:id", ar.truckSave)
 	admin.Get("/locations", ar.locations)
+	admin.Get("/locations/new", ar.addLocation)
+	admin.Post("/locations/new", ar.addLocationSave)
 	admin.Post("/locations/search", ar.locationSearch)
 	admin.Get("/location/:id", ar.location)
 	admin.Post("/location/:id", ar.locationSave)

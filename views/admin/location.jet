@@ -42,7 +42,7 @@
             <input name="Zone" value="{{location.Zone}}"/>
         </div>
         <div class="form-buttons">
-            <button type="submit">Update</button>
+            <button type="submit">Save</button>
         </div>
     </form>
 </main>

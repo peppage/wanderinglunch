@@ -421,3 +421,17 @@ func (context *dbContext) UpdateLocation(loc *Location) error {
 	_, err := context.db.Exec(query, &loc.Display, &loc.Matcher, &loc.Lat, &loc.Long, &loc.Zone, &loc.ID)
 	return err
 }
+
+func (context *dbContext) InsertLocation(loc *Location) (int64, error) {
+	const query = `INSERT INTO locations
+			(display, matcher, lat, long, zone)
+			VALUES
+			(?, ?, ?, ?, ?)`
+
+	result, err := context.db.Exec(query, &loc.Display, &loc.Matcher, &loc.Lat, &loc.Long, &loc.Zone)
+	if err != nil {
+		return 0, err
+	}
+
+	return result.LastInsertId()
+}
