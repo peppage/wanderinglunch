@@ -253,11 +253,7 @@ func (context *dbContext) GetUser(email string) (*User, error) {
 	u := new(User)
 
 	err := row.Scan(&u.ID, &u.Email, &u.Password)
-	if err != nil {
-		return nil, err
-	}
-
-	return u, nil
+	return u, err
 }
 
 /****************************************************
@@ -342,10 +338,7 @@ func (context *dbContext) GetSub(id int) (*Sub, error) {
 
 	s := new(Sub)
 	err := row.Scan(&s.ID, &s.Regex, &s.Replacement)
-	if err != nil {
-		return nil, err
-	}
-	return s, nil
+	return s, err
 }
 
 func (context *dbContext) UpdateSub(sub *Sub) error {
@@ -409,10 +402,7 @@ func (context *dbContext) GetLocation(id int) (*Location, error) {
 
 	l := new(Location)
 	err := row.Scan(&l.ID, &l.Display, &l.Matcher, &l.Lat, &l.Long, &l.Zone)
-	if err != nil {
-		return nil, err
-	}
-	return l, nil
+	return l, err
 }
 
 func (context *dbContext) UpdateLocation(loc *Location) error {
