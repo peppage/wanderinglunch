@@ -6,7 +6,6 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/go-co-op/gocron"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/gofiber/fiber/v2/middleware/session"
@@ -19,7 +18,8 @@ import (
 var conf *config
 var db *dbContext
 var store *session.Store
-var scheduler *gocron.Scheduler
+
+//var scheduler *gocron.Scheduler
 
 func main() {
 	zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
@@ -27,12 +27,12 @@ func main() {
 	db = openDatabase()
 	defer db.db.Close()
 
-	scheduler = gocron.NewScheduler(time.UTC)
-	scheduler.Every(15).Minutes().Do(updator)
+	//scheduler = gocron.NewScheduler(time.UTC)
+	//scheduler.Every(15).Minutes().Do(updator)
 
-	if !conf.Debug {
-		scheduler.StartAsync()
-	}
+	//if !conf.Debug {
+	//	scheduler.StartAsync()
+	//}
 
 	storage := sqlite3.New(sqlite3.Config{
 		Database:   "./session.sqlite3",

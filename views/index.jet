@@ -1,6 +1,16 @@
 {{include "partials/header"}}
 
 <main>
+<div style="margin:5rem;padding:3rem;background-color:#cfe2ff;color:#0a58ca;border: 2px solid #9ec5fe">
+<p>Sadly I must shut down this site. It was dying anyway after NYC decided to kill food
+trucks. Now Twitter is charging for API access and that's where the site's information
+comes from. 😢
+</p>
+<p>
+I had a blast making it,  and I hope it was useful. 🖤
+</p>
+</div>
+
 {{ if len(spots) == 0 }}
     <h1>Your hunger cannot be satisfied, no trucks are tweeting</h1>
     <p>If it's late, bookmark the site and come back around lunchtime! <br></p>

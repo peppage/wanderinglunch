@@ -1,3 +1,9 @@
+# 🛑 Archived
+
+This project is killed because Twitter is charging for their API. Per [this tweet](https://twitter.com/TwitterDev/status/1621026986784337922).
+
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
+
 <div align="center">
     <br>
   <img
@@ -8,6 +14,7 @@
 </div>
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/peppage/wanderinglunch)](https://goreportcard.com/report/github.com/peppage/wanderinglunch)
+
 
 Welcome to the [Wanderinglunch](https://wanderinglunch.com) code base. It's a website that tracks food trucks around NYC based on their tweets!
 
